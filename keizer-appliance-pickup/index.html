@@ -117,12 +117,21 @@ margin:25px 0;
 border-radius:6px;
 }
 
+.form-intro {
+background:#f8f8f8;
+padding:20px;
+margin-top:25px;
+border-radius:6px 6px 0 0;
+border:1px solid #ddd;
+border-bottom:none;
+}
+
 form {
 background:#f8f8f8;
 border:1px solid #ddd;
 padding:25px;
-margin-top:25px;
-border-radius:6px;
+margin-top:0;
+border-radius:0 0 6px 6px;
 }
 
 label {
@@ -382,6 +391,104 @@ Free pickup is available for qualifying appliances. We review the appliance cond
 </p>
 
 </div>
+
+
+<!-- REQUEST FORM NEAR THE TOP -->
+
+<h2>Request Free Appliance Pickup in Keizer Oregon</h2>
+
+<div class="form-intro">
+
+<p>
+Have an unwanted appliance? Complete the form below with your appliance information and pickup location. We will review your request and determine whether the appliance qualifies for free pickup.
+</p>
+
+<p>
+<strong>Prefer to call or text?</strong> 503-868-4455
+</p>
+
+</div>
+
+
+<form action="https://formspree.io/f/mvzeapzd" method="POST">
+
+<input type="hidden" name="_subject" value="New Keizer Appliance Pickup Request">
+
+<label for="name">Name</label>
+<input id="name" type="text" name="name" autocomplete="name" required>
+
+
+<label for="phone">Phone Number</label>
+<input id="phone" type="tel" name="phone" autocomplete="tel" required>
+
+
+<label for="email">Email (optional)</label>
+<input id="email" type="email" name="email" autocomplete="email">
+
+
+<label for="address">Address</label>
+<input id="address" type="text" name="address" autocomplete="street-address" required>
+
+
+<label for="city">City</label>
+<input id="city" type="text" name="city" value="Keizer" autocomplete="address-level2" required>
+
+
+<label for="zip">ZIP Code</label>
+<input id="zip" type="text" name="zip" autocomplete="postal-code" required>
+
+
+<label for="appliance">Appliance Type</label>
+
+<select id="appliance" name="appliance" required>
+
+<option value="">Select appliance</option>
+<option>Refrigerator</option>
+<option>Washer</option>
+<option>Dryer</option>
+<option>Stove / Range</option>
+<option>Freezer</option>
+<option>Dishwasher</option>
+<option>Oven</option>
+<option>Microwave</option>
+<option>Other</option>
+
+</select>
+
+
+<label for="condition">Appliance Condition</label>
+
+<select id="condition" name="condition" required>
+
+<option value="">Select condition</option>
+<option>Fully working</option>
+<option>Working but needs minor repair</option>
+<option>Not working</option>
+<option>Not sure</option>
+
+</select>
+
+
+<label for="photos">Do you have photos?</label>
+
+<select id="photos" name="photos">
+
+<option>No</option>
+<option>Yes</option>
+
+</select>
+
+
+<label for="message">Additional Information</label>
+
+<textarea id="message" name="message" rows="6"></textarea>
+
+
+<button type="submit">
+Request Free Pickup
+</button>
+
+</form>
 
 
 <h2>Free Appliance Pickup in Keizer, Oregon</h2>
@@ -707,108 +814,31 @@ Depending on the pickup, we may serve nearby communities including Salem, Woodbu
 <h3>How do I request free appliance pickup in Keizer?</h3>
 
 <p>
-Fill out the request form below with your name, phone number, address, city, ZIP code, appliance type and condition. You can also call or text 503-868-4455.
+Fill out the request form near the top of this page with your name, phone number, address, city, ZIP code, appliance type and condition. You can also call or text 503-868-4455.
 </p>
 
 
 <div class="contact-box">
 
-<h2>Request Free Appliance Pickup in Keizer Oregon</h2>
+<h2>Need Help With an Appliance Pickup?</h2>
 
 <p>
-Have an unwanted refrigerator, washer, dryer, freezer, stove, range, dishwasher or other major appliance?
+Have an unwanted refrigerator, washer, dryer, freezer, stove, range, dishwasher, oven or microwave?
 </p>
 
 <p>
-Submit the request form below or call/text:
+Call or Text:
 </p>
 
 <p>
 <a href="tel:5038684455">503-868-4455</a>
 </p>
 
+<p>
+Or use the pickup request form near the top of this page.
+</p>
+
 </div>
-
-
-<form action="https://formspree.io/f/mvzeapzd" method="POST">
-
-<input type="hidden" name="_subject" value="New Keizer Appliance Pickup Request">
-
-<label for="name">Name</label>
-<input id="name" type="text" name="name" autocomplete="name" required>
-
-
-<label for="phone">Phone Number</label>
-<input id="phone" type="tel" name="phone" autocomplete="tel" required>
-
-
-<label for="email">Email (optional)</label>
-<input id="email" type="email" name="email" autocomplete="email">
-
-
-<label for="address">Address</label>
-<input id="address" type="text" name="address" autocomplete="street-address" required>
-
-
-<label for="city">City</label>
-<input id="city" type="text" name="city" value="Keizer" autocomplete="address-level2" required>
-
-
-<label for="zip">ZIP Code</label>
-<input id="zip" type="text" name="zip" autocomplete="postal-code" required>
-
-
-<label for="appliance">Appliance Type</label>
-
-<select id="appliance" name="appliance" required>
-
-<option value="">Select appliance</option>
-<option>Refrigerator</option>
-<option>Washer</option>
-<option>Dryer</option>
-<option>Stove / Range</option>
-<option>Freezer</option>
-<option>Dishwasher</option>
-<option>Oven</option>
-<option>Microwave</option>
-<option>Other</option>
-
-</select>
-
-
-<label for="condition">Appliance Condition</label>
-
-<select id="condition" name="condition" required>
-
-<option value="">Select condition</option>
-<option>Fully working</option>
-<option>Working but needs minor repair</option>
-<option>Not working</option>
-<option>Not sure</option>
-
-</select>
-
-
-<label for="photos">Do you have photos?</label>
-
-<select id="photos" name="photos">
-
-<option>No</option>
-<option>Yes</option>
-
-</select>
-
-
-<label for="message">Additional Information</label>
-
-<textarea id="message" name="message" rows="6"></textarea>
-
-
-<button type="submit">
-Request Free Pickup
-</button>
-
-</form>
 
 
 <h2>Contact Free Reliable Appliance Pickup in Keizer</h2>
