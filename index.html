@@ -530,7 +530,7 @@ Submit the pickup form or call us with your location and appliance information.
 <h3>2. Tell Us About the Appliance</h3>
 
 <p>
-Provide the appliance type, condition and any important access information.
+Provide the appliance type, condition and important access information, including where the appliance is located.
 </p>
 
 </div>
@@ -902,6 +902,77 @@ Select Condition
 <option>Fully Working</option>
 <option>Working but Needs Repair</option>
 <option>Not Working</option>
+<option>Unknown</option>
+
+</select>
+
+
+<label for="location">
+Where Is The Appliance Located?
+</label>
+
+<select
+id="location"
+name="appliance_location"
+required
+>
+
+<option value="">
+Select Appliance Location
+</option>
+
+<option>First Floor</option>
+<option>Second Floor</option>
+<option>Third Floor</option>
+<option>Basement</option>
+<option>Garage</option>
+<option>Outside</option>
+<option>Other</option>
+
+</select>
+
+
+<label for="stairs">
+Are Stairs Involved?
+</label>
+
+<select
+id="stairs"
+name="stairs_involved"
+required
+>
+
+<option value="">
+Select One
+</option>
+
+<option>No Stairs</option>
+<option>Yes - 1 Flight</option>
+<option>Yes - 2 Flights</option>
+<option>Yes - 3 or More Flights</option>
+<option>Unknown</option>
+
+</select>
+
+
+<label for="access">
+Pickup Access
+</label>
+
+<select
+id="access"
+name="pickup_access"
+required
+>
+
+<option value="">
+Select Access
+</option>
+
+<option>Easy Access</option>
+<option>Doorway / Hallway Access</option>
+<option>Tight Access</option>
+<option>Appliance Requires Door Removal</option>
 <option>Unknown</option>
 
 </select>
