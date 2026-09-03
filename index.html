@@ -2,16 +2,17 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Free Appliance Pickup, Removal & Recycling | Free Reliable Appliance Pickup</title>
+    <title>
+        Free Appliance Pickup, Removal & Recycling | Free Reliable Appliance Pickup
+    </title>
 
     <meta
         name="description"
-        content="Free Reliable Appliance Pickup provides qualifying washer, dryer, refrigerator, stove, freezer and major appliance pickup, removal and recycling across California, Oregon, Washington, Arizona and Colorado."
+        content="Free Reliable Appliance Pickup provides qualifying appliance pickup, removal and recycling for washers, dryers, refrigerators, stoves, ranges, freezers and other major appliances across California, Oregon, Washington, Arizona and Colorado."
     >
 
     <meta name="robots" content="index, follow">
@@ -21,9 +22,7 @@
         href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
     >
 
-
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -34,48 +33,49 @@
 
         body {
             margin: 0;
-            padding: 0;
             font-family: Arial, Helvetica, sans-serif;
-            background: #f5f7fa;
-            color: #222;
             line-height: 1.6;
+            color: #222;
+            background: #f7f7f7;
+        }
+
+        a {
+            color: inherit;
         }
 
         header {
-            background: linear-gradient(135deg, #0757b8, #063b80);
-            color: white;
+            background: linear-gradient(135deg, #0b6b3a, #16884d);
+            color: #fff;
+            padding: 45px 20px;
             text-align: center;
-            padding: 55px 20px;
         }
 
         header h1 {
-            margin: 0 0 15px;
-            font-size: 44px;
-            line-height: 1.2;
+            margin: 0 0 12px;
+            font-size: 38px;
         }
 
         header p {
-            max-width: 900px;
+            max-width: 850px;
             margin: 0 auto;
             font-size: 19px;
         }
 
         nav {
-            background: white;
-            text-align: center;
-            padding: 15px 10px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+            background: #111;
+            padding: 12px 10px;
+            text-align: center;
         }
 
         nav a {
-            display: inline-block;
-            margin: 5px 10px;
-            color: #063b80;
+            color: #fff;
             text-decoration: none;
+            margin: 0 10px;
             font-weight: bold;
+            font-size: 14px;
         }
 
         nav a:hover {
@@ -83,176 +83,147 @@
         }
 
         .container {
-            width: 92%;
-            max-width: 1150px;
-            margin: 0 auto;
+            width: min(1100px, 92%);
+            margin: auto;
         }
 
         section {
-            padding: 55px 0;
-        }
-
-        section:nth-child(even) {
-            background: #ffffff;
+            background: #fff;
+            margin: 25px 0;
+            padding: 35px 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
         }
 
         h2 {
-            color: #063b80;
-            text-align: center;
-            font-size: 34px;
-            margin: 0 0 30px;
+            color: #0b6b3a;
+            margin-top: 0;
+            font-size: 30px;
         }
 
         h3 {
-            color: #0757b8;
-        }
-
-        p {
-            font-size: 17px;
+            color: #145c38;
         }
 
         .hero {
-            background: white;
             text-align: center;
-            padding: 60px 20px;
+            padding: 45px 20px;
         }
 
         .hero h2 {
-            font-size: 38px;
-            margin-bottom: 20px;
+            font-size: 34px;
         }
 
         .hero p {
             max-width: 850px;
             margin: 15px auto;
+            font-size: 18px;
         }
 
         .button {
             display: inline-block;
-            background: #0757b8;
-            color: white;
+            background: #0b6b3a;
+            color: #fff;
+            padding: 13px 22px;
+            border-radius: 7px;
             text-decoration: none;
-            padding: 14px 25px;
-            border-radius: 8px;
             font-weight: bold;
-            margin: 8px;
+            margin: 8px 4px;
         }
 
         .button:hover {
-            background: #063b80;
+            background: #084f2c;
         }
 
-        .card-grid {
+        .service-grid,
+        .area-grid,
+        .steps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 22px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
         }
 
         .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background: #fafafa;
         }
 
         .card h3 {
             margin-top: 0;
         }
 
-        .notice {
-            background: #eef5ff;
-            border-left: 5px solid #0757b8;
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 6px;
-        }
-
         .area-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
         }
 
-        .area {
-            background: white;
-            padding: 18px;
-            border-radius: 9px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        .area-group {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background: #fafafa;
         }
 
-        .area a {
-            color: #063b80;
-            text-decoration: none;
+        .area-group a {
+            display: inline-block;
+            margin: 4px 8px 4px 0;
+            color: #0b6b3a;
             font-weight: bold;
+            text-decoration: none;
         }
 
-        .area a:hover {
+        .area-group a:hover {
             text-decoration: underline;
         }
 
-        .step {
-            background: white;
-            padding: 23px;
-            margin: 15px 0;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        .steps-grid {
+            grid-template-columns: repeat(4, 1fr);
         }
 
-        .step strong {
-            color: #0757b8;
+        .step-number {
+            display: inline-flex;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #0b6b3a;
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
         .faq {
-            background: white;
-            padding: 23px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .faq:last-child {
+            border-bottom: none;
         }
 
         .faq h3 {
-            margin-top: 0;
-        }
-
-        .contact-box {
-            background: #063b80;
-            color: white;
-            padding: 40px;
-            border-radius: 14px;
-        }
-
-        .contact-box h2 {
-            color: white;
-        }
-
-        .contact-box a {
-            color: white;
+            margin-bottom: 7px;
         }
 
         form {
-            background: white;
-            color: #222;
-            padding: 28px;
-            border-radius: 12px;
-            margin-top: 25px;
+            display: grid;
+            gap: 14px;
         }
 
         label {
-            display: block;
             font-weight: bold;
-            margin-top: 16px;
-            margin-bottom: 6px;
         }
 
         input,
         select,
         textarea {
             width: 100%;
-            padding: 13px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
+            padding: 12px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
             font-size: 16px;
-            font-family: Arial, Helvetica, sans-serif;
         }
 
         textarea {
@@ -260,103 +231,88 @@
             resize: vertical;
         }
 
-        input[type="submit"] {
-            background: #0757b8;
-            color: white;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 22px;
+        input[type="file"] {
+            background: #fff;
         }
 
-        input[type="submit"]:hover {
-            background: #063b80;
+        button {
+            border: none;
+            background: #0b6b3a;
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 7px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #084f2c;
+        }
+
+        .contact-box {
+            text-align: center;
+            background: #eef8f2;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .contact-box a {
+            color: #0b6b3a;
+            font-weight: bold;
+            text-decoration: none;
         }
 
         footer {
-            background: #111827;
-            color: white;
+            background: #111;
+            color: #fff;
             text-align: center;
-            padding: 35px 20px;
+            padding: 30px 20px;
+            margin-top: 35px;
         }
 
         footer a {
-            color: white;
+            color: #fff;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
 
             header h1 {
-                font-size: 32px;
-            }
-
-            header p {
-                font-size: 17px;
-            }
-
-            .hero h2 {
                 font-size: 30px;
             }
 
-            h2 {
-                font-size: 28px;
+            .service-grid,
+            .area-grid,
+            .steps-grid {
+                grid-template-columns: 1fr;
             }
 
             nav a {
-                font-size: 14px;
-                margin: 4px 6px;
+                display: inline-block;
+                margin: 4px 7px;
             }
-
-            .contact-box {
-                padding: 25px 18px;
-            }
-
         }
-
     </style>
 
-
-    <!-- Organization Schema -->
-
     <script type="application/ld+json">
-
     {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Free Reliable Appliance Pickup",
         "url": "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/",
-        "description": "Free appliance pickup, removal and recycling for qualifying major appliances.",
+        "description": "Appliance pickup, removal and recycling services for qualifying major appliances.",
         "areaServed": [
-            {
-                "@type": "State",
-                "name": "California"
-            },
-            {
-                "@type": "State",
-                "name": "Oregon"
-            },
-            {
-                "@type": "State",
-                "name": "Washington"
-            },
-            {
-                "@type": "State",
-                "name": "Arizona"
-            },
-            {
-                "@type": "State",
-                "name": "Colorado"
-            }
+            "California",
+            "Oregon",
+            "Washington",
+            "Arizona",
+            "Colorado"
         ]
     }
-
     </script>
 
-
-    <!-- Service Schema -->
-
     <script type="application/ld+json">
-
     {
         "@context": "https://schema.org",
         "@type": "Service",
@@ -366,916 +322,406 @@
             "name": "Free Reliable Appliance Pickup"
         },
         "serviceType": [
-            "Washer pickup",
-            "Dryer pickup",
-            "Refrigerator pickup",
-            "Stove pickup",
-            "Freezer pickup",
-            "Major appliance removal",
-            "Appliance recycling"
+            "Appliance Pickup",
+            "Appliance Removal",
+            "Appliance Recycling",
+            "Washer Pickup",
+            "Dryer Pickup",
+            "Refrigerator Pickup",
+            "Stove Pickup",
+            "Freezer Pickup"
+        ],
+        "areaServed": [
+            "California",
+            "Oregon",
+            "Washington",
+            "Arizona",
+            "Colorado"
         ]
     }
-
     </script>
-
 </head>
-
 
 <body>
 
-
-    <!-- HEADER -->
-
     <header>
-
-        <h1>
-            Free Reliable Appliance Pickup
-        </h1>
+        <h1>Free Reliable Appliance Pickup</h1>
 
         <p>
-            Free qualifying appliance pickup, removal and recycling
-            for washers, dryers, refrigerators, stoves, freezers
-            and other major appliances.
+            Free appliance pickup, removal and recycling for qualifying
+            washers, dryers, refrigerators, stoves, ranges, freezers and
+            other major appliances across California, Oregon, Washington,
+            Arizona and Colorado.
         </p>
-
     </header>
 
-
-    <!-- NAVIGATION -->
-
     <nav>
-
-        <a href="#about">
-            About
-        </a>
-
-        <a href="#services">
-            Services
-        </a>
-
-        <a href="#areas">
-            Service Areas
-        </a>
-
-        <a href="#how-it-works">
-            How It Works
-        </a>
-
-        <a href="#who-we-help">
-            Who We Help
-        </a>
-
-        <a href="#faq">
-            FAQ
-        </a>
-
-        <a href="#contact">
-            Contact
-        </a>
-
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#areas">Service Areas</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Request Pickup</a>
     </nav>
 
-
-    <main>
-
-
-        <!-- HERO -->
+    <main class="container">
 
         <section class="hero">
 
-            <div class="container">
+            <h2>
+                Free Appliance Pickup, Removal & Recycling
+            </h2>
 
-                <h2>
-                    Free Appliance Pickup & Removal
-                </h2>
+            <p>
+                Have a working major appliance you no longer need?
+                Free Reliable Appliance Pickup helps homeowners,
+                renters, landlords, property managers and businesses
+                arrange pickup for qualifying appliances.
+            </p>
 
-                <p>
-                    Have a working washer, dryer, refrigerator, stove,
-                    freezer or other major appliance you no longer need?
-                    We may be able to pick it up for free.
-                </p>
+            <p>
+                We focus on major household appliances including
+                washers, dryers, refrigerators, stoves, ranges,
+                freezers and dishwashers.
+            </p>
 
-                <p>
-                    Service availability depends on the appliance,
-                    condition, location and pickup requirements.
-                </p>
+            <a class="button" href="#contact">
+                Request a Pickup
+            </a>
 
-                <a
-                    class="button"
-                    href="#contact"
-                >
-                    Request Free Pickup
-                </a>
-
-                <a
-                    class="button"
-                    href="#areas"
-                >
-                    View Service Areas
-                </a>
-
-            </div>
+            <a class="button" href="#areas">
+                View Service Areas
+            </a>
 
         </section>
-
-
-        <!-- ABOUT -->
 
         <section id="about">
 
-            <div class="container">
+            <h2>About Free Reliable Appliance Pickup</h2>
 
-                <h2>
-                    About Free Reliable Appliance Pickup
-                </h2>
+            <p>
+                Free Reliable Appliance Pickup provides appliance
+                pickup, removal and recycling services in active
+                service areas throughout California, Oregon,
+                Washington, Arizona and Colorado.
+            </p>
 
-                <p>
-                    Free Reliable Appliance Pickup helps homeowners,
-                    renters, landlords, property managers, businesses
-                    and other customers arrange pickup and removal of
-                    qualifying major appliances.
-                </p>
+            <p>
+                Our goal is to make appliance removal simple and
+                convenient. If you have a qualifying appliance that
+                is working and in acceptable condition, you can send
+                us the details and photos so our team can determine
+                whether the appliance qualifies for free pickup.
+            </p>
 
-                <p>
-                    Our goal is to make appliance removal simple and
-                    convenient while helping usable appliances stay in
-                    circulation whenever possible.
-                </p>
-
-                <p>
-                    Depending on the appliance and its condition,
-                    appliances may be reused, recovered, recycled or
-                    otherwise responsibly handled.
-                </p>
-
-                <div class="notice">
-
-                    <strong>
-                        Important:
-                    </strong>
-
-                    Free pickup is subject to qualification,
-                    location and availability. Please send clear
-                    photos of the appliance and provide your city,
-                    ZIP code and pickup-location information before
-                    service is confirmed.
-
-                </div>
-
-            </div>
+            <p>
+                Pickup must be confirmed before a scheduled visit.
+                Availability can vary by city, appliance type,
+                condition, access and current demand.
+            </p>
 
         </section>
-
-
-        <!-- SERVICES -->
 
         <section id="services">
 
-            <div class="container">
+            <h2>Major Appliance Pickup Services</h2>
 
-                <h2>
-                    Appliance Pickup & Removal Services
-                </h2>
+            <div class="service-grid">
 
-                <div class="card-grid">
-
-
-                    <div class="card">
-
-                        <h3>
-                            Washer Pickup
-                        </h3>
-
-                        <p>
-                            We accept requests for qualifying working
-                            washing machines. Send photos and location
-                            information so we can determine whether
-                            your washer qualifies for pickup.
-                        </p>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h3>
-                            Dryer Pickup
-                        </h3>
-
-                        <p>
-                            We provide pickup options for qualifying
-                            electric and other major household dryers,
-                            depending on condition and service-area
-                            availability.
-                        </p>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h3>
-                            Refrigerator Pickup
-                        </h3>
-
-                        <p>
-                            Qualifying refrigerators may be considered
-                            for free pickup and removal. Please provide
-                            clear photos showing the refrigerator,
-                            condition and access to the pickup location.
-                        </p>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h3>
-                            Stove & Range Pickup
-                        </h3>
-
-                        <p>
-                            We may accept qualifying electric or gas
-                            ranges and stoves depending on condition,
-                            location and pickup requirements.
-                        </p>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h3>
-                            Freezer Pickup
-                        </h3>
-
-                        <p>
-                            Standalone and household freezers may qualify
-                            depending on condition and location.
-                        </p>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h3>
-                            Other Major Appliances
-                        </h3>
-
-                        <p>
-                            Dishwashers and other major household
-                            appliances may be considered on a
-                            case-by-case basis.
-                        </p>
-
-                    </div>
-
+                <div class="card">
+                    <h3>Washer Pickup</h3>
+                    <p>
+                        Pickup for qualifying working washing machines,
+                        including top-load and front-load models.
+                    </p>
                 </div>
 
+                <div class="card">
+                    <h3>Dryer Pickup</h3>
+                    <p>
+                        Pickup for qualifying electric and gas dryers
+                        that are accessible and ready for removal.
+                    </p>
+                </div>
 
-                <div class="notice">
+                <div class="card">
+                    <h3>Washer & Dryer Sets</h3>
+                    <p>
+                        Working washer and dryer sets may qualify for
+                        coordinated pickup.
+                    </p>
+                </div>
 
-                    <strong>
-                        Appliance qualification:
-                    </strong>
+                <div class="card">
+                    <h3>Refrigerator Pickup</h3>
+                    <p>
+                        Pickup for qualifying refrigerators,
+                        including common full-size household models.
+                    </p>
+                </div>
 
-                    Not every appliance qualifies for free pickup.
-                    Appliances should generally be in usable,
-                    working or otherwise acceptable condition.
-                    We review each request individually.
+                <div class="card">
+                    <h3>Stove & Range Pickup</h3>
+                    <p>
+                        Qualifying electric and gas stoves and ranges
+                        may be considered for pickup.
+                    </p>
+                </div>
 
+                <div class="card">
+                    <h3>Freezer Pickup</h3>
+                    <p>
+                        Pickup for qualifying standalone and household
+                        freezers may be available.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Dishwasher Pickup</h3>
+                    <p>
+                        Working dishwashers may qualify depending on
+                        location, access and current pickup needs.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Other Major Appliances</h3>
+                    <p>
+                        If you have another major household appliance,
+                        send photos and details so we can determine
+                        whether it qualifies.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Appliance Recycling</h3>
+                    <p>
+                        Appliances that qualify for our service may be
+                        removed for reuse, recovery or recycling.
+                    </p>
                 </div>
 
             </div>
 
+            <h3>Important Pickup Information</h3>
+
+            <p>
+                Free pickup is based on qualification and availability.
+                Please send clear photos of the appliance, its condition,
+                your city and ZIP code, and information about where the
+                appliance is located.
+            </p>
+
+            <p>
+                Standalone microwaves are generally not accepted.
+                A microwave may be considered when included with another
+                qualifying major appliance.
+            </p>
+
         </section>
-
-
-        <!-- SERVICE AREAS -->
 
         <section id="areas">
 
-            <div class="container">
+            <h2>Service Areas</h2>
 
-                <h2>
-                    Service Areas
-                </h2>
+            <p>
+                We serve selected cities and surrounding communities
+                throughout California, Oregon, Washington, Arizona
+                and Colorado. Service availability can vary by city.
+            </p>
 
-                <p>
-                    Free Reliable Appliance Pickup serves selected
-                    cities and surrounding communities across
-                    California, Oregon, Washington, Arizona and Colorado.
-                </p>
+            <div class="area-grid">
 
+                <div class="area-group">
 
-                <h3>
-                    California
-                </h3>
+                    <h3>California</h3>
 
-                <div class="area-grid">
-
-                    <div class="area">
-                        <a href="california/los-angeles/">
-                            Los Angeles
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/fontana/">
-                            Fontana
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/rancho-cucamonga/">
-                            Rancho Cucamonga
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/upland/">
-                            Upland
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/san-bernardino/">
-                            San Bernardino
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/riverside/">
-                            Riverside
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/palm-desert/">
-                            Palm Desert
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/palm-springs/">
-                            Palm Springs
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/rancho-mirage/">
-                            Rancho Mirage
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/cathedral-city/">
-                            Cathedral City
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/indian-wells/">
-                            Indian Wells
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/la-quinta/">
-                            La Quinta
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/victorville/">
-                            Victorville
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="california/rowland-heights/">
-                            Rowland Heights
-                        </a>
-                    </div>
+                    <a href="california/los-angeles/">Los Angeles</a>
+                    <a href="california/fontana/">Fontana</a>
+                    <a href="california/rancho-cucamonga/">
+                        Rancho Cucamonga
+                    </a>
+                    <a href="california/upland/">Upland</a>
+                    <a href="california/san-bernardino/">
+                        San Bernardino
+                    </a>
+                    <a href="california/riverside/">Riverside</a>
+                    <a href="california/palm-desert/">Palm Desert</a>
+                    <a href="california/palm-springs/">Palm Springs</a>
+                    <a href="california/rancho-mirage/">
+                        Rancho Mirage
+                    </a>
+                    <a href="california/cathedral-city/">
+                        Cathedral City
+                    </a>
+                    <a href="california/indian-wells/">Indian Wells</a>
+                    <a href="california/la-quinta/">La Quinta</a>
+                    <a href="california/victorville/">Victorville</a>
+                    <a href="california/rowland-heights/">
+                        Rowland Heights
+                    </a>
 
                 </div>
 
+                <div class="area-group">
 
-                <h3>
-                    Oregon
-                </h3>
+                    <h3>Oregon</h3>
 
-                <div class="area-grid">
-
-                    <div class="area">
-                        <a href="oregon/portland/">
-                            Portland
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/salem/">
-                            Salem
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/keizer/">
-                            Keizer
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/beaverton/">
-                            Beaverton
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/hillsboro/">
-                            Hillsboro
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/gresham/">
-                            Gresham
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/tigard/">
-                            Tigard
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/lake-oswego/">
-                            Lake Oswego
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/oregon-city/">
-                            Oregon City
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/milwaukie/">
-                            Milwaukie
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/tualatin/">
-                            Tualatin
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/happy-valley/">
-                            Happy Valley
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/wilsonville/">
-                            Wilsonville
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/clackamas/">
-                            Clackamas
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/sherwood/">
-                            Sherwood
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/troutdale/">
-                            Troutdale
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/newberg/">
-                            Newberg
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="oregon/mcminnville/">
-                            McMinnville
-                        </a>
-                    </div>
+                    <a href="oregon/portland/">Portland</a>
+                    <a href="oregon/salem/">Salem</a>
+                    <a href="oregon/keizer/">Keizer</a>
+                    <a href="oregon/beaverton/">Beaverton</a>
+                    <a href="oregon/hillsboro/">Hillsboro</a>
+                    <a href="oregon/gresham/">Gresham</a>
+                    <a href="oregon/tigard/">Tigard</a>
+                    <a href="oregon/lake-oswego/">Lake Oswego</a>
+                    <a href="oregon/oregon-city/">Oregon City</a>
+                    <a href="oregon/milwaukie/">Milwaukie</a>
+                    <a href="oregon/tualatin/">Tualatin</a>
+                    <a href="oregon/happy-valley/">Happy Valley</a>
+                    <a href="oregon/wilsonville/">Wilsonville</a>
+                    <a href="oregon/clackamas/">Clackamas</a>
+                    <a href="oregon/sherwood/">Sherwood</a>
+                    <a href="oregon/troutdale/">Troutdale</a>
+                    <a href="oregon/newberg/">Newberg</a>
+                    <a href="oregon/mcminnville/">McMinnville</a>
 
                 </div>
 
+                <div class="area-group">
 
-                <h3>
-                    Washington
-                </h3>
+                    <h3>Washington</h3>
 
-                <div class="area-grid">
-
-                    <div class="area">
-                        <a href="washington/seattle/">
-                            Seattle
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/tacoma/">
-                            Tacoma
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/bellevue/">
-                            Bellevue
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/everett/">
-                            Everett
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/kent/">
-                            Kent
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/renton/">
-                            Renton
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/federal-way/">
-                            Federal Way
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/spokane/">
-                            Spokane
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/vancouver/">
-                            Vancouver
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/kirkland/">
-                            Kirkland
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/redmond/">
-                            Redmond
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/auburn/">
-                            Auburn
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/marysville/">
-                            Marysville
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/lakewood/">
-                            Lakewood
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/shoreline/">
-                            Shoreline
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/burien/">
-                            Burien
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/olympia/">
-                            Olympia
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/bellingham/">
-                            Bellingham
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/yakima/">
-                            Yakima
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="washington/kennewick/">
-                            Kennewick
-                        </a>
-                    </div>
+                    <a href="washington/seattle/">Seattle</a>
+                    <a href="washington/tacoma/">Tacoma</a>
+                    <a href="washington/bellevue/">Bellevue</a>
+                    <a href="washington/everett/">Everett</a>
+                    <a href="washington/kent/">Kent</a>
+                    <a href="washington/renton/">Renton</a>
+                    <a href="washington/federal-way/">
+                        Federal Way
+                    </a>
+                    <a href="washington/spokane/">Spokane</a>
+                    <a href="washington/vancouver/">Vancouver</a>
+                    <a href="washington/kirkland/">Kirkland</a>
+                    <a href="washington/redmond/">Redmond</a>
+                    <a href="washington/auburn/">Auburn</a>
+                    <a href="washington/marysville/">Marysville</a>
+                    <a href="washington/lakewood/">Lakewood</a>
+                    <a href="washington/shoreline/">Shoreline</a>
+                    <a href="washington/burien/">Burien</a>
+                    <a href="washington/olympia/">Olympia</a>
+                    <a href="washington/bellingham/">Bellingham</a>
+                    <a href="washington/yakima/">Yakima</a>
+                    <a href="washington/kennewick/">Kennewick</a>
 
                 </div>
 
+                <div class="area-group">
 
-                <h3>
-                    Arizona
-                </h3>
+                    <h3>Arizona</h3>
 
-                <div class="area-grid">
-
-                    <div class="area">
-                        <a href="arizona/phoenix/">
-                            Phoenix
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="arizona/mesa/">
-                            Mesa
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="arizona/chandler/">
-                            Chandler
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="arizona/scottsdale/">
-                            Scottsdale
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="arizona/glendale/">
-                            Glendale
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="arizona/tempe/">
-                            Tempe
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="arizona/peoria/">
-                            Peoria
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="arizona/surprise/">
-                            Surprise
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="arizona/goodyear/">
-                            Goodyear
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="arizona/avondale/">
-                            Avondale
-                        </a>
-                    </div>
+                    <a href="arizona/phoenix/">Phoenix</a>
+                    <a href="arizona/mesa/">Mesa</a>
+                    <a href="arizona/chandler/">Chandler</a>
+                    <a href="arizona/scottsdale/">Scottsdale</a>
+                    <a href="arizona/glendale/">Glendale</a>
+                    <a href="arizona/tempe/">Tempe</a>
+                    <a href="arizona/peoria/">Peoria</a>
+                    <a href="arizona/surprise/">Surprise</a>
+                    <a href="arizona/goodyear/">Goodyear</a>
+                    <a href="arizona/avondale/">Avondale</a>
 
                 </div>
 
+                <div class="area-group">
 
-                <h3>
-                    Colorado
-                </h3>
+                    <h3>Colorado</h3>
 
-                <div class="area-grid">
-
-                    <div class="area">
-                        <a href="colorado/denver/">
-                            Denver
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/aurora/">
-                            Aurora
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/centennial/">
-                            Centennial
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/parker/">
-                            Parker
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/lakewood/">
-                            Lakewood
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/arvada/">
-                            Arvada
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/westminster/">
-                            Westminster
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/thornton/">
-                            Thornton
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/commerce-city/">
-                            Commerce City
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/englewood/">
-                            Englewood
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/littleton/">
-                            Littleton
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/highlands-ranch/">
-                            Highlands Ranch
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/castle-rock/">
-                            Castle Rock
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/brighton/">
-                            Brighton
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/broomfield/">
-                            Broomfield
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/golden/">
-                            Golden
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/northglenn/">
-                            Northglenn
-                        </a>
-                    </div>
-
-                    <div class="area">
-                        <a href="colorado/wheat-ridge/">
-                            Wheat Ridge
-                        </a>
-                    </div>
+                    <a href="colorado/denver/">Denver</a>
+                    <a href="colorado/aurora/">Aurora</a>
+                    <a href="colorado/centennial/">Centennial</a>
+                    <a href="colorado/parker/">Parker</a>
+                    <a href="colorado/lakewood/">Lakewood</a>
+                    <a href="colorado/arvada/">Arvada</a>
+                    <a href="colorado/westminster/">Westminster</a>
+                    <a href="colorado/thornton/">Thornton</a>
+                    <a href="colorado/commerce-city/">
+                        Commerce City
+                    </a>
+                    <a href="colorado/englewood/">Englewood</a>
+                    <a href="colorado/littleton/">Littleton</a>
+                    <a href="colorado/highlands-ranch/">
+                        Highlands Ranch
+                    </a>
+                    <a href="colorado/castle-rock/">Castle Rock</a>
+                    <a href="colorado/brighton/">Brighton</a>
+                    <a href="colorado/broomfield/">Broomfield</a>
+                    <a href="colorado/golden/">Golden</a>
+                    <a href="colorado/northglenn/">Northglenn</a>
+                    <a href="colorado/wheat-ridge/">Wheat Ridge</a>
 
                 </div>
 
             </div>
 
         </section>
-
-
-        <!-- HOW IT WORKS -->
 
         <section id="how-it-works">
 
-            <div class="container">
+            <h2>How Appliance Pickup Works</h2>
 
-                <h2>
-                    How Free Appliance Pickup Works
-                </h2>
+            <div class="steps-grid">
 
+                <div class="card">
 
-                <div class="step">
+                    <div class="step-number">1</div>
 
-                    <strong>
-                        Step 1 — Send Your Information
-                    </strong>
+                    <h3>Send Your Information</h3>
 
                     <p>
-                        Complete the request form and provide your name,
-                        phone number, city, ZIP code, address and
-                        information about the appliance.
+                        Complete the pickup request form and provide
+                        your city, ZIP code, appliance information and
+                        access details.
                     </p>
 
                 </div>
 
+                <div class="card">
 
-                <div class="step">
+                    <div class="step-number">2</div>
 
-                    <strong>
-                        Step 2 — Send Clear Photos
-                    </strong>
+                    <h3>Send Photos</h3>
 
                     <p>
-                        Photos help us determine the appliance type,
-                        condition and whether it may qualify for pickup.
+                        Clear photos help us determine the appliance's
+                        condition, size and accessibility.
                     </p>
 
                 </div>
 
+                <div class="card">
 
-                <div class="step">
+                    <div class="step-number">3</div>
 
-                    <strong>
-                        Step 3 — We Review the Request
-                    </strong>
+                    <h3>Qualification</h3>
 
                     <p>
-                        We review the appliance, location, access
-                        conditions and service availability.
+                        We review the information and determine whether
+                        the appliance qualifies for pickup.
                     </p>
 
                 </div>
 
+                <div class="card">
 
-                <div class="step">
+                    <div class="step-number">4</div>
 
-                    <strong>
-                        Step 4 — Confirm Pickup
-                    </strong>
-
-                    <p>
-                        If the request qualifies, we coordinate a
-                        pickup time and provide any additional
-                        instructions needed.
-                    </p>
-
-                </div>
-
-
-                <div class="step">
-
-                    <strong>
-                        Step 5 — Appliance Pickup
-                    </strong>
+                    <h3>Schedule Pickup</h3>
 
                     <p>
-                        Our pickup team arrives at the agreed location
-                        and removes the qualifying appliance.
+                        If approved, we coordinate an available pickup
+                        time and removal details.
                     </p>
 
                 </div>
@@ -1284,537 +730,433 @@
 
         </section>
 
+        <section>
 
-        <!-- WHO WE HELP -->
+            <h2>Who We Help</h2>
 
-        <section id="who-we-help">
+            <div class="service-grid">
 
-            <div class="container">
+                <div class="card">
+                    <h3>Homeowners</h3>
+                    <p>
+                        Remove unwanted working appliances when upgrading
+                        your home or replacing equipment.
+                    </p>
+                </div>
 
-                <h2>
-                    Who We Help
-                </h2>
+                <div class="card">
+                    <h3>Renters</h3>
+                    <p>
+                        Request pickup when you need to clear out a
+                        qualifying appliance.
+                    </p>
+                </div>
 
-                <div class="card-grid">
+                <div class="card">
+                    <h3>Landlords</h3>
+                    <p>
+                        Appliance pickup can help prepare rental
+                        properties between tenants.
+                    </p>
+                </div>
 
-                    <div class="card">
+                <div class="card">
+                    <h3>Property Managers</h3>
+                    <p>
+                        Coordinate appliance removal for qualifying
+                        properties and units.
+                    </p>
+                </div>
 
-                        <h3>
-                            Homeowners
-                        </h3>
+                <div class="card">
+                    <h3>Businesses</h3>
+                    <p>
+                        Businesses with qualifying major appliances
+                        can submit a pickup request.
+                    </p>
+                </div>
 
-                        <p>
-                            Replacing an old appliance? Contact us to
-                            see whether your existing appliance qualifies
-                            for pickup.
-                        </p>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h3>
-                            Renters
-                        </h3>
-
-                        <p>
-                            Moving or upgrading? We can review your
-                            appliance pickup request.
-                        </p>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h3>
-                            Landlords
-                        </h3>
-
-                        <p>
-                            Property owners can contact us regarding
-                            qualifying appliances left at rental
-                            properties.
-                        </p>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h3>
-                            Property Managers
-                        </h3>
-
-                        <p>
-                            We can review appliance pickup requests
-                            for qualifying properties and locations.
-                        </p>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h3>
-                            Businesses
-                        </h3>
-
-                        <p>
-                            Businesses with qualifying major appliances
-                            can contact us to discuss pickup availability.
-                        </p>
-
-                    </div>
-
+                <div class="card">
+                    <h3>Homeowners Upgrading</h3>
+                    <p>
+                        Replacing an appliance? Send us the details
+                        before disposing of the old one.
+                    </p>
                 </div>
 
             </div>
 
         </section>
-
-
-        <!-- FAQ -->
 
         <section id="faq">
 
-            <div class="container">
+            <h2>Frequently Asked Questions</h2>
 
-                <h2>
-                    Frequently Asked Questions
-                </h2>
+            <div class="faq">
 
+                <h3>
+                    Is appliance pickup really free?
+                </h3>
 
-                <div class="faq">
+                <p>
+                    Qualifying appliances may be picked up at no charge.
+                    Pickup is subject to appliance condition, location,
+                    access, demand and availability. We must confirm
+                    eligibility before scheduling.
+                </p>
 
-                    <h3>
-                        Is appliance pickup always free?
-                    </h3>
+            </div>
 
-                    <p>
-                        No. Free pickup depends on the appliance,
-                        condition, location, access and current
-                        availability. Every request is reviewed before
-                        pickup is confirmed.
-                    </p>
+            <div class="faq">
 
-                </div>
+                <h3>
+                    What appliances do you pick up?
+                </h3>
 
+                <p>
+                    We primarily consider washers, dryers, refrigerators,
+                    stoves, ranges, freezers, dishwashers and other
+                    major household appliances.
+                </p>
 
-                <div class="faq">
+            </div>
 
-                    <h3>
-                        What appliances do you pick up?
-                    </h3>
+            <div class="faq">
 
-                    <p>
-                        We primarily consider washers, dryers,
-                        refrigerators, stoves, ranges, freezers,
-                        dishwashers and other major household appliances.
-                    </p>
+                <h3>
+                    Do I need to send photos?
+                </h3>
 
-                </div>
+                <p>
+                    Yes. Photos are strongly recommended because they
+                    help us evaluate the appliance and pickup conditions
+                    before confirming service.
+                </p>
 
+            </div>
 
-                <div class="faq">
+            <div class="faq">
 
-                    <h3>
-                        Do you pick up broken appliances?
-                    </h3>
+                <h3>
+                    Do you accept broken appliances?
+                </h3>
 
-                    <p>
-                        Some non-working appliances may be considered,
-                        but free pickup is not guaranteed. Send photos
-                        and details so we can review the request.
-                    </p>
+                <p>
+                    Free pickup is primarily intended for qualifying
+                    appliances in working or acceptable condition.
+                    Send photos and details so we can determine whether
+                    your appliance can be considered.
+                </p>
 
-                </div>
+            </div>
 
+            <div class="faq">
 
-                <div class="faq">
+                <h3>
+                    Do you pick up appliances from apartments?
+                </h3>
 
-                    <h3>
-                        Do you pick up microwaves?
-                    </h3>
+                <p>
+                    Apartment pickups may be possible depending on
+                    access, stairs, elevators, parking and other
+                    removal conditions. Please provide these details
+                    with your request.
+                </p>
 
-                    <p>
-                        We generally do not provide pickup for a
-                        standalone microwave. A microwave may be
-                        considered when included with another
-                        qualifying major appliance.
-                    </p>
+            </div>
 
-                </div>
+            <div class="faq">
 
+                <h3>
+                    Do you pick up microwaves?
+                </h3>
 
-                <div class="faq">
+                <p>
+                    We generally do not accept standalone microwaves.
+                    A microwave may be considered when included with
+                    another qualifying major appliance.
+                </p>
 
-                    <h3>
-                        What information should I provide?
-                    </h3>
+            </div>
 
-                    <p>
-                        Please provide clear appliance photos, your
-                        city, ZIP code, exact pickup address, floor
-                        information, stairs and any access details.
-                    </p>
+            <div class="faq">
 
-                </div>
+                <h3>
+                    When are pickups available?
+                </h3>
 
-
-                <div class="faq">
-
-                    <h3>
-                        Do you pick up appliances from apartments?
-                    </h3>
-
-                    <p>
-                        Apartment pickups may be possible depending
-                        on access, stairs, elevators, parking and
-                        other conditions. Please provide these details
-                        with your request.
-                    </p>
-
-                </div>
-
-
-                <div class="faq">
-
-                    <h3>
-                        What are your hours?
-                    </h3>
-
-                    <p>
-                        Pickup requests are accepted Monday through
-                        Sunday, generally from 8:00 AM to 8:00 PM,
-                        subject to availability.
-                    </p>
-
-                </div>
+                <p>
+                    Our general service hours are Monday through Sunday,
+                    8:00 AM to 8:00 PM. Actual pickup times depend on
+                    availability and confirmation.
+                </p>
 
             </div>
 
         </section>
-
-
-        <!-- CONTACT -->
 
         <section id="contact">
 
-            <div class="container">
-
-                <div class="contact-box">
-
-                    <h2>
-                        Request Free Appliance Pickup
-                    </h2>
-
-                    <p>
-                        Send us your information and photos. We will
-                        review your request and determine whether the
-                        appliance qualifies for pickup.
-                    </p>
-
-
-                    <p>
-                        <strong>
-                            Colorado:
-                        </strong>
-
-                        <a href="tel:+17206047498">
-                            (720) 604-7498
-                        </a>
-                    </p>
-
-
-                    <p>
-                        <strong>
-                            Oregon & Washington:
-                        </strong>
-
-                        <a href="tel:+15038684455">
-                            (503) 868-4455
-                        </a>
-                    </p>
-
-
-                    <p>
-                        <strong>
-                            Orange County, Riverside County &
-                            San Bernardino County:
-                        </strong>
-
-                        <a href="tel:+19093756685">
-                            (909) 375-6685
-                        </a>
-                    </p>
-
-
-                    <p>
-                        <strong>
-                            Los Angeles County:
-                        </strong>
-
-                        <a href="tel:+13107744304">
-                            (310) 774-4304
-                        </a>
-                    </p>
-
-
-                    <p>
-                        <strong>
-                            Hours:
-                        </strong>
-
-                        Monday – Sunday,
-                        8:00 AM – 8:00 PM
-                    </p>
-
-
-                    <!-- CONTACT FORM -->
-
-                    <form
-                        action="https://formspree.io/f/mvzeapzd"
-                        method="POST"
-                        enctype="multipart/form-data"
-                    >
-
-                        <label for="name">
-                            Name
-                        </label>
-
-                        <input
-                            id="name"
-                            type="text"
-                            name="name"
-                            autocomplete="name"
-                            required
-                        >
-
-
-                        <label for="phone">
-                            Phone
-                        </label>
-
-                        <input
-                            id="phone"
-                            type="tel"
-                            name="phone"
-                            autocomplete="tel"
-                            required
-                        >
-
-
-                        <label for="email">
-                            Email
-                        </label>
-
-                        <input
-                            id="email"
-                            type="email"
-                            name="email"
-                            autocomplete="email"
-                        >
-
-
-                        <label for="address">
-                            Pickup Address
-                        </label>
-
-                        <input
-                            id="address"
-                            type="text"
-                            name="address"
-                            autocomplete="street-address"
-                            required
-                        >
-
-
-                        <label for="city">
-                            City
-                        </label>
-
-                        <input
-                            id="city"
-                            type="text"
-                            name="city"
-                            autocomplete="address-level2"
-                            required
-                        >
-
-
-                        <label for="state">
-                            State
-                        </label>
-
-                        <select
-                            id="state"
-                            name="state"
-                            required
-                        >
-
-                            <option value="">
-                                Select State
-                            </option>
-
-                            <option value="California">
-                                California
-                            </option>
-
-                            <option value="Oregon">
-                                Oregon
-                            </option>
-
-                            <option value="Washington">
-                                Washington
-                            </option>
-
-                            <option value="Arizona">
-                                Arizona
-                            </option>
-
-                            <option value="Colorado">
-                                Colorado
-                            </option>
-
-                        </select>
-
-
-                        <label for="zip">
-                            ZIP Code
-                        </label>
-
-                        <input
-                            id="zip"
-                            type="text"
-                            name="zip"
-                            inputmode="numeric"
-                            autocomplete="postal-code"
-                            required
-                        >
-
-
-                        <label for="appliance">
-                            Appliance Type
-                        </label>
-
-                        <select
-                            id="appliance"
-                            name="appliance"
-                            required
-                        >
-
-                            <option value="">
-                                Select Appliance
-                            </option>
-
-                            <option value="Washer">
-                                Washer
-                            </option>
-
-                            <option value="Dryer">
-                                Dryer
-                            </option>
-
-                            <option value="Washer and Dryer">
-                                Washer and Dryer
-                            </option>
-
-                            <option value="Refrigerator">
-                                Refrigerator
-                            </option>
-
-                            <option value="Stove or Range">
-                                Stove or Range
-                            </option>
-
-                            <option value="Freezer">
-                                Freezer
-                            </option>
-
-                            <option value="Dishwasher">
-                                Dishwasher
-                            </option>
-
-                            <option value="Other Major Appliance">
-                                Other Major Appliance
-                            </option>
-
-                        </select>
-
-
-                        <label for="floor">
-                            Pickup Floor / Access
-                        </label>
-
-                        <input
-                            id="floor"
-                            type="text"
-                            name="floor"
-                            placeholder="Example: first floor, second floor, stairs, elevator"
-                        >
-
-
-                        <label for="message">
-                            Additional Information
-                        </label>
-
-                        <textarea
-                            id="message"
-                            name="message"
-                            placeholder="Tell us about the appliance, condition, access, stairs, parking and anything else we should know."
-                        ></textarea>
-
-
-                        <label for="photos">
-                            Appliance Photos
-                        </label>
-
-                        <input
-                            id="photos"
-                            type="file"
-                            name="photos"
-                            accept="image/*"
-                            multiple
-                        >
-
-
-                        <input
-                            type="submit"
-                            value="Submit Pickup Request"
-                        >
-
-                    </form>
-
-                </div>
+            <h2>Request a Free Appliance Pickup</h2>
+
+            <div class="contact-box">
+
+                <h3>Contact Us</h3>
+
+                <p>
+                    <strong>Colorado:</strong>
+                    <a href="tel:+17206047498">
+                        (720) 604-7498
+                    </a>
+                </p>
+
+                <p>
+                    <strong>Oregon & Washington:</strong>
+                    <a href="tel:+15038684455">
+                        (503) 868-4455
+                    </a>
+                </p>
+
+                <p>
+                    <strong>
+                        Orange County, Riverside County &
+                        San Bernardino County:
+                    </strong>
+
+                    <a href="tel:+19093756685">
+                        (909) 375-6685
+                    </a>
+                </p>
+
+                <p>
+                    <strong>Los Angeles County:</strong>
+
+                    <a href="tel:+13107744304">
+                        (310) 774-4304
+                    </a>
+                </p>
+
+                <p>
+                    <strong>Hours:</strong>
+                    Monday–Sunday, 8:00 AM–8:00 PM
+                </p>
 
             </div>
 
+            <form
+                action="https://formspree.io/f/mvzeapzd"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <label for="name">
+                    Name
+                </label>
+
+                <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    autocomplete="name"
+                    required
+                >
+
+                <label for="phone">
+                    Phone
+                </label>
+
+                <input
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    autocomplete="tel"
+                    required
+                >
+
+                <label for="email">
+                    Email (optional)
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    autocomplete="email"
+                >
+
+                <label for="address">
+                    Pickup Address
+                </label>
+
+                <input
+                    id="address"
+                    type="text"
+                    name="address"
+                    autocomplete="street-address"
+                    required
+                >
+
+                <label for="city">
+                    City
+                </label>
+
+                <input
+                    id="city"
+                    type="text"
+                    name="city"
+                    autocomplete="address-level2"
+                    required
+                >
+
+                <label for="state">
+                    State
+                </label>
+
+                <select
+                    id="state"
+                    name="state"
+                    required
+                >
+                    <option value="">
+                        Select State
+                    </option>
+
+                    <option value="California">
+                        California
+                    </option>
+
+                    <option value="Oregon">
+                        Oregon
+                    </option>
+
+                    <option value="Washington">
+                        Washington
+                    </option>
+
+                    <option value="Arizona">
+                        Arizona
+                    </option>
+
+                    <option value="Colorado">
+                        Colorado
+                    </option>
+                </select>
+
+                <label for="zip">
+                    ZIP Code
+                </label>
+
+                <input
+                    id="zip"
+                    type="text"
+                    name="zip"
+                    inputmode="numeric"
+                    autocomplete="postal-code"
+                    required
+                >
+
+                <label for="appliance">
+                    Appliance Type
+                </label>
+
+                <select
+                    id="appliance"
+                    name="appliance"
+                    required
+                >
+                    <option value="">
+                        Select Appliance
+                    </option>
+
+                    <option value="Washer">
+                        Washer
+                    </option>
+
+                    <option value="Dryer">
+                        Dryer
+                    </option>
+
+                    <option value="Washer and Dryer">
+                        Washer and Dryer
+                    </option>
+
+                    <option value="Refrigerator">
+                        Refrigerator
+                    </option>
+
+                    <option value="Stove or Range">
+                        Stove or Range
+                    </option>
+
+                    <option value="Freezer">
+                        Freezer
+                    </option>
+
+                    <option value="Dishwasher">
+                        Dishwasher
+                    </option>
+
+                    <option value="Other Major Appliance">
+                        Other Major Appliance
+                    </option>
+                </select>
+
+                <label for="access">
+                    Pickup Floor / Access Information
+                </label>
+
+                <input
+                    id="access"
+                    type="text"
+                    name="pickup_access"
+                    placeholder="Example: first floor, stairs, elevator, garage, etc."
+                >
+
+                <label for="message">
+                    Additional Information
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Please describe the appliance, condition, approximate age, and anything important about access."
+                ></textarea>
+
+                <label for="photos">
+                    Appliance Photos
+                </label>
+
+                <input
+                    id="photos"
+                    type="file"
+                    name="photos"
+                    accept="image/*"
+                    multiple
+                >
+
+                <button type="submit">
+                    Submit Pickup Request
+                </button>
+
+            </form>
+
         </section>
 
-
     </main>
-
-
-    <!-- FOOTER -->
 
     <footer>
 
         <p>
-            &copy;
-            2026
-            Free Reliable Appliance Pickup.
+            © 2026 Free Reliable Appliance Pickup.
             All rights reserved.
         </p>
 
         <p>
-            Free qualifying appliance pickup, removal and recycling
+            Appliance pickup, removal and recycling services
             across selected service areas.
         </p>
 
     </footer>
-
 
 </body>
 
