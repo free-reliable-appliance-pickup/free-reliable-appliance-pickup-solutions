@@ -1,0 +1,10 @@
+CORRECTED IDAHO BATCH
+This matches your existing root-level URL structure:
+idaho-appliance-pickup/
+boise-appliance-pickup/
+meridian-appliance-pickup/
+etc.
+
+Upload these folders to the ROOT of your GitHub repository.
+The idaho-appliance-pickup folder contains the updated Idaho hub.
+This package does NOT contain index.html at repository root, robots.txt, or any images.
