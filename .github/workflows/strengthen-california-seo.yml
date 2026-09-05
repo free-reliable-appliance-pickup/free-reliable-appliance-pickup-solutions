@@ -1,0 +1,64 @@
+name: Strengthen California SEO
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  california-seo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Strengthen California pages
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          cities = [
+              "los-angeles","anaheim","bakersfield","fresno","irvine",
+              "long-beach","modesto","oakland","oxnard","pasadena",
+              "riverside","sacramento","san-diego","san-francisco",
+              "san-jose","santa-ana","santa-clarita","santa-rosa",
+              "stockton","torrance","moreno-valley","murrieta",
+              "palm-springs","palm-desert","rancho-mirage",
+              "la-quinta","indian-wells","cathedral-city",
+              "bermuda-dunes","victorville","fontana",
+              "rancho-cucamonga","upland"
+          ]
+
+          phone = "(909) 375-6685"
+
+          for city in cities:
+              file = Path(f"{city}-appliance-pickup/index.html")
+
+              if not file.exists():
+                  print("Missing:", file)
+                  continue
+
+              html = file.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
+              name = city.replace("-", " ").title()
+              marker = "<!-- CALIFORNIA SEO BOOST -->"
+
+              if marker in html:
+                  print("Already updated:", name)
+                  continue
+
+              local_phone = phone
+
+              if city in [
+                  "los-angeles","long-beach","pasadena",
+                  "santa-clarita","torrance"
+              ]:
+                  local_phone = "(310) 774-4304"
+
+              tel = local_phone.replace(
+                  "(", ""
+             
