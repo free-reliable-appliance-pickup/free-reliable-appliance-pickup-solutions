@@ -1,0 +1,66 @@
+name: Fix Missing SEO
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-seo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Fix missing SEO fields
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+
+          state_names = {
+              "california": "California",
+              "oregon": "Oregon",
+              "washington": "Washington",
+              "arizona": "Arizona",
+              "colorado": "Colorado",
+              "utah": "Utah",
+              "nevada": "Nevada",
+              "idaho": "Idaho"
+          }
+
+          state_codes = {
+              "california": "CA",
+              "oregon": "OR",
+              "washington": "WA",
+              "arizona": "AZ",
+              "colorado": "CO",
+              "utah": "UT",
+              "nevada": "NV",
+              "idaho": "ID"
+          }
+
+          def pretty_name(slug):
+              slug = slug.replace("-appliance-pickup", "")
+              return " ".join(
+                  word.capitalize()
+                  for word in slug.split("-")
+              )
+
+          def detect_state(html, folder):
+              lower = html.lower()
+
+              for key, name in state_names.items():
+                  if name.lower() in lower:
+                      return key
+
+              if folder in [
+                  "california-appliance-pickup",
+                  "oregon-appliance-pickup",
+                  "washington-appliance-pickup",
+                  "arizona-appliance-pickup",
+                  "
