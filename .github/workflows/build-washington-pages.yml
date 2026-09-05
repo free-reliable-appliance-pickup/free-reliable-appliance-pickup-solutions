@@ -1,4 +1,4 @@
-name: Build Washington Appliance Pickup Pages
+name: Build Washington Pages
 
 on:
   workflow_dispatch:
@@ -7,39 +7,81 @@ permissions:
   contents: write
 
 jobs:
-  build-washington:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v5
 
-      - name: Generate Washington city pages
-        shell: bash
+      - name: Build pages
         run: |
           python3 <<'PY'
           from pathlib import Path
-          import json
 
-          BASE_URL = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
-          PHONE_DISPLAY = "(503) 868-4455"
-          PHONE_LINK = "+15038684455"
-          FORMSPREE = "https://formspree.io/f/mvzeapzd"
+          cities = {
+              "Bellevue": "bellevue",
+              "Everett": "everett",
+              "Vancouver": "vancouver",
+              "Kent": "kent",
+              "Renton": "renton",
+              "Federal Way": "federal-way",
+              "Spokane": "spokane",
+              "Auburn": "auburn",
+              "Lakewood": "lakewood",
+              "Puyallup": "puyallup",
+              "Redmond": "redmond",
+              "Kirkland": "kirkland",
+              "Bothell": "bothell",
+              "Lynnwood": "lynnwood",
+              "Shoreline": "shoreline",
+              "Burien": "burien"
+          }
 
-          cities = [
-              ("Bellevue", "bellevue"),
-              ("Everett", "everett"),
-              ("Vancouver", "vancouver"),
-              ("Kent", "kent"),
-              ("Renton", "renton"),
-              ("Federal Way", "federal-way"),
-              ("Spokane", "spokane"),
-              ("Auburn", "auburn"),
-              ("Lakewood", "lakewood"),
-              ("Puyallup", "puyallup"),
-              ("Redmond", "redmond"),
-              ("Kirkland", "kirkland"),
-              ("Bothell", "bothell"),
-              ("Lynnwood", "lynnwood"),
-              ("Shoreline", "shoreline"),
-              ("Burien", "
+          source = Path(
+              "tacoma-appliance-pickup/index.html"
+          ).read_text(encoding="utf-8")
+
+          for city, slug in cities.items():
+
+              page = source.replace(
+                  "Tacoma",
+                  city
+              ).replace(
+                  "tacoma",
+                  slug
+              )
+
+              folder = Path(
+                  f"{slug}-appliance-pickup"
+              )
+
+              folder.mkdir(
+                  parents=True,
+                  exist_ok=True
+              )
+
+              (
+                  folder / "index.html"
+              ).write_text(
+                  page,
+                  encoding="utf-8"
+              )
+
+              print("Created:", city)
+
+          PY
+
+      - name: Save pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add .
+
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "Add Washington city pages"
+            git push
+          fi
