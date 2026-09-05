@@ -1,80 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
+name: Build Washington Appliance Pickup Pages
 
-<head>
-    <meta charset="UTF-8">
+on:
+  workflow_dispatch:
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+permissions:
+  contents: write
 
-    <title>
-        Free Appliance Pickup Washington | Washer & Dryer Removal
-    </title>
+jobs:
+  build-washington:
+    runs-on: ubuntu-latest
 
-    <meta
-        name="description"
-        content="Request qualifying free appliance pickup in Washington for washers, dryers, refrigerators, stoves, freezers and other major appliances. Send photos and appliance condition for review."
-    >
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
 
-    <meta name="robots" content="index, follow">
+      - name: Create Washington pages
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
 
-    <link
-        rel="canonical"
-        href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/washington-appliance-pickup/"
-    >
+          cities = {
+              "Bellevue": "bellevue",
+              "Everett": "everett",
+              "Vancouver": "vancouver",
+              "Kent": "kent",
+              "Renton": "renton",
+              "Federal Way": "federal-way",
+              "Spokane": "spokane",
+              "Auburn": "auburn",
+              "Lakewood": "lakewood",
+              "Puyallup": "puyallup",
+              "Redmond": "redmond",
+              "Kirkland": "kirkland",
+              "Bothell": "bothell",
+              "Lynnwood": "lynnwood",
+              "Shoreline": "shoreline",
+              "Burien": "burien"
+          }
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+          source = Path("tacoma-appliance-pickup/index.html").read_text()
 
-        html {
-            scroll-behavior: smooth;
-        }
+          for city, slug in cities.items():
+              page = source.replace("Tacoma", city).replace("tacoma", slug)
 
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            line-height: 1.6;
-            color: #222;
-            background: #f7f7f7;
-        }
+              folder = Path(f"{slug}-appliance-pickup")
+              folder.mkdir(exist_ok=True)
 
-        header {
-            background: linear-gradient(135deg, #0b6b3a, #16884d);
-            color: white;
-            text-align: center;
-            padding: 45px 20px;
-        }
+              (folder / "index.html").write_text(page)
 
-        header h1 {
-            margin: 0 0 12px;
-            font-size: 38px;
-        }
+              print("Created", city)
 
-        header p {
-            max-width: 900px;
-            margin: auto;
-            font-size: 19px;
-        }
+          PY
 
-        nav {
-            background: #111;
-            padding: 12px;
-            text-align: center;
-        }
+      - name: Commit pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            margin: 0 10px;
-        }
+          git add .
 
-        .container {
-            width: min(1100px, 92%);
-            margin: auto;
-        }
-
-        section {
-            background: white;
-            margin
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit"
+          else
+            git commit -m "Build Washington city pages"
+            git push
+          fi
