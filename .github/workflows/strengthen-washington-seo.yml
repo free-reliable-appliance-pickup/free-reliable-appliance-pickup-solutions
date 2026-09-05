@@ -26,13 +26,17 @@ jobs:
           ]
 
           for city in cities:
-              f = Path(city + "-appliance-pickup/index.html")
+              file = Path(f"{city}-appliance-pickup/index.html")
 
-              if not f.exists():
-                  print("Missing:", f)
+              if not file.exists():
+                  print("Missing:", file)
                   continue
 
-              html = f.read_text(encoding="utf-8", errors="ignore")
+              html = file.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
               name = city.replace("-", " ").title()
 
               marker = "<!-- WASHINGTON SEO BOOST -->"
@@ -41,28 +45,28 @@ jobs:
                   print("Already updated:", name)
                   continue
 
-              section = """
-          <!-- WASHINGTON SEO BOOST -->
+              section = f"""
+          {marker}
           <section>
-            <h2>Washer and Dryer Pickup in CITY, Washington</h2>
+            <h2>Washer and Dryer Pickup in {name}, Washington</h2>
 
             <p>
               Free Reliable Appliance Pickup provides qualifying appliance
-              pickup in CITY for washers, dryers, refrigerators, stoves,
+              pickup in {name} for washers, dryers, refrigerators, stoves,
               ranges, freezers and other major household appliances.
             </p>
 
             <p>
               Washer and dryer pickup is one of our primary services.
               Working and reusable appliances may be prioritized for reuse.
-              Pickup availability depends on condition, local demand,
+              Pickup approval depends on appliance condition, local demand,
               accessibility and scheduling.
             </p>
 
             <p>
-              Send clear appliance photos and accurate condition information
-              with your request. This helps us determine whether the appliance
-              qualifies for free pickup.
+              Send clear photos and accurate condition information with your
+              request so we can review whether the appliance qualifies for
+              free pickup.
             </p>
 
             <p>
@@ -71,7 +75,7 @@ jobs:
               or use the online pickup request form.
             </p>
           </section>
-          """.replace("CITY", name)
+          """
 
               if "</main>" in html:
                   html = html.replace(
@@ -79,24 +83,7 @@ jobs:
                       section + "\n</main>",
                       1
                   )
+
               elif "</body>" in html:
                   html = html.replace(
-                      "</body>",
-                      section + "\n</body>",
-                      1
-                  )
-              else:
-                  html += section
-
-              f.write_text(html, encoding="utf-8")
-              print("Updated:", name)
-
-          PY
-
-      - name: Save changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git diff --cached --quiet || git commit -m "Strengthen Washington SEO"
-          git push
+                      "</
