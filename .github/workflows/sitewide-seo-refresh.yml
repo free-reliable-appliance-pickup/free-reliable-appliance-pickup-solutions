@@ -14,45 +14,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Refresh sitemap and internal links
+      - name: Refresh sitemap and robots
         run: |
-          python3 <<'PY'
+          python3 - <<'PY'
           from pathlib import Path
-          import re
 
-          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          base = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
 
-          states = [
-              ("California", "california-appliance-pickup"),
-              ("Oregon", "oregon-appliance-pickup"),
-              ("Washington", "washington-appliance-pickup"),
-              ("Arizona", "arizona-appliance-pickup"),
-              ("Colorado", "colorado-appliance-pickup"),
-              ("Utah", "utah-appliance-pickup"),
-              ("Nevada", "nevada-appliance-pickup"),
-              ("Idaho", "idaho-appliance-pickup"),
+          folders = [
+              d.name
+              for d in sorted(Path(".").glob("*-appliance-pickup"))
+              if d.is_dir() and (d / "index.html").exists()
           ]
 
-          # -------------------------------------------------
-          # Find every real appliance pickup page
-          # -------------------------------------------------
-
-          folders = []
-
-          for folder in sorted(Path(".").glob("*-appliance-pickup")):
-              if folder.is_dir() and (folder / "index.html").exists():
-                  folders.append(folder.name)
-
-          print("Found appliance pickup folders:", len(folders))
-
-          # -------------------------------------------------
-          # Rebuild sitemap.xml
-          # -------------------------------------------------
-
-          urls = [BASE]
-
-          for folder in folders:
-              urls.append(f"{BASE}{folder}/")
+          urls = [base] + [
+              base + folder + "/"
+              for folder in folders
+          ]
 
           sitemap = [
               '<?xml version="1.0" encoding="UTF-8"?>',
@@ -60,7 +38,36 @@ jobs:
           ]
 
           for url in urls:
-              sitemap.extend([
-                  "  <url>",
-                  f"    <loc>{url}</loc>",
-                  "    <changefreq>weekly
+              sitemap.append(
+                  f"  <url><loc>{url}</loc></url>"
+              )
+
+          sitemap.append("</urlset>")
+
+          Path("sitemap.xml").write_text(
+              "\n".join(sitemap),
+              encoding="utf-8"
+          )
+
+          robots = (
+              "User-agent: *\n"
+              "Allow: /\n"
+              f"Sitemap: {base}sitemap.xml\n"
+          )
+
+          Path("robots.txt").write_text(
+              robots,
+              encoding="utf-8"
+          )
+
+          print("Pages found:", len(folders))
+          print("Sitemap URLs:", len(urls))
+          PY
+
+      - name: Save changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml robots.txt
+          git diff --cached --quiet || git commit -m "Refresh sitewide SEO files"
+          git push
