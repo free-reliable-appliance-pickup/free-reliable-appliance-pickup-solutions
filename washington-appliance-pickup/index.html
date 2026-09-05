@@ -1,3 +1,4 @@
+
 name: Build Washington Appliance Pickup Pages
 
 on:
@@ -38,30 +39,11 @@ jobs:
               "Burien": "burien"
           }
 
-          source = Path("tacoma-appliance-pickup/index.html").read_text()
+          source = Path(
+              "tacoma-appliance-pickup/index.html"
+          ).read_text(encoding="utf-8")
 
           for city, slug in cities.items():
-              page = source.replace("Tacoma", city).replace("tacoma", slug)
-
-              folder = Path(f"{slug}-appliance-pickup")
-              folder.mkdir(exist_ok=True)
-
-              (folder / "index.html").write_text(page)
-
-              print("Created", city)
-
-          PY
-
-      - name: Commit pages
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add .
-
-          if git diff --cached --quiet; then
-            echo "Nothing new to commit"
-          else
-            git commit -m "Build Washington city pages"
-            git push
-          fi
+              page = source.replace(
+                  "Tacoma", city
+              ).replace
