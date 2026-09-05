@@ -1,0 +1,120 @@
+name: Strengthen Washington SEO
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  washington-seo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Strengthen Washington pages
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          cities = [
+            "seattle","tacoma","bellevue","everett","vancouver",
+            "kent","renton","federal-way","spokane","auburn",
+            "lakewood","puyallup","redmond","kirkland","bothell",
+            "lynnwood","shoreline","burien"
+          ]
+
+          base = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+
+          for city in cities:
+              folder = Path(f"{city}-appliance-pickup")
+              file = folder / "index.html"
+
+              if not file.exists():
+                  print("Missing:", folder)
+                  continue
+
+              name = city.replace("-", " ").title()
+              html = file.read_text(encoding="utf-8", errors="ignore")
+
+              title = (
+                  f"Free Appliance Pickup {name}, WA | "
+                  f"Washer & Dryer Pickup"
+              )
+
+              desc = (
+                  f"Request qualifying free appliance pickup in {name}, "
+                  f"Washington for washers, dryers, refrigerators, stoves, "
+                  f"freezers and other major household appliances."
+              )
+
+              canonical = base + folder.name + "/"
+
+              html = re.sub(
+                  r"<title>.*?</title>",
+                  f"<title>{title}</title>",
+                  html,
+                  count=1,
+                  flags=re.I | re.S
+              )
+
+              html = re.sub(
+                  r'<meta\s+name=["\']description["\'][^>]*>',
+                  f'<meta name="description" content="{desc}">',
+                  html,
+                  count=1,
+                  flags=re.I
+              )
+
+              html = re.sub(
+                  r'<link\s+rel=["\']canonical["\'][^>]*>',
+                  f'<link rel="canonical" href="{canonical}">',
+                  html,
+                  count=1,
+                  flags=re.I
+              )
+
+              html = re.sub(
+                  r"<h1[^>]*>.*?</h1>",
+                  f"<h1>Free Appliance Pickup in {name}, Washington</h1>",
+                  html,
+                  count=1,
+                  flags=re.I | re.S
+              )
+
+              marker = "<!-- WA UNIQUE SEO -->"
+
+              if marker not in html:
+                  section = f"""
+          {marker}
+          <section class="section">
+            <h2>Washer & Dryer Pickup in {name}</h2>
+
+            <p>
+              Free Reliable Appliance Pickup serves {name}, Washington
+              customers who need qualifying washers, dryers, refrigerators,
+              stoves, ranges, freezers and other major appliances removed.
+              Washer and dryer pickup is one of our primary services.
+            </p>
+
+            <p>
+              Pickup approval depends on appliance condition, local demand,
+              accessibility and scheduling. Sending clear photos and accurate
+              condition information helps us review your pickup request faster.
+            </p>
+
+            <p>
+              Working and reusable appliances may be prioritized for reuse.
+              Other qualifying appliances may be directed toward responsible
+              recycling when appropriate.
+            </p>
+
+            <p>
+              For Washington pickup assistance call
+              <a href="tel:+15038684455">(503) 868-4455</a>
+              or submit the online pickup request form.
+            </p>
+
+           
