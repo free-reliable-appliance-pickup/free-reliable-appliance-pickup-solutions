@@ -1,0 +1,782 @@
+name: Build Utah Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-utah:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create Utah appliance pickup pages
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          from html import escape
+
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          FORM = "https://formspree.io/f/mvzeapzd"
+
+          cities = {
+              "Salt Lake City": "salt-lake-city",
+              "West Valley City": "west-valley-city",
+              "West Jordan": "west-jordan",
+              "Sandy": "sandy",
+              "South Jordan": "south-jordan",
+              "Murray": "murray",
+              "Draper": "draper",
+              "Riverton": "riverton",
+              "Herriman": "herriman",
+              "Midvale": "midvale",
+              "Taylorsville": "taylorsville",
+              "Lehi": "lehi",
+              "American Fork": "american-fork",
+              "Orem": "orem",
+              "Provo": "provo",
+              "Layton": "layton",
+              "Ogden": "ogden"
+          }
+
+          def page(city, slug):
+              canonical = f"{BASE}{slug}-appliance-pickup/"
+
+              city_links = "\n".join(
+                  f'<a href="../{s}-appliance-pickup/">{escape(c)}</a>'
+                  for c, s in cities.items()
+                  if s != slug
+              )
+
+              return f"""<!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+              <title>Free Appliance Pickup {city} UT | Washer & Dryer Removal</title>
+
+              <meta
+                  name="description"
+                  content="Request qualifying free appliance pickup in {city}, Utah. Washer and dryer pickup, refrigerator removal, stove pickup, freezer pickup and appliance recycling."
+              >
+
+              <meta name="robots" content="index, follow">
+
+              <link rel="canonical" href="{canonical}">
+
+              <meta property="og:title" content="Free Appliance Pickup {city} Utah">
+              <meta
+                  property="og:description"
+                  content="Qualifying washer, dryer, refrigerator, stove and major appliance pickup in {city}, Utah."
+              >
+              <meta property="og:type" content="website">
+              <meta property="og:url" content="{canonical}">
+
+              <style>
+                  * {{
+                      box-sizing: border-box;
+                  }}
+
+                  html {{
+                      scroll-behavior: smooth;
+                  }}
+
+                  body {{
+                      margin: 0;
+                      font-family: Arial, Helvetica, sans-serif;
+                      line-height: 1.6;
+                      color: #222;
+                      background: #f6f7f6;
+                  }}
+
+                  a {{
+                      color: #0b6b3a;
+                  }}
+
+                  header {{
+                      background: linear-gradient(135deg, #075c32, #14924f);
+                      color: white;
+                      padding: 48px 20px;
+                      text-align: center;
+                  }}
+
+                  header h1 {{
+                      margin: 0 0 12px;
+                      font-size: 38px;
+                  }}
+
+                  header p {{
+                      max-width: 850px;
+                      margin: auto;
+                      font-size: 19px;
+                  }}
+
+                  nav {{
+                      background: #111;
+                      padding: 14px;
+                      text-align: center;
+                  }}
+
+                  nav a {{
+                      color: white;
+                      text-decoration: none;
+                      font-weight: bold;
+                      margin: 0 10px;
+                  }}
+
+                  main {{
+                      width: min(1100px, 92%);
+                      margin: auto;
+                  }}
+
+                  section {{
+                      background: white;
+                      margin: 24px 0;
+                      padding: 32px 26px;
+                      border-radius: 12px;
+                      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+                  }}
+
+                  h2 {{
+                      color: #075c32;
+                      margin-top: 0;
+                  }}
+
+                  h3 {{
+                      color: #11663e;
+                  }}
+
+                  .grid {{
+                      display: grid;
+                      grid-template-columns: repeat(3, 1fr);
+                      gap: 18px;
+                  }}
+
+                  .card {{
+                      border: 1px solid #ddd;
+                      border-radius: 10px;
+                      padding: 20px;
+                      background: #fafafa;
+                  }}
+
+                  .button {{
+                      display: inline-block;
+                      padding: 14px 24px;
+                      background: #08753f;
+                      color: white;
+                      text-decoration: none;
+                      font-weight: bold;
+                      border-radius: 7px;
+                  }}
+
+                  .notice {{
+                      background: #fff8e7;
+                      border-left: 5px solid #d99b00;
+                      padding: 18px;
+                      margin-top: 20px;
+                  }}
+
+                  .cities {{
+                      display: flex;
+                      flex-wrap: wrap;
+                      gap: 10px;
+                  }}
+
+                  .cities a {{
+                      background: #eef7f1;
+                      padding: 8px 12px;
+                      border-radius: 6px;
+                      text-decoration: none;
+                  }}
+
+                  form {{
+                      display: grid;
+                      gap: 13px;
+                  }}
+
+                  label {{
+                      font-weight: bold;
+                  }}
+
+                  input,
+                  select,
+                  textarea {{
+                      width: 100%;
+                      padding: 12px;
+                      border: 1px solid #bbb;
+                      border-radius: 6px;
+                      font-size: 16px;
+                  }}
+
+                  textarea {{
+                      min-height: 120px;
+                  }}
+
+                  button {{
+                      padding: 14px;
+                      border: none;
+                      background: #08753f;
+                      color: white;
+                      border-radius: 7px;
+                      font-size: 17px;
+                      font-weight: bold;
+                      cursor: pointer;
+                  }}
+
+                  footer {{
+                      margin-top: 30px;
+                      padding: 30px 20px;
+                      text-align: center;
+                      background: #111;
+                      color: white;
+                  }}
+
+                  footer a {{
+                      color: white;
+                  }}
+
+                  @media (max-width: 800px) {{
+                      .grid {{
+                          grid-template-columns: 1fr;
+                      }}
+
+                      header h1 {{
+                          font-size: 30px;
+                      }}
+                  }}
+              </style>
+
+              <script type="application/ld+json">
+              {{
+                  "@context": "https://schema.org",
+                  "@type": "Service",
+                  "name": "Free Appliance Pickup {city} Utah",
+                  "serviceType": [
+                      "Appliance Pickup",
+                      "Washer Pickup",
+                      "Dryer Pickup",
+                      "Washer and Dryer Pickup",
+                      "Refrigerator Pickup",
+                      "Appliance Removal",
+                      "Appliance Recycling"
+                  ],
+                  "provider": {{
+                      "@type": "Organization",
+                      "name": "Free Reliable Appliance Pickup",
+                      "url": "{BASE}"
+                  }},
+                  "areaServed": {{
+                      "@type": "City",
+                      "name": "{city}"
+                  }},
+                  "url": "{canonical}"
+              }}
+              </script>
+          </head>
+
+          <body>
+
+          <header>
+              <h1>Free Appliance Pickup in {city}, Utah</h1>
+
+              <p>
+                  Request qualifying washer, dryer, refrigerator,
+                  stove, freezer and other major appliance pickup,
+                  removal, reuse and recycling.
+              </p>
+          </header>
+
+          <nav>
+              <a href="../">Home</a>
+              <a href="../utah-appliance-pickup/">Utah</a>
+              <a href="#services">Services</a>
+              <a href="#request">Request Pickup</a>
+          </nav>
+
+          <main>
+
+              <section>
+                  <h2>{city} Appliance Pickup & Removal</h2>
+
+                  <p>
+                      Free Reliable Appliance Pickup accepts qualifying
+                      appliance pickup requests throughout {city}, Utah.
+                      We work with homeowners, renters, landlords,
+                      property managers and other customers who need
+                      major household appliances removed.
+                  </p>
+
+                  <p>
+                      Working appliances are especially valuable because
+                      they may qualify for reuse. Washers and dryers are
+                      among our highest-priority appliance categories.
+                  </p>
+
+                  <a class="button" href="#request">
+                      Request Free Pickup Review
+                  </a>
+              </section>
+
+              <section id="services">
+                  <h2>Appliances We Pick Up in {city}</h2>
+
+                  <div class="grid">
+
+                      <div class="card">
+                          <h3>Washer Pickup</h3>
+                          <p>
+                              Top-load and front-load washing machines
+                              may qualify for pickup.
+                          </p>
+                      </div>
+
+                      <div class="card">
+                          <h3>Dryer Pickup</h3>
+                          <p>
+                              Electric and gas clothes dryers may qualify
+                              depending on condition and access.
+                          </p>
+                      </div>
+
+                      <div class="card">
+                          <h3>Washer & Dryer Sets</h3>
+                          <p>
+                              Laundry sets are strongly preferred,
+                              especially when both machines still work.
+                          </p>
+                      </div>
+
+                      <div class="card">
+                          <h3>Refrigerator Pickup</h3>
+                          <p>
+                              Qualifying refrigerators may be considered
+                              for reuse, parts recovery or recycling.
+                          </p>
+                      </div>
+
+                      <div class="card">
+                          <h3>Stoves & Ranges</h3>
+                          <p>
+                              Gas and electric stoves and ranges may
+                              qualify for removal.
+                          </p>
+                      </div>
+
+                      <div class="card">
+                          <h3>Freezer Pickup</h3>
+                          <p>
+                              Upright and chest freezers may qualify
+                              depending on condition and current demand.
+                          </p>
+                      </div>
+
+                  </div>
+              </section>
+
+              <section>
+                  <h2>Free Washer & Dryer Pickup in {city}</h2>
+
+                  <p>
+                      Replacing a washer or dryer can leave you with a
+                      large appliance that is difficult to move.
+                      Our {city} pickup service reviews requests for
+                      working washers, dryers and laundry sets.
+                  </p>
+
+                  <p>
+                      Send clear photos and tell us whether the appliance
+                      is fully working, partly working or not working.
+                      Providing accurate condition information helps us
+                      evaluate your request faster.
+                  </p>
+              </section>
+
+              <section>
+                  <h2>Appliance Pickup From Homes and Rentals</h2>
+
+                  <p>
+                      We review pickup requests from houses, apartments,
+                      rental properties, garages and property turnovers
+                      throughout the {city} area.
+                  </p>
+
+                  <p>
+                      Tell us if the appliance is upstairs, downstairs,
+                      in a basement, garage or outside. Please include
+                      information about stairs, narrow doors or other
+                      access issues.
+                  </p>
+              </section>
+
+              <section>
+                  <h2>Reuse Before Disposal</h2>
+
+                  <p>
+                      Appliances that still have useful life may be
+                      recovered for reuse, refurbishment or parts.
+                      This can help keep usable major appliances out
+                      of the waste stream.
+                  </p>
+
+                  <div class="notice">
+                      <strong>Important:</strong>
+                      Free appliance pickup is not automatic or guaranteed.
+                      Approval depends on appliance condition, demand,
+                      location, accessibility and scheduling availability.
+                  </div>
+              </section>
+
+              <section id="request">
+                  <h2>Request Appliance Pickup in {city}</h2>
+
+                  <form
+                      action="{FORM}"
+                      method="POST"
+                      enctype="multipart/form-data"
+                  >
+
+                      <input
+                          type="hidden"
+                          name="_subject"
+                          value="{city} Utah Appliance Pickup Request"
+                      >
+
+                      <input
+                          type="hidden"
+                          name="city"
+                          value="{city}"
+                      >
+
+                      <input
+                          type="hidden"
+                          name="state"
+                          value="Utah"
+                      >
+
+                      <label>Name</label>
+                      <input type="text" name="name" required>
+
+                      <label>Phone</label>
+                      <input type="tel" name="phone" required>
+
+                      <label>Email (optional)</label>
+                      <input type="email" name="email">
+
+                      <label>Pickup Address</label>
+                      <input type="text" name="address" required>
+
+                      <label>ZIP Code</label>
+                      <input type="text" name="zip" required>
+
+                      <label>Appliance Type</label>
+
+                      <select name="appliance" required>
+                          <option value="">Select Appliance</option>
+                          <option>Washer</option>
+                          <option>Dryer</option>
+                          <option>Washer and Dryer</option>
+                          <option>Refrigerator</option>
+                          <option>Stove or Range</option>
+                          <option>Freezer</option>
+                          <option>Dishwasher</option>
+                          <option>Multiple Appliances</option>
+                          <option>Other Major Appliance</option>
+                      </select>
+
+                      <label>Condition</label>
+
+                      <select name="condition" required>
+                          <option value="">Select Condition</option>
+                          <option>Fully working</option>
+                          <option>Working but needs repair</option>
+                          <option>Not working</option>
+                          <option>Unknown</option>
+                      </select>
+
+                      <label>Appliance Location</label>
+
+                      <select name="location" required>
+                          <option value="">Select Location</option>
+                          <option>First Floor</option>
+                          <option>Second Floor</option>
+                          <option>Third Floor</option>
+                          <option>Basement</option>
+                          <option>Garage</option>
+                          <option>Outside</option>
+                          <option>Other</option>
+                      </select>
+
+                      <label>Stairs</label>
+
+                      <select name="stairs" required>
+                          <option value="">Select Stairs</option>
+                          <option>No Stairs</option>
+                          <option>1 Flight</option>
+                          <option>2 Flights</option>
+                          <option>3+ Flights</option>
+                          <option>Unknown</option>
+                      </select>
+
+                      <label>Additional Information</label>
+
+                      <textarea
+                          name="details"
+                          placeholder="Brand, model, age, working condition and pickup access."
+                      ></textarea>
+
+                      <label>Appliance Photos</label>
+
+                      <input
+                          type="file"
+                          name="photos"
+                          accept="image/*"
+                          multiple
+                          required
+                      >
+
+                      <button type="submit">
+                          Submit Pickup Request
+                      </button>
+
+                  </form>
+              </section>
+
+              <section>
+                  <h2>Other Utah Appliance Pickup Areas</h2>
+
+                  <div class="cities">
+                      {city_links}
+                  </div>
+              </section>
+
+          </main>
+
+          <footer>
+              <p>© 2026 Free Reliable Appliance Pickup</p>
+
+              <p>
+                  <a href="../">Home</a> |
+                  <a href="../utah-appliance-pickup/">
+                      Utah Appliance Pickup
+                  </a>
+              </p>
+          </footer>
+
+          </body>
+          </html>
+          """
+
+          # Create city pages
+          for city, slug in cities.items():
+              folder = Path(f"{slug}-appliance-pickup")
+              folder.mkdir(parents=True, exist_ok=True)
+              (folder / "index.html").write_text(
+                  page(city, slug),
+                  encoding="utf-8"
+              )
+              print("Created:", city)
+
+          # Create Utah state hub
+          hub_links = "\n".join(
+              f'<li><a href="../{slug}-appliance-pickup/">{city} Appliance Pickup</a></li>'
+              for city, slug in cities.items()
+          )
+
+          hub = f"""<!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+              <title>Free Appliance Pickup Utah | Washer & Dryer Removal</title>
+
+              <meta
+                  name="description"
+                  content="Request qualifying free appliance pickup in Utah. Washer pickup, dryer pickup, refrigerator removal, stove pickup, freezer pickup and appliance recycling."
+              >
+
+              <meta name="robots" content="index, follow">
+
+              <link
+                  rel="canonical"
+                  href="{BASE}utah-appliance-pickup/"
+              >
+
+              <style>
+                  body {{
+                      margin: 0;
+                      font-family: Arial, Helvetica, sans-serif;
+                      line-height: 1.6;
+                      color: #222;
+                      background: #f6f7f6;
+                  }}
+
+                  header {{
+                      background: linear-gradient(135deg, #075c32, #14924f);
+                      color: white;
+                      padding: 50px 20px;
+                      text-align: center;
+                  }}
+
+                  main {{
+                      width: min(1000px, 92%);
+                      margin: auto;
+                  }}
+
+                  section {{
+                      background: white;
+                      padding: 30px;
+                      margin: 25px 0;
+                      border-radius: 12px;
+                  }}
+
+                  h2 {{
+                      color: #075c32;
+                  }}
+
+                  a {{
+                      color: #08753f;
+                  }}
+
+                  li {{
+                      margin: 9px 0;
+                  }}
+
+                  .button {{
+                      display: inline-block;
+                      padding: 13px 22px;
+                      background: #08753f;
+                      color: white;
+                      text-decoration: none;
+                      border-radius: 7px;
+                      font-weight: bold;
+                  }}
+
+                  footer {{
+                      background: #111;
+                      color: white;
+                      text-align: center;
+                      padding: 28px;
+                  }}
+              </style>
+          </head>
+
+          <body>
+
+          <header>
+              <h1>Free Appliance Pickup in Utah</h1>
+
+              <p>
+                  Qualifying washer, dryer, refrigerator,
+                  stove, freezer and other major appliance pickup.
+              </p>
+          </header>
+
+          <main>
+
+              <section>
+                  <h2>Utah Appliance Pickup</h2>
+
+                  <p>
+                      Free Reliable Appliance Pickup is expanding
+                      qualifying appliance pickup coverage throughout
+                      Utah, with strong emphasis on washers, dryers
+                      and reusable major appliances.
+                  </p>
+
+                  <p>
+                      Free pickup is subject to approval based on
+                      appliance condition, demand, location, access
+                      and scheduling availability.
+                  </p>
+
+                  <a class="button" href="../#pickup-form">
+                      Request Pickup
+                  </a>
+              </section>
+
+              <section>
+                  <h2>Utah Cities We Serve</h2>
+
+                  <ul>
+                      {hub_links}
+                  </ul>
+              </section>
+
+              <section>
+                  <h2>Washer & Dryer Pickup Across Utah</h2>
+
+                  <p>
+                      Washers, dryers and laundry sets are priority
+                      appliance categories. Working appliances are
+                      especially valuable for potential reuse.
+                  </p>
+              </section>
+
+          </main>
+
+          <footer>
+              © 2026 Free Reliable Appliance Pickup
+          </footer>
+
+          </body>
+          </html>
+          """
+
+          hub_folder = Path("utah-appliance-pickup")
+          hub_folder.mkdir(parents=True, exist_ok=True)
+
+          (hub_folder / "index.html").write_text(
+              hub,
+              encoding="utf-8"
+          )
+
+          # Automatically rebuild sitemap from all live appliance folders
+          urls = [BASE]
+
+          for folder in sorted(Path(".").glob("*-appliance-pickup")):
+              if folder.is_dir() and (folder / "index.html").exists():
+                  urls.append(BASE + folder.name + "/")
+
+          sitemap = [
+              '<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+          ]
+
+          for url in urls:
+              sitemap.extend([
+                  "  <url>",
+                  f"    <loc>{url}</loc>",
+                  "  </url>"
+              ])
+
+          sitemap.append("</urlset>")
+
+          Path("sitemap.xml").write_text(
+              "\n".join(sitemap),
+              encoding="utf-8"
+          )
+
+          print("Utah hub created")
+          print("Utah city pages created:", len(cities))
+          print("Sitemap rebuilt:", len(urls), "URLs")
+          PY
+
+      - name: Commit Utah pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add .
+
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit"
+          else
+            git commit -m "Add Utah appliance pickup pages"
+            git push
+          fi
