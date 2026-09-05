@@ -15,106 +15,88 @@ jobs:
 
       - name: Strengthen Washington pages
         run: |
-          python3 - <<'PY'
+          python3 <<'PY'
           from pathlib import Path
-          import re
 
           cities = [
-            "seattle","tacoma","bellevue","everett","vancouver",
-            "kent","renton","federal-way","spokane","auburn",
-            "lakewood","puyallup","redmond","kirkland","bothell",
-            "lynnwood","shoreline","burien"
+              "seattle","tacoma","bellevue","everett","vancouver",
+              "kent","renton","federal-way","spokane","auburn",
+              "lakewood","puyallup","redmond","kirkland","bothell",
+              "lynnwood","shoreline","burien"
           ]
 
-          base = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
-
           for city in cities:
-              folder = Path(f"{city}-appliance-pickup")
-              file = folder / "index.html"
+              f = Path(city + "-appliance-pickup/index.html")
 
-              if not file.exists():
-                  print("Missing:", folder)
+              if not f.exists():
+                  print("Missing:", f)
                   continue
 
+              html = f.read_text(encoding="utf-8", errors="ignore")
               name = city.replace("-", " ").title()
-              html = file.read_text(encoding="utf-8", errors="ignore")
 
-              title = (
-                  f"Free Appliance Pickup {name}, WA | "
-                  f"Washer & Dryer Pickup"
-              )
+              marker = "<!-- WASHINGTON SEO BOOST -->"
 
-              desc = (
-                  f"Request qualifying free appliance pickup in {name}, "
-                  f"Washington for washers, dryers, refrigerators, stoves, "
-                  f"freezers and other major household appliances."
-              )
+              if marker in html:
+                  print("Already updated:", name)
+                  continue
 
-              canonical = base + folder.name + "/"
-
-              html = re.sub(
-                  r"<title>.*?</title>",
-                  f"<title>{title}</title>",
-                  html,
-                  count=1,
-                  flags=re.I | re.S
-              )
-
-              html = re.sub(
-                  r'<meta\s+name=["\']description["\'][^>]*>',
-                  f'<meta name="description" content="{desc}">',
-                  html,
-                  count=1,
-                  flags=re.I
-              )
-
-              html = re.sub(
-                  r'<link\s+rel=["\']canonical["\'][^>]*>',
-                  f'<link rel="canonical" href="{canonical}">',
-                  html,
-                  count=1,
-                  flags=re.I
-              )
-
-              html = re.sub(
-                  r"<h1[^>]*>.*?</h1>",
-                  f"<h1>Free Appliance Pickup in {name}, Washington</h1>",
-                  html,
-                  count=1,
-                  flags=re.I | re.S
-              )
-
-              marker = "<!-- WA UNIQUE SEO -->"
-
-              if marker not in html:
-                  section = f"""
-          {marker}
-          <section class="section">
-            <h2>Washer & Dryer Pickup in {name}</h2>
+              section = """
+          <!-- WASHINGTON SEO BOOST -->
+          <section>
+            <h2>Washer and Dryer Pickup in CITY, Washington</h2>
 
             <p>
-              Free Reliable Appliance Pickup serves {name}, Washington
-              customers who need qualifying washers, dryers, refrigerators,
-              stoves, ranges, freezers and other major appliances removed.
+              Free Reliable Appliance Pickup provides qualifying appliance
+              pickup in CITY for washers, dryers, refrigerators, stoves,
+              ranges, freezers and other major household appliances.
+            </p>
+
+            <p>
               Washer and dryer pickup is one of our primary services.
-            </p>
-
-            <p>
-              Pickup approval depends on appliance condition, local demand,
-              accessibility and scheduling. Sending clear photos and accurate
-              condition information helps us review your pickup request faster.
-            </p>
-
-            <p>
               Working and reusable appliances may be prioritized for reuse.
-              Other qualifying appliances may be directed toward responsible
-              recycling when appropriate.
+              Pickup availability depends on condition, local demand,
+              accessibility and scheduling.
             </p>
 
             <p>
-              For Washington pickup assistance call
-              <a href="tel:+15038684455">(503) 868-4455</a>
-              or submit the online pickup request form.
+              Send clear appliance photos and accurate condition information
+              with your request. This helps us determine whether the appliance
+              qualifies for free pickup.
             </p>
 
-           
+            <p>
+              Washington customers can call
+              <a href="tel:+15038684455">(503) 868-4455</a>
+              or use the online pickup request form.
+            </p>
+          </section>
+          """.replace("CITY", name)
+
+              if "</main>" in html:
+                  html = html.replace(
+                      "</main>",
+                      section + "\n</main>",
+                      1
+                  )
+              elif "</body>" in html:
+                  html = html.replace(
+                      "</body>",
+                      section + "\n</body>",
+                      1
+                  )
+              else:
+                  html += section
+
+              f.write_text(html, encoding="utf-8")
+              print("Updated:", name)
+
+          PY
+
+      - name: Save changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "Strengthen Washington SEO"
+          git push
