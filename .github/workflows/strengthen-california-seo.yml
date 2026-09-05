@@ -30,10 +30,8 @@ jobs:
               "rancho-cucamonga","upland"
           ]
 
-          phone = "(909) 375-6685"
-
           for city in cities:
-              file = Path(f"{city}-appliance-pickup/index.html")
+              file = Path(city + "-appliance-pickup/index.html")
 
               if not file.exists():
                   print("Missing:", file)
@@ -51,14 +49,65 @@ jobs:
                   print("Already updated:", name)
                   continue
 
-              local_phone = phone
+              section = """
+          <!-- CALIFORNIA SEO BOOST -->
+          <section>
+            <h2>Washer and Dryer Pickup in CITY, California</h2>
 
-              if city in [
-                  "los-angeles","long-beach","pasadena",
-                  "santa-clarita","torrance"
-              ]:
-                  local_phone = "(310) 774-4304"
+            <p>
+              Free Reliable Appliance Pickup provides qualifying appliance
+              pickup in CITY for washers, dryers, refrigerators, stoves,
+              ranges, freezers and other major household appliances.
+            </p>
 
-              tel = local_phone.replace(
-                  "(", ""
+            <p>
+              Washer and dryer pickup is one of our primary California
+              services. Working and reusable appliances may be prioritized
+              for reuse.
+            </p>
+
+            <p>
+              Free pickup qualification depends on appliance condition,
+              local demand, accessibility and scheduling. Send clear photos
+              and accurate condition information with your pickup request.
+            </p>
+
+            <p>
+              Customers can use our online appliance pickup request form
+              to submit appliance details and photos for review.
+            </p>
+          </section>
+          """.replace("CITY", name)
+
+              if "</main>" in html:
+                  html = html.replace(
+                      "</main>",
+                      section + "\n</main>",
+                      1
+                  )
+              elif "</body>" in html:
+                  html = html.replace(
+                      "</body>",
+                      section + "\n</body>",
+                      1
+                  )
+              else:
+                  html += section
+
+              file.write_text(
+                  html,
+                  encoding="utf-8"
+              )
+
+              print("Updated:", name)
+
+          PY
+
+      - name: Save changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "Strengthen California SEO"
+          git push
              
