@@ -7,87 +7,128 @@ permissions:
   contents: write
 
 jobs:
-  fix-seo:
+  fix:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
 
-      - name: Fix missing SEO
+      - name: Fix SEO
         run: |
-          python3 <<'PY'
+          python3 - <<'PY'
           from pathlib import Path
           import re
 
-          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          base = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
 
-          folders = sorted(Path(".").glob("*-appliance-pickup"))
+          pages = []
 
-          changed = 0
+          for d in Path(".").glob("*-appliance-pickup"):
+              f = d / "index.html"
 
-          for folder in folders:
-              file = folder / "index.html"
-
-              if not file.exists():
+              if not f.exists():
                   continue
 
-              html = file.read_text(
+              pages.append(d)
+
+              h = f.read_text(
                   encoding="utf-8",
                   errors="ignore"
               )
 
-              original = html
+              old = h
 
-              name = folder.name.replace(
+              name = d.name.replace(
                   "-appliance-pickup",
                   ""
+              ).replace("-", " ").title()
+
+              url = base + d.name + "/"
+
+              if "<title" not in h.lower():
+                  h = h.replace(
+                      "</head>",
+                      f"<title>Free Appliance Pickup {name}</title>\n</head>"
+                  )
+
+              if 'name="description"' not in h.lower():
+                  h = h.replace(
+                      "</head>",
+                      f'<meta name="description" content="Qualifying free appliance pickup in {name} for washers, dryers, refrigerators and other major appliances.">\n</head>'
+                  )
+
+              if 'rel="canonical"' not in h.lower():
+                  h = h.replace(
+                      "</head>",
+                      f'<link rel="canonical" href="{url}">\n</head>'
+                  )
+
+              if 'name="robots"' not in h.lower():
+                  h = h.replace(
+                      "</head>",
+                      '<meta name="robots" content="index, follow">\n</head>'
+                  )
+
+              if "<h1" not in h.lower():
+                  heading = (
+                      f"<h1>Free Appliance Pickup in {name}</h1>"
+                  )
+
+                  if "<main" in h.lower():
+                      h = re.sub(
+                          r"(<main[^>]*>)",
+                          r"\1" + heading,
+                          h,
+                          count=1,
+                          flags=re.I
+                      )
+                  else:
+                      h = re.sub(
+                          r"(<body[^>]*>)",
+                          r"\1" + heading,
+                          h,
+                          count=1,
+                          flags=re.I
+                      )
+
+              if h != old:
+                  f.write_text(
+                      h,
+                      encoding="utf-8"
+                  )
+
+                  print("Fixed", d.name)
+
+          urls = [base] + [
+              base + d.name + "/"
+              for d in sorted(pages)
+          ]
+
+          lines = [
+              '<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+          ]
+
+          for url in urls:
+              lines.append(
+                  f"<url><loc>{url}</loc></url>"
               )
 
-              pretty = " ".join(
-                  word.capitalize()
-                  for word in name.split("-")
-              )
+          lines.append("</urlset>")
 
-              canonical = BASE + folder.name + "/"
+          Path("sitemap.xml").write_text(
+              "\n".join(lines),
+              encoding="utf-8"
+          )
 
-              if not re.search(
-                  r"<title\b",
-                  html,
-                  re.I
-              ):
-                  html = re.sub(
-                      r"</head>",
-                      f"<title>Free Appliance Pickup {pretty} | Washer & Dryer Removal</title>\n</head>",
-                      html,
-                      count=1,
-                      flags=re.I
-                  )
+          print("Total pages:", len(pages))
+          print("Sitemap URLs:", len(urls))
+          PY
 
-              if not re.search(
-                  r'<meta[^>]+name=["\']description["\']',
-                  html,
-                  re.I
-              ):
-                  description = (
-                      f"Request qualifying free appliance pickup in {pretty} "
-                      f"for washers, dryers, refrigerators, stoves, freezers "
-                      f"and other major appliances."
-                  )
-
-                  html = re.sub(
-                      r"</head>",
-                      f'<meta name="description" content="{description}">\n</head>',
-                      html,
-                      count=1,
-                      flags=re.I
-                  )
-
-              if not re.search(
-                  r'<link[^>]+rel=["\']canonical["\']',
-                  html,
-                  re.I
-              ):
-                  html = re.sub(
-                      r"</head>",
-                      f'<link rel="
+      - name: Save changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "Fix sitewide SEO"
+          git push
