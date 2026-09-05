@@ -1,0 +1,36 @@
+name: Nationwide Final Build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  final-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout website
+        uses: actions/checkout@v4
+
+      - name: Build partner system
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import os
+
+          ROOT = Path(".")
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+
+          STYLE = """
+          <style>
+          *{box-sizing:border-box}
+          body{margin:0;font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#222;background:#f7f7f7}
+          header{background:#0b5d35;color:white;padding:40px 20px}
+          header div,main{max-width:1000px;margin:auto}
+          main{background:white;padding:30px 20px}
+          h1,h2,h3{line-height:1.25}
+          .card{background:#eef8f2;padding:22px;margin:20px 0;border-radius:10px}
+          .grid{
