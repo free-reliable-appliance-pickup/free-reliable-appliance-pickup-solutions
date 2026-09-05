@@ -12,25 +12,67 @@ jobs:
 
     steps:
       - name: Checkout website
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Build partner system
+      - name: Create partner pages
         shell: bash
         run: |
-          python3 <<'PY'
-          from pathlib import Path
-          import os
+          set -e
 
-          ROOT = Path(".")
-          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          mkdir -p partners
+          mkdir -p partner-territories
+          mkdir -p appliance-pickup-leads
 
-          STYLE = """
-          <style>
-          *{box-sizing:border-box}
-          body{margin:0;font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#222;background:#f7f7f7}
-          header{background:#0b5d35;color:white;padding:40px 20px}
-          header div,main{max-width:1000px;margin:auto}
-          main{background:white;padding:30px 20px}
-          h1,h2,h3{line-height:1.25}
-          .card{background:#eef8f2;padding:22px;margin:20px 0;border-radius:10px}
-          .grid{
+          cat > partners/index.html <<'HTML'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <title>Appliance Pickup Partner Program | Leads & Territories</title>
+
+            <meta name="description" content="Apply to become a Free Reliable Appliance Pickup partner and receive qualifying appliance pickup opportunities in available U.S. territories.">
+
+            <meta name="robots" content="index, follow">
+
+            <link rel="canonical" href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/partners/">
+
+            <style>
+              * {
+                box-sizing: border-box;
+              }
+
+              body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                line-height: 1.65;
+                color: #222;
+                background: #f7f7f7;
+              }
+
+              header {
+                background: linear-gradient(135deg, #0b5d35, #087443);
+                color: white;
+                padding: 45px 20px;
+              }
+
+              header div,
+              main {
+                max-width: 1000px;
+                margin: auto;
+              }
+
+              main {
+                background: white;
+                padding: 30px 20px;
+              }
+
+              h1,
+              h2,
+              h3 {
+                line-height: 1.25;
+              }
+
+              .card {
+                background: #eef8f2;
