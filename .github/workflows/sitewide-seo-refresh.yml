@@ -1,0 +1,66 @@
+name: Sitewide SEO Refresh
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  seo-refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Refresh sitemap and internal links
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+
+          states = [
+              ("California", "california-appliance-pickup"),
+              ("Oregon", "oregon-appliance-pickup"),
+              ("Washington", "washington-appliance-pickup"),
+              ("Arizona", "arizona-appliance-pickup"),
+              ("Colorado", "colorado-appliance-pickup"),
+              ("Utah", "utah-appliance-pickup"),
+              ("Nevada", "nevada-appliance-pickup"),
+              ("Idaho", "idaho-appliance-pickup"),
+          ]
+
+          # -------------------------------------------------
+          # Find every real appliance pickup page
+          # -------------------------------------------------
+
+          folders = []
+
+          for folder in sorted(Path(".").glob("*-appliance-pickup")):
+              if folder.is_dir() and (folder / "index.html").exists():
+                  folders.append(folder.name)
+
+          print("Found appliance pickup folders:", len(folders))
+
+          # -------------------------------------------------
+          # Rebuild sitemap.xml
+          # -------------------------------------------------
+
+          urls = [BASE]
+
+          for folder in folders:
+              urls.append(f"{BASE}{folder}/")
+
+          sitemap = [
+              '<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+          ]
+
+          for url in urls:
+              sitemap.extend([
+                  "  <url>",
+                  f"    <loc>{url}</loc>",
+                  "    <changefreq>weekly
