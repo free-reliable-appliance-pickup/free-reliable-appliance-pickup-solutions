@@ -1,0 +1,106 @@
+name: Strengthen Utah SEO
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  utah-seo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Strengthen Utah pages
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          cities = [
+              "salt-lake-city","west-valley-city","west-jordan",
+              "sandy","south-jordan","murray","draper","riverton",
+              "herriman","midvale","taylorsville","lehi",
+              "american-fork","orem","provo","layton","ogden"
+          ]
+
+          for city in cities:
+              file = Path(city + "-appliance-pickup/index.html")
+
+              if not file.exists():
+                  print("Missing:", file)
+                  continue
+
+              html = file.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
+              name = city.replace("-", " ").title()
+              marker = "<!-- UTAH SEO BOOST -->"
+
+              if marker in html:
+                  print("Already updated:", name)
+                  continue
+
+              section = """
+          <!-- UTAH SEO BOOST -->
+          <section>
+            <h2>Washer and Dryer Pickup in CITY, Utah</h2>
+
+            <p>
+              Free Reliable Appliance Pickup provides qualifying appliance
+              pickup in CITY for washers, dryers, refrigerators, stoves,
+              ranges, freezers and other major household appliances.
+            </p>
+
+            <p>
+              Washer and dryer pickup is one of our primary Utah services.
+              Working and reusable appliances may be prioritized for reuse.
+            </p>
+
+            <p>
+              Free pickup qualification depends on appliance condition,
+              local demand, accessibility and scheduling. Send clear photos
+              and accurate condition information with your request.
+            </p>
+
+            <p>
+              Utah customers can use our online appliance pickup request form
+              to submit appliance details, pickup location and photos for review.
+            </p>
+          </section>
+          """.replace("CITY", name)
+
+              if "</main>" in html:
+                  html = html.replace(
+                      "</main>",
+                      section + "\n</main>",
+                      1
+                  )
+              elif "</body>" in html:
+                  html = html.replace(
+                      "</body>",
+                      section + "\n</body>",
+                      1
+                  )
+              else:
+                  html += section
+
+              file.write_text(
+                  html,
+                  encoding="utf-8"
+              )
+
+              print("Updated:", name)
+
+          PY
+
+      - name: Save changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "Strengthen Utah SEO"
+          git push
