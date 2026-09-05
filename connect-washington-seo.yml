@@ -1,0 +1,227 @@
+name: Connect Washington SEO
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  connect-washington:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Update sitemap and internal links
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          base_url = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+
+          washington_pages = [
+              ("Washington", "washington-appliance-pickup"),
+              ("Seattle", "seattle-appliance-pickup"),
+              ("Tacoma", "tacoma-appliance-pickup"),
+              ("Bellevue", "bellevue-appliance-pickup"),
+              ("Everett", "everett-appliance-pickup"),
+              ("Vancouver", "vancouver-appliance-pickup"),
+              ("Kent", "kent-appliance-pickup"),
+              ("Renton", "renton-appliance-pickup"),
+              ("Federal Way", "federal-way-appliance-pickup"),
+              ("Spokane", "spokane-appliance-pickup"),
+              ("Auburn", "auburn-appliance-pickup"),
+              ("Lakewood", "lakewood-appliance-pickup"),
+              ("Puyallup", "puyallup-appliance-pickup"),
+              ("Redmond", "redmond-appliance-pickup"),
+              ("Kirkland", "kirkland-appliance-pickup"),
+              ("Bothell", "bothell-appliance-pickup"),
+              ("Lynnwood", "lynnwood-appliance-pickup"),
+              ("Shoreline", "shoreline-appliance-pickup"),
+              ("Burien", "burien-appliance-pickup")
+          ]
+
+          # -----------------------------
+          # 1. UPDATE SITEMAP
+          # -----------------------------
+
+          sitemap = Path("sitemap.xml")
+
+          if sitemap.exists():
+              tree = ET.parse(sitemap)
+              root = tree.getroot()
+
+              namespace = "http://www.sitemaps.org/schemas/sitemap/0.9"
+              ET.register_namespace("", namespace)
+
+              existing = set()
+
+              for loc in root.findall(f".//{{{namespace}}}loc"):
+                  if loc.text:
+                      existing.add(loc.text.strip())
+
+              for city, slug in washington_pages:
+                  url = f"{base_url}{slug}/"
+
+                  if url not in existing:
+                      url_el = ET.SubElement(
+                          root,
+                          f"{{{namespace}}}url"
+                      )
+
+                      loc_el = ET.SubElement(
+                          url_el,
+                          f"{{{namespace}}}loc"
+                      )
+
+                      loc_el.text = url
+
+              tree.write(
+                  sitemap,
+                  encoding="utf-8",
+                  xml_declaration=True
+              )
+
+              print("Sitemap updated.")
+
+          # -----------------------------
+          # 2. UPDATE WASHINGTON HUB
+          # -----------------------------
+
+          hub = Path(
+              "washington-appliance-pickup/index.html"
+          )
+
+          if hub.exists():
+              text = hub.read_text(
+                  encoding="utf-8"
+              )
+
+              start_marker = "<!-- WASHINGTON CITY LINKS START -->"
+              end_marker = "<!-- WASHINGTON CITY LINKS END -->"
+
+              links = []
+
+              for city, slug in washington_pages[1:]:
+                  links.append(
+                      f'<li><a href="../{slug}/">{city} Appliance Pickup</a></li>'
+                  )
+
+              section = f"""
+          {start_marker}
+          <section>
+              <h2>Washington Appliance Pickup Service Areas</h2>
+
+              <p>
+                  Explore qualifying appliance pickup services
+                  throughout our growing Washington network.
+              </p>
+
+              <ul>
+                  {''.join(links)}
+              </ul>
+          </section>
+          {end_marker}
+          """
+
+              if start_marker not in text:
+                  text = text.replace(
+                      "</main>",
+                      section + "\n</main>"
+                  )
+
+                  hub.write_text(
+                      text,
+                      encoding="utf-8"
+                  )
+
+                  print("Washington hub linked.")
+
+          # -----------------------------
+          # 3. UPDATE HOMEPAGE
+          # -----------------------------
+
+          homepage = Path("index.html")
+
+          if homepage.exists():
+              text = homepage.read_text(
+                  encoding="utf-8"
+              )
+
+              marker = "<!-- WASHINGTON HOMEPAGE LINKS -->"
+
+              section = f"""
+          {marker}
+          <section>
+              <h2>Washington Appliance Pickup</h2>
+
+              <p>
+                  Free Reliable Appliance Pickup now serves
+                  qualifying appliance pickup requests across
+                  multiple Washington markets.
+              </p>
+
+              <p>
+                  <a href="washington-appliance-pickup/">
+                      Washington Appliance Pickup
+                  </a>
+                  |
+                  <a href="seattle-appliance-pickup/">
+                      Seattle
+                  </a>
+                  |
+                  <a href="tacoma-appliance-pickup/">
+                      Tacoma
+                  </a>
+                  |
+                  <a href="bellevue-appliance-pickup/">
+                      Bellevue
+                  </a>
+                  |
+                  <a href="everett-appliance-pickup/">
+                      Everett
+                  </a>
+                  |
+                  <a href="vancouver-appliance-pickup/">
+                      Vancouver
+                  </a>
+                  |
+                  <a href="spokane-appliance-pickup/">
+                      Spokane
+                  </a>
+              </p>
+          </section>
+          """
+
+              if marker not in text:
+                  text = text.replace(
+                      "</main>",
+                      section + "\n</main>"
+                  )
+
+                  homepage.write_text(
+                      text,
+                      encoding="utf-8"
+                  )
+
+                  print("Homepage Washington links added.")
+
+          print("Washington SEO connection complete.")
+          PY
+
+      - name: Commit SEO updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add sitemap.xml index.html washington-appliance-pickup/index.html
+
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit"
+          else
+            git commit -m "Connect Washington pages and sitemap"
+            git push
+          fi
