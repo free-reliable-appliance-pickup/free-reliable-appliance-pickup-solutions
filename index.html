@@ -2,17 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Free Appliance Pickup, Removal & Recycling | Free Reliable Appliance Pickup</title>
 
-<meta name="description" content="Request qualifying washer, dryer, refrigerator, stove, freezer and major appliance pickup across California, Oregon, Washington, Arizona, Utah, Colorado, Nevada and Idaho.">
+<meta
+    name="description"
+    content="Request qualifying washer, dryer, refrigerator, stove, freezer and major appliance pickup across California, Oregon, Washington, Arizona, Utah, Colorado, Nevada and Idaho."
+>
 
 <meta name="robots" content="index, follow">
 
-<link rel="canonical" href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/">
+<link
+    rel="canonical"
+    href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -117,12 +124,27 @@ h3 {
     margin: 8px 4px;
 }
 
+.button:hover {
+    background: #084f2c;
+}
+
 .service-grid,
 .area-grid,
 .steps-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 18px;
+}
+
+.service-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.area-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.steps-grid {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .card,
@@ -133,12 +155,9 @@ h3 {
     background: #fafafa;
 }
 
-.card h3 {
+.card h3,
+.area-group h3 {
     margin-top: 0;
-}
-
-.area-grid {
-    grid-template-columns: repeat(2, 1fr);
 }
 
 .area-group a {
@@ -149,8 +168,8 @@ h3 {
     text-decoration: none;
 }
 
-.steps-grid {
-    grid-template-columns: repeat(4, 1fr);
+.area-group a:hover {
+    text-decoration: underline;
 }
 
 .step-number {
@@ -165,29 +184,45 @@ h3 {
     font-weight: bold;
 }
 
-/* REAL APPLIANCE PICKUP PHOTO SECTION */
+/* APPLIANCE PICKUP PHOTO GALLERY */
 
 .pickup-gallery {
     text-align: center;
 }
 
-.pickup-gallery p {
+.pickup-gallery > p {
     max-width: 850px;
     margin: 0 auto 25px;
     font-size: 18px;
 }
 
 .pickup-photo-main {
-    max-width: 950px;
-    margin: auto;
+    max-width: 1000px;
+    margin: 25px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.pickup-photo-main figure {
+    margin: 0;
+    background: #f4f4f4;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 5px 18px rgba(0,0,0,.16);
 }
 
 .pickup-photo-main img {
     display: block;
     width: 100%;
-    height: auto;
-    border-radius: 14px;
-    box-shadow: 0 5px 18px rgba(0,0,0,.18);
+    height: 330px;
+    object-fit: cover;
+}
+
+.pickup-photo-main figcaption {
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #444;
 }
 
 .pickup-caption {
@@ -195,6 +230,8 @@ h3 {
     color: #444;
     font-size: 16px;
 }
+
+/* FORM */
 
 form {
     display: grid;
@@ -213,13 +250,14 @@ textarea {
     border: 1px solid #bbb;
     border-radius: 6px;
     font-size: 16px;
+    font-family: inherit;
 }
 
 textarea {
     min-height: 120px;
 }
 
-input[type=file] {
+input[type="file"] {
     background: #fff;
 }
 
@@ -240,6 +278,10 @@ button {
     font-size: 17px;
     font-weight: bold;
     cursor: pointer;
+}
+
+button:hover {
+    background: #084f2c;
 }
 
 .contact-box {
@@ -265,32 +307,51 @@ footer {
     margin-top: 35px;
 }
 
-@media(max-width:800px) {
+footer a {
+    color: #fff;
+}
+
+@media(max-width: 800px) {
+
     header h1 {
         font-size: 30px;
     }
 
+    .hero h2 {
+        font-size: 29px;
+    }
+
     .service-grid,
     .area-grid,
-    .steps-grid {
+    .steps-grid,
+    .pickup-photo-main {
         grid-template-columns: 1fr;
+    }
+
+    .pickup-photo-main img {
+        height: auto;
     }
 
     nav a {
         display: inline-block;
         margin: 4px 7px;
     }
+
+    section {
+        padding: 28px 18px;
+    }
 }
+
 </style>
 
 <script type="application/ld+json">
 {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"Free Reliable Appliance Pickup",
-    "url":"https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/",
-    "description":"Qualifying major appliance pickup, removal and recycling.",
-    "areaServed":[
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Free Reliable Appliance Pickup",
+    "url": "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/",
+    "description": "Qualifying major appliance pickup, removal and recycling.",
+    "areaServed": [
         "California",
         "Oregon",
         "Washington",
@@ -305,14 +366,14 @@ footer {
 
 <script type="application/ld+json">
 {
-    "@context":"https://schema.org",
-    "@type":"Service",
-    "name":"Free Appliance Pickup",
-    "provider":{
-        "@type":"Organization",
-        "name":"Free Reliable Appliance Pickup"
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Free Appliance Pickup",
+    "provider": {
+        "@type": "Organization",
+        "name": "Free Reliable Appliance Pickup"
     },
-    "serviceType":[
+    "serviceType": [
         "Washer Pickup",
         "Dryer Pickup",
         "Washer and Dryer Pickup",
@@ -323,7 +384,7 @@ footer {
         "Appliance Removal",
         "Appliance Recycling"
     ],
-    "areaServed":[
+    "areaServed": [
         "California",
         "Oregon",
         "Washington",
@@ -341,22 +402,26 @@ footer {
 <body>
 
 <header>
+
     <h1>Free Reliable Appliance Pickup</h1>
 
     <p>
         Free appliance pickup, removal and recycling for qualifying
         washers, dryers, refrigerators, stoves, ranges, freezers,
-        dishwashers and other major appliances across selected service areas.
+        dishwashers and other major household appliances.
     </p>
+
 </header>
 
 <nav>
+
     <a href="#services">Services</a>
     <a href="#pickup-photos">Our Pickups</a>
     <a href="#areas">Service Areas</a>
     <a href="#how-it-works">How It Works</a>
     <a href="#contact">Request Pickup</a>
     <a href="partners/">Pickup Partners</a>
+
 </nav>
 
 <main class="container">
@@ -382,29 +447,131 @@ footer {
 
 </section>
 
+
+<!-- REAL PICKUP PHOTOS -->
+
 <section id="pickup-photos" class="pickup-gallery">
 
     <h2>Real Appliance Pickup Service</h2>
 
     <p>
         We pick up qualifying refrigerators, washers, dryers, stoves,
-        ranges and other major household appliances. Our pickup network
-        uses different pickup trucks and trailers depending on the
-        appliance load and service area.
+        ranges, freezers and other major household appliances.
+        Different pickup trucks and trailers may be used depending on
+        the appliance load and service area.
     </p>
 
     <div class="pickup-photo-main">
 
-        <img
-            src="images/appliance-pickup-trucks.jpg.png"
-            alt="Appliance pickup trucks carrying refrigerators washers dryers and stoves"
-            loading="lazy"
-        >
+        <figure>
+
+            <img
+                src="IMG-20230603-WA0032.jpg"
+                alt="Pickup truck used for major appliance pickup"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Major appliance pickup service
+            </figcaption>
+
+        </figure>
+
+
+        <figure>
+
+            <img
+                src="IMG-20230604-WA0038.jpg"
+                alt="Pickup truck carrying household appliances"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Washer, dryer and appliance pickup
+            </figcaption>
+
+        </figure>
+
+
+        <figure>
+
+            <img
+                src="IMG-20230628-WA0042.jpg"
+                alt="Truck used for free appliance pickup service"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Local appliance pickup
+            </figcaption>
+
+        </figure>
+
+
+        <figure>
+
+            <img
+                src="IMG-20230715-WA0046.jpg"
+                alt="Pickup truck transporting major household appliances"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Major appliance removal
+            </figcaption>
+
+        </figure>
+
+
+        <figure>
+
+            <img
+                src="IMG-20230720-WA0018.jpg"
+                alt="Appliance pickup truck used for washer dryer refrigerator and stove pickup"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Washer and dryer pickup
+            </figcaption>
+
+        </figure>
+
+
+        <figure>
+
+            <img
+                src="IMG-20230805-WA0003.jpg"
+                alt="Pickup truck used for refrigerator and appliance removal"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Refrigerator and appliance pickup
+            </figcaption>
+
+        </figure>
+
+
+        <figure>
+
+            <img
+                src="IMG-20230805-WA0013.jpg"
+                alt="Truck carrying appliances for removal reuse and recycling"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Appliance reuse and recycling
+            </figcaption>
+
+        </figure>
 
     </div>
 
     <p class="pickup-caption">
-        Major appliance pickup • Washer &amp; dryer pickup • Refrigerator pickup • Stove pickup
+        Major appliance pickup • Washer &amp; dryer pickup •
+        Refrigerator pickup • Stove pickup • Freezer pickup
     </p>
 
     <a class="button" href="#contact">
@@ -413,6 +580,9 @@ footer {
 
 </section>
 
+
+<!-- SERVICES -->
+
 <section id="services">
 
 <h2>Major Appliance Pickup Services</h2>
@@ -420,96 +590,148 @@ footer {
 <div class="service-grid">
 
 <div class="card">
+
 <h3>Washer Pickup</h3>
+
 <p>
 Top-load and front-load washing machines are a priority pickup category.
+Send clear photos and condition information with your request.
 </p>
+
 </div>
 
+
 <div class="card">
+
 <h3>Dryer Pickup</h3>
+
 <p>
 Qualifying electric and gas dryers may be picked up from accessible locations.
 </p>
+
 </div>
 
+
 <div class="card">
+
 <h3>Washer &amp; Dryer Sets</h3>
+
 <p>
 Matching or mixed-brand washer and dryer sets are welcome for review.
 Please send photos of both machines.
 </p>
+
 </div>
 
+
 <div class="card">
+
 <h3>Refrigerator Pickup</h3>
+
 <p>
-Qualifying full-size refrigerators, including common top-freezer,
+Qualifying full-size refrigerators including top-freezer,
 side-by-side and French-door models.
 </p>
+
 </div>
 
+
 <div class="card">
+
 <h3>Stove &amp; Range Pickup</h3>
+
 <p>
-Qualifying electric and gas stoves and ranges may be considered.
+Qualifying electric and gas stoves and ranges may be considered for pickup.
 </p>
+
 </div>
 
+
 <div class="card">
+
 <h3>Freezer Pickup</h3>
+
 <p>
 Qualifying upright and chest freezers may be available for pickup.
 </p>
+
 </div>
 
+
 <div class="card">
+
 <h3>Dishwasher Pickup</h3>
+
 <p>
-Dishwashers may qualify depending on condition, access and local demand.
+Dishwashers may qualify depending on condition,
+access and current local demand.
 </p>
+
 </div>
 
+
 <div class="card">
+
 <h3>Multiple Appliances</h3>
+
 <p>
-Have several major appliances? Include all of them in one request
-and upload clear photos.
+Have several major appliances?
+Include all appliances in one request and send clear photos.
 </p>
+
 </div>
+
 
 <div class="card">
+
 <h3>Reuse &amp; Recycling</h3>
+
 <p>
-Qualifying appliances may be removed for reuse, recovery or recycling.
+Qualifying appliances may be removed for reuse,
+recovery or responsible recycling.
 </p>
+
 </div>
 
 </div>
+
 
 <div class="notice">
+
+<strong>Important:</strong>
+Pickup availability depends on appliance type, condition,
+location, access and local demand.
+
+<br><br>
+
 <strong>Microwaves:</strong>
-standalone microwaves are generally not accepted.
-A microwave may be considered with another qualifying major appliance.
+Standalone microwaves are generally not accepted.
+A microwave may be considered together with another qualifying major appliance.
+
 </div>
 
 </section>
 
+
+<!-- SERVICE AREAS -->
+
 <section id="areas">
 
-<h2>Service Areas</h2>
+<h2>Free Appliance Pickup Service Areas</h2>
 
 <p>
-Current priority service states are California, Oregon, Washington,
-Arizona, Utah, Colorado, Nevada and Idaho.
-Pickup availability varies by city, ZIP code, appliance condition
-and current demand.
+Current priority service states include California, Oregon,
+Washington, Arizona, Utah, Colorado, Nevada and Idaho.
+Availability varies by city, ZIP code, appliance condition and demand.
 </p>
 
 <div class="area-grid">
 
+
 <div class="area-group">
+
 <h3>California</h3>
+
 <a href="california/">California</a>
 <a href="california/los-angeles/">Los Angeles</a>
 <a href="california/fontana/">Fontana</a>
@@ -520,10 +742,14 @@ and current demand.
 <a href="california/palm-desert/">Palm Desert</a>
 <a href="california/palm-springs/">Palm Springs</a>
 <a href="california/victorville/">Victorville</a>
+
 </div>
 
+
 <div class="area-group">
+
 <h3>Oregon</h3>
+
 <a href="oregon/">Oregon</a>
 <a href="oregon/portland/">Portland</a>
 <a href="oregon/salem/">Salem</a>
@@ -531,20 +757,28 @@ and current demand.
 <a href="oregon/beaverton/">Beaverton</a>
 <a href="oregon/hillsboro/">Hillsboro</a>
 <a href="oregon/gresham/">Gresham</a>
+
 </div>
 
+
 <div class="area-group">
+
 <h3>Washington</h3>
+
 <a href="washington/">Washington</a>
 <a href="washington/seattle/">Seattle</a>
 <a href="washington/tacoma/">Tacoma</a>
 <a href="washington/bellevue/">Bellevue</a>
 <a href="washington/everett/">Everett</a>
 <a href="washington/vancouver/">Vancouver</a>
+
 </div>
 
+
 <div class="area-group">
+
 <h3>Arizona</h3>
+
 <a href="arizona/">Arizona</a>
 <a href="arizona/phoenix/">Phoenix</a>
 <a href="arizona/mesa/">Mesa</a>
@@ -552,9 +786,477 @@ and current demand.
 <a href="arizona/scottsdale/">Scottsdale</a>
 <a href="arizona/glendale/">Glendale</a>
 <a href="arizona/tempe/">Tempe</a>
+
 </div>
 
+
 <div class="area-group">
+
 <h3>Utah</h3>
+
 <a href="utah/">Utah</a>
-<a href="utah/salt-lake-city/">Salt Lake City</a
+<a href="utah/salt-lake-city/">Salt Lake City</a>
+<a href="utah/west-valley-city/">West Valley City</a>
+<a href="utah/west-jordan/">West Jordan</a>
+<a href="utah/sandy/">Sandy</a>
+<a href="utah/draper/">Draper</a>
+<a href="utah/layton/">Layton</a>
+
+</div>
+
+
+<div class="area-group">
+
+<h3>Colorado</h3>
+
+<a href="colorado/">Colorado</a>
+<a href="colorado/denver/">Denver</a>
+<a href="colorado/aurora/">Aurora</a>
+<a href="colorado/lakewood/">Lakewood</a>
+<a href="colorado/arvada/">Arvada</a>
+<a href="colorado/thornton/">Thornton</a>
+<a href="colorado/centennial/">Centennial</a>
+<a href="colorado/westminster/">Westminster</a>
+<a href="colorado/wheat-ridge/">Wheat Ridge</a>
+
+</div>
+
+
+<div class="area-group">
+
+<h3>Nevada</h3>
+
+<a href="nevada/">Nevada</a>
+<a href="nevada/las-vegas/">Las Vegas</a>
+<a href="nevada/henderson/">Henderson</a>
+<a href="nevada/north-las-vegas/">North Las Vegas</a>
+<a href="nevada/reno/">Reno</a>
+<a href="nevada/sparks/">Sparks</a>
+
+</div>
+
+
+<div class="area-group">
+
+<h3>Idaho</h3>
+
+<a href="idaho/">Idaho</a>
+<a href="idaho/boise/">Boise</a>
+<a href="idaho/meridian/">Meridian</a>
+<a href="idaho/nampa/">Nampa</a>
+<a href="idaho/caldwell/">Caldwell</a>
+<a href="idaho/eagle/">Eagle</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+
+<section id="how-it-works">
+
+<h2>How Free Appliance Pickup Works</h2>
+
+<div class="steps-grid">
+
+
+<div class="card">
+
+<span class="step-number">1</span>
+
+<h3>Send Appliance Details</h3>
+
+<p>
+Tell us what appliance you have, the brand if known,
+and whether it is working or needs repair.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<span class="step-number">2</span>
+
+<h3>Send Clear Photos</h3>
+
+<p>
+Send clear pictures showing the front and overall condition
+of the appliance.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<span class="step-number">3</span>
+
+<h3>Provide Pickup Location</h3>
+
+<p>
+Tell us your city, ZIP code and whether the appliance
+is on the first floor, upstairs, basement or garage.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<span class="step-number">4</span>
+
+<h3>Pickup Review</h3>
+
+<p>
+We review your request and confirm whether free pickup
+is available in your area.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- REQUEST SECTION -->
+
+<section id="contact">
+
+<h2>Request Free Appliance Pickup</h2>
+
+<p>
+For the fastest review, provide complete appliance information
+and clear photos.
+</p>
+
+<div class="photo-help">
+
+<strong>Please include:</strong>
+
+<br>
+
+Appliance type • Brand • Working condition • City • State • ZIP code •
+Floor or access information • Clear photos
+
+</div>
+
+<br>
+
+<form>
+
+<label for="name">
+Name
+</label>
+
+<input
+    type="text"
+    id="name"
+    name="name"
+    placeholder="Your name"
+>
+
+
+<label for="phone">
+Phone Number
+</label>
+
+<input
+    type="tel"
+    id="phone"
+    name="phone"
+    placeholder="Your phone number"
+>
+
+
+<label for="email">
+Email
+</label>
+
+<input
+    type="email"
+    id="email"
+    name="email"
+    placeholder="Your email address"
+>
+
+
+<label for="appliance">
+Appliance Type
+</label>
+
+<select id="appliance" name="appliance">
+
+<option value="">
+Select appliance
+</option>
+
+<option>
+Washer
+</option>
+
+<option>
+Dryer
+</option>
+
+<option>
+Washer and Dryer Set
+</option>
+
+<option>
+Refrigerator
+</option>
+
+<option>
+Stove / Range
+</option>
+
+<option>
+Freezer
+</option>
+
+<option>
+Dishwasher
+</option>
+
+<option>
+Multiple Appliances
+</option>
+
+</select>
+
+
+<label for="condition">
+Appliance Condition
+</label>
+
+<select id="condition" name="condition">
+
+<option value="">
+Select condition
+</option>
+
+<option>
+Fully Working
+</option>
+
+<option>
+Working With Minor Issue
+</option>
+
+<option>
+Needs Repair
+</option>
+
+<option>
+Not Working
+</option>
+
+<option>
+Not Sure
+</option>
+
+</select>
+
+
+<label for="address">
+Pickup Address
+</label>
+
+<input
+    type="text"
+    id="address"
+    name="address"
+    placeholder="Street address"
+>
+
+
+<label for="city">
+City
+</label>
+
+<input
+    type="text"
+    id="city"
+    name="city"
+    placeholder="City"
+>
+
+
+<label for="state">
+State
+</label>
+
+<select id="state" name="state">
+
+<option value="">
+Select state
+</option>
+
+<option>California</option>
+<option>Oregon</option>
+<option>Washington</option>
+<option>Arizona</option>
+<option>Utah</option>
+<option>Colorado</option>
+<option>Nevada</option>
+<option>Idaho</option>
+
+</select>
+
+
+<label for="zip">
+ZIP Code
+</label>
+
+<input
+    type="text"
+    id="zip"
+    name="zip"
+    placeholder="ZIP code"
+>
+
+
+<label for="access">
+Pickup Access
+</label>
+
+<select id="access" name="access">
+
+<option value="">
+Select access
+</option>
+
+<option>
+Garage
+</option>
+
+<option>
+Driveway
+</option>
+
+<option>
+First Floor
+</option>
+
+<option>
+Second Floor
+</option>
+
+<option>
+Third Floor
+</option>
+
+<option>
+Basement
+</option>
+
+<option>
+Other
+</option>
+
+</select>
+
+
+<label for="message">
+Additional Information
+</label>
+
+<textarea
+    id="message"
+    name="message"
+    placeholder="Tell us the appliance brand, age, condition and anything we should know."
+></textarea>
+
+
+<label for="photos">
+Appliance Photos
+</label>
+
+<input
+    type="file"
+    id="photos"
+    name="photos"
+    accept="image/*"
+    multiple
+>
+
+
+<div class="photo-help">
+
+Clear photos help us determine whether your appliance qualifies
+before a driver is sent to your location.
+
+</div>
+
+<button type="button">
+Request Appliance Pickup
+</button>
+
+</form>
+
+<div class="notice">
+
+<strong>Please note:</strong>
+Submitting appliance information does not automatically guarantee free pickup.
+Pickup must first be reviewed and confirmed based on condition,
+location and local availability.
+
+</div>
+
+</section>
+
+
+<!-- PARTNER SECTION -->
+
+<section>
+
+<div class="contact-box">
+
+<h2>Appliance Pickup Partners</h2>
+
+<p>
+We are expanding our appliance pickup network.
+Independent appliance buyers, recyclers and pickup operators
+may be able to participate in selected service territories.
+</p>
+
+<a class="button" href="partners/">
+Learn About Pickup Partners
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<p>
+<strong>Free Reliable Appliance Pickup</strong>
+</p>
+
+<p>
+Washer Pickup • Dryer Pickup • Refrigerator Pickup •
+Stove Pickup • Freezer Pickup • Appliance Removal
+</p>
+
+<p>
+California • Oregon • Washington • Arizona • Utah •
+Colorado • Nevada • Idaho
+</p>
+
+<p>
+© 2026 Free Reliable Appliance Pickup
+</p>
+
+</footer>
+
+</body>
+</html>
