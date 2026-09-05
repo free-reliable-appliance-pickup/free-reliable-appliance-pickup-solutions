@@ -1,0 +1,93 @@
+name: Fix Missing SEO
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-seo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Fix missing SEO
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+
+          folders = sorted(Path(".").glob("*-appliance-pickup"))
+
+          changed = 0
+
+          for folder in folders:
+              file = folder / "index.html"
+
+              if not file.exists():
+                  continue
+
+              html = file.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
+              original = html
+
+              name = folder.name.replace(
+                  "-appliance-pickup",
+                  ""
+              )
+
+              pretty = " ".join(
+                  word.capitalize()
+                  for word in name.split("-")
+              )
+
+              canonical = BASE + folder.name + "/"
+
+              if not re.search(
+                  r"<title\b",
+                  html,
+                  re.I
+              ):
+                  html = re.sub(
+                      r"</head>",
+                      f"<title>Free Appliance Pickup {pretty} | Washer & Dryer Removal</title>\n</head>",
+                      html,
+                      count=1,
+                      flags=re.I
+                  )
+
+              if not re.search(
+                  r'<meta[^>]+name=["\']description["\']',
+                  html,
+                  re.I
+              ):
+                  description = (
+                      f"Request qualifying free appliance pickup in {pretty} "
+                      f"for washers, dryers, refrigerators, stoves, freezers "
+                      f"and other major appliances."
+                  )
+
+                  html = re.sub(
+                      r"</head>",
+                      f'<meta name="description" content="{description}">\n</head>',
+                      html,
+                      count=1,
+                      flags=re.I
+                  )
+
+              if not re.search(
+                  r'<link[^>]+rel=["\']canonical["\']',
+                  html,
+                  re.I
+              ):
+                  html = re.sub(
+                      r"</head>",
+                      f'<link rel="
