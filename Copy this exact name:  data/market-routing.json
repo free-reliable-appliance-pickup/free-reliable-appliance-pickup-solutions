@@ -1,0 +1,11 @@
+[
+  {"state":"CA","city":"Los Angeles","routing":"owner_priority","cluster":"Los Angeles Core","monthly_price_cents":null,"pricing_status":"collect_data"},
+  {"state":"CA","city":"West Covina","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
+  {"state":"CA","city":"Covina","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
+  {"state":"CA","city":"Pomona","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
+  {"state":"CA","city":"Glendora","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
+  {"state":"CA","city":"La Verne","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
+
+  {"state":"CA","city":"Fontana","routing":"owner_priority","cluster":"Inland Empire","monthly_price_cents":null,"pricing_status":"collect_data"},
+  {"state":"CA","city":"Rialto","routing":"owner_priority","cluster":"Inland Empire","monthly_price_cents":null,"pricing_status":"collect_data"},
+  {"state":"CA","city":"
