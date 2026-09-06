@@ -79,6 +79,10 @@ h2{
     margin-top:0;
 }
 
+h3{
+    color:#17352a;
+}
+
 .green-box{
     background:#eef8f2;
     border-left:5px solid #0b5d35;
@@ -163,3 +167,199 @@ button{
     width:38px;
     height:38px;
     padding:0;
+    border:1px solid #b7cfc1;
+    background:white;
+    color:#0b5d35;
+    border-radius:6px;
+}
+
+.letter:hover,
+.letter.active{
+    background:#0b5d35;
+    color:white;
+}
+
+.city-toolbar{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.city-results{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:10px;
+    max-height:420px;
+    overflow:auto;
+    border:1px solid #d8e5dd;
+    padding:15px;
+    border-radius:9px;
+    background:#fafcfb;
+}
+
+.city-item{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border:1px solid #d8e5dd;
+    padding:10px;
+    border-radius:7px;
+    background:white;
+    cursor:pointer;
+}
+
+.city-item:hover{
+    border-color:#0b5d35;
+}
+
+.city-item input{
+    width:auto;
+    margin:0;
+}
+
+.selected-area{
+    margin-top:20px;
+}
+
+.selected-cities{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+}
+
+.city-tag{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:#eef8f2;
+    color:#0b5d35;
+    border:1px solid #bcd7c8;
+    padding:7px 10px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+.city-tag button{
+    background:none;
+    color:#b00020;
+    padding:0;
+    font-size:17px;
+    line-height:1;
+}
+
+.counter{
+    margin-top:10px;
+    font-weight:bold;
+    color:#0b5d35;
+}
+
+.status{
+    padding:12px;
+    margin-top:15px;
+    border-radius:7px;
+    display:none;
+}
+
+.status.success{
+    display:block;
+    background:#e8f7ee;
+    color:#075c32;
+}
+
+.status.error{
+    display:block;
+    background:#fff0f0;
+    color:#a00000;
+}
+
+.loading{
+    padding:20px;
+    text-align:center;
+    color:#555;
+}
+
+.manual-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:10px;
+    margin-top:15px;
+}
+
+.notice{
+    font-size:14px;
+    color:#555;
+}
+
+footer{
+    margin-top:30px;
+    background:#17352a;
+    color:white;
+    text-align:center;
+    padding:28px 20px;
+}
+
+footer a{
+    color:white;
+}
+
+@media(max-width:700px){
+
+    header h1{
+        font-size:30px;
+    }
+
+    .city-toolbar{
+        grid-template-columns:1fr;
+    }
+
+    .manual-row{
+        grid-template-columns:1fr;
+    }
+
+    nav a{
+        display:inline-block;
+        margin:5px 8px;
+    }
+
+    .card{
+        padding:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Appliance Pickup Partner Program</h1>
+    <p>
+        Join the Free Reliable Appliance Pickup partner network and request
+        appliance pickup territory opportunities throughout the United States.
+        Search by state, city name, or letter A–Z and choose up to 50 cities.
+    </p>
+</header>
+
+<nav>
+    <a href="../">Home</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#territories">Choose Cities</a>
+    <a href="#application">Apply</a>
+</nav>
+
+<main class="container">
+
+<section class="card">
+
+<h2>Grow Your Appliance Pickup Business</h2>
+
+<p>
+Free Reliable Appliance Pickup is building a nationwide network of independent
+appliance pickup partners.
+</p>
+
+<div class="green-box">
+<strong>Partners may request up to 50 cities.</strong>
+Additional cities or expanded territories may become available depending on
+local
