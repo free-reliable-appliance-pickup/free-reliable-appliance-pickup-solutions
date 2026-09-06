@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +6,20 @@
 
 <title>Appliance Pickup Partner Program | Free Reliable Appliance Pickup</title>
 
-<meta name="description" content="Join the Free Reliable Appliance Pickup partner network. Choose service areas across all 50 states, select up to 50 cities, and apply for appliance pickup lead and territory opportunities.">
+<meta
+name="description"
+content="Join the Free Reliable Appliance Pickup partner network. Choose service areas across all 50 states, search cities A-Z, select up to 50 cities, and apply for appliance pickup territory opportunities."
+>
 
 <meta name="robots" content="index, follow">
 
-<link rel="canonical" href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/partners/">
+<link
+rel="canonical"
+href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/partners/"
+>
 
 <style>
+
 :root{
 --green:#0b5d35;
 --green2:#087443;
@@ -24,11 +30,16 @@
 --muted:#666;
 --white:#fff;
 --danger:#a12622;
+--gold:#f4b400;
 }
 
-*{box-sizing:border-box}
+*{
+box-sizing:border-box;
+}
 
-html{scroll-behavior:smooth}
+html{
+scroll-behavior:smooth;
+}
 
 body{
 margin:0;
@@ -38,7 +49,9 @@ color:var(--text);
 background:#f5f5f5;
 }
 
-a{color:inherit}
+a{
+color:inherit;
+}
 
 header{
 background:linear-gradient(135deg,var(--green),var(--green2));
@@ -54,7 +67,7 @@ line-height:1.15;
 }
 
 header p{
-max-width:850px;
+max-width:900px;
 margin:0 auto 24px;
 font-size:1.08rem;
 }
@@ -100,7 +113,10 @@ border-radius:12px;
 box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
-h2,h3{color:var(--green)}
+h2,
+h3{
+color:var(--green);
+}
 
 h2{
 margin-top:0;
@@ -121,11 +137,21 @@ padding:20px;
 border-radius:9px;
 }
 
-.card h3{margin-top:0}
+.card h3{
+margin-top:0;
+}
 
 .notice{
 background:var(--light);
 border-left:5px solid var(--green);
+padding:16px;
+margin:18px 0;
+border-radius:6px;
+}
+
+.warning{
+background:#fff8e8;
+border-left:5px solid var(--gold);
 padding:16px;
 margin:18px 0;
 border-radius:6px;
@@ -179,11 +205,16 @@ font-weight:700;
 margin-bottom:6px;
 }
 
-input,select,textarea,button{
+input,
+select,
+textarea,
+button{
 font:inherit;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
 width:100%;
 border:1px solid #b8c6bd;
 border-radius:8px;
@@ -200,6 +231,13 @@ min-height:110px;
 font-size:.92rem;
 color:var(--muted);
 margin-top:5px;
+}
+
+.status{
+font-size:.94rem;
+margin-top:10px;
+font-weight:700;
+color:var(--green);
 }
 
 .az-title{
@@ -247,6 +285,7 @@ margin:18px 0 10px;
 
 .city-meta{
 color:var(--muted);
+font-weight:700;
 }
 
 .clear-filter{
@@ -261,7 +300,7 @@ cursor:pointer;
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
 gap:9px;
-max-height:470px;
+max-height:500px;
 overflow:auto;
 padding-right:4px;
 }
@@ -284,6 +323,10 @@ border-color:var(--green);
 .city-item strong{
 display:block;
 color:var(--green);
+}
+
+.city-item small{
+color:var(--muted);
 }
 
 .empty{
@@ -332,7 +375,9 @@ gap:10px;
 flex-wrap:wrap;
 }
 
-.selected-head strong{color:var(--green)}
+.selected-head strong{
+color:var(--green);
+}
 
 .selected-count{
 font-weight:700;
@@ -381,7 +426,9 @@ grid-template-columns:1fr 1fr;
 gap:14px;
 }
 
-.full{grid-column:1/-1}
+.full{
+grid-column:1/-1;
+}
 
 .checkbox-row{
 display:flex;
@@ -413,7 +460,9 @@ text-align:center;
 padding:30px 18px;
 }
 
-footer a{color:#fff}
+footer a{
+color:#fff;
+}
 
 @media(max-width:720px){
 
@@ -459,6 +508,7 @@ grid-template-columns:1fr;
 }
 
 }
+
 </style>
 </head>
 
@@ -466,15 +516,19 @@ grid-template-columns:1fr;
 
 <header>
 
-<h1>Appliance Pickup Partner Program</h1>
+<h1>
+Appliance Pickup Partner Program
+</h1>
 
 <p>
 Build your appliance pickup territory with Free Reliable Appliance Pickup.
-Choose a state, search cities A–Z, select up to 50 cities, and apply for
-available lead and territory opportunities.
+Choose any U.S. state, search cities, browse cities A–Z,
+select up to 50 cities and apply for available territory opportunities.
 </p>
 
-<a class="hero-button" href="#territories">
+<a
+class="hero-button"
+href="#territories">
 Choose Your Territory
 </a>
 
@@ -482,11 +536,25 @@ Choose Your Territory
 
 <nav>
 
-<a href="../">Home</a>
-<a href="#how-it-works">How It Works</a>
-<a href="#territories">Territories</a>
-<a href="#appliances">Appliances</a>
-<a href="#apply">Apply</a>
+<a href="../">
+Home
+</a>
+
+<a href="#how-it-works">
+How It Works
+</a>
+
+<a href="#territories">
+Territories
+</a>
+
+<a href="#appliances">
+Appliances
+</a>
+
+<a href="#apply">
+Apply
+</a>
 
 </nav>
 
@@ -494,53 +562,78 @@ Choose Your Territory
 
 <section>
 
-<h2>Partner With Free Reliable Appliance Pickup</h2>
+<h2>
+Partner With Free Reliable Appliance Pickup
+</h2>
 
 <p>
 We are building a nationwide network of reliable local appliance pickup
-operators. Qualified partners may receive customer pickup opportunities
-in approved service areas when leads are available.
+operators. Qualified partners may receive appliance pickup opportunities
+in approved service areas when customer demand is available.
 </p>
 
 <div class="grid">
 
 <div class="card">
-<h3>Local Leads</h3>
+
+<h3>
+Local Pickup Opportunities
+</h3>
+
 <p>
-Receive qualifying appliance pickup opportunities in approved service areas.
+Receive qualifying appliance pickup opportunities in your approved service area.
 </p>
+
 </div>
 
 <div class="card">
-<h3>Choose Your Cities</h3>
+
+<h3>
+Choose Your Cities
+</h3>
+
 <p>
-Build a territory by selecting up to 50 cities.
-Larger territory requests can be reviewed separately.
+Build a standard territory by selecting up to 50 cities.
+Larger territories may be reviewed separately.
 </p>
+
 </div>
 
 <div class="card">
-<h3>Grow Your Operation</h3>
+
+<h3>
+Grow Your Operation
+</h3>
+
 <p>
-Add potential pickup opportunities without relying only on your own advertising.
+Add potential pickup opportunities without depending only on your own advertising.
 </p>
+
 </div>
 
 <div class="card">
-<h3>Nationwide Expansion</h3>
+
+<h3>
+Nationwide Expansion
+</h3>
+
 <p>
-Partner opportunities may become available across all 50 U.S. states
-as the network grows.
+Partner opportunities may be available across all 50 U.S. states
+as the network expands.
 </p>
+
 </div>
 
 </div>
 
 </section>
 
+
 <section id="how-it-works">
 
-<h2>How the Partner Program Works</h2>
+<h2>
+How the Partner Program Works
+</h2>
 
 <ol class="steps">
 
@@ -553,33 +646,35 @@ Browse cities by A–Z or search by city name.
 </li>
 
 <li>
-Select up to 50 cities for your requested territory.
+Tap a city to add it to your requested territory.
 </li>
 
 <li>
-If a city is not listed yet, type it manually and add it.
+Choose up to 50 cities for a standard territory request.
 </li>
 
 <li>
-Submit your partner application with your contact and operating information.
+If you cannot find a city, type it manually and add it.
 </li>
 
 <li>
-We review territory availability, service ability and customer demand
-before approval.
+Submit your partner application for review.
 </li>
 
 </ol>
 
 </section>
 
+
 <section id="territories">
 
-<h2>Choose State & Cities</h2>
+<h2>
+Choose Your State & Cities
+</h2>
 
 <p>
-Choose any of the 50 states. Then search cities or browse them alphabetically.
-Letters without matching cities are disabled so you do not open an empty letter.
+All 50 states are available below.
+Choose a state first, then use the A–Z buttons or city search.
 </p>
 
 <div class="territory-box">
@@ -594,1679 +689,40 @@ Choose State
 
 <select id="stateSelect">
 
-<option value="">Choose a State</option>
-
-<option value="alabama">Alabama</option>
-<option value="alaska">Alaska</option>
-<option value="arizona">Arizona</option>
-<option value="arkansas">Arkansas</option>
-<option value="california">California</option>
-<option value="colorado">Colorado</option>
-<option value="connecticut">Connecticut</option>
-<option value="delaware">Delaware</option>
-<option value="florida">Florida</option>
-<option value="georgia">Georgia</option>
-<option value="hawaii">Hawaii</option>
-<option value="idaho">Idaho</option>
-<option value="illinois">Illinois</option>
-<option value="indiana">Indiana</option>
-<option value="iowa">Iowa</option>
-<option value="kansas">Kansas</option>
-<option value="kentucky">Kentucky</option>
-<option value="louisiana">Louisiana</option>
-<option value="maine">Maine</option>
-<option value="maryland">Maryland</option>
-<option value="massachusetts">Massachusetts</option>
-<option value="michigan">Michigan</option>
-<option value="minnesota">Minnesota</option>
-<option value="mississippi">Mississippi</option>
-<option value="missouri">Missouri</option>
-<option value="montana">Montana</option>
-<option value="nebraska">Nebraska</option>
-<option value="nevada">Nevada</option>
-<option value="new-hampshire">New Hampshire</option>
-<option value="new-jersey">New Jersey</option>
-<option value="new-mexico">New Mexico</option>
-<option value="new-york">New York</option>
-<option value="north-carolina">North Carolina</option>
-<option value="north-dakota">North Dakota</option>
-<option value="ohio">Ohio</option>
-<option value="oklahoma">Oklahoma</option>
-<option value="oregon">Oregon</option>
-<option value="pennsylvania">Pennsylvania</option>
-<option value="rhode-island">Rhode Island</option>
-<option value="south-carolina">South Carolina</option>
-<option value="south-dakota">South Dakota</option>
-<option value="tennessee">Tennessee</option>
-<option value="texas">Texas</option>
-<option value="utah">Utah</option>
-<option value="vermont">Vermont</option>
-<option value="virginia">Virginia</option>
-<option value="washington">Washington</option>
-<option value="west-virginia">West Virginia</option>
-<option value="wisconsin">Wisconsin</option>
-<option value="wyoming">Wyoming</option>
-
-</select>
-
-</div>
-
-<div>
-
-<label for="citySearch">
-Search City
-</label>
-
-<input
-id="citySearch"
-type="search"
-placeholder="Example: Alhambra"
->
-
-<div class="helper">
-Search the cities in the selected state.
-</div>
-
-</div>
-
-</div>
-
-<div class="az-title">
-Browse Cities A–Z
-</div>
-
-<div
-class="az"
-id="azButtons">
-</div>
-
-<div class="city-toolbar">
-
-<div
-class="city-meta"
-id="cityMeta">
-Choose a state to view cities.
-</div>
-
-<button
-type="button"
-class="clear-filter"
-id="clearFilter">
-Clear City Filter
-</button>
-
-</div>
-
-<div
-class="city-list"
-id="cityList">
-
-<div class="empty">
-Choose a state above to begin.
-</div>
-
-</div>
-
-<div class="manual-add">
-
-<label for="manualCity">
-City Not Listed? Add It Manually
-</label>
-
-<div class="manual-row">
-
-<input
-id="manualCity"
-type="text"
-placeholder="Type city name"
->
-
-<button
-type="button"
-class="add-button"
-id="manualAddButton">
-Add City
-</button>
-
-</div>
-
-<div class="helper">
-You can request a city even if its city page has not been created yet.
-</div>
-
-</div>
-
-<div class="selected-wrap">
-
-<div class="selected-head">
-
-<strong>
-Your Selected Territory
-</strong>
-
-<div>
-
-<span
-class="selected-count"
-id="selectedCount">
-0 / 50 cities
-</span>
-
-&nbsp;
-
-<button
-type="button"
-class="small-button"
-id="clearSelected">
-Clear All
-</button>
-
-</div>
-
-</div>
-
-<div
-class="selected-list"
-id="selectedList">
-
-<span class="helper">
-No cities selected yet.
-</span>
-
-</div>
-
-</div>
-
-<div class="notice">
-
-<strong>Territory limit:</strong>
-
-A standard partner request can include up to 50 cities.
-If demand and coverage justify it, larger territories may be considered.
-
-</div>
-
-</div>
-
-</section>
-
-<section id="appliances">
-
-<h2>Appliances Commonly Requested</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Washers</h3>
-<p>
-Top-load, front-load and stackable washing machines.
-</p>
-</div>
-
-<div class="card">
-<h3>Dryers</h3>
-<p>
-Electric and gas dryers, including washer and dryer sets.
-</p>
-</div>
-
-<div class="card">
-<h3>Refrigerators</h3>
-<p>
-Top-freezer, side-by-side, French-door and other full-size refrigerators.
-</p>
-</div>
-
-<div class="card">
-<h3>Stoves & Ranges</h3>
-<p>
-Major electric and gas stoves and ranges.
-</p>
-</div>
-
-<div class="card">
-<h3>Freezers</h3>
-<p>
-Upright and chest freezers that qualify for pickup.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<section>
-
-<h2>Who We Are Looking For</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Reliable Operators</h3>
-<p>
-People who can respond to customers and complete pickups professionally.
-</p>
-</div>
-
-<div class="card">
-<h3>Appliance Resellers</h3>
-<p>
-Independent appliance sellers who can handle additional pickup opportunities.
-</p>
-</div>
-
-<div class="card">
-<h3>Pickup Trucks & Trailers</h3>
-<p>
-Operators with suitable pickup trucks, trailers, cargo vans or similar equipment.
-</p>
-</div>
-
-<div class="card">
-<h3>Consistent Coverage</h3>
-<p>
-Partners who can reliably service the cities included in their approved territory.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<section id="apply">
-
-<h2>Apply to Become a Partner</h2>
-
-<p>
-Complete the information below.
-Your selected cities will automatically be copied into the requested territory field.
-</p>
-
-<form
-id="partnerForm"
-action="mailto:freereliableappliancepickup@gmail.com"
-method="post"
-enctype="text/plain">
-
-<div class="apply-grid">
-
-<div>
-
-<label for="name">
-Full Name *
-</label>
-
-<input
-id="name"
-name="Full Name"
-required
->
-
-</div>
-
-<div>
-
-<label for="phone">
-Phone Number *
-</label>
-
-<input
-id="phone"
-name="Phone Number"
-type="tel"
-required
->
-
-</div>
-
-<div>
-
-<label for="email">
-Email Address *
-</label>
-
-<input
-id="email"
-name="Email Address"
-type="email"
-required
->
-
-</div>
-
-<div>
-
-<label for="business">
-Business Name
-</label>
-
-<input
-id="business"
-name="Business Name"
->
-
-</div>
-
-<div>
-
-<label for="primaryState">
-Primary State *
-</label>
-
-<input
-id="primaryState"
-name="Primary State"
-required
->
-
-</div>
-
-<div>
-
-<label for="primaryCity">
-Primary City *
-</label>
-
-<input
-id="primaryCity"
-name="Primary City"
-required
->
-
-</div>
-
-<div>
-
-<label for="vehicle">
-Vehicle / Equipment
-</label>
-
-<select
-id="vehicle"
-name="Vehicle / Equipment">
-
 <option value="">
-Choose one
+Choose a State
 </option>
 
-<option>
-Pickup truck
-</option>
-
-<option>
-Pickup truck and trailer
-</option>
-
-<option>
-Cargo van
-</option>
-
-<option>
-Box truck
-</option>
-
-<option>
-Multiple vehicles
-</option>
-
-<option>
-Other
-</option>
-
-</select>
-
-</div>
-
-<div>
-
-<label for="experience">
-Appliance Pickup Experience
-</label>
-
-<select
-id="experience"
-name="Appliance Pickup Experience">
-
-<option value="">
-Choose one
-</option>
-
-<option>
-New to appliance pickup
-</option>
-
-<option>
-Less than 1 year
-</option>
-
-<option>
-1–3 years
-</option>
-
-<option>
-3–5 years
-</option>
-
-<option>
-5+ years
-</option>
-
-</select>
-
-</div>
-
-<div class="full">
-
-<label for="territoryField">
-Requested Cities / Territory *
-</label>
-
-<textarea
-id="territoryField"
-name="Requested Cities / Territory"
-required
-placeholder="Select cities above or type your territory here."></textarea>
-
-</div>
-
-<div class="full">
-
-<label for="notes">
-Additional Information
-</label>
-
-<textarea
-id="notes"
-name="Additional Information"
-placeholder="Tell us about your operation, schedule, service radius or anything else we should know."></textarea>
-
-</div>
-
-<div class="full checkbox-row">
-
-<input
-id="agree"
-name="Agreement"
-value="Yes"
-type="checkbox"
-required
->
-
-<label for="agree">
-I understand that applying does not guarantee approval,
-leads, exclusivity or territory availability.
-</label>
-
-</div>
-
-<div class="full">
-
-<button
-class="submit"
-type="submit">
-Send Partner Application
-</button>
-
-</div>
-
-</div>
-
-</form>
-
-<div class="notice">
-
-<strong>Important:</strong>
-
-Partner approval, lead volume and territory availability depend on
-local demand, service quality, current coverage and other business factors.
-
-</div>
-
-</section>
-
-</main>
-
-<footer>
-
-<p>
-<strong>
-Free Reliable Appliance Pickup
-</strong>
-</p>
-
-<p>
-Appliance pickup services and partner opportunities across the United States.
-</p>
-
-<p>
-<a href="../">
-Return to Homepage
-</a>
-</p>
-
-</footer>
-
-<script>
-
-const STATE_NAMES = {
-
-"alabama":"Alabama",
-"alaska":"Alaska",
-"arizona":"Arizona",
-"arkansas":"Arkansas",
-"california":"California",
-"colorado":"Colorado",
-"connecticut":"Connecticut",
-"delaware":"Delaware",
-"florida":"Florida",
-"georgia":"Georgia",
-"hawaii":"Hawaii",
-"idaho":"Idaho",
-"illinois":"Illinois",
-"indiana":"Indiana",
-"iowa":"Iowa",
-"kansas":"Kansas",
-"kentucky":"Kentucky",
-"louisiana":"Louisiana",
-"maine":"Maine",
-"maryland":"Maryland",
-"massachusetts":"Massachusetts",
-"michigan":"Michigan",
-"minnesota":"Minnesota",
-"mississippi":"Mississippi",
-"missouri":"Missouri",
-"montana":"Montana",
-"nebraska":"Nebraska",
-"nevada":"Nevada",
-"new-hampshire":"New Hampshire",
-"new-jersey":"New Jersey",
-"new-mexico":"New Mexico",
-"new-york":"New York",
-"north-carolina":"North Carolina",
-"north-dakota":"North Dakota",
-"ohio":"Ohio",
-"oklahoma":"Oklahoma",
-"oregon":"Oregon",
-"pennsylvania":"Pennsylvania",
-"rhode-island":"Rhode Island",
-"south-carolina":"South Carolina",
-"south-dakota":"South Dakota",
-"tennessee":"Tennessee",
-"texas":"Texas",
-"utah":"Utah",
-"vermont":"Vermont",
-"virginia":"Virginia",
-"washington":"Washington",
-"west-virginia":"West Virginia",
-"wisconsin":"Wisconsin",
-"wyoming":"Wyoming"
-
-};
-
-
-/*
-BACKUP CITY LIST
-
-These cities make the selector work even if sitemap.xml
-does not load immediately.
-
-More cities found in sitemap.xml are automatically added.
-*/
-
-const FALLBACK_CITIES = [
-
-{stateSlug:"california",state:"California",city:"Alhambra"},
-{stateSlug:"california",state:"California",city:"Anaheim"},
-{stateSlug:"california",state:"California",city:"Arcadia"},
-{stateSlug:"california",state:"California",city:"Azusa"},
-{stateSlug:"california",state:"California",city:"Baldwin Park"},
-{stateSlug:"california",state:"California",city:"Burbank"},
-{stateSlug:"california",state:"California",city:"Chino"},
-{stateSlug:"california",state:"California",city:"Chino Hills"},
-{stateSlug:"california",state:"California",city:"Claremont"},
-{stateSlug:"california",state:"California",city:"Covina"},
-{stateSlug:"california",state:"California",city:"Diamond Bar"},
-{stateSlug:"california",state:"California",city:"Fontana"},
-{stateSlug:"california",state:"California",city:"Fullerton"},
-{stateSlug:"california",state:"California",city:"Glendora"},
-{stateSlug:"california",state:"California",city:"La Habra"},
-{stateSlug:"california",state:"California",city:"La Puente"},
-{stateSlug:"california",state:"California",city:"Ontario"},
-{stateSlug:"california",state:"California",city:"Pomona"},
-{stateSlug:"california",state:"California",city:"Rancho Cucamonga"},
-{stateSlug:"california",state:"California",city:"Rowland Heights"},
-{stateSlug:"california",state:"California",city:"San Bernardino"},
-{stateSlug:"california",state:"California",city:"Upland"},
-{stateSlug:"california",state:"California",city:"Victorville"},
-
-{stateSlug:"arizona",state:"Arizona",city:"Avondale"},
-{stateSlug:"arizona",state:"Arizona",city:"Buckeye"},
-{stateSlug:"arizona",state:"Arizona",city:"Bullhead City"},
-{stateSlug:"arizona",state:"Arizona",city:"Chandler"},
-{stateSlug:"arizona",state:"Arizona",city:"Glendale"},
-{stateSlug:"arizona",state:"Arizona",city:"Mesa"},
-{stateSlug:"arizona",state:"Arizona",city:"Phoenix"},
-{stateSlug:"arizona",state:"Arizona",city:"Scottsdale"},
-{stateSlug:"arizona",state:"Arizona",city:"Tempe"},
-
-{stateSlug:"colorado",state:"Colorado",city:"Arvada"},
-{stateSlug:"colorado",state:"Colorado",city:"Aurora"},
-{stateSlug:"colorado",state:"Colorado",city:"Brighton"},
-{stateSlug:"colorado",state:"Colorado",city:"Broomfield"},
-{stateSlug:"colorado",state:"Colorado",city:"Centennial"},
-{stateSlug:"colorado",state:"Colorado",city:"Commerce City"},
-{stateSlug:"colorado",state:"Colorado",city:"Denver"},
-{stateSlug:"colorado",state:"Colorado",city:"Englewood"},
-{stateSlug:"colorado",state:"Colorado",city:"Golden"},
-{stateSlug:"colorado",state:"Colorado",city:"Lakewood"},
-{stateSlug:"colorado",state:"Colorado",city:"Littleton"},
-{stateSlug:"colorado",state:"Colorado",city:"Parker"},
-{stateSlug:"colorado",state:"Colorado",city:"Thornton"},
-{stateSlug:"colorado",state:"Colorado",city:"Westminster"},
-{stateSlug:"colorado",state:"Colorado",city:"Wheat Ridge"},
-
-{stateSlug:"oregon",state:"Oregon",city:"Beaverton"},
-{stateSlug:"oregon",state:"Oregon",city:"Gresham"},
-{stateSlug:"oregon",state:"Oregon",city:"Hillsboro"},
-{stateSlug:"oregon",state:"Oregon",city:"Keizer"},
-{stateSlug:"oregon",state:"Oregon",city:"Portland"},
-{stateSlug:"oregon",state:"Oregon",city:"Salem"},
-{stateSlug:"oregon",state:"Oregon",city:"Tigard"},
-
-{stateSlug:"washington",state:"Washington",city:"Bellevue"},
-{stateSlug:"washington",state:"Washington",city:"Everett"},
-{stateSlug:"washington",state:"Washington",city:"Kent"},
-{stateSlug:"washington",state:"Washington",city:"Seattle"},
-{stateSlug:"washington",state:"Washington",city:"Tacoma"},
-{stateSlug:"washington",state:"Washington",city:"Vancouver"},
-
-{stateSlug:"utah",state:"Utah",city:"Ogden"},
-{stateSlug:"utah",state:"Utah",city:"Park City"},
-{stateSlug:"utah",state:"Utah",city:"Provo"},
-{stateSlug:"utah",state:"Utah",city:"Salt Lake City"},
-{stateSlug:"utah",state:"Utah",city:"Sandy"},
-
-{stateSlug:"nevada",state:"Nevada",city:"Henderson"},
-{stateSlug:"nevada",state:"Nevada",city:"Las Vegas"},
-{stateSlug:"nevada",state:"Nevada",city:"North Las Vegas"},
-{stateSlug:"nevada",state:"Nevada",city:"Reno"},
-{stateSlug:"nevada",state:"Nevada",city:"Sparks"},
-
-{stateSlug:"idaho",state:"Idaho",city:"Boise"},
-{stateSlug:"idaho",state:"Idaho",city:"Caldwell"},
-{stateSlug:"idaho",state:"Idaho",city:"Meridian"},
-{stateSlug:"idaho",state:"Idaho",city:"Nampa"}
-
-];
-
-
-let allCities = [];
-
-let selectedCities = [];
-
-let activeLetter = "";
-
-
-function slugToTitle(slug){
-
-return slug
-.split("-")
-.filter(Boolean)
-.map(function(word){
-
-return word.charAt(0).toUpperCase() + word.slice(1);
-
-})
-.join(" ");
-
-}
-
-
-function normalizeText(value){
-
-return (value || "")
-.trim()
-.replace(/\s+/g," ");
-
-}
-
-
-function uniqueCities(cities){
-
-const seen = new Set();
-
-return cities
-.filter(function(city){
-
-const key =
-(city.stateSlug + "|" + city.city).toLowerCase();
-
-if(seen.has(key)){
-return false;
-}
-
-seen.add(key);
-
-return true;
-
-})
-.sort(function(a,b){
-
-const cityCompare =
-a.city.localeCompare(b.city);
-
-if(cityCompare !== 0){
-return cityCompare;
-}
-
-return a.state.localeCompare(b.state);
-
-});
-
-}
-
-
-async function loadCities(){
-
-let sitemapCities = [];
-
-try{
-
-const response =
-await fetch("../sitemap.xml",{
-cache:"no-store"
-});
-
-if(response.ok){
-
-const text =
-await response.text();
-
-const xml =
-new DOMParser()
-.parseFromString(
-text,
-"application/xml"
-);
-
-const locations =
-Array.from(
-xml.querySelectorAll("loc")
-)
-.map(function(node){
-
-return node.textContent.trim();
-
-});
-
-
-locations.forEach(function(rawUrl){
-
-try{
-
-const url =
-new URL(rawUrl);
-
-const parts =
-url.pathname
-.split("/")
-.filter(Boolean);
-
-const repoPosition =
-parts.indexOf(
-"free-reliable-appliance-pickup-solutions"
-);
-
-if(repoPosition === -1){
-return;
-}
-
-const stateSlug =
-parts[repoPosition + 1];
-
-const citySlug =
-parts[repoPosition + 2];
-
-if(!stateSlug || !citySlug){
-return;
-}
-
-if(!STATE_NAMES[stateSlug]){
-return;
-}
-
-if(citySlug === "partners"){
-return;
-}
-
-sitemapCities.push({
-
-stateSlug:stateSlug,
-
-state:
-STATE_NAMES[stateSlug],
-
-city:
-slugToTitle(citySlug),
-
-citySlug:citySlug,
-
-url:rawUrl
-
-});
-
-}catch(error){}
-
-});
-
-}
-
-}catch(error){}
-
-
-allCities =
-uniqueCities(
-sitemapCities.concat(FALLBACK_CITIES)
-);
-
-renderAZ();
-
-renderCities();
-
-}
-
-
-function getChosenState(){
-
-return document
-.getElementById("stateSelect")
-.value;
-
-}
-
-
-function getChosenStateName(){
-
-const slug =
-getChosenState();
-
-return slug
-? STATE_NAMES[slug]
-: "";
-
-}
-
-
-function getStateCities(){
-
-const state =
-getChosenState();
-
-if(!state){
-return [];
-}
-
-return allCities.filter(function(city){
-
-return city.stateSlug === state;
-
-});
-
-}
-
-
-function getAvailableLetters(){
-
-const letters =
-new Set();
-
-getStateCities()
-.forEach(function(city){
-
-if(city.city){
-
-letters.add(
-city.city
-.charAt(0)
-.toUpperCase()
-);
-
-}
-
-});
-
-return letters;
-
-}
-
-
-function renderAZ(){
-
-const wrap =
-document.getElementById(
-"azButtons"
-);
-
-const availableLetters =
-getAvailableLetters();
-
-wrap.innerHTML = "";
-
-"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-.split("")
-.forEach(function(letter){
-
-const button =
-document.createElement(
-"button"
-);
-
-button.type =
-"button";
-
-button.textContent =
-letter;
-
-const stateSelected =
-Boolean(
-getChosenState()
-);
-
-const available =
-availableLetters.has(letter);
-
-button.disabled =
-!stateSelected ||
-!available;
-
-if(activeLetter === letter){
-
-button.classList.add(
-"active"
-);
-
-}
-
-button.addEventListener(
-"click",
-function(){
-
-if(activeLetter === letter){
-
-activeLetter = "";
-
-}else{
-
-activeLetter = letter;
-
-}
-
-document
-.getElementById(
-"citySearch"
-)
-.value = "";
-
-renderAZ();
-
-renderCities();
-
-}
-);
-
-wrap.appendChild(
-button
-);
-
-});
-
-}
-
-
-function filteredCities(){
-
-const state =
-getChosenState();
-
-const query =
-normalizeText(
-document
-.getElementById(
-"citySearch"
-)
-.value
-)
-.toLowerCase();
-
-if(!state){
-return [];
-}
-
-return allCities.filter(
-function(city){
-
-if(city.stateSlug !== state){
-
-return false;
-
-}
-
-if(
-activeLetter &&
-city.city
-.charAt(0)
-.toUpperCase()
-!== activeLetter
-){
-
-return false;
-
-}
-
-if(
-query &&
-!city.city
-.toLowerCase()
-.includes(query)
-){
-
-return false;
-
-}
-
-return true;
-
-}
-);
-
-}
-
-
-function renderCities(){
-
-const list =
-document.getElementById(
-"cityList"
-);
-
-const meta =
-document.getElementById(
-"cityMeta"
-);
-
-const state =
-getChosenState();
-
-const query =
-normalizeText(
-document
-.getElementById(
-"citySearch"
-)
-.value
-);
-
-const cities =
-filteredCities();
-
-list.innerHTML = "";
-
-
-if(!state){
-
-meta.textContent =
-"Choose a state to view cities.";
-
-const empty =
-document.createElement(
-"div"
-);
-
-empty.className =
-"empty";
-
-empty.textContent =
-"Choose a state above to begin.";
-
-list.appendChild(
-empty
-);
-
-return;
-
-}
-
-
-let description =
-cities.length +
-" city" +
-(cities.length === 1 ? "" : "ies") +
-" shown in " +
-STATE_NAMES[state];
-
-
-if(activeLetter){
-
-description +=
-" starting with " +
-activeLetter;
-
-}
-
-
-if(query){
-
-description +=
-' matching "' +
-query +
-'"';
-
-}
-
-
-meta.textContent =
-description + ".";
-
-
-if(cities.length === 0){
-
-const empty =
-document.createElement(
-"div"
-);
-
-empty.className =
-"empty";
-
-empty.innerHTML =
-"<strong>No matching city was found.</strong><br>You can still type the city in the manual city box and add it to your territory.";
-
-list.appendChild(
-empty
-);
-
-return;
-
-}
-
-
-cities.forEach(
-function(city){
-
-const button =
-document.createElement(
-"button"
-);
-
-button.type =
-"button";
-
-button.className =
-"city-item";
-
-button.innerHTML =
-"<strong>" +
-city.city +
-"</strong>" +
-city.state;
-
-button.addEventListener(
-"click",
-function(){
-
-addSelectedCity(
-city.city,
-city.stateSlug
-);
-
-}
-);
-
-list.appendChild(
-button
-);
-
-}
-);
-
-}
-
-
-function addSelectedCity(
-cityName,
-stateSlug
-){
-
-const city =
-normalizeText(
-cityName
-);
-
-if(
-!city ||
-!stateSlug
-){
-
-return;
-
-}
-
-
-const stateName =
-STATE_NAMES[stateSlug];
-
-
-const duplicate =
-selectedCities.some(
-function(item){
-
-return (
-item.city.toLowerCase()
-===
-city.toLowerCase()
-&&
-item.stateSlug
-===
-stateSlug
-);
-
-}
-);
-
-
-if(duplicate){
-
-alert(
-city +
-", " +
-stateName +
-" is already selected."
-);
-
-return;
-
-}
-
-
-if(
-selectedCities.length >= 50
-){
-
-alert(
-"You can select up to 50 cities in the standard territory request."
-);
-
-return;
-
-}
-
-
-selectedCities.push({
-
-city:city,
-
-stateSlug:stateSlug,
-
-state:stateName
-
-});
-
-
-updateSelectedCities();
-
-}
-
-
-function removeSelectedCity(
-index
-){
-
-selectedCities.splice(
-index,
-1
-);
-
-updateSelectedCities();
-
-}
-
-
-function updateSelectedCities(){
-
-const list =
-document.getElementById(
-"selectedList"
-);
-
-const count =
-document.getElementById(
-"selectedCount"
-);
-
-const territory =
-document.getElementById(
-"territoryField"
-);
-
-
-count.textContent =
-selectedCities.length +
-" / 50 cities";
-
-
-list.innerHTML = "";
-
-
-if(
-selectedCities.length === 0
-){
-
-const helper =
-document.createElement(
-"span"
-);
-
-helper.className =
-"helper";
-
-helper.textContent =
-"No cities selected yet.";
-
-list.appendChild(
-helper
-);
-
-}else{
-
-
-selectedCities.forEach(
-function(item,index){
-
-const chip =
-document.createElement(
-"span"
-);
-
-chip.className =
-"selected-chip";
-
-
-const text =
-document.createElement(
-"span"
-);
-
-text.textContent =
-item.city +
-", " +
-item.state;
-
-
-const remove =
-document.createElement(
-"button"
-);
-
-remove.type =
-"button";
-
-remove.setAttribute(
-"aria-label",
-"Remove " +
-item.city
-);
-
-remove.textContent =
-"×";
-
-
-remove.addEventListener(
-"click",
-function(){
-
-removeSelectedCity(
-index
-);
-
-}
-);
-
-
-chip.appendChild(
-text
-);
-
-chip.appendChild(
-remove
-);
-
-list.appendChild(
-chip
-);
-
-}
-);
-
-}
-
-
-territory.value =
-selectedCities
-.map(function(item){
-
-return (
-item.city +
-", " +
-item.state
-);
-
-})
-.join("; ");
-
-}
-
-
-document
-.getElementById(
-"stateSelect"
-)
-.addEventListener(
-"change",
-function(){
-
-activeLetter = "";
-
-document
-.getElementById(
-"citySearch"
-)
-.value = "";
-
-
-const stateName =
-getChosenStateName();
-
-
-if(stateName){
-
-document
-.getElementById(
-"primaryState"
-)
-.value =
-stateName;
-
-}
-
-
-renderAZ();
-
-renderCities();
-
-}
-);
-
-
-document
-.getElementById(
-"citySearch"
-)
-.addEventListener(
-"input",
-function(){
-
-activeLetter = "";
-
-renderAZ();
-
-renderCities();
-
-}
-);
-
-
-document
-.getElementById(
-"clearFilter"
-)
-.addEventListener(
-"click",
-function(){
-
-activeLetter = "";
-
-document
-.getElementById(
-"citySearch"
-)
-.value = "";
-
-renderAZ();
-
-renderCities();
-
-}
-);
-
-
-document
-.getElementById(
-"manualAddButton"
-)
-.addEventListener(
-"click",
-function(){
-
-const state =
-getChosenState();
-
-const input =
-document.getElementById(
-"manualCity"
-);
-
-const city =
-normalizeText(
-input.value
-);
-
-
-if(!state){
-
-alert(
-"Choose a state first."
-);
-
-return;
-
-}
-
-
-if(!city){
-
-alert(
-"Type a city name first."
-);
-
-return;
-
-}
-
-
-addSelectedCity(
-city,
-state
-);
-
-input.value = "";
-
-}
-);
-
-
-document
-.getElementById(
-"manualCity"
-)
-.addEventListener(
-"keydown",
-function(event){
-
-if(
-event.key === "Enter"
-){
-
-event.preventDefault();
-
-document
-.getElementById(
-"manualAddButton"
-)
-.click();
-
-}
-
-}
-);
-
-
-document
-.getElementById(
-"clearSelected"
-)
-.addEventListener(
-"click",
-function(){
-
-if(
-selectedCities.length === 0
-){
-
-return;
-
-}
-
-if(
-confirm(
-"Remove all selected cities?"
-)
-){
-
-selectedCities = [];
-
-updateSelectedCities();
-
-}
-
-}
-);
-
-
-loadCities();
-
-updateSelectedCities();
-
-</script>
-
-</body>
-</html>
+<option value="AL">Alabama</option>
+<option value="AK">Alaska</option>
+<option value="AZ">Arizona</option>
+<option value="AR">Arkansas</option>
+<option value="CA">California</option>
+<option value="CO">Colorado</option>
+<option value="CT">Connecticut</option>
+<option value="DE">Delaware</option>
+<option value="FL">Florida</option>
+<option value="GA">Georgia</option>
+<option value="HI">Hawaii</option>
+<option value="ID">Idaho</option>
+<option value="IL">Illinois</option>
+<option value="IN">Indiana</option>
+<option value="IA">Iowa</option>
+<option value="KS">Kansas</option>
+<option value="KY">Kentucky</option>
+<option value="LA">Louisiana</option>
+<option value="ME">Maine</option>
+<option value="MD">Maryland</option>
+<option value="MA">Massachusetts</option>
+<option value="MI">Michigan</option>
+<option value="MN">Minnesota</option>
+<option value="MS">Mississippi</option>
+<option value="MO">Missouri</option>
+<option value="MT">Montana</option>
+<option value="NE">Nebraska</option>
+<option value="NV">Nevada</option>
+<option value="NH">New Hampshire</option>
+<option value="NJ">New Jersey</option>
+<option value="NM">New Mexico</option>
+<option value="NY">New York</option>
+<option value="NC">
