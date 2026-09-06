@@ -6,723 +6,160 @@
 
 <title>Appliance Pickup Partner Program | Free Reliable Appliance Pickup</title>
 
-<meta
-name="description"
-content="Join the Free Reliable Appliance Pickup partner network. Choose service areas across all 50 states, search cities A-Z, select up to 50 cities, and apply for appliance pickup territory opportunities."
->
+<meta name="description" content="Join the Free Reliable Appliance Pickup partner network. Search service areas across the United States, choose up to 50 cities, and apply for appliance pickup territory opportunities.">
 
 <meta name="robots" content="index, follow">
 
-<link
-rel="canonical"
-href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/partners/"
->
+<link rel="canonical" href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/partners/">
 
 <style>
-
-:root{
---green:#0b5d35;
---green2:#087443;
---dark:#17352a;
---light:#eef8f2;
---border:#d8e5dd;
---text:#222;
---muted:#666;
---white:#fff;
---danger:#a12622;
---gold:#f4b400;
-}
-
 *{
-box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 html{
-scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-line-height:1.6;
-color:var(--text);
-background:#f5f5f5;
-}
-
-a{
-color:inherit;
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7f6;
+    color:#222;
+    line-height:1.6;
 }
 
 header{
-background:linear-gradient(135deg,var(--green),var(--green2));
-color:#fff;
-text-align:center;
-padding:58px 20px;
+    background:linear-gradient(135deg,#0b5d35,#087443);
+    color:white;
+    text-align:center;
+    padding:55px 20px;
 }
 
 header h1{
-margin:0 0 14px;
-font-size:2.45rem;
-line-height:1.15;
+    margin:0 0 12px;
+    font-size:38px;
 }
 
 header p{
-max-width:900px;
-margin:0 auto 24px;
-font-size:1.08rem;
-}
-
-.hero-button{
-display:inline-block;
-text-decoration:none;
-background:#fff;
-color:var(--green);
-padding:14px 22px;
-border-radius:8px;
-font-weight:700;
+    max-width:850px;
+    margin:auto;
+    font-size:18px;
 }
 
 nav{
-position:sticky;
-top:0;
-z-index:20;
-background:var(--dark);
-text-align:center;
-padding:11px 8px;
+    background:#063f25;
+    text-align:center;
+    padding:12px;
 }
 
 nav a{
-color:#fff;
-text-decoration:none;
-font-weight:700;
-display:inline-block;
-margin:5px 10px;
+    color:white;
+    text-decoration:none;
+    margin:0 12px;
+    font-weight:bold;
 }
 
-main{
-max-width:1120px;
-margin:auto;
-padding:28px 16px 50px;
-}
-
-section{
-background:#fff;
-margin-bottom:24px;
-padding:30px;
-border-radius:12px;
-box-shadow:0 3px 12px rgba(0,0,0,.08);
-}
-
-h2,
-h3{
-color:var(--green);
-}
-
-h2{
-margin-top:0;
-line-height:1.25;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:18px;
-margin-top:20px;
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:35px 20px;
 }
 
 .card{
-background:#f7faf8;
-border:1px solid var(--border);
-padding:20px;
-border-radius:9px;
+    background:white;
+    padding:28px;
+    margin-bottom:25px;
+    border-radius:12px;
+    box-shadow:0 3px 14px rgba(0,0,0,.08);
 }
 
-.card h3{
-margin-top:0;
+h2{
+    color:#0b5d35;
+    margin-top:0;
 }
 
-.notice{
-background:var(--light);
-border-left:5px solid var(--green);
-padding:16px;
-margin:18px 0;
-border-radius:6px;
-}
-
-.warning{
-background:#fff8e8;
-border-left:5px solid var(--gold);
-padding:16px;
-margin:18px 0;
-border-radius:6px;
+.green-box{
+    background:#eef8f2;
+    border-left:5px solid #0b5d35;
+    padding:18px;
+    margin:20px 0;
 }
 
 .steps{
-counter-reset:step;
-list-style:none;
-padding:0;
-margin:0;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
 }
 
-.steps li{
-counter-increment:step;
-margin:0 0 17px;
-padding-left:44px;
-position:relative;
+.step{
+    background:#f7faf8;
+    border:1px solid #d8e5dd;
+    padding:20px;
+    border-radius:10px;
 }
 
-.steps li:before{
-content:counter(step);
-position:absolute;
-left:0;
-top:0;
-width:30px;
-height:30px;
-line-height:30px;
-text-align:center;
-border-radius:50%;
-color:#fff;
-background:var(--green);
-font-weight:700;
-}
-
-.territory-box{
-background:#f8fbf9;
-border:1px solid var(--border);
-padding:22px;
-border-radius:12px;
-}
-
-.row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px;
+.step strong{
+    color:#0b5d35;
+    display:block;
+    font-size:18px;
+    margin-bottom:7px;
 }
 
 label{
-display:block;
-font-weight:700;
-margin-bottom:6px;
+    display:block;
+    font-weight:bold;
+    margin-top:16px;
+    margin-bottom:6px;
 }
 
 input,
 select,
-textarea,
+textarea{
+    width:100%;
+    padding:13px;
+    border:1px solid #bbb;
+    border-radius:7px;
+    font-size:16px;
+    background:white;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
 button{
-font:inherit;
+    border:0;
+    border-radius:7px;
+    padding:13px 20px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-input,
-select,
-textarea{
-width:100%;
-border:1px solid #b8c6bd;
-border-radius:8px;
-padding:12px 13px;
-background:#fff;
+.primary{
+    background:#0b5d35;
+    color:white;
 }
 
-textarea{
-resize:vertical;
-min-height:110px;
+.primary:hover{
+    background:#087443;
 }
 
-.helper{
-font-size:.92rem;
-color:var(--muted);
-margin-top:5px;
+.secondary{
+    background:#e8f3ed;
+    color:#0b5d35;
 }
 
-.status{
-font-size:.94rem;
-margin-top:10px;
-font-weight:700;
-color:var(--green);
+.letters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin:15px 0;
 }
 
-.az-title{
-font-weight:700;
-margin:22px 0 9px;
-}
-
-.az{
-display:flex;
-flex-wrap:wrap;
-gap:7px;
-}
-
-.az button{
-width:auto;
-min-width:39px;
-border:1px solid var(--green);
-border-radius:7px;
-background:#fff;
-color:var(--green);
-padding:9px 10px;
-font-weight:700;
-cursor:pointer;
-}
-
-.az button:hover,
-.az button.active{
-background:var(--green);
-color:#fff;
-}
-
-.az button:disabled{
-opacity:.28;
-cursor:not-allowed;
-}
-
-.city-toolbar{
-display:flex;
-justify-content:space-between;
-gap:12px;
-align-items:center;
-flex-wrap:wrap;
-margin:18px 0 10px;
-}
-
-.city-meta{
-color:var(--muted);
-font-weight:700;
-}
-
-.clear-filter{
-border:1px solid #aaa;
-background:#fff;
-padding:8px 12px;
-border-radius:7px;
-cursor:pointer;
-}
-
-.city-list{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
-gap:9px;
-max-height:500px;
-overflow:auto;
-padding-right:4px;
-}
-
-.city-item{
-width:100%;
-text-align:left;
-background:#fff;
-border:1px solid var(--border);
-border-radius:8px;
-padding:11px 12px;
-cursor:pointer;
-}
-
-.city-item:hover{
-background:var(--light);
-border-color:var(--green);
-}
-
-.city-item strong{
-display:block;
-color:var(--green);
-}
-
-.city-item small{
-color:var(--muted);
-}
-
-.empty{
-grid-column:1/-1;
-background:#fff8e8;
-border:1px solid #ead8a4;
-border-radius:8px;
-padding:16px;
-}
-
-.manual-add{
-margin-top:18px;
-border-top:1px solid var(--border);
-padding-top:18px;
-}
-
-.manual-row{
-display:grid;
-grid-template-columns:1fr auto;
-gap:9px;
-}
-
-.add-button{
-border:0;
-border-radius:8px;
-background:var(--green);
-color:#fff;
-padding:0 18px;
-font-weight:700;
-cursor:pointer;
-}
-
-.selected-wrap{
-margin-top:22px;
-background:#fff;
-border:1px solid var(--border);
-border-radius:10px;
-padding:16px;
-}
-
-.selected-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.selected-head strong{
-color:var(--green);
-}
-
-.selected-count{
-font-weight:700;
-}
-
-.selected-list{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-margin-top:12px;
-}
-
-.selected-chip{
-display:inline-flex;
-align-items:center;
-gap:8px;
-background:var(--light);
-border:1px solid #b9dac7;
-border-radius:999px;
-padding:7px 10px 7px 12px;
-}
-
-.selected-chip button{
-width:24px;
-height:24px;
-line-height:20px;
-border:0;
-border-radius:50%;
-background:#fff;
-color:var(--danger);
-cursor:pointer;
-font-weight:700;
-}
-
-.small-button{
-border:1px solid #bbb;
-background:#fff;
-padding:7px 10px;
-border-radius:7px;
-cursor:pointer;
-}
-
-.apply-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-}
-
-.full{
-grid-column:1/-1;
-}
-
-.checkbox-row{
-display:flex;
-gap:9px;
-align-items:flex-start;
-}
-
-.checkbox-row input{
-width:auto;
-margin-top:5px;
-}
-
-.submit{
-width:100%;
-border:0;
-border-radius:8px;
-padding:15px 20px;
-background:var(--green);
-color:#fff;
-font-weight:700;
-cursor:pointer;
-font-size:1.05rem;
-}
-
-footer{
-background:#1e1e1e;
-color:#fff;
-text-align:center;
-padding:30px 18px;
-}
-
-footer a{
-color:#fff;
-}
-
-@media(max-width:720px){
-
-header{
-padding:44px 17px;
-}
-
-header h1{
-font-size:1.9rem;
-}
-
-section{
-padding:22px 17px;
-}
-
-.row,
-.apply-grid{
-grid-template-columns:1fr;
-}
-
-.full{
-grid-column:auto;
-}
-
-.manual-row{
-grid-template-columns:1fr;
-}
-
-.add-button{
-padding:12px;
-}
-
-.city-list{
-grid-template-columns:1fr 1fr;
-}
-
-}
-
-@media(max-width:450px){
-
-.city-list{
-grid-template-columns:1fr;
-}
-
-}
-
-</style>
-</head>
-
-<body>
-
-<header>
-
-<h1>
-Appliance Pickup Partner Program
-</h1>
-
-<p>
-Build your appliance pickup territory with Free Reliable Appliance Pickup.
-Choose any U.S. state, search cities, browse cities A–Z,
-select up to 50 cities and apply for available territory opportunities.
-</p>
-
-<a
-class="hero-button"
-href="#territories">
-Choose Your Territory
-</a>
-
-</header>
-
-<nav>
-
-<a href="../">
-Home
-</a>
-
-<a href="#how-it-works">
-How It Works
-</a>
-
-<a href="#territories">
-Territories
-</a>
-
-<a href="#appliances">
-Appliances
-</a>
-
-<a href="#apply">
-Apply
-</a>
-
-</nav>
-
-<main>
-
-<section>
-
-<h2>
-Partner With Free Reliable Appliance Pickup
-</h2>
-
-<p>
-We are building a nationwide network of reliable local appliance pickup
-operators. Qualified partners may receive appliance pickup opportunities
-in approved service areas when customer demand is available.
-</p>
-
-<div class="grid">
-
-<div class="card">
-
-<h3>
-Local Pickup Opportunities
-</h3>
-
-<p>
-Receive qualifying appliance pickup opportunities in your approved service area.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>
-Choose Your Cities
-</h3>
-
-<p>
-Build a standard territory by selecting up to 50 cities.
-Larger territories may be reviewed separately.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>
-Grow Your Operation
-</h3>
-
-<p>
-Add potential pickup opportunities without depending only on your own advertising.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>
-Nationwide Expansion
-</h3>
-
-<p>
-Partner opportunities may be available across all 50 U.S. states
-as the network expands.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section id="how-it-works">
-
-<h2>
-How the Partner Program Works
-</h2>
-
-<ol class="steps">
-
-<li>
-Choose the state where you want to operate.
-</li>
-
-<li>
-Browse cities by A–Z or search by city name.
-</li>
-
-<li>
-Tap a city to add it to your requested territory.
-</li>
-
-<li>
-Choose up to 50 cities for a standard territory request.
-</li>
-
-<li>
-If you cannot find a city, type it manually and add it.
-</li>
-
-<li>
-Submit your partner application for review.
-</li>
-
-</ol>
-
-</section>
-
-
-<section id="territories">
-
-<h2>
-Choose Your State & Cities
-</h2>
-
-<p>
-All 50 states are available below.
-Choose a state first, then use the A–Z buttons or city search.
-</p>
-
-<div class="territory-box">
-
-<div class="row">
-
-<div>
-
-<label for="stateSelect">
-Choose State
-</label>
-
-<select id="stateSelect">
-
-<option value="">
-Choose a State
-</option>
-
-<option value="AL">Alabama</option>
-<option value="AK">Alaska</option>
-<option value="AZ">Arizona</option>
-<option value="AR">Arkansas</option>
-<option value="CA">California</option>
-<option value="CO">Colorado</option>
-<option value="CT">Connecticut</option>
-<option value="DE">Delaware</option>
-<option value="FL">Florida</option>
-<option value="GA">Georgia</option>
-<option value="HI">Hawaii</option>
-<option value="ID">Idaho</option>
-<option value="IL">Illinois</option>
-<option value="IN">Indiana</option>
-<option value="IA">Iowa</option>
-<option value="KS">Kansas</option>
-<option value="KY">Kentucky</option>
-<option value="LA">Louisiana</option>
-<option value="ME">Maine</option>
-<option value="MD">Maryland</option>
-<option value="MA">Massachusetts</option>
-<option value="MI">Michigan</option>
-<option value="MN">Minnesota</option>
-<option value="MS">Mississippi</option>
-<option value="MO">Missouri</option>
-<option value="MT">Montana</option>
-<option value="NE">Nebraska</option>
-<option value="NV">Nevada</option>
-<option value="NH">New Hampshire</option>
-<option value="NJ">New Jersey</option>
-<option value="NM">New Mexico</option>
-<option value="NY">New York</option>
-<option value="NC">
+.letter{
+    width:38px;
+    height:38px;
+    padding:0;
