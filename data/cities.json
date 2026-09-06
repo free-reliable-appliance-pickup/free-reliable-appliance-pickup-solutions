@@ -167,10 +167,9 @@ button{
     width:38px;
     height:38px;
     padding:0;
-    border:1px solid #b7cfc1;
-    background:white;
+    background:#e8f3ed;
     color:#0b5d35;
-    border-radius:6px;
+    border:1px solid #b9d5c5;
 }
 
 .letter:hover,
@@ -179,112 +178,105 @@ button{
     color:white;
 }
 
-.city-toolbar{
+.search-row{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
+    grid-template-columns:2fr 1fr;
+    gap:12px;
+    margin-bottom:15px;
 }
 
 .city-results{
-    margin-top:18px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-    gap:10px;
-    max-height:420px;
-    overflow:auto;
     border:1px solid #d8e5dd;
-    padding:15px;
-    border-radius:9px;
-    background:#fafcfb;
+    border-radius:8px;
+    max-height:430px;
+    overflow-y:auto;
+    background:white;
 }
 
 .city-item{
     display:flex;
+    justify-content:space-between;
     align-items:center;
-    gap:9px;
-    border:1px solid #d8e5dd;
-    padding:10px;
-    border-radius:7px;
-    background:white;
-    cursor:pointer;
+    gap:15px;
+    padding:12px 14px;
+    border-bottom:1px solid #eee;
 }
 
-.city-item:hover{
-    border-color:#0b5d35;
+.city-item:last-child{
+    border-bottom:0;
 }
 
-.city-item input{
-    width:auto;
-    margin:0;
+.city-name{
+    font-weight:bold;
 }
 
-.selected-area{
-    margin-top:20px;
+.city-state{
+    color:#666;
+    font-size:14px;
+}
+
+.add-city{
+    background:#0b5d35;
+    color:white;
+    white-space:nowrap;
+    padding:9px 14px;
+}
+
+.add-city:disabled{
+    background:#aaa;
+    cursor:not-allowed;
+}
+
+.selection-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:25px;
+}
+
+.counter{
+    font-weight:bold;
+    color:#0b5d35;
 }
 
 .selected-cities{
     display:flex;
     flex-wrap:wrap;
     gap:8px;
-    margin-top:10px;
+    margin-top:12px;
 }
 
-.city-tag{
-    display:flex;
-    align-items:center;
-    gap:7px;
+.selected-tag{
     background:#eef8f2;
-    color:#0b5d35;
-    border:1px solid #bcd7c8;
-    padding:7px 10px;
+    border:1px solid #b9d5c5;
     border-radius:20px;
+    padding:7px 11px;
     font-size:14px;
 }
 
-.city-tag button{
+.selected-tag button{
+    padding:0;
+    margin-left:7px;
     background:none;
     color:#b00020;
-    padding:0;
-    font-size:17px;
-    line-height:1;
+    font-size:16px;
 }
 
-.counter{
-    margin-top:10px;
-    font-weight:bold;
-    color:#0b5d35;
-}
-
-.status{
-    padding:12px;
-    margin-top:15px;
-    border-radius:7px;
-    display:none;
-}
-
-.status.success{
-    display:block;
-    background:#e8f7ee;
-    color:#075c32;
-}
-
-.status.error{
-    display:block;
-    background:#fff0f0;
-    color:#a00000;
-}
-
-.loading{
-    padding:20px;
+.no-results{
+    padding:25px;
     text-align:center;
-    color:#555;
+    color:#666;
 }
 
-.manual-row{
+.form-grid{
     display:grid;
-    grid-template-columns:1fr auto;
-    gap:10px;
-    margin-top:15px;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.full{
+    grid-column:1/-1;
 }
 
 .notice{
@@ -293,11 +285,11 @@ button{
 }
 
 footer{
-    margin-top:30px;
-    background:#17352a;
+    background:#063f25;
     color:white;
     text-align:center;
     padding:28px 20px;
+    margin-top:30px;
 }
 
 footer a{
@@ -305,26 +297,30 @@ footer a{
 }
 
 @media(max-width:700px){
-
     header h1{
         font-size:30px;
     }
 
-    .city-toolbar{
-        grid-template-columns:1fr;
-    }
-
-    .manual-row{
-        grid-template-columns:1fr;
-    }
-
     nav a{
         display:inline-block;
-        margin:5px 8px;
+        margin:6px 8px;
+    }
+
+    .search-row,
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
     }
 
     .card{
         padding:20px;
+    }
+
+    .city-item{
+        align-items:flex-start;
     }
 }
 </style>
@@ -335,31 +331,569 @@ footer a{
 <header>
     <h1>Appliance Pickup Partner Program</h1>
     <p>
-        Join the Free Reliable Appliance Pickup partner network and request
-        appliance pickup territory opportunities throughout the United States.
-        Search by state, city name, or letter A–Z and choose up to 50 cities.
+        Grow your appliance pickup business with Free Reliable Appliance Pickup.
+        Search available service areas, choose up to 50 cities, and apply to join
+        our expanding nationwide partner network.
     </p>
 </header>
 
 <nav>
     <a href="../">Home</a>
-    <a href="#how-it-works">How It Works</a>
+    <a href="#how">How It Works</a>
     <a href="#territories">Choose Cities</a>
-    <a href="#application">Apply</a>
+    <a href="#apply">Apply</a>
 </nav>
 
 <main class="container">
 
-<section class="card">
+<section class="card" id="how">
+    <h2>Become a Local Appliance Pickup Partner</h2>
 
-<h2>Grow Your Appliance Pickup Business</h2>
+    <p>
+        We are building a nationwide network of reliable appliance pickup partners.
+        Partners may receive opportunities from customers looking for pickup of
+        washers, dryers, refrigerators, stoves, ranges and freezers.
+    </p>
 
-<p>
-Free Reliable Appliance Pickup is building a nationwide network of independent
-appliance pickup partners.
-</p>
+    <div class="green-box">
+        <strong>Choose your territory.</strong>
+        Search by city, state or letter and select up to 50 cities for your application.
+        Additional territory opportunities may become available as our network grows.
+    </div>
 
-<div class="green-box">
-<strong>Partners may request up to 50 cities.</strong>
-Additional cities or expanded territories may become available depending on
-local
+    <div class="steps">
+        <div class="step">
+            <strong>1. Search</strong>
+            Find cities where you want appliance pickup opportunities.
+        </div>
+
+        <div class="step">
+            <strong>2. Select</strong>
+            Choose up to 50 preferred cities.
+        </div>
+
+        <div class="step">
+            <strong>3. Apply</strong>
+            Submit your business and contact information.
+        </div>
+
+        <div class="step">
+            <strong>4. Review</strong>
+            We review applications and territory availability before approval.
+        </div>
+    </div>
+</section>
+
+<section class="card" id="territories">
+
+    <h2>Search Partner Service Areas</h2>
+
+    <p>
+        Search by city name, select a state, or use the A–Z buttons.
+        The city list below contains service markets throughout the United States.
+    </p>
+
+    <div class="search-row">
+        <div>
+            <label for="citySearch">Search City</label>
+            <input
+                type="text"
+                id="citySearch"
+                placeholder="Example: Phoenix, Denver, Portland, Los Angeles..."
+            >
+        </div>
+
+        <div>
+            <label for="stateFilter">State</label>
+            <select id="stateFilter">
+                <option value="">All States</option>
+            </select>
+        </div>
+    </div>
+
+    <label>Browse A–Z</label>
+
+    <div class="letters" id="letters"></div>
+
+    <div class="city-results" id="cityResults"></div>
+
+    <div class="selection-header">
+        <h3>Your Selected Cities</h3>
+        <div class="counter">
+            <span id="selectedCount">0</span> / 50
+        </div>
+    </div>
+
+    <div class="selected-cities" id="selectedCities">
+        <span class="notice">No cities selected yet.</span>
+    </div>
+
+</section>
+
+<section class="card" id="apply">
+
+    <h2>Partner Application</h2>
+
+    <p>
+        Complete the application below after selecting the cities you are interested in.
+        Selecting a city does not guarantee exclusivity or approval.
+    </p>
+
+    <form
+        id="partnerForm"
+        action="https://formsubmit.co/free.reliable.appliance.pickup@gmail.com"
+        method="POST"
+    >
+
+        <input type="hidden" name="_subject" value="New Appliance Pickup Partner Application">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="Selected Cities" id="selectedCitiesInput">
+
+        <div class="form-grid">
+
+            <div>
+                <label for="name">Full Name *</label>
+                <input id="name" name="Full Name" type="text" required>
+            </div>
+
+            <div>
+                <label for="business">Business Name</label>
+                <input id="business" name="Business Name" type="text">
+            </div>
+
+            <div>
+                <label for="phone">Phone *</label>
+                <input id="phone" name="Phone" type="tel" required>
+            </div>
+
+            <div>
+                <label for="email">Email *</label>
+                <input id="email" name="Email" type="email" required>
+            </div>
+
+            <div>
+                <label for="homeCity">Primary City *</label>
+                <input id="homeCity" name="Primary City" type="text" required>
+            </div>
+
+            <div>
+                <label for="homeState">Primary State *</label>
+                <select id="homeState" name="Primary State" required>
+                    <option value="">Select State</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="experience">Appliance Pickup Experience</label>
+                <select id="experience" name="Experience">
+                    <option value="">Select</option>
+                    <option>No experience yet</option>
+                    <option>Less than 1 year</option>
+                    <option>1–3 years</option>
+                    <option>3–5 years</option>
+                    <option>5+ years</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="vehicle">Pickup Vehicle</label>
+                <select id="vehicle" name="Vehicle">
+                    <option value="">Select</option>
+                    <option>Pickup truck</option>
+                    <option>Pickup truck with trailer</option>
+                    <option>Cargo van</option>
+                    <option>Box truck</option>
+                    <option>Multiple vehicles</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="full">
+                <label for="message">Tell Us About Your Service</label>
+                <textarea
+                    id="message"
+                    name="Message"
+                    placeholder="Tell us about your appliance pickup experience, service area, availability and anything else we should know."
+                ></textarea>
+            </div>
+
+            <div class="full">
+                <button type="submit" class="primary">
+                    Submit Partner Application
+                </button>
+            </div>
+
+        </div>
+
+        <p class="notice">
+            Applications are reviewed before territory access is approved.
+            Territory availability, lead volume and partner terms may vary by market.
+        </p>
+
+    </form>
+
+</section>
+
+</main>
+
+<footer>
+    <strong>Free Reliable Appliance Pickup</strong><br>
+    Nationwide Appliance Pickup Partner Network
+</footer>
+
+<script>
+const stateNames = {
+    AL:"Alabama",
+    AK:"Alaska",
+    AZ:"Arizona",
+    AR:"Arkansas",
+    CA:"California",
+    CO:"Colorado",
+    CT:"Connecticut",
+    DE:"Delaware",
+    FL:"Florida",
+    GA:"Georgia",
+    HI:"Hawaii",
+    ID:"Idaho",
+    IL:"Illinois",
+    IN:"Indiana",
+    IA:"Iowa",
+    KS:"Kansas",
+    KY:"Kentucky",
+    LA:"Louisiana",
+    ME:"Maine",
+    MD:"Maryland",
+    MA:"Massachusetts",
+    MI:"Michigan",
+    MN:"Minnesota",
+    MS:"Mississippi",
+    MO:"Missouri",
+    MT:"Montana",
+    NE:"Nebraska",
+    NV:"Nevada",
+    NH:"New Hampshire",
+    NJ:"New Jersey",
+    NM:"New Mexico",
+    NY:"New York",
+    NC:"North Carolina",
+    ND:"North Dakota",
+    OH:"Ohio",
+    OK:"Oklahoma",
+    OR:"Oregon",
+    PA:"Pennsylvania",
+    RI:"Rhode Island",
+    SC:"South Carolina",
+    SD:"South Dakota",
+    TN:"Tennessee",
+    TX:"Texas",
+    UT:"Utah",
+    VT:"Vermont",
+    VA:"Virginia",
+    WA:"Washington",
+    WV:"West Virginia",
+    WI:"Wisconsin",
+    WY:"Wyoming"
+};
+
+const cityData = [
+["Birmingham","AL"],["Huntsville","AL"],["Mobile","AL"],["Montgomery","AL"],["Tuscaloosa","AL"],
+["Anchorage","AK"],["Fairbanks","AK"],["Juneau","AK"],
+["Avondale","AZ"],["Buckeye","AZ"],["Chandler","AZ"],["Flagstaff","AZ"],["Gilbert","AZ"],["Glendale","AZ"],["Goodyear","AZ"],["Mesa","AZ"],["Peoria","AZ"],["Phoenix","AZ"],["Scottsdale","AZ"],["Surprise","AZ"],["Tempe","AZ"],["Tucson","AZ"],["Yuma","AZ"],
+["Fayetteville","AR"],["Fort Smith","AR"],["Jonesboro","AR"],["Little Rock","AR"],["Rogers","AR"],["Springdale","AR"],
+["Alhambra","CA"],["Anaheim","CA"],["Apple Valley","CA"],["Arcadia","CA"],["Azusa","CA"],["Bakersfield","CA"],["Baldwin Park","CA"],["Bellflower","CA"],["Brea","CA"],["Burbank","CA"],["Carson","CA"],["Cathedral City","CA"],["Chino","CA"],["Chino Hills","CA"],["Claremont","CA"],["Colton","CA"],["Compton","CA"],["Corona","CA"],["Costa Mesa","CA"],["Covina","CA"],["Culver City","CA"],["Diamond Bar","CA"],["Downey","CA"],["Eastvale","CA"],["El Monte","CA"],["Encinitas","CA"],["Escondido","CA"],["Fontana","CA"],["Fountain Valley","CA"],["Fullerton","CA"],["Garden Grove","CA"],["Glendale","CA"],["Glendora","CA"],["Hemet","CA"],["Hesperia","CA"],["Highland","CA"],["Huntington Beach","CA"],["Indio","CA"],["Irvine","CA"],["La Habra","CA"],["La Mesa","CA"],["La Quinta","CA"],["Lake Elsinore","CA"],["Lakewood","CA"],["Lancaster","CA"],["Long Beach","CA"],["Los Angeles","CA"],["Menifee","CA"],["Mission Viejo","CA"],["Modesto","CA"],["Montclair","CA"],["Montebello","CA"],["Monterey Park","CA"],["Moreno Valley","CA"],["Murrieta","CA"],["National City","CA"],["Newport Beach","CA"],["Norwalk","CA"],["Oceanside","CA"],["Ontario","CA"],["Orange","CA"],["Oxnard","CA"],["Palm Desert","CA"],["Palm Springs","CA"],["Palmdale","CA"],["Pasadena","CA"],["Perris","CA"],["Pomona","CA"],["Rancho Cucamonga","CA"],["Rancho Mirage","CA"],["Redlands","CA"],["Rialto","CA"],["Riverside","CA"],["Rosemead","CA"],["Sacramento","CA"],["San Bernardino","CA"],["San Diego","CA"],["San Francisco","CA"],["San Jose","CA"],["San Marcos","CA"],["San Mateo","CA"],["Santa Ana","CA"],["Santa Clarita","CA"],["Santa Monica","CA"],["Simi Valley","CA"],["South Gate","CA"],["Temecula","CA"],["Torrance","CA"],["Upland","CA"],["Victorville","CA"],["West Covina","CA"],["Westminster","CA"],["Whittier","CA"],["Yorba Linda","CA"],
+["Arvada","CO"],["Aurora","CO"],["Boulder","CO"],["Brighton","CO"],["Broomfield","CO"],["Castle Pines","CO"],["Castle Rock","CO"],["Centennial","CO"],["Commerce City","CO"],["Denver","CO"],["Englewood","CO"],["Erie","CO"],["Federal Heights","CO"],["Fort Collins","CO"],["Golden","CO"],["Grand Junction","CO"],["Greeley","CO"],["Greenwood Village","CO"],["Highlands Ranch","CO"],["Lafayette","CO"],["Lakewood","CO"],["Littleton","CO"],["Longmont","CO"],["Louisville","CO"],["Loveland","CO"],["Northglenn","CO"],["Parker","CO"],["Pueblo","CO"],["Sheridan","CO"],["Superior","CO"],["Thornton","CO"],["Westminster","CO"],["Wheat Ridge","CO"],
+["Bridgeport","CT"],["Danbury","CT"],["Hartford","CT"],["New Haven","CT"],["Norwalk","CT"],["Stamford","CT"],["Waterbury","CT"],
+["Dover","DE"],["Newark","DE"],["Wilmington","DE"],
+["Boca Raton","FL"],["Bradenton","FL"],["Cape Coral","FL"],["Clearwater","FL"],["Coral Springs","FL"],["Davie","FL"],["Daytona Beach","FL"],["Deltona","FL"],["Fort Lauderdale","FL"],["Fort Myers","FL"],["Gainesville","FL"],["Hialeah","FL"],["Hollywood","FL"],["Jacksonville","FL"],["Kissimmee","FL"],["Lakeland","FL"],["Miami","FL"],["Miramar","FL"],["Ocala","FL"],["Orlando","FL"],["Palm Bay","FL"],["Pembroke Pines","FL"],["Pensacola","FL"],["Plantation","FL"],["Pompano Beach","FL"],["Port St. Lucie","FL"],["Sarasota","FL"],["St. Petersburg","FL"],["Tallahassee","FL"],["Tampa","FL"],["West Palm Beach","FL"],
+["Albany","GA"],["Athens","GA"],["Atlanta","GA"],["Augusta","GA"],["Columbus","GA"],["Macon","GA"],["Marietta","GA"],["Roswell","GA"],["Savannah","GA"],["Sandy Springs","GA"],
+["Honolulu","HI"],["Hilo","HI"],["Kailua","HI"],
+["Boise","ID"],["Caldwell","ID"],["Idaho Falls","ID"],["Meridian","ID"],["Nampa","ID"],["Pocatello","ID"],
+["Aurora","IL"],["Chicago","IL"],["Elgin","IL"],["Joliet","IL"],["Naperville","IL"],["Peoria","IL"],["Rockford","IL"],["Springfield","IL"],
+["Bloomington","IN"],["Evansville","IN"],["Fort Wayne","IN"],["Indianapolis","IN"],["South Bend","IN"],
+["Ames","IA"],["Cedar Rapids","IA"],["Davenport","IA"],["Des Moines","IA"],["Iowa City","IA"],["Sioux City","IA"],
+["Kansas City","KS"],["Lawrence","KS"],["Olathe","KS"],["Overland Park","KS"],["Topeka","KS"],["Wichita","KS"],
+["Bowling Green","KY"],["Covington","KY"],["Lexington","KY"],["Louisville","KY"],["Owensboro","KY"],
+["Baton Rouge","LA"],["Lafayette","LA"],["Lake Charles","LA"],["Metairie","LA"],["New Orleans","LA"],["Shreveport","LA"],
+["Bangor","ME"],["Lewiston","ME"],["Portland","ME"],["South Portland","ME"],
+["Annapolis","MD"],["Baltimore","MD"],["Bethesda","MD"],["Frederick","MD"],["Gaithersburg","MD"],["Rockville","MD"],["Silver Spring","MD"],
+["Boston","MA"],["Brockton","MA"],["Cambridge","MA"],["Lowell","MA"],["New Bedford","MA"],["Quincy","MA"],["Springfield","MA"],["Worcester","MA"],
+["Ann Arbor","MI"],["Dearborn","MI"],["Detroit","MI"],["Flint","MI"],["Grand Rapids","MI"],["Kalamazoo","MI"],["Lansing","MI"],["Sterling Heights","MI"],["Warren","MI"],
+["Bloomington","MN"],["Duluth","MN"],["Minneapolis","MN"],["Rochester","MN"],["St. Cloud","MN"],["St. Paul","MN"],
+["Biloxi","MS"],["Gulfport","MS"],["Hattiesburg","MS"],["Jackson","MS"],["Southaven","MS"],
+["Columbia","MO"],["Independence","MO"],["Kansas City","MO"],["Springfield","MO"],["St. Charles","MO"],["St. Louis","MO"],
+["Billings","MT"],["Bozeman","MT"],["Great Falls","MT"],["Helena","MT"],["Missoula","MT"],
+["Bellevue","NE"],["Grand Island","NE"],["Lincoln","NE"],["Omaha","NE"],
+["Carson City","NV"],["Henderson","NV"],["Las Vegas","NV"],["North Las Vegas","NV"],["Reno","NV"],["Sparks","NV"],
+["Concord","NH"],["Manchester","NH"],["Nashua","NH"],
+["Camden","NJ"],["Clifton","NJ"],["Edison","NJ"],["Elizabeth","NJ"],["Jersey City","NJ"],["Newark","NJ"],["Paterson","NJ"],["Trenton","NJ"],
+["Albuquerque","NM"],["Farmington","NM"],["Las Cruces","NM"],["Rio Rancho","NM"],["Santa Fe","NM"],
+["Albany","NY"],["Buffalo","NY"],["New Rochelle","NY"],["New York","NY"],["Rochester","NY"],["Schenectady","NY"],["Syracuse","NY"],["Yonkers","NY"],
+["Asheville","NC"],["Cary","NC"],["Charlotte","NC"],["Durham","NC"],["Fayetteville","NC"],["Greensboro","NC"],["Raleigh","NC"],["Wilmington","NC"],["Winston-Salem","NC"],
+["Bismarck","ND"],["Fargo","ND"],["Grand Forks","ND"],["Minot","ND"],
+["Akron","OH"],["Canton","OH"],["Cincinnati","OH"],["Cleveland","OH"],["Columbus","OH"],["Dayton","OH"],["Toledo","OH"],["Youngstown","OH"],
+["Broken Arrow","OK"],["Edmond","OK"],["Lawton","OK"],["Norman","OK"],["Oklahoma City","OK"],["Tulsa","OK"],
+["Albany","OR"],["Beaverton","OR"],["Bend","OR"],["Corvallis","OR"],["Eugene","OR"],["Gresham","OR"],["Hillsboro","OR"],["Keizer","OR"],["Lake Oswego","OR"],["Medford","OR"],["Oregon City","OR"],["Portland","OR"],["Salem","OR"],["Springfield","OR"],["Tigard","OR"],["Tualatin","OR"],
+["Allentown","PA"],["Erie","PA"],["Harrisburg","PA"],["Lancaster","PA"],["Philadelphia","PA"],["Pittsburgh","PA"],["Reading","PA"],["Scranton","PA"],
+["Cranston","RI"],["Pawtucket","RI"],["Providence","RI"],["Warwick","RI"],
+["Charleston","SC"],["Columbia","SC"],["Greenville","SC"],["Myrtle Beach","SC"],["North Charleston","SC"],["Rock Hill","SC"],
+["Aberdeen","SD"],["Rapid City","SD"],["Sioux Falls","SD"],
+["Chattanooga","TN"],["Clarksville","TN"],["Knoxville","TN"],["Memphis","TN"],["Murfreesboro","TN"],["Nashville","TN"],
+["Abilene","TX"],["Amarillo","TX"],["Arlington","TX"],["Austin","TX"],["Baytown","TX"],["Beaumont","TX"],["Brownsville","TX"],["Carrollton","TX"],["College Station","TX"],["Corpus Christi","TX"],["Dallas","TX"],["Denton","TX"],["El Paso","TX"],["Fort Worth","TX"],["Frisco","TX"],["Garland","TX"],["Grand Prairie","TX"],["Houston","TX"],["Irving","TX"],["Killeen","TX"],["Laredo","TX"],["Lubbock","TX"],["McAllen","TX"],["McKinney","TX"],["Mesquite","TX"],["Midland","TX"],["Odessa","TX"],["Pasadena","TX"],["Pearland","TX"],["Plano","TX"],["Richardson","TX"],["Round Rock","TX"],["San Antonio","TX"],["Sugar Land","TX"],["Tyler","TX"],["Waco","TX"],
+["Bountiful","UT"],["Layton","UT"],["Lehi","UT"],["Logan","UT"],["Ogden","UT"],["Orem","UT"],["Provo","UT"],["Salt Lake City","UT"],["Sandy","UT"],["South Jordan","UT"],["St. George","UT"],["West Jordan","UT"],["West Valley City","UT"],
+["Burlington","VT"],["Montpelier","VT"],["Rutland","VT"],
+["Alexandria","VA"],["Arlington","VA"],["Chesapeake","VA"],["Fairfax","VA"],["Hampton","VA"],["Newport News","VA"],["Norfolk","VA"],["Richmond","VA"],["Roanoke","VA"],["Virginia Beach","VA"],
+["Auburn","WA"],["Bellevue","WA"],["Bellingham","WA"],["Bremerton","WA"],["Everett","WA"],["Federal Way","WA"],["Kent","WA"],["Kirkland","WA"],["Lakewood","WA"],["Olympia","WA"],["Puyallup","WA"],["Redmond","WA"],["Renton","WA"],["Seattle","WA"],["Spokane","WA"],["Tacoma","WA"],["Vancouver","WA"],["Yakima","WA"],
+["Charleston","WV"],["Huntington","WV"],["Morgantown","WV"],["Parkersburg","WV"],
+["Appleton","WI"],["Eau Claire","WI"],["Green Bay","WI"],["Kenosha","WI"],["Madison","WI"],["Milwaukee","WI"],["Racine","WI"],
+["Casper","WY"],["Cheyenne","WY"],["Gillette","WY"],["Laramie","WY"]
+];
+
+cityData.sort((a,b) => {
+    const cityCompare = a[0].localeCompare(b[0]);
+    if(cityCompare !== 0) return cityCompare;
+    return a[1].localeCompare(b[1]);
+});
+
+const citySearch = document.getElementById("citySearch");
+const stateFilter = document.getElementById("stateFilter");
+const cityResults = document.getElementById("cityResults");
+const lettersContainer = document.getElementById("letters");
+const selectedCitiesContainer = document.getElementById("selectedCities");
+const selectedCount = document.getElementById("selectedCount");
+const selectedCitiesInput = document.getElementById("selectedCitiesInput");
+const partnerForm = document.getElementById("partnerForm");
+const homeState = document.getElementById("homeState");
+
+let activeLetter = "";
+let selectedCities = [];
+
+Object.entries(stateNames).forEach(([code,name]) => {
+    const option1 = document.createElement("option");
+    option1.value = code;
+    option1.textContent = name;
+    stateFilter.appendChild(option1);
+
+    const option2 = document.createElement("option");
+    option2.value = code;
+    option2.textContent = name;
+    homeState.appendChild(option2);
+});
+
+const allButton = document.createElement("button");
+allButton.type = "button";
+allButton.className = "letter active";
+allButton.textContent = "All";
+allButton.style.width = "50px";
+
+allButton.addEventListener("click", () => {
+    activeLetter = "";
+    setActiveLetter(allButton);
+    renderCities();
+});
+
+lettersContainer.appendChild(allButton);
+
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(letter => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "letter";
+    button.textContent = letter;
+
+    button.addEventListener("click", () => {
+        activeLetter = letter;
+        setActiveLetter(button);
+        renderCities();
+    });
+
+    lettersContainer.appendChild(button);
+});
+
+function setActiveLetter(activeButton){
+    document.querySelectorAll(".letter").forEach(button => {
+        button.classList.remove("active");
+    });
+
+    activeButton.classList.add("active");
+}
+
+function cityKey(city,state){
+    return city + "|" + state;
+}
+
+function renderCities(){
+    const search = citySearch.value.trim().toLowerCase();
+    const state = stateFilter.value;
+
+    const filtered = cityData.filter(item => {
+        const city = item[0];
+        const stateCode = item[1];
+        const fullState = stateNames[stateCode];
+
+        const matchesSearch =
+            city.toLowerCase().includes(search) ||
+            stateCode.toLowerCase().includes(search) ||
+            fullState.toLowerCase().includes(search);
+
+        const matchesState = !state || stateCode === state;
+
+        const matchesLetter =
+            !activeLetter ||
+            city.toUpperCase().startsWith(activeLetter);
+
+        return matchesSearch && matchesState && matchesLetter;
+    });
+
+    cityResults.innerHTML = "";
+
+    if(filtered.length === 0){
+        cityResults.innerHTML =
+            '<div class="no-results">No matching cities found. Try another city, state or letter.</div>';
+        return;
+    }
+
+    filtered.forEach(item => {
+        const city = item[0];
+        const state = item[1];
+        const key = cityKey(city,state);
+
+        const row = document.createElement("div");
+        row.className = "city-item";
+
+        const info = document.createElement("div");
+
+        const name = document.createElement("div");
+        name.className = "city-name";
+        name.textContent = city;
+
+        const stateText = document.createElement("div");
+        stateText.className = "city-state";
+        stateText.textContent = stateNames[state] + " (" + state + ")";
+
+        info.appendChild(name);
+        info.appendChild(stateText);
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "add-city";
+
+        const alreadySelected = selectedCities.some(
+            selected => cityKey(selected.city,selected.state) === key
+        );
+
+        if(alreadySelected){
+            button.textContent = "Selected";
+            button.disabled = true;
+        }else{
+            button.textContent = "Add City";
+
+            button.addEventListener("click", () => {
+                addCity(city,state);
+            });
+        }
+
+        row.appendChild(info);
+        row.appendChild(button);
+        cityResults.appendChild(row);
+    });
+}
+
+function addCity(city,state){
+    if(selectedCities.length >= 50){
+        alert("You can select up to 50 cities.");
+        return;
+    }
+
+    const key = cityKey(city,state);
+
+    const exists = selectedCities.some(
+        selected => cityKey(selected.city,selected.state) === key
+    );
+
+    if(exists) return;
+
+    selectedCities.push({
+        city:city,
+        state:state
+    });
+
+    updateSelectedCities();
+    renderCities();
+}
+
+function removeCity(city,state){
+    const key = cityKey(city,state);
+
+    selectedCities = selectedCities.filter(
+        selected => cityKey(selected.city,selected.state) !== key
+    );
+
+    updateSelectedCities();
+    renderCities();
+}
+
+function updateSelectedCities(){
+    selectedCount.textContent = selectedCities.length;
+
+    selectedCitiesInput.value = selectedCities
+        .map(item => item.city + ", " + item.state)
+        .join("; ");
+
+    selectedCitiesContainer.innerHTML = "";
+
+    if(selectedCities.length === 0){
+        selectedCitiesContainer.innerHTML =
+            '<span class="notice">No cities selected yet.</span>';
+        return;
+    }
+
+    selectedCities.forEach(item => {
+        const tag = document.createElement("span");
+        tag.className = "selected-tag";
+
+        const text = document.createTextNode(
+            item.city + ", " + item.state + " "
+        );
+
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.setAttribute(
+            "aria-label",
+            "Remove " + item.city + ", " + item.state
+        );
+        removeButton.textContent = "×";
+
+        removeButton.addEventListener("click", () => {
+            removeCity(item.city,item.state);
+        });
+
+        tag.appendChild(text);
+        tag.appendChild(removeButton);
+
+        selectedCitiesContainer.appendChild(tag);
+    });
+}
+
+citySearch.addEventListener("input", renderCities);
+stateFilter.addEventListener("change", renderCities);
+
+partnerForm.addEventListener("submit", function(event){
+    if(selectedCities.length === 0){
+        event.preventDefault();
+        alert("Please select at least one city before submitting your partner application.");
+        document.getElementById("territories").scrollIntoView({
+            behavior:"smooth"
+        });
+        return;
+    }
+
+    selectedCitiesInput.value = selectedCities
+        .map(item => item.city + ", " + item.state)
+        .join("; ");
+});
+
+renderCities();
+updateSelectedCities();
+</script>
+
+</body>
+</html>
