@@ -1576,39 +1576,95 @@ stateFilter.addEventListener(
     }
 );
 
-partnerForm.addEventListener(
-    "submit",
-    function(event){
+partnerForm.addEventListener("submit", async function(event){
 
-        if(selectedCities.length === 0){
+    event.preventDefault();
 
-            event.preventDefault();
+    if(selectedCities.length === 0){
 
-            alert(
-                "Please select at least one city before submitting your partner application."
-            );
+        alert("Please select at least one city before submitting.");
 
-            document
-            .getElementById("territories")
-            .scrollIntoView({
-                behavior:"smooth"
-            });
+        document
+        .getElementById("territories")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
 
-            return;
+        return;
+    }
+
+    selectedCitiesInput.value = selectedCities
+    .map(function(item){
+        return item.city + ", " + item.state;
+    })
+    .join(", ");
+
+    const submitButton = partnerForm.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
+
+    const application = {
+        full_name: document.getElementById("name").value.trim(),
+        business_name: document.getElementById("business").value.trim() || null,
+        phone: document.getElementById("phone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        city: document.getElementById("homeCity").value.trim(),
+        state: document.getElementById("homeState").value,
+        selected_cities: selectedCities.map(function(item){
+            return item.city + ", " + item.state;
+        }),
+        number_of_cities: selectedCities.length,
+        experience: document.getElementById("experience").value || null,
+        vehicle_type: document.getElementById("vehicle").value || null,
+        notes: document.getElementById("message").value.trim() || null
+    };
+
+    try {
+
+        const response = await fetch(
+            "https://hutsrafyktcxpgilogdj.supabase.co/rest/v1/partner_applications",
+            {
+                method: "POST",
+                headers: {
+                    "apikey": "sb_publishable_eSxdhKuBxrC-Sw7FwmYxGA_oBYCTCgg",
+                    "Content-Type": "application/json",
+                    "Prefer": "return=minimal"
+                },
+                body: JSON.stringify(application)
+            }
+        );
+
+        if(!response.ok){
+            const errorText = await response.text();
+            throw new Error(errorText);
         }
 
-        selectedCitiesInput.value =
-        selectedCities
-        .map(function(item){
+        alert("Thank you! Your partner application was submitted successfully.");
 
-            return item.city +
-            ", " +
-            item.state;
+        partnerForm.reset();
+        selectedCities = [];
+        renderCities();
+        updateSelectedCities();
 
-        })
-        .join("; ");
+    } catch(error){
+
+        console.error("Partner application error:", error);
+
+        alert(
+            "We could not submit your application right now. Please try again."
+        );
+
+    } finally {
+
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
     }
-);
+
+});
+
+        
 
 renderCities();
 
