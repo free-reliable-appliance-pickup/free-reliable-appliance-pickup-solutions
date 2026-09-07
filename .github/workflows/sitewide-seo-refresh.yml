@@ -1,10 +1,10 @@
 name: Sitewide SEO Structure Repair
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - '.github/workflows/sitewide-seo-refresh.yml'
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,26 +24,52 @@ jobs:
           from pathlib import Path
           from datetime import date
 
-          BASE = 'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
 
-          # Connect the 8 priority states from the homepage.
-          home = Path('index.html')
+          def write_page(slug, title, desc, h1, body):
+              p = Path(slug) / "index.html"
+              p.parent.mkdir(parents=True, exist_ok=True)
+
+              url = BASE + slug + "/"
+
+              html = (
+                  '<!doctype html><html lang="en"><head>'
+                  '<meta charset="utf-8">'
+                  '<meta name="viewport" content="width=device-width,initial-scale=1">'
+                  f'<title>{title}</title>'
+                  f'<meta name="description" content="{desc}">'
+                  '<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">'
+                  f'<link rel="canonical" href="{url}">'
+                  '</head><body>'
+                  f'<main><h1>{h1}</h1>'
+                  f'<p>{body}</p>'
+                  '<p>Qualifying washers, dryers, refrigerators, freezers, stoves and ranges may be reviewed. '
+                  'Working and reusable appliances receive priority.</p>'
+                  '<p><a href="../#request">Request appliance pickup</a></p>'
+                  '</main>'
+                  '<footer><a href="../">Free Reliable Appliance Pickup</a></footer>'
+                  '</body></html>'
+              )
+
+              p.write_text(html, encoding="utf-8")
+
+          home = Path("index.html")
 
           if home.exists():
               s = home.read_text(
-                  encoding='utf-8',
-                  errors='ignore'
+                  encoding="utf-8",
+                  errors="ignore"
               )
 
               links = {
-                  'California': 'california-appliance-pickup',
-                  'Oregon': 'oregon-appliance-pickup',
-                  'Washington': 'washington-appliance-pickup',
-                  'Arizona': 'arizona-appliance-pickup',
-                  'Utah': 'utah-appliance-pickup',
-                  'Colorado': 'colorado-appliance-pickup',
-                  'Nevada': 'nevada-appliance-pickup',
-                  'Idaho': 'idaho-appliance-pickup'
+                  "California": "california-appliance-pickup",
+                  "Oregon": "oregon-appliance-pickup",
+                  "Washington": "washington-appliance-pickup",
+                  "Arizona": "arizona-appliance-pickup",
+                  "Utah": "utah-appliance-pickup",
+                  "Colorado": "colorado-appliance-pickup",
+                  "Nevada": "nevada-appliance-pickup",
+                  "Idaho": "idaho-appliance-pickup"
               }
 
               for state, slug in links.items():
@@ -54,174 +80,186 @@ jobs:
 
               home.write_text(
                   s,
-                  encoding='utf-8'
+                  encoding="utf-8"
               )
 
-          # Clean the Portland page and link it to Oregon.
           portland = Path(
-              'portland-appliance-pickup/index.html'
+              "portland-appliance-pickup/index.html"
           )
 
           if portland.exists():
               s = portland.read_text(
-                  encoding='utf-8',
-                  errors='ignore'
+                  encoding="utf-8",
+                  errors="ignore"
               )
 
-              s = '\n'.join(
+              s = "\n".join(
                   line
                   for line in s.splitlines()
                   if not (
                       line.strip().startswith('"description":')
                       and
-                      'Free Reliable Appliance Pickup provides'
+                      "Free Reliable Appliance Pickup provides"
                       in line
                   )
               )
 
               if (
-                  'oregon-appliance-pickup/' not in s
-                  and '</main>' in s
+                  "oregon-appliance-pickup/" not in s
+                  and "</main>" in s
               ):
-                  block = (
-                      '<section>'
-                      '<h2>Oregon Appliance Pickup Areas</h2>'
-                      '<p>'
-                      '<a href="../oregon-appliance-pickup/">'
-                      'View Oregon appliance pickup service areas'
-                      '</a> for Portland, Salem, Keizer and '
-                      'surrounding communities.'
-                      '</p>'
-                      '</section>'
-                  )
-
                   s = s.replace(
-                      '</main>',
-                      block + '</main>',
+                      "</main>",
+                      '<p><a href="../oregon-appliance-pickup/">'
+                      'View Oregon appliance pickup areas'
+                      '</a></p></main>',
                       1
                   )
 
               portland.write_text(
                   s,
-                  encoding='utf-8'
+                  encoding="utf-8"
               )
 
-          # Reusable page creator.
-          def page(
-              slug,
-              title,
-              desc,
-              h1,
-              intro,
-              local_links=''
-          ):
-              p = Path(slug) / 'index.html'
+          write_page(
+              "oregon-appliance-pickup",
+              "Free Appliance Pickup Oregon | Portland, Salem & Keizer",
+              "Request qualifying appliance pickup in Oregon for washers, dryers, refrigerators, stoves and freezers.",
+              "Free Appliance Pickup in Oregon",
+              'Priority areas include '
+              '<a href="../portland-appliance-pickup/">Portland</a>, '
+              '<a href="../salem-appliance-pickup/">Salem</a> and '
+              '<a href="../keizer-appliance-pickup/">Keizer</a>.'
+          )
 
-              p.parent.mkdir(
-                  parents=True,
-                  exist_ok=True
+          write_page(
+              "arizona-appliance-pickup",
+              "Free Appliance Pickup Arizona | Phoenix Metro",
+              "Request qualifying appliance pickup in Arizona, including Phoenix metro.",
+              "Free Appliance Pickup in Arizona",
+              'Priority areas include '
+              '<a href="../phoenix-appliance-pickup/">Phoenix</a>, '
+              'Mesa, Chandler, Scottsdale, Glendale and Tempe.'
+          )
+
+          write_page(
+              "utah-appliance-pickup",
+              "Free Appliance Pickup Utah | Salt Lake City",
+              "Request qualifying appliance pickup in Utah, including Salt Lake City and the Wasatch Front.",
+              "Free Appliance Pickup in Utah",
+              'Priority areas include '
+              '<a href="../salt-lake-city-appliance-pickup/">Salt Lake City</a>, '
+              'Provo, Orem, Lehi, Ogden and Layton.'
+          )
+
+          write_page(
+              "phoenix-appliance-pickup",
+              "Free Appliance Pickup Phoenix AZ | Washer, Dryer & Refrigerator Pickup",
+              "Request qualifying appliance pickup in Phoenix Arizona for washers, dryers, refrigerators, stoves and freezers.",
+              "Free Appliance Pickup in Phoenix, Arizona",
+              'Phoenix metro requests are reviewed based on condition, access and available coverage. '
+              '<a href="../arizona-appliance-pickup/">View Arizona service areas</a>.'
+          )
+
+          write_page(
+              "salt-lake-city-appliance-pickup",
+              "Free Appliance Pickup Salt Lake City UT | Washer & Dryer Pickup",
+              "Request qualifying appliance pickup in Salt Lake City Utah for washers, dryers, refrigerators, stoves and freezers.",
+              "Free Appliance Pickup in Salt Lake City, Utah",
+              'Salt Lake City and Wasatch Front requests are reviewed based on condition, access and available coverage. '
+              '<a href="../utah-appliance-pickup/">View Utah service areas</a>.'
+          )
+
+          sitemap = Path("sitemap.xml")
+
+          if sitemap.exists():
+              text = sitemap.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+          else:
+              text = (
+                  '<?xml version="1.0" encoding="UTF-8"?>\n'
+                  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+                  '</urlset>\n'
               )
 
-              canonical = BASE + slug + '/'
+          today = str(date.today())
 
-              html = (
-                  '<!DOCTYPE html>'
-                  '<html lang="en">'
-                  '<head>'
-                  '<meta charset="UTF-8">'
-                  '<meta name="viewport" '
-                  'content="width=device-width,initial-scale=1">'
+          for slug in [
+              "oregon-appliance-pickup",
+              "arizona-appliance-pickup",
+              "utah-appliance-pickup",
+              "phoenix-appliance-pickup",
+              "salt-lake-city-appliance-pickup"
+          ]:
+              url = BASE + slug + "/"
 
-                  f'<title>{title}</title>'
+              if url not in text:
+                  entry = (
+                      f'  <url><loc>{url}</loc>'
+                      f'<lastmod>{today}</lastmod></url>\n'
+                  )
 
-                  f'<meta name="description" '
-                  f'content="{desc}">'
+                  text = text.replace(
+                      "</urlset>",
+                      entry + "</urlset>"
+                  )
 
-                  '<meta name="robots" '
-                  'content="index,follow,'
-                  'max-snippet:-1,'
-                  'max-image-preview:large">'
+          sitemap.write_text(
+              text,
+              encoding="utf-8"
+          )
 
-                  f'<link rel="canonical" '
-                  f'href="{canonical}">'
+          Path("robots.txt").write_text(
+              "User-agent: *\n"
+              "Allow: /\n\n"
+              "Sitemap: "
+              + BASE
+              + "sitemap.xml\n",
+              encoding="utf-8"
+          )
 
-                  '<style>'
-                  'body{'
-                  'font-family:Arial,Helvetica,sans-serif;'
-                  'margin:0;'
-                  'line-height:1.65;'
-                  'background:#f5f7f6;'
-                  'color:#222'
-                  '}'
+          required = [
+              "oregon-appliance-pickup/index.html",
+              "arizona-appliance-pickup/index.html",
+              "utah-appliance-pickup/index.html",
+              "phoenix-appliance-pickup/index.html",
+              "salt-lake-city-appliance-pickup/index.html"
+          ]
 
-                  'header{'
-                  'background:#087443;'
-                  'color:white;'
-                  'padding:45px 20px;'
-                  'text-align:center'
-                  '}'
+          missing = [
+              x
+              for x in required
+              if not Path(x).exists()
+          ]
 
-                  'main{'
-                  'max-width:1000px;'
-                  'margin:auto;'
-                  'padding:20px'
-                  '}'
+          if missing:
+              raise SystemExit(
+                  "Missing files: "
+                  + ", ".join(missing)
+              )
 
-                  'section{'
-                  'background:white;'
-                  'padding:24px;'
-                  'margin:20px 0;'
-                  'border-radius:12px'
-                  '}'
+          print("SEO STRUCTURE REPAIR SUCCESSFUL")
+          PY
 
-                  'a{color:#087443}'
-                  'header a{color:white}'
+      - name: Commit repaired website
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-                  'footer{'
-                  'background:#111;'
-                  'color:white;'
-                  'text-align:center;'
-                  'padding:24px'
-                  '}'
+                    git add index.html \
+            portland-appliance-pickup/index.html \
+            sitemap.xml \
+            robots.txt \
+            oregon-appliance-pickup \
+            arizona-appliance-pickup \
+            utah-appliance-pickup \
+            phoenix-appliance-pickup \
+            salt-lake-city-appliance-pickup
 
-                  'footer a{color:white}'
-                  '</style>'
+          git diff --cached --quiet || \
+            git commit -m "Complete SEO structure repair"
 
-                  '</head>'
-
-                  '<body>'
-
-                  '<header>'
-                  f'<h1>{h1}</h1>'
-                  f'<p>{intro}</p>'
-                  '<p>'
-                  '<a href="../#request">'
-                  'Request Appliance Pickup'
-                  '</a>'
-                  '</p>'
-                  '</header>'
-
-                  '<main>'
-
-                  '<section>'
-                  '<h2>Appliances We Review</h2>'
-                  '<p>'
-                  'Washers, dryers, washer and dryer sets, '
-                  'refrigerators, freezers, stoves, ranges '
-                  'and multiple major appliances may be reviewed. '
-                  'Working appliances receive priority.'
-                  '</p>'
-                  '</section>'
-
-                  '<section>'
-                  '<h2>Service Areas</h2>'
-                  f'<p>{local_links}</p>'
-                  '</section>'
-
-                  '<section>'
-                  '<h2>Request Pickup</h2>'
-                  '<p>'
-                  'Include appliance condition, city, ZIP code, '
-                  'floor level, stairs and access details.'
-                  '</p>'
-                  '<p>'
+          git push
