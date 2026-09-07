@@ -1,25 +1,12 @@
-name: Restore Nationwide Partners Page
+name: Restore Nationwide Partners Page - Disabled
 
 on:
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
-  restore-partners:
+  disabled:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
-      - name: Restore complete nationwide partners page
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import base64, gzip, re
-
-          payload = """H4sIABdNnmoC/719/3rbtpLo/34KlOntSltJtpy6cZTYZ23HaX3qJN7YaW5Ob78EEiGJNUXwkJRtxcfft++wf+wD3TfZJ7kzgx8Ef0ii1bN3uycmAcxgMBjM
-DAZD6OU3r96dXH26OGXTbBYebr3EPyzk0eTAE5GHBYL78GcmMs5GU56kIjvwPly97u57pjjiM3Hg3QTiNpZJ5rGRjDIRQbPbwM+mB764CUaiSy8dFk
+      - name: Workflow disabled
+        run: echo "Old restore workflow is disabled. No website files will be changed."
