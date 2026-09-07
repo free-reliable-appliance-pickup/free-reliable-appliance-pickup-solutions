@@ -32,4 +32,114 @@ jobs:
               p.parent.mkdir(parents=True, exist_ok=True)
               old = p.read_text(encoding="utf-8", errors="ignore") if p.exists() else None
               if old != text:
-                  p.write_text
+                  p.write_text(text, encoding="utf-8")
+                  print("UPDATED", p)
+              else:
+                  print("OK", p)
+
+          write("partner-territories/index.html", f'''<!DOCTYPE html>
+          <html lang="en"><head><meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1.0">
+          <title>Appliance Pickup Partner Program | Free Reliable Appliance Pickup</title>
+          <meta name="description" content="Join the Free Reliable Appliance Pickup nationwide partner network for appliance pickup lead and territory opportunities.">
+          <meta name="robots" content="noindex,follow">
+          <link rel="canonical" href="{BASE}partners/">
+          <meta http-equiv="refresh" content="0;url={BASE}partners/">
+          <script>window.location.replace('{BASE}partners/');</script>
+          </head><body><p>This page has moved to the <a href="{BASE}partners/">Nationwide Appliance Pickup Partner Program</a>.</p></body></html>''')
+
+          schema = {
+            "@context":"https://schema.org","@type":"Service",
+            "name":"Free Appliance Pickup in Colorado",
+            "serviceType":"Major Appliance Pickup",
+            "provider":{"@type":"Organization","name":"Free Reliable Appliance Pickup","telephone":"+1-720-604-7498","url":BASE},
+            "areaServed":{"@type":"State","name":"Colorado"},
+            "url":BASE+"colorado-appliance-pickup/"
+          }
+
+          write("colorado-appliance-pickup/index.html", f'''<!DOCTYPE html>
+          <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+          <title>Free Appliance Pickup Colorado | Denver, Aurora & Lakewood</title>
+          <meta name="description" content="Request qualifying free appliance pickup in Colorado for washers, dryers, refrigerators, stoves, ranges and freezers. Serving Denver, Aurora and Lakewood.">
+          <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+          <link rel="canonical" href="{BASE}colorado-appliance-pickup/">
+          <style>*{{box-sizing:border-box}}body{{margin:0;font-family:Arial,sans-serif;line-height:1.65;background:#f5f7f6;color:#222}}header{{background:linear-gradient(135deg,#0b5d35,#087443);color:#fff;text-align:center;padding:55px 20px}}main{{max-width:1050px;margin:auto;padding:35px 20px}}section{{background:#fff;padding:28px;margin-bottom:24px;border-radius:12px;box-shadow:0 3px 14px rgba(0,0,0,.07)}}h2{{color:#0b5d35}}a{{color:#075c36;font-weight:bold}}.btn{{display:inline-block;background:#0b5d35;color:#fff;text-decoration:none;padding:14px 22px;border-radius:8px;margin:6px}}footer{{background:#17352a;color:#fff;text-align:center;padding:25px}}</style>
+          <script type="application/ld+json">{json.dumps(schema)}</script></head><body>
+          <header><h1>Free Appliance Pickup in Colorado</h1><p>Qualifying washer, dryer, refrigerator, stove, range and freezer pickup in active Colorado service areas.</p><a class="btn" href="tel:+17206047498">Call Colorado: {PHONE}</a></header>
+          <main>
+          <section><h2>Colorado Appliance Pickup Service</h2><p>Free Reliable Appliance Pickup reviews requests for major household appliances. Working and reusable appliances may receive priority depending on condition, local demand, access and scheduling.</p><p>Clear photos, accurate condition details, ZIP code and access information help us review requests faster.</p></section>
+          <section><h2>Active Colorado Service Pages</h2><p><a href="../denver-appliance-pickup/">Denver Appliance Pickup</a></p><p><a href="../aurora-appliance-pickup/">Aurora Appliance Pickup</a></p><p><a href="../lakewood-appliance-pickup/">Lakewood Appliance Pickup</a></p></section>
+          <section><h2>Washer and Dryer Pickup in Colorado</h2><p>Washer and dryer pickup is one of our primary Colorado services. Fully functioning and reusable machines may receive priority. Every request is reviewed individually.</p></section>
+          <section><h2>Request Pickup</h2><p>We may review washers, dryers, refrigerators, stoves, ranges and freezers. Microwaves are generally considered only with another qualifying major appliance.</p><a class="btn" href="{BASE}">Request Appliance Pickup</a><a class="btn" href="tel:+17206047498">Call {PHONE}</a></section>
+          </main><footer>Free Reliable Appliance Pickup - Colorado</footer></body></html>''')
+
+          for slug, city in [("denver","Denver"),("lakewood","Lakewood")]:
+              p = Path(f"{slug}-appliance-pickup/index.html")
+              if not p.exists():
+                  continue
+              html = p.read_text(encoding="utf-8", errors="ignore")
+              marker = "<!-- FINAL COLORADO LOCAL SEO -->"
+              if marker not in html:
+                  section = f'''
+{marker}
+<section><h2>Washer and Dryer Pickup in {city}, Colorado</h2><p>Free Reliable Appliance Pickup reviews qualifying washer, dryer, refrigerator, stove, range and freezer pickup requests in {city}. Working and reusable appliances may receive priority.</p><p>Send clear photos and accurate condition, ZIP code, stairs and access information. Colorado customers can call <a href="tel:+17206047498">{PHONE}</a>.</p><p><a href="../colorado-appliance-pickup/">Colorado Appliance Pickup</a> | <a href="../aurora-appliance-pickup/">Aurora</a> | <a href="../lakewood-appliance-pickup/">Lakewood</a> | <a href="../denver-appliance-pickup/">Denver</a></p></section>
+'''
+                  if "</main>" in html:
+                      html = html.replace("</main>", section + "</main>", 1)
+                  else:
+                      html = html.replace("</body>", section + "</body>", 1)
+              if "720-604-7498" not in html and "</header>" in html:
+                  html = html.replace("</header>", f'<p><a href="tel:+17206047498" style="color:white;font-weight:bold">Call Colorado: {PHONE}</a></p></header>', 1)
+              p.write_text(html, encoding="utf-8")
+
+          ap = Path("aurora-appliance-pickup/index.html")
+          if ap.exists():
+              html = ap.read_text(encoding="utf-8", errors="ignore")
+              repl = '''<div class="card"><h2>Nearby Colorado Appliance Pickup Areas</h2><p>Visit our <a href="../colorado-appliance-pickup/">Colorado Appliance Pickup</a> page for broader service information.</p><p><a href="../denver-appliance-pickup/">Denver</a> | <a href="../lakewood-appliance-pickup/">Lakewood</a></p></div>'''
+              html, n = re.subn(r'<div class="card">\s*<h2>Nearby Colorado Appliance Pickup Areas</h2>.*?</div>', repl, html, count=1, flags=re.I|re.S)
+              if n:
+                  ap.write_text(html, encoding="utf-8")
+
+          urls = {BASE, BASE+"partners/"}
+          for p in Path(".").glob("*/index.html"):
+              d = p.parent.name
+              if d in {"partner-territories", ".github", "github"}:
+                  continue
+              txt = p.read_text(encoding="utf-8", errors="ignore").lower()
+              if 'name="robots" content="noindex' in txt or "name='robots' content='noindex" in txt:
+                  continue
+              urls.add(BASE + d + "/")
+
+          today = date.today().isoformat()
+          sm = ['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+          for u in sorted(urls):
+              sm += ['  <url>',f'    <loc>{u}</loc>',f'    <lastmod>{today}</lastmod>','  </url>']
+          sm.append('</urlset>')
+          write("sitemap.xml", "\n".join(sm)+"\n")
+          write("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {BASE}sitemap.xml\n")
+
+          required = ["index.html","partners/index.html","partner-territories/index.html","colorado-appliance-pickup/index.html","denver-appliance-pickup/index.html","aurora-appliance-pickup/index.html","lakewood-appliance-pickup/index.html","sitemap.xml","robots.txt"]
+          missing = [x for x in required if not Path(x).exists()]
+          if missing:
+              raise SystemExit("Missing required files: " + ", ".join(missing))
+
+          for x in required[:7]:
+              t = Path(x).read_text(encoding="utf-8", errors="ignore").lower()
+              if "</html>" not in t:
+                  raise SystemExit("Incomplete HTML: " + x)
+
+          print("FINAL WEBSITE REPAIR COMPLETE")
+          PY
+
+      - name: Commit repaired website
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add partner-territories/index.html colorado-appliance-pickup/index.html denver-appliance-pickup/index.html aurora-appliance-pickup/index.html lakewood-appliance-pickup/index.html sitemap.xml robots.txt
+          if git diff --cached --quiet; then
+            echo "Website already repaired"
+          else
+            git commit -m "Complete Colorado and partner SEO repair"
+            git push
+          fi
