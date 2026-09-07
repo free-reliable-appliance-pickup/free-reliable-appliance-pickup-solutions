@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Free Appliance Pickup Near Me | Washer, Dryer & Refrigerator Pickup</title>
+<title>Free Appliance Pickup Near Me Nationwide | Washer & Dryer Pickup</title>
 
-<meta name="description" content="Request qualifying free appliance pickup for washers, dryers, refrigerators, stoves, freezers and other major appliances across selected service areas in California, Oregon, Washington, Arizona, Utah, Colorado, Nevada and Idaho.">
+<meta name="description" content="Request qualifying free appliance pickup nationwide. Priority service markets include California, Oregon, Washington, Arizona, Utah, Colorado, Nevada and Idaho, with additional U.S. areas reviewed through our pickup partner network.">
 
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -17,15 +17,14 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Free Reliable Appliance Pickup">
-<meta property="og:title" content="Free Appliance Pickup Near Me | Free Reliable Appliance Pickup">
-<meta property="og:description" content="Request qualifying washer, dryer, refrigerator, stove, freezer and major appliance pickup in available service areas.">
+<meta property="og:title" content="Free Appliance Pickup Near Me Nationwide">
+<meta property="og:description" content="Qualifying washer, dryer, refrigerator, stove and freezer pickup requests accepted nationwide, with priority service markets in eight western states.">
 <meta property="og:url" content="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/">
 
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0b6b3a">
 
 <style>
-
 :root{
     --green:#0b6b3a;
     --green2:#16884d;
@@ -34,7 +33,7 @@
     --border:#d8e5dd;
     --text:#222;
     --muted:#5b665f;
-    --warn:#fff8e8;
+    --gold:#fff8e8;
 }
 
 *{
@@ -48,7 +47,7 @@ html{
 body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    line-height:1.65;
+    line-height:1.6;
     color:var(--text);
     background:#f6f8f7;
 }
@@ -60,31 +59,30 @@ a{
 header{
     background:linear-gradient(135deg,var(--green),var(--green2));
     color:#fff;
-    padding:52px 20px 48px;
     text-align:center;
+    padding:54px 20px;
 }
 
-.brand{
-    margin:0 0 8px;
+header .brand{
     font-weight:700;
-    letter-spacing:.3px;
     font-size:18px;
+    margin:0 0 8px;
 }
 
 header h1{
-    margin:0 auto 14px;
-    max-width:950px;
     font-size:40px;
-    line-height:1.18;
+    line-height:1.15;
+    max-width:980px;
+    margin:0 auto 14px;
 }
 
 header p{
+    font-size:19px;
     max-width:900px;
     margin:0 auto;
-    font-size:19px;
 }
 
-.header-actions{
+.actions{
     margin-top:22px;
 }
 
@@ -92,14 +90,14 @@ header p{
     display:inline-block;
     background:#fff;
     color:var(--green);
-    padding:13px 21px;
+    padding:13px 20px;
     border-radius:8px;
     text-decoration:none;
     font-weight:700;
-    margin:6px 4px;
+    margin:5px;
 }
 
-.button.secondary{
+.button.alt{
     background:transparent;
     color:#fff;
     border:2px solid #fff;
@@ -108,19 +106,19 @@ header p{
 nav{
     position:sticky;
     top:0;
-    z-index:1000;
+    z-index:10;
     background:var(--dark);
-    padding:11px 10px;
     text-align:center;
+    padding:10px;
 }
 
 nav a{
     display:inline-block;
     color:#fff;
     text-decoration:none;
-    margin:4px 8px;
     font-weight:700;
     font-size:14px;
+    margin:4px 8px;
 }
 
 .container{
@@ -131,14 +129,14 @@ nav a{
 section{
     background:#fff;
     margin:24px 0;
-    padding:34px 26px;
+    padding:32px 26px;
     border-radius:12px;
     box-shadow:0 2px 10px rgba(0,0,0,.06);
 }
 
 h2{
+    margin:0 0 12px;
     color:var(--green);
-    margin:0 0 14px;
     font-size:30px;
     line-height:1.25;
 }
@@ -156,127 +154,80 @@ h3{
     color:var(--muted);
 }
 
-.service-grid,
-.area-grid,
-.steps-grid,
-.contact-grid{
+.grid{
     display:grid;
-    gap:18px;
-}
-
-.service-grid{
     grid-template-columns:repeat(3,1fr);
+    gap:16px;
 }
 
-.area-grid{
-    grid-template-columns:repeat(2,1fr);
-}
-
-.steps-grid{
-    grid-template-columns:repeat(4,1fr);
-}
-
-.contact-grid{
-    grid-template-columns:repeat(2,1fr);
-}
-
-.card,
-.area-group,
-.step,
-.contact-card{
+.card{
     border:1px solid var(--border);
     border-radius:10px;
-    padding:20px;
+    padding:18px;
     background:#fafcfb;
 }
 
-.area-group p{
-    margin-top:0;
-}
-
-.area-group a{
-    display:inline-block;
-    margin:5px 8px 5px 0;
-    color:var(--green);
-    font-weight:700;
-    text-decoration:none;
-}
-
-.area-group a:hover{
-    text-decoration:underline;
-}
-
-.city-chip{
-    display:inline-block;
-    margin:5px 7px 5px 0;
-    padding:7px 10px;
-    border-radius:7px;
-    background:var(--light);
-    color:#24543a;
-    font-weight:700;
-    font-size:14px;
-}
-
-.step-number{
-    display:inline-flex;
-    width:38px;
-    height:38px;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:var(--green);
-    color:#fff;
-    font-weight:700;
-}
-
 .notice{
-    background:var(--warn);
+    background:var(--gold);
     border-left:4px solid #d49a00;
     padding:15px;
     border-radius:6px;
-    margin-top:20px;
+    margin:18px 0;
 }
 
-.good-box{
+.good{
     background:var(--light);
     border-left:4px solid var(--green);
-    padding:16px;
+    padding:15px;
     border-radius:6px;
-    margin-top:20px;
+    margin:18px 0;
 }
 
-.quick-links{
+.priority{
     display:flex;
     flex-wrap:wrap;
-    gap:10px;
-    margin-top:18px;
+    gap:9px;
+    margin:14px 0;
 }
 
-.quick-links a{
+.chip{
+    background:var(--light);
+    color:#24543a;
+    padding:8px 11px;
+    border-radius:7px;
+    font-weight:700;
+}
+
+.link-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.link-grid a{
     background:var(--light);
     color:var(--green);
-    padding:10px 14px;
+    padding:9px 12px;
     border-radius:7px;
     text-decoration:none;
     font-weight:700;
 }
 
-.faq-item{
-    padding:17px 0;
-    border-bottom:1px solid #e5e5e5;
+.states{
+    columns:4;
+    column-gap:28px;
+    margin-top:16px;
 }
 
-.faq-item:last-child{
-    border-bottom:0;
-}
-
-.faq-item h3{
-    margin:0 0 7px;
+.states span{
+    display:block;
+    padding:4px 0;
+    break-inside:avoid;
 }
 
 form{
     display:grid;
-    gap:13px;
+    gap:12px;
 }
 
 label{
@@ -314,6 +265,19 @@ button:hover{
     background:#095a31;
 }
 
+.contact-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
+.contact-card{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:18px;
+    background:#fafcfb;
+}
+
 .contact-card a{
     color:var(--green);
     font-weight:700;
@@ -342,15 +306,15 @@ footer a{
         font-size:31px;
     }
 
-    .service-grid,
-    .area-grid,
-    .steps-grid,
+    .grid,
     .contact-grid{
         grid-template-columns:1fr;
     }
 
+    .states{
+        columns:2;
+    }
 }
-
 </style>
 
 <script type="application/ld+json">
@@ -362,17 +326,11 @@ footer a{
       "@id":"https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/#organization",
       "name":"Free Reliable Appliance Pickup",
       "url":"https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/",
-      "description":"Qualifying major appliance pickup, removal, reuse and recycling across selected service areas.",
-      "areaServed":[
-        "California",
-        "Oregon",
-        "Washington",
-        "Arizona",
-        "Utah",
-        "Colorado",
-        "Nevada",
-        "Idaho"
-      ],
+      "description":"Nationwide appliance pickup request network with priority service markets and additional partner-supported territories across the United States.",
+      "areaServed":{
+        "@type":"Country",
+        "name":"United States"
+      },
       "contactPoint":[
         {
           "@type":"ContactPoint",
@@ -410,21 +368,9 @@ footer a{
       }
     },
     {
-      "@type":"WebPage",
-      "@id":"https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/#webpage",
-      "url":"https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/",
-      "name":"Free Appliance Pickup Near Me",
-      "isPartOf":{
-        "@id":"https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/#website"
-      },
-      "about":{
-        "@id":"https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/#service"
-      }
-    },
-    {
       "@type":"Service",
       "@id":"https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/#service",
-      "name":"Free Appliance Pickup",
+      "name":"Free Appliance Pickup Request Service",
       "provider":{
         "@id":"https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/#organization"
       },
@@ -432,36 +378,35 @@ footer a{
         "Free Appliance Pickup",
         "Washer Pickup",
         "Dryer Pickup",
-        "Washer and Dryer Pickup",
         "Refrigerator Pickup",
         "Stove Pickup",
-        "Range Pickup",
         "Freezer Pickup",
-        "Dishwasher Pickup",
         "Appliance Removal",
         "Appliance Recycling"
       ],
-      "areaServed":[
-        "California",
-        "Oregon",
-        "Washington",
-        "Arizona",
-        "Utah",
-        "Colorado",
-        "Nevada",
-        "Idaho"
-      ],
-      "description":"Qualifying major appliances may be eligible for free pickup after review of condition, photos, location, access, local demand and current availability."
+      "areaServed":{
+        "@type":"Country",
+        "name":"United States"
+      },
+      "description":"Qualifying appliance pickup requests are reviewed based on condition, location, access, local demand and pickup-partner availability."
     },
     {
       "@type":"FAQPage",
       "mainEntity":[
         {
           "@type":"Question",
-          "name":"Is appliance pickup really free?",
+          "name":"Do you accept appliance pickup requests nationwide?",
           "acceptedAnswer":{
             "@type":"Answer",
-            "text":"Qualifying appliances may be picked up free after review. Approval depends on appliance condition, photos, location, access, local demand and current pickup availability."
+            "text":"Yes. Requests can be submitted from all 50 states. California, Oregon, Washington, Arizona, Utah, Colorado, Nevada and Idaho are priority markets, while other locations are reviewed for available pickup-partner coverage."
+          }
+        },
+        {
+          "@type":"Question",
+          "name":"Is appliance pickup always free?",
+          "acceptedAnswer":{
+            "@type":"Answer",
+            "text":"Qualifying requests may receive free pickup. Approval depends on appliance condition, location, access, demand and available pickup coverage."
           }
         },
         {
@@ -469,39 +414,15 @@ footer a{
           "name":"What appliances do you pick up?",
           "acceptedAnswer":{
             "@type":"Answer",
-            "text":"Common pickup requests include washers, dryers, washer and dryer sets, refrigerators, stoves, ranges, freezers, dishwashers and other qualifying major household appliances."
+            "text":"Common requests include washers, dryers, washer and dryer sets, refrigerators, stoves, ranges, freezers and dishwashers."
           }
         },
         {
           "@type":"Question",
-          "name":"Do you pick up washers and dryers?",
+          "name":"Do working appliances receive priority?",
           "acceptedAnswer":{
             "@type":"Answer",
-            "text":"Yes. Qualifying washers, dryers and washer and dryer sets are priority pickup categories."
-          }
-        },
-        {
-          "@type":"Question",
-          "name":"Do I need to send appliance photos?",
-          "acceptedAnswer":{
-            "@type":"Answer",
-            "text":"Clear photos are strongly recommended because they help review appliance type, condition, size and access before pickup is approved."
-          }
-        },
-        {
-          "@type":"Question",
-          "name":"Do you pick up broken appliances?",
-          "acceptedAnswer":{
-            "@type":"Answer",
-            "text":"Working, repairable and non-working appliances can be submitted for review. Pickup is not guaranteed and depends on the individual request and local availability."
-          }
-        },
-        {
-          "@type":"Question",
-          "name":"Do you pick up standalone microwaves?",
-          "acceptedAnswer":{
-            "@type":"Answer",
-            "text":"Standalone microwaves are generally not accepted. A microwave may be considered with another qualifying major appliance."
+            "text":"Working, complete and reusable appliances may receive priority, though repairable or non-working appliances can also be submitted for review."
           }
         }
       ]
@@ -509,7 +430,6 @@ footer a{
   ]
 }
 </script>
-
 </head>
 
 <body>
@@ -521,37 +441,36 @@ Free Reliable Appliance Pickup
 </p>
 
 <h1>
-Free Appliance Pickup Near Me
+Free Appliance Pickup Near Me — Nationwide Requests
 </h1>
 
 <p>
 Request qualifying pickup for washers, dryers, refrigerators, stoves,
-ranges, freezers and other major household appliances across selected
-service areas in the western United States.
+freezers and other major appliances. We accept requests from all 50
+states, with priority service markets in California, Oregon, Washington,
+Arizona, Utah, Colorado, Nevada and Idaho.
 </p>
 
-<div class="header-actions">
+<div class="actions">
 
-<a class="button" href="#contact">
+<a class="button" href="#request">
 Request Appliance Pickup
 </a>
 
-<a class="button secondary" href="#areas">
-Find a Service Area
+<a class="button alt" href="#coverage">
+See Nationwide Coverage
 </a>
 
 </div>
 
 </header>
 
-
 <nav>
 
 <a href="#services">Services</a>
-<a href="#areas">Service Areas</a>
-<a href="#how-it-works">How It Works</a>
-<a href="#faq">FAQ</a>
-<a href="#contact">Request Pickup</a>
+<a href="#priority">Priority Markets</a>
+<a href="#coverage">Nationwide</a>
+<a href="#request">Request Pickup</a>
 
 <a href="/free-reliable-appliance-pickup-solutions/partners/">
 Pickup Partners
@@ -559,60 +478,38 @@ Pickup Partners
 
 </nav>
 
-
 <main class="container">
-
 
 <section>
 
 <h2>
-Free Washer, Dryer &amp; Refrigerator Pickup Near You
+Washer, Dryer &amp; Refrigerator Pickup
 </h2>
 
 <p class="lead">
 If you are searching for
 <strong>free appliance pickup near me</strong>,
-send us your appliance type, condition, city, ZIP code, clear photos and
-pickup-access details. We review each request before confirming service.
+submit your city, state, ZIP code, appliance condition and access
+details. Qualifying requests are reviewed for the best available local
+pickup option.
 </p>
+
+<div class="good">
+
+<strong>Priority:</strong>
+working and reusable appliances, especially washers, dryers,
+washer-and-dryer sets and refrigerators, may be easier to match with an
+available pickup route.
+
+</div>
 
 <p>
-Working and reusable appliances may receive priority. We also review
-repairable and non-working appliances when local pickup capacity and
-recycling or reuse options are available.
+Direct service, protected territories and partner-supported areas vary
+by city. A state being listed does not guarantee pickup; every request
+is reviewed individually.
 </p>
 
-<div class="good-box">
-
-<strong>Fastest review:</strong>
-
-include clear appliance photos, tell us whether it works, and describe
-stairs, floor level, garage or basement access before scheduling.
-
-</div>
-
-<div class="quick-links">
-
-<a href="#services">
-Washer &amp; Dryer Pickup
-</a>
-
-<a href="#services">
-Refrigerator Pickup
-</a>
-
-<a href="#areas">
-Browse Locations
-</a>
-
-<a href="#contact">
-Submit a Pickup Request
-</a>
-
-</div>
-
 </section>
-
 
 <section id="services">
 
@@ -620,143 +517,61 @@ Submit a Pickup Request
 Major Appliance Pickup Services
 </h2>
 
-<div class="service-grid">
-
-
-<div class="card">
-
-<h3>
-Free Washer Pickup
-</h3>
-
-<p>
-Qualifying top-load and front-load washing machines may be eligible for
-pickup. Tell us whether the washer is fully functioning, needs repair or
-is not working.
-</p>
-
-</div>
-
+<div class="grid">
 
 <div class="card">
-
-<h3>
-Free Dryer Pickup
-</h3>
-
+<h3>Washer Pickup</h3>
 <p>
-Qualifying electric and gas dryers may be reviewed for pickup. Include
-the dryer type, condition and photos whenever possible.
+Top-load and front-load washing machines may qualify. Tell us whether
+the washer works, needs repair or is not working.
 </p>
-
 </div>
-
 
 <div class="card">
-
-<h3>
-Washer &amp; Dryer Set Pickup
-</h3>
-
+<h3>Dryer Pickup</h3>
 <p>
-Washer-and-dryer sets are one of our priority categories. Matching
-brands are not required. Include information and photos for both units.
+Electric and gas dryers may qualify. Include condition, access and any
+available photo information.
 </p>
-
 </div>
-
 
 <div class="card">
-
-<h3>
-Refrigerator Pickup
-</h3>
-
+<h3>Washer &amp; Dryer Sets</h3>
 <p>
-Qualifying full-size refrigerators may be considered, including
-top-freezer, bottom-freezer, side-by-side and French-door models.
+Washer-and-dryer sets are a priority category in many of our active
+service markets.
 </p>
-
 </div>
-
 
 <div class="card">
-
-<h3>
-Stove &amp; Range Pickup
-</h3>
-
+<h3>Refrigerator Pickup</h3>
 <p>
-Qualifying electric and gas stoves, ranges and ovens may be submitted
-for pickup review.
+Full-size refrigerators, including side-by-side, French-door and top-
+or bottom-freezer models, may qualify.
 </p>
-
 </div>
-
 
 <div class="card">
-
-<h3>
-Freezer Pickup
-</h3>
-
+<h3>Stove &amp; Range Pickup</h3>
 <p>
-Qualifying upright and chest freezers may be considered depending on
-condition, access and local availability.
+Electric and gas stoves, ranges and ovens can be submitted for pickup
+review.
 </p>
-
 </div>
-
 
 <div class="card">
-
-<h3>
-Dishwasher Pickup
-</h3>
-
+<h3>Freezer Pickup</h3>
 <p>
-Dishwashers may qualify depending on condition, accessibility and
-current demand in the pickup area.
+Upright and chest freezers may qualify depending on condition and local
+availability.
 </p>
-
 </div>
 
-
-<div class="card">
-
-<h3>
-Multiple Appliance Pickup
-</h3>
-
-<p>
-Have more than one appliance? Submit all major appliances in the same
-request and describe the condition of each unit.
-</p>
-
 </div>
-
-
-<div class="card">
-
-<h3>
-Reuse, Repair &amp; Recycling
-</h3>
-
-<p>
-Depending on condition and local options, qualifying appliances may be
-reused, refurbished, used for parts or appropriately recycled.
-</p>
-
-</div>
-
-
-</div>
-
 
 <div class="notice">
 
 <strong>Microwaves:</strong>
-
 standalone microwaves are generally not accepted. A microwave may be
 considered when included with another qualifying major appliance.
 
@@ -764,1094 +579,200 @@ considered when included with another qualifying major appliance.
 
 </section>
 
-
-<section id="areas">
+<section id="priority">
 
 <h2>
-Free Appliance Pickup Service Areas
+8 Priority Appliance Pickup States
 </h2>
 
 <p class="lead">
-We currently accept pickup requests across selected areas in California,
-Oregon, Washington, Arizona, Utah, Colorado, Nevada and Idaho.
-Availability varies by city, ZIP code, appliance condition and access.
+These are our priority markets. Important cities may be reserved for
+direct operations or selected partners, while other cities in the same
+states can still be available for partner territories and lead
+opportunities.
 </p>
 
-<p class="muted">
-Choose a location page below. If your city is not listed, submit the
-pickup request form and we will review current availability.
-</p>
+<div class="priority">
 
+<span class="chip">California</span>
+<span class="chip">Oregon</span>
+<span class="chip">Washington</span>
+<span class="chip">Arizona</span>
+<span class="chip">Utah</span>
+<span class="chip">Colorado</span>
+<span class="chip">Nevada</span>
+<span class="chip">Idaho</span>
 
-<div class="area-grid">
-
-
-<div class="area-group">
+</div>
 
 <h3>
-California Appliance Pickup
+Popular Service-Area Pages
 </h3>
 
-<p>
+<div class="link-grid">
 
 <a href="/free-reliable-appliance-pickup-solutions/california-appliance-pickup/">
-California Appliance Pickup
+California
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/los-angeles-appliance-pickup/">
-Los Angeles Appliance Pickup
+Los Angeles
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/san-bernardino-county-appliance-pickup/">
-San Bernardino County Appliance Pickup
+San Bernardino County
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/riverside-appliance-pickup/">
-Riverside Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/palm-desert-appliance-pickup/">
-Palm Desert Appliance Pickup
+Riverside
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/palm-springs-appliance-pickup/">
-Palm Springs Appliance Pickup
+Palm Springs
 </a>
-
-<a href="/free-reliable-appliance-pickup-solutions/anaheim-appliance-pickup/">
-Anaheim Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/irvine-appliance-pickup/">
-Irvine Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/long-beach-appliance-pickup/">
-Long Beach Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/san-diego-appliance-pickup/">
-San Diego Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/sacramento-appliance-pickup/">
-Sacramento Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/fresno-appliance-pickup/">
-Fresno Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/san-jose-appliance-pickup/">
-San Jose Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/san-francisco-appliance-pickup/">
-San Francisco Appliance Pickup
-</a>
-
-</p>
-
-<p class="small">
-San Bernardino County coverage includes communities such as Fontana,
-Rancho Cucamonga, Upland, San Bernardino and Victorville, subject to
-current availability.
-</p>
-
-</div>
-
-
-<div class="area-group">
-
-<h3>
-Oregon Appliance Pickup
-</h3>
-
-<p>
 
 <a href="/free-reliable-appliance-pickup-solutions/portland-appliance-pickup/">
-Portland Appliance Pickup
+Portland
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/salem-appliance-pickup/">
-Salem Appliance Pickup
+Salem
 </a>
-
-<a href="/free-reliable-appliance-pickup-solutions/keizer-appliance-pickup/">
-Keizer Appliance Pickup
-</a>
-
-</p>
-
-<p class="small">
-Other Oregon locations can be submitted through the pickup request form
-for availability review.
-</p>
-
-</div>
-
-
-<div class="area-group">
-
-<h3>
-Washington Appliance Pickup
-</h3>
-
-<p>
 
 <a href="/free-reliable-appliance-pickup-solutions/washington-appliance-pickup/">
-Washington Appliance Pickup
+Washington
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/seattle-appliance-pickup/">
-Seattle Appliance Pickup
+Seattle
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/tacoma-appliance-pickup/">
-Tacoma Appliance Pickup
+Tacoma
 </a>
-
-<a href="/free-reliable-appliance-pickup-solutions/bellevue-appliance-pickup/">
-Bellevue Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/everett-appliance-pickup/">
-Everett Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/vancouver-appliance-pickup/">
-Vancouver Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/spokane-appliance-pickup/">
-Spokane Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/kent-appliance-pickup/">
-Kent Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/renton-appliance-pickup/">
-Renton Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/redmond-appliance-pickup/">
-Redmond Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/kirkland-appliance-pickup/">
-Kirkland Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/shoreline-appliance-pickup/">
-Shoreline Appliance Pickup
-</a>
-
-</p>
-
-</div>
-
-
-<div class="area-group">
-
-<h3>
-Colorado Appliance Pickup
-</h3>
-
-<p>
 
 <a href="/free-reliable-appliance-pickup-solutions/denver-appliance-pickup/">
-Denver Appliance Pickup
+Denver
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/aurora-appliance-pickup/">
-Aurora Appliance Pickup
+Aurora
 </a>
 
-</p>
-
-<p class="small">
-Denver and Aurora are the current dedicated Colorado location pages.
-Nearby Colorado requests can still be submitted for review.
-</p>
-
-</div>
-
-
-<div class="area-group">
-
-<h3>
-Nevada Appliance Pickup
-</h3>
-
-<p>
-
 <a href="/free-reliable-appliance-pickup-solutions/nevada-appliance-pickup/">
-Nevada Appliance Pickup
+Nevada
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/las-vegas-appliance-pickup/">
-Las Vegas Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/henderson-appliance-pickup/">
-Henderson Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/north-las-vegas-appliance-pickup/">
-North Las Vegas Appliance Pickup
+Las Vegas
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/reno-appliance-pickup/">
-Reno Appliance Pickup
+Reno
 </a>
-
-<a href="/free-reliable-appliance-pickup-solutions/sparks-appliance-pickup/">
-Sparks Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/boulder-city-appliance-pickup/">
-Boulder City Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/carson-city-appliance-pickup/">
-Carson City Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/enterprise-appliance-pickup/">
-Enterprise Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/paradise-appliance-pickup/">
-Paradise Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/spring-valley-appliance-pickup/">
-Spring Valley Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/summerlin-appliance-pickup/">
-Summerlin Appliance Pickup
-</a>
-
-</p>
-
-</div>
-
-
-<div class="area-group">
-
-<h3>
-Idaho Appliance Pickup
-</h3>
-
-<p>
 
 <a href="/free-reliable-appliance-pickup-solutions/idaho-appliance-pickup/">
-Idaho Appliance Pickup
+Idaho
 </a>
 
 <a href="/free-reliable-appliance-pickup-solutions/boise-appliance-pickup/">
-Boise Appliance Pickup
+Boise
 </a>
-
-<a href="/free-reliable-appliance-pickup-solutions/meridian-appliance-pickup/">
-Meridian Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/nampa-appliance-pickup/">
-Nampa Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/caldwell-appliance-pickup/">
-Caldwell Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/eagle-appliance-pickup/">
-Eagle Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/garden-city-appliance-pickup/">
-Garden City Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/kuna-appliance-pickup/">
-Kuna Appliance Pickup
-</a>
-
-<a href="/free-reliable-appliance-pickup-solutions/star-appliance-pickup/">
-Star Appliance Pickup
-</a>
-
-</p>
-
-</div>
-
-
-<div class="area-group">
-
-<h3>
-Arizona Appliance Pickup
-</h3>
-
-<p>
-Pickup requests can be submitted for review in available Arizona
-service areas, including major Phoenix-area communities.
-</p>
-
-<span class="city-chip">Phoenix</span>
-<span class="city-chip">Mesa</span>
-<span class="city-chip">Chandler</span>
-<span class="city-chip">Scottsdale</span>
-<span class="city-chip">Glendale</span>
-<span class="city-chip">Tempe</span>
-
-</div>
-
-
-<div class="area-group">
-
-<h3>
-Utah Appliance Pickup
-</h3>
-
-<p>
-Pickup requests can be submitted for review in available Utah service
-areas, including major Wasatch Front communities.
-</p>
-
-<span class="city-chip">Salt Lake City</span>
-<span class="city-chip">Lehi</span>
-<span class="city-chip">Provo</span>
-<span class="city-chip">Orem</span>
-<span class="city-chip">Ogden</span>
-<span class="city-chip">Layton</span>
-
-</div>
-
 
 </div>
 
 </section>
 
-
-<section id="how-it-works">
-
-<h2>
-How Free Appliance Pickup Works
-</h2>
-
-<div class="steps-grid">
-
-
-<div class="step">
-
-<span class="step-number">
-1
-</span>
-
-<h3>
-Send Your Location
-</h3>
-
-<p>
-Provide the city, ZIP code, pickup address and your best contact
-information.
-</p>
-
-</div>
-
-
-<div class="step">
-
-<span class="step-number">
-2
-</span>
-
-<h3>
-Describe the Appliance
-</h3>
-
-<p>
-Tell us the appliance type, brand if known and whether it works, needs
-repair or is not working.
-</p>
-
-</div>
-
-
-<div class="step">
-
-<span class="step-number">
-3
-</span>
-
-<h3>
-Show Condition &amp; Access
-</h3>
-
-<p>
-Clear photos plus information about stairs, floor level, garages,
-basements and tight doorways help us review the request.
-</p>
-
-</div>
-
-
-<div class="step">
-
-<span class="step-number">
-4
-</span>
-
-<h3>
-We Review &amp; Coordinate
-</h3>
-
-<p>
-If the request qualifies and pickup is available, we contact you to
-coordinate the next step.
-</p>
-
-</div>
-
-
-</div>
-
-</section>
-
-
-<section>
+<section id="coverage">
 
 <h2>
-Why Working Appliances May Receive Priority
-</h2>
-
-<p>
-Our pickup model is designed to give qualifying appliances another
-opportunity for reuse, repair, refurbishment, parts recovery or
-recycling when practical. Because of that, appliances that are fully
-working, repairable or complete may be easier to match with an available
-pickup route.
-</p>
-
-<p>
-That does not mean a non-working appliance cannot be submitted. We
-review each request individually based on appliance type, condition,
-location, access and current local demand.
-</p>
-
-</section>
-
-
-<section id="faq">
-
-<h2>
-Frequently Asked Questions
-</h2>
-
-
-<div class="faq-item">
-
-<h3>
-Is appliance pickup really free?
-</h3>
-
-<p>
-Qualifying appliance requests may receive free pickup. Approval depends
-on appliance condition, photos, location, access, local demand and
-current pickup availability.
-</p>
-
-</div>
-
-
-<div class="faq-item">
-
-<h3>
-What appliances do you pick up?
-</h3>
-
-<p>
-Common requests include washers, dryers, washer-and-dryer sets,
-refrigerators, stoves, ranges, freezers, dishwashers and other
-qualifying major household appliances.
-</p>
-
-</div>
-
-
-<div class="faq-item">
-
-<h3>
-Do you pick up washers and dryers?
-</h3>
-
-<p>
-Yes. Qualifying washers, dryers and washer-and-dryer sets are priority
-pickup categories in many of our service areas.
-</p>
-
-</div>
-
-
-<div class="faq-item">
-
-<h3>
-Do I need appliance photos?
-</h3>
-
-<p>
-Clear photos are strongly recommended. They help us verify appliance
-type, condition, size and possible access issues before someone drives
-to the pickup location.
-</p>
-
-</div>
-
-
-<div class="faq-item">
-
-<h3>
-Do you pick up broken appliances?
-</h3>
-
-<p>
-Working, repairable and non-working appliances can be submitted for
-review. Pickup is not guaranteed and depends on the individual request
-and local availability.
-</p>
-
-</div>
-
-
-<div class="faq-item">
-
-<h3>
-Do you pick up standalone microwaves?
-</h3>
-
-<p>
-Standalone microwaves are generally not accepted. A microwave may be
-considered when included with another qualifying major appliance.
-</p>
-
-</div>
-
-
-</section>
-
-
-<section id="contact">
-
-<h2>
-Request Free Appliance Pickup
+Nationwide Appliance Pickup Request Network
 </h2>
 
 <p class="lead">
-Submit the appliance information below. Complete and accurate details
-help us review the request faster.
+Customers may submit appliance pickup requests from
+<strong>all 50 states</strong>.
+Outside our priority cities, requests can be reviewed for available
+pickup partners, lead coverage or future territory expansion.
 </p>
 
-
-<form
-action="https://formspree.io/f/mvzeapzd"
-method="POST">
-
-
-<input
-type="hidden"
-name="_subject"
-value="New Free Appliance Pickup Request">
-
-
-<input
-type="hidden"
-name="page_source"
-value="Main Homepage">
-
-
-<label for="name">
-Full Name
-</label>
-
-<input
-id="name"
-type="text"
-name="name"
-autocomplete="name"
-required>
-
-
-<label for="phone">
-Phone Number
-</label>
-
-<input
-id="phone"
-type="tel"
-name="phone"
-autocomplete="tel"
-required>
-
-
-<label for="email">
-Email
-</label>
-
-<input
-id="email"
-type="email"
-name="email"
-autocomplete="email">
-
-
-<label for="address">
-Pickup Address
-</label>
-
-<input
-id="address"
-type="text"
-name="address"
-autocomplete="street-address"
-required>
-
-
-<label for="city">
-City
-</label>
-
-<input
-id="city"
-type="text"
-name="city"
-autocomplete="address-level2"
-required>
-
-
-<label for="state">
-State
-</label>
-
-<select
-id="state"
-name="state"
-autocomplete="address-level1"
-required>
-
-<option value="">
-Select state
-</option>
-
-<option>
-California
-</option>
-
-<option>
-Oregon
-</option>
-
-<option>
-Washington
-</option>
-
-<option>
-Arizona
-</option>
-
-<option>
-Utah
-</option>
-
-<option>
-Colorado
-</option>
-
-<option>
-Nevada
-</option>
-
-<option>
-Idaho
-</option>
-
-</select>
-
-
-<label for="zip">
-ZIP Code
-</label>
-
-<input
-id="zip"
-type="text"
-name="zip"
-inputmode="numeric"
-autocomplete="postal-code"
-required>
-
-
-<label for="appliance">
-Appliance Type
-</label>
-
-<select
-id="appliance"
-name="appliance"
-required>
-
-<option value="">
-Select appliance
-</option>
-
-<option>
-Refrigerator
-</option>
-
-<option>
-Washer
-</option>
-
-<option>
-Dryer
-</option>
-
-<option>
-Washer and Dryer Set
-</option>
-
-<option>
-Stove or Range
-</option>
-
-<option>
-Freezer
-</option>
-
-<option>
-Dishwasher
-</option>
-
-<option>
-Multiple Major Appliances
-</option>
-
-<option>
-Microwave with another major appliance
-</option>
-
-<option>
-Other Major Appliance
-</option>
-
-</select>
-
-
-<label for="condition">
-Appliance Condition
-</label>
-
-<select
-id="condition"
-name="condition"
-required>
-
-<option value="">
-Select condition
-</option>
-
-<option>
-Fully functioning
-</option>
-
-<option>
-Needs repair
-</option>
-
-<option>
-Not working
-</option>
-
-<option>
-Unknown
-</option>
-
-</select>
-
-
-<label for="location">
-Appliance Location
-</label>
-
-<select
-id="location"
-name="location"
-required>
-
-<option value="">
-Select location
-</option>
-
-<option>
-First floor
-</option>
-
-<option>
-Second floor
-</option>
-
-<option>
-Third floor or higher
-</option>
-
-<option>
-Basement
-</option>
-
-<option>
-Garage
-</option>
-
-<option>
-Outside
-</option>
-
-<option>
-Other
-</option>
-
-</select>
-
-
-<label for="stairs">
-Are stairs involved?
-</label>
-
-<select
-id="stairs"
-name="stairs"
-required>
-
-<option value="">
-Select
-</option>
-
-<option>
-No
-</option>
-
-<option>
-Yes
-</option>
-
-</select>
-
-
-<label for="message">
-Additional Information
-</label>
-
-<textarea
-id="message"
-name="message"
-placeholder="Describe the appliance, whether it works, any repair needed, stairs, floor level, narrow doors, gates or other pickup-access details."></textarea>
-
-
-<label for="photo_information">
-Photo Information or Photo Link
-</label>
-
-<input
-id="photo_information"
-type="text"
-name="photo_information"
-placeholder="If you have a photo link, paste it here. Otherwise tell us you can send photos by text or email.">
-
-
-<button type="submit">
-Request Appliance Pickup Review
-</button>
-
-
-</form>
-
-
-<div class="notice">
-
-<strong>Photos help:</strong>
-
-clear photos of the front of the appliance, the full appliance and any
-difficult pickup access can help us review your request before
-scheduling.
+<p class="muted">
+The 8 priority states remain our strongest operating markets.
+Nationwide availability depends on the city, appliance, condition and
+local partner coverage.
+</p>
+
+<div class="states" aria-label="All 50 U.S. states">
+
+<span>Alabama</span>
+<span>Alaska</span>
+<span>Arizona</span>
+<span>Arkansas</span>
+<span>California</span>
+<span>Colorado</span>
+<span>Connecticut</span>
+<span>Delaware</span>
+<span>Florida</span>
+<span>Georgia</span>
+<span>Hawaii</span>
+<span>Idaho</span>
+<span>Illinois</span>
+<span>Indiana</span>
+<span>Iowa</span>
+<span>Kansas</span>
+<span>Kentucky</span>
+<span>Louisiana</span>
+<span>Maine</span>
+<span>Maryland</span>
+<span>Massachusetts</span>
+<span>Michigan</span>
+<span>Minnesota</span>
+<span>Mississippi</span>
+<span>Missouri</span>
+<span>Montana</span>
+<span>Nebraska</span>
+<span>Nevada</span>
+<span>New Hampshire</span>
+<span>New Jersey</span>
+<span>New Mexico</span>
+<span>New York</span>
+<span>North Carolina</span>
+<span>North Dakota</span>
+<span>Ohio</span>
+<span>Oklahoma</span>
+<span>Oregon</span>
+<span>Pennsylvania</span>
+<span>Rhode Island</span>
+<span>South Carolina</span>
+<span>South Dakota</span>
+<span>Tennessee</span>
+<span>Texas</span>
+<span>Utah</span>
+<span>Vermont</span>
+<span>Virginia</span>
+<span>Washington</span>
+<span>West Virginia</span>
+<span>Wisconsin</span>
+<span>Wyoming</span>
 
 </div>
 
 </section>
-
 
 <section>
 
 <h2>
-Contact Free Reliable Appliance Pickup
+How It Works
 </h2>
 
+<div class="grid">
 
-<div class="contact-grid">
-
-
-<div class="contact-card">
-
-<h3>
-Colorado
-</h3>
-
+<div class="card">
+<h3>1. Send Your Location</h3>
 <p>
-<a href="tel:+17206047498">
-720-604-7498
-</a>
+Enter your city, state, ZIP code and pickup address.
 </p>
-
-<p>
-Denver, Aurora and available nearby Colorado service areas.
-</p>
-
 </div>
 
-
-<div class="contact-card">
-
-<h3>
-Oregon &amp; Washington
-</h3>
-
-<p>
-<a href="tel:+15038684455">
-503-868-4455
-</a>
-</p>
-
-<p>
-Portland, Salem, Seattle, Tacoma and available surrounding areas.
-</p>
-
-</div>
-
-
-<div class="contact-card">
-
-<h3>
-Inland Empire &amp; Nearby California
-</h3>
-
-<p>
-<a href="tel:+19093756685">
-909-375-6685
-</a>
-</p>
-
-<p>
-Orange, Riverside and San Bernardino County service inquiries.
-</p>
-
-</div>
-
-
-<div class="contact-card">
-
-<h3>
-Los Angeles County
-</h3>
-
-<p>
-<a href="tel:+13107744304">
-310-774-4304
-</a>
-</p>
-
-<p>
-Los Angeles County service inquiries.
-</p>
-
-</div>
-
-
-</div>
-
-
-<p class="small muted">
-For Nevada, Idaho, Arizona, Utah and other listed service areas, use the
-pickup request form so we can review current availability.
-</p>
-
-</section>
-
-
-<section>
-
-<h2>
-Appliance Pickup Partners
-</h2>
-
-<p>
-Interested in receiving appliance pickup opportunities in available
-territories? Visit the partner program to learn more about current
-pickup-partner opportunities.
-</p>
-
-<p>
-
-<a
-class="button"
-style="background:#0b6b3a;color:#fff"
-href="/free-reliable-appliance-pickup-solutions/partners/">
-
-View Pickup Partner Program
-
-</a>
-
-</p>
-
-</section>
-
-
-</main>
-
-
-<footer>
-
-<strong>
-Free Reliable Appliance Pickup
-</strong>
-
-<br>
-
-Qualifying Washer • Dryer • Refrigerator • Stove • Freezer Pickup
-
-<br><br>
-
-<a href="/free-reliable-appliance-pickup-solutions/">
-Home
-</a>
-
-|
-
-<a href="/free-reliable-appliance-pickup-solutions/partners/">
-Pickup Partners
-</a>
-
-|
-
-<a href="/free-reliable-appliance-pickup-solutions/sitemap.xml">
-Sitemap
-</a>
-
-<br><br>
-
-© 2026 Free Reliable Appliance Pickup
-
-</footer>
-
-
-</body>
-</html>
+<div class="card">
+<h3>2. Describe the Appliance
