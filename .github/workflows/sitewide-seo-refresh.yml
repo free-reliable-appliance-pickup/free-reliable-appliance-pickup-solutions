@@ -3,7 +3,7 @@ name: Sitewide SEO Structure Repair
 on:
   push:
     paths:
-      - ".github/workflows/sitewide-seo-refresh.yml"
+      - '.github/workflows/sitewide-seo-refresh.yml'
   workflow_dispatch:
 
 permissions:
@@ -17,758 +17,211 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Repair website SEO structure
+      - name: Repair SEO structure
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
           from datetime import date
 
-          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
-          ROOT = Path(".")
+          BASE = 'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
 
-          def save(path, content):
-              file = ROOT / path
-              file.parent.mkdir(parents=True, exist_ok=True)
-              file.write_text(content.strip() + "\n", encoding="utf-8")
+          # Connect the 8 priority states from the homepage.
+          home = Path('index.html')
 
-          # -------------------------------------------------
-          # 1. CONNECT THE 8 PRIORITY STATES FROM HOMEPAGE
-          # -------------------------------------------------
-
-          homepage = ROOT / "index.html"
-
-          if homepage.exists():
-              html = homepage.read_text(
-                  encoding="utf-8",
-                  errors="ignore"
+          if home.exists():
+              s = home.read_text(
+                  encoding='utf-8',
+                  errors='ignore'
               )
 
-              state_links = {
-                  "California": "california-appliance-pickup/",
-                  "Oregon": "oregon-appliance-pickup/",
-                  "Washington": "washington-appliance-pickup/",
-                  "Arizona": "arizona-appliance-pickup/",
-                  "Utah": "utah-appliance-pickup/",
-                  "Colorado": "colorado-appliance-pickup/",
-                  "Nevada": "nevada-appliance-pickup/",
-                  "Idaho": "idaho-appliance-pickup/"
+              links = {
+                  'California': 'california-appliance-pickup',
+                  'Oregon': 'oregon-appliance-pickup',
+                  'Washington': 'washington-appliance-pickup',
+                  'Arizona': 'arizona-appliance-pickup',
+                  'Utah': 'utah-appliance-pickup',
+                  'Colorado': 'colorado-appliance-pickup',
+                  'Nevada': 'nevada-appliance-pickup',
+                  'Idaho': 'idaho-appliance-pickup'
               }
 
-              for state, url in state_links.items():
-                  html = html.replace(
+              for state, slug in links.items():
+                  s = s.replace(
                       f'<span class="chip">{state}</span>',
-                      f'<a class="chip" href="{url}">{state}</a>'
+                      f'<a class="chip" href="{slug}/">{state}</a>'
                   )
 
-              homepage.write_text(
-                  html,
-                  encoding="utf-8"
+              home.write_text(
+                  s,
+                  encoding='utf-8'
               )
 
-          # -------------------------------------------------
-          # 2. CLEAN PORTLAND PAGE
-          # -------------------------------------------------
+          # Clean the Portland page and link it to Oregon.
+          portland = Path(
+              'portland-appliance-pickup/index.html'
+          )
 
-          portland_file = ROOT / "portland-appliance-pickup/index.html"
-
-          if portland_file.exists():
-              text = portland_file.read_text(
-                  encoding="utf-8",
-                  errors="ignore"
+          if portland.exists():
+              s = portland.read_text(
+                  encoding='utf-8',
+                  errors='ignore'
               )
 
-              lines = []
-
-              for line in text.splitlines():
-                  if (
+              s = '\n'.join(
+                  line
+                  for line in s.splitlines()
+                  if not (
                       line.strip().startswith('"description":')
-                      and "Free Reliable Appliance Pickup provides" in line
-                  ):
-                      continue
-
-                  lines.append(line)
-
-              text = "\n".join(lines)
-
-              if "oregon-appliance-pickup/" not in text:
-                  block = """
-<section>
-<h2>Oregon Appliance Pickup Areas</h2>
-<p>
-Free Reliable Appliance Pickup also reviews requests across
-Portland, Salem, Keizer and other Oregon communities.
-</p>
-<p>
-<a href="../oregon-appliance-pickup/">
-View Oregon Appliance Pickup Areas
-</a>
-</p>
-</section>
-"""
-
-                  if "</main>" in text:
-                      text = text.replace(
-                          "</main>",
-                          block + "\n</main>",
-                          1
-                      )
-
-              portland_file.write_text(
-                  text,
-                  encoding="utf-8"
+                      and
+                      'Free Reliable Appliance Pickup provides'
+                      in line
+                  )
               )
 
-          # -------------------------------------------------
-          # COMMON DESIGN
-          # -------------------------------------------------
-
-          STYLE = """
-          *{box-sizing:border-box}
-          body{
-              margin:0;
-              font-family:Arial,Helvetica,sans-serif;
-              line-height:1.65;
-              background:#f5f7f6;
-              color:#222
-          }
-          header{
-              background:linear-gradient(135deg,#075c34,#0b8a4d);
-              color:white;
-              text-align:center;
-              padding:52px 20px
-          }
-          header h1{
-              margin:0 0 12px;
-              font-size:clamp(30px,6vw,48px)
-          }
-          header p{
-              max-width:850px;
-              margin:auto;
-              font-size:18px
-          }
-          main{
-              max-width:1050px;
-              margin:auto;
-              padding:5px 18px 50px
-          }
-          section{
-              background:white;
-              margin:24px 0;
-              padding:28px;
-              border-radius:12px;
-              border:1px solid #d7e5dc
-          }
-          h2,h3{color:#075c34}
-          a{color:#075c34}
-          .button{
-              display:inline-block;
-              margin-top:18px;
-              background:white;
-              color:#075c34;
-              padding:12px 18px;
-              border-radius:8px;
-              text-decoration:none;
-              font-weight:bold
-          }
-          .note{
-              background:#eef8f2;
-              border-left:5px solid #087443;
-              padding:15px;
-              border-radius:7px
-          }
-          .cities a{
-              display:inline-block;
-              margin:5px;
-              padding:8px 11px;
-              background:#eef8f2;
-              border-radius:7px;
-              text-decoration:none;
-              font-weight:bold
-          }
-          footer{
-              background:#111;
-              color:white;
-              text-align:center;
-              padding:28px 18px
-          }
-          footer a{color:white}
-          """
-
-          def state_page(
-              state,
-              slug,
-              description,
-              intro,
-              city_links,
-              cities_text
-          ):
-              links = "".join(
-                  f'<a href="{url}">{city}</a>'
-                  for city, url in city_links
-              )
-
-              canonical = BASE + slug + "/"
-
-              return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Free Appliance Pickup {state} | Appliance Removal</title>
-
-<meta name="description" content="{description}">
-
-<meta name="robots"
-content="index,follow,max-snippet:-1,max-image-preview:large">
-
-<link rel="canonical" href="{canonical}">
-
-<style>
-{STYLE}
-</style>
-
-<script type="application/ld+json">
-{{
-  "@context":"https://schema.org",
-  "@type":"Service",
-  "name":"Free Appliance Pickup in {state}",
-  "provider":{{
-    "@type":"Organization",
-    "name":"Free Reliable Appliance Pickup",
-    "url":"{BASE}"
-  }},
-  "areaServed":{{
-    "@type":"State",
-    "name":"{state}"
-  }},
-  "serviceType":[
-    "Appliance Pickup",
-    "Washer Pickup",
-    "Dryer Pickup",
-    "Refrigerator Pickup",
-    "Stove Pickup",
-    "Freezer Pickup"
-  ],
-  "url":"{canonical}"
-}}
-</script>
-</head>
-
-<body>
-
-<header>
-<h1>Free Appliance Pickup in {state}</h1>
-
-<p>{intro}</p>
-
-<a class="button" href="../#request">
-Request Appliance Pickup
-</a>
-</header>
-
-<main>
-
-<section>
-<h2>{state} Appliance Pickup</h2>
-
-<p>{description}</p>
-
-<div class="note">
-<strong>Working appliances receive priority.</strong>
-Pickup depends on condition, location, stairs,
-access, local demand and available service coverage.
-</div>
-</section>
-
-<section>
-<h2>Appliances We Review</h2>
-
-<ul>
-<li>Washers</li>
-<li>Dryers</li>
-<li>Washer and dryer sets</li>
-<li>Refrigerators</li>
-<li>Freezers</li>
-<li>Stoves and ranges</li>
-<li>Multiple major appliances</li>
-</ul>
-</section>
-
-<section>
-<h2>Priority {state} Service Areas</h2>
-
-<p>{cities_text}</p>
-
-<div class="cities">
-{links}
-</div>
-</section>
-
-<section>
-<h2>Request Pickup</h2>
-
-<p>
-Submit the appliance type, working condition,
-city, ZIP code, floor level, stairs and access details.
-Photos or a photo link are helpful when available.
-</p>
-
-<p>
-<a href="../#request">
-<strong>Open Appliance Pickup Request Form</strong>
-</a>
-</p>
-</section>
-
-</main>
-
-<footer>
-<a href="../">Free Reliable Appliance Pickup</a>
-</footer>
-
-</body>
-</html>"""
-
-          # -------------------------------------------------
-          # 3. OREGON STATE HUB
-          # -------------------------------------------------
-
-          save(
-              "oregon-appliance-pickup/index.html",
-              state_page(
-                  "Oregon",
-                  "oregon-appliance-pickup",
-                  "Request qualifying appliance pickup in Oregon for washers, dryers, refrigerators, stoves and freezers. Priority markets include Portland, Salem and Keizer.",
-                  "Qualifying appliance pickup requests are reviewed throughout Oregon, with Portland and the Salem-Keizer area among our priority markets.",
-                  [
-                      ("Portland", "../portland-appliance-pickup/"),
-                      ("Salem", "../salem-appliance-pickup/"),
-                      ("Keizer", "../keizer-appliance-pickup/")
-                  ],
-                  "Priority Oregon coverage includes Portland, Salem, Keizer and surrounding communities."
-              )
-          )
-
-          # -------------------------------------------------
-          # 4. ARIZONA STATE HUB
-          # -------------------------------------------------
-
-          save(
-              "arizona-appliance-pickup/index.html",
-              state_page(
-                  "Arizona",
-                  "arizona-appliance-pickup",
-                  "Request qualifying appliance pickup in Arizona for washers, dryers, refrigerators, stoves and freezers. Phoenix metro is a priority service market.",
-                  "Arizona is one of our priority appliance pickup states, with Phoenix and surrounding metro communities receiving special focus.",
-                  [
-                      ("Phoenix", "../phoenix-appliance-pickup/")
-                  ],
-                  "Priority Arizona markets include Phoenix, Mesa, Chandler, Scottsdale, Glendale and Tempe."
-              )
-          )
-
-          # -------------------------------------------------
-          # 5. UTAH STATE HUB
-          # -------------------------------------------------
-
-          save(
-              "utah-appliance-pickup/index.html",
-              state_page(
-                  "Utah",
-                  "utah-appliance-pickup",
-                  "Request qualifying appliance pickup in Utah for washers, dryers, refrigerators, stoves and freezers. Salt Lake City and Wasatch Front requests are reviewed.",
-                  "Utah is a priority appliance pickup state, including Salt Lake City and communities across the Wasatch Front.",
-                  [
-                      (
-                          "Salt Lake City",
-                          "../salt-lake-city-appliance-pickup/"
-                      )
-                  ],
-                  "Priority Utah markets include Salt Lake City, Provo, Orem, Lehi, Ogden, Layton and American Fork."
-              )
-          )
-
-          # -------------------------------------------------
-          # 6. PHOENIX PAGE
-          # -------------------------------------------------
-
-          save(
-              "phoenix-appliance-pickup/index.html",
-              f"""<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>
-Free Appliance Pickup Phoenix AZ | Washer, Dryer & Refrigerator Pickup
-</title>
-
-<meta name="description"
-content="Request qualifying free appliance pickup in Phoenix Arizona for washers, dryers, refrigerators, stoves, freezers and multiple major appliances.">
-
-<meta name="robots"
-content="index,follow,max-snippet:-1,max-image-preview:large">
-
-<link rel="canonical"
-href="{BASE}phoenix-appliance-pickup/">
-
-<style>
-{STYLE}
-</style>
-
-<script type="application/ld+json">
-{{
-  "@context":"https://schema.org",
-  "@type":"Service",
-  "name":"Free Appliance Pickup in Phoenix Arizona",
-  "provider":{{
-    "@type":"Organization",
-    "name":"Free Reliable Appliance Pickup",
-    "url":"{BASE}"
-  }},
-  "areaServed":{{
-    "@type":"City",
-    "name":"Phoenix"
-  }},
-  "serviceType":"Appliance Pickup",
-  "url":"{BASE}phoenix-appliance-pickup/"
-}}
-</script>
-</head>
-
-<body>
-
-<header>
-<h1>Free Appliance Pickup in Phoenix, Arizona</h1>
-
-<p>
-Request pickup for qualifying washers, dryers,
-refrigerators, freezers, stoves and other major appliances.
-</p>
-
-<a class="button" href="../#request">
-Request Pickup
-</a>
-</header>
-
-<main>
-
-<section>
-<h2>Phoenix Appliance Pickup</h2>
-
-<p>
-We review major appliance pickup requests in Phoenix
-and surrounding metro communities. Working and reusable
-appliances receive priority because local demand is strongest
-for appliances that can continue to be used or refurbished.
-</p>
-</section>
-
-<section>
-<h2>Washer and Dryer Pickup</h2>
-
-<p>
-Washers, dryers and complete laundry sets are important
-pickup categories in the Phoenix area. Tell us whether each
-machine powers on and completes a normal operating cycle.
-</p>
-</section>
-
-<section>
-<h2>Refrigerator and Freezer Pickup</h2>
-
-<p>
-For refrigerators and freezers, tell us whether the appliance
-is cooling properly and whether it is currently connected
-and operating. Include stair, doorway and access information.
-</p>
-</section>
-
-<section>
-<h2>Phoenix Metro Coverage</h2>
-
-<p>
-Requests may also be reviewed from Mesa, Chandler,
-Scottsdale, Glendale, Tempe and nearby communities.
-</p>
-
-<p>
-<a href="../arizona-appliance-pickup/">
-View Arizona Appliance Pickup
-</a>
-</p>
-</section>
-
-<section>
-<h2>Submit Your Pickup Request</h2>
-
-<p>
-Provide your city, ZIP code, appliance condition,
-floor level, stairs and access details.
-</p>
-
-<p>
-<a href="../#request">
-<strong>Request Phoenix Appliance Pickup</strong>
-</a>
-</p>
-</section>
-
-</main>
-
-<footer>
-<a href="../">Free Reliable Appliance Pickup</a>
-</footer>
-
-</body>
-</html>"""
-          )
-
-          # -------------------------------------------------
-          # 7. SALT LAKE CITY PAGE
-          # -------------------------------------------------
-
-          save(
-              "salt-lake-city-appliance-pickup/index.html",
-              f"""<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>
-Free Appliance Pickup Salt Lake City UT | Washer & Dryer Pickup
-</title>
-
-<meta name="description"
-content="Request qualifying free appliance pickup in Salt Lake City Utah for washers, dryers, refrigerators, stoves, freezers and multiple major appliances.">
-
-<meta name="robots"
-content="index,follow,max-snippet:-1,max-image-preview:large">
-
-<link rel="canonical"
-href="{BASE}salt-lake-city-appliance-pickup/">
-
-<style>
-{STYLE}
-</style>
-
-<script type="application/ld+json">
-{{
-  "@context":"https://schema.org",
-  "@type":"Service",
-  "name":"Free Appliance Pickup in Salt Lake City Utah",
-  "provider":{{
-    "@type":"Organization",
-    "name":"Free Reliable Appliance Pickup",
-    "url":"{BASE}"
-  }},
-  "areaServed":{{
-    "@type":"City",
-    "name":"Salt Lake City"
-  }},
-  "serviceType":"Appliance Pickup",
-  "url":"{BASE}salt-lake-city-appliance-pickup/"
-}}
-</script>
-</head>
-
-<body>
-
-<header>
-<h1>Free Appliance Pickup in Salt Lake City, Utah</h1>
-
-<p>
-Qualifying appliance pickup requests are reviewed
-throughout Salt Lake City and the Wasatch Front.
-</p>
-
-<a class="button" href="../#request">
-Request Pickup
-</a>
-</header>
-
-<main>
-
-<section>
-<h2>Salt Lake City Appliance Pickup</h2>
-
-<p>
-Submit washers, dryers, refrigerators, household freezers,
-stoves, ranges and multiple major appliances for review.
-Working and reusable appliances receive priority.
-</p>
-</section>
-
-<section>
-<h2>Laundry Appliance Pickup</h2>
-
-<p>
-Washers, dryers and complete laundry sets are priority
-categories. Tell us whether each unit powers on, fills,
-spins, heats and completes its normal cycle.
-</p>
-</section>
-
-<section>
-<h2>Wasatch Front Coverage</h2>
-
-<p>
-Requests may also be reviewed from Provo, Orem, Lehi,
-Ogden, Layton, American Fork and nearby Utah communities.
-</p>
-
-<p>
-<a href="../utah-appliance-pickup/">
-View Utah Appliance Pickup
-</a>
-</p>
-</section>
-
-<section>
-<h2>Submit Your Pickup Request</h2>
-
-<p>
-Include appliance condition, city, ZIP code,
-floor level, stairs and access details.
-</p>
-
-<p>
-<a href="../#request">
-<strong>Request Salt Lake City Appliance Pickup</strong>
-</a>
-</p>
-</section>
-
-</main>
-
-<footer>
-<a href="../">Free Reliable Appliance Pickup</a>
-</footer>
-
-</body>
-</html>"""
-          )
-
-          # -------------------------------------------------
-          # 8. REBUILD SITEMAP FROM ACTUAL SITE PAGES
-          # -------------------------------------------------
-
-          folders = sorted(
-              d.name
-              for d in ROOT.glob("*-appliance-pickup")
-              if d.is_dir()
-              and (d / "index.html").exists()
-          )
-
-          urls = [BASE]
-
-          urls += [
-              BASE + folder + "/"
-              for folder in folders
-          ]
-
-          if (ROOT / "partners/index.html").exists():
-              urls.append(BASE + "partners/")
-
-          sitemap = [
-              '<?xml version="1.0" encoding="UTF-8"?>',
-              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-          ]
-
-          today = str(date.today())
-
-          for url in urls:
-              sitemap.append("  <url>")
-              sitemap.append(f"    <loc>{url}</loc>")
-              sitemap.append(f"    <lastmod>{today}</lastmod>")
-              sitemap.append("  </url>")
-
-          sitemap.append("</urlset>")
-
-          Path("sitemap.xml").write_text(
-              "\n".join(sitemap) + "\n",
-              encoding="utf-8"
-          )
-
-          # -------------------------------------------------
-          # 9. ROBOTS.TXT
-          # -------------------------------------------------
-
-          Path("robots.txt").write_text(
-              "User-agent: *\n"
-              "Allow: /\n\n"
-              f"Sitemap: {BASE}sitemap.xml\n",
-              encoding="utf-8"
-          )
-
-          # -------------------------------------------------
-          # 10. VERIFY REPAIR
-          # -------------------------------------------------
-
-          required = [
-              "oregon-appliance-pickup/index.html",
-              "arizona-appliance-pickup/index.html",
-              "utah-appliance-pickup/index.html",
-              "phoenix-appliance-pickup/index.html",
-              "salt-lake-city-appliance-pickup/index.html",
-              "sitemap.xml",
-              "robots.txt"
-          ]
-
-          missing = [
-              file
-              for file in required
-              if not Path(file).exists()
-          ]
-
-          if missing:
-              raise SystemExit(
-                  "Missing repaired files: "
-                  + ", ".join(missing)
-              )
-
-          sitemap_text = Path(
-              "sitemap.xml"
-          ).read_text(
-              encoding="utf-8"
-          )
-
-          for required_url in [
-              "oregon-appliance-pickup/",
-              "arizona-appliance-pickup/",
-              "utah-appliance-pickup/",
-              "phoenix-appliance-pickup/",
-              "salt-lake-city-appliance-pickup/"
-          ]:
-              if required_url not in sitemap_text:
-                  raise SystemExit(
-                      "Missing sitemap URL: "
-                      + required_url
+              if (
+                  'oregon-appliance-pickup/' not in s
+                  and '</main>' in s
+              ):
+                  block = (
+                      '<section>'
+                      '<h2>Oregon Appliance Pickup Areas</h2>'
+                      '<p>'
+                      '<a href="../oregon-appliance-pickup/">'
+                      'View Oregon appliance pickup service areas'
+                      '</a> for Portland, Salem, Keizer and '
+                      'surrounding communities.'
+                      '</p>'
+                      '</section>'
                   )
 
-          print("SEO STRUCTURE REPAIR SUCCESSFUL")
-          print("City/state pages found:", len(folders))
-          print("Sitemap URLs:", len(urls))
+                  s = s.replace(
+                      '</main>',
+                      block + '</main>',
+                      1
+                  )
 
-          PY
+              portland.write_text(
+                  s,
+                  encoding='utf-8'
+              )
 
-      - name: Commit repaired website
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Reusable page creator.
+          def page(
+              slug,
+              title,
+              desc,
+              h1,
+              intro,
+              local_links=''
+          ):
+              p = Path(slug) / 'index.html'
 
-          git add -A
+              p.parent.mkdir(
+                  parents=True,
+                  exist_ok=True
+              )
 
-          if git diff --cached --quiet; then
-            echo "No additional changes required."
-          else
-            git commit -m "Complete SEO structure repair"
-            git push
-          fi
+              canonical = BASE + slug + '/'
+
+              html = (
+                  '<!DOCTYPE html>'
+                  '<html lang="en">'
+                  '<head>'
+                  '<meta charset="UTF-8">'
+                  '<meta name="viewport" '
+                  'content="width=device-width,initial-scale=1">'
+
+                  f'<title>{title}</title>'
+
+                  f'<meta name="description" '
+                  f'content="{desc}">'
+
+                  '<meta name="robots" '
+                  'content="index,follow,'
+                  'max-snippet:-1,'
+                  'max-image-preview:large">'
+
+                  f'<link rel="canonical" '
+                  f'href="{canonical}">'
+
+                  '<style>'
+                  'body{'
+                  'font-family:Arial,Helvetica,sans-serif;'
+                  'margin:0;'
+                  'line-height:1.65;'
+                  'background:#f5f7f6;'
+                  'color:#222'
+                  '}'
+
+                  'header{'
+                  'background:#087443;'
+                  'color:white;'
+                  'padding:45px 20px;'
+                  'text-align:center'
+                  '}'
+
+                  'main{'
+                  'max-width:1000px;'
+                  'margin:auto;'
+                  'padding:20px'
+                  '}'
+
+                  'section{'
+                  'background:white;'
+                  'padding:24px;'
+                  'margin:20px 0;'
+                  'border-radius:12px'
+                  '}'
+
+                  'a{color:#087443}'
+                  'header a{color:white}'
+
+                  'footer{'
+                  'background:#111;'
+                  'color:white;'
+                  'text-align:center;'
+                  'padding:24px'
+                  '}'
+
+                  'footer a{color:white}'
+                  '</style>'
+
+                  '</head>'
+
+                  '<body>'
+
+                  '<header>'
+                  f'<h1>{h1}</h1>'
+                  f'<p>{intro}</p>'
+                  '<p>'
+                  '<a href="../#request">'
+                  'Request Appliance Pickup'
+                  '</a>'
+                  '</p>'
+                  '</header>'
+
+                  '<main>'
+
+                  '<section>'
+                  '<h2>Appliances We Review</h2>'
+                  '<p>'
+                  'Washers, dryers, washer and dryer sets, '
+                  'refrigerators, freezers, stoves, ranges '
+                  'and multiple major appliances may be reviewed. '
+                  'Working appliances receive priority.'
+                  '</p>'
+                  '</section>'
+
+                  '<section>'
+                  '<h2>Service Areas</h2>'
+                  f'<p>{local_links}</p>'
+                  '</section>'
+
+                  '<section>'
+                  '<h2>Request Pickup</h2>'
+                  '<p>'
+                  'Include appliance condition, city, ZIP code, '
+                  'floor level, stairs and access details.'
+                  '</p>'
+                  '<p>'
