@@ -1,0 +1,57 @@
+name: One-Time Full Website Repair
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair-site:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Repair website
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import xml.etree.ElementTree as ET
+
+          ROOT = Path(".")
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+
+          def write(path, text):
+              path.parent.mkdir(parents=True, exist_ok=True)
+              path.write_text(text, encoding="utf-8")
+
+          def complete_html(text):
+              return (
+                  "<!DOCTYPE html" in text.lower()
+                  and "</html>" in text.lower()
+                  and "</body>" in text.lower()
+              )
+
+          def title_for_slug(slug):
+              clean = slug.replace("-appliance-pickup", "")
+              return clean.replace("-", " ").title()
+
+          def city_page(slug):
+              city = title_for_slug(slug)
+              canonical = BASE + slug + "/"
+
+              return f"""<!DOCTYPE html>
+          <html lang="en">
+          <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+          <title>Free Appliance Pickup in {city} | Washer, Dryer & Refrigerator Pickup</title>
+
+          <meta name="description" content="Free Reliable Appliance Pickup provides qualifying appliance pickup in {city}. Request pickup for washers, dryers, refrigerators, stoves, freezers and other major appliances.">
+
+          <meta name="robots" content="index, follow,
