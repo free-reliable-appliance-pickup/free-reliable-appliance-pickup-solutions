@@ -1,0 +1,419 @@
+name: Repair Site Once
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair-site:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Repair sitemap robots and homepage SEO
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import xml.etree.ElementTree as ET
+          from html import escape
+
+          ROOT = Path(".")
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions"
+          HOME_URL = BASE + "/"
+
+          changed = []
+
+          def write_file(path, text):
+              old = path.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              ) if path.exists() else None
+
+              if old != text:
+                  path.parent.mkdir(parents=True, exist_ok=True)
+                  path.write_text(text, encoding="utf-8")
+                  changed.append(str(path))
+
+          def complete_html(text):
+              low = text.lower()
+              return (
+                  "<!doctype html" in low
+                  and "<html" in low
+                  and "</html>" in low
+              )
+
+          # --------------------------------------------------
+          # 1. FIND ALL REAL, COMPLETE HTML PAGES
+          # --------------------------------------------------
+
+          pages = []
+
+          for path in ROOT.rglob("*.html"):
+              rel = path.relative_to(ROOT)
+
+              # Ignore GitHub/internal folders
+              if any(part.startswith(".") for part in rel.parts):
+                  continue
+
+              # Never put the 404 page in sitemap
+              if path.name.lower() == "404.html":
+                  continue
+
+              try:
+                  text = path.read_text(
+                      encoding="utf-8",
+                      errors="ignore"
+                  )
+              except Exception:
+                  continue
+
+              if not complete_html(text):
+                  print("Skipping incomplete HTML:", rel)
+                  continue
+
+              pages.append(path)
+
+          print("Complete HTML pages found:", len(pages))
+
+          # --------------------------------------------------
+          # 2. BUILD CLEAN URL LIST
+          # --------------------------------------------------
+
+          urls = []
+
+          for path in pages:
+              rel = path.relative_to(ROOT)
+
+              if rel.as_posix() == "index.html":
+                  url = HOME_URL
+
+              elif path.name == "index.html":
+                  folder = path.parent.relative_to(ROOT).as_posix()
+                  url = f"{BASE}/{folder}/"
+
+              else:
+                  url = f"{BASE}/{rel.as_posix()}"
+
+              if url not in urls:
+                  urls.append(url)
+
+          # Homepage always first
+          urls = [u for u in urls if u != HOME_URL]
+          urls.sort()
+          urls.insert(0, HOME_URL)
+
+          # --------------------------------------------------
+          # 3. COMPLETELY REBUILD sitemap.xml
+          # --------------------------------------------------
+
+          sitemap_lines = [
+              '<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+          ]
+
+          for url in urls:
+              sitemap_lines.append("  <url>")
+              sitemap_lines.append(f"    <loc>{escape(url)}</loc>")
+              sitemap_lines.append("  </url>")
+
+          sitemap_lines.append("</urlset>")
+
+          sitemap_text = "\n".join(sitemap_lines) + "\n"
+
+          write_file(ROOT / "sitemap.xml", sitemap_text)
+
+          # --------------------------------------------------
+          # 4. CREATE CLEAN robots.txt
+          # --------------------------------------------------
+
+          robots_text = (
+              "User-agent: *\n"
+              "Allow: /\n\n"
+              f"Sitemap: {BASE}/sitemap.xml\n"
+          )
+
+          write_file(ROOT / "robots.txt", robots_text)
+
+          # --------------------------------------------------
+          # 5. FIX HOMEPAGE CANONICAL + SITEMAP LINK
+          # --------------------------------------------------
+
+          home = ROOT / "index.html"
+
+          if not home.exists():
+              raise SystemExit("ERROR: index.html was not found.")
+
+          html = home.read_text(
+              encoding="utf-8",
+              errors="ignore"
+          )
+
+          if not complete_html(html):
+              raise SystemExit(
+                  "ERROR: index.html is incomplete. "
+                  "Workflow stopped without replacing the homepage."
+              )
+
+          original_html = html
+
+          # Remove existing canonical tags
+          html = re.sub(
+              r'<link\b[^>]*\brel=["\'][^"\']*canonical[^"\']*["\'][^>]*>',
+              '',
+              html,
+              flags=re.I
+          )
+
+          # Remove existing sitemap link tags
+          html = re.sub(
+              r'<link\b[^>]*\brel=["\'][^"\']*sitemap[^"\']*["\'][^>]*>',
+              '',
+              html,
+              flags=re.I
+          )
+
+          seo_links = (
+              f'\n<link rel="canonical" href="{HOME_URL}">\n'
+              f'<link rel="sitemap" type="application/xml" '
+              f'href="{BASE}/sitemap.xml">\n'
+          )
+
+          if re.search(r"</head>", html, re.I):
+              html = re.sub(
+                  r"</head>",
+                  seo_links + "</head>",
+                  html,
+                  count=1,
+                  flags=re.I
+              )
+          else:
+              raise SystemExit(
+                  "ERROR: Homepage has no closing </head> tag."
+              )
+
+          # --------------------------------------------------
+          # 6. ENSURE GOOGLE CAN DISCOVER SERVICE PAGES
+          # --------------------------------------------------
+
+          service_pages = []
+
+          for path in pages:
+              if path == home:
+                  continue
+
+              if path.name != "index.html":
+                  continue
+
+              folder = path.parent.relative_to(ROOT).as_posix()
+
+              if not folder or folder == ".":
+                  continue
+
+              # Main service/city/state/partner pages
+              service_pages.append(folder)
+
+          service_pages = sorted(set(service_pages))
+
+          existing_links = set(
+              re.findall(
+                  r'href=["\']([^"\']+)["\']',
+                  html,
+                  flags=re.I
+              )
+          )
+
+          linked_count = 0
+
+          for folder in service_pages:
+              candidates = {
+                  f"{folder}/",
+                  f"/{folder}/",
+                  f"{BASE}/{folder}/",
+                  f"./{folder}/"
+              }
+
+              if any(link in existing_links for link in candidates):
+                  linked_count += 1
+
+          print(
+              "Service pages already linked from homepage:",
+              linked_count
+          )
+
+          # Add a visible crawlable service-area section only
+          # when the homepage does not already link enough pages.
+          if service_pages and linked_count < min(10, len(service_pages)):
+
+              link_items = []
+
+              for folder in service_pages:
+                  label = folder
+
+                  label = re.sub(
+                      r"-appliance-pickup$",
+                      "",
+                      label
+                  )
+
+                  label = label.replace("-", " ").title()
+
+                  link_items.append(
+                      f'<a href="{folder}/">{escape(label)}</a>'
+                  )
+
+              service_section = f'''
+          <section id="all-service-areas">
+            <h2>Appliance Pickup Service Areas</h2>
+            <p>
+              Browse available Free Reliable Appliance Pickup
+              service areas.
+            </p>
+            <div class="service-area-links">
+              {' | '.join(link_items)}
+            </div>
+          </section>
+          '''
+
+              if re.search(r"</main>", html, re.I):
+                  html = re.sub(
+                      r"</main>",
+                      service_section + "\n</main>",
+                      html,
+                      count=1,
+                      flags=re.I
+                  )
+              elif re.search(r"</body>", html, re.I):
+                  html = re.sub(
+                      r"</body>",
+                      service_section + "\n</body>",
+                      html,
+                      count=1,
+                      flags=re.I
+                  )
+
+          if html != original_html:
+              write_file(home, html)
+
+          # --------------------------------------------------
+          # 7. ENABLE NORMAL GITHUB PAGES STATIC SERVING
+          # --------------------------------------------------
+
+          nojekyll = ROOT / ".nojekyll"
+
+          if not nojekyll.exists():
+              nojekyll.touch()
+              changed.append(".nojekyll")
+
+          # --------------------------------------------------
+          # 8. VALIDATE NEW SITEMAP
+          # --------------------------------------------------
+
+          try:
+              tree = ET.parse(ROOT / "sitemap.xml")
+              root = tree.getroot()
+          except Exception as exc:
+              raise SystemExit(
+                  f"ERROR: sitemap.xml is invalid XML: {exc}"
+              )
+
+          namespace = {
+              "sm": "http://www.sitemaps.org/schemas/sitemap/0.9"
+          }
+
+          sitemap_urls = [
+              node.text.strip()
+              for node in root.findall("sm:url/sm:loc", namespace)
+              if node.text
+          ]
+
+          if not sitemap_urls:
+              raise SystemExit(
+                  "ERROR: sitemap.xml contains no URLs."
+              )
+
+          if HOME_URL not in sitemap_urls:
+              raise SystemExit(
+                  "ERROR: Homepage missing from sitemap."
+              )
+
+          if len(sitemap_urls) != len(set(sitemap_urls)):
+              raise SystemExit(
+                  "ERROR: Duplicate URLs found in sitemap."
+              )
+
+          # --------------------------------------------------
+          # 9. VERIFY HOMEPAGE SEO
+          # --------------------------------------------------
+
+          final_home = home.read_text(
+              encoding="utf-8",
+              errors="ignore"
+          )
+
+          canonical_check = re.search(
+              r'<link\b[^>]*rel=["\']canonical["\'][^>]*'
+              r'href=["\']([^"\']+)["\']',
+              final_home,
+              re.I
+          )
+
+          if not canonical_check:
+              canonical_check = re.search(
+                  r'<link\b[^>]*href=["\']([^"\']+)["\'][^>]*'
+                  r'rel=["\']canonical["\']',
+                  final_home,
+                  re.I
+              )
+
+          if (
+              not canonical_check
+              or canonical_check.group(1) != HOME_URL
+          ):
+              raise SystemExit(
+                  "ERROR: Homepage canonical is incorrect."
+              )
+
+          expected_sitemap = f"{BASE}/sitemap.xml"
+
+          robots = (ROOT / "robots.txt").read_text(
+              encoding="utf-8",
+              errors="ignore"
+          )
+
+          if expected_sitemap not in robots:
+              raise SystemExit(
+                  "ERROR: robots.txt sitemap URL is incorrect."
+              )
+
+          print("")
+          print("======================================")
+          print("SITE REPAIR VALIDATION PASSED")
+          print("======================================")
+          print("Homepage:", HOME_URL)
+          print("Sitemap URLs:", len(sitemap_urls))
+          print("Sitemap:", expected_sitemap)
+          print("Files changed:", ", ".join(changed) if changed else "None")
+          print("======================================")
+
+          PY
+
+      - name: Commit repaired files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add index.html sitemap.xml robots.txt .nojekyll
+
+          if git diff --cached --quiet; then
+            echo "No changes were needed."
+          else
+            git commit -m "Repair sitemap robots and homepage SEO"
+            git push
+          fi
