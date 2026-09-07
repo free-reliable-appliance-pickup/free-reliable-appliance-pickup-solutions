@@ -1,110 +1,35 @@
-name: Strengthen Colorado SEO
+name: Complete Website SEO Repair
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/strengthen-colorado-seo.yml"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  colorado-seo:
+  repair:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v5
 
-      - name: Strengthen Colorado pages
+      - name: Repair partner and Colorado SEO
+        shell: bash
         run: |
-          python3 <<'PY'
+          python3 - <<'PY'
           from pathlib import Path
+          from datetime import date
+          import re, json
 
-          cities = [
-              "denver","aurora","lakewood","arvada","thornton",
-              "westminster","centennial","englewood","littleton",
-              "parker","highlands-ranch","commerce-city",
-              "wheat-ridge","northglenn","brighton","broomfield",
-              "golden"
-          ]
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          PHONE = "720-604-7498"
 
-          for city in cities:
-              file = Path(f"{city}-appliance-pickup/index.html")
-
-              if not file.exists():
-                  print("Missing:", file)
-                  continue
-
-              html = file.read_text(
-                  encoding="utf-8",
-                  errors="ignore"
-              )
-
-              name = city.replace("-", " ").title()
-              marker = "<!-- COLORADO SEO BOOST -->"
-
-              if marker in html:
-                  print("Already updated:", name)
-                  continue
-
-              section = f"""
-          {marker}
-          <section>
-            <h2>Washer and Dryer Pickup in {name}, Colorado</h2>
-
-            <p>
-              Free Reliable Appliance Pickup provides qualifying appliance
-              pickup in {name} for washers, dryers, refrigerators, stoves,
-              ranges, freezers and other major household appliances.
-            </p>
-
-            <p>
-              Washer and dryer pickup is one of our primary Colorado services.
-              Working and reusable appliances may be prioritized for reuse.
-              Pickup approval depends on appliance condition, local demand,
-              accessibility and scheduling.
-            </p>
-
-            <p>
-              Send clear photos and accurate condition information with your
-              request so we can quickly review whether the appliance qualifies
-              for free pickup.
-            </p>
-
-            <p>
-              Colorado customers can call
-              <a href="tel:+17206047498">(720) 604-7498</a>
-              or submit the online pickup request form.
-            </p>
-          </section>
-          """
-
-              if "</main>" in html:
-                  html = html.replace(
-                      "</main>",
-                      section + "\n</main>",
-                      1
-                  )
-              elif "</body>" in html:
-                  html = html.replace(
-                      "</body>",
-                      section + "\n</body>",
-                      1
-                  )
-              else:
-                  html += section
-
-              file.write_text(
-                  html,
-                  encoding="utf-8"
-              )
-
-              print("Updated:", name)
-
-          PY
-
-      - name: Save changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git diff --cached --quiet || git commit -m "Strengthen Colorado SEO"
-          git push
+          def write(path, text):
+              p = Path(path)
+              p.parent.mkdir(parents=True, exist_ok=True)
+              old = p.read_text(encoding="utf-8", errors="ignore") if p.exists() else None
+              if old != text:
+                  p.write_text
