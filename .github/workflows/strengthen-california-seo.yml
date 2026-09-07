@@ -1,113 +1,490 @@
-name: Strengthen California SEO
+name: Southern California SEO Expansion
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/strengthen-california-seo.yml"
 
 permissions:
   contents: write
 
 jobs:
-  california-seo:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v5
 
-      - name: Strengthen California pages
+      - name: Build Southern California regional and city pages
+        shell: bash
         run: |
-          python3 <<'PY'
+          python3 - <<'PY'
           from pathlib import Path
+          from datetime import date
+          import html
+          import json
+          import re
+          import xml.etree.ElementTree as ET
 
-          cities = [
-              "los-angeles","anaheim","bakersfield","fresno","irvine",
-              "long-beach","modesto","oakland","oxnard","pasadena",
-              "riverside","sacramento","san-diego","san-francisco",
-              "san-jose","santa-ana","santa-clarita","santa-rosa",
-              "stockton","torrance","moreno-valley","murrieta",
-              "palm-springs","palm-desert","rancho-mirage",
-              "la-quinta","indian-wells","cathedral-city",
-              "bermuda-dunes","victorville","fontana",
-              "rancho-cucamonga","upland"
-          ]
+          ROOT = Path(".")
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          BRAND = "Free Reliable Appliance Pickup"
+          TODAY = date.today().isoformat()
+          FORM = BASE + "#request"
 
-          for city in cities:
-              file = Path(city + "-appliance-pickup/index.html")
+          regions = {
+              "san-bernardino-county-appliance-pickup": {
+                  "name": "San Bernardino County",
+                  "phone": "909-375-6685",
+                  "intro": "Core Inland Empire coverage across western San Bernardino County, the San Bernardino Valley and Victor Valley.",
+                  "cities": [
+                      "San Bernardino",
+                      "Fontana",
+                      "Rancho Cucamonga",
+                      "Ontario",
+                      "Upland",
+                      "Montclair",
+                      "Rialto",
+                      "Colton",
+                      "Highland",
+                      "Loma Linda",
+                      "Redlands",
+                      "Yucaipa",
+                      "Chino",
+                      "Chino Hills",
+                      "Grand Terrace",
+                      "Victorville",
+                      "Hesperia",
+                      "Apple Valley"
+                  ],
+              },
 
-              if not file.exists():
-                  print("Missing:", file)
-                  continue
+              "inland-empire-appliance-pickup": {
+                  "name": "Inland Empire",
+                  "phone": "909-375-6685",
+                  "intro": "Appliance pickup coverage connecting western San Bernardino County with nearby Riverside County communities.",
+                  "cities": [
+                      "Fontana",
+                      "Rancho Cucamonga",
+                      "Ontario",
+                      "Upland",
+                      "Montclair",
+                      "San Bernardino",
+                      "Rialto",
+                      "Chino",
+                      "Chino Hills",
+                      "Riverside",
+                      "Jurupa Valley",
+                      "Moreno Valley",
+                      "Corona",
+                      "Eastvale",
+                      "Norco"
+                  ],
+              },
 
-              html = file.read_text(
-                  encoding="utf-8",
-                  errors="ignore"
+              "riverside-county-appliance-pickup": {
+                  "name": "Riverside County",
+                  "phone": "909-375-6685",
+                  "intro": "Riverside County service from the Inland Empire corridor through southwest Riverside County and nearby communities.",
+                  "cities": [
+                      "Riverside",
+                      "Jurupa Valley",
+                      "Moreno Valley",
+                      "Corona",
+                      "Eastvale",
+                      "Norco",
+                      "Temecula",
+                      "Murrieta",
+                      "Menifee",
+                      "Lake Elsinore",
+                      "Perris",
+                      "Hemet",
+                      "San Jacinto",
+                      "Beaumont",
+                      "Banning",
+                      "Calimesa",
+                      "Wildomar"
+                  ],
+              },
+
+              "orange-county-appliance-pickup": {
+                  "name": "Orange County",
+                  "phone": "909-375-6685",
+                  "intro": "Orange County coverage with special focus on South Orange County and the I-5 and 241 corridor.",
+                  "cities": [
+                      "Lake Forest",
+                      "Mission Viejo",
+                      "Laguna Niguel",
+                      "Rancho Santa Margarita",
+                      "Irvine",
+                      "San Juan Capistrano",
+                      "San Clemente",
+                      "Laguna Hills",
+                      "Aliso Viejo",
+                      "Laguna Beach",
+                      "Dana Point",
+                      "Newport Beach",
+                      "Costa Mesa",
+                      "Huntington Beach",
+                      "Fountain Valley",
+                      "Santa Ana",
+                      "Anaheim",
+                      "Fullerton",
+                      "Brea",
+                      "Orange",
+                      "Tustin",
+                      "Yorba Linda",
+                      "Garden Grove",
+                      "Westminster",
+                      "Buena Park"
+                  ],
+              },
+
+              "san-gabriel-valley-appliance-pickup": {
+                  "name": "San Gabriel Valley",
+                  "phone": "909-375-6685",
+                  "intro": "Eastern Los Angeles County and San Gabriel Valley coverage near the Inland Empire border.",
+                  "cities": [
+                      "Pomona",
+                      "Claremont",
+                      "La Verne",
+                      "Glendora",
+                      "San Dimas",
+                      "West Covina",
+                      "Covina",
+                      "Azusa",
+                      "Duarte",
+                      "Arcadia",
+                      "Monrovia",
+                      "Pasadena",
+                      "San Gabriel",
+                      "Alhambra",
+                      "Monterey Park",
+                      "Rosemead",
+                      "Walnut",
+                      "Diamond Bar",
+                      "Hacienda Heights",
+                      "Baldwin Park",
+                      "El Monte",
+                      "South El Monte",
+                      "Temple City",
+                      "Sierra Madre"
+                  ],
+              },
+
+              "los-angeles-county-appliance-pickup": {
+                  "name": "Los Angeles County",
+                  "phone": "310-774-4304",
+                  "intro": "Los Angeles County appliance pickup coverage for Los Angeles and surrounding communities.",
+                  "cities": [
+                      "Los Angeles",
+                      "Long Beach",
+                      "Torrance",
+                      "Santa Clarita",
+                      "Burbank",
+                      "Glendale",
+                      "Inglewood",
+                      "Culver City",
+                      "Santa Monica"
+                  ],
+              },
+          }
+
+          def slugify(value):
+              return re.sub(
+                  r"[^a-z0-9]+",
+                  "-",
+                  value.lower()
+              ).strip("-")
+
+          def tel(phone):
+              return "+1" + re.sub(
+                  r"\D",
+                  "",
+                  phone
               )
 
-              name = city.replace("-", " ").title()
-              marker = "<!-- CALIFORNIA SEO BOOST -->"
+          def write(path, text):
+              path = Path(path)
 
-              if marker in html:
-                  print("Already updated:", name)
-                  continue
-
-              section = """
-          <!-- CALIFORNIA SEO BOOST -->
-          <section>
-            <h2>Washer and Dryer Pickup in CITY, California</h2>
-
-            <p>
-              Free Reliable Appliance Pickup provides qualifying appliance
-              pickup in CITY for washers, dryers, refrigerators, stoves,
-              ranges, freezers and other major household appliances.
-            </p>
-
-            <p>
-              Washer and dryer pickup is one of our primary California
-              services. Working and reusable appliances may be prioritized
-              for reuse.
-            </p>
-
-            <p>
-              Free pickup qualification depends on appliance condition,
-              local demand, accessibility and scheduling. Send clear photos
-              and accurate condition information with your pickup request.
-            </p>
-
-            <p>
-              Customers can use our online appliance pickup request form
-              to submit appliance details and photos for review.
-            </p>
-          </section>
-          """.replace("CITY", name)
-
-              if "</main>" in html:
-                  html = html.replace(
-                      "</main>",
-                      section + "\n</main>",
-                      1
-                  )
-              elif "</body>" in html:
-                  html = html.replace(
-                      "</body>",
-                      section + "\n</body>",
-                      1
-                  )
-              else:
-                  html += section
-
-              file.write_text(
-                  html,
-                  encoding="utf-8"
+              path.parent.mkdir(
+                  parents=True,
+                  exist_ok=True
               )
 
-              print("Updated:", name)
+              old = (
+                  path.read_text(
+                      encoding="utf-8",
+                      errors="ignore"
+                  )
+                  if path.exists()
+                  else None
+              )
 
-          PY
+              if old != text:
+                  path.write_text(
+                      text,
+                      encoding="utf-8"
+                  )
 
-      - name: Save changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git diff --cached --quiet || git commit -m "Strengthen California SEO"
-          git push
+                  print(
+                      "UPDATED",
+                      path
+                  )
+
+          CSS = """
+          *{
+            box-sizing:border-box;
+          }
+
+          html{
+            scroll-behavior:smooth;
+          }
+
+          body{
+            margin:0;
+            font-family:Arial,Helvetica,sans-serif;
+            background:#f5f7f6;
+            color:#202522;
+            line-height:1.65;
+          }
+
+          a{
+            color:#086b3e;
+          }
+
+          header{
+            background:linear-gradient(
+              135deg,
+              #0b5d35,
+              #087443
+            );
+            color:#fff;
+            text-align:center;
+            padding:54px 20px;
+          }
+
+          header h1{
+            max-width:980px;
+            margin:0 auto 14px;
+            font-size:clamp(
+              2rem,
+              5vw,
+              3.4rem
+            );
+            line-height:1.08;
+          }
+
+          header p{
+            max-width:850px;
+            margin:8px auto;
+            font-size:1.08rem;
+          }
+
+          nav{
+            background:#fff;
+            border-bottom:1px solid #d7e5dc;
+            padding:13px;
+            text-align:center;
+          }
+
+          nav a{
+            display:inline-block;
+            margin:5px 8px;
+            font-weight:700;
+            text-decoration:none;
+          }
+
+          main{
+            width:min(
+              1120px,
+              94%
+            );
+            margin:auto;
+          }
+
+          section{
+            background:#fff;
+            margin:24px 0;
+            padding:30px 24px;
+            border:1px solid #d7e5dc;
+            border-radius:16px;
+          }
+
+          h2,
+          h3{
+            color:#17352a;
+            line-height:1.25;
+          }
+
+          .lead{
+            font-size:1.08rem;
+          }
+
+          .grid{
+            display:grid;
+            grid-template-columns:
+              repeat(
+                auto-fit,
+                minmax(220px,1fr)
+              );
+            gap:15px;
+          }
+
+          .card{
+            border:1px solid #d7e5dc;
+            border-radius:12px;
+            padding:18px;
+            background:#fbfdfc;
+          }
+
+          .links{
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+          }
+
+          .links a{
+            padding:9px 11px;
+            border:1px solid #d0e5d8;
+            border-radius:9px;
+            background:#eef8f2;
+            text-decoration:none;
+            font-weight:700;
+          }
+
+          .notice{
+            padding:15px 17px;
+            background:#eef8f2;
+            border-left:5px solid #087443;
+            border-radius:8px;
+          }
+
+          .warn{
+            padding:15px 17px;
+            background:#fff8e5;
+            border-left:5px solid #c98d00;
+            border-radius:8px;
+          }
+
+          .btn{
+            display:inline-block;
+            margin:5px;
+            background:#0b5d35;
+            color:#fff;
+            text-decoration:none;
+            font-weight:700;
+            padding:12px 18px;
+            border-radius:9px;
+          }
+
+          footer{
+            margin-top:28px;
+            background:#17352a;
+            color:#fff;
+            text-align:center;
+            padding:30px 20px;
+          }
+
+          footer a{
+            color:#fff;
+          }
+          """
+
+          primary = {}
+
+          for rslug, region in regions.items():
+
+              for city in region["cities"]:
+
+                  primary.setdefault(
+                      city,
+                      rslug
+                  )
+
+          for preferred in [
+              "san-bernardino-county-appliance-pickup",
+              "riverside-county-appliance-pickup",
+              "orange-county-appliance-pickup",
+              "san-gabriel-valley-appliance-pickup",
+              "los-angeles-county-appliance-pickup",
+          ]:
+
+              for city in regions[
+                  preferred
+              ]["cities"]:
+
+                  primary[
+                      city
+                  ] = preferred
+
+          def city_links(cities):
+
+              return "".join(
+
+                  f'<a href="../{slugify(city)}-appliance-pickup/">'
+                  f'{html.escape(city)}</a>'
+
+                  for city in cities
+              )
+
+          def region_page(
+              rslug,
+              region
+          ):
+
+              name = region["name"]
+              phone = region["phone"]
+
+              url = (
+                  BASE +
+                  rslug +
+                  "/"
+              )
+
+              schema = {
+                  "@context":
+                      "https://schema.org",
+
+                  "@type":
+                      "Service",
+
+                  "name":
+                      f"Free Appliance Pickup in {name}, California",
+
+                  "serviceType": [
+                      "Appliance Pickup",
+                      "Appliance Removal",
+                      "Washer Pickup",
+                      "Dryer Pickup",
+                      "Refrigerator Pickup",
+                      "Freezer Pickup"
+                  ],
+
+                  "provider": {
+                      "@type":
+                          "Organization",
+
+                      "name":
+                          BRAND,
+
+                      "url":
+                          BASE,
+
+                      "telephone":
+                          tel(phone)
+                  },
+
+                  "areaServed": {
+                      "@type":
+                          "AdministrativeArea",
+
+                      "name":
+                          name
+                  },
+
+                  "url":
+                      url,
              
