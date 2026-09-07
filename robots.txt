@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+
 Sitemap: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/sitemap.xml
