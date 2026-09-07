@@ -1,4 +1,4 @@
-name: One-Time Full Website Repair COMPACT
+name: SEO Sitewide Repair
 
 on:
   workflow_dispatch:
@@ -11,60 +11,231 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout website
         uses: actions/checkout@v5
 
-      - name: Run existing full repair safely
+      - name: Upgrade website SEO
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import textwrap
+          from datetime import date
+          from urllib.parse import urljoin
+          import html
+          import os
+          import re
+          import shutil
+          import subprocess
+          import xml.etree.ElementTree as ET
 
-          lines = Path(".github/workflows/repair-site.yml").read_text(
-              encoding="utf-8"
-          ).splitlines()
+          ROOT = Path(".")
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          BRAND = "Free Reliable Appliance Pickup"
+          COLORADO_PHONE = "720-604-7498"
+          TODAY = date.today().isoformat()
 
-          blocks = []
-          i = 0
+          changed = []
 
-          while i < len(lines):
-              if "<<'PY'" in lines[i]:
-                  start = i + 1
-                  end = next(
-                      j for j in range(start, len(lines))
-                      if lines[j].strip() == "PY"
-                  )
-                  blocks.append(
-                      textwrap.dedent("\n".join(lines[start:end]))
-                  )
-                  i = end + 1
-              else:
-                  i += 1
+          def write_file(path, text):
+              path = Path(path)
+              path.parent.mkdir(parents=True, exist_ok=True)
 
-          if not blocks:
-              raise SystemExit("Could not find repair code.")
+              old = None
+              if path.exists():
+                  old = path.read_text(encoding="utf-8", errors="ignore")
 
-          for number, code in enumerate(blocks, 1):
-              exec(
-                  compile(code, f"repair_block_{number}.py", "exec"),
-                  {"__name__": "__main__"}
-              )
+              if old != text:
+                  path.write_text(text, encoding="utf-8")
+                  changed.append(str(path))
 
-          print(f"Completed {len(blocks)} repair/validation blocks.")
-          PY
+          # ------------------------------------------------------------
+          # CSS
+          # ------------------------------------------------------------
 
-      - name: Commit repaired site
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          css = r'''
+          :root{
+            --green:#0b5d35;
+            --green2:#087443;
+            --dark:#17352a;
+            --light:#eef8f2;
+            --border:#d7e5dc;
+            --text:#202522;
+            --muted:#5d6b63;
+            --white:#ffffff;
+          }
 
-          git add -A
+          *{box-sizing:border-box}
 
-          if git diff --cached --quiet; then
-            echo "No changes needed."
-          else
-            git commit -m "Repair website SEO pages and internal links"
-            git push
-          fi
+          html{scroll-behavior:smooth}
+
+          body{
+            margin:0;
+            font-family:Arial,Helvetica,sans-serif;
+            background:#f7f9f8;
+            color:var(--text);
+            line-height:1.65;
+          }
+
+          a{color:#086b3e}
+
+          img{
+            max-width:100%;
+            height:auto;
+          }
+
+          .seo-header{
+            background:linear-gradient(135deg,var(--green),var(--green2));
+            color:white;
+            padding:56px 20px;
+            text-align:center;
+          }
+
+          .seo-header h1{
+            max-width:950px;
+            margin:0 auto 14px;
+            font-size:clamp(2rem,5vw,3.5rem);
+            line-height:1.08;
+          }
+
+          .seo-header p{
+            max-width:780px;
+            margin:0 auto;
+            font-size:1.1rem;
+          }
+
+          .seo-nav{
+            background:white;
+            border-bottom:1px solid var(--border);
+            padding:14px 18px;
+            text-align:center;
+            position:sticky;
+            top:0;
+            z-index:20;
+          }
+
+          .seo-nav a{
+            display:inline-block;
+            margin:5px 8px;
+            font-weight:700;
+            text-decoration:none;
+          }
+
+          .seo-wrap{
+            width:min(1120px,calc(100% - 32px));
+            margin:0 auto;
+          }
+
+          .seo-section{
+            background:white;
+            margin:24px auto;
+            padding:30px;
+            border:1px solid var(--border);
+            border-radius:18px;
+            box-shadow:0 6px 22px rgba(0,0,0,.04);
+          }
+
+          .seo-section h2,
+          .seo-section h3{
+            color:var(--dark);
+            line-height:1.25;
+          }
+
+          .seo-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+            gap:18px;
+          }
+
+          .seo-card{
+            padding:20px;
+            border:1px solid var(--border);
+            border-radius:14px;
+            background:#fbfdfc;
+          }
+
+          .seo-card h3{
+            margin-top:0;
+          }
+
+          .seo-button{
+            display:inline-block;
+            margin-top:10px;
+            background:var(--green);
+            color:white!important;
+            padding:12px 18px;
+            border-radius:10px;
+            font-weight:700;
+            text-decoration:none;
+          }
+
+          .seo-photo-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:15px;
+            margin-top:20px;
+          }
+
+          .seo-photo-grid img{
+            width:100%;
+            aspect-ratio:4/3;
+            object-fit:cover;
+            border-radius:14px;
+            border:1px solid var(--border);
+            background:#edf2ef;
+          }
+
+          .seo-list{
+            columns:2;
+            column-gap:32px;
+            padding-left:22px;
+          }
+
+          .seo-list li{
+            margin-bottom:7px;
+          }
+
+          .seo-notice{
+            border-left:5px solid var(--green);
+            padding:14px 18px;
+            background:var(--light);
+            border-radius:8px;
+          }
+
+          .seo-footer{
+            text-align:center;
+            padding:35px 20px;
+            color:var(--muted);
+          }
+
+          .seo-footer a{
+            margin:4px 7px;
+          }
+
+          .seo-home-upgrade{
+            width:min(1120px,calc(100% - 32px));
+            margin:30px auto;
+            padding:30px;
+            border:1px solid var(--border);
+            border-radius:18px;
+            background:#fff;
+          }
+
+          .seo-home-upgrade h2{
+            color:var(--dark);
+            margin-top:0;
+          }
+
+          .seo-home-links{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:12px;
+          }
+
+          .seo-home-links a{
+            display:block;
+            padding:14px;
+            border:1px solid var(--border);
+            border-radius:10px;
+            text-decoration:none;
+            font-weight:700;
+            background:#f
