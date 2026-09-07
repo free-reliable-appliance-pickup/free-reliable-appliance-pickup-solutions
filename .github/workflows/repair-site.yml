@@ -1,0 +1,410 @@
+name: One-Time Full Website Repair
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair-site:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Repair website
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from datetime import date
+          import html
+          import xml.etree.ElementTree as ET
+
+          ROOT = Path(".")
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+
+          changed = []
+
+          def write_file(path, text):
+              path.parent.mkdir(parents=True, exist_ok=True)
+              old = path.read_text(encoding="utf-8", errors="ignore") if path.exists() else None
+
+              if old != text:
+                  path.write_text(text, encoding="utf-8")
+                  changed.append(str(path))
+
+          def complete_html(text):
+              low = text.lower()
+
+              return (
+                  "<!doctype html" in low
+                  and "<html" in low
+                  and "</html>" in low
+                  and "<head" in low
+                  and "</head>" in low
+                  and "<body" in low
+                  and "</body>" in low
+              )
+
+          def title_from_slug(slug):
+              clean = slug.replace("-appliance-pickup", "")
+              return clean.replace("-", " ").title()
+
+          def make_page(slug):
+              place = title_from_slug(slug)
+              safe_place = html.escape(place)
+              canonical = BASE + slug + "/"
+
+              return f"""<!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <title>Free Appliance Pickup in {safe_place} | Washer, Dryer & Refrigerator Pickup</title>
+
+            <meta name="description" content="Request qualifying free appliance pickup in {safe_place} for washers, dryers, refrigerators, stoves, freezers and other major household appliances.">
+
+            <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+            <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+            <link rel="canonical" href="{canonical}">
+
+            <style>
+              *{{box-sizing:border-box}}
+
+              body{{
+                margin:0;
+                font-family:Arial,Helvetica,sans-serif;
+                background:#f5f7f6;
+                color:#222;
+                line-height:1.6;
+              }}
+
+              header{{
+                background:linear-gradient(135deg,#0b5d35,#087443);
+                color:#fff;
+                text-align:center;
+                padding:55px 20px;
+              }}
+
+              header h1{{
+                margin:0 0 14px;
+                font-size:clamp(30px,6vw,52px);
+              }}
+
+              header p{{
+                max-width:800px;
+                margin:0 auto;
+                font-size:18px;
+              }}
+
+              main{{
+                max-width:1000px;
+                margin:auto;
+                padding:35px 20px 55px;
+              }}
+
+              section{{
+                background:white;
+                border-radius:14px;
+                padding:28px;
+                margin-bottom:24px;
+                box-shadow:0 3px 14px rgba(0,0,0,.07);
+              }}
+
+              h2{{
+                color:#0b5d35;
+              }}
+
+              .button{{
+                display:inline-block;
+                background:#0b5d35;
+                color:#fff;
+                text-decoration:none;
+                font-weight:bold;
+                padding:14px 22px;
+                border-radius:9px;
+              }}
+
+              ul{{
+                padding-left:22px;
+              }}
+
+              footer{{
+                background:#17352a;
+                color:white;
+                text-align:center;
+                padding:25px 15px;
+              }}
+            </style>
+
+            <script type="application/ld+json">
+            {{
+              "@context":"https://schema.org",
+              "@type":"Service",
+              "name":"Free Appliance Pickup in {safe_place}",
+              "provider":{{
+                "@type":"Organization",
+                "name":"Free Reliable Appliance Pickup",
+                "url":"{BASE}"
+              }},
+              "areaServed":"{safe_place}",
+              "serviceType":"Appliance Pickup",
+              "url":"{canonical}"
+            }}
+            </script>
+          </head>
+
+          <body>
+
+            <header>
+              <h1>Free Appliance Pickup in {safe_place}</h1>
+              <p>Fast, reliable pickup for qualifying major household appliances.</p>
+            </header>
+
+            <main>
+
+              <section>
+                <h2>Appliances We Pick Up</h2>
+
+                <ul>
+                  <li>Washers</li>
+                  <li>Dryers</li>
+                  <li>Refrigerators</li>
+                  <li>Stoves and ranges</li>
+                  <li>Freezers</li>
+                </ul>
+
+                <p>
+                  Pickup availability depends on appliance condition,
+                  location and local service availability.
+                </p>
+              </section>
+
+              <section>
+                <h2>Request Appliance Pickup in {safe_place}</h2>
+
+                <p>
+                  Tell us what appliance you have, its condition and where
+                  it is located. Photos help us confirm whether it qualifies
+                  for free pickup.
+                </p>
+
+                <a class="button" href="{BASE}">
+                  Request Pickup
+                </a>
+              </section>
+
+              <section>
+                <h2>Free Reliable Appliance Pickup</h2>
+
+                <p>
+                  We help customers connect with appliance pickup service
+                  across growing service areas in the United States.
+                </p>
+
+                <a href="{BASE}">
+                  Return to the main website
+                </a>
+              </section>
+
+            </main>
+
+            <footer>
+              © Free Reliable Appliance Pickup
+            </footer>
+
+          </body>
+          </html>
+          """
+
+          appliance_dirs = sorted([
+              p for p in ROOT.iterdir()
+              if p.is_dir()
+              and p.name.endswith("-appliance-pickup")
+          ])
+
+          repaired = 0
+          created = 0
+
+          for folder in appliance_dirs:
+              page = folder / "index.html"
+
+              if not page.exists():
+                  write_file(page, make_page(folder.name))
+                  created += 1
+                  continue
+
+              text = page.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
+              if not complete_html(text):
+                  write_file(page, make_page(folder.name))
+                  repaired += 1
+
+          nojekyll = ROOT / ".nojekyll"
+
+          if not nojekyll.exists():
+              write_file(nojekyll, "")
+
+          urls = []
+
+          for page in ROOT.rglob("index.html"):
+
+              parts = page.parts
+
+              if ".git" in parts or ".github" in parts:
+                  continue
+
+              parent = page.parent
+
+              if parent == ROOT:
+                  url = BASE
+              else:
+                  rel = parent.relative_to(ROOT).as_posix().strip("/")
+                  url = BASE + rel + "/"
+
+              urls.append(url)
+
+          urls = sorted(set(urls))
+
+          NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
+
+          ET.register_namespace("", NS)
+
+          urlset = ET.Element(
+              f"{{{NS}}}urlset"
+          )
+
+          today = date.today().isoformat()
+
+          for url in urls:
+
+              item = ET.SubElement(
+                  urlset,
+                  f"{{{NS}}}url"
+              )
+
+              loc = ET.SubElement(
+                  item,
+                  f"{{{NS}}}loc"
+              )
+
+              loc.text = url
+
+              lastmod = ET.SubElement(
+                  item,
+                  f"{{{NS}}}lastmod"
+              )
+
+              lastmod.text = today
+
+          tree = ET.ElementTree(urlset)
+
+          ET.indent(
+              tree,
+              space="  "
+          )
+
+          sitemap_path = ROOT / "sitemap.xml"
+
+          tree.write(
+              sitemap_path,
+              encoding="utf-8",
+              xml_declaration=True
+          )
+
+          ET.parse(sitemap_path)
+
+          robots = f"""User-agent: *
+          Allow: /
+
+          Sitemap: {BASE}sitemap.xml
+          """
+
+          write_file(
+              ROOT / "robots.txt",
+              robots
+          )
+
+          broken = []
+
+          for page in ROOT.rglob("*.html"):
+
+              if ".git" in page.parts or ".github" in page.parts:
+                  continue
+
+              text = page.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
+              if not complete_html(text):
+                  broken.append(str(page))
+
+          print("==========================================")
+          print("WEBSITE REPAIR COMPLETE")
+          print("==========================================")
+
+          print(
+              f"Appliance folders checked: "
+              f"{len(appliance_dirs)}"
+          )
+
+          print(
+              f"Missing city pages created: "
+              f"{created}"
+          )
+
+          print(
+              f"Broken city pages repaired: "
+              f"{repaired}"
+          )
+
+          print(
+              f"Sitemap URLs: "
+              f"{len(urls)}"
+          )
+
+          print(
+              f"Files changed by repair: "
+              f"{len(changed)}"
+          )
+
+          if broken:
+
+              print(
+                  "WARNING: Other incomplete HTML files found:"
+              )
+
+              for page in broken:
+                  print(" -", page)
+
+          else:
+              print(
+                  "All HTML files passed structural validation."
+              )
+
+          print("==========================================")
+          PY
+
+      - name: Commit repaired website
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No website changes were necessary."
+          else
+            git commit -m "Repair website structure and sitemap"
+            git push
+          fi
