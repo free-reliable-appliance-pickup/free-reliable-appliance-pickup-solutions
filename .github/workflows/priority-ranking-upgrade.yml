@@ -1,100 +1,983 @@
-name: Restore Priority Ranking Workflow
+name: Priority Local SEO Upgrade
 
 on:
-  push:
-    paths:
-      - '.github/workflows/fix-priority-ranking-yaml.yml'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  restore:
+  priority-seo:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout full repository history
+      - name: Checkout repository
         uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
 
-      - name: Restore and repair priority workflow
+      - name: Upgrade priority local SEO
         shell: bash
         run: |
-          git show 57498fd899395d26cbd2a2b5394f4f8770541e5c:.github/workflows/priority-ranking-upgrade.yml > /tmp/priority-original.yml
-
           python3 - <<'PY'
           from pathlib import Path
+          from datetime import date
+          import html
+          import re
+          import xml.etree.ElementTree as ET
 
-          source = Path("/tmp/priority-original.yml")
-          target = Path(".github/workflows/priority-ranking-upgrade.yml")
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          TODAY = date.today().isoformat()
+          changed = []
 
-          lines = source.read_text(
-              encoding="utf-8"
-          ).splitlines()
+          def save(path, text):
+              path = Path(path)
 
-          output = []
-          inside_main_run = False
-
-          for line in lines:
-
-              if (
-                  line == "        run: |"
-                  and not inside_main_run
-              ):
-                  inside_main_run = True
-                  output.append(line)
-                  continue
-
-              if (
-                  inside_main_run
-                  and line.startswith(
-                      "      - name: Commit priority SEO upgrade"
+              old = (
+                  path.read_text(
+                      encoding="utf-8",
+                      errors="ignore"
                   )
-              ):
-                  inside_main_run = False
-                  output.append(line)
-                  continue
+                  if path.exists()
+                  else None
+              )
 
-              if inside_main_run and line.strip():
-                  spaces = len(line) - len(
-                      line.lstrip(" ")
+              if old != text:
+                  path.parent.mkdir(
+                      parents=True,
+                      exist_ok=True
                   )
 
-                  if spaces < 10:
-                      line = (
-                          " " * (10 - spaces)
-                      ) + line
+                  path.write_text(
+                      text,
+                      encoding="utf-8"
+                  )
 
-              output.append(line)
+                  changed.append(str(path))
 
-          target.write_text(
-              "\n".join(output) + "\n",
-              encoding="utf-8"
+          def put_in_head(text, value):
+              if "</head>" in text.lower():
+                  pos = text.lower().find("</head>")
+                  return (
+                      text[:pos]
+                      + value
+                      + "\n"
+                      + text[pos:]
+                  )
+
+              return text
+
+          def set_title(text, title):
+              replacement = (
+                  "<title>"
+                  + html.escape(title)
+                  + "</title>"
+              )
+
+              if re.search(
+                  r"<title\b[^>]*>.*?</title>",
+                  text,
+                  flags=re.I | re.S
+              ):
+                  return re.sub(
+                      r"<title\b[^>]*>.*?</title>",
+                      replacement,
+                      text,
+                      count=1,
+                      flags=re.I | re.S
+                  )
+
+              return put_in_head(
+                  text,
+                  replacement
+              )
+
+          def set_description(text, description):
+              replacement = (
+                  '<meta name="description" content="'
+                  + html.escape(
+                      description,
+                      quote=True
+                  )
+                  + '">'
+              )
+
+              pattern = (
+                  r'<meta\s+name=["\']description["\']'
+                  r'[^>]*>'
+              )
+
+              if re.search(
+                  pattern,
+                  text,
+                  flags=re.I
+              ):
+                  return re.sub(
+                      pattern,
+                      replacement,
+                      text,
+                      count=1,
+                      flags=re.I
+                  )
+
+              return put_in_head(
+                  text,
+                  replacement
+              )
+
+          def set_robots(text):
+              replacement = (
+                  '<meta name="robots" '
+                  'content="index,follow,'
+                  'max-snippet:-1,'
+                  'max-image-preview:large,'
+                  'max-video-preview:-1">'
+              )
+
+              pattern = (
+                  r'<meta\s+name=["\']robots["\']'
+                  r'[^>]*>'
+              )
+
+              if re.search(
+                  pattern,
+                  text,
+                  flags=re.I
+              ):
+                  return re.sub(
+                      pattern,
+                      replacement,
+                      text,
+                      count=1,
+                      flags=re.I
+                  )
+
+              return put_in_head(
+                  text,
+                  replacement
+              )
+
+          def set_canonical(text, slug):
+              url = BASE + slug + "/"
+
+              replacement = (
+                  '<link rel="canonical" href="'
+                  + url
+                  + '">'
+              )
+
+              pattern = (
+                  r'<link\s+rel=["\']canonical["\']'
+                  r'[^>]*>'
+              )
+
+              if re.search(
+                  pattern,
+                  text,
+                  flags=re.I
+              ):
+                  return re.sub(
+                      pattern,
+                      replacement,
+                      text,
+                      count=1,
+                      flags=re.I
+                  )
+
+              return put_in_head(
+                  text,
+                  replacement
+              )
+
+          def local_link(label, slug, current):
+              if slug == current:
+                  return (
+                      "<strong>"
+                      + html.escape(label)
+                      + "</strong>"
+                  )
+
+              target = Path(slug) / "index.html"
+
+              if target.exists():
+                  return (
+                      '<a href="../'
+                      + slug
+                      + '/">'
+                      + html.escape(label)
+                      + "</a>"
+                  )
+
+              return html.escape(label)
+
+          def add_local_section(text, data):
+              if 'id="priority-local-seo"' in text:
+                  return text
+
+              nearby = " · ".join(
+                  local_link(
+                      label,
+                      slug,
+                      data["slug"]
+                  )
+                  for label, slug in data["nearby"]
+              )
+
+              neighborhoods = "".join(
+                  "<li>"
+                  + html.escape(item)
+                  + "</li>"
+                  for item in data["areas"]
+              )
+
+              section = f'''
+          <section id="priority-local-seo">
+
+          <h2>{html.escape(data["heading"])}</h2>
+
+          <p>
+          {html.escape(data["intro"])}
+          </p>
+
+          <h3>Local Areas We Review</h3>
+
+          <ul>
+          {neighborhoods}
+          </ul>
+
+          <p>
+          Working and reusable washers, dryers, refrigerators,
+          freezers, stoves and ranges receive priority.
+          Free pickup is qualification-based and depends on
+          condition, access, current demand and scheduling.
+          </p>
+
+          <p>
+          <strong>Nearby appliance pickup pages:</strong>
+          {nearby}
+          </p>
+
+          <p>
+          <a href="../#request">
+          Request Appliance Pickup
+          </a>
+          </p>
+
+          </section>
+          '''
+
+              low = text.lower()
+
+              if "</main>" in low:
+                  pos = low.rfind("</main>")
+
+                  return (
+                      text[:pos]
+                      + section
+                      + "\n"
+                      + text[pos:]
+                  )
+
+              if "</body>" in low:
+                  pos = low.rfind("</body>")
+
+                  return (
+                      text[:pos]
+                      + section
+                      + "\n"
+                      + text[pos:]
+                  )
+
+              return text + section
+
+          pages = [
+              {
+                  "slug":
+                  "los-angeles-appliance-pickup",
+
+                  "title":
+                  "Free Appliance Pickup Los Angeles CA | Appliance Removal & Recycling",
+
+                  "description":
+                  "Request qualifying free appliance pickup in Los Angeles, California for washers, dryers, refrigerators, stoves and freezers. Working and reusable appliances receive priority.",
+
+                  "heading":
+                  "Los Angeles Appliance Pickup & Removal",
+
+                  "intro":
+                  "Free Reliable Appliance Pickup reviews major appliance pickup requests throughout Los Angeles, including homes, apartments, rental properties and selected business locations.",
+
+                  "areas": [
+                      "Hollywood",
+                      "North Hollywood",
+                      "Van Nuys",
+                      "Sherman Oaks",
+                      "Northridge",
+                      "Reseda",
+                      "Koreatown",
+                      "Silver Lake",
+                      "Echo Park",
+                      "West Los Angeles",
+                      "Mar Vista",
+                      "Venice"
+                  ],
+
+                  "nearby": [
+                      (
+                          "Los Angeles",
+                          "los-angeles-appliance-pickup"
+                      ),
+                      (
+                          "Los Angeles County",
+                          "los-angeles-county-appliance-pickup"
+                      ),
+                      (
+                          "Long Beach",
+                          "long-beach-appliance-pickup"
+                      ),
+                      (
+                          "Pasadena",
+                          "pasadena-appliance-pickup"
+                      ),
+                      (
+                          "Pomona",
+                          "pomona-appliance-pickup"
+                      )
+                  ]
+              },
+
+              {
+                  "slug":
+                  "san-bernardino-county-appliance-pickup",
+
+                  "title":
+                  "Free Appliance Pickup San Bernardino County CA | Appliance Removal",
+
+                  "description":
+                  "Request qualifying appliance pickup across San Bernardino County, California for washers, dryers, refrigerators, stoves and freezers. Inland Empire and Victor Valley requests reviewed.",
+
+                  "heading":
+                  "San Bernardino County Appliance Pickup",
+
+                  "intro":
+                  "San Bernardino County is one of our core Southern California service areas, with appliance pickup requests reviewed across the Inland Empire, High Desert and Victor Valley routes.",
+
+                  "areas": [
+                      "San Bernardino",
+                      "Rancho Cucamonga",
+                      "Fontana",
+                      "Ontario",
+                      "Upland",
+                      "Rialto",
+                      "Redlands",
+                      "Yucaipa",
+                      "Victorville",
+                      "Hesperia",
+                      "Apple Valley"
+                  ],
+
+                  "nearby": [
+                      (
+                          "San Bernardino County",
+                          "san-bernardino-county-appliance-pickup"
+                      ),
+                      (
+                          "San Bernardino",
+                          "san-bernardino-appliance-pickup"
+                      ),
+                      (
+                          "Rancho Cucamonga",
+                          "rancho-cucamonga-appliance-pickup"
+                      ),
+                      (
+                          "Fontana",
+                          "fontana-appliance-pickup"
+                      ),
+                      (
+                          "Ontario",
+                          "ontario-appliance-pickup"
+                      )
+                  ]
+              },
+
+              {
+                  "slug":
+                  "riverside-county-appliance-pickup",
+
+                  "title":
+                  "Free Appliance Pickup Riverside County CA | Appliance Removal",
+
+                  "description":
+                  "Request qualifying free appliance pickup across Riverside County, California for washers, dryers, refrigerators, stoves and freezers. Riverside, Temecula, Murrieta and nearby areas reviewed.",
+
+                  "heading":
+                  "Riverside County Appliance Pickup & Removal",
+
+                  "intro":
+                  "We review appliance pickup requests across Riverside County, including the Riverside metro, southwest county communities and selected Coachella Valley routes.",
+
+                  "areas": [
+                      "Riverside",
+                      "Jurupa Valley",
+                      "Moreno Valley",
+                      "Corona",
+                      "Eastvale",
+                      "Temecula",
+                      "Murrieta",
+                      "Menifee",
+                      "Beaumont",
+                      "Perris",
+                      "Hemet"
+                  ],
+
+                  "nearby": [
+                      (
+                          "Riverside County",
+                          "riverside-county-appliance-pickup"
+                      ),
+                      (
+                          "Riverside",
+                          "riverside-appliance-pickup"
+                      ),
+                      (
+                          "Temecula",
+                          "temecula-appliance-pickup"
+                      ),
+                      (
+                          "Murrieta",
+                          "murrieta-appliance-pickup"
+                      ),
+                      (
+                          "Menifee",
+                          "menifee-appliance-pickup"
+                      ),
+                      (
+                          "Palm Desert",
+                          "palm-desert-appliance-pickup"
+                      )
+                  ]
+              },
+
+              {
+                  "slug":
+                  "orange-county-appliance-pickup",
+
+                  "title":
+                  "Free Appliance Pickup Orange County CA | Appliance Removal & Recycling",
+
+                  "description":
+                  "Request qualifying free appliance pickup throughout Orange County, California for washers, dryers, refrigerators, stoves and freezers. North, Central and South Orange County requests reviewed.",
+
+                  "heading":
+                  "Orange County Appliance Pickup & Removal",
+
+                  "intro":
+                  "Free Reliable Appliance Pickup reviews qualifying major appliance pickup requests throughout North, Central and South Orange County.",
+
+                  "areas": [
+                      "Anaheim",
+                      "Santa Ana",
+                      "Irvine",
+                      "Fullerton",
+                      "Costa Mesa",
+                      "Huntington Beach",
+                      "Lake Forest",
+                      "Mission Viejo",
+                      "Laguna Niguel",
+                      "San Clemente",
+                      "San Juan Capistrano",
+                      "Newport Beach"
+                  ],
+
+                  "nearby": [
+                      (
+                          "Orange County",
+                          "orange-county-appliance-pickup"
+                      ),
+                      (
+                          "Anaheim",
+                          "anaheim-appliance-pickup"
+                      ),
+                      (
+                          "Irvine",
+                          "irvine-appliance-pickup"
+                      ),
+                      (
+                          "Mission Viejo",
+                          "mission-viejo-appliance-pickup"
+                      ),
+                      (
+                          "San Clemente",
+                          "san-clemente-appliance-pickup"
+                      )
+                  ]
+              },
+
+              {
+                  "slug":
+                  "portland-appliance-pickup",
+
+                  "title":
+                  "Free Appliance Pickup Portland OR | Appliance Removal & Recycling",
+
+                  "description":
+                  "Request qualifying free appliance pickup in Portland, Oregon for washers, dryers, refrigerators, stoves and freezers. Portland metro pickup requests reviewed. Call or text 503-868-4455.",
+
+                  "heading":
+                  "Portland Appliance Pickup & Removal",
+
+                  "intro":
+                  "Portland is one of our strongest Oregon service areas. We review appliance pickup requests from homes, apartments, landlords, property managers and businesses across the Portland metro.",
+
+                  "areas": [
+                      "Portland",
+                      "Beaverton",
+                      "Hillsboro",
+                      "Gresham",
+                      "Tigard",
+                      "Lake Oswego",
+                      "Oregon City",
+                      "Milwaukie",
+                      "Tualatin",
+                      "Sherwood",
+                      "Happy Valley",
+                      "Clackamas"
+                  ],
+
+                  "nearby": [
+                      (
+                          "Portland",
+                          "portland-appliance-pickup"
+                      ),
+                      (
+                          "Beaverton",
+                          "beaverton-appliance-pickup"
+                      ),
+                      (
+                          "Hillsboro",
+                          "hillsboro-appliance-pickup"
+                      ),
+                      (
+                          "Gresham",
+                          "gresham-appliance-pickup"
+                      ),
+                      (
+                          "Salem",
+                          "salem-appliance-pickup"
+                      )
+                  ]
+              },
+
+              {
+                  "slug":
+                  "salem-appliance-pickup",
+
+                  "title":
+                  "Free Appliance Pickup Salem OR | Appliance Removal & Recycling",
+
+                  "description":
+                  "Request qualifying free appliance pickup in Salem, Oregon for washers, dryers, refrigerators, stoves and freezers. Salem and nearby communities reviewed. Call or text 503-868-4455.",
+
+                  "heading":
+                  "Salem Appliance Pickup & Removal",
+
+                  "intro":
+                  "Salem is a priority Oregon appliance pickup market. Working washers, dryers, refrigerators, freezers and other reusable major appliances receive strong priority.",
+
+                  "areas": [
+                      "Salem",
+                      "West Salem",
+                      "Keizer",
+                      "Turner",
+                      "Stayton",
+                      "Silverton",
+                      "Dallas",
+                      "Monmouth",
+                      "Independence",
+                      "Woodburn"
+                  ],
+
+                  "nearby": [
+                      (
+                          "Salem",
+                          "salem-appliance-pickup"
+                      ),
+                      (
+                          "Keizer",
+                          "keizer-appliance-pickup"
+                      ),
+                      (
+                          "Portland",
+                          "portland-appliance-pickup"
+                      )
+                  ]
+              }
+          ]
+
+          for data in pages:
+              path = (
+                  Path(data["slug"])
+                  / "index.html"
+              )
+
+              if not path.exists():
+                  print(
+                      "Skipping missing page:",
+                      path
+                  )
+                  continue
+
+              text = path.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
+              text = set_title(
+                  text,
+                  data["title"]
+              )
+
+              text = set_description(
+                  text,
+                  data["description"]
+              )
+
+              text = set_robots(text)
+
+              text = set_canonical(
+                  text,
+                  data["slug"]
+              )
+
+              text = add_local_section(
+                  text,
+                  data
+              )
+
+              save(
+                  path,
+                  text
+              )
+
+          home = Path("index.html")
+
+          if home.exists():
+              text = home.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
+              if 'id="priority-local-markets"' not in text:
+                  block = '''
+          <section id="priority-local-markets">
+
+          <h2>Priority Local Appliance Pickup Markets</h2>
+
+          <p>
+          Start with one of our strongest local appliance pickup areas.
+          Working and reusable appliances receive priority.
+          </p>
+
+          <div class="grid">
+
+          <div class="card">
+          <h3>
+          <a href="los-angeles-appliance-pickup/">
+          Los Angeles, California
+          </a>
+          </h3>
+          </div>
+
+          <div class="card">
+          <h3>
+          <a href="san-bernardino-county-appliance-pickup/">
+          San Bernardino County, California
+          </a>
+          </h3>
+          </div>
+
+          <div class="card">
+          <h3>
+          <a href="riverside-county-appliance-pickup/">
+          Riverside County, California
+          </a>
+          </h3>
+          </div>
+
+          <div class="card">
+          <h3>
+          <a href="orange-county-appliance-pickup/">
+          Orange County, California
+          </a>
+          </h3>
+          </div>
+
+          <div class="card">
+          <h3>
+          <a href="portland-appliance-pickup/">
+          Portland, Oregon
+          </a>
+          </h3>
+          </div>
+
+          <div class="card">
+          <h3>
+          <a href="salem-appliance-pickup/">
+          Salem, Oregon
+          </a>
+          </h3>
+          </div>
+
+          </div>
+
+          </section>
+          '''
+
+                  low = text.lower()
+
+                  request_marker = (
+                      '<section id="request"'
+                  )
+
+                  if request_marker in low:
+                      pos = low.find(
+                          request_marker
+                      )
+
+                      text = (
+                          text[:pos]
+                          + block
+                          + "\n"
+                          + text[pos:]
+                      )
+
+                  elif "</main>" in low:
+                      pos = low.rfind(
+                          "</main>"
+                      )
+
+                      text = (
+                          text[:pos]
+                          + block
+                          + "\n"
+                          + text[pos:]
+                      )
+
+                  else:
+                      text += block
+
+                  save(
+                      home,
+                      text
+                  )
+
+          oregon_path = Path(
+              "oregon-appliance-pickup/index.html"
           )
+
+          if oregon_path.exists():
+              text = oregon_path.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
+              text = set_title(
+                  text,
+                  "Free Appliance Pickup Oregon | Portland, Salem & Keizer"
+              )
+
+              text = set_description(
+                  text,
+                  "Request qualifying appliance pickup in Oregon for washers, dryers, refrigerators, stoves and freezers. Priority service areas include Portland, Salem and Keizer."
+              )
+
+              text = set_robots(text)
+
+              text = set_canonical(
+                  text,
+                  "oregon-appliance-pickup"
+              )
+
+              save(
+                  oregon_path,
+                  text
+              )
+
+          sitemap = Path("sitemap.xml")
+
+          namespace = (
+              "http://www.sitemaps.org/"
+              "schemas/sitemap/0.9"
+          )
+
+          ET.register_namespace(
+              "",
+              namespace
+          )
+
+          if sitemap.exists():
+              try:
+                  tree = ET.parse(
+                      sitemap
+                  )
+
+                  root = tree.getroot()
+
+              except Exception:
+                  root = ET.Element(
+                      "{"
+                      + namespace
+                      + "}urlset"
+                  )
+
+                  tree = ET.ElementTree(
+                      root
+                  )
+          else:
+              root = ET.Element(
+                  "{"
+                  + namespace
+                  + "}urlset"
+              )
+
+              tree = ET.ElementTree(
+                  root
+              )
+
+          existing = {}
+
+          for url in root.findall(
+              "{"
+              + namespace
+              + "}url"
+          ):
+              loc = url.find(
+                  "{"
+                  + namespace
+                  + "}loc"
+              )
+
+              if (
+                  loc is not None
+                  and loc.text
+              ):
+                  existing[
+                      loc.text.strip()
+                  ] = url
+
+          slugs = [
+              "",
+              "los-angeles-appliance-pickup",
+              "san-bernardino-county-appliance-pickup",
+              "riverside-county-appliance-pickup",
+              "orange-county-appliance-pickup",
+              "portland-appliance-pickup",
+              "salem-appliance-pickup",
+              "oregon-appliance-pickup"
+          ]
+
+          sitemap_changed = False
+
+          for slug in slugs:
+              url_text = (
+                  BASE
+                  if not slug
+                  else BASE + slug + "/"
+              )
+
+              if url_text in existing:
+                  url = existing[
+                      url_text
+                  ]
+              else:
+                  url = ET.SubElement(
+                      root,
+                      "{"
+                      + namespace
+                      + "}url"
+                  )
+
+                  loc = ET.SubElement(
+                      url,
+                      "{"
+                      + namespace
+                      + "}loc"
+                  )
+
+                  loc.text = url_text
+                  sitemap_changed = True
+
+              lastmod = url.find(
+                  "{"
+                  + namespace
+                  + "}lastmod"
+              )
+
+              if lastmod is None:
+                  lastmod = ET.SubElement(
+                      url,
+                      "{"
+                      + namespace
+                      + "}lastmod"
+                  )
+
+                  sitemap_changed = True
+
+              if lastmod.text != TODAY:
+                  lastmod.text = TODAY
+                  sitemap_changed = True
+
+          if sitemap_changed:
+              tree.write(
+                  sitemap,
+                  encoding="utf-8",
+                  xml_declaration=True
+              )
+
+              changed.append(
+                  "sitemap.xml"
+              )
 
           print(
-              "Original Priority Local SEO Upgrade restored and repaired."
+              "Priority SEO files changed:"
           )
+
+          if changed:
+              for item in changed:
+                  print(
+                      " -",
+                      item
+                  )
+          else:
+              print(
+                  "No website changes were needed."
+              )
+
           PY
 
-      - name: Commit restored workflow
+      - name: Commit priority SEO upgrade
         shell: bash
         run: |
-          if git diff --quiet; then
-            echo "No changes needed."
+          git add \
+            index.html \
+            sitemap.xml \
+            los-angeles-appliance-pickup/index.html \
+            san-bernardino-county-appliance-pickup/index.html \
+            riverside-county-appliance-pickup/index.html \
+            orange-county-appliance-pickup/index.html \
+            portland-appliance-pickup/index.html \
+            salem-appliance-pickup/index.html \
+            oregon-appliance-pickup/index.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
+
           git config user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add \
-            .github/workflows/priority-ranking-upgrade.yml
-
           git commit \
-            -m "Restore repaired priority ranking workflow"
+            -m "Strengthen priority local SEO pages"
 
           git push
