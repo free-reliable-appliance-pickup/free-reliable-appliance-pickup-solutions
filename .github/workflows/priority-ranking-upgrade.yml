@@ -1,0 +1,100 @@
+name: Restore Priority Ranking Workflow
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-priority-ranking-yaml.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout full repository history
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Restore and repair priority workflow
+        shell: bash
+        run: |
+          git show 57498fd899395d26cbd2a2b5394f4f8770541e5c:.github/workflows/priority-ranking-upgrade.yml > /tmp/priority-original.yml
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          source = Path("/tmp/priority-original.yml")
+          target = Path(".github/workflows/priority-ranking-upgrade.yml")
+
+          lines = source.read_text(
+              encoding="utf-8"
+          ).splitlines()
+
+          output = []
+          inside_main_run = False
+
+          for line in lines:
+
+              if (
+                  line == "        run: |"
+                  and not inside_main_run
+              ):
+                  inside_main_run = True
+                  output.append(line)
+                  continue
+
+              if (
+                  inside_main_run
+                  and line.startswith(
+                      "      - name: Commit priority SEO upgrade"
+                  )
+              ):
+                  inside_main_run = False
+                  output.append(line)
+                  continue
+
+              if inside_main_run and line.strip():
+                  spaces = len(line) - len(
+                      line.lstrip(" ")
+                  )
+
+                  if spaces < 10:
+                      line = (
+                          " " * (10 - spaces)
+                      ) + line
+
+              output.append(line)
+
+          target.write_text(
+              "\n".join(output) + "\n",
+              encoding="utf-8"
+          )
+
+          print(
+              "Original Priority Local SEO Upgrade restored and repaired."
+          )
+          PY
+
+      - name: Commit restored workflow
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            .github/workflows/priority-ranking-upgrade.yml
+
+          git commit \
+            -m "Restore repaired priority ranking workflow"
+
+          git push
