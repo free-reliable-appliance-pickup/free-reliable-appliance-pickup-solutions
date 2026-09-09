@@ -384,7 +384,7 @@
         <form
             action="https://formspree.io/f/mvzeapzd"
             method="POST"
-            enctype="multipart/form-data"
+
         >
 
             <input
@@ -405,24 +405,24 @@
                 value="Idaho"
             >
 
-            <label>Name</label>
-            <input type="text" name="name" required>
+            <label for="field-name">Name</label>
+            <input type="text" name="name" required id="field-name">
 
-            <label>Phone</label>
-            <input type="tel" name="phone" required>
+            <label for="field-phone">Phone</label>
+            <input type="tel" name="phone" required id="field-phone">
 
-            <label>Email (optional)</label>
-            <input type="email" name="email">
+            <label for="field-email">Email (optional)</label>
+            <input type="email" name="email" id="field-email">
 
-            <label>Pickup Address</label>
-            <input type="text" name="address" required>
+            <label for="field-address">Pickup Address</label>
+            <input type="text" name="address" required id="field-address">
 
-            <label>ZIP Code</label>
-            <input type="text" name="zip" required>
+            <label for="field-zip">ZIP Code</label>
+            <input type="text" name="zip" required id="field-zip">
 
-            <label>Appliance Type</label>
+            <label for="field-appliance">Appliance Type</label>
 
-            <select name="appliance" required>
+            <select name="appliance" required id="field-appliance">
                 <option value="">Select Appliance</option>
                 <option>Washer</option>
                 <option>Dryer</option>
@@ -430,14 +430,14 @@
                 <option>Refrigerator</option>
                 <option>Stove or Range</option>
                 <option>Freezer</option>
-                <option>Dishwasher</option>
+                <option>Dishwasher with 2 or more major working appliances</option>
                 <option>Multiple Appliances</option>
                 <option>Other Major Appliance</option>
             </select>
 
-            <label>Condition</label>
+            <label for="field-condition">Condition</label>
 
-            <select name="condition" required>
+            <select name="condition" required id="field-condition">
                 <option value="">Select Condition</option>
                 <option>Fully working</option>
                 <option>Working but needs repair</option>
@@ -445,9 +445,9 @@
                 <option>Unknown</option>
             </select>
 
-            <label>Appliance Location</label>
+            <label for="field-location">Appliance Location</label>
 
-            <select name="location" required>
+            <select name="location" required id="field-location">
                 <option value="">Select Location</option>
                 <option>First Floor</option>
                 <option>Second Floor</option>
@@ -458,9 +458,9 @@
                 <option>Other</option>
             </select>
 
-            <label>Stairs</label>
+            <label for="field-stairs">Stairs</label>
 
-            <select name="stairs" required>
+            <select name="stairs" required id="field-stairs">
                 <option value="">Select Stairs</option>
                 <option>No Stairs</option>
                 <option>1 Flight</option>
@@ -469,22 +469,16 @@
                 <option>Unknown</option>
             </select>
 
-            <label>Additional Information</label>
+            <label for="field-details">Additional Information</label>
 
             <textarea
                 name="details"
                 placeholder="Brand, model, age, working condition and pickup access."
-            ></textarea>
+             id="field-details"></textarea>
 
-            <label>Appliance Photos</label>
+            <label for="field-photo_information">Photo Link or Photo Information (optional)</label>
 
-            <input
-                type="file"
-                name="photos"
-                accept="image/*"
-                multiple
-                required
-            >
+            <input type="text" name="photo_information" placeholder="Paste a photo link, or tell us you can provide photos." id="field-photo_information">
 
             <label>
                 <input
@@ -546,6 +540,13 @@
   </p>
 </section>
 
+
+<section id="pickup-eligibility">
+  <h2>What Qualifies for Free Pickup?</h2>
+  <p>Free pickup is available for qualifying fully working appliances, or mixed loads where approximately 80% of the appliances work. Minor repairs may be considered. A nonworking appliance by itself does not qualify for free pickup.</p>
+  <p>Dishwashers are considered only with two or more major working appliances. Microwaves are accepted only with another qualifying major appliance.</p>
+  <p>Send the appliance condition, city or ZIP code, photos and access details. Pickup must be confirmed based on the load, location, access and available coverage before scheduling.</p>
+</section>
 </main>
 
 <footer>

@@ -410,7 +410,7 @@ local demand and available coverage.
 
 <div class="warning">
 <strong>Microwaves:</strong>
-standalone microwaves are generally not accepted unless included
+standalone microwaves are not accepted. They must be included
 with another qualifying major appliance.
 </div>
 
@@ -709,7 +709,7 @@ required>
 id="coverage_message"
 class="coverage">
 
-Choose a state to see how the request will be classified.
+Choose your state to check pickup-request coverage.
 
 </div>
 
@@ -737,7 +737,7 @@ required>
 <option>Refrigerator</option>
 <option>Stove or Range</option>
 <option>Freezer</option>
-<option>Dishwasher</option>
+<option>Dishwasher with 2 or more major working appliances</option>
 <option>Multiple Major Appliances</option>
 <option>Microwave with another major appliance</option>
 <option>Other Major Appliance</option>
@@ -786,11 +786,17 @@ required>
 
 <option value="">Select</option>
 <option>No</option>
-<option>Yes</option>
+<option>1 flight</option>
+<option>2 flights</option>
+<option>3+ flights</option>
+<option>Unknown</option>
 
 </select>
 
-<label for="details">Additional Information</label>
+<label for="access">Pickup Access Notes</label>
+<textarea id="access" name="access" placeholder="Narrow doors, hallways, gates, parking, elevator access or door removal."></textarea>
+
+<label for="details">Message / Additional Information</label>
 
 <textarea
 id="details"
@@ -836,12 +842,12 @@ a request before scheduling.
 </div>
 
 <div class="contact">
-<h3>California — Inland Empire &amp; Nearby</h3>
+<h3>California — Inland Empire, Orange County, Riverside County, Coachella Valley, Victorville &amp; San Gabriel Valley</h3>
 <a href="tel:+19093756685">909-375-6685</a>
 </div>
 
 <div class="contact">
-<h3>Los Angeles County</h3>
+<h3>Los Angeles &amp; Other California Areas</h3>
 <a href="tel:+13107744304">310-774-4304</a>
 </div>
 
@@ -891,7 +897,14 @@ often receive priority, although other major appliances can also be submitted.
 
 </section>
 
-<!-- SOCAL SEO NETWORK --><section id="southern-california"><h2>Southern California Appliance Pickup Areas</h2><p>Browse San Bernardino County, Inland Empire, Riverside County, Orange County, San Gabriel Valley and Los Angeles County service hubs.</p><div class="grid"><div class="card"><h3><a href="../san-bernardino-county-appliance-pickup/">San Bernardino County</a></h3><p>San Bernardino, Fontana, Rancho Cucamonga, Ontario, Upland, Montclair and surrounding areas.</p></div><div class="card"><h3><a href="../inland-empire-appliance-pickup/">Inland Empire</a></h3><p>Fontana, Rancho Cucamonga, Ontario, Upland, Montclair, San Bernardino and surrounding areas.</p></div><div class="card"><h3><a href="../riverside-county-appliance-pickup/">Riverside County</a></h3><p>Riverside, Jurupa Valley, Moreno Valley, Corona, Eastvale, Norco and surrounding areas.</p></div><div class="card"><h3><a href="../orange-county-appliance-pickup/">Orange County</a></h3><p>Lake Forest, Mission Viejo, Laguna Niguel, Rancho Santa Margarita, Irvine, San Juan Capistrano and surrounding areas.</p></div><div class="card"><h3><a href="../san-gabriel-valley-appliance-pickup/">San Gabriel Valley</a></h3><p>Pomona, Claremont, La Verne, Glendora, San Dimas, West Covina and surrounding areas.</p></div><div class="card"><h3><a href="../los-angeles-county-appliance-pickup/">Los Angeles County</a></h3><p>Los Angeles, Long Beach, Torrance, Santa Clarita, Burbank, Glendale and surrounding areas.</p></div></div></section></main>
+<!-- SOCAL SEO NETWORK --><section id="southern-california"><h2>Southern California Appliance Pickup Areas</h2><p>Browse San Bernardino County, Inland Empire, Riverside County, Orange County, San Gabriel Valley and Los Angeles County service hubs.</p><div class="grid"><div class="card"><h3><a href="san-bernardino-county-appliance-pickup/">San Bernardino County</a></h3><p>San Bernardino, Fontana, Rancho Cucamonga, Ontario, Upland, Montclair and surrounding areas.</p></div><div class="card"><h3><a href="inland-empire-appliance-pickup/">Inland Empire</a></h3><p>Fontana, Rancho Cucamonga, Ontario, Upland, Montclair, San Bernardino and surrounding areas.</p></div><div class="card"><h3><a href="riverside-county-appliance-pickup/">Riverside County</a></h3><p>Riverside, Jurupa Valley, Moreno Valley, Corona, Eastvale, Norco and surrounding areas.</p></div><div class="card"><h3><a href="orange-county-appliance-pickup/">Orange County</a></h3><p>Lake Forest, Mission Viejo, Laguna Niguel, Rancho Santa Margarita, Irvine, San Juan Capistrano and surrounding areas.</p></div><div class="card"><h3><a href="san-gabriel-valley-appliance-pickup/">San Gabriel Valley</a></h3><p>Pomona, Claremont, La Verne, Glendora, San Dimas, West Covina and surrounding areas.</p></div><div class="card"><h3><a href="los-angeles-county-appliance-pickup/">Los Angeles County</a></h3><p>Los Angeles, Long Beach, Torrance, Santa Clarita, Burbank, Glendale and surrounding areas.</p></div></div></section>
+<section id="pickup-eligibility">
+  <h2>What Qualifies for Free Pickup?</h2>
+  <p>Free pickup is available for qualifying fully working appliances, or mixed loads where approximately 80% of the appliances work. Minor repairs may be considered. A nonworking appliance by itself does not qualify for free pickup.</p>
+  <p>Dishwashers are considered only with two or more major working appliances. Microwaves are accepted only with another qualifying major appliance.</p>
+  <p>Send the appliance condition, city or ZIP code, photos and access details. Pickup must be confirmed based on the load, location, access and available coverage before scheduling.</p>
+</section>
+</main>
 
 <footer>
 
@@ -955,7 +968,7 @@ stateSelect.value;
 if(!selected){
 
 coverageMessage.textContent =
-"Choose a state to see how the request will be classified.";
+"Choose your state to check pickup-request coverage.";
 
 coverageType.value = "";
 
@@ -965,7 +978,7 @@ return;
 if(priorityStates.has(selected)){
 
 coverageMessage.innerHTML =
-"<strong>Priority State:</strong> availability depends on the city. Important territories may be direct or protected, while other cities may be handled through partner or lead coverage.";
+"<strong>Priority State:</strong> send your appliance details so we can check pickup availability in your city.";
 
 coverageType.value =
 "Priority State";
@@ -973,7 +986,7 @@ coverageType.value =
 }else{
 
 coverageMessage.innerHTML =
-"<strong>Nationwide Coverage:</strong> this request will be reviewed for available pickup-partner, lead or future territory coverage.";
+"<strong>Pickup Request:</strong> we will review local partner availability. Pickup is subject to confirmation.";
 
 coverageType.value =
 "Nationwide Partner / Lead Market";

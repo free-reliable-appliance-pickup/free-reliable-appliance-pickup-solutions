@@ -427,10 +427,10 @@ Call or text (503) 868-4455 or complete the request form below.
 <option>Freezer</option>
 <option>Washer</option>
 <option>Dryer</option>
-<option>Dishwasher</option>
+<option>Dishwasher with 2 or more major working appliances</option>
 <option>Stove / Range</option>
 <option>Oven</option>
-<option>Microwave</option>
+<option>Microwave with another major appliance</option>
 <option>Other</option>
 
 </select>
@@ -450,6 +450,19 @@ Call or text (503) 868-4455 or complete the request form below.
 <textarea name="message" rows="6" placeholder="Tell us about the appliance, stairs, access and pickup information."></textarea>
 
 
+<input type="hidden" name="state" value="Oregon">
+<label for="pickup-floor">Appliance Location</label>
+<select id="pickup-floor" name="location" required>
+<option value="">Select Location</option><option>First floor</option><option>Second floor</option><option>Third floor or higher</option><option>Basement</option><option>Garage</option><option>Outside</option><option>Other</option>
+</select>
+<label for="pickup-stairs">Stairs</label>
+<select id="pickup-stairs" name="stairs" required>
+<option value="">Select Stairs</option><option>No stairs</option><option>1 flight</option><option>2 flights</option><option>3+ flights</option><option>Unknown</option>
+</select>
+<label for="pickup-access">Pickup Access Notes</label>
+<textarea id="pickup-access" name="access" placeholder="Parking, narrow doors, gates, elevators or other access details."></textarea>
+<label for="photo-information">Photo Link or Photo Information (optional)</label>
+<input id="photo-information" name="photo_information" type="text" placeholder="Paste a photo link, or tell us you can provide photos.">
 <button type="submit">
 Request My Free Pickup
 </button>

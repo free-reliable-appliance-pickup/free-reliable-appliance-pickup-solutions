@@ -448,9 +448,9 @@ Have an unwanted appliance? Complete the form below with your appliance informat
 <option>Dryer</option>
 <option>Stove / Range</option>
 <option>Freezer</option>
-<option>Dishwasher</option>
+<option>Dishwasher with 2 or more major working appliances</option>
 <option>Oven</option>
-<option>Microwave</option>
+<option>Microwave with another major appliance</option>
 <option>Other</option>
 
 </select>
@@ -484,6 +484,19 @@ Have an unwanted appliance? Complete the form below with your appliance informat
 <textarea id="message" name="message" rows="6"></textarea>
 
 
+<input type="hidden" name="state" value="Oregon">
+<label for="pickup-floor">Appliance Location</label>
+<select id="pickup-floor" name="location" required>
+<option value="">Select Location</option><option>First floor</option><option>Second floor</option><option>Third floor or higher</option><option>Basement</option><option>Garage</option><option>Outside</option><option>Other</option>
+</select>
+<label for="pickup-stairs">Stairs</label>
+<select id="pickup-stairs" name="stairs" required>
+<option value="">Select Stairs</option><option>No stairs</option><option>1 flight</option><option>2 flights</option><option>3+ flights</option><option>Unknown</option>
+</select>
+<label for="pickup-access">Pickup Access Notes</label>
+<textarea id="pickup-access" name="access" placeholder="Parking, narrow doors, gates, elevators or other access details."></textarea>
+<label for="photo-information">Photo Link or Photo Information (optional)</label>
+<input id="photo-information" name="photo_information" type="text" placeholder="Paste a photo link, or tell us you can provide photos.">
 <button type="submit">
 Request Free Pickup
 </button>
@@ -553,7 +566,7 @@ If the appliance is connected to gas or electricity, provide accurate informatio
 <h2>Dishwasher, Oven and Microwave Pickup</h2>
 
 <p>
-Qualifying dishwashers, ovens and microwaves may also be considered for pickup in Keizer.
+Ovens may qualify for pickup. Dishwashers must be included with two or more major working appliances; microwaves must be included with another qualifying major appliance.
 </p>
 
 <p>

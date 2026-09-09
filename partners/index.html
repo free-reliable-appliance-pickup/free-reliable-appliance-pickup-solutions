@@ -419,6 +419,12 @@ autocomplete="off">
 
 <div class="city-results" id="cityResults"></div>
 
+<div class="search-row">
+  <div><label for="manualCity">Add a city not listed</label><input id="manualCity" type="text" maxlength="100" placeholder="City name"></div>
+  <div><label for="manualState">State for this city</label><select id="manualState"><option value="">Select State</option></select></div>
+</div>
+<button type="button" id="manualAdd" class="primary">Add This City</button>
+<p class="notice">Select up to 50 cities. Larger service areas may be considered by review.</p>
 <div class="selection-header">
 <h3>Your Selected Cities</h3>
 
@@ -427,7 +433,8 @@ autocomplete="off">
 </div>
 </div>
 
-<div class="selected-cities" id="selectedCities">
+<button type="button" id="clearCities">Clear All Cities</button>
+<div class="selected-cities" id="selectedCities" aria-live="polite">
 <span class="notice">No cities selected yet.</span>
 </div>
 
@@ -533,6 +540,8 @@ placeholder="Tell us about your appliance pickup experience, service area and av
 </div>
 
 <div class="full">
+
+<label><input type="checkbox" name="Agreement" value="Accepted" required style="width:auto"> I understand that cities are subject to review and selecting a city does not guarantee territory approval or lead volume.</label>
 
 <button type="submit" class="primary">
 Submit Partner Application
@@ -1284,7 +1293,7 @@ function setActiveLetter(activeButton){
 
 function cityKey(city,state){
 
-    return city + "|" + state;
+    return city.trim().toLowerCase() + "|" + state;
 }
 
 function renderCities(){
@@ -1576,95 +1585,39 @@ stateFilter.addEventListener(
     }
 );
 
-partnerForm.addEventListener("submit", async function(event){
-
-    event.preventDefault();
-
-    if(selectedCities.length === 0){
-
+partnerForm.addEventListener("submit", function(event){
+    if (selectedCities.length === 0) {
+        event.preventDefault();
         alert("Please select at least one city before submitting.");
-
-        document
-        .getElementById("territories")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
-
+        document.getElementById("territories").scrollIntoView({behavior: "smooth"});
         return;
     }
-
-    selectedCitiesInput.value = selectedCities
-    .map(function(item){
-        return item.city + ", " + item.state;
-    })
-    .join(", ");
-
-    const submitButton = partnerForm.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.textContent;
-
-    submitButton.disabled = true;
-    submitButton.textContent = "Submitting...";
-
-    const application = {
-        full_name: document.getElementById("name").value.trim(),
-        business_name: document.getElementById("business").value.trim() || null,
-        phone: document.getElementById("phone").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        city: document.getElementById("homeCity").value.trim(),
-        state: document.getElementById("homeState").value,
-        selected_cities: selectedCities.map(function(item){
-            return item.city + ", " + item.state;
-        }),
-        number_of_cities: selectedCities.length,
-        experience: document.getElementById("experience").value || null,
-        vehicle_type: document.getElementById("vehicle").value || null,
-        notes: document.getElementById("message").value.trim() || null
-    };
-
-    try {
-
-        const response = await fetch(
-            "https://hutsrafyktcxpgilogdj.supabase.co/rest/v1/partner_applications",
-            {
-                method: "POST",
-                headers: {
-                    "apikey": "sb_publishable_eSxdhKuBxrC-Sw7FwmYxGA_oBYCTCgg",
-                    "Content-Type": "application/json",
-                    "Prefer": "return=minimal"
-                },
-                body: JSON.stringify(application)
-            }
-        );
-
-        if(!response.ok){
-            const errorText = await response.text();
-            throw new Error(errorText);
-        }
-
-        alert("Thank you! Your partner application was submitted successfully.");
-
-        partnerForm.reset();
-        selectedCities = [];
-        renderCities();
-        updateSelectedCities();
-
-    } catch(error){
-
-        console.error("Partner application error:", error);
-
-        alert(
-            "We could not submit your application right now. Please try again."
-        );
-
-    } finally {
-
-        submitButton.disabled = false;
-        submitButton.textContent = originalButtonText;
-    }
-
+    updateSelectedCities();
 });
 
-        
+const manualState = document.getElementById("manualState");
+Object.keys(stateNames).forEach(function(code) {
+    const option = document.createElement("option");
+    option.value = code;
+    option.textContent = stateNames[code];
+    manualState.appendChild(option);
+});
+document.getElementById("manualAdd").addEventListener("click", function() {
+    const input = document.getElementById("manualCity");
+    const city = input.value.trim().replace(/\s+/g, " ");
+    if (!city || !manualState.value) {
+        alert("Enter a city and choose its state.");
+        return;
+    }
+    addCity(city, manualState.value);
+    input.value = "";
+});
+document.getElementById("clearCities").addEventListener("click", function() {
+    selectedCities = [];
+    updateSelectedCities();
+    renderCities();
+});
+
 
 renderCities();
 
