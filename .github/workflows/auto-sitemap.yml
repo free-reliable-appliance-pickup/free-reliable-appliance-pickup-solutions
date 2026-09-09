@@ -1,0 +1,82 @@
+name: Auto Rebuild Sitemap
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - sitemap.xml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-sitemap-main
+  cancel-in-progress: true
+
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build sitemap from live pages
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import subprocess
+          import xml.etree.ElementTree as ET
+
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          root = Path('.')
+
+          pages = [Path('index.html')]
+          pages += sorted(p for p in root.rglob('index.html') if p != Path('index.html') and '.github' not in p.parts)
+
+          def lastmod(path):
+              try:
+                  return subprocess.check_output(
+                      ['git','log','-1','--format=%cs','--',str(path)],
+                      text=True
+                  ).strip() or None
+              except Exception:
+                  return None
+
+          urlset = ET.Element('urlset', {'xmlns':'http://www.sitemaps.org/schemas/sitemap/0.9'})
+          seen = set()
+
+          for page in pages:
+              if page == Path('index.html'):
+                  url = BASE
+              else:
+                  rel = page.parent.as_posix().strip('/')
+                  url = BASE + rel + '/'
+              if url in seen:
+                  continue
+              seen.add(url)
+              u = ET.SubElement(urlset, 'url')
+              ET.SubElement(u, 'loc').text = url
+              date = lastmod(page)
+              if date:
+                  ET.SubElement(u, 'lastmod').text = date
+
+          ET.indent(urlset, space='  ')
+          tree = ET.ElementTree(urlset)
+          tree.write('sitemap.xml', encoding='utf-8', xml_declaration=True)
+          print(f'Generated sitemap with {len(seen)} URLs')
+          PY
+
+      - name: Commit sitemap if changed
+        run: |
+          if git diff --quiet -- sitemap.xml; then
+            echo "Sitemap already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml
+          git commit -m "Auto rebuild sitemap"
+          git push
