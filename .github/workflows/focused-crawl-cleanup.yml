@@ -47,7 +47,7 @@ jobs:
           anchor_re = re.compile(r'<a\b([^>]*?)href\s*=\s*([\"\'])(.*?)\2([^>]*)>(.*?)</a>', re.I | re.S)
 
           changed_files = []
-          removed_links = 0
+          removed_links = [0]
 
           for path in Path('.').rglob('*.html'):
               if '.git' in path.parts:
@@ -59,7 +59,6 @@ jobs:
               text = path.read_text(encoding='utf-8')
 
               def repl(m):
-                  nonlocal_removed = None
                   before, quote, href, after, inner = m.groups()
                   h = href.strip()
                   low = h.lower()
@@ -70,26 +69,20 @@ jobs:
                   p = urlparse(absolute)
                   clean = urlunparse((p.scheme, p.netloc, p.path, '', '', ''))
 
-                  # External links and non-site links stay untouched.
                   if p.netloc != base_parts.netloc or not p.path.startswith(base_path):
                       return m.group(0)
 
-                  # Assets/files are not part of the page crawl graph.
                   last = p.path.rsplit('/', 1)[-1]
                   if '.' in last and not last.endswith('.html'):
                       return m.group(0)
 
-                  # Normalize directory-like page URLs.
                   if not clean.endswith('/') and not clean.endswith('.html'):
                       clean += '/'
 
                   if clean in allowed or clean in preserve:
                       return m.group(0)
 
-                  # Keep the destination visible to customers as text, but stop
-                  # indexable hub pages from advertising excluded template URLs.
-                  nonlocal removed_links
-                  removed_links += 1
+                  removed_links[0] += 1
                   return f'<span class="nonindexed-area">{inner}</span>'
 
               new = anchor_re.sub(repl, text)
@@ -97,8 +90,7 @@ jobs:
                   path.write_text(new, encoding='utf-8')
                   changed_files.append(path.as_posix())
 
-          readme = Path('README.md')
-          readme.write_text(
+          Path('README.md').write_text(
               '# Free Reliable Appliance Pickup\n\n'
               'Live website: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/\n\n'
               'Free Reliable Appliance Pickup reviews qualifying pickup requests for washers, dryers, refrigerators, freezers, stoves and ovens. Working and reusable appliances receive priority.\n\n'
@@ -114,7 +106,7 @@ jobs:
 
           print(f'Allowed sitemap URLs: {len(allowed)}')
           print(f'Indexable HTML files changed: {len(changed_files)}')
-          print(f'Links to excluded template pages converted to text: {removed_links}')
+          print(f'Links to excluded template pages converted to text: {removed_links[0]}')
           for f in changed_files:
               print('changed:', f)
           PY
