@@ -1,0 +1,54 @@
+name: Final One-Time Workflow Cleanup
+
+on:
+  push:
+    paths:
+      - '.github/workflows/final-workflow-cleanup.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove remaining completed repair workflows
+        shell: bash
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          rm -f \
+            .github/workflows/strengthen-california-seo.yml \
+            .github/workflows/strengthen-colorado-seo.yml \
+            .github/workflows/strengthen-idaho-seo.yml \
+            .github/workflows/strengthen-nevada-seo.yml \
+            .github/workflows/strengthen-utah-seo.yml \
+            .github/workflows/strengthen-washington-seo.yml \
+            .github/workflows/.github/workflows/repair-site-compact.yml \
+            .github/workflows/final-workflow-cleanup.yml
+
+          if git diff --quiet; then
+            echo 'Nothing to clean.'
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Remove remaining completed repair workflows'
+
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main || true
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            git fetch origin main
+            git rebase origin/main || true
+          done
+          exit 1
