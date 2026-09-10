@@ -1,0 +1,109 @@
+name: One-Time Google Indexing Focus
+
+on:
+  push:
+    paths:
+      - '.github/workflows/focus-google-indexing.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  focus-indexing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Keep only strongest pages indexable
+        shell: bash
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          KEEP = {
+              '',
+              'service-areas',
+              'how-appliance-pickup-works',
+              'free-pickup-qualification',
+              'washer-dryer-pickup',
+              'refrigerator-pickup',
+              'freezer-pickup',
+              'stove-oven-pickup',
+              'california-appliance-pickup',
+              'oregon-appliance-pickup',
+              'washington-appliance-pickup',
+              'arizona-appliance-pickup',
+              'utah-appliance-pickup',
+              'colorado-appliance-pickup',
+              'nevada-appliance-pickup',
+              'idaho-appliance-pickup',
+              'los-angeles-appliance-pickup',
+              'portland-appliance-pickup',
+              'seattle-appliance-pickup',
+              'phoenix-appliance-pickup',
+              'denver-appliance-pickup',
+              'las-vegas-appliance-pickup',
+          }
+
+          pages = [Path('index.html')]
+          pages += sorted(p for p in Path('.').rglob('index.html') if p != Path('index.html') and '.github' not in p.parts)
+          changed = []
+          indexable = 0
+          noindexed = 0
+
+          robots_re = re.compile(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>', re.I)
+
+          for path in pages:
+              slug = '' if path == Path('index.html') else path.parent.as_posix().strip('/')
+              text = path.read_text(encoding='utf-8', errors='ignore')
+              original = text
+              desired = 'index, follow' if slug in KEEP else 'noindex, follow'
+              tag = f'<meta name="robots" content="{desired}">'
+
+              if robots_re.search(text):
+                  text = robots_re.sub(tag, text, count=1)
+              else:
+                  text = re.sub(r'<head(\s[^>]*)?>', lambda m: m.group(0) + '\n  ' + tag, text, count=1, flags=re.I)
+
+              if slug in KEEP:
+                  indexable += 1
+              else:
+                  noindexed += 1
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(str(path))
+
+          print(f'Indexable pages: {indexable}')
+          print(f'Noindex-follow pages: {noindexed}')
+          print(f'Changed files: {len(changed)}')
+          PY
+
+      - name: Commit focused indexing setup
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'No changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Focus Google indexing on strongest site pages'
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main || true
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            git fetch origin main
+            git rebase origin/main || true
+          done
+          echo 'Could not push focused indexing setup after retries.'
+          exit 1
