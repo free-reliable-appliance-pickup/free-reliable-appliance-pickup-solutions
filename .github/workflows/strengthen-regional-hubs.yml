@@ -1,0 +1,103 @@
+name: One-Time Regional Hub Quality Upgrade
+
+on:
+  push:
+    paths:
+      - '.github/workflows/strengthen-regional-hubs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Strengthen and re-enable high-value regional hubs
+        shell: bash
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+
+          additions={
+          'inland-empire-appliance-pickup': '''
+<section id="regional-service-detail">
+<h2>Inland Empire Appliance Pickup Coverage</h2>
+<p>The Inland Empire service region includes major communities across western San Bernardino County and nearby Riverside County. Requests are reviewed from Rancho Cucamonga, Fontana, Upland, Ontario, Montclair, Chino, Chino Hills, Pomona, Claremont, Rialto, San Bernardino, Riverside, Jurupa Valley and surrounding communities when route coverage is available.</p>
+<p>This regional page is designed for customers who are not sure which county or city page fits their location. For more specific coverage, use the <a href="../san-bernardino-county-appliance-pickup/">San Bernardino County pickup page</a> or <a href="../riverside-county-appliance-pickup/">Riverside County pickup page</a>.</p>
+<h3>Priority appliances in the Inland Empire</h3>
+<p>Working washers, dryers and complete laundry sets receive strong priority. Reusable refrigerators, freezers, stoves and ranges are also reviewed. For refrigerators and freezers, tell us whether the appliance is plugged in and cooling. For laundry equipment, describe whether the washer fills, drains and spins and whether the dryer tumbles and heats.</p>
+<h3>What helps us review your request</h3>
+<p>Send clear appliance photos, your city or ZIP code, working condition, floor level and access details. Tell us about stairs, narrow halls, gates, tight doorways or appliances located in a garage, driveway or outside. Complete details help us decide whether the load qualifies and whether a route is available.</p>
+<p><a href="../how-appliance-pickup-works/">How appliance pickup works</a> · <a href="../free-pickup-qualification/">What qualifies for free pickup</a> · <a href="../about/">About &amp; Contact</a></p>
+</section>''',
+          'orange-county-appliance-pickup': '''
+<section id="county-service-detail">
+<h2>Orange County Pickup Areas and Request Details</h2>
+<p>Orange County requests are reviewed across communities including Irvine, Mission Viejo, Lake Forest, Rancho Santa Margarita, Laguna Niguel, San Clemente, San Juan Capistrano, Newport Beach, Costa Mesa, Huntington Beach, Anaheim, Fullerton, Santa Ana and nearby areas. Route availability can vary by city and by the appliance load.</p>
+<h3>South, Central and North Orange County</h3>
+<p>South County requests commonly include laundry sets, refrigerators and cooking appliances from homes, garages and rental properties. Central and North County requests may include single qualifying appliances or multiple-appliance loads. In every area, working condition, access and current demand are reviewed before pickup is confirmed.</p>
+<h3>Apartment, garage and property-manager pickups</h3>
+<p>For apartments or multi-unit properties, include the floor level, elevator availability and any stairs or narrow hallways. For garage or driveway pickups, say whether the appliance can be reached directly from the street or parking area. Landlords and property managers can list multiple appliances in one request and describe the condition of each item.</p>
+<p><a href="../how-appliance-pickup-works/">How pickup works</a> · <a href="../free-pickup-qualification/">Free pickup qualifications</a> · <a href="../about/">About &amp; Contact</a></p>
+</section>''',
+          'riverside-county-appliance-pickup': '''
+<section id="county-service-detail">
+<h2>Riverside County Appliance Pickup Coverage</h2>
+<p>Riverside County requests are reviewed from Riverside, Jurupa Valley, Corona, Moreno Valley, Temecula, Murrieta, Menifee, Beaumont, Banning and surrounding communities when coverage is available. Because the county covers a large area, city, ZIP code and appliance details are especially important for route review.</p>
+<h3>Metro Riverside, Temecula Valley and Pass-area requests</h3>
+<p>Metro Riverside requests often involve washers, dryers, refrigerators and stoves from homes, apartments and rental properties. Temecula Valley and Menifee-area requests are reviewed with the same qualification standards. Beaumont and Banning requests depend on current route availability and the value and condition of the appliance load.</p>
+<h3>Multiple-appliance loads</h3>
+<p>If you have several appliances, list every item and its condition. A mixed load may qualify when approximately 80% of the major appliances are working. Dishwashers are considered only with two or more major working appliances, and microwaves are accepted only with another qualifying major appliance.</p>
+<p><a href="../how-appliance-pickup-works/">How pickup works</a> · <a href="../free-pickup-qualification/">Free pickup qualifications</a> · <a href="../about/">About &amp; Contact</a></p>
+</section>''',
+          'san-bernardino-county-appliance-pickup': '''
+<section id="county-navigation-detail">
+<h2>San Bernardino County Pickup Navigation</h2>
+<p>This county hub connects customers with appliance pickup information for the western San Bernardino Valley and surrounding service communities. For broader regional information that also covers nearby Riverside County, visit the <a href="../inland-empire-appliance-pickup/">Inland Empire appliance pickup page</a>.</p>
+<p>Before requesting pickup, review <a href="../free-pickup-qualification/">what qualifies for free pickup</a> and <a href="../how-appliance-pickup-works/">how the pickup review process works</a>. Business contact information and service hours are available on our <a href="../about/">About &amp; Contact page</a>.</p>
+</section>'''
+          }
+
+          robots_re=re.compile(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>',re.I)
+          for slug,block in additions.items():
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  print('Missing',p); continue
+              text=p.read_text(encoding='utf-8',errors='ignore')
+              tag='<meta name="robots" content="index, follow">'
+              if robots_re.search(text):
+                  text=robots_re.sub(tag,text,count=1)
+              else:
+                  text=re.sub(r'<head(\s[^>]*)?>',lambda m:m.group(0)+'\n'+tag,text,count=1,flags=re.I)
+              marker=block.split('<section')[1].split('>')[0]
+              section_id=re.search(r'id="([^"]+)"',block).group(1)
+              if f'id="{section_id}"' not in text:
+                  if re.search(r'</main>',text,re.I):
+                      text=re.sub(r'</main>',block+'\n</main>',text,count=1,flags=re.I)
+                  else:
+                      text=re.sub(r'</body>',block+'\n</body>',text,count=1,flags=re.I)
+              p.write_text(text,encoding='utf-8')
+          PY
+
+          rm -f .github/workflows/strengthen-regional-hubs.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Strengthen and re-enable key Southern California hubs'
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main || true
+            if git push origin HEAD:main; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            git fetch origin main
+            git rebase origin/main || true
+          done
+          exit 1
