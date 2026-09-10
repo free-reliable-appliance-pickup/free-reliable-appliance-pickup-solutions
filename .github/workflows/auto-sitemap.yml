@@ -1,3 +1,4 @@
+# Maintains indexable page URLs plus owned appliance-image discovery references.
 name: Auto Rebuild Sitemap
 
 on:
