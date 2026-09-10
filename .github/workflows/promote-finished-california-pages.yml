@@ -1,0 +1,147 @@
+name: Promote Finished California Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/promote-finished-california-pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Promote finished pages and rebuild focused sitemaps
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+          import subprocess
+          import xml.etree.ElementTree as ET
+
+          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+
+          # These pages were strengthened first; now make only these finished priority pages indexable.
+          promote = [
+              Path("palm-desert-appliance-pickup/index.html"),
+              Path("riverside-appliance-pickup/index.html"),
+          ]
+          for path in promote:
+              text = path.read_text(encoding="utf-8")
+              new = re.sub(
+                  r'<meta\s+name=["\']robots["\']\s+content=["\']noindex,\s*follow["\']\s*/?>',
+                  '<meta name="robots" content="index, follow">',
+                  text,
+                  count=1,
+                  flags=re.I,
+              )
+              if new == text:
+                  print(f"Robots already promoted or pattern not found: {path}")
+              else:
+                  path.write_text(new, encoding="utf-8")
+                  print(f"Promoted: {path}")
+
+          # Add crawlable links only to the two pages promoted above.
+          county = Path("riverside-county-appliance-pickup/index.html")
+          text = county.read_text(encoding="utf-8")
+          text = text.replace(
+              '<span class="nonindexed-area">Riverside</span>',
+              '<a href="../riverside-appliance-pickup/">Riverside</a>'
+          )
+          text = text.replace(
+              '<span class="nonindexed-area">Palm Desert</span>',
+              '<a href="../palm-desert-appliance-pickup/">Palm Desert</a>'
+          )
+          county.write_text(text, encoding="utf-8")
+
+          inland = Path("inland-empire-appliance-pickup/index.html")
+          text = inland.read_text(encoding="utf-8")
+          text = text.replace(
+              '<span class="nonindexed-area">Riverside</span>',
+              '<a href="../riverside-appliance-pickup/">Riverside</a>'
+          )
+          inland.write_text(text, encoding="utf-8")
+
+          california = Path("california-appliance-pickup/index.html")
+          text = california.read_text(encoding="utf-8")
+          text = text.replace(
+              'Palm Springs, Palm Desert, Rancho Mirage, La Quinta, Cathedral City and nearby communities.',
+              'Palm Springs, <a href="../palm-desert-appliance-pickup/">Palm Desert</a>, Rancho Mirage, La Quinta, Cathedral City and nearby communities.'
+          )
+          text = text.replace(
+              'The <a href="../riverside-county-appliance-pickup/">Riverside County page</a> includes Riverside, southwest county and selected Coachella Valley routes.',
+              'The <a href="../riverside-county-appliance-pickup/">Riverside County page</a> covers the county, and the <a href="../riverside-appliance-pickup/">Riverside city page</a> provides city-specific pickup details. Selected Coachella Valley routes include <a href="../palm-desert-appliance-pickup/">Palm Desert</a>.'
+          )
+          california.write_text(text, encoding="utf-8")
+
+          # Rebuild both submitted sitemaps from every page that is currently indexable.
+          root = Path('.')
+          all_pages = [Path('index.html')]
+          all_pages += sorted(p for p in root.rglob('index.html') if p != Path('index.html') and '.github' not in p.parts)
+
+          def is_indexable(path):
+              text = path.read_text(encoding='utf-8', errors='ignore')
+              match = re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>', text, flags=re.I)
+              return not (match and 'noindex' in match.group(0).lower())
+
+          def lastmod(path):
+              try:
+                  return subprocess.check_output(
+                      ['git','log','-1','--format=%cs','--',str(path)],
+                      text=True
+                  ).strip() or None
+              except Exception:
+                  return None
+
+          pages = [p for p in all_pages if is_indexable(p)]
+
+          def write_sitemap(filename):
+              urlset = ET.Element('urlset', {'xmlns':'http://www.sitemaps.org/schemas/sitemap/0.9'})
+              seen = set()
+              for page in pages:
+                  if page == Path('index.html'):
+                      url = BASE
+                  else:
+                      url = BASE + page.parent.as_posix().strip('/') + '/'
+                  if url in seen:
+                      continue
+                  seen.add(url)
+                  item = ET.SubElement(urlset, 'url')
+                  ET.SubElement(item, 'loc').text = url
+                  modified = lastmod(page)
+                  if modified:
+                      ET.SubElement(item, 'lastmod').text = modified
+              ET.indent(urlset, space='  ')
+              ET.ElementTree(urlset).write(filename, encoding='utf-8', xml_declaration=True)
+              return len(seen)
+
+          count = write_sitemap('sitemap.xml')
+          write_sitemap('sitemap-new.xml')
+          print(f"Focused sitemap now contains {count} indexable URLs")
+          PY
+
+          if git diff --quiet; then
+            echo "Everything already promoted"
+            exit 0
+          fi
+
+          git add palm-desert-appliance-pickup/index.html \
+                  riverside-appliance-pickup/index.html \
+                  riverside-county-appliance-pickup/index.html \
+                  inland-empire-appliance-pickup/index.html \
+                  california-appliance-pickup/index.html \
+                  sitemap.xml sitemap-new.xml
+          git commit -m "Index finished Riverside and Palm Desert priority pages"
+          git push origin HEAD:main
