@@ -1,0 +1,41 @@
+name: Final California crawl links
+
+on:
+  push:
+    paths:
+      - '.github/workflows/final-california-crawl-links.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  link-priority-cities:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add direct California hub links
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('california-appliance-pickup/index.html')
+          h=p.read_text(encoding='utf-8')
+          old=h
+          h=h.replace(
+            '<div class="card"><h3><span class="nonindexed-area">Coachella Valley</span></h3><p>Palm Springs, <a href="../palm-desert-appliance-pickup/">Palm Desert</a>, Rancho Mirage, La Quinta, Cathedral City and nearby communities.</p></div>',
+            '<div class="card"><h3>Coachella Valley</h3><p><a href="../palm-springs-appliance-pickup/">Palm Springs</a>, <a href="../palm-desert-appliance-pickup/">Palm Desert</a>, <a href="../rancho-mirage-appliance-pickup/">Rancho Mirage</a>, <a href="../la-quinta-appliance-pickup/">La Quinta</a>, <a href="../cathedral-city-appliance-pickup/">Cathedral City</a>, <a href="../indian-wells-appliance-pickup/">Indian Wells</a> and nearby communities.</p></div>'
+          )
+          h=h.replace(
+            'Selected Coachella Valley routes include <a href="../palm-desert-appliance-pickup/">Palm Desert</a>.',
+            'Selected Coachella Valley routes include <a href="../palm-springs-appliance-pickup/">Palm Springs</a>, <a href="../palm-desert-appliance-pickup/">Palm Desert</a>, <a href="../rancho-mirage-appliance-pickup/">Rancho Mirage</a>, <a href="../la-quinta-appliance-pickup/">La Quinta</a>, <a href="../cathedral-city-appliance-pickup/">Cathedral City</a> and <a href="../indian-wells-appliance-pickup/">Indian Wells</a>.'
+          )
+          if h==old:
+            raise SystemExit('Expected California hub text not found; no unsafe fallback applied.')
+          p.write_text(h,encoding='utf-8')
+      - name: Commit links
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add california-appliance-pickup/index.html
+          git commit -m "Link California hub to priority Coachella city pages"
+          git push
