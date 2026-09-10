@@ -16,13 +16,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
       - name: Build core service information pages
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re, xml.etree.ElementTree as ET
-          from datetime import date
+          import re
 
           BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
           LOGO=BASE+'assets/free-reliable-appliance-pickup-logo.svg'
@@ -33,23 +36,12 @@ jobs:
           'title':'How Free Appliance Pickup Works | Request & Review Process',
           'desc':'Learn how Free Reliable Appliance Pickup reviews requests, what details to submit, how condition and access affect eligibility, and what happens before pickup.',
           'h1':'How Free Appliance Pickup Works',
-          'body':'''<section><h2>1. Submit the appliance details</h2><p>Start by telling us what major appliance or appliances you want picked up. Include the appliance type, working condition, city and ZIP code, floor level, stairs and access notes. Photos are strongly recommended because they help us see the overall condition and identify obvious damage before a route is planned.</p><p>For refrigerators and freezers, tell us whether the unit is currently plugged in and cooling or freezing. For washers and dryers, mention whether the machines complete their normal cycles. For stoves and ranges, tell us whether the burners or elements and oven operate.</p></section>
-          <section><h2>2. We review condition and local demand</h2><p>Free pickup is qualification-based. Fully working and reusable appliances receive priority because they have the best chance of being reused rather than simply discarded. Minor-repair appliances may be considered depending on age, model, overall condition, local demand and route availability.</p><p>A single nonworking appliance does not automatically qualify for free pickup. Mixed loads may qualify when approximately 80% of the load is working. This lets us evaluate the whole pickup rather than treating every item the same.</p></section>
-          <section><h2>3. Access is part of the review</h2><p>Moving a refrigerator from a garage is very different from moving one down a narrow upstairs hallway. Tell us whether the appliance is in a garage, driveway, first floor, second or third floor, basement, outside area or another location. Include stairs, narrow doorways, tight corners, gates and anything else that affects the path to the pickup vehicle.</p><p>Accurate access information helps us determine what equipment and staffing are needed and prevents failed pickup attempts.</p></section>
-          <section><h2>4. Special appliance rules</h2><p>Microwaves are accepted only when they are included with another qualifying major appliance. Dishwashers are considered only when they come with two or more major working appliances. These rules help keep routes focused on major household appliances that can be handled efficiently.</p></section>
-          <section><h2>5. Scheduling depends on active coverage</h2><p>Even when an appliance is a good candidate, free pickup still depends on an active local route, current demand and scheduling capacity. Coverage varies by city and market. The service-area directory shows current priority pages, but submitting a request is still the best way to determine whether a pickup can be scheduled.</p></section>
-          <section><h2>Before the pickup</h2><p>Remove food and personal items, clear the path, and make sure pets and children are away from the moving area. Water, electrical and gas connections should be handled safely. Do not disconnect gas fittings unless you are qualified to do so. If you were asked to keep a working refrigerator or freezer plugged in so its condition can be confirmed, keep it operating until the appropriate time.</p></section>'''},
+          'body':'''<section><h2>1. Submit the appliance details</h2><p>Start by telling us what major appliance or appliances you want picked up. Include the appliance type, working condition, city and ZIP code, floor level, stairs and access notes. Photos are strongly recommended because they help us see the overall condition and identify obvious damage before a route is planned.</p><p>For refrigerators and freezers, tell us whether the unit is currently plugged in and cooling or freezing. For washers and dryers, mention whether the machines complete their normal cycles. For stoves and ranges, tell us whether the burners or elements and oven operate.</p></section><section><h2>2. We review condition and local demand</h2><p>Free pickup is qualification-based. Fully working and reusable appliances receive priority because they have the best chance of being reused rather than simply discarded. Minor-repair appliances may be considered depending on age, model, overall condition, local demand and route availability.</p><p>A single nonworking appliance does not automatically qualify for free pickup. Mixed loads may qualify when approximately 80% of the load is working. This lets us evaluate the whole pickup rather than treating every item the same.</p></section><section><h2>3. Access is part of the review</h2><p>Moving a refrigerator from a garage is very different from moving one down a narrow upstairs hallway. Tell us whether the appliance is in a garage, driveway, first floor, second or third floor, basement, outside area or another location. Include stairs, narrow doorways, tight corners, gates and anything else that affects the path to the pickup vehicle.</p><p>Accurate access information helps us determine what equipment and staffing are needed and prevents failed pickup attempts.</p></section><section><h2>4. Special appliance rules</h2><p>Microwaves are accepted only when they are included with another qualifying major appliance. Dishwashers are considered only when they come with two or more major working appliances. These rules help keep routes focused on major household appliances that can be handled efficiently.</p></section><section><h2>5. Scheduling depends on active coverage</h2><p>Even when an appliance is a good candidate, free pickup still depends on an active local route, current demand and scheduling capacity. Coverage varies by city and market. The service-area directory shows current priority pages, but submitting a request is still the best way to determine whether a pickup can be scheduled.</p></section><section><h2>Before the pickup</h2><p>Remove food and personal items, clear the path, and make sure pets and children are away from the moving area. Water, electrical and gas connections should be handled safely. Do not disconnect gas fittings unless you are qualified to do so. If you were asked to keep a working refrigerator or freezer plugged in so its condition can be confirmed, keep it operating until the appropriate time.</p></section>'''},
           'free-pickup-qualification':{
           'title':'What Qualifies for Free Appliance Pickup? | Eligibility Guide',
           'desc':'See what appliances may qualify for free pickup, how working condition and mixed loads are reviewed, and the special rules for microwaves and dishwashers.',
           'h1':'What Qualifies for Free Appliance Pickup?',
-          'body':'''<section><h2>Working appliances receive priority</h2><p>Free Reliable Appliance Pickup focuses first on appliances that are working and reusable. Washers, dryers, refrigerators, household freezers, stoves, ranges and ovens are the main appliance categories reviewed. A working appliance generally means that its primary functions operate normally and there is no major damage that prevents safe use or movement.</p><p>Cosmetic wear does not automatically disqualify an appliance. Scratches, small dents or normal age-related wear can be acceptable when the appliance still works and remains reusable.</p></section>
-          <section><h2>Minor repairs may still be reviewed</h2><p>An appliance that needs a small repair can sometimes be considered, but free pickup is not guaranteed. Age, brand, model, parts availability, overall condition, local demand and the active pickup route all matter. Provide clear photos and describe the problem accurately so the request can be evaluated correctly.</p></section>
-          <section><h2>Nonworking appliances</h2><p>A single nonworking appliance does not automatically qualify for free pickup. If you have several appliances, a mixed load may qualify when approximately 80% of the load is working. For example, a larger pickup with mostly working appliances can be reviewed differently from a request for one completely broken appliance.</p><p>Do not mark an appliance as working if it has a serious functional problem. Accurate condition information makes scheduling more reliable.</p></section>
-          <section><h2>Appliances we commonly review</h2><h3>Washers and dryers</h3><p>Working washers, dryers and complete laundry sets are priority categories. Tell us whether the washer fills, drains and spins and whether the dryer tumbles and heats.</p><h3>Refrigerators and freezers</h3><p>Cooling condition is important. Tell us whether the refrigerator is currently plugged in and cooling or whether the freezer is reaching and holding freezing temperature. Photos of the exterior, interior and model label are helpful.</p><h3>Stoves, ranges and ovens</h3><p>Gas and electric cooking appliances can be reviewed. Tell us whether the burners or elements, controls and oven operate and whether the appliance is already disconnected.</p></section>
-          <section><h2>Microwave and dishwasher rules</h2><p>Microwaves are not accepted by themselves. They are reviewed only when included with another qualifying major appliance. Dishwashers are reviewed only when they come with two or more major working appliances.</p></section>
-          <section><h2>Condition is not the only factor</h2><p>Even a fully working appliance is not automatically guaranteed free pickup. Local demand, distance, route availability, access, stairs, doorway clearance and scheduling all affect the final decision. That is why every request is reviewed before a pickup is confirmed.</p></section>
-          <section><h2>How to improve the quality of your request</h2><p>Send clear photos, list every appliance, describe the condition honestly, include your city and ZIP code, and explain the pickup location. Mention stairs, tight hallways, gates or unusual access. Complete information lets us make a better decision without unnecessary back-and-forth.</p></section>'''}}
+          'body':'''<section><h2>Working appliances receive priority</h2><p>Free Reliable Appliance Pickup focuses first on appliances that are working and reusable. Washers, dryers, refrigerators, household freezers, stoves, ranges and ovens are the main appliance categories reviewed. A working appliance generally means that its primary functions operate normally and there is no major damage that prevents safe use or movement.</p><p>Cosmetic wear does not automatically disqualify an appliance. Scratches, small dents or normal age-related wear can be acceptable when the appliance still works and remains reusable.</p></section><section><h2>Minor repairs may still be reviewed</h2><p>An appliance that needs a small repair can sometimes be considered, but free pickup is not guaranteed. Age, brand, model, parts availability, overall condition, local demand and the active pickup route all matter. Provide clear photos and describe the problem accurately so the request can be evaluated correctly.</p></section><section><h2>Nonworking appliances</h2><p>A single nonworking appliance does not automatically qualify for free pickup. If you have several appliances, a mixed load may qualify when approximately 80% of the load is working. For example, a larger pickup with mostly working appliances can be reviewed differently from a request for one completely broken appliance.</p><p>Do not mark an appliance as working if it has a serious functional problem. Accurate condition information makes scheduling more reliable.</p></section><section><h2>Appliances we commonly review</h2><h3>Washers and dryers</h3><p>Working washers, dryers and complete laundry sets are priority categories. Tell us whether the washer fills, drains and spins and whether the dryer tumbles and heats.</p><h3>Refrigerators and freezers</h3><p>Cooling condition is important. Tell us whether the refrigerator is currently plugged in and cooling or whether the freezer is reaching and holding freezing temperature. Photos of the exterior, interior and model label are helpful.</p><h3>Stoves, ranges and ovens</h3><p>Gas and electric cooking appliances can be reviewed. Tell us whether the burners or elements, controls and oven operate and whether the appliance is already disconnected.</p></section><section><h2>Microwave and dishwasher rules</h2><p>Microwaves are not accepted by themselves. They are reviewed only when included with another qualifying major appliance. Dishwashers are reviewed only when they come with two or more major working appliances.</p></section><section><h2>Condition is not the only factor</h2><p>Even a fully working appliance is not automatically guaranteed free pickup. Local demand, distance, route availability, access, stairs, doorway clearance and scheduling all affect the final decision. That is why every request is reviewed before a pickup is confirmed.</p></section><section><h2>How to improve the quality of your request</h2><p>Send clear photos, list every appliance, describe the condition honestly, include your city and ZIP code, and explain the pickup location. Mention stairs, tight hallways, gates or unusual access. Complete information lets us make a better decision without unnecessary back-and-forth.</p></section>'''}}
 
           def make_page(slug,data):
               url=BASE+slug+'/'
@@ -70,24 +62,25 @@ jobs:
               if re.search(r'</main>',txt,re.I): txt=re.sub(r'</main>',block+'</main>',txt,count=1,flags=re.I)
               else: txt=re.sub(r'</body>',block+'</body>',txt,count=1,flags=re.I)
               p.write_text(txt,encoding='utf-8')
-
-          sm=Path('sitemap.xml')
-          if sm.exists():
-              ns='http://www.sitemaps.org/schemas/sitemap/0.9'; ET.register_namespace('',ns)
-              tree=ET.parse(sm); root=tree.getroot(); existing={x.text.strip() for x in root.findall(f'.//{{{ns}}}loc') if x.text}
-              for slug in pages:
-                  u=BASE+slug+'/'
-                  if u not in existing:
-                      node=ET.SubElement(root,f'{{{ns}}}url'); ET.SubElement(node,f'{{{ns}}}loc').text=u; ET.SubElement(node,f'{{{ns}}}lastmod').text=date.today().isoformat()
-              tree.write(sm,encoding='utf-8',xml_declaration=True)
           PY
-      - name: Commit
+      - name: Commit with concurrent-push retry
         shell: bash
         run: |
-          if git diff --quiet && [ -z "$(git status --porcelain)" ]; then exit 0; fi
+          if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
+            echo "No content changes needed"
+            exit 0
+          fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
           git commit -m 'Add core service trust and qualification content'
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              echo "Core trust content pushed successfully"
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          echo "Could not push after retries"
+          exit 1
