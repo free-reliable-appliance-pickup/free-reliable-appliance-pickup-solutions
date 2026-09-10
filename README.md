@@ -13,6 +13,15 @@ Free Reliable Appliance Pickup reviews qualifying pickup requests for washers, d
 - Riverside, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/riverside-appliance-pickup/
 - Orange County, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/orange-county-appliance-pickup/
 - Palm Desert, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/palm-desert-appliance-pickup/
+- San Diego, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/san-diego-appliance-pickup/
+- Stockton, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/stockton-appliance-pickup/
+- Bakersfield, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/bakersfield-appliance-pickup/
+- Fresno, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/fresno-appliance-pickup/
+- Modesto, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/modesto-appliance-pickup/
+- Sacramento, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/sacramento-appliance-pickup/
+- San Francisco, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/san-francisco-appliance-pickup/
+- San Jose, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/san-jose-appliance-pickup/
+- Oakland, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/oakland-appliance-pickup/
 - Portland, Oregon: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/portland-appliance-pickup/
 - Salem, Oregon: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/salem-appliance-pickup/
 - Keizer, Oregon: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/keizer-appliance-pickup/
