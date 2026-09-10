@@ -1,0 +1,71 @@
+name: One-Time Final Priority Content Cleanup
+
+on:
+  push:
+    paths:
+      - '.github/workflows/final-priority-content-cleanup.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Expand guides and clean state snippets
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          states={
+          'oregon-appliance-pickup/index.html':('Free Appliance Pickup Oregon | Portland & Salem Removal','Free appliance pickup across Oregon priority markets including Portland and Salem for qualifying washers, dryers, refrigerators, stoves and freezers.'),
+          'washington-appliance-pickup/index.html':('Free Appliance Pickup Washington | Seattle & Tacoma','Free appliance pickup across Washington priority markets including Seattle, Tacoma and Vancouver for qualifying major household appliances.'),
+          'colorado-appliance-pickup/index.html':('Free Appliance Pickup Colorado | Denver & Aurora','Free appliance pickup in Colorado priority markets including Denver and Aurora for qualifying washers, dryers, refrigerators, stoves and freezers.'),
+          'utah-appliance-pickup/index.html':('Free Appliance Pickup Utah | Salt Lake City & Provo','Free appliance pickup across Utah priority markets including Salt Lake City and Provo for qualifying major household appliances.'),
+          'idaho-appliance-pickup/index.html':('Free Appliance Pickup Idaho | Boise & Meridian','Free appliance pickup across Idaho priority markets including Boise and Meridian for qualifying washers, dryers, refrigerators, stoves and freezers.'),
+          'arizona-appliance-pickup/index.html':('Free Appliance Pickup Arizona | Phoenix Metro','Free appliance pickup across Phoenix metro and Arizona priority markets for qualifying washers, dryers, refrigerators, stoves and freezers.'),
+          'nevada-appliance-pickup/index.html':('Free Appliance Pickup Nevada | Las Vegas, Henderson & Reno','Free appliance pickup across Nevada priority markets including Las Vegas, Henderson and Reno for qualifying major household appliances.')}
+
+          for fn,(title,desc) in states.items():
+              p=Path(fn)
+              if not p.exists(): continue
+              t=p.read_text(encoding='utf-8',errors='ignore')
+              t=re.sub(r'<title>.*?</title>',f'<title>{title}</title>',t,count=1,flags=re.I|re.S)
+              t=re.sub(r'<meta\s+name=["\']description["\']\s+content=["\'][^"\']*["\']\s*/?>',f'<meta name="description" content="{desc}">',t,count=1,flags=re.I)
+              p.write_text(t,encoding='utf-8')
+
+          extra={
+          'washer-dryer-pickup/index.html':('<h2>What happens after I submit?</h2>','After you submit the appliance details, we review the condition, number of units, access and current local demand. Clear photos and accurate working-condition information help us decide whether the request qualifies. If pickup is available, scheduling depends on the active route and local coverage. Keep the machines accessible and do not move them into a more difficult location before the pickup window.'),
+          'refrigerator-pickup/index.html':('<h2>What happens after I submit?</h2>','We review cooling condition, size, age, photos, access and local demand before confirming whether free pickup is available. Accurate information matters because refrigerators vary greatly in weight and doorway clearance. If the refrigerator is working, keep it plugged in when practical until the condition has been confirmed, and remove food and personal items before the scheduled pickup.'),
+          'freezer-pickup/index.html':('<h2>What happens after I submit?</h2>','We review whether the freezer is working, its style and approximate size, access conditions, photos and local demand. Working chest and upright freezers can be useful inventory, but pickup availability still depends on the current route and service coverage. Before pickup, remove all food and personal items and make sure the path from the freezer to the exit is clear.'),
+          'stove-oven-pickup/index.html':('<h2>What happens after I submit?</h2>','We review whether the appliance is gas or electric, which functions work, overall condition, access and local demand. Clear photos of the front, controls and cooking surface help the review. If pickup is available, make sure the appliance is safe to move. Gas connections must be handled properly, and the pickup path should be free of loose items and obstacles.')}
+
+          for fn,(heading,para) in extra.items():
+              p=Path(fn)
+              if not p.exists(): continue
+              t=p.read_text(encoding='utf-8',errors='ignore')
+              if heading in t: continue
+              section=f'<section>{heading}<p>{para}</p></section>'
+              marker='<section><h2>Related Appliance Pickup Guides</h2>'
+              if marker in t:
+                  t=t.replace(marker,section+marker,1)
+              else:
+                  t=re.sub(r'</main>',section+'</main>',t,count=1,flags=re.I)
+              p.write_text(t,encoding='utf-8')
+          PY
+      - name: Commit
+        shell: bash
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Finish priority content and metadata cleanup'
+          git pull --rebase origin main
+          git push origin HEAD:main
