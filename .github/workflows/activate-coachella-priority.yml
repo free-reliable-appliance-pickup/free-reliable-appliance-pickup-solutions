@@ -1,0 +1,54 @@
+name: Activate Coachella priority pages
+
+on:
+  push:
+    paths:
+      - '.github/workflows/activate-coachella-priority.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  activate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove noindex from strengthened priority pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          pages={
+            'palm-springs-appliance-pickup/index.html':('Palm Springs','Palm Springs, Cathedral City, Rancho Mirage and Palm Desert'),
+            'rancho-mirage-appliance-pickup/index.html':('Rancho Mirage','Rancho Mirage, Palm Desert, Palm Springs and Indian Wells'),
+            'la-quinta-appliance-pickup/index.html':('La Quinta','La Quinta, Indian Wells, Palm Desert and nearby Coachella Valley communities'),
+            'cathedral-city-appliance-pickup/index.html':('Cathedral City','Cathedral City, Palm Springs, Rancho Mirage and Palm Desert'),
+            'indian-wells-appliance-pickup/index.html':('Indian Wells','Indian Wells, Palm Desert, La Quinta and Rancho Mirage')
+          }
+          base='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          for rel,(city,areas) in pages.items():
+            p=Path(rel)
+            if not p.exists():
+              print('skip missing',rel); continue
+            h=p.read_text(encoding='utf-8'); old=h
+            h=re.sub(r'<meta\s+name=["\']robots["\']\s+content=["\']noindex\s*,\s*follow["\']\s*/?>','<meta name="robots" content="index, follow">',h,flags=re.I)
+            if 'priority-seo-finish-2026' not in h:
+              block=f'''\n<section id="priority-seo-finish-2026" style="max-width:1050px;margin:22px auto;padding:24px 20px;background:#fff;border:1px solid #d7e5dc;border-radius:12px">\n<h2>Free Appliance Pickup Details for {city}, California</h2>\n<p>We review qualifying appliance pickup requests in {areas}. Working and reusable washers, dryers, refrigerators, freezers, stoves and ranges receive priority. Free pickup is qualification-based and depends on condition, access, route coverage and scheduling.</p>\n<p>Send clear appliance photos, condition details, your ZIP code, floor level, stairs and any tight access. Call or text <a href="tel:+19093756685">909-375-6685</a> between 8:00 AM and 8:00 PM, Monday through Sunday.</p>\n<p>See <a href="{base}california-appliance-pickup/">California service areas</a> and <a href="{base}free-pickup-qualification/">free pickup qualifications</a>.</p>\n</section>\n'''
+              if '</main>' in h: h=h.replace('</main>',block+'</main>',1)
+              elif '<footer' in h: h=h.replace('<footer',block+'<footer',1)
+              else: h=h.replace('</body>',block+'</body>',1)
+            if h!=old:
+              p.write_text(h,encoding='utf-8'); print('activated',rel)
+          
+      - name: Commit activation
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Make strengthened Coachella priority pages indexable"
+          git push
