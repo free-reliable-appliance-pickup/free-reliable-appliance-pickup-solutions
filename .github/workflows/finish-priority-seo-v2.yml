@@ -1,0 +1,64 @@
+name: Finish priority city SEO v2
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finish-priority-seo-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply priority page improvements
+        shell: python
+        run: |
+          from pathlib import Path
+          import json, re
+          base='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          pages={
+            'salem-appliance-pickup/index.html':('Salem','Oregon','503-868-4455','+15038684455','assets/major-appliance-pickup-photo-2.jpg','Salem, West Salem, Keizer, Turner, Stayton, Silverton, Dallas, Monmouth, Independence and Woodburn','oregon-appliance-pickup/'),
+            'aurora-appliance-pickup/index.html':('Aurora','Colorado','720-604-7498','+17206047498','assets/major-appliance-pickup-photo-1.jpg','Central Aurora, Aurora Hills, Meadow Hills, Heather Gardens, Seven Hills, Southlands, Aurora Highlands and nearby Denver-metro communities','colorado-appliance-pickup/'),
+            'los-angeles-appliance-pickup/index.html':('Los Angeles','California','310-774-4304','+13107744304','assets/major-appliance-pickup-photo-3.jpg','Hollywood, North Hollywood, Van Nuys, Sherman Oaks, Northridge, Koreatown, Silver Lake, Echo Park, West Los Angeles, Mar Vista and Venice','california-appliance-pickup/'),
+            'palm-desert-appliance-pickup/index.html':('Palm Desert','California','909-375-6685','+19093756685','assets/major-appliance-pickup-photo-2.jpg','Palm Desert, Rancho Mirage, Indian Wells, La Quinta, Bermuda Dunes, Cathedral City and nearby Coachella Valley communities','california-appliance-pickup/'),
+            'palm-springs-appliance-pickup/index.html':('Palm Springs','California','909-375-6685','+19093756685','assets/major-appliance-pickup-photo-3.jpg','Palm Springs, Cathedral City, Rancho Mirage, Palm Desert and nearby Coachella Valley communities','california-appliance-pickup/'),
+            'rancho-mirage-appliance-pickup/index.html':('Rancho Mirage','California','909-375-6685','+19093756685','assets/major-appliance-pickup-photo-1.jpg','Rancho Mirage, Palm Desert, Palm Springs, Cathedral City, Indian Wells and nearby Coachella Valley communities','california-appliance-pickup/'),
+            'la-quinta-appliance-pickup/index.html':('La Quinta','California','909-375-6685','+19093756685','assets/major-appliance-pickup-photo-2.jpg','La Quinta, Indian Wells, Palm Desert, Bermuda Dunes, Indio and nearby Coachella Valley communities','california-appliance-pickup/'),
+            'cathedral-city-appliance-pickup/index.html':('Cathedral City','California','909-375-6685','+19093756685','assets/major-appliance-pickup-photo-3.jpg','Cathedral City, Palm Springs, Rancho Mirage, Palm Desert and nearby Coachella Valley communities','california-appliance-pickup/'),
+            'indio-appliance-pickup/index.html':('Indio','California','909-375-6685','+19093756685','assets/major-appliance-pickup-photo-1.jpg','Indio, La Quinta, Bermuda Dunes, Palm Desert, Coachella and nearby eastern Coachella Valley communities','california-appliance-pickup/'),
+            'stockton-appliance-pickup/index.html':('Stockton','California','310-774-4304','+13107744304','assets/major-appliance-pickup-photo-2.jpg','Stockton and nearby San Joaquin County communities, with exact coverage confirmed by address or ZIP code','california-appliance-pickup/')}
+          for rel,(city,state,phone,tel,img,local,statepage) in pages.items():
+            p=Path(rel)
+            if not p.exists():
+              print('skip missing',rel); continue
+            h=p.read_text(encoding='utf-8'); old=h; image=base+img
+            h=re.sub(r'<meta property="og:image" content="[^"]*free-reliable-appliance-pickup-logo\.svg">',f'<meta property="og:image" content="{image}">',h,count=1)
+            if 'property="og:image"' not in h:
+              h=h.replace('</head>',f'<meta property="og:image" content="{image}">\n<meta property="og:image:alt" content="Real major household appliance example in {city}, {state}">\n</head>',1)
+            if 'name="twitter:card"' not in h:
+              h=h.replace('</head>',f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="{image}">\n</head>',1)
+            if 'priority-seo-finish-2026' not in h:
+              schema={'@context':'https://schema.org','@type':'ImageObject','contentUrl':image,'caption':f'Real major household appliance example for appliance pickup information in {city}, {state}.','representativeOfPage':True}
+              h=h.replace('</head>','<script type="application/ld+json">'+json.dumps(schema,separators=(',',':'))+'</script>\n</head>',1)
+              block=f'''\n<section id="priority-seo-finish-2026" style="max-width:1050px;margin:22px auto;padding:24px 20px;background:#fff;border:1px solid #d7e5dc;border-radius:12px">\n<h2>Free Appliance Pickup Details for {city}, {state}</h2>\n<p>We review qualifying appliance pickup requests in {local}. Working and reusable washers, dryers, refrigerators, freezers, stoves and ranges receive priority. Free pickup is qualification-based and depends on condition, access, current demand, route coverage and scheduling.</p>\n<h3>Photos and Condition Details</h3>\n<p>Send a clear full-appliance photo and model label when available. For refrigerators and freezers, include an interior photo and tell us whether the unit maintains temperature. For laundry appliances, describe each machine separately and tell us whether the washer fills, drains and spins and whether the dryer heats and tumbles.</p>\n<h3>Access Details</h3>\n<p>Tell us whether the appliance is in a garage, driveway, first floor, upper floor, basement or outside. Include stairs, elevators, narrow doors, tight hallways, gates and parking or loading restrictions.</p>\n<p><strong>Call or text <a href="tel:{tel}">{phone}</a></strong> between 8:00 AM and 8:00 PM, Monday through Sunday. See <a href="{base}{statepage}">{state} service areas</a>, <a href="{base}free-pickup-qualification/">free pickup qualifications</a> and <a href="{base}how-appliance-pickup-works/">how pickup works</a>.</p>\n<figure style="margin:24px 0 0;max-width:720px"><img src="{image}" alt="Real major household appliance example for appliance pickup in {city}, {state}" decoding="async" style="width:100%;height:auto;border-radius:10px"><figcaption>Real appliance photo from our work and inventory. It is not a stock image and does not guarantee pickup; every request is reviewed for eligibility.</figcaption></figure>\n</section>\n'''
+              if '</main>' in h: h=h.replace('</main>',block+'</main>',1)
+              elif '<footer' in h: h=h.replace('<footer',block+'<footer',1)
+              else: h=h.replace('</body>',block+'</body>',1)
+            if h!=old:
+              p.write_text(h,encoding='utf-8'); print('updated',rel)
+          
+      - name: Commit improvements
+        run: |
+          if git diff --quiet; then
+            echo "No page changes needed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Finish priority city SEO and real-image signals"
+          git push
