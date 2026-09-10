@@ -1,0 +1,67 @@
+name: One-Time Discovery Signals
+
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-discovery-signals.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  improve-discovery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Strengthen internal links and canonical crawl signals
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          sb = '<div class="card"><h3><a href="san-bernardino-county-appliance-pickup/">San Bernardino County, California</a></h3></div>'
+          ie = '<div class="card"><h3><a href="inland-empire-appliance-pickup/">Inland Empire, California</a></h3><p>Rancho Cucamonga, Fontana, Ontario and nearby pickup requests.</p></div>'
+          if ie not in s:
+              if sb not in s:
+                  raise SystemExit('San Bernardino priority card anchor not found')
+              s = s.replace(sb, sb + '\n' + ie, 1)
+
+          rc = '<div class="card"><h3><a href="riverside-county-appliance-pickup/">Riverside County, California</a></h3></div>'
+          rv = '<div class="card"><h3><a href="riverside-appliance-pickup/">Riverside, California</a></h3><p>City-specific pickup details for Riverside homes, rentals and properties.</p></div>'
+          pd = '<div class="card"><h3><a href="palm-desert-appliance-pickup/">Palm Desert, California</a></h3><p>Palm Desert and selected Coachella Valley appliance pickup requests.</p></div>'
+          additions = []
+          if rv not in s:
+              additions.append(rv)
+          if pd not in s:
+              additions.append(pd)
+          if additions:
+              if rc not in s:
+                  raise SystemExit('Riverside County priority card anchor not found')
+              s = s.replace(rc, rc + '\n' + '\n'.join(additions), 1)
+
+          p.write_text(s, encoding='utf-8')
+
+          Path('robots.txt').write_text(
+              'User-agent: *\nAllow: /\n\n'
+              'Sitemap: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/sitemap.xml\n',
+              encoding='utf-8'
+          )
+          PY
+
+      - name: Commit finished discovery improvements and remove this workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/one-time-discovery-signals.yml
+          git add index.html robots.txt
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Strengthen priority page discovery signals"
+          git push
