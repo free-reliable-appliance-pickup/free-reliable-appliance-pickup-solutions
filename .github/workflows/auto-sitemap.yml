@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths-ignore:
       - sitemap.xml
+      - sitemap-new.xml
   workflow_dispatch:
 
 permissions:
@@ -23,7 +24,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Rebuild and push sitemap safely
+      - name: Rebuild and push sitemaps safely
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -36,13 +37,19 @@ jobs:
 
             python3 <<'PY'
           from pathlib import Path
+          import re
           import subprocess
           import xml.etree.ElementTree as ET
 
           BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
           root = Path('.')
-          pages = [Path('index.html')]
-          pages += sorted(p for p in root.rglob('index.html') if p != Path('index.html') and '.github' not in p.parts)
+          all_pages = [Path('index.html')]
+          all_pages += sorted(p for p in root.rglob('index.html') if p != Path('index.html') and '.github' not in p.parts)
+
+          def is_indexable(path):
+              text = path.read_text(encoding='utf-8', errors='ignore')
+              match = re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>', text, flags=re.I)
+              return not (match and 'noindex' in match.group(0).lower())
 
           def lastmod(path):
               try:
@@ -53,37 +60,43 @@ jobs:
               except Exception:
                   return None
 
-          urlset = ET.Element('urlset', {'xmlns':'http://www.sitemaps.org/schemas/sitemap/0.9'})
-          seen = set()
-          for page in pages:
-              if page == Path('index.html'):
-                  url = BASE
-              else:
-                  rel = page.parent.as_posix().strip('/')
-                  url = BASE + rel + '/'
-              if url in seen:
-                  continue
-              seen.add(url)
-              u = ET.SubElement(urlset, 'url')
-              ET.SubElement(u, 'loc').text = url
-              modified = lastmod(page)
-              if modified:
-                  ET.SubElement(u, 'lastmod').text = modified
+          pages = [p for p in all_pages if is_indexable(p)]
 
-          ET.indent(urlset, space='  ')
-          ET.ElementTree(urlset).write('sitemap.xml', encoding='utf-8', xml_declaration=True)
-          print(f'Generated sitemap with {len(seen)} URLs')
+          def write_sitemap(filename):
+              urlset = ET.Element('urlset', {'xmlns':'http://www.sitemaps.org/schemas/sitemap/0.9'})
+              seen = set()
+              for page in pages:
+                  if page == Path('index.html'):
+                      url = BASE
+                  else:
+                      rel = page.parent.as_posix().strip('/')
+                      url = BASE + rel + '/'
+                  if url in seen:
+                      continue
+                  seen.add(url)
+                  u = ET.SubElement(urlset, 'url')
+                  ET.SubElement(u, 'loc').text = url
+                  modified = lastmod(page)
+                  if modified:
+                      ET.SubElement(u, 'lastmod').text = modified
+              ET.indent(urlset, space='  ')
+              ET.ElementTree(urlset).write(filename, encoding='utf-8', xml_declaration=True)
+              return len(seen)
+
+          count = write_sitemap('sitemap.xml')
+          write_sitemap('sitemap-new.xml')
+          print(f'Generated focused sitemaps with {count} indexable URLs')
           PY
 
-            if git diff --quiet -- sitemap.xml; then
-              echo "Sitemap already current"
+            if git diff --quiet -- sitemap.xml sitemap-new.xml; then
+              echo "Sitemaps already current"
               exit 0
             fi
 
-            git add sitemap.xml
-            git commit -m "Auto rebuild sitemap"
+            git add sitemap.xml sitemap-new.xml
+            git commit -m "Auto rebuild focused sitemaps"
             if git push origin HEAD:main; then
-              echo "Sitemap pushed successfully"
+              echo "Sitemaps pushed successfully"
               exit 0
             fi
 
