@@ -2,9 +2,10 @@ name: One-Time Competitor Edge SEO Pass
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
-      - .github/workflows/competitor-edge-final.yml
+      - '.github/workflows/competitor-edge-final.yml'
 
 permissions:
   contents: write
@@ -16,167 +17,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Strengthen hierarchy proof and differentiation
-        shell: bash
+      - name: Apply competitor-informed improvements
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git reset --hard origin/main
-
-          python3 <<'PY'
-          from pathlib import Path
-          import re, json, html
-
-          BASE = 'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
-          photos = ['major-appliance-pickup-photo-1.jpg','major-appliance-pickup-photo-2.jpg','major-appliance-pickup-photo-3.jpg']
-
-          # Homepage: factual competitive differentiation without unverifiable claims.
-          hp = Path('index.html')
-          t = hp.read_text(encoding='utf-8')
-          if 'id="why-different"' not in t:
-              section = '''
-<section id="why-different">
-<h2>Why Free Reliable Appliance Pickup Is Different</h2>
-<div class="grid">
-<div class="card"><h3>Qualification Is Explained Up Front</h3><p>We do not pretend every appliance automatically qualifies. Working appliances receive priority, mixed loads are reviewed by working share, and special rules for microwaves and dishwashers are stated clearly before scheduling.</p></div>
-<div class="card"><h3>Photo-First Review</h3><p>Clear appliance and model-label photos help us review condition before a trip is arranged. Refrigerators and freezers should include interior photos and cooling status when possible.</p></div>
-<div class="card"><h3>Access Details Before Pickup</h3><p>Stairs, basements, upper floors, tight hallways, gates, elevators, parking and possible door removal are reviewed before scheduling so the pickup team has the information needed for the job.</p></div>
-<div class="card"><h3>Regional Contact Information</h3><p>Priority markets use regional phone numbers and local service pages so customers can submit the appliance condition, photos, city or ZIP code and access information to the correct coverage area.</p></div>
-</div>
-<p><a href="free-pickup-qualification/">See free-pickup qualification</a> · <a href="appliance-pickup-checklist/">Use the pickup checklist</a> · <a href="contact/">Contact the correct regional team</a></p>
-</section>
-'''
-              marker = '<section id="services">'
-              if marker in t:
-                  t = t.replace(marker, section + '\n' + marker, 1)
-              else:
-                  t = t.replace('</main>', section + '\n</main>', 1)
-              hp.write_text(t, encoding='utf-8')
-
-          # California hub: promote existing indexable LA County + Antelope Valley pages.
-          cp = Path('california-appliance-pickup/index.html')
-          s = cp.read_text(encoding='utf-8')
-          s = s.replace('<span class="nonindexed-area">Los Angeles County</span>', '<a href="../los-angeles-county-appliance-pickup/">Los Angeles County</a>')
-          if 'id="antelope-valley-pages"' not in s:
-              block = '''
-<section id="antelope-valley-pages">
-<h2>Antelope Valley & High Desert California</h2>
-<div class="links"><a href="../palmdale-appliance-pickup/">Palmdale Appliance Pickup</a><a href="../lancaster-appliance-pickup/">Lancaster Appliance Pickup</a></div>
-<p>Palmdale and Lancaster requests are reviewed under the broader California network. Submit the exact address or ZIP code, appliance condition, photos and access details so current route coverage can be confirmed.</p>
-</section>
-'''
-              anchor = '<section>\n<h2>Bay Area & Central California</h2>'
-              if anchor in s:
-                  s = s.replace(anchor, block + '\n' + anchor, 1)
-              else:
-                  s = s.replace('</main>', block + '\n</main>', 1)
-          cp.write_text(s, encoding='utf-8')
-
-          # Service-area hub: ensure every strong California page has a crawlable hub link.
-          sp = Path('service-areas/index.html')
-          s = sp.read_text(encoding='utf-8')
-          if 'los-angeles-county-appliance-pickup/' not in s:
-              needle = '<div class="card"><a href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-appliance-pickup/">Los Angeles Appliance Pickup</a></div>'
-              add = needle + '\n<div class="card"><a href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-county-appliance-pickup/">Los Angeles County Appliance Pickup</a></div>\n<div class="card"><a href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/palmdale-appliance-pickup/">Palmdale Appliance Pickup</a></div>\n<div class="card"><a href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/lancaster-appliance-pickup/">Lancaster Appliance Pickup</a></div>'
-              if needle in s:
-                  s = s.replace(needle, add, 1)
-          sp.write_text(s, encoding='utf-8')
-
-          # Second-tier California pages: state hierarchy + real proof + trust navigation.
-          pages = [
-              ('bakersfield-appliance-pickup/index.html','Bakersfield'),
-              ('fresno-appliance-pickup/index.html','Fresno'),
-              ('lancaster-appliance-pickup/index.html','Lancaster'),
-              ('los-angeles-county-appliance-pickup/index.html','Los Angeles County'),
-              ('modesto-appliance-pickup/index.html','Modesto'),
-              ('oakland-appliance-pickup/index.html','Oakland'),
-              ('palmdale-appliance-pickup/index.html','Palmdale'),
-              ('sacramento-appliance-pickup/index.html','Sacramento'),
-              ('san-francisco-appliance-pickup/index.html','San Francisco'),
-              ('san-jose-appliance-pickup/index.html','San Jose'),
-              ('santa-rosa-appliance-pickup/index.html','Santa Rosa'),
-          ]
-
-          for i, (filename, label) in enumerate(pages):
-              p = Path(filename)
-              if not p.exists():
-                  continue
-              text = p.read_text(encoding='utf-8', errors='ignore')
-              page_url = BASE + p.parent.as_posix().strip('/') + '/'
-
-              if '"@type":"BreadcrumbList"' not in text and '"@type": "BreadcrumbList"' not in text:
-                  crumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
-                      {"@type":"ListItem","position":1,"name":"Home","item":BASE},
-                      {"@type":"ListItem","position":2,"name":"Service Areas","item":BASE+'service-areas/'},
-                      {"@type":"ListItem","position":3,"name":"California","item":BASE+'california-appliance-pickup/'},
-                      {"@type":"ListItem","position":4,"name":label,"item":page_url}
-                  ]}
-                  tag = '<script type="application/ld+json">' + json.dumps(crumb, separators=(',',':')) + '</script>\n'
-                  text = re.sub(r'</head>', tag + '</head>', text, count=1, flags=re.I)
-
-              if 'class="seo-breadcrumb"' not in text:
-                  visible = f'<div class="seo-breadcrumb" role="navigation" aria-label="Breadcrumb" style="max-width:1080px;margin:12px auto;padding:0 18px;font:14px/1.5 Arial,sans-serif"><a href="../" style="color:#075c34">Home</a> &rsaquo; <a href="../service-areas/" style="color:#075c34">Service Areas</a> &rsaquo; <a href="../california-appliance-pickup/" style="color:#075c34">California</a> &rsaquo; <span>{html.escape(label)}</span></div>'
-                  text = re.sub(r'(<body\b[^>]*>)', r'\1\n' + visible, text, count=1, flags=re.I)
-
-              if 'class="real-appliance-proof"' not in text:
-                  photo = photos[i % len(photos)]
-                  proof = f'''<section class="real-appliance-proof"><h2>Real Appliance Example</h2><figure style="margin:0;max-width:720px"><img src="../assets/{photo}" alt="Real major household appliance handled by Free Reliable Appliance Pickup" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:10px"><figcaption>Real appliance photo from our work and inventory. It is not a stock image. Pickup eligibility is reviewed for each request based on condition, location, access and available coverage.</figcaption></figure></section>'''
-                  m = re.search(r'<section[^>]*>\s*<h2[^>]*>[^<]*(?:FAQ|Frequently Asked Questions)', text, flags=re.I)
-                  if m:
-                      text = text[:m.start()] + proof + '\n' + text[m.start():]
-                  elif '</main>' in text:
-                      text = text.replace('</main>', proof + '\n</main>', 1)
-
-              if 'href="../contact/"' not in text:
-                  trust = '<p><a href="../contact/">Contact</a> · <a href="../about/">About</a> · <a href="../privacy/">Privacy</a> · <a href="../terms/">Service Terms</a></p>'
-                  text = re.sub(r'</footer>', trust + '\n</footer>', text, count=1, flags=re.I)
-
-              p.write_text(text, encoding='utf-8')
-
-          # Tighten small audit warnings without changing search intent.
-          replacements = {
-              'los-angeles-county-appliance-pickup/index.html': (
-                  r'<title>.*?</title>', '<title>Free Appliance Pickup Los Angeles County | Appliance Removal</title>',
-                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Request qualifying free appliance pickup in Los Angeles County for washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
-              ),
-              'bakersfield-appliance-pickup/index.html': (
-                  None, None,
-                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free appliance pickup in Bakersfield, CA for qualifying washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
-              ),
-              'sacramento-appliance-pickup/index.html': (
-                  None, None,
-                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free appliance pickup in Sacramento, CA for qualifying washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
-              ),
-              'san-francisco-appliance-pickup/index.html': (
-                  None, None,
-                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free appliance pickup in San Francisco, CA for qualifying washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
-              ),
-              'santa-rosa-appliance-pickup/index.html': (
-                  None, None,
-                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free appliance pickup in Santa Rosa, CA for qualifying washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
-              ),
-          }
-          for filename, rules in replacements.items():
-              p = Path(filename)
-              if not p.exists():
-                  continue
-              text = p.read_text(encoding='utf-8')
-              title_pat, title_new, meta_pat, meta_new = rules
-              if title_pat:
-                  text = re.sub(title_pat, title_new, text, count=1, flags=re.I|re.S)
-              text = re.sub(meta_pat, meta_new, text, count=1, flags=re.I)
-              p.write_text(text, encoding='utf-8')
-          PY
-
+          echo 'CmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aAppbXBvcnQgcmUsIGpzb24sIGh0bWwKCkJBU0UgPSAiaHR0cHM6Ly9mcmVlLXJlbGlhYmxlLWFwcGxpYW5jZS1waWNrdXAuZ2l0aHViLmlvL2ZyZWUtcmVsaWFibGUtYXBwbGlhbmNlLXBpY2t1cC1zb2x1dGlvbnMvIgpwaG90b3MgPSBbIm1ham9yLWFwcGxpYW5jZS1waWNrdXAtcGhvdG8tMS5qcGciLCJtYWpvci1hcHBsaWFuY2UtcGlja3VwLXBob3RvLTIuanBnIiwibWFqb3ItYXBwbGlhbmNlLXBpY2t1cC1waG90by0zLmpwZyJdCgpo cCA9IFBhdGgoImluZGV4Lmh0bWwiKQp0ID0gaHAucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpCmlmICdpZD0id2h5LWRpZmZlcmVudCInIG5vdCBpbiB0OgogICAgc2VjdGlvbiA9ICIiIgo8c2VjdGlvbiBpZD0id2h5LWRpZmZlcmVudCI+CjxoMj5XaHkgRnJlZSBSZWxpYWJsZSBBcHBsaWFuY2UgUGlja3VwIElzIERpZmZlcmVudDwvaDI+CjxkaXYgY2xhc3M9ImdyaWQiPgo8ZGl2IGNsYXNzPSJjYXJkIj48aDM+UXVhbGlmaWNhdGlvbiBJcyBFeHBsYWluZWQgVXAgRnJvbnQ8L2gzPjxwPldlIGRvIG5vdCBwcmV0ZW5kIGV2ZXJ5IGFwcGxpYW5jZSBhdXRvbWF0aWNhbGx5IHF1YWxpZmllcy4gV29ya2luZyBhcHBsaWFuY2VzIHJlY2VpdmUgcHJpb3JpdHksIG1peGVkIGxvYWRzIGFyZSByZXZpZXdlZCBieSB3b3JraW5nIHNoYXJlLCBhbmQgc3BlY2lhbCBydWxlcyBmb3IgbWljcm93YXZlcyBhbmQgZGlzaHdhc2hlcnMgYXJlIHN0YXRlZCBjbGVhcmx5IGJlZm9yZSBzY2hlZHVsaW5nLjwvcD48L2Rpdj4KPGRpdiBjbGFzcz0iY2FyZCI+PGgzPlBob3RvLUZpcnN0IFJldmlldzwvaDM+PHA+Q2xlYXIgYXBwbGlhbmNlIGFuZCBtb2RlbC1sYWJlbCBwaG90b3MgaGVscCB1cyByZXZpZXcgY29uZGl0aW9uIGJlZm9yZSBhIHRyaXAgaXMgYXJyYW5nZWQuIFJlZnJpZ2VyYXRvcnMgYW5kIGZyZWV6ZXJzIHNob3VsZCBpbmNsdWRlIGludGVyaW9yIHBob3RvcyBhbmQgY29vbGluZyBzdGF0dXMgd2hlbiBwb3NzaWJsZS48L3A+PC9kaXY+CjxkaXYgY2xhc3M9ImNhcmQiPjxoMz5BY2Nlc3MgRGV0YWlscyBCZWZvcmUgUGlja3VwPC9oMz48cD5TdGFpcnMsIGJhc2VtZW50cywgdXBwZXIgZmxvb3JzLCB0aWdodCBoYWxsd2F5cywgZ2F0ZXMsIGVsZXZhdG9ycywgcGFya2luZyBhbmQgcG9zc2libGUgZG9vciByZW1vdmFsIGFyZSByZXZpZXdlZCBiZWZvcmUgc2NoZWR1bGluZyBzbyB0aGUgcGlja3VwIHRlYW0gaGFzIHRoZSBpbmZvcm1hdGlvbiBuZWVkZWQgZm9yIHRoZSBqb2IuPC9wPjwvZGl2Pgo8ZGl2IGNsYXNzPSJjYXJkIj48aDM+UmVnaW9uYWwgQ29udGFjdCBJbmZvcm1hdGlvbjwvaDM+PHA+UHJpb3JpdHkgbWFya2V0cyB1c2UgcmVnaW9uYWwgcGhvbmUgbnVtYmVycyBhbmQgbG9jYWwgc2VydmljZSBwYWdlcyBzbyBjdXN0b21lcnMgY2FuIHN1Ym1pdCBhcHBsaWFuY2UgY29uZGl0aW9uLCBwaG90b3MsIGNpdHkgb3IgWklQIGNvZGUgYW5kIGFjY2VzcyBpbmZvcm1hdGlvbiB0byB0aGUgY29ycmVjdCBjb3ZlcmFnZSBhcmVhLjwvcD48L2Rpdj4KPC9kaXY+CjxwPjxhIGhyZWY9ImZyZWUtcGlja3VwLXF1YWxpZmljYXRpb24vIj5TZWUgZnJlZS1waWNrdXAgcXVhbGlmaWNhdGlvbjwvYT4gwrcgPGEgaHJlZj0iYXBwbGlhbmNlLXBpY2t1cC1jaGVja2xpc3QvIj5Vc2UgdGhlIHBpY2t1cCBjaGVja2xpc3Q8L2E+IMK3IDxhIGhyZWY9ImNvbnRhY3QvIj5Db250YWN0IHRoZSBjb3JyZWN0IHJlZ2lvbmFsIHRlYW08L2E+PC9wPgo8L3NlY3Rpb24+CjIiIiIKICAgIG1hcmtlciA9ICc8c2VjdGlvbiBpZD0ic2VydmljZXMiPicKICAgIHQgPSB0LnJlcGxhY2UobWFya2VyLCBzZWN0aW9uICsgIlxuIiArIG1hcmtlciwgMSkgaWYgbWFya2VyIGluIHQgZWxzZSB0LnJlcGxhY2UoIjwvbWFpbj4iLCBzZWN0aW9uICsgIlxuPC9tYWluPiIsIDEpCiAgICBocC53cml0ZV90ZXh0KHQsIGVuY29kaW5nPSJ1dGYtOCIpCgpjcCA9IFBhdGgoImNhbGlmb3JuaWEtYXBwbGlhbmNlLXBpY2t1cC9pbmRleC5odG1sIikKcyA9IGNwLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKQpzID0gcy5yZXBsYWNlKCc8c3BhbiBjbGFzcz0ibm9uaW5kZXhlZC1hcmVhIj5Mb3MgQW5nZWxlcyBDb3VudHk8L3NwYW4+JywgJzxhIGhyZWY9Ii4uL2xvcy1hbmdlbGVzLWNvdW50eS1hcHBsaWFuY2UtcGlja3VwLyI+TG9zIEFuZ2VsZXMgQ291bnR5PC9hPicpCmlmICdpZD0iYW50ZWxvcGUtdmFsbGV5LXBhZ2VzIicgbm90IGluIHM6CiAgICBibG9jayA9ICIiIgo8c2VjdGlvbiBpZD0iYW50ZWxvcGUtdmFsbGV5LXBhZ2VzIj4KPGgyPkFudGVsb3BlIFZhbGxleSAmYW1wOyBIaWdoIERlc2VydCBDYWxpZm9ybmlhPC9oMj4KPGRpdiBjbGFzcz0ibGlua3MiPjxhIGhyZWY9Ii4uL3BhbG1kYWxlLWFwcGxpYW5jZS1waWNrdXAvIj5QYWxtZGFsZSBBcHBsaWFuY2UgUGlja3VwPC9hPjxhIGhyZWY9Ii4uL2xhbmNhc3Rlci1hcHBsaWFuY2UtcGlja3VwLyI+TGFuY2FzdGVyIEFwcGxpYW5jZSBQaWNrdXA8L2E+PC9kaXY+CjxwPlBhbG1kYWxlIGFuZCBMYW5jYXN0ZXIgcmVxdWVzdHMgYXJlIHJldmlld2VkIHVuZGVyIHRoZSBicm9hZGVyIENhbGlmb3JuaWEgbmV0d29yay4gU3VibWl0IHRoZSBleGFjdCBhZGRyZXNzIG9yIFpJUCBjb2RlLCBhcHBsaWFuY2UgY29uZGl0aW9uLCBwaG90b3MgYW5kIGFjY2VzcyBkZXRhaWxzIHNvIGN1cnJlbnQgcm91dGUgY292ZXJhZ2UgY2FuIGJlIGNvbmZpcm1lZC48L3A+Cjwvc2VjdGlvbj4KIiIiCiAgICBhbmNob3IgPSAiPHNlY3Rpb24+XG48aDI+QmF5IEFyZWEgJiBDZW50cmFsIENhbGlmb3JuaWE8L2gyPiIKICAgIHMgPSBzLnJlcGxhY2UoYW5jaG9yLCBibG9jayArICJcbiIgKyBhbmNob3IsIDEpIGlmIGFuY2hvciBpbiBzIGVsc2Ugcy5yZXBsYWNlKCI8L21haW4+IiwgYmxvY2sgKyAiXG48L21haW4+IiwgMSkKY3Aud3JpdGVfdGV4dChzLCBlbmNvZGluZz0idXRmLTgiKQoKc3AgPSBQYXRoKCJzZXJ2aWNlLWFyZWFzL2luZGV4Lmh0bWwiKQpzID0gc3AucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpCm5lZWRsZSA9ICc8ZGl2IGNsYXNzPSJjYXJkIj48YSBocmVmPSJodHRwczovL2ZyZWUtcmVsaWFibGUtYXBwbGlhbmNlLXBpY2t1cC5naXRodWIuaW8vZnJlZS1yZWxpYWJsZS1hcHBsaWFuY2UtcGlja3VwLXNvbHV0aW9ucy9sb3MtYW5nZWxlcy1hcHBsaWFuY2UtcGlja3VwLyI+TG9zIEFuZ2VsZXMgQXBwbGlhbmNlIFBpY2t1cDwvYT48L2Rpdj4nCmlmICJsb3MtYW5nZWxlcy1jb3VudHktYXBwbGlhbmNlLXBpY2t1cC8iIG5vdCBpbiBzIGFuZCBuZWVkbGUgaW4gczoKICAgIGFkZCA9IG5lZWRsZSArICIiIgo8ZGl2IGNsYXNzPSJjYXJkIj48YSBocmVmPSJodHRwczovL2ZyZWUtcmVsaWFibGUtYXBwbGlhbmNlLXBpY2t1cC5naXRodWIuaW8vZnJlZS1yZWxpYWJsZS1hcHBsaWFuY2UtcGlja3VwLXNvbHV0aW9ucy9sb3MtYW5nZWxlcy1jb3VudHktYXBwbGlhbmNlLXBpY2t1cC8iPkxvcyBBbmdlbGVzIENvdW50eSBBcHBsaWFuY2UgUGlja3VwPC9hPjwvZGl2Pgo8ZGl2IGNsYXNzPSJjYXJkIj48YSBocmVmPSJodHRwczovL2ZyZWUtcmVsaWFibGUtYXBwbGlhbmNlLXBpY2t1cC5naXRodWIuaW8vZnJlZS1yZWxpYWJsZS1hcHBsaWFuY2UtcGlja3VwLXNvbHV0aW9ucy9wYWxtZGFsZS1hcHBsaWFuY2UtcGlja3VwLyI+UGFsbWRhbGUgQXBwbGlhbmNlIFBpY2t1cDwvYT48L2Rpdj4KPGRpdiBjbGFzcz0iY2FyZCI+PGEgaHJlZj0iaHR0cHM6Ly9mcmVlLXJlbGlhYmxlLWFwcGxpYW5jZS1waWNrdXAuZ2l0aHViLmlvL2ZyZWUtcmVsaWFibGUtYXBwbGlhbmNlLXBpY2t1cC1zb2x1dGlvbnMvbGFuY2FzdGVyLWFwcGxpYW5jZS1waWNrdXAvIj5MYW5jYXN0ZXIgQXBwbGlhbmNlIFBpY2t1cDwvYT48L2Rpdj4KIiIiCiAgICBzID0gcy5yZXBsYWNlKG5lZWRsZSwgYWRkLCAxKQpzcC53cml0ZV90ZXh0KHMsIGVuY29kaW5nPSJ1dGYtOCIpCgpnYWdlcyA9IFsKKCJiYWtlcnNmaWVsZC1hcHBsaWFuY2UtcGlja3VwL2luZGV4Lmh0bWwiLCJCYWtlcnNmaWVsZCIpLAooImZyZXNuby1hcHBsaWFuY2UtcGlja3VwL2luZGV4Lmh0bWwiLCJGcmVzbm8iKSwKKCJ sYW5jYXN0ZXItYXBwbGlhbmNlLXBpY2t1cC9pbmRleC5odG1sIiwiTGFuY2FzdGVyIiksCigibG9zLWFuZ2VsZXMtY291bnR5LWFwcGxpYW5jZS1waWNrdXAvaW5kZXguaHRtbCIsIkxvcyBBbmdlbGVzIENvdW50eSIpLAooIm1vZGVzdG8tYXBwbGlhbmNlLXBpY2t1cC9pbmRleC5odG1sIiwiTW9kZXN0byIpLAooIm9ha2xhbmQtYXBwbGlhbmNlLXBpY2t1cC9pbmRleC5odG1sIiwiT2FrbGFuZCIpLAooInBhbG1kYWxlLWFwcGxpYW5jZS1waWNrdXAvaW5kZXguaHRtbCIsIlBhbG1kYWxlIiksCigic2FjcmFtZW50by1hcHBsaWFuY2UtcGlja3VwL2luZGV4Lmh0bWwiLCJTYWNyYW1lbnRvIiksCigic2FuLWZyYW5jaXNjby1hcHBsaWFuY2UtcGlja3VwL2luZGV4Lmh0bWwiLCJTYW4gRnJhbmNpc2NvIiksCigic2FuLWpvc2UtYXBwbGlhbmNlLXBpY2t1cC9pbmRleC5odG1sIiwiU2FuIEpvc2UiKSwKKCJzYW50YS1yb3NhLWFwcGxpYW5jZS1waWNrdXAvaW5kZXguaHRtbCIsIlNhbnRhIFJvc2EiKSwKXQpmb3IgaSwoZmlsZW5hbWUsbGFiZWwpIGluIGVudW1lcmF0ZShwYWdlcyk6CiAgICBwPVBhdGgoZmlsZW5hbWUpCiAgICBpZiBub3QgcC5leGlzdHMoKTogY29udGludWUKICAgIHRleHQ9cC5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IixlcnJvcnM9Imlnbm9yZSIpCiAgICBwYWdlX3VybD1CQVNFK3AucGFyZW50LmFzX3Bvc2l4KCkuc3RyaXAoIi8iKSsiLyIKICAgIGlmICciQHR5cGUiOiJCcmVhZGNydW1iTGlzdCInIG5vdCBpbiB0ZXh0IGFuZCAnIkB0eXBlIjogIkJyZWFkY3J1bWJMaXN0Iicgbm90IGluIHRleHQ6CiAgICAgICAgY3J1bWI9eyJAY29udGV4dCI6Imh0dHBzOi8vc2NoZW1hLm9yZyIsIkB0eXBlIjoiQnJlYWRjcnVtYkxpc3QiLCJpdGVtTGlzdEVsZW1lbnQiOlsKICAgICAgICAgICAgeyJAdHlwZSI6Ikxpc3RJdGVtIiwicG9zaXRpb24iOjEsIm5hbWUiOiJIb21lIiwiaXRlbSI6QkFTRX0sCiAgICAgICAgICAgIHsiQHR5cGUiOiJMaXN0SXRlbSIsInBvc2l0aW9uIjoyLCJuYW1lIjoiU2VydmljZSBBcmVhcyIsIml0ZW0iOkJBU0UrInNlcnZpY2UtYXJlYXMvIn0sCiAgICAgICAgICAgIHsiQHR5cGUiOiJMaXN0SXRlbSIsInBvc2l0aW9uIjozLCJuYW1lIjoiQ2FsaWZvcm5pYSIsIml0ZW0iOkJBU0UrImNhbGlmb3JuaWEtYXBwbGlhbmNlLXBpY2t1cC8ifSwKICAgICAgICAgICAgeyJAdHlwZSI6Ikxpc3RJdGVtIiwicG9zaXRpb24iOjQsIm5hbWUiOmxhYmVsLCJpdGVtI jpwYWdlX3VybH0sCiAgICAgICAgXX0KICAgICAgICB0YWc9JzxzY3JpcHQgdHlwZT0iYXBwbGljYXRpb24vbGQranNvbiI+Jytqc29uLmR1bXBzKGNydW1iLHNlcGFyYXRvcnM9KCIsIiwiOiIpKSsiPC9zY3JpcHQ+XG4iCiAgICAgICAgdGV4dD1yZS5zdWIociI8L2hlYWQ+Iix0YWcrIjwvaGVhZD4iLHRleHQsY291bnQ9MSxmbGFncz1yZS5JKQogICAgaWYgJ2NsYXNzPSJzZW8tYnJlYWRjcnVtYiInIG5vdCBpbiB0ZXh0OgogICAgICAgIHZpc2libGU9Zic8ZGl2IGNsYXNzPSJzZW8tYnJlYWRjcnVtYiIgcm9sZT0ibmF2aWdhdGlvbiIgYXJpYS1sYWJlbD0iQnJlYWRjcnVtYiIgc3R5bGU9Im1heC13aWR0aDoxMDgwcHg7bWFyZ2luOjEycHggYXV0bztwYWRkaW5nOjAgMThweDtmb250OjE0cHgvMS41IEFyaWFsLHNhbnMtc2VyaWYiPjxhIGhyZWY9Ii4uLyIgc3R5bGU9ImNvbG9yOiMwNzVjMzQiPkhvbWU8L2E+ICZyc2FxdW87IDxhIGhyZWY9Ii4uL3NlcnZpY2UtYXJlYXMvIiBzdHlsZT0iY29sb3I6IzA3NWMzNCI+U2VydmljZSBBcmVhczwvYT4gJnJzYXF1bzsgPGEgaHJlZj0iLi4vY2FsaWZvcm5pYS1hcHBsaWFuY2UtcGlja3VwLyIgc3R5bGU9ImNvbG9yOiMwNzVjMzQiPkNhbGlmb3JuaWE8L2E+ICZyc2FxdW87IDxzcGFuPntodG1sLmVzY2FwZShsYWJlbCl9PC9zcGFuPjwvZGl2PicKICAgICAgICB0ZXh0PXJlLnN1YihyIig8Ym9keVxiW14+XSo+KSIsbGFtYmRhIG06bS5ncm91cCgxKSsiXG4iK3Zpc2libGUsdGV4dCxjb3VudD0xLGZsYWdzPXJlLkkpCiAgICBpZiAnY2xhc3M9InJlYWwtYXBwbGlhbmNlLXByb29mIicgbm90IGluIHRleHQ6CiAgICAgICAgcGhvdG89cGhvdG9zW2klbGVuKHBob3RvcyldCiAgICAgICAgcHJvb2Y9Zic8c2VjdGlvbiBjbGFzcz0icmVhbC1hcHBsaWFuY2UtcHJvb2YiPjxoMj5SZWFsIEFwcGxpYW5jZSBFeGFtcGxlPC9oMj48ZmlndXJlIHN0eWxlPSJtYXJnaW46MDttYXgtd2lkdGg6NzIwcHgiPjxpbWcgc3JjPSIuLi9hc3NldHMve3Bob3RvfSIgYWx0PSJSZWFsIG1ham9yIGhvdXNlaG9sZCBhcHBsaWFuY2UgaGFuZGxlZCBieSBGcmVlIFJlbGlhYmxlIEFwcGxpYW5jZSBQaWNrdXAiIGxvYWRpbmc9ImxhenkiIGRlY29kaW5nPSJhc3luYyIgc3R5bGU9IndpZHRoOjEwMCU7aGVpZ2h0OmF1dG87Ym9yZGVyLXJhZGl1czoxMHB4Ij48ZmlnY2FwdGlvbj5SZWFsIGFwcGxpYW5jZSBwaG90byBmcm9tIG91ciB3b3JrIGFuZCBpbnZlbnRvcnkuIEl0IGlzIG5vdCBhIHN0b2NrIGltYWdlLiBQaWNrdXAgZWxpZ2liaWxpdHkgaXMgcmV2aWV3ZWQgZm9yIGVhY2ggcmVxdWVzdCBiYXNlZCBvbiBjb25kaXRpb24sIGxvY2F0aW9uLCBhY2Nlc3MgYW5kIGF2YWlsYWJsZSBjb3ZlcmFnZS48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9zZWN0aW9uPicKICAgICAgICBtPXJlLnNlYXJjaChyIjxzZWN0aW9uW14+XSo+XHMqPGgyW14+XSo+W148XSooPzpGQVF8RnJlcXVlbnRseSBBc2tlZCBRdWVzdGlvbnMpIix0ZXh0LGZsYWdzPXJlLkkpCiAgICAgICAgdGV4dD10ZXh0WzptLnN0YXJ0KCldK3Byb29mKyJcbiIrdGV4dFttLnN0YXJ0KCk6XSBpZiBtIGVsc2UgdGV4dC5yZXBsYWNlKCI8L21haW4+Iixwcm9vZisiXG48L21haW4+IiwxKQogICAgaWYgJ2hyZWY9Ii4uL2NvbnRhY3QvIicgbm90IGluIHRleHQ6CiAgICAgICAgdHJ1c3Q9JzxwPjxhIGhyZWY9Ii4uL2NvbnRhY3QvIj5Db250YWN0PC9hPiDCtyA8YSBocmVmPSIuLi9hYm91dC8iPkFib3V0PC9hPiDCtyA8YSBocmVmPSIuLi9wcml2YWN5LyI+UHJpdmFjeTwvYT4gwrcgPGEgaHJlZj0iLi4vdGVybXMvIj5TZXJ2aWNlIFRlcm1zPC9hPjwvcD4nCiAgICAgICAgdGV4dD1yZS5zdWIociI8L2Zvb3Rlcj4iLHRydXN0KyJcbjwvZm9vdGVyPiIsdGV4dCxjb3VudD0xLGZsYWdzPXJlLkkpCiAgICBwLndyaXRlX3RleHQodGV4dCxlbmNvZGluZz0idXRmLTgiKQoKbWV0YWRhdGEgPSB7CiJsb3MtYW5nZWxlcy1jb3VudHktYXBwbGlhbmNlLXBpY2t1cC9pbmRleC5odG1sIigKICAgICc8dGl0bGU+RnJlZSBBcHBsaWFuY2UgUGlja3VwIExvcyBBbmdlbGVzIENvdW50eSB8IEFwcGxpYW5jZSBSZW1vdmFsPC90aXRsZT4nLAogICAgJzxtZXRhIG5hbWU9ImRlc2NyaXB0aW9uIiBjb250ZW50PSJSZXF1ZXN0IHF1YWxpZnlpbmcgZnJlZSBhcHBsaWFuY2UgcGlja3VwIGluIExvcyBBbmdlbGVzIENvdW50eSBmb3Igd2FzaGVycywgZHJ5ZXJzLCByZWZyaWdlcmF0b3JzLCBzdG92ZXMgYW5kIGZyZWV6ZXJzLiBTZW5kIHBob3RvcyBhbmQgYWNjZXNzIGRldGFpbHMuIj4nKSwKImJha2Vyc2ZpZWxkLWFwcGxpYW5jZS1waWNrdXAvaW5kZXguaHRtbCI6KE5vbmUsJzxtZXRhIG5hbWU9ImRlc2NyaXB0aW9uIiBjb250ZW50PSJGcmVlIGFwcGxpYW5jZSBwaWNrdXAgaW4gQmFrZXJzZmllbGQsIENBIGZvciBxdWFsaWZ5aW5nIHdhc2hlcnMsIGRyeWVycywgcmVm cmlnZXJhdG9ycywgc3RvdmVzIGFuZCBmcmVlemVycy4gU2VuZCBwaG90b3MgYW5kIGFjY2VzcyBkZXRhaWxzLiI+JyksCiJzYWNyYW1lbnRvLWFwcGxpYW5jZS1waWNrdXAvaW5kZXguaHRtbCI6KE5vbmUsJzxtZXRhIG5hbWU9ImRlc2NyaXB0aW9uIiBjb250ZW50PSJGcmVlIGFwcGxpYW5jZSBwaWNrdXAgaW4gU2FjcmFtZW50bywgQ0EgZm9yIHF1YWxpZnlpbmcgd2FzaGVycywgZHJ5ZXJzLCByZWZyaWdlcmF0b3JzLCBzdG92ZXMgYW5kIGZyZWV6ZXJzLiBTZW5kIHBob3RvcyBhbmQgYWNjZXNzIGRldGFpbHMuIj4nKSwKInNhbi1mcmFuY2lzY28tYXBwbGlhbmNlLXBpY2t1cC9pbmRleC5odG1sIigKTm9uZSwKJzxtZXRhIG5hbWU9ImRlc2NyaXB0aW9uIiBjb250ZW50PSJGcmVlIGFwcGxpYW5jZSBwaWNrdXAgaW4gU2FuIEZyYW5jaXNjbywgQ0EgZm9yIHF1YWxpZnlpbmcgd2FzaGVycywgZHJ5ZXJzLCByZWZyaWdlcmF0b3JzLCBzdG92ZXMgYW5kIGZyZWV6ZXJzLiBTZW5kIHBob3RvcyBhbmQgYWNjZXNzIGRldGFpbHMuIj4nKSwKInNhbnRhLXJvc2EtYXBwbGlhbmNlLXBpY2t1cC9pbmRleC5odG1sIigKTm9uZSwKJzxtZXRhIG5hbWU9ImRlc2NyaXB0aW9uIiBjb250ZW50PSJGcmVlIGFwcGxpYW5jZSBwaWNrdXAgaW4gU2FudGEgUm9zYSwgQ0EgZm9yIHF1YWxpZnlpbmcgd2FzaGVycywgZHJ5ZXJzLCByZWZyaWdlcmF0b3JzLCBzdG92ZXMgYW5kIGZyZWV6ZXJzLiBTZW5kIHBob3RvcyBhbmQgYWNjZXNzIGRldGFpbHMuIj4nKSwKfQpmb3IgZmlsZW5hbWUsKG5ld190aXRsZSxuZXdfbWV0YSkgaW4gbWV0YWRhdGEuaXRlbXMoKToKICAgIHA9UGF0aChmaWxlbmFtZSkKICAgIGlmIG5vdCBwLmV4aXN0cygpOiBjb250aW51ZQogICAgdGV4dD1wLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKQogICAgaWYgbmV3X3RpdGxlOiB0ZXh0PXJlLnN1YihyIjx0aXRsZT4uKj88L3RpdGxlPiIsbmV3X3RpdGxlLHRleHQsY291bnQ9MSxmbGFncz1yZS5JfHJlLlMpCiAgICB0ZXh0PXJlLnN1YihyJzxtZXRhIG5hbWU9ImRlc2NyaXB0aW9uIiBjb250ZW50PSJbXiJdKiI+JyxuZXdfbWV0YSx0ZXh0LGNvdW50PTEsZmxhZ3M9cmUuSSkKICAgIHAud3JpdGVfdGV4dCh0ZXh0LGVuY29kaW5nPSJ1dGYtOCIpCg==' | tr -d ' ' | base64 -d > /tmp/competitor_edge.py
+          python3 /tmp/competitor_edge.py
           rm -f .github/workflows/competitor-edge-final.yml
           git add -A
           git commit -m "Strengthen competitor edge hierarchy images and trust" || exit 0
-
           for attempt in 1 2 3 4; do
-            if git push origin HEAD:main; then
-              exit 0
-            fi
+            if git push origin HEAD:main; then exit 0; fi
             git pull --rebase origin main
             sleep 2
           done
