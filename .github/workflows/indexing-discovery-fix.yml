@@ -1,0 +1,192 @@
+name: One-Time Indexing Discovery Fix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/indexing-discovery-fix.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Strengthen crawl discovery and structured data
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import html
+          import xml.etree.ElementTree as ET
+          from datetime import date
+          from urllib.parse import urlparse
+
+          BASE = 'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          LOGO = BASE + 'assets/free-reliable-appliance-pickup-logo.svg'
+          SERVICE_AREAS = BASE + 'service-areas/'
+          ROOT = Path('.')
+
+          # Read the current sitemap so the service-area directory mirrors only URLs already published.
+          sitemap_path = ROOT / 'sitemap.xml'
+          urls = []
+          if sitemap_path.exists():
+              try:
+                  tree = ET.parse(sitemap_path)
+                  root = tree.getroot()
+                  ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+                  for loc in root.findall('.//sm:loc', ns):
+                      if loc.text and loc.text.startswith(BASE):
+                          urls.append(loc.text.strip())
+              except Exception as exc:
+                  print('Could not parse existing sitemap:', exc)
+
+          # Build an HTML directory from current published location URLs.
+          location_urls = []
+          excluded = {'', 'partners', 'partner-territories', 'service-areas'}
+          for url in urls:
+              rel = url[len(BASE):].strip('/')
+              if not rel:
+                  continue
+              first = rel.split('/')[0]
+              if first in excluded:
+                  continue
+              if rel.endswith('.xml') or rel.endswith('.html'):
+                  continue
+              location_urls.append(url)
+          location_urls = sorted(set(location_urls))
+
+          def label_for(url):
+              rel = url[len(BASE):].strip('/')
+              slug = rel.split('/')[-1]
+              slug = re.sub(r'-appliance-pickup$', '', slug)
+              return slug.replace('-', ' ').title()
+
+          cards = []
+          for url in location_urls:
+              cards.append(f'<li><a href="{html.escape(url)}">{html.escape(label_for(url))} appliance pickup</a></li>')
+
+          service_dir = ROOT / 'service-areas'
+          service_dir.mkdir(exist_ok=True)
+          service_html = f'''<!doctype html>
+          <html lang="en">
+          <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1">
+          <title>Appliance Pickup Service Areas | Free Reliable Appliance Pickup</title>
+          <meta name="description" content="Browse current Free Reliable Appliance Pickup city, county and state service-area pages and submit a qualifying appliance pickup request.">
+          <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+          <link rel="canonical" href="{SERVICE_AREAS}">
+          <link rel="icon" href="{LOGO}" type="image/svg+xml">
+          <style>
+          *{{box-sizing:border-box}}body{{margin:0;background:#f5f7f6;color:#222;font:17px/1.6 Arial,Helvetica,sans-serif}}header{{background:linear-gradient(135deg,#075c34,#0b8a4d);color:#fff;text-align:center;padding:46px 20px}}header h1{{margin:0 0 12px}}main{{width:min(1100px,94%);margin:auto}}section{{background:#fff;margin:24px 0;padding:28px;border-radius:12px}}a{{color:#075c34;font-weight:700}}ul{{columns:3;column-gap:28px;padding-left:22px}}li{{break-inside:avoid;margin:0 0 9px}}.btn{{display:inline-block;background:#fff;color:#075c34;padding:11px 16px;border-radius:8px;text-decoration:none;margin:5px}}footer{{background:#111;color:#fff;text-align:center;padding:24px}}footer a{{color:#fff}}@media(max-width:800px){{ul{{columns:1}}}}
+          </style>
+          <script type="application/ld+json">{{"@context":"https://schema.org","@graph":[{{"@type":"Organization","@id":"{BASE}#organization","name":"Free Reliable Appliance Pickup","url":"{BASE}","logo":"{LOGO}"}},{{"@type":"WebPage","name":"Appliance Pickup Service Areas","url":"{SERVICE_AREAS}","isPartOf":{{"@type":"WebSite","name":"Free Reliable Appliance Pickup","url":"{BASE}"}}}}]}}</script>
+          </head>
+          <body>
+          <header><h1>Appliance Pickup Service Areas</h1><p>Browse current city, county and state pickup pages. Free pickup is qualification-based and depends on appliance condition, access, local demand and available coverage.</p><a class="btn" href="{BASE}#request">Request Appliance Pickup</a><a class="btn" href="{BASE}">Home</a></header>
+          <main>
+          <section><h2>Priority States</h2><p><a href="{BASE}california-appliance-pickup/">California</a> · <a href="{BASE}oregon-appliance-pickup/">Oregon</a> · <a href="{BASE}washington-appliance-pickup/">Washington</a> · <a href="{BASE}arizona-appliance-pickup/">Arizona</a> · <a href="{BASE}utah-appliance-pickup/">Utah</a> · <a href="{BASE}colorado-appliance-pickup/">Colorado</a> · <a href="{BASE}nevada-appliance-pickup/">Nevada</a> · <a href="{BASE}idaho-appliance-pickup/">Idaho</a></p></section>
+          <section><h2>Current Local and Regional Pages</h2><p>Use these links to reach the most specific published pickup page for your area.</p><ul>{''.join(cards)}</ul></section>
+          <section><h2>How Free Pickup Is Reviewed</h2><p>Working appliances receive priority. Eligible mixed loads may qualify when approximately 80% of the load is working. A single nonworking appliance does not qualify for free pickup. Dishwashers are considered only with two or more major working appliances, and microwaves only with another qualifying major appliance.</p></section>
+          </main>
+          <footer><a href="{BASE}">Free Reliable Appliance Pickup</a> · <a href="{BASE}#request">Request Pickup</a></footer>
+          </body></html>'''
+          (service_dir / 'index.html').write_text(service_html, encoding='utf-8')
+
+          # Sitewide fixes: favicon, Organization logo, invalid LocalBusiness-without-address markup,
+          # and a crawl path to the service-area directory.
+          for path in ROOT.rglob('*.html'):
+              if '.git' in path.parts or '.github' in path.parts:
+                  continue
+              text = path.read_text(encoding='utf-8', errors='ignore')
+              original = text
+
+              if '<head' in text.lower() and 'free-reliable-appliance-pickup-logo.svg' not in text:
+                  m = re.search(r'(<link\s+rel=["\']canonical["\'][^>]*>)', text, flags=re.I)
+                  icon = f'\n<link rel="icon" href="{LOGO}" type="image/svg+xml">'
+                  if m:
+                      text = text[:m.end()] + icon + text[m.end():]
+                  else:
+                      text = re.sub(r'</head>', icon + '\n</head>', text, count=1, flags=re.I)
+
+              # Add a logo property immediately after every Organization @type when missing nearby.
+              def add_logo_to_org(match):
+                  whole = match.group(0)
+                  if re.search(r'["\']logo["\']\s*:', whole, re.I):
+                      return whole
+                  return re.sub(r'(["\']@type["\']\s*:\s*["\']Organization["\']\s*,)', r'\1\n"logo":"' + LOGO + '",', whole, count=1, flags=re.I)
+
+              # Work one JSON-LD script at a time so the regex does not touch normal HTML.
+              def fix_script(m):
+                  block = m.group(0)
+                  if re.search(r'["\']@type["\']\s*:\s*["\']Organization["\']', block, re.I):
+                      block = add_logo_to_org(re.match(r'[\s\S]*', block))
+                  # Service-area businesses without a public structured address are better expressed
+                  # as Organization providers than invalid LocalBusiness rich-result markup.
+                  if re.search(r'["\']@type["\']\s*:\s*["\']LocalBusiness["\']', block, re.I) and not re.search(r'["\']address["\']\s*:', block, re.I):
+                      block = re.sub(r'(["\']@type["\']\s*:\s*)["\']LocalBusiness["\']', r'\1"Organization"', block, flags=re.I)
+                      if not re.search(r'["\']logo["\']\s*:', block, re.I):
+                          block = re.sub(r'(["\']@type["\']\s*:\s*["\']Organization["\']\s*,)', r'\1\n"logo":"' + LOGO + '",', block, count=1, flags=re.I)
+                  return block
+
+              text = re.sub(r'<script[^>]+application/ld\+json[^>]*>[\s\S]*?</script>', fix_script, text, flags=re.I)
+
+              # Add a single sitewide crawl link if absent.
+              if 'service-areas/' not in text and path.name.lower() == 'index.html':
+                  link = f'<p><a href="{SERVICE_AREAS}">Browse all appliance pickup service areas</a></p>\n'
+                  if re.search(r'</footer>', text, flags=re.I):
+                      text = re.sub(r'</footer>', link + '</footer>', text, count=1, flags=re.I)
+                  else:
+                      text = re.sub(r'</body>', link + '</body>', text, count=1, flags=re.I)
+
+              if path.resolve() == (ROOT / 'index.html').resolve():
+                  # Shorter description and a prominent browse link on the homepage.
+                  text = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free appliance pickup requests for qualifying washers, dryers, refrigerators, stoves and freezers. Browse priority U.S. service areas and request pickup.">', text, count=1, flags=re.I)
+                  if 'Browse Service Areas' not in text:
+                      text = text.replace('<a class="btn alt" href="#nationwide">Nationwide Coverage</a>', '<a class="btn alt" href="#nationwide">Nationwide Coverage</a>\n<a class="btn alt" href="service-areas/">Browse Service Areas</a>')
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+
+          # Refresh sitemap lastmod and add the new service-area directory.
+          try:
+              tree = ET.parse(sitemap_path)
+              root = tree.getroot()
+              nsuri = 'http://www.sitemaps.org/schemas/sitemap/0.9'
+              ET.register_namespace('', nsuri)
+              locs = [el.text.strip() for el in root.findall(f'.//{{{nsuri}}}loc') if el.text]
+              if SERVICE_AREAS not in locs:
+                  u = ET.SubElement(root, f'{{{nsuri}}}url')
+                  ET.SubElement(u, f'{{{nsuri}}}loc').text = SERVICE_AREAS
+                  ET.SubElement(u, f'{{{nsuri}}}lastmod').text = date.today().isoformat()
+              for u in root.findall(f'{{{nsuri}}}url'):
+                  lm = u.find(f'{{{nsuri}}}lastmod')
+                  if lm is None:
+                      lm = ET.SubElement(u, f'{{{nsuri}}}lastmod')
+                  lm.text = date.today().isoformat()
+              tree.write(sitemap_path, encoding='utf-8', xml_declaration=True)
+          except Exception as exc:
+              print('Sitemap refresh failed:', exc)
+
+          print('Updated HTML files and service-area discovery page.')
+          PY
+
+      - name: Commit fixes
+        shell: bash
+        run: |
+          if git diff --quiet && git status --porcelain | grep -q '^$'; then
+            echo 'No changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Improve indexing discovery and structured data'
+          git push
