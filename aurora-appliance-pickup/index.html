@@ -433,9 +433,9 @@ Send your appliance information for pickup review.
 <form action="https://formspree.io/f/mvzeapzd"
 method="POST">
 
-<label>Full Name</label><br>
+<label for="pickup-name">Full Name</label><br>
 
-<input
+<input id="pickup-name"
 type="text"
 name="name"
 required
@@ -444,9 +444,9 @@ style="width:100%;padding:12px">
 <br><br>
 
 
-<label>Phone Number</label><br>
+<label for="pickup-phone">Phone Number</label><br>
 
-<input
+<input id="pickup-phone"
 type="tel"
 name="phone"
 required
@@ -455,9 +455,9 @@ style="width:100%;padding:12px">
 <br><br>
 
 
-<label>Email</label><br>
+<label for="pickup-email">Email</label><br>
 
-<input
+<input id="pickup-email"
 type="email"
 name="email"
 style="width:100%;padding:12px">
@@ -465,9 +465,9 @@ style="width:100%;padding:12px">
 <br><br>
 
 
-<label>Pickup Address</label><br>
+<label for="pickup-address">Pickup Address</label><br>
 
-<input
+<input id="pickup-address"
 type="text"
 name="address"
 required
@@ -476,9 +476,9 @@ style="width:100%;padding:12px">
 <br><br>
 
 
-<label>ZIP Code</label><br>
+<label for="pickup-zip">ZIP Code</label><br>
 
-<input
+<input id="pickup-zip"
 type="text"
 name="zip"
 required
@@ -487,9 +487,9 @@ style="width:100%;padding:12px">
 <br><br>
 
 
-<label>Appliance Type</label><br>
+<label for="pickup-appliance">Appliance Type</label><br>
 
-<select
+<select id="pickup-appliance"
 name="appliance"
 required
 style="width:100%;padding:12px">
@@ -517,9 +517,9 @@ style="width:100%;padding:12px">
 <br><br>
 
 
-<label>Condition</label><br>
+<label for="pickup-condition">Condition</label><br>
 
-<select
+<select id="pickup-condition"
 name="condition"
 required
 style="width:100%;padding:12px">
@@ -538,9 +538,9 @@ style="width:100%;padding:12px">
 <br><br>
 
 
-<label>Location</label><br>
+<label for="pickup-location">Location</label><br>
 
-<select
+<select id="pickup-location"
 name="location"
 required
 style="width:100%;padding:12px">
@@ -566,9 +566,9 @@ style="width:100%;padding:12px">
 <br><br>
 
 
-<label>Are stairs involved?</label><br>
+<label for="pickup-stairs">Are stairs involved?</label><br>
 
-<select
+<select id="pickup-stairs"
 name="stairs"
 required
 style="width:100%;padding:12px">
@@ -589,9 +589,9 @@ style="width:100%;padding:12px">
 <label for="access-notes">Pickup Access Notes</label>
 <textarea id="access-notes" name="access" style="width:100%;padding:12px" placeholder="Parking, elevators, narrow doors, gates or loading restrictions."></textarea>
 <br><br>
-<label>Additional Information</label><br>
+<label for="pickup-message">Additional Information</label><br>
 
-<textarea
+<textarea id="pickup-message"
 name="message"
 rows="6"
 style="width:100%;padding:12px"
@@ -601,9 +601,9 @@ placeholder="Describe the appliance, condition, repair needed, access, stairs, d
 <br><br>
 
 
-<label>Photo Links or Photo Information</label><br>
+<label for="pickup-photo_information">Photo Links or Photo Information</label><br>
 
-<input
+<input id="pickup-photo_information"
 type="text"
 name="photo_information"
 style="width:100%;padding:12px"
