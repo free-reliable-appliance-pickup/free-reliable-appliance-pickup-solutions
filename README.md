@@ -22,6 +22,7 @@ Free Reliable Appliance Pickup reviews qualifying pickup requests for washers, d
 - San Francisco, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/san-francisco-appliance-pickup/
 - San Jose, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/san-jose-appliance-pickup/
 - Oakland, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/oakland-appliance-pickup/
+- Santa Rosa, California: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/santa-rosa-appliance-pickup/
 - Portland, Oregon: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/portland-appliance-pickup/
 - Salem, Oregon: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/salem-appliance-pickup/
 - Keizer, Oregon: https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/keizer-appliance-pickup/
