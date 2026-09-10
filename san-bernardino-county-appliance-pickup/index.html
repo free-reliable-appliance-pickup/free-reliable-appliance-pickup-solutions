@@ -816,6 +816,9 @@ so we can review the request accurately.
 <label for="email">Email (optional)</label>
 <input id="email" type="email" name="email">
 
+<label for="pickup-address">Pickup Address</label>
+<input id="pickup-address" type="text" name="address" autocomplete="street-address" required>
+
 <label for="city">City</label>
 <input id="city" type="text" name="city" required>
 
@@ -864,6 +867,10 @@ so we can review the request accurately.
 <option>Yes - 3 or More Flights</option>
 <option>Unknown</option>
 </select>
+
+<label for="access-notes">Pickup Access Notes</label>
+<textarea id="access-notes" name="access" rows="3"
+placeholder="Parking or loading access, gates, elevators, narrow doors or other removal details."></textarea>
 
 <label for="message">Additional Information</label>
 <textarea id="message" name="message" rows="6"
