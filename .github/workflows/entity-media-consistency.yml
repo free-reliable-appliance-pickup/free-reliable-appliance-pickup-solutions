@@ -1,0 +1,41 @@
+name: One-Time Entity Media Consistency
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/entity_media_consistency.py'
+      - '.github/workflows/entity-media-consistency.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply entity and media consistency
+        run: python .github/scripts/entity_media_consistency.py
+      - name: Commit changes and remove one-time files
+        shell: bash
+        run: |
+          set -e
+          rm -f .github/scripts/entity_media_consistency.py .github/workflows/entity-media-consistency.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Align organization contacts and representative page images'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || true
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 2
+          done
+          exit 1
