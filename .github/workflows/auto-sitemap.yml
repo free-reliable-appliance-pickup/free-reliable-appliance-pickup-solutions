@@ -42,12 +42,20 @@ jobs:
           import xml.etree.ElementTree as ET
 
           BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
+          IMG_NS = "http://www.google.com/schemas/sitemap-image/1.1"
+          ET.register_namespace('', NS)
+          ET.register_namespace('image', IMG_NS)
+
           root = Path('.')
           all_pages = [Path('index.html')]
           all_pages += sorted(p for p in root.rglob('index.html') if p != Path('index.html') and '.github' not in p.parts)
 
+          def page_text(path):
+              return path.read_text(encoding='utf-8', errors='ignore')
+
           def is_indexable(path):
-              text = path.read_text(encoding='utf-8', errors='ignore')
+              text = page_text(path)
               match = re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>', text, flags=re.I)
               return not (match and 'noindex' in match.group(0).lower())
 
@@ -60,11 +68,22 @@ jobs:
               except Exception:
                   return None
 
+          def appliance_images(path):
+              text = page_text(path)
+              names = re.findall(r'(major-appliance-pickup-photo-[123]\.jpg)', text, flags=re.I)
+              seen = []
+              for name in names:
+                  name = name.lower()
+                  if name not in seen:
+                      seen.append(name)
+              return [BASE + 'assets/' + name for name in seen]
+
           pages = [p for p in all_pages if is_indexable(p)]
 
           def write_sitemap(filename):
-              urlset = ET.Element('urlset', {'xmlns':'http://www.sitemaps.org/schemas/sitemap/0.9'})
+              urlset = ET.Element(ET.QName(NS, 'urlset'))
               seen = set()
+              image_count = 0
               for page in pages:
                   if page == Path('index.html'):
                       url = BASE
@@ -74,18 +93,22 @@ jobs:
                   if url in seen:
                       continue
                   seen.add(url)
-                  u = ET.SubElement(urlset, 'url')
-                  ET.SubElement(u, 'loc').text = url
+                  u = ET.SubElement(urlset, ET.QName(NS, 'url'))
+                  ET.SubElement(u, ET.QName(NS, 'loc')).text = url
                   modified = lastmod(page)
                   if modified:
-                      ET.SubElement(u, 'lastmod').text = modified
+                      ET.SubElement(u, ET.QName(NS, 'lastmod')).text = modified
+                  for image_url in appliance_images(page):
+                      image = ET.SubElement(u, ET.QName(IMG_NS, 'image'))
+                      ET.SubElement(image, ET.QName(IMG_NS, 'loc')).text = image_url
+                      image_count += 1
               ET.indent(urlset, space='  ')
               ET.ElementTree(urlset).write(filename, encoding='utf-8', xml_declaration=True)
-              return len(seen)
+              return len(seen), image_count
 
-          count = write_sitemap('sitemap.xml')
+          count, images = write_sitemap('sitemap.xml')
           write_sitemap('sitemap-new.xml')
-          print(f'Generated focused sitemaps with {count} indexable URLs')
+          print(f'Generated focused sitemaps with {count} indexable URLs and {images} appliance-image references')
           PY
 
             if git diff --quiet -- sitemap.xml sitemap-new.xml; then
@@ -94,7 +117,7 @@ jobs:
             fi
 
             git add sitemap.xml sitemap-new.xml
-            git commit -m "Auto rebuild focused sitemaps"
+            git commit -m "Auto rebuild focused image sitemaps"
             if git push origin HEAD:main; then
               echo "Sitemaps pushed successfully"
               exit 0
