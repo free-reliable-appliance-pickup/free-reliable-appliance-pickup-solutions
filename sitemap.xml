@@ -1,5 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/</loc>
+    <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-2.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-3.jpg</image:loc>
+    </image:image>
+  </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/about/</loc>
     <lastmod>2026-09-10</lastmod>
@@ -11,10 +24,16 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/arizona-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/aurora-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-2.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/bakersfield-appliance-pickup/</loc>
@@ -23,10 +42,16 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/california-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/colorado-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-2.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/contact/</loc>
@@ -35,6 +60,9 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/denver-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/free-pickup-qualification/</loc>
@@ -55,14 +83,16 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/idaho-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
-  </url>
-  <url>
-    <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/</loc>
-    <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-2.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/inland-empire-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-2.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/keizer-appliance-pickup/</loc>
@@ -79,10 +109,16 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/las-vegas-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-2.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-3.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-county-appliance-pickup/</loc>
@@ -95,6 +131,9 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/nevada-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-3.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/oakland-appliance-pickup/</loc>
@@ -103,14 +142,23 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/orange-county-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/oregon-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-2.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/palm-desert-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-2.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/palmdale-appliance-pickup/</loc>
@@ -119,6 +167,9 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/phoenix-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-3.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/portland-appliance-pickup/</loc>
@@ -135,6 +186,9 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/riverside-county-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/sacramento-appliance-pickup/</loc>
@@ -147,10 +201,16 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/san-bernardino-county-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-3.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/san-diego-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/san-francisco-appliance-pickup/</loc>
@@ -167,6 +227,9 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/seattle-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/service-areas/</loc>
@@ -175,6 +238,9 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/stockton-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-2.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/stove-oven-pickup/</loc>
@@ -183,6 +249,9 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/utah-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/washer-dryer-pickup/</loc>
@@ -191,5 +260,8 @@
   <url>
     <loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/washington-appliance-pickup/</loc>
     <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/major-appliance-pickup-photo-3.jpg</image:loc>
+    </image:image>
   </url>
 </urlset>
