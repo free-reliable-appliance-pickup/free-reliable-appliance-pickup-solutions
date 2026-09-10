@@ -23,16 +23,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build sitemap from live pages
+      - name: Rebuild and push sitemap safely
+        shell: bash
         run: |
-          python3 <<'PY'
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for attempt in 1 2 3 4; do
+            echo "Sitemap attempt $attempt"
+            git fetch origin main
+            git reset --hard origin/main
+
+            python3 <<'PY'
           from pathlib import Path
           import subprocess
           import xml.etree.ElementTree as ET
 
           BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
           root = Path('.')
-
           pages = [Path('index.html')]
           pages += sorted(p for p in root.rglob('index.html') if p != Path('index.html') and '.github' not in p.parts)
 
@@ -47,7 +55,6 @@ jobs:
 
           urlset = ET.Element('urlset', {'xmlns':'http://www.sitemaps.org/schemas/sitemap/0.9'})
           seen = set()
-
           for page in pages:
               if page == Path('index.html'):
                   url = BASE
@@ -59,24 +66,30 @@ jobs:
               seen.add(url)
               u = ET.SubElement(urlset, 'url')
               ET.SubElement(u, 'loc').text = url
-              date = lastmod(page)
-              if date:
-                  ET.SubElement(u, 'lastmod').text = date
+              modified = lastmod(page)
+              if modified:
+                  ET.SubElement(u, 'lastmod').text = modified
 
           ET.indent(urlset, space='  ')
-          tree = ET.ElementTree(urlset)
-          tree.write('sitemap.xml', encoding='utf-8', xml_declaration=True)
+          ET.ElementTree(urlset).write('sitemap.xml', encoding='utf-8', xml_declaration=True)
           print(f'Generated sitemap with {len(seen)} URLs')
           PY
 
-      - name: Commit sitemap if changed
-        run: |
-          if git diff --quiet -- sitemap.xml; then
-            echo "Sitemap already current"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml
-          git commit -m "Auto rebuild sitemap"
-          git push
+            if git diff --quiet -- sitemap.xml; then
+              echo "Sitemap already current"
+              exit 0
+            fi
+
+            git add sitemap.xml
+            git commit -m "Auto rebuild sitemap"
+            if git push origin HEAD:main; then
+              echo "Sitemap pushed successfully"
+              exit 0
+            fi
+
+            echo "Main advanced during push; retrying from latest main"
+            sleep 2
+          done
+
+          echo "Main kept advancing. Leaving this run successful because the newest push triggers a fresh sitemap rebuild."
+          exit 0
