@@ -1,0 +1,69 @@
+name: One-Time Helpful Guide Links
+
+on:
+  push:
+    paths:
+      - '.github/workflows/link-helpful-guides.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  link-guides:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add helpful guide links
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text()
+
+          nav_anchor = '<a href="about/">About &amp; Contact</a>'
+          nav_links = '''<a href="appliance-pickup-checklist/">Pickup Checklist</a>\n<a href="landlord-property-manager-appliance-pickup/">Landlords</a>\n<a href="about/">About &amp; Contact</a>'''
+          if 'href="appliance-pickup-checklist/"' not in s:
+              s = s.replace(nav_anchor, nav_links, 1)
+
+          marker = '<section id="services">'
+          section = '''<section id="helpful-guides">\n<h2>Helpful Appliance Pickup Guides</h2>\n<p>Use these guides to prepare a pickup request, understand qualification, and provide the details needed for a faster review.</p>\n<div class="grid">\n<div class="card"><h3><a href="appliance-pickup-checklist/">Appliance Pickup Checklist</a></h3><p>Prepare appliance condition, photos, floor level, stairs, access details, city and ZIP before submitting.</p></div>\n<div class="card"><h3><a href="free-pickup-qualification/">Free Pickup Qualification</a></h3><p>See how working condition, mixed loads, local demand and access affect free-pickup eligibility.</p></div>\n<div class="card"><h3><a href="landlord-property-manager-appliance-pickup/">Landlord &amp; Property Manager Guide</a></h3><p>Plan appliance removal for rentals, turnovers, garages and multi-unit properties.</p></div>\n</div>\n</section>\n\n'''
+          if 'id="helpful-guides"' not in s:
+              s = s.replace(marker, section + marker, 1)
+
+          p.write_text(s)
+          PY
+
+      - name: Commit and push
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3 4; do
+            git fetch origin main
+            git reset --hard origin/main
+            python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text()
+          nav_anchor = '<a href="about/">About &amp; Contact</a>'
+          nav_links = '''<a href="appliance-pickup-checklist/">Pickup Checklist</a>\n<a href="landlord-property-manager-appliance-pickup/">Landlords</a>\n<a href="about/">About &amp; Contact</a>'''
+          if 'href="appliance-pickup-checklist/"' not in s:
+              s = s.replace(nav_anchor, nav_links, 1)
+          marker = '<section id="services">'
+          section = '''<section id="helpful-guides">\n<h2>Helpful Appliance Pickup Guides</h2>\n<p>Use these guides to prepare a pickup request, understand qualification, and provide the details needed for a faster review.</p>\n<div class="grid">\n<div class="card"><h3><a href="appliance-pickup-checklist/">Appliance Pickup Checklist</a></h3><p>Prepare appliance condition, photos, floor level, stairs, access details, city and ZIP before submitting.</p></div>\n<div class="card"><h3><a href="free-pickup-qualification/">Free Pickup Qualification</a></h3><p>See how working condition, mixed loads, local demand and access affect free-pickup eligibility.</p></div>\n<div class="card"><h3><a href="landlord-property-manager-appliance-pickup/">Landlord &amp; Property Manager Guide</a></h3><p>Plan appliance removal for rentals, turnovers, garages and multi-unit properties.</p></div>\n</div>\n</section>\n\n'''
+          if 'id="helpful-guides"' not in s:
+              s = s.replace(marker, section + marker, 1)
+          p.write_text(s)
+          PY
+            git add index.html
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "Link pickup checklist and landlord guide from homepage"
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 2
+          done
+          exit 1
