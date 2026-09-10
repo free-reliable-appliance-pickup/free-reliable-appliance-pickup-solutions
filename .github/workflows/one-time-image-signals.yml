@@ -1,0 +1,70 @@
+name: One-Time Image Signals
+
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-image-signals.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  add-image-signals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add fallback image metadata and visible logo
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import xml.etree.ElementTree as ET
+          from urllib.parse import urlparse
+
+          base_path = '/free-reliable-appliance-pickup-solutions/'
+          logo = 'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/assets/free-reliable-appliance-pickup-logo.svg'
+          meta = f'<meta property="og:image" content="{logo}">\n<meta property="og:image:alt" content="Free Reliable Appliance Pickup logo">'
+          img = f'<img src="{logo}" alt="Free Reliable Appliance Pickup logo" width="120" height="120" style="max-width:120px;height:auto;margin-bottom:14px" decoding="async">\n'
+
+          tree = ET.parse('sitemap.xml')
+          ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          urls = [n.text.strip() for n in tree.findall('.//sm:loc', ns) if n.text]
+
+          changed = 0
+          for url in urls:
+              path = urlparse(url).path
+              if not path.startswith(base_path):
+                  continue
+              rel = path[len(base_path):].strip('/')
+              file = Path('index.html') if not rel else Path(rel) / 'index.html'
+              if not file.exists():
+                  continue
+              s = file.read_text(encoding='utf-8')
+              original = s
+              if 'property="og:image"' not in s and "property='og:image'" not in s:
+                  s = re.sub(r'</head\s*>', meta + '\n</head>', s, count=1, flags=re.I)
+              if '<img' not in s.lower():
+                  s = re.sub(r'(<header\b[^>]*>)', r'\1\n' + img, s, count=1, flags=re.I)
+              if s != original:
+                  file.write_text(s, encoding='utf-8')
+                  changed += 1
+          print(f'Updated {changed} sitemap pages with image signals')
+          PY
+
+      - name: Commit image-signal improvements and remove workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/one-time-image-signals.yml
+          git add '*.html' '*/index.html' || true
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Add crawlable image signals to focused pages"
+          git fetch origin main
+          git rebase origin/main
+          git push origin main
