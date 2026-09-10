@@ -1,0 +1,183 @@
+name: One-Time Competitor Edge SEO Pass
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/competitor-edge-final.yml
+
+permissions:
+  contents: write
+
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Strengthen hierarchy proof and differentiation
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git reset --hard origin/main
+
+          python3 <<'PY'
+          from pathlib import Path
+          import re, json, html
+
+          BASE = 'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          photos = ['major-appliance-pickup-photo-1.jpg','major-appliance-pickup-photo-2.jpg','major-appliance-pickup-photo-3.jpg']
+
+          # Homepage: factual competitive differentiation without unverifiable claims.
+          hp = Path('index.html')
+          t = hp.read_text(encoding='utf-8')
+          if 'id="why-different"' not in t:
+              section = '''
+<section id="why-different">
+<h2>Why Free Reliable Appliance Pickup Is Different</h2>
+<div class="grid">
+<div class="card"><h3>Qualification Is Explained Up Front</h3><p>We do not pretend every appliance automatically qualifies. Working appliances receive priority, mixed loads are reviewed by working share, and special rules for microwaves and dishwashers are stated clearly before scheduling.</p></div>
+<div class="card"><h3>Photo-First Review</h3><p>Clear appliance and model-label photos help us review condition before a trip is arranged. Refrigerators and freezers should include interior photos and cooling status when possible.</p></div>
+<div class="card"><h3>Access Details Before Pickup</h3><p>Stairs, basements, upper floors, tight hallways, gates, elevators, parking and possible door removal are reviewed before scheduling so the pickup team has the information needed for the job.</p></div>
+<div class="card"><h3>Regional Contact Information</h3><p>Priority markets use regional phone numbers and local service pages so customers can submit the appliance condition, photos, city or ZIP code and access information to the correct coverage area.</p></div>
+</div>
+<p><a href="free-pickup-qualification/">See free-pickup qualification</a> · <a href="appliance-pickup-checklist/">Use the pickup checklist</a> · <a href="contact/">Contact the correct regional team</a></p>
+</section>
+'''
+              marker = '<section id="services">'
+              if marker in t:
+                  t = t.replace(marker, section + '\n' + marker, 1)
+              else:
+                  t = t.replace('</main>', section + '\n</main>', 1)
+              hp.write_text(t, encoding='utf-8')
+
+          # California hub: promote existing indexable LA County + Antelope Valley pages.
+          cp = Path('california-appliance-pickup/index.html')
+          s = cp.read_text(encoding='utf-8')
+          s = s.replace('<span class="nonindexed-area">Los Angeles County</span>', '<a href="../los-angeles-county-appliance-pickup/">Los Angeles County</a>')
+          if 'id="antelope-valley-pages"' not in s:
+              block = '''
+<section id="antelope-valley-pages">
+<h2>Antelope Valley & High Desert California</h2>
+<div class="links"><a href="../palmdale-appliance-pickup/">Palmdale Appliance Pickup</a><a href="../lancaster-appliance-pickup/">Lancaster Appliance Pickup</a></div>
+<p>Palmdale and Lancaster requests are reviewed under the broader California network. Submit the exact address or ZIP code, appliance condition, photos and access details so current route coverage can be confirmed.</p>
+</section>
+'''
+              anchor = '<section>\n<h2>Bay Area & Central California</h2>'
+              if anchor in s:
+                  s = s.replace(anchor, block + '\n' + anchor, 1)
+              else:
+                  s = s.replace('</main>', block + '\n</main>', 1)
+          cp.write_text(s, encoding='utf-8')
+
+          # Service-area hub: ensure every strong California page has a crawlable hub link.
+          sp = Path('service-areas/index.html')
+          s = sp.read_text(encoding='utf-8')
+          if 'los-angeles-county-appliance-pickup/' not in s:
+              needle = '<div class="card"><a href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-appliance-pickup/">Los Angeles Appliance Pickup</a></div>'
+              add = needle + '\n<div class="card"><a href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-county-appliance-pickup/">Los Angeles County Appliance Pickup</a></div>\n<div class="card"><a href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/palmdale-appliance-pickup/">Palmdale Appliance Pickup</a></div>\n<div class="card"><a href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/lancaster-appliance-pickup/">Lancaster Appliance Pickup</a></div>'
+              if needle in s:
+                  s = s.replace(needle, add, 1)
+          sp.write_text(s, encoding='utf-8')
+
+          # Second-tier California pages: state hierarchy + real proof + trust navigation.
+          pages = [
+              ('bakersfield-appliance-pickup/index.html','Bakersfield'),
+              ('fresno-appliance-pickup/index.html','Fresno'),
+              ('lancaster-appliance-pickup/index.html','Lancaster'),
+              ('los-angeles-county-appliance-pickup/index.html','Los Angeles County'),
+              ('modesto-appliance-pickup/index.html','Modesto'),
+              ('oakland-appliance-pickup/index.html','Oakland'),
+              ('palmdale-appliance-pickup/index.html','Palmdale'),
+              ('sacramento-appliance-pickup/index.html','Sacramento'),
+              ('san-francisco-appliance-pickup/index.html','San Francisco'),
+              ('san-jose-appliance-pickup/index.html','San Jose'),
+              ('santa-rosa-appliance-pickup/index.html','Santa Rosa'),
+          ]
+
+          for i, (filename, label) in enumerate(pages):
+              p = Path(filename)
+              if not p.exists():
+                  continue
+              text = p.read_text(encoding='utf-8', errors='ignore')
+              page_url = BASE + p.parent.as_posix().strip('/') + '/'
+
+              if '"@type":"BreadcrumbList"' not in text and '"@type": "BreadcrumbList"' not in text:
+                  crumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+                      {"@type":"ListItem","position":1,"name":"Home","item":BASE},
+                      {"@type":"ListItem","position":2,"name":"Service Areas","item":BASE+'service-areas/'},
+                      {"@type":"ListItem","position":3,"name":"California","item":BASE+'california-appliance-pickup/'},
+                      {"@type":"ListItem","position":4,"name":label,"item":page_url}
+                  ]}
+                  tag = '<script type="application/ld+json">' + json.dumps(crumb, separators=(',',':')) + '</script>\n'
+                  text = re.sub(r'</head>', tag + '</head>', text, count=1, flags=re.I)
+
+              if 'class="seo-breadcrumb"' not in text:
+                  visible = f'<div class="seo-breadcrumb" role="navigation" aria-label="Breadcrumb" style="max-width:1080px;margin:12px auto;padding:0 18px;font:14px/1.5 Arial,sans-serif"><a href="../" style="color:#075c34">Home</a> &rsaquo; <a href="../service-areas/" style="color:#075c34">Service Areas</a> &rsaquo; <a href="../california-appliance-pickup/" style="color:#075c34">California</a> &rsaquo; <span>{html.escape(label)}</span></div>'
+                  text = re.sub(r'(<body\b[^>]*>)', r'\1\n' + visible, text, count=1, flags=re.I)
+
+              if 'class="real-appliance-proof"' not in text:
+                  photo = photos[i % len(photos)]
+                  proof = f'''<section class="real-appliance-proof"><h2>Real Appliance Example</h2><figure style="margin:0;max-width:720px"><img src="../assets/{photo}" alt="Real major household appliance handled by Free Reliable Appliance Pickup" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:10px"><figcaption>Real appliance photo from our work and inventory. It is not a stock image. Pickup eligibility is reviewed for each request based on condition, location, access and available coverage.</figcaption></figure></section>'''
+                  m = re.search(r'<section[^>]*>\s*<h2[^>]*>[^<]*(?:FAQ|Frequently Asked Questions)', text, flags=re.I)
+                  if m:
+                      text = text[:m.start()] + proof + '\n' + text[m.start():]
+                  elif '</main>' in text:
+                      text = text.replace('</main>', proof + '\n</main>', 1)
+
+              if 'href="../contact/"' not in text:
+                  trust = '<p><a href="../contact/">Contact</a> · <a href="../about/">About</a> · <a href="../privacy/">Privacy</a> · <a href="../terms/">Service Terms</a></p>'
+                  text = re.sub(r'</footer>', trust + '\n</footer>', text, count=1, flags=re.I)
+
+              p.write_text(text, encoding='utf-8')
+
+          # Tighten small audit warnings without changing search intent.
+          replacements = {
+              'los-angeles-county-appliance-pickup/index.html': (
+                  r'<title>.*?</title>', '<title>Free Appliance Pickup Los Angeles County | Appliance Removal</title>',
+                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Request qualifying free appliance pickup in Los Angeles County for washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
+              ),
+              'bakersfield-appliance-pickup/index.html': (
+                  None, None,
+                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free appliance pickup in Bakersfield, CA for qualifying washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
+              ),
+              'sacramento-appliance-pickup/index.html': (
+                  None, None,
+                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free appliance pickup in Sacramento, CA for qualifying washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
+              ),
+              'san-francisco-appliance-pickup/index.html': (
+                  None, None,
+                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free appliance pickup in San Francisco, CA for qualifying washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
+              ),
+              'santa-rosa-appliance-pickup/index.html': (
+                  None, None,
+                  r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free appliance pickup in Santa Rosa, CA for qualifying washers, dryers, refrigerators, stoves and freezers. Send photos and access details.">'
+              ),
+          }
+          for filename, rules in replacements.items():
+              p = Path(filename)
+              if not p.exists():
+                  continue
+              text = p.read_text(encoding='utf-8')
+              title_pat, title_new, meta_pat, meta_new = rules
+              if title_pat:
+                  text = re.sub(title_pat, title_new, text, count=1, flags=re.I|re.S)
+              text = re.sub(meta_pat, meta_new, text, count=1, flags=re.I)
+              p.write_text(text, encoding='utf-8')
+          PY
+
+          rm -f .github/workflows/competitor-edge-final.yml
+          git add -A
+          git commit -m "Strengthen competitor edge hierarchy images and trust" || exit 0
+
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            git pull --rebase origin main
+            sleep 2
+          done
+          exit 1
