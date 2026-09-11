@@ -31,8 +31,9 @@ jobs:
               json.loads(p.read_text())
           routing=json.loads(pathlib.Path('data/market-routing.json').read_text())
           rules=routing.get('rules',{})
-          if routing.get('defaultStatus')!='request-only': sys.exit('defaultStatus must be request-only')
-          if routing.get('defaultTerritoryStatus')!='available': sys.exit('defaultTerritoryStatus must be available')
+          if rules.get('defaultStatus')!='request-only': sys.exit('rules.defaultStatus must be request-only')
+          if rules.get('defaultTerritoryStatus')!='available': sys.exit('rules.defaultTerritoryStatus must be available')
           if rules.get('automaticCityPageCreation') is not False: sys.exit('automaticCityPageCreation must remain false')
+          if rules.get('indexableCityStatuses') != ['direct','partner-supported']: sys.exit('indexableCityStatuses must remain direct and partner-supported only')
           print('Routing JSON and SEO safety defaults validated')
           PY
