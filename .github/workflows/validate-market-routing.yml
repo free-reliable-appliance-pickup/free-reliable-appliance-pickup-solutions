@@ -164,5 +164,10 @@ jobs:
           if "fetch(siteUrl('data/market-routing.json')" not in customer_script or "fetch(siteUrl('data/cities.json')" not in customer_script:
               sys.exit('customer routing must keep base-aware canonical data loading')
 
+          homepage=pathlib.Path('index.html').read_text()
+          for token in ['id="coverage-checker"','id="coverage-city"','id="coverage-state"','FreeReliableCustomerRouting.classify(city,state)']:
+              if token not in homepage:
+                  sys.exit(f'homepage coverage checker missing required token: {token}')
+
           print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); representative resolution tests passed; partner/customer routing safeguards passed; automatic city-page creation remains disabled')
           PY

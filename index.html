@@ -54,6 +54,26 @@ font-size:19px;
 
 .actions{margin-top:22px}
 
+.coverage-checker{
+max-width:760px;
+margin:24px auto 0;
+padding:18px;
+background:rgba(255,255,255,.98);
+color:#222;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,.18);
+text-align:left;
+}
+
+.coverage-checker h2{font-size:23px;margin-bottom:4px}
+.coverage-checker p{font-size:15px;margin:0 0 12px;max-width:none}
+.coverage-checker-grid{display:grid;grid-template-columns:1.4fr 1fr auto;gap:10px;align-items:end}
+.coverage-checker label{font-size:14px;color:#16472f}
+.coverage-checker button{white-space:nowrap;padding:12px 18px}
+.coverage-result{display:none;margin-top:12px;padding:12px;border-radius:8px;background:#eef9f3;border-left:4px solid #087443;font-size:15px}
+.coverage-result.is-visible{display:block}
+.coverage-result.is-limited{background:#fff8e6;border-left-color:#d99b00}
+
 .btn{
 display:inline-block;
 margin:5px;
@@ -258,6 +278,7 @@ footer a{color:#fff}
 @media(max-width:800px){
 header h1{font-size:31px}
 .grid,.contacts{grid-template-columns:1fr}
+.coverage-checker-grid{grid-template-columns:1fr}
 .states{columns:2}
 section{padding:24px 18px}
 }
@@ -344,6 +365,17 @@ section{padding:24px 18px}
 Request qualifying pickup for washers, dryers, refrigerators,
 stoves and freezers. Customers can submit requests from all 50 states. Direct and selected-partner coverage is concentrated in priority states and regional markets, and every request is reviewed before pickup is confirmed.
 </p>
+
+<div class="coverage-checker" id="coverage-checker">
+<h2>Check Your Pickup Area</h2>
+<p>Enter your city and state. We will show the correct request path for your market.</p>
+<div class="coverage-checker-grid">
+<div><label for="coverage-city">City</label><input id="coverage-city" autocomplete="address-level2" placeholder="Example: Portland"></div>
+<div><label for="coverage-state">State</label><select id="coverage-state" autocomplete="address-level1"><option value="">Select State</option></select></div>
+<button type="button" id="coverage-check-button">Check Area</button>
+</div>
+<div class="coverage-result" id="coverage-check-result" role="status" aria-live="polite"></div>
+</div>
 
 <div class="actions">
 <a class="btn" href="#request">Request Appliance Pickup</a>
@@ -999,6 +1031,54 @@ coverageType.value =
 
 }
 
+});
+
+const stateNames = Array.from(stateSelect.options).slice(1).map(option => option.value || option.textContent);
+const coverageState = document.getElementById("coverage-state");
+const coverageCity = document.getElementById("coverage-city");
+const coverageCheckButton = document.getElementById("coverage-check-button");
+const coverageCheckResult = document.getElementById("coverage-check-result");
+
+stateNames.forEach(function(stateName){
+const option = document.createElement("option");
+option.value = stateName;
+option.textContent = stateName;
+coverageState.appendChild(option);
+});
+
+coverageCheckButton.addEventListener("click", async function(){
+const city = coverageCity.value.trim();
+const state = coverageState.value;
+if(!city || !state){
+coverageCheckResult.className = "coverage-result is-visible is-limited";
+coverageCheckResult.textContent = "Enter both your city and state to check the correct pickup path.";
+return;
+}
+
+coverageCheckButton.disabled = true;
+coverageCheckButton.textContent = "Checking…";
+await window.FreeReliableCustomerRouting.load();
+const route = window.FreeReliableCustomerRouting.classify(city,state);
+const direct = route.status === "direct" || route.status === "partner-supported";
+const recruiting = route.status === "partner-recruiting";
+const region = route.region && !route.region.includes("statewide intake") ? " in " + route.region : "";
+
+coverageCheckResult.className = "coverage-result is-visible" + (direct ? "" : " is-limited");
+if(direct){
+coverageCheckResult.innerHTML = "<strong>Established coverage" + region + ".</strong> Your appliance still needs qualification. Continue below to send condition, photos and access details.";
+}else if(recruiting){
+coverageCheckResult.innerHTML = "<strong>Request review available" + region + ".</strong> We are building local partner coverage here. Submit the request below and pickup will be confirmed only if qualified coverage is available.";
+}else{
+coverageCheckResult.innerHTML = "<strong>Nationwide request intake is available.</strong> Local pickup is not yet established for this market. You may submit the request below for partner-availability review.";
+}
+
+document.getElementById("city").value = city;
+stateSelect.value = state;
+stateSelect.dispatchEvent(new Event("change"));
+coverageType.value = route.status;
+coverageCheckResult.insertAdjacentHTML("beforeend", ' <a href="#request">Continue to pickup request</a>.');
+coverageCheckButton.disabled = false;
+coverageCheckButton.textContent = "Check Area";
 });
 
 </script>
