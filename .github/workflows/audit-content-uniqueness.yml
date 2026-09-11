@@ -1,0 +1,86 @@
+name: Audit Content Uniqueness
+
+on:
+  push:
+    paths:
+      - '.github/workflows/audit-content-uniqueness.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Analyze city-page uniqueness and usability
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, html, itertools
+          from difflib import SequenceMatcher
+
+          def visible_text(raw):
+              raw = re.sub(r'<script\b[^>]*>.*?</script>', ' ', raw, flags=re.I|re.S)
+              raw = re.sub(r'<style\b[^>]*>.*?</style>', ' ', raw, flags=re.I|re.S)
+              raw = re.sub(r'<!--.*?-->', ' ', raw, flags=re.S)
+              raw = re.sub(r'<[^>]+>', ' ', raw)
+              raw = html.unescape(raw)
+              raw = re.sub(r'\b\d{3}[-.)\s]*\d{3}[-.\s]*\d{4}\b', ' PHONE ', raw)
+              raw = re.sub(r'\b\d{5}(?:-\d{4})?\b', ' ZIP ', raw)
+              raw = re.sub(r'\s+', ' ', raw).strip().lower()
+              return raw
+
+          pages = []
+          for p in Path('.').glob('*/index.html'):
+              slug = p.parent.name
+              if 'appliance-pickup' not in slug:
+                  continue
+              raw = p.read_text(encoding='utf-8', errors='ignore')
+              txt = visible_text(raw)
+              words = re.findall(r"[a-z0-9']+", txt)
+              has_form = 'formspree.io/f/mvzeapzd' in raw
+              funnels_home = ('../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw)
+              pages.append({
+                  'slug': slug,
+                  'path': str(p),
+                  'raw': raw,
+                  'txt': txt,
+                  'words': len(words),
+                  'has_form': has_form,
+                  'funnels_home': funnels_home,
+              })
+
+          print('CITY_PAGE_COUNT', len(pages))
+          print('WITH_LOCAL_FORM', sum(x['has_form'] for x in pages))
+          print('FUNNEL_TO_HOMEPAGE_FORM', sum(x['funnels_home'] for x in pages))
+          print('UNDER_350_WORDS', sum(x['words'] < 350 for x in pages))
+          print('UNDER_500_WORDS', sum(x['words'] < 500 for x in pages))
+          print('\nLOWEST_WORD_COUNT')
+          for x in sorted(pages, key=lambda x:x['words'])[:20]:
+              print(f"{x['words']:4d} | form={x['has_form']} funnel={x['funnels_home']} | {x['slug']}")
+
+          pairs=[]
+          for a,b in itertools.combinations(pages,2):
+              # Compare visible text after replacing each slug's city words to reduce false uniqueness from city names.
+              ta=a['txt']
+              tb=b['txt']
+              for slug in (a['slug'], b['slug']):
+                  for token in slug.replace('-appliance-pickup','').split('-'):
+                      if len(token)>2:
+                          ta=re.sub(rf'\b{re.escape(token)}\b',' CITY ',ta)
+                          tb=re.sub(rf'\b{re.escape(token)}\b',' CITY ',tb)
+              ratio=SequenceMatcher(None,ta,tb,autojunk=True).ratio()
+              pairs.append((ratio,a['slug'],b['slug']))
+
+          print('\nMOST_SIMILAR_PAIRS')
+          for ratio,a,b in sorted(pairs, reverse=True)[:30]:
+              print(f"{ratio:.3f} | {a} <-> {b}")
+
+          print('\nPAGES_STILL_FUNNELING')
+          for x in pages:
+              if x['funnels_home']:
+                  print(x['slug'])
+          PY
