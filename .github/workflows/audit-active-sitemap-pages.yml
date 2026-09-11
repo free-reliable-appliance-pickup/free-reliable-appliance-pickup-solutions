@@ -13,21 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Report active sitemap city pages
+      - name: Report active sitemap market pages
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
           import re, html, xml.etree.ElementTree as ET
 
+          BASE='https://freereliableappliancepickup.com/'
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           urls=[x.text.strip() for x in root.findall('.//s:loc',ns) if x.text]
           active=set()
           for u in urls:
-              base='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
-              if u.startswith(base):
-                  rest=u[len(base):].strip('/')
+              if u.startswith(BASE):
+                  rest=u[len(BASE):].strip('/')
                   if rest:
                       active.add(rest)
 
@@ -41,13 +41,11 @@ jobs:
           rows=[]
           for slug in sorted(active):
               p=Path(slug)/'index.html'
-              if not p.exists():
+              if not p.exists() or 'appliance-pickup' not in slug:
                   continue
               raw=p.read_text(encoding='utf-8',errors='ignore')
-              if 'appliance-pickup' not in slug:
-                  continue
               rows.append((slug,words(raw),'formspree.io/f/mvzeapzd' in raw,'../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw,'noindex' in raw.lower()))
-          print('ACTIVE_CITY_OR_MARKET_PAGES',len(rows))
+          print('ACTIVE_MARKET_PAGES',len(rows))
           print('ACTIVE_WITH_LOCAL_FORM',sum(r[2] for r in rows))
           print('ACTIVE_STILL_FUNNELING',sum(r[3] for r in rows))
           print('ACTIVE_UNDER_350_WORDS',sum(r[1]<350 for r in rows))
