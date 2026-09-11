@@ -1,0 +1,49 @@
+name: Add missing regional schema
+on:
+  push:
+    paths:
+      - '.github/workflows/add-missing-regional-schema.yml'
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add Service and Breadcrumb JSON-LD where missing
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          pages = {
+            'arizona-appliance-pickup/index.html': ('Arizona Appliance Pickup','Major appliance pickup request review', {'@type':'State','name':'Arizona'}, [('Home','/'),('Service Areas','/service-areas/'),('Arizona','/arizona-appliance-pickup/')]),
+            'phoenix-metro-appliance-pickup/index.html': ('Phoenix Metro Appliance Pickup','Major appliance pickup request review', {'@type':'AdministrativeArea','name':'Phoenix metropolitan area'}, [('Home','/'),('Arizona','/arizona-appliance-pickup/'),('Phoenix Metro','/phoenix-metro-appliance-pickup/')]),
+            'puget-sound-appliance-pickup/index.html': ('Puget Sound Appliance Pickup','Major appliance pickup request review', {'@type':'AdministrativeArea','name':'Puget Sound'}, [('Home','/'),('Washington','/washington-appliance-pickup/'),('Puget Sound','/puget-sound-appliance-pickup/')]),
+            'washington-appliance-pickup/index.html': ('Washington Appliance Pickup','Major appliance pickup request review', {'@type':'State','name':'Washington'}, [('Home','/'),('Service Areas','/service-areas/'),('Washington','/washington-appliance-pickup/')]),
+            'las-vegas-valley-appliance-pickup/index.html': ('Las Vegas Valley Appliance Pickup','Major appliance pickup request review', {'@type':'AdministrativeArea','name':'Las Vegas Valley'}, [('Home','/'),('Nevada','/nevada-appliance-pickup/'),('Las Vegas Valley','/las-vegas-valley-appliance-pickup/')]),
+            'nevada-appliance-pickup/index.html': ('Nevada Appliance Pickup','Major appliance pickup request review', {'@type':'State','name':'Nevada'}, [('Home','/'),('Service Areas','/service-areas/'),('Nevada','/nevada-appliance-pickup/')]),
+            'wasatch-front-appliance-pickup/index.html': ('Wasatch Front Appliance Pickup','Major appliance pickup request review', {'@type':'AdministrativeArea','name':'Wasatch Front'}, [('Home','/'),('Utah','/utah-appliance-pickup/'),('Wasatch Front','/wasatch-front-appliance-pickup/')]),
+            'utah-appliance-pickup/index.html': ('Utah Appliance Pickup','Major appliance pickup request review', {'@type':'State','name':'Utah'}, [('Home','/'),('Service Areas','/service-areas/'),('Utah','/utah-appliance-pickup/')]),
+            'treasure-valley-appliance-pickup/index.html': ('Treasure Valley Appliance Pickup','Major appliance pickup request review', {'@type':'AdministrativeArea','name':'Treasure Valley'}, [('Home','/'),('Idaho','/idaho-appliance-pickup/'),('Treasure Valley','/treasure-valley-appliance-pickup/')]),
+            'idaho-appliance-pickup/index.html': ('Idaho Appliance Pickup','Major appliance pickup request review', {'@type':'State','name':'Idaho'}, [('Home','/'),('Service Areas','/service-areas/'),('Idaho','/idaho-appliance-pickup/')]),
+          }
+          base='https://freereliableappliancepickup.com'
+          for path,(name,stype,area,crumbs) in pages.items():
+              p=Path(path)
+              if not p.exists(): continue
+              s=p.read_text()
+              if 'application/ld+json' in s: continue
+              url=base+'/'+path.removesuffix('index.html')
+              data={'@context':'https://schema.org','@graph':[{'@type':'Service','name':name,'serviceType':stype,'provider':{'@type':'Organization','name':'Free Reliable Appliance Pickup','url':base+'/'},'areaServed':area,'url':url},{'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':i+1,'name':n,'item':base+u} for i,(n,u) in enumerate(crumbs)]}]}
+              tag='<script type="application/ld+json">'+json.dumps(data,separators=(',',':'))+'</script>'
+              s=s.replace('</head>',tag+'</head>',1)
+              p.write_text(s)
+          PY
+      - name: Commit repairs
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add arizona-appliance-pickup phoenix-metro-appliance-pickup puget-sound-appliance-pickup washington-appliance-pickup las-vegas-valley-appliance-pickup nevada-appliance-pickup wasatch-front-appliance-pickup utah-appliance-pickup treasure-valley-appliance-pickup idaho-appliance-pickup
+          git diff --cached --quiet && exit 0
+          git commit -m "Add missing Service and breadcrumb schema to regional hubs"
+          git push
