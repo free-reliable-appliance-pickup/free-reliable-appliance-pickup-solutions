@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check active sitemap forms, funnels and similarity
+      - name: Check active sitemap core-content similarity
         shell: bash
         run: |
           python - <<'PY'
@@ -32,11 +32,20 @@ jobs:
                   if slug and 'appliance-pickup' in slug and (Path(slug)/'index.html').exists():
                       active.append(slug)
 
-          def words(raw):
-              x=re.sub(r'<script\b[^>]*>.*?</script>',' ',raw,flags=re.I|re.S)
-              x=re.sub(r'<style\b[^>]*>.*?</style>',' ',x,flags=re.I|re.S)
+          def visible_words(raw, core=False):
+              x=raw
+              for tag in ['script','style']:
+                  x=re.sub(rf'<{tag}\b[^>]*>.*?</{tag}>',' ',x,flags=re.I|re.S)
+              if core:
+                  # Forms, global navigation, headers and footers are shared UI boilerplate,
+                  # not the local editorial/service content we want to compare.
+                  for tag in ['form','nav','header','footer']:
+                      x=re.sub(rf'<{tag}\b[^>]*>.*?</{tag}>',' ',x,flags=re.I|re.S)
+              x=re.sub(r'<!--.*?-->',' ',x,flags=re.S)
               x=re.sub(r'<[^>]+>',' ',x)
               x=html.unescape(x).lower()
+              x=re.sub(r'\b\d{3}[-.)\s]*\d{3}[-.\s]*\d{4}\b',' phone ',x)
+              x=re.sub(r'\b\d{5}(?:-\d{4})?\b',' zip ',x)
               return re.findall(r"[a-z0-9']+",x)
 
           def shingles(ws,n=5):
@@ -45,11 +54,13 @@ jobs:
           rows=[]
           for slug in active:
               raw=(Path(slug)/'index.html').read_text(encoding='utf-8',errors='ignore')
-              ws=words(raw)
+              all_words=visible_words(raw,False)
+              core_words=visible_words(raw,True)
               tokens=set(slug.replace('-appliance-pickup','').split('-'))
-              norm=['city' if w in tokens and len(w)>2 else w for w in ws]
+              norm=['city' if w in tokens and len(w)>2 else w for w in core_words]
               rows.append({
-                  'slug':slug,'words':len(ws),'form':'formspree.io/f/mvzeapzd' in raw,
+                  'slug':slug,'words':len(all_words),'core_words':len(core_words),
+                  'form':'formspree.io/f/mvzeapzd' in raw,
                   'funnel':'../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw,
                   'noindex':bool(re.search(r'<meta\s+name=["\']robots["\'][^>]*noindex',raw,re.I)),
                   'sh':shingles(norm)
@@ -59,23 +70,19 @@ jobs:
           print('WITH_LOCAL_FORM',sum(r['form'] for r in rows))
           print('STILL_FUNNELING_HOME',sum(r['funnel'] for r in rows))
           print('NOINDEX_ACTIVE',sum(r['noindex'] for r in rows))
-          print('UNDER_350_WORDS',sum(r['words']<350 for r in rows))
-          print('\nPAGES_WITHOUT_LOCAL_FORM')
-          for r in rows:
-              if not r['form']: print(r['slug'])
-          print('\nPAGES_STILL_FUNNELING')
-          for r in rows:
-              if r['funnel']: print(r['slug'])
+          print('UNDER_350_TOTAL_WORDS',sum(r['words']<350 for r in rows))
+          print('UNDER_300_CORE_WORDS',sum(r['core_words']<300 for r in rows))
 
           pairs=[]
           for a,b in itertools.combinations(rows,2):
               union=a['sh']|b['sh']; inter=a['sh']&b['sh']
               score=len(inter)/len(union) if union else 0
               pairs.append((score,a['slug'],b['slug']))
-          print('\nMOST_SIMILAR_ACTIVE_PAIRS')
+          print('\nMOST_SIMILAR_CORE_CONTENT_PAIRS')
           for score,a,b in sorted(pairs,reverse=True)[:30]:
               print(f'{score:.3f} | {a} <-> {b}')
-          print('\nLOWEST_ACTIVE_WORD_COUNTS')
-          for r in sorted(rows,key=lambda x:x['words'])[:20]:
-              print(f"{r['words']:4d} | {r['slug']}")
+
+          print('\nLOWEST_CORE_WORD_COUNTS')
+          for r in sorted(rows,key=lambda x:x['core_words'])[:25]:
+              print(f"core={r['core_words']:4d} total={r['words']:4d} | {r['slug']}")
           PY
