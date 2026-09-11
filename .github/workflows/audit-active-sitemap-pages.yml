@@ -1,0 +1,58 @@
+name: Audit Active Sitemap Pages
+
+on:
+  push:
+    paths:
+      - '.github/workflows/audit-active-sitemap-pages.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Report active sitemap city pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, html, xml.etree.ElementTree as ET
+
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          urls=[x.text.strip() for x in root.findall('.//s:loc',ns) if x.text]
+          active=set()
+          for u in urls:
+              base='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+              if u.startswith(base):
+                  rest=u[len(base):].strip('/')
+                  if rest:
+                      active.add(rest)
+
+          def words(raw):
+              raw=re.sub(r'<script\b[^>]*>.*?</script>',' ',raw,flags=re.I|re.S)
+              raw=re.sub(r'<style\b[^>]*>.*?</style>',' ',raw,flags=re.I|re.S)
+              raw=re.sub(r'<[^>]+>',' ',raw)
+              raw=html.unescape(raw)
+              return len(re.findall(r"[A-Za-z0-9']+",raw))
+
+          rows=[]
+          for slug in sorted(active):
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              if 'appliance-pickup' not in slug:
+                  continue
+              rows.append((slug,words(raw),'formspree.io/f/mvzeapzd' in raw,'../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw,'noindex' in raw.lower()))
+          print('ACTIVE_CITY_OR_MARKET_PAGES',len(rows))
+          print('ACTIVE_WITH_LOCAL_FORM',sum(r[2] for r in rows))
+          print('ACTIVE_STILL_FUNNELING',sum(r[3] for r in rows))
+          print('ACTIVE_UNDER_350_WORDS',sum(r[1]<350 for r in rows))
+          print('ACTIVE_NOINDEX',sum(r[4] for r in rows))
+          print('\nACTIVE_ROWS')
+          for r in sorted(rows,key=lambda x:x[1]):
+              print(f"{r[1]:4d} | form={r[2]} funnel={r[3]} noindex={r[4]} | {r[0]}")
+          PY
