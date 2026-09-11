@@ -50,13 +50,16 @@
 <p>Submit the appliance condition, pickup address, access details and photos or photo information. This request is reviewed specifically for Denver, Colorado before pickup is confirmed.</p>
 <p><strong>Call or text <a href="tel:+17206047498">720-604-7498</a></strong> for Denver pickup questions.</p>
 <form action="https://formspree.io/f/mvzeapzd" method="POST" style="display:grid;gap:12px">
+<label for="actual-pickup-city">Pickup City</label>
+<input id="actual-pickup-city" type="text" name="city" value="Denver" autocomplete="address-level2" required style="width:100%;padding:12px">
+
 <input type="hidden" name="_subject" value="Denver Colorado Appliance Pickup Request">
-<input type="hidden" name="city" value="Denver">
+
 <input type="hidden" name="state" value="Colorado">
-<label>Full Name<input type="text" name="name" required style="width:100%;padding:12px;margin-top:6px"></label>
-<label>Phone Number<input type="tel" name="phone" required style="width:100%;padding:12px;margin-top:6px"></label>
-<label>Pickup Address<input type="text" name="address" required style="width:100%;padding:12px;margin-top:6px"></label>
-<label>ZIP Code<input type="text" name="zip" required style="width:100%;padding:12px;margin-top:6px"></label>
+<label>Full Name<input type="text" name="name" required style="width:100%;padding:12px;margin-top:6px" autocomplete="name"></label>
+<label>Phone Number<input type="tel" name="phone" required style="width:100%;padding:12px;margin-top:6px" autocomplete="tel"></label>
+<label>Pickup Address<input type="text" name="address" required style="width:100%;padding:12px;margin-top:6px" autocomplete="street-address"></label>
+<label>ZIP Code<input type="text" name="zip" required style="width:100%;padding:12px;margin-top:6px" autocomplete="postal-code" inputmode="numeric"></label>
 <label>Appliance Type<select name="appliance" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select appliance</option><option>Washer</option><option>Dryer</option><option>Washer and Dryer</option><option>Refrigerator</option><option>Freezer</option><option>Stove / Range / Oven</option><option>Multiple Major Appliances</option><option>Other Major Appliance</option></select></label>
 <label>Condition<select name="condition" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select condition</option><option>Fully Working</option><option>Needs Repair</option><option>Not Working</option><option>Unknown</option></select></label>
 <label>Appliance Location<select name="location" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select location</option><option>First Floor</option><option>Second Floor</option><option>Third Floor or Higher</option><option>Basement</option><option>Garage</option><option>Outside</option><option>Other</option></select></label>
