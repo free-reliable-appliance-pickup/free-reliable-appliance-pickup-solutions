@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-11",
+  "version": "2026-09-11.2",
   "purpose": "Operational coverage routing for the nationwide appliance pickup partner network. This file is not a promise of pickup availability. Customer requests remain subject to qualification and confirmed local coverage.",
   "statuses": {
     "direct": "Established market served by Free Reliable Appliance Pickup operations.",
@@ -7,31 +7,47 @@
     "partner-recruiting": "Priority market where partner applications are being recruited.",
     "request-only": "Customers may submit requests, but local pickup coverage is not yet established."
   },
+  "territoryStatuses": {
+    "protected": "Reserved for direct company operations or an approved partner.",
+    "assigned": "Assigned to an approved partner.",
+    "available": "Open for partner application and review.",
+    "waitlist": "Not currently assignable; applications may be held for future review."
+  },
   "rules": {
     "defaultStatus": "request-only",
+    "defaultTerritoryStatus": "available",
     "indexableCityStatuses": ["direct", "partner-supported"],
     "regionalHubStatuses": ["direct", "partner-supported", "partner-recruiting"],
     "cityPagePolicy": "Create or index a city service page only when the market has direct or partner-supported coverage and the page contains useful market-specific service information.",
     "qualificationRequired": true,
-    "coverageConfirmationRequired": true
+    "coverageConfirmationRequired": true,
+    "partnerAssignmentRequiredForPartnerSupported": true,
+    "automaticCityPageCreation": false
   },
   "markets": [
-    {"state":"Oregon","region":"Portland Metro","city":"Portland","status":"direct","phone":"503-868-4455"},
-    {"state":"Oregon","region":"Salem Metro","city":"Salem","status":"direct","phone":"503-868-4455"},
-    {"state":"Colorado","region":"Denver Metro","city":"Denver","status":"direct","phone":"720-604-7498"},
-    {"state":"Colorado","region":"Denver Metro","city":"Aurora","status":"direct","phone":"720-604-7498"},
-    {"state":"California","region":"Los Angeles County","status":"partner-recruiting","phone":"310-774-4304"},
-    {"state":"California","region":"Inland Empire","status":"partner-recruiting","phone":"909-375-6685"},
-    {"state":"California","region":"Orange County","status":"partner-recruiting","phone":"909-375-6685"},
-    {"state":"California","region":"Riverside County","status":"partner-recruiting","phone":"909-375-6685"},
-    {"state":"California","region":"San Diego County","status":"partner-recruiting","phone":"310-774-4304"},
-    {"state":"California","region":"San Francisco Bay Area","status":"partner-recruiting","phone":"310-774-4304"},
-    {"state":"California","region":"Central Valley","status":"partner-recruiting","phone":"310-774-4304"},
-    {"state":"California","region":"Central Coast","status":"partner-recruiting","phone":"310-774-4304"},
-    {"state":"Washington","region":"Puget Sound","status":"partner-recruiting","phone":"503-868-4455"},
-    {"state":"Arizona","region":"Phoenix Metro","status":"partner-recruiting"},
-    {"state":"Nevada","region":"Las Vegas Valley","status":"partner-recruiting"},
-    {"state":"Utah","region":"Wasatch Front","status":"partner-recruiting"},
-    {"state":"Idaho","region":"Treasure Valley","status":"partner-recruiting"}
+    {"state":"Oregon","state_code":"OR","region":"Portland Metro","city":"Portland","status":"direct","territory_status":"protected","partner_id":null,"backup_partner_id":null,"lead_priority":1,"phone":"503-868-4455","pricing_status":"not_for_sale","monthly_price_cents":null},
+    {"state":"Oregon","state_code":"OR","region":"Salem Metro","city":"Salem","status":"direct","territory_status":"protected","partner_id":null,"backup_partner_id":null,"lead_priority":1,"phone":"503-868-4455","pricing_status":"not_for_sale","monthly_price_cents":null},
+    {"state":"Colorado","state_code":"CO","region":"Denver Metro","city":"Denver","status":"direct","territory_status":"protected","partner_id":null,"backup_partner_id":null,"lead_priority":1,"phone":"720-604-7498","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Colorado","state_code":"CO","region":"Denver Metro","city":"Aurora","status":"direct","territory_status":"protected","partner_id":null,"backup_partner_id":null,"lead_priority":1,"phone":"720-604-7498","pricing_status":"collect_data","monthly_price_cents":null},
+
+    {"state":"California","state_code":"CA","region":"Los Angeles County","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"California","state_code":"CA","region":"Inland Empire","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"909-375-6685","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"California","state_code":"CA","region":"Orange County","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"909-375-6685","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"California","state_code":"CA","region":"Riverside County","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"909-375-6685","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"California","state_code":"CA","region":"San Diego County","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"California","state_code":"CA","region":"San Francisco Bay Area","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"California","state_code":"CA","region":"Central Valley","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"California","state_code":"CA","region":"Central Coast","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
+
+    {"state":"Washington","state_code":"WA","region":"Puget Sound","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"503-868-4455","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Arizona","state_code":"AZ","region":"Phoenix Metro","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Nevada","state_code":"NV","region":"Las Vegas Valley","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Utah","state_code":"UT","region":"Wasatch Front","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Idaho","state_code":"ID","region":"Treasure Valley","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+
+    {"state":"Texas","state_code":"TX","region":"Dallas-Fort Worth","status":"request-only","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":3,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Texas","state_code":"TX","region":"Houston Metro","status":"request-only","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":3,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Florida","state_code":"FL","region":"South Florida","status":"request-only","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":3,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Florida","state_code":"FL","region":"Central Florida","status":"request-only","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":3,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null}
   ]
 }
