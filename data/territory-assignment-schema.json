@@ -1,0 +1,34 @@
+{
+  "version": "2026-09-11",
+  "purpose": "Internal territory assignment records connecting approved partners to operational markets without creating public SEO pages.",
+  "rules": {
+    "approvedPartnerRequired": true,
+    "activeAssignmentRequiredForRouting": true,
+    "assignmentDoesNotCreateSeoPage": true,
+    "publicPartnerIdentity": false,
+    "allowPrimaryAndBackupAssignments": true
+  },
+  "assignmentStatuses": {
+    "pending": "Assignment is being reviewed and cannot receive leads.",
+    "active": "Assignment is approved and eligible to receive routed leads.",
+    "paused": "Assignment is temporarily unavailable for new leads.",
+    "ended": "Assignment is no longer active."
+  },
+  "assignmentTemplate": {
+    "assignment_id": null,
+    "partner_id": null,
+    "state_code": null,
+    "region": null,
+    "city": null,
+    "role": "primary",
+    "status": "pending",
+    "service_radius_miles": null,
+    "appliance_types": ["washer", "dryer", "refrigerator", "freezer", "stove", "range", "oven"],
+    "daily_capacity": null,
+    "monthly_price_cents": null,
+    "starts_on": null,
+    "ends_on": null,
+    "notes": null
+  },
+  "assignments": []
+}
