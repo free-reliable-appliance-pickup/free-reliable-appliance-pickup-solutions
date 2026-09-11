@@ -1,0 +1,76 @@
+name: Audit Active Metadata Uniqueness
+
+on:
+  push:
+    paths:
+      - '.github/workflows/audit-active-metadata-uniqueness.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check canonical, title, description and H1 uniqueness
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from collections import defaultdict
+          import re, html, xml.etree.ElementTree as ET
+
+          BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          urls=[e.text.strip() for e in root.findall('.//s:loc',ns) if e.text]
+
+          def file_for(url):
+              if url.rstrip('/')==BASE.rstrip('/'):
+                  return Path('index.html')
+              rel=url[len(BASE):].strip('/')
+              p=Path(rel)
+              return p if p.suffix else p/'index.html'
+
+          def get(pattern,text):
+              m=re.search(pattern,text,re.I|re.S)
+              return html.unescape(re.sub(r'<[^>]+>',' ',m.group(1)).strip()) if m else ''
+
+          rows=[]
+          for url in urls:
+              p=file_for(url)
+              if not p.exists():
+                  rows.append((url,'','','','MISSING'))
+                  continue
+              s=p.read_text(encoding='utf-8',errors='ignore')
+              title=get(r'<title[^>]*>(.*?)</title>',s)
+              desc=get(r'<meta\s+name=["\']description["\'][^>]*content=["\']([^"\']*)["\']',s)
+              if not desc:
+                  desc=get(r'<meta\s+content=["\']([^"\']*)["\'][^>]*name=["\']description["\']',s)
+              h1=get(r'<h1[^>]*>(.*?)</h1>',s)
+              can=get(r'<link\s+rel=["\']canonical["\'][^>]*href=["\']([^"\']+)["\']',s)
+              if not can:
+                  can=get(r'<link\s+href=["\']([^"\']+)["\'][^>]*rel=["\']canonical["\']',s)
+              rows.append((url,title,desc,h1,can))
+
+          print('ACTIVE_URLS',len(rows))
+          print('MISSING_TITLE',sum(not r[1] for r in rows))
+          print('MISSING_DESCRIPTION',sum(not r[2] for r in rows))
+          print('MISSING_H1',sum(not r[3] for r in rows))
+          print('MISSING_CANONICAL',sum(not r[4] for r in rows))
+          bad=[r for r in rows if r[4] and r[4].rstrip('/')!=r[0].rstrip('/')]
+          print('CANONICAL_MISMATCH',len(bad))
+          for r in bad: print('BAD_CANONICAL',r[0],'->',r[4])
+
+          for label,idx in [('TITLE',1),('DESCRIPTION',2),('H1',3)]:
+              groups=defaultdict(list)
+              for r in rows:
+                  key=' '.join(r[idx].lower().split())
+                  if key: groups[key].append(r[0])
+              dups=[(k,v) for k,v in groups.items() if len(v)>1]
+              print('\nDUPLICATE_'+label+'_GROUPS',len(dups))
+              for k,v in sorted(dups,key=lambda x:(-len(x[1]),x[0])):
+                  print(label,len(v),k)
+                  for u in v: print(' ',u)
+          PY
