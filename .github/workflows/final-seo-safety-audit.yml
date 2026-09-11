@@ -1,0 +1,48 @@
+name: Final SEO safety audit
+on:
+  push:
+    paths:
+      - '.github/workflows/final-seo-safety-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit indexable pages, canonicals, sitemap and retired-link leaks
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, sys, xml.etree.ElementTree as ET
+          base='https://freereliableappliancepickup.com/'
+          errors=[]
+          html=list(Path('.').glob('**/index.html'))+[Path('index.html')]
+          html=list(dict.fromkeys(p for p in html if p.exists() and '.git' not in p.parts))
+          indexable=[]
+          for p in html:
+              s=p.read_text(errors='ignore')
+              low=s.lower()
+              if 'noindex' not in low:
+                  indexable.append(p)
+                  c=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',s,re.I)
+                  if not c: errors.append(f'MISSING CANONICAL {p}')
+                  elif not c[0].startswith(base): errors.append(f'BAD CANONICAL {p}: {c[0]}')
+                  if '<title>' not in low: errors.append(f'MISSING TITLE {p}')
+                  if '<h1' not in low: errors.append(f'MISSING H1 {p}')
+          sitemap=Path('sitemap.xml').read_text(errors='ignore')
+          locs=set(re.findall(r'<loc>(.*?)</loc>',sitemap))
+          for p in indexable:
+              rel='' if str(p)=='index.html' else str(p.parent).replace('\\','/')+'/'
+              url=base+rel
+              if url not in locs: errors.append(f'INDEXABLE NOT IN SITEMAP {p} -> {url}')
+          retired=['palm-desert-appliance-pickup','palm-springs-appliance-pickup','rancho-mirage-appliance-pickup','indian-wells-appliance-pickup','la-quinta-appliance-pickup','cathedral-city-appliance-pickup','indio-appliance-pickup','keizer-appliance-pickup','stockton-appliance-pickup','wheat-ridge']
+          for p in indexable:
+              s=p.read_text(errors='ignore').lower()
+              for r in retired:
+                  if ('href="/'+r+'/' in s or "href='/"+r+"/" in s or 'href="../'+r+'/' in s or "href='../"+r+"/" in s):
+                      errors.append(f'RETIRED LINK LEAK {p}: {r}')
+          if errors:
+              print('\n'.join(errors)); sys.exit(1)
+          print(f'PASS: {len(indexable)} indexable HTML pages checked; sitemap/canonicals/titles/H1/retired-link leaks clean')
+          PY
