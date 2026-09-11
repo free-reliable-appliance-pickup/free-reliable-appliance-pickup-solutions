@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-11",
+  "version": "2026-09-11.2",
   "purpose": "Structured city catalog for partner territory selection and internal routing support. This file does not create public SEO pages or imply confirmed pickup coverage.",
   "notes": [
     "The live partner application may include additional cities beyond this priority catalog.",
@@ -65,10 +65,21 @@
 
     {"city":"Dallas","state":"Texas","state_code":"TX","region":"Dallas-Fort Worth","priority":2},
     {"city":"Fort Worth","state":"Texas","state_code":"TX","region":"Dallas-Fort Worth","priority":2},
+    {"city":"Arlington","state":"Texas","state_code":"TX","region":"Dallas-Fort Worth","priority":2},
+    {"city":"Plano","state":"Texas","state_code":"TX","region":"Dallas-Fort Worth","priority":2},
     {"city":"Houston","state":"Texas","state_code":"TX","region":"Houston Metro","priority":2},
+    {"city":"Austin","state":"Texas","state_code":"TX","region":"Austin Metro","priority":2},
+    {"city":"Round Rock","state":"Texas","state_code":"TX","region":"Austin Metro","priority":2},
+    {"city":"San Antonio","state":"Texas","state_code":"TX","region":"San Antonio Metro","priority":2},
+
     {"city":"Miami","state":"Florida","state_code":"FL","region":"South Florida","priority":2},
     {"city":"Fort Lauderdale","state":"Florida","state_code":"FL","region":"South Florida","priority":2},
+    {"city":"West Palm Beach","state":"Florida","state_code":"FL","region":"South Florida","priority":2},
     {"city":"Orlando","state":"Florida","state_code":"FL","region":"Central Florida","priority":2},
-    {"city":"Tampa","state":"Florida","state_code":"FL","region":"Central Florida","priority":2}
+    {"city":"Kissimmee","state":"Florida","state_code":"FL","region":"Central Florida","priority":2},
+    {"city":"Tampa","state":"Florida","state_code":"FL","region":"Tampa Bay","priority":2},
+    {"city":"St. Petersburg","state":"Florida","state_code":"FL","region":"Tampa Bay","priority":2},
+    {"city":"Clearwater","state":"Florida","state_code":"FL","region":"Tampa Bay","priority":2},
+    {"city":"Jacksonville","state":"Florida","state_code":"FL","region":"Northeast Florida","priority":2}
   ]
 }
