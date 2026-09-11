@@ -159,6 +159,13 @@ jobs:
               sys.exit('partner page must not load customer-routing.js')
           if 'automaticCityPageCreation' in partner_page:
               sys.exit('partner page must not contain city-page generation controls')
+          required_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','id="territorySummary"']
+          for token in required_matching_fields:
+              if token not in partner_page:
+                  sys.exit(f'partner capability matching field missing: {token}')
+          for token in ['publicLabel(market)','classifySelection();']:
+              if token not in partner_script:
+                  sys.exit(f'partner territory status display missing: {token}')
           if "automaticCityPageCreation') is not False" not in pathlib.Path('.github/workflows/validate-market-routing.yml').read_text():
               sys.exit('validator must continue enforcing automaticCityPageCreation=false')
           if "fetch(siteUrl('data/market-routing.json')" not in customer_script or "fetch(siteUrl('data/cities.json')" not in customer_script:

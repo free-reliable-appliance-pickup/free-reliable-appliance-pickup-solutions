@@ -109,6 +109,21 @@
     ensureHidden(form, 'Application Source', 'applicationSource').value = 'Nationwide Partner Page';
     ensureHidden(form, 'Routing Policy', 'routingPolicy').value = 'Application review only; selection does not establish coverage or create an SEO page';
 
+    const summary = document.getElementById('territorySummary');
+    if (summary) {
+      summary.innerHTML = '';
+      classified.forEach(x => {
+        const row = document.createElement('div');
+        row.className = 'territory-row';
+        const title = document.createElement('strong');
+        title.textContent = x.city + ', ' + x.state;
+        const detail = document.createElement('div');
+        detail.textContent = (x.region ? x.region + ' · ' : '') + publicLabel(x);
+        row.append(title, detail);
+        summary.appendChild(row);
+      });
+    }
+
     const homeCity = document.getElementById('homeCity');
     const homeState = document.getElementById('homeState');
     if (homeCity && homeState) {
@@ -169,7 +184,8 @@
         const strong = document.createElement('strong');
         strong.textContent = c.city;
         const small = document.createElement('small');
-        small.textContent = (c.stateName || c.state) + ' (' + c.state + ')' + (c.region ? ' · ' + c.region : '');
+        const market = marketFor(c.city, c.state);
+        small.textContent = (c.stateName || c.state) + ' (' + c.state + ')' + (c.region ? ' · ' + c.region : '') + ' · ' + publicLabel(market);
         info.append(strong, small);
 
         const button = document.createElement('button');
@@ -213,6 +229,7 @@
       // Safe fallback remains request-only/available.
     }
     syncCanonicalCityPicker();
+    classifySelection();
     document.dispatchEvent(new CustomEvent('partner-routing-ready'));
   }
 
