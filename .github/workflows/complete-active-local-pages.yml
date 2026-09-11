@@ -1,0 +1,119 @@
+name: Complete Active Local Pages
+
+on:
+  push:
+    paths:
+      - '.github/workflows/complete-active-local-pages.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add local request capability to active market pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          markets = {
+            'cathedral-city-appliance-pickup': ('Cathedral City','California','909-375-6685'),
+            'la-quinta-appliance-pickup': ('La Quinta','California','909-375-6685'),
+            'rancho-mirage-appliance-pickup': ('Rancho Mirage','California','909-375-6685'),
+            'indian-wells-appliance-pickup': ('Indian Wells','California','909-375-6685'),
+            'inland-empire-appliance-pickup': ('Inland Empire','California','909-375-6685'),
+            'riverside-county-appliance-pickup': ('Riverside County','California','909-375-6685'),
+            'orange-county-appliance-pickup': ('Orange County','California','909-375-6685'),
+            'riverside-appliance-pickup': ('Riverside','California','909-375-6685'),
+            'palmdale-appliance-pickup': ('Palmdale','California','310-774-4304'),
+            'lancaster-appliance-pickup': ('Lancaster','California','310-774-4304'),
+            'santa-rosa-appliance-pickup': ('Santa Rosa','California','310-774-4304'),
+            'los-angeles-county-appliance-pickup': ('Los Angeles County','California','310-774-4304'),
+            'modesto-appliance-pickup': ('Modesto','California','310-774-4304'),
+            'oakland-appliance-pickup': ('Oakland','California','310-774-4304'),
+            'sacramento-appliance-pickup': ('Sacramento','California','310-774-4304'),
+            'bakersfield-appliance-pickup': ('Bakersfield','California','310-774-4304'),
+            'san-francisco-appliance-pickup': ('San Francisco','California','310-774-4304'),
+            'san-jose-appliance-pickup': ('San Jose','California','310-774-4304'),
+            'fresno-appliance-pickup': ('Fresno','California','310-774-4304'),
+            'san-diego-appliance-pickup': ('San Diego','California','310-774-4304'),
+            'stockton-appliance-pickup': ('Stockton','California','310-774-4304'),
+          }
+
+          def form(city,state,phone):
+            digits=''.join(c for c in phone if c.isdigit())
+            return f'''
+          <section id="request" class="local-request-form">
+          <h2>Request Appliance Pickup in {city}</h2>
+          <p>This form sends a pickup request for {city}, {state}. Include the appliance condition, exact pickup address and access details so the request can be reviewed locally before service is confirmed.</p>
+          <p><strong>Call or text <a href="tel:+1{digits}">{phone}</a></strong> for pickup questions.</p>
+          <form action="https://formspree.io/f/mvzeapzd" method="POST" style="display:grid;gap:12px">
+          <input type="hidden" name="_subject" value="{city} {state} Appliance Pickup Request">
+          <input type="hidden" name="city" value="{city}">
+          <input type="hidden" name="state" value="{state}">
+          <label>Full Name<input type="text" name="name" required style="width:100%;padding:12px;margin-top:6px"></label>
+          <label>Phone Number<input type="tel" name="phone" required style="width:100%;padding:12px;margin-top:6px"></label>
+          <label>Pickup Address<input type="text" name="address" required style="width:100%;padding:12px;margin-top:6px"></label>
+          <label>ZIP Code<input type="text" name="zip" required style="width:100%;padding:12px;margin-top:6px"></label>
+          <label>Appliance Type<select name="appliance" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select appliance</option><option>Washer</option><option>Dryer</option><option>Washer and Dryer</option><option>Refrigerator</option><option>Freezer</option><option>Stove / Range / Oven</option><option>Multiple Major Appliances</option><option>Other Major Appliance</option></select></label>
+          <label>Condition<select name="condition" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select condition</option><option>Fully Working</option><option>Needs Repair</option><option>Not Working</option><option>Unknown</option></select></label>
+          <label>Appliance Location<select name="location" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select location</option><option>First Floor</option><option>Second Floor</option><option>Third Floor or Higher</option><option>Basement</option><option>Garage</option><option>Outside</option><option>Other</option></select></label>
+          <label>Stairs<select name="stairs" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select stairs</option><option>No Stairs</option><option>1 Flight</option><option>2 Flights</option><option>3+ Flights</option><option>Unknown</option></select></label>
+          <label>Access Notes / Photo Information<textarea name="message" rows="5" placeholder="Brand, model, working condition, stairs, elevators, gates, narrow doors, parking, and whether photos are available." style="width:100%;padding:12px;margin-top:6px"></textarea></label>
+          <button type="submit" style="padding:14px;border:0;border-radius:8px;background:#075c34;color:#fff;font-weight:700;font-size:17px">Submit {city} Pickup Request</button>
+          </form>
+          </section>
+          '''
+
+          changed=[]
+          for slug,(city,state,phone) in markets.items():
+            p=Path(slug)/'index.html'
+            if not p.exists(): continue
+            text=p.read_text(encoding='utf-8',errors='ignore')
+            original=text
+            text=text.replace('href="../#request"','href="#request"')
+            text=text.replace('href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/#request"','href="#request"')
+            if 'formspree.io/f/mvzeapzd' not in text:
+              block=form(city,state,phone)
+              if '</main>' in text:
+                text=text.replace('</main>',block+'\n</main>',1)
+              elif '</body>' in text:
+                text=text.replace('</body>',block+'\n</body>',1)
+            if text!=original:
+              p.write_text(text,encoding='utf-8')
+              changed.append(slug)
+
+          # Pages that already had a local form but retained an old homepage CTA.
+          for slug in ['salem-appliance-pickup','san-bernardino-county-appliance-pickup']:
+            p=Path(slug)/'index.html'
+            if not p.exists(): continue
+            text=p.read_text(encoding='utf-8',errors='ignore')
+            original=text
+            text=text.replace('href="../#request"','href="#request"')
+            text=text.replace('href="https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/#request"','href="#request"')
+            if text!=original:
+              p.write_text(text,encoding='utf-8')
+              changed.append(slug)
+
+          print('ACTIVE_MARKET_PAGES_COMPLETED',len(changed))
+          for slug in changed: print('COMPLETED',slug)
+          PY
+
+      - name: Commit active market improvements
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' || true
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Make active market pages complete local destinations"
+          git push
