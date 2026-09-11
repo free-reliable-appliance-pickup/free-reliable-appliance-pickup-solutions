@@ -1,9 +1,10 @@
-name: Concentrate Indexable Pages
+name: Concentrate Indexable Location Pages
 
 on:
   push:
     paths:
       - '.github/workflows/concentrate-indexable-pages.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,72 +14,45 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Noindex non-sitemap location pages
+      - name: Reduce doorway-page footprint
         shell: bash
         run: |
-          python - <<'PY'
+          python3 <<'PY'
           from pathlib import Path
-          import re, xml.etree.ElementTree as ET
-
-          BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
-          root=ET.parse('sitemap.xml').getroot()
-          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          active=set()
-          for el in root.findall('.//s:loc',ns):
-              if not el.text: continue
-              u=el.text.strip()
-              if u.startswith(BASE):
-                  slug=u[len(BASE):].strip('/')
-                  if slug: active.add(slug)
-
+          import re
+          # Keep broad service-area/state pages and the few core markets with real operations.
+          KEEP={
+            'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
+            'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
+            'utah-appliance-pickup','idaho-appliance-pickup','inland-empire-appliance-pickup',
+            'orange-county-appliance-pickup','riverside-county-appliance-pickup',
+            'los-angeles-county-appliance-pickup','portland-appliance-pickup',
+            'salem-appliance-pickup','denver-appliance-pickup','aurora-appliance-pickup'
+          }
           changed=[]
-          skipped_active=[]
           for p in Path('.').glob('*/index.html'):
               slug=p.parent.name
-              if 'appliance-pickup' not in slug:
-                  continue
-              if slug in active:
-                  skipped_active.append(slug)
-                  continue
-
-              text=p.read_text(encoding='utf-8',errors='ignore')
-              original=text
-
-              robots_re=re.compile(r'<meta\s+name=["\']robots["\'][^>]*>',re.I)
-              googlebot_re=re.compile(r'<meta\s+name=["\']googlebot["\'][^>]*>',re.I)
-
-              if robots_re.search(text):
-                  text=robots_re.sub('<meta name="robots" content="noindex, follow">',text,count=1)
+              if not slug.endswith('-appliance-pickup') or slug in KEEP: continue
+              s=p.read_text(encoding='utf-8',errors='ignore'); old=s
+              tag='<meta name="robots" content="noindex, follow">'
+              r=re.compile(r'<meta\s+name=["\']robots["\'][^>]*>',re.I)
+              if r.search(s): s=r.sub(tag,s,count=1)
               else:
-                  m=re.search(r'<head[^>]*>',text,re.I)
-                  if m:
-                      text=text[:m.end()]+'\n<meta name="robots" content="noindex, follow">'+text[m.end():]
-
-              if googlebot_re.search(text):
-                  text=googlebot_re.sub('<meta name="googlebot" content="noindex, follow">',text,count=1)
-
-              if text != original:
-                  p.write_text(text,encoding='utf-8')
-                  changed.append(slug)
-
-          print(f'ACTIVE_SITEMAP_SLUGS_KEPT_INDEXABLE={len(skipped_active)}')
-          print(f'NON_SITEMAP_LOCATION_PAGES_NOINDEXED={len(changed)}')
-          for slug in changed:
-              print('NOINDEX',slug)
+                  h=re.search(r'<head[^>]*>',s,re.I)
+                  if h: s=s[:h.end()]+'\n'+tag+s[h.end():]
+              g=re.compile(r'<meta\s+name=["\']googlebot["\'][^>]*>',re.I)
+              if g.search(s): s=g.sub('<meta name="googlebot" content="noindex, follow">',s,count=1)
+              if s!=old:
+                  p.write_text(s,encoding='utf-8'); changed.append(slug)
+          print('NOINDEXED_LOCATION_PAGES',len(changed))
+          print('\n'.join(changed))
           PY
-
-      - name: Commit indexability cleanup
+      - name: Commit cleanup
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- '*-appliance-pickup/index.html' || true
-          if git diff --cached --quiet; then
-            echo "No changes needed"
-            exit 0
-          fi
-          git commit -m "Focus indexing on active high-quality service pages"
+          if git diff --cached --quiet; then echo 'No changes needed'; exit 0; fi
+          git commit -m "Reduce doorway-page footprint and focus service areas"
           git push
