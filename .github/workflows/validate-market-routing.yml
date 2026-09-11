@@ -124,6 +124,8 @@ jobs:
 
           # Regression tests mirror the production routing order: exact city -> regional market -> statewide intake.
           expect('Portland','OR','exact','direct','Portland Metro','503-868-4455')
+          expect('Beaverton','OR','regional','direct','Portland Metro','503-868-4455')
+          expect('Keizer','OR','regional','direct','Salem Metro','503-868-4455')
           expect('Denver','CO','exact','direct','Denver Metro','720-604-7498')
           expect('Wheat Ridge','CO','regional','direct','Denver Metro','720-604-7498')
           expect('Victorville','CA','regional','partner-recruiting','Victorville Valley','909-375-6685')
