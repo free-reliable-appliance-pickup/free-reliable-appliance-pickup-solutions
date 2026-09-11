@@ -1,0 +1,139 @@
+/* Nationwide partner application routing helper.
+   Operational only: this script never creates URLs or SEO pages. */
+(function () {
+  'use strict';
+
+  const DEFAULT = {
+    status: 'request-only',
+    territory_status: 'available',
+    region: 'Unassigned market',
+    lead_priority: 3
+  };
+
+  let routing = null;
+  let cityCatalog = null;
+
+  const normalize = value => String(value || '').trim().toLowerCase();
+
+  function marketFor(city, state) {
+    if (!routing || !Array.isArray(routing.markets)) return { ...DEFAULT };
+    const stateCode = String(state || '').trim().toUpperCase();
+    const cityName = normalize(city);
+
+    const exact = routing.markets.find(m =>
+      String(m.state_code || '').toUpperCase() === stateCode &&
+      m.city && normalize(m.city) === cityName
+    );
+    if (exact) return exact;
+
+    let region = null;
+    if (cityCatalog && Array.isArray(cityCatalog.cities)) {
+      const catalogCity = cityCatalog.cities.find(c =>
+        String(c.state_code || '').toUpperCase() === stateCode &&
+        normalize(c.city) === cityName
+      );
+      if (catalogCity && catalogCity.region) region = catalogCity.region;
+    }
+
+    if (region) {
+      const regional = routing.markets.find(m =>
+        String(m.state_code || '').toUpperCase() === stateCode &&
+        !m.city && normalize(m.region) === normalize(region)
+      );
+      if (regional) return regional;
+    }
+
+    return { ...DEFAULT, state_code: stateCode, city };
+  }
+
+  function publicLabel(info) {
+    if (info.status === 'direct' || info.territory_status === 'protected') {
+      return 'Established operation — backup or overflow applications may be reviewed';
+    }
+    if (info.status === 'partner-supported' || info.territory_status === 'assigned') {
+      return 'Partner-supported market — applications reviewed for future availability';
+    }
+    if (info.status === 'partner-recruiting') {
+      return 'Partner recruiting — applications welcome';
+    }
+    if (info.territory_status === 'waitlist') {
+      return 'Waitlist market — application may be held for future review';
+    }
+    return 'Future market — application can be reviewed';
+  }
+
+  function ensureHidden(form, name, id) {
+    let input = form.querySelector('#' + id);
+    if (!input) {
+      input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.id = id;
+      form.appendChild(input);
+    }
+    return input;
+  }
+
+  function classifySelection() {
+    const form = document.getElementById('partnerForm');
+    const selectedInput = document.getElementById('selectedCitiesInput');
+    if (!form || !selectedInput) return;
+
+    const raw = String(selectedInput.value || '').split(';').map(v => v.trim()).filter(Boolean);
+    const classified = raw.map(item => {
+      const comma = item.lastIndexOf(',');
+      const city = comma >= 0 ? item.slice(0, comma).trim() : item;
+      const state = comma >= 0 ? item.slice(comma + 1).trim() : '';
+      const info = marketFor(city, state);
+      return {
+        city,
+        state,
+        region: info.region || 'Unassigned market',
+        status: info.status || DEFAULT.status,
+        territory_status: info.territory_status || DEFAULT.territory_status,
+        lead_priority: info.lead_priority || DEFAULT.lead_priority
+      };
+    });
+
+    ensureHidden(form, 'Selected Market Routing', 'selectedMarketRouting').value = classified
+      .map(x => `${x.city}, ${x.state} | ${x.region} | ${x.status} | ${x.territory_status} | priority ${x.lead_priority}`)
+      .join('; ');
+    ensureHidden(form, 'Application Source', 'applicationSource').value = 'Nationwide Partner Page';
+    ensureHidden(form, 'Routing Policy', 'routingPolicy').value = 'Application review only; selection does not establish coverage or create an SEO page';
+
+    const homeCity = document.getElementById('homeCity');
+    const homeState = document.getElementById('homeState');
+    if (homeCity && homeState) {
+      const primary = marketFor(homeCity.value, homeState.value);
+      ensureHidden(form, 'Primary Market Status', 'primaryMarketStatus').value = primary.status || DEFAULT.status;
+      ensureHidden(form, 'Primary Territory Status', 'primaryTerritoryStatus').value = primary.territory_status || DEFAULT.territory_status;
+      ensureHidden(form, 'Primary Market Region', 'primaryMarketRegion').value = primary.region || DEFAULT.region;
+    }
+  }
+
+  async function loadRouting() {
+    try {
+      const [routingResponse, cityResponse] = await Promise.all([
+        fetch('../data/market-routing.json', { cache: 'no-store' }),
+        fetch('../data/cities.json', { cache: 'no-store' })
+      ]);
+      if (routingResponse.ok) routing = await routingResponse.json();
+      if (cityResponse.ok) cityCatalog = await cityResponse.json();
+    } catch (_) {
+      // Safe fallback remains request-only/available.
+    }
+    document.dispatchEvent(new CustomEvent('partner-routing-ready'));
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('partnerForm');
+    if (form) form.addEventListener('submit', classifySelection, true);
+    loadRouting();
+  });
+
+  window.FreeReliablePartnerRouting = {
+    classify: marketFor,
+    label: publicLabel,
+    refresh: classifySelection
+  };
+})();
