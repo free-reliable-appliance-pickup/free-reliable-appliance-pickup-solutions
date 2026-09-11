@@ -1,0 +1,40 @@
+name: Clean homepage regional hierarchy
+on:
+  push:
+    paths:
+      - '.github/workflows/clean-homepage-regional-hierarchy.yml'
+permissions:
+  contents: write
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clean homepage SEO hierarchy
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text()
+          s=s.replace('<title>Free Appliance Pickup Near Me | Nationwide Appliance Pickup</title>','<title>Free Appliance Pickup | Service Areas & Pickup Requests</title>')
+          s=s.replace('<meta property="og:title" content="Free Appliance Pickup Near Me | Nationwide Appliance Pickup">','<meta property="og:title" content="Free Appliance Pickup | Service Areas & Pickup Requests">')
+          s=s.replace('<h1>Free Appliance Pickup Near Me</h1>','<h1>Free Appliance Pickup</h1>')
+          s=s.replace('Customers can submit requests from all 50 states,\nwith eight priority states for direct and selected-partner service.','Customers can submit requests from all 50 states. Direct and selected-partner coverage is concentrated in priority states and regional markets, and every request is reviewed before pickup is confirmed.')
+          s=s.replace('>Nationwide Coverage</a>','>All-State Requests</a>')
+          s=s.replace('>Nationwide</a>','>All-State Requests</a>')
+          replacement='''<section id="priority-local-markets">\n<h2>Priority Regional & Local Markets</h2>\n<p>Our location pages are organized around meaningful service regions and established operating markets rather than a separate search page for every city.</p>\n<div class="grid">\n<div class="card"><h3>Established Local Operations</h3><p><a href="portland-appliance-pickup/">Portland</a> · <a href="salem-appliance-pickup/">Salem</a> · <a href="denver-appliance-pickup/">Denver</a> · <a href="aurora-appliance-pickup/">Aurora</a></p></div>\n<div class="card"><h3>California Regions</h3><p><a href="los-angeles-county-appliance-pickup/">Los Angeles County</a> · <a href="inland-empire-appliance-pickup/">Inland Empire</a> · <a href="orange-county-appliance-pickup/">Orange County</a> · <a href="riverside-county-appliance-pickup/">Riverside County</a> · <a href="san-diego-county-appliance-pickup/">San Diego County</a> · <a href="sf-bay-area-appliance-pickup/">Bay Area</a> · <a href="central-valley-appliance-pickup/">Central Valley</a> · <a href="central-coast-appliance-pickup/">Central Coast</a></p></div>\n<div class="card"><h3>Other Priority Regions</h3><p><a href="puget-sound-appliance-pickup/">Puget Sound</a> · <a href="phoenix-metro-appliance-pickup/">Phoenix Metro</a> · <a href="las-vegas-valley-appliance-pickup/">Las Vegas Valley</a> · <a href="wasatch-front-appliance-pickup/">Wasatch Front</a> · <a href="treasure-valley-appliance-pickup/">Treasure Valley</a></p></div>\n</div>\n<p><a href="service-areas/">Browse the complete service-area hierarchy</a>.</p>\n</section>'''
+          pattern=r'<section id="priority-local-markets">.*?</section>'
+          s,n=re.subn(pattern,replacement,s,count=1,flags=re.S)
+          if n != 1:
+              raise SystemExit('priority-local-markets section not found exactly once')
+          p.write_text(s)
+          PY
+      - name: Commit homepage cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Clean homepage regional hierarchy and SEO wording"
+          git push
