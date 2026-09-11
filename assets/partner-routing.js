@@ -12,6 +12,7 @@
 
   let routing = null;
   let cityCatalog = null;
+  let activeLetter = '';
 
   const normalize = value => String(value || '').trim().toLowerCase();
 
@@ -41,6 +42,13 @@
         !m.city && normalize(m.region) === normalize(region)
       );
       if (regional) return regional;
+    }
+
+    if (Array.isArray(routing.state_defaults)) {
+      const statewide = routing.state_defaults.find(s =>
+        String(s.state_code || '').toUpperCase() === stateCode
+      );
+      if (statewide) return statewide;
     }
 
     return { ...DEFAULT, state_code: stateCode, city };
@@ -111,6 +119,88 @@
     }
   }
 
+  function syncCanonicalCityPicker() {
+    if (!cityCatalog || !Array.isArray(cityCatalog.cities)) return;
+    const search = document.getElementById('citySearch');
+    const filter = document.getElementById('stateFilter');
+    const results = document.getElementById('cityResults');
+    if (!search || !filter || !results) return;
+
+    const catalog = cityCatalog.cities
+      .map(c => ({
+        city: String(c.city || '').trim(),
+        state: String(c.state_code || '').trim().toUpperCase(),
+        stateName: String(c.state || c.state_code || '').trim(),
+        region: String(c.region || '').trim()
+      }))
+      .filter(c => c.city && c.state)
+      .sort((a, b) => a.city.localeCompare(b.city) || a.state.localeCompare(b.state));
+
+    function selectedKeys() {
+      const input = document.getElementById('selectedCitiesInput');
+      return new Set(String(input && input.value || '')
+        .split(';').map(v => v.trim()).filter(Boolean)
+        .map(v => {
+          const i = v.lastIndexOf(',');
+          return normalize(i >= 0 ? v.slice(0, i) : v) + '|' + String(i >= 0 ? v.slice(i + 1) : '').trim().toUpperCase();
+        }));
+    }
+
+    function renderCanonical() {
+      const q = normalize(search.value);
+      const st = String(filter.value || '').toUpperCase();
+      const chosen = selectedKeys();
+      const rows = catalog.filter(c =>
+        (!q || normalize(c.city).includes(q) || normalize(c.state).includes(q) || normalize(c.stateName).includes(q) || normalize(c.region).includes(q)) &&
+        (!st || c.state === st) &&
+        (!activeLetter || c.city.toUpperCase().startsWith(activeLetter))
+      );
+
+      results.innerHTML = '';
+      if (!rows.length) {
+        results.innerHTML = '<div class="city">No matching catalog city. Use manual city entry below.</div>';
+        return;
+      }
+
+      rows.forEach(c => {
+        const row = document.createElement('div');
+        row.className = 'city';
+        const info = document.createElement('div');
+        const strong = document.createElement('strong');
+        strong.textContent = c.city;
+        const small = document.createElement('small');
+        small.textContent = (c.stateName || c.state) + ' (' + c.state + ')' + (c.region ? ' · ' + c.region : '');
+        info.append(strong, small);
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'add';
+        const exists = chosen.has(normalize(c.city) + '|' + c.state);
+        button.textContent = exists ? 'Selected' : 'Add City';
+        button.disabled = exists;
+        if (!exists) button.onclick = function () {
+          if (typeof window.add === 'function') window.add(c.city, c.state);
+          setTimeout(renderCanonical, 0);
+        };
+        row.append(info, button);
+        results.appendChild(row);
+      });
+    }
+
+    search.oninput = renderCanonical;
+    filter.onchange = renderCanonical;
+    document.querySelectorAll('#letters .letter').forEach(button => {
+      button.onclick = function () {
+        activeLetter = button.textContent === 'All' ? '' : button.textContent;
+        document.querySelectorAll('#letters .letter').forEach(x => x.classList.remove('active'));
+        button.classList.add('active');
+        renderCanonical();
+      };
+    });
+
+    renderCanonical();
+  }
+
   async function loadRouting() {
     try {
       const [routingResponse, cityResponse] = await Promise.all([
@@ -122,6 +212,7 @@
     } catch (_) {
       // Safe fallback remains request-only/available.
     }
+    syncCanonicalCityPicker();
     document.dispatchEvent(new CustomEvent('partner-routing-ready'));
   }
 
@@ -134,6 +225,7 @@
   window.FreeReliablePartnerRouting = {
     classify: marketFor,
     label: publicLabel,
-    refresh: classifySelection
+    refresh: classifySelection,
+    syncCityPicker: syncCanonicalCityPicker
   };
 })();
