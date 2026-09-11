@@ -27,13 +27,65 @@ jobs:
         run: |
           python - <<'PY'
           import json, pathlib, sys
+
           for p in pathlib.Path('data').glob('*.json'):
               json.loads(p.read_text())
+
           routing=json.loads(pathlib.Path('data/market-routing.json').read_text())
+          cities=json.loads(pathlib.Path('data/cities.json').read_text())
           rules=routing.get('rules',{})
+          markets=routing.get('markets',[])
+          state_defaults=routing.get('state_defaults',[])
+
           if rules.get('defaultStatus')!='request-only': sys.exit('rules.defaultStatus must be request-only')
           if rules.get('defaultTerritoryStatus')!='available': sys.exit('rules.defaultTerritoryStatus must be available')
           if rules.get('automaticCityPageCreation') is not False: sys.exit('automaticCityPageCreation must remain false')
           if rules.get('indexableCityStatuses') != ['direct','partner-supported']: sys.exit('indexableCityStatuses must remain direct and partner-supported only')
-          print('Routing JSON and SEO safety defaults validated')
+
+          valid_status={'direct','partner-supported','partner-recruiting','request-only'}
+          valid_territory={'protected','assigned','available','waitlist'}
+          state_codes={
+            'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
+          }
+
+          defaults_by_code={}
+          for row in state_defaults:
+              code=row.get('state_code')
+              if code in defaults_by_code: sys.exit(f'duplicate state default: {code}')
+              defaults_by_code[code]=row
+              if row.get('status') not in valid_status: sys.exit(f'invalid state default status: {row}')
+              if row.get('territory_status') not in valid_territory: sys.exit(f'invalid state default territory status: {row}')
+              if not isinstance(row.get('lead_priority'),int) or not 1 <= row['lead_priority'] <= 5: sys.exit(f'invalid state default priority: {row}')
+
+          if set(defaults_by_code)!=state_codes:
+              missing=sorted(state_codes-set(defaults_by_code)); extra=sorted(set(defaults_by_code)-state_codes)
+              sys.exit(f'state defaults must cover exactly all 50 states; missing={missing}, extra={extra}')
+
+          region_rows={}
+          exact_rows=set()
+          for row in markets:
+              code=row.get('state_code'); region=row.get('region'); city=row.get('city')
+              if row.get('status') not in valid_status: sys.exit(f'invalid market status: {row}')
+              if row.get('territory_status') not in valid_territory: sys.exit(f'invalid market territory status: {row}')
+              if not isinstance(row.get('lead_priority'),int) or not 1 <= row['lead_priority'] <= 5: sys.exit(f'invalid market priority: {row}')
+              if row.get('status')=='partner-supported' and not row.get('partner_id'): sys.exit(f'partner-supported market missing partner_id: {row}')
+              if row.get('territory_status')=='assigned' and not row.get('partner_id'): sys.exit(f'assigned territory missing partner_id: {row}')
+              if row.get('backup_partner_id') and row.get('backup_partner_id')==row.get('partner_id'): sys.exit(f'backup partner duplicates primary: {row}')
+              if city:
+                  key=(code,city.strip().lower())
+                  if key in exact_rows: sys.exit(f'duplicate exact city route: {key}')
+                  exact_rows.add(key)
+              else:
+                  key=(code,(region or '').strip().lower())
+                  if key in region_rows: sys.exit(f'duplicate regional route: {key}')
+                  region_rows[key]=row
+
+          for c in cities.get('cities',[]):
+              code=c.get('state_code'); region=(c.get('region') or '').strip().lower()
+              exact=(code,(c.get('city') or '').strip().lower())
+              if exact in exact_rows: continue
+              if (code,region) not in region_rows:
+                  sys.exit(f'city catalog has no exact or regional route: {c}')
+
+          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities; automatic city-page creation remains disabled')
           PY
