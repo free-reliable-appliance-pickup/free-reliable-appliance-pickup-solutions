@@ -22,8 +22,12 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
-          script = '<script src="/assets/customer-routing.js" defer></script>'
+          routing_tag = re.compile(
+              r'<script\b[^>]*\bsrc=["\'][^"\']*assets/customer-routing\.js(?:\?[^"\']*)?["\'][^>]*>\s*</script>',
+              re.I,
+          )
           changed = []
 
           for path in Path('.').rglob('*.html'):
@@ -39,11 +43,17 @@ jobs:
 
               if not (is_formspree and has_city and has_state and has_appliance):
                   continue
-              if '/assets/customer-routing.js' in text:
+
+              # Recognize root-relative, root-page relative, and nested-page relative loads.
+              # If routing is already present, never add another copy.
+              if routing_tag.search(text):
                   continue
               if '</head>' not in lower:
                   continue
 
+              depth = len(path.parent.parts)
+              src = ('../' * depth) + 'assets/customer-routing.js'
+              script = f'<script src="{src}" defer></script>'
               idx = lower.index('</head>')
               text = text[:idx] + script + '\n' + text[idx:]
               path.write_text(text, encoding='utf-8')
@@ -57,17 +67,34 @@ jobs:
 
       - name: Verify partner application was not wired to customer routing
         run: |
-          if grep -q '/assets/customer-routing.js' partners/index.html; then
-            echo 'ERROR: partner application incorrectly received customer routing helper'
-            exit 1
-          fi
+          python - <<'PY'
+          from pathlib import Path
+          import re
 
-      - name: Verify every customer pickup form loads routing helper
+          page = Path('partners/index.html').read_text(encoding='utf-8')
+          routing_tag = re.compile(
+              r'<script\b[^>]*\bsrc=["\'][^"\']*assets/customer-routing\.js(?:\?[^"\']*)?["\'][^>]*>\s*</script>',
+              re.I,
+          )
+          if routing_tag.search(page):
+              raise SystemExit('ERROR: partner application incorrectly received customer routing helper')
+          print('Partner application correctly excludes customer routing helper.')
+          PY
+
+      - name: Verify every customer pickup form loads routing helper exactly once
         run: |
           python - <<'PY'
           from pathlib import Path
-          failures=[]
+          import re
+
+          routing_tag = re.compile(
+              r'<script\b[^>]*\bsrc=["\'][^"\']*assets/customer-routing\.js(?:\?[^"\']*)?["\'][^>]*>\s*</script>',
+              re.I,
+          )
+          missing=[]
+          duplicates=[]
           detected=[]
+
           for path in Path('.').rglob('*.html'):
               text=path.read_text(encoding='utf-8')
               lower=text.lower()
@@ -75,16 +102,25 @@ jobs:
                       ('name="city"' in lower or "name='city'" in lower or 'name="pickup_city"' in lower or "name='pickup_city'" in lower) and
                       ('name="state"' in lower or "name='state'" in lower or 'name="pickup_state"' in lower or "name='pickup_state'" in lower) and
                       ('name="appliance"' in lower or "name='appliance'" in lower or 'name="appliance type"' in lower or "name='appliance type'" in lower))
-              if target:
-                  detected.append(str(path))
-                  if '/assets/customer-routing.js' not in text:
-                      failures.append(str(path))
-          if failures:
-              print('Missing routing helper:', failures)
+              if not target:
+                  continue
+
+              detected.append(str(path))
+              count=len(routing_tag.findall(text))
+              if count == 0:
+                  missing.append(str(path))
+              elif count > 1:
+                  duplicates.append(f'{path} ({count} loads)')
+
+          if missing:
+              print('Missing routing helper:', missing)
+              raise SystemExit(1)
+          if duplicates:
+              print('Duplicate routing helper loads:', duplicates)
               raise SystemExit(1)
           if not detected:
               raise SystemExit('No customer pickup forms detected; wiring audit cannot pass silently')
-          print(f'All {len(detected)} detected customer pickup forms are wired.')
+          print(f'All {len(detected)} detected customer pickup forms load routing exactly once.')
           PY
 
       - name: Commit generated wiring changes
@@ -95,6 +131,6 @@ jobs:
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add '*.html' ':/*/*.html'
+          git add -- ':glob:*.html' ':glob:**/*.html'
           git commit -m 'Wire routing engine into live customer pickup forms'
           git push
