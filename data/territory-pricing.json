@@ -1,0 +1,25 @@
+{
+  "version": "2026-09-11",
+  "purpose": "Internal territory pricing framework. Prices are not public offers and must be approved before a partner is charged or assigned a market.",
+  "currency": "USD",
+  "billing": "monthly",
+  "rules": {
+    "defaultPricingStatus": "collect_data",
+    "directMarketsForSale": false,
+    "priceRequiresManualApproval": true,
+    "selectionDoesNotReserveTerritory": true,
+    "paymentDoesNotCreateSEOPage": true
+  },
+  "pricingStatuses": {
+    "not_for_sale": "Protected direct-operation territory.",
+    "collect_data": "Gather lead volume and market performance before setting price.",
+    "review": "Pricing under manual review.",
+    "available": "Approved for partner subscription offer.",
+    "assigned": "Territory currently assigned."
+  },
+  "planningRangeCents": {
+    "minimum": 20000,
+    "maximum": 40000
+  },
+  "markets": []
+}
