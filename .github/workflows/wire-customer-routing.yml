@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - '*.html'
+      - '**/*.html'
+      - 'assets/customer-routing.js'
       - '.github/workflows/wire-customer-routing.yml'
 
 permissions:
@@ -64,6 +67,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           failures=[]
+          detected=[]
           for path in Path('.').rglob('*.html'):
               text=path.read_text(encoding='utf-8')
               lower=text.lower()
@@ -71,12 +75,16 @@ jobs:
                       ('name="city"' in lower or "name='city'" in lower or 'name="pickup_city"' in lower or "name='pickup_city'" in lower) and
                       ('name="state"' in lower or "name='state'" in lower or 'name="pickup_state"' in lower or "name='pickup_state'" in lower) and
                       ('name="appliance"' in lower or "name='appliance'" in lower or 'name="appliance type"' in lower or "name='appliance type'" in lower))
-              if target and '/assets/customer-routing.js' not in text:
-                  failures.append(str(path))
+              if target:
+                  detected.append(str(path))
+                  if '/assets/customer-routing.js' not in text:
+                      failures.append(str(path))
           if failures:
               print('Missing routing helper:', failures)
               raise SystemExit(1)
-          print('All detected customer pickup forms are wired.')
+          if not detected:
+              raise SystemExit('No customer pickup forms detected; wiring audit cannot pass silently')
+          print(f'All {len(detected)} detected customer pickup forms are wired.')
           PY
 
       - name: Commit generated wiring changes
