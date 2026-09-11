@@ -1,4 +1,5 @@
 # Recheck after doorway-page consolidation
+# Final verification after nationwide and regional cleanup
 name: Verify Active Content Quality
 
 on:
