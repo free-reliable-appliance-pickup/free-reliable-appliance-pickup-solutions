@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Audit live headers and active-to-inactive links
+      - name: Find active links to non-sitemap appliance location pages
         shell: bash
         run: |
           python - <<'PY'
@@ -37,7 +37,7 @@ jobs:
               p=Path(rel)
               return p if p.suffix else p/'index.html'
 
-          leaked=[]
+          leaks=set()
           for src in active_urls:
               fp=file_for(src)
               if not fp or not fp.exists(): continue
@@ -49,37 +49,17 @@ jobs:
                   if u.netloc!='free-reliable-appliance-pickup.github.io': continue
                   clean=u._replace(fragment='',query='').geturl()
                   if clean.endswith('/index.html'): clean=clean[:-10]
+                  if clean in active or not clean.startswith(BASE): continue
+                  rel=clean[len(BASE):].strip('/')
+                  if 'appliance-pickup' not in rel: continue
                   target=file_for(clean)
-                  if target and target.exists() and clean not in active:
-                      t=target.read_text(encoding='utf-8',errors='ignore')
-                      noindex=bool(re.search(r'<meta\s+name=["\']robots["\'][^>]*noindex',t,re.I))
-                      leaked.append((src,clean,noindex))
+                  if not target or not target.exists(): continue
+                  t=target.read_text(encoding='utf-8',errors='ignore')
+                  noindex=bool(re.search(r'<meta\s+name=["\']robots["\'][^>]*noindex',t,re.I))
+                  leaks.add((src,clean,noindex))
 
-          print('ACTIVE_TO_NON_SITEMAP_INTERNAL_LINKS',len(set(leaked)))
-          print('ACTIVE_TO_NOINDEX_LINKS',sum(1 for x in set(leaked) if x[2]))
-          for src,dst,noindex in sorted(set(leaked))[:150]:
-              print('LEAK', 'noindex='+str(noindex), src, '->', dst)
+          print('ACTIVE_LINKS_TO_NON_SITEMAP_APPLIANCE_PAGES',len(leaks))
+          print('OF_THOSE_NOINDEX',sum(1 for x in leaks if x[2]))
+          for src,dst,noindex in sorted(leaks):
+              print('CITY_LEAK', 'noindex='+str(noindex), src, '->', dst)
           PY
-
-          echo '--- LIVE RESPONSE HEADERS ---'
-          urls=(
-            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
-            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/portland-appliance-pickup/'
-            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-appliance-pickup/'
-            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/palm-springs-appliance-pickup/'
-            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/sitemap.xml'
-            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/robots.txt'
-          )
-          for u in "${urls[@]}"; do
-            echo "URL $u"
-            curl -sS -I -L --max-redirs 5 "$u" | grep -Ei '^(HTTP/|content-type:|x-robots-tag:|location:|cache-control:|etag:|last-modified:|content-length:)' || true
-          done
-
-          echo '--- LIVE ROBOTS META CHECK ---'
-          for u in \
-            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/' \
-            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/portland-appliance-pickup/' \
-            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-appliance-pickup/'; do
-            echo "URL $u"
-            curl -sS -L "$u" | grep -Eio '<meta[^>]+(robots|googlebot)[^>]*>' | head -10 || true
-          done
