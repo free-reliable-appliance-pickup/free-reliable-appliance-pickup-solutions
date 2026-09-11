@@ -1,0 +1,75 @@
+name: Audit Content Uniqueness Fast
+
+on:
+  push:
+    paths:
+      - '.github/workflows/audit-content-uniqueness-fast.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Analyze city-page uniqueness fast
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, html, itertools
+
+          def visible_words(raw):
+              raw = re.sub(r'<script\b[^>]*>.*?</script>', ' ', raw, flags=re.I|re.S)
+              raw = re.sub(r'<style\b[^>]*>.*?</style>', ' ', raw, flags=re.I|re.S)
+              raw = re.sub(r'<!--.*?-->', ' ', raw, flags=re.S)
+              raw = re.sub(r'<[^>]+>', ' ', raw)
+              raw = html.unescape(raw).lower()
+              raw = re.sub(r'\b\d{3}[-.)\s]*\d{3}[-.\s]*\d{4}\b', ' phone ', raw)
+              raw = re.sub(r'\b\d{5}(?:-\d{4})?\b', ' zip ', raw)
+              return re.findall(r"[a-z0-9']+", raw)
+
+          def shingles(words, n=5):
+              return {' '.join(words[i:i+n]) for i in range(max(0,len(words)-n+1))}
+
+          pages=[]
+          for p in Path('.').glob('*/index.html'):
+              slug=p.parent.name
+              if 'appliance-pickup' not in slug:
+                  continue
+              raw=p.read_text(encoding='utf-8', errors='ignore')
+              words=visible_words(raw)
+              # remove city tokens to avoid city names creating false uniqueness
+              city_tokens=set(slug.replace('-appliance-pickup','').split('-'))
+              norm=['city' if w in city_tokens and len(w)>2 else w for w in words]
+              pages.append({
+                  'slug':slug,
+                  'words':len(words),
+                  'sh':shingles(norm),
+                  'form':'formspree.io/f/mvzeapzd' in raw,
+                  'funnel':'../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw,
+              })
+
+          print('CITY_PAGE_COUNT',len(pages))
+          print('WITH_LOCAL_FORM',sum(x['form'] for x in pages))
+          print('FUNNEL_TO_HOMEPAGE_FORM',sum(x['funnel'] for x in pages))
+          print('UNDER_350_WORDS',sum(x['words']<350 for x in pages))
+          print('UNDER_500_WORDS',sum(x['words']<500 for x in pages))
+          print('\nLOWEST_WORD_COUNT')
+          for x in sorted(pages,key=lambda x:x['words'])[:20]:
+              print(f"{x['words']:4d} | form={x['form']} funnel={x['funnel']} | {x['slug']}")
+
+          pairs=[]
+          for a,b in itertools.combinations(pages,2):
+              u=a['sh']|b['sh']; i=a['sh']&b['sh']
+              score=len(i)/len(u) if u else 0
+              pairs.append((score,a['slug'],b['slug']))
+          print('\nMOST_SIMILAR_PAIRS')
+          for score,a,b in sorted(pairs,reverse=True)[:30]:
+              print(f"{score:.3f} | {a} <-> {b}")
+          print('\nPAGES_STILL_FUNNELING')
+          for x in pages:
+              if x['funnel']:
+                  print(x['slug'])
+          PY
