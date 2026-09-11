@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-11.4",
+  "version": "2026-09-11.5",
   "purpose": "Operational coverage routing for the nationwide appliance pickup partner network. This file is not a promise of pickup availability. Customer requests remain subject to qualification and confirmed local coverage.",
   "statuses": {
     "direct": "Established market served by Free Reliable Appliance Pickup operations.",
@@ -99,9 +99,13 @@
     {"state":"Nevada","state_code":"NV","region":"Reno-Sparks","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"Utah","state_code":"UT","region":"Wasatch Front","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"Idaho","state_code":"ID","region":"Treasure Valley","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
-    {"state":"Texas","state_code":"TX","region":"Dallas-Fort Worth","status":"request-only","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":3,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
-    {"state":"Texas","state_code":"TX","region":"Houston Metro","status":"request-only","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":3,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
-    {"state":"Florida","state_code":"FL","region":"South Florida","status":"request-only","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":3,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
-    {"state":"Florida","state_code":"FL","region":"Central Florida","status":"request-only","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":3,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null}
+    {"state":"Texas","state_code":"TX","region":"Dallas-Fort Worth","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Texas","state_code":"TX","region":"Houston Metro","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Texas","state_code":"TX","region":"Austin Metro","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Texas","state_code":"TX","region":"San Antonio Metro","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Florida","state_code":"FL","region":"South Florida","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Florida","state_code":"FL","region":"Central Florida","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Florida","state_code":"FL","region":"Tampa Bay","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Florida","state_code":"FL","region":"Northeast Florida","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null}
   ]
 }
