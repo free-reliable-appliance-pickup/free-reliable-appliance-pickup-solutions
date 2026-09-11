@@ -395,7 +395,7 @@ Call (909) 375-6685 or use the pickup request form on our main website.
 Ready to request a pickup? Provide your Riverside city, ZIP code, appliance type and condition.
 </p>
 
-<a class="button" href="../#request">
+<a class="button" href="#request">
 Schedule Free Appliance Pickup
 </a>
 
@@ -505,5 +505,27 @@ Monday - Sunday | 8:00 AM - 8:00 PM
 <p><a href="https://www.riversideca.gov/publicworks/trash-recycling/clean-riverside" rel="noopener">Official Clean Up Riverside disposal information</a></p>
 <p class="notice">Programs, event dates, residency requirements and accepted items can change. Verify current details with the City of Riverside.</p>
 </section>
+
+<section id="request" class="local-request-form">
+<h2>Request Appliance Pickup in Riverside</h2>
+<p>This form sends a pickup request for Riverside, California. Include the appliance condition, exact pickup address and access details so the request can be reviewed locally before service is confirmed.</p>
+<p><strong>Call or text <a href="tel:+19093756685">909-375-6685</a></strong> for pickup questions.</p>
+<form action="https://formspree.io/f/mvzeapzd" method="POST" style="display:grid;gap:12px">
+<input type="hidden" name="_subject" value="Riverside California Appliance Pickup Request">
+<input type="hidden" name="city" value="Riverside">
+<input type="hidden" name="state" value="California">
+<label>Full Name<input type="text" name="name" required style="width:100%;padding:12px;margin-top:6px"></label>
+<label>Phone Number<input type="tel" name="phone" required style="width:100%;padding:12px;margin-top:6px"></label>
+<label>Pickup Address<input type="text" name="address" required style="width:100%;padding:12px;margin-top:6px"></label>
+<label>ZIP Code<input type="text" name="zip" required style="width:100%;padding:12px;margin-top:6px"></label>
+<label>Appliance Type<select name="appliance" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select appliance</option><option>Washer</option><option>Dryer</option><option>Washer and Dryer</option><option>Refrigerator</option><option>Freezer</option><option>Stove / Range / Oven</option><option>Multiple Major Appliances</option><option>Other Major Appliance</option></select></label>
+<label>Condition<select name="condition" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select condition</option><option>Fully Working</option><option>Needs Repair</option><option>Not Working</option><option>Unknown</option></select></label>
+<label>Appliance Location<select name="location" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select location</option><option>First Floor</option><option>Second Floor</option><option>Third Floor or Higher</option><option>Basement</option><option>Garage</option><option>Outside</option><option>Other</option></select></label>
+<label>Stairs<select name="stairs" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select stairs</option><option>No Stairs</option><option>1 Flight</option><option>2 Flights</option><option>3+ Flights</option><option>Unknown</option></select></label>
+<label>Access Notes / Photo Information<textarea name="message" rows="5" placeholder="Brand, model, working condition, stairs, elevators, gates, narrow doors, parking, and whether photos are available." style="width:100%;padding:12px;margin-top:6px"></textarea></label>
+<button type="submit" style="padding:14px;border:0;border-radius:8px;background:#075c34;color:#fff;font-weight:700;font-size:17px">Submit Riverside Pickup Request</button>
+</form>
+</section>
+
 </body>
 </html>
