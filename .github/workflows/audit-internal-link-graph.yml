@@ -22,9 +22,8 @@ jobs:
           from collections import defaultdict, deque
           import re, xml.etree.ElementTree as ET
 
-          BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
-          HOST='free-reliable-appliance-pickup.github.io'
-          PREFIX='/free-reliable-appliance-pickup-solutions/'
+          BASE='https://freereliableappliancepickup.com/'
+          HOST='freereliableappliancepickup.com'
 
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
@@ -32,15 +31,13 @@ jobs:
           active=set(sitemap_urls)
 
           def url_to_file(url):
-              if url==BASE or url.rstrip('/')==BASE.rstrip('/'):
+              if url.rstrip('/')==BASE.rstrip('/'):
                   return Path('index.html')
               if not url.startswith(BASE): return None
               rel=url[len(BASE):].split('#',1)[0].split('?',1)[0].strip('/')
               if not rel: return Path('index.html')
               p=Path(rel)
-              if p.suffix:
-                  return p
-              return p/'index.html'
+              return p if p.suffix else p/'index.html'
 
           graph=defaultdict(set)
           inlinks=defaultdict(set)
@@ -59,13 +56,12 @@ jobs:
                       continue
                   dest=urljoin(src,href)
                   parsed=urlparse(dest)
-                  if parsed.netloc!=HOST or not parsed.path.startswith(PREFIX):
+                  if parsed.netloc!=HOST:
                       continue
                   clean=parsed._replace(fragment='',query='').geturl()
                   if clean.endswith('/index.html'):
                       clean=clean[:-10]
-                  # Normalize directory URLs to trailing slash when they map to a folder index.
-                  rel=parsed.path[len(PREFIX):].strip('/')
+                  rel=parsed.path.strip('/')
                   candidate=Path(rel)
                   if rel and not candidate.suffix and (candidate/'index.html').exists():
                       clean=BASE+rel+'/'
