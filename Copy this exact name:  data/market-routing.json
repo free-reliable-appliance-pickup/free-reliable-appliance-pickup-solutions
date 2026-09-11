@@ -1,11 +1,44 @@
-[
-  {"state":"CA","city":"Los Angeles","routing":"owner_priority","cluster":"Los Angeles Core","monthly_price_cents":null,"pricing_status":"collect_data"},
-  {"state":"CA","city":"West Covina","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
-  {"state":"CA","city":"Covina","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
-  {"state":"CA","city":"Pomona","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
-  {"state":"CA","city":"Glendora","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
-  {"state":"CA","city":"La Verne","routing":"owner_priority","cluster":"San Gabriel Valley","monthly_price_cents":null,"pricing_status":"collect_data"},
+{
+  "version": 2,
+  "updated": "2026-09-11",
+  "purpose": "Internal market and partner lead routing. Coverage records do not create public SEO location pages.",
+  "routing_values": ["owner_priority", "direct_operation", "partner_available", "partner_assigned", "future_market"],
+  "markets": [
+    {"state":"CA","city":"Los Angeles","routing":"owner_priority","cluster":"Los Angeles Core","phone":"310-774-4304","pricing_status":"collect_data"},
+    {"state":"CA","city":"West Covina","routing":"owner_priority","cluster":"San Gabriel Valley","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"Covina","routing":"owner_priority","cluster":"San Gabriel Valley","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"Pomona","routing":"owner_priority","cluster":"San Gabriel Valley","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"Glendora","routing":"owner_priority","cluster":"San Gabriel Valley","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"La Verne","routing":"owner_priority","cluster":"San Gabriel Valley","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"Fontana","routing":"owner_priority","cluster":"Inland Empire","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"Rialto","routing":"owner_priority","cluster":"Inland Empire","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"Rancho Cucamonga","routing":"owner_priority","cluster":"Inland Empire","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"Ontario","routing":"owner_priority","cluster":"Inland Empire","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"Riverside","routing":"owner_priority","cluster":"Riverside County","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"Palm Springs","routing":"owner_priority","cluster":"Coachella Valley","phone":"909-375-6685","pricing_status":"collect_data"},
+    {"state":"CA","city":"San Diego","routing":"owner_priority","cluster":"San Diego County","phone":"310-774-4304","pricing_status":"collect_data"},
+    {"state":"CA","city":"San Francisco","routing":"owner_priority","cluster":"Bay Area","phone":"310-774-4304","pricing_status":"collect_data"},
+    {"state":"CA","city":"Stockton","routing":"owner_priority","cluster":"Central Valley","phone":"310-774-4304","pricing_status":"collect_data"},
 
-  {"state":"CA","city":"Fontana","routing":"owner_priority","cluster":"Inland Empire","monthly_price_cents":null,"pricing_status":"collect_data"},
-  {"state":"CA","city":"Rialto","routing":"owner_priority","cluster":"Inland Empire","monthly_price_cents":null,"pricing_status":"collect_data"},
-  {"state":"CA","city":"
+    {"state":"OR","city":"Portland","routing":"direct_operation","cluster":"Portland Metro","phone":"503-868-4455","pricing_status":"not_for_sale"},
+    {"state":"OR","city":"Salem","routing":"direct_operation","cluster":"Salem Metro","phone":"503-868-4455","pricing_status":"not_for_sale"},
+    {"state":"OR","city":"Keizer","routing":"direct_operation","cluster":"Salem Metro","phone":"503-868-4455","pricing_status":"not_for_sale"},
+    {"state":"WA","city":"Vancouver","routing":"owner_priority","cluster":"Clark County","phone":"503-868-4455","pricing_status":"collect_data"},
+    {"state":"WA","city":"Seattle","routing":"partner_available","cluster":"Seattle Metro","phone":"503-868-4455","pricing_status":"collect_data"},
+    {"state":"WA","city":"Tacoma","routing":"partner_available","cluster":"Seattle-Tacoma","phone":"503-868-4455","pricing_status":"collect_data"},
+
+    {"state":"CO","city":"Denver","routing":"direct_operation","cluster":"Denver Metro","phone":"720-604-7498","pricing_status":"collect_data"},
+    {"state":"CO","city":"Aurora","routing":"direct_operation","cluster":"Denver Metro","phone":"720-604-7498","pricing_status":"collect_data"},
+    {"state":"CO","city":"Wheat Ridge","routing":"partner_available","cluster":"Denver Metro","phone":"720-604-7498","pricing_status":"collect_data"},
+
+    {"state":"AZ","city":"Phoenix","routing":"partner_available","cluster":"Phoenix Metro","phone":null,"pricing_status":"collect_data"},
+    {"state":"NV","city":"Las Vegas","routing":"partner_available","cluster":"Las Vegas Valley","phone":null,"pricing_status":"collect_data"},
+    {"state":"NV","city":"Reno","routing":"partner_available","cluster":"Reno-Sparks","phone":null,"pricing_status":"collect_data"},
+    {"state":"UT","city":"Salt Lake City","routing":"partner_available","cluster":"Wasatch Front","phone":null,"pricing_status":"collect_data"},
+    {"state":"ID","city":"Boise","routing":"partner_available","cluster":"Treasure Valley","phone":null,"pricing_status":"collect_data"},
+    {"state":"TX","city":"Dallas","routing":"future_market","cluster":"Dallas-Fort Worth","phone":null,"pricing_status":"collect_data"},
+    {"state":"TX","city":"Houston","routing":"future_market","cluster":"Houston Metro","phone":null,"pricing_status":"collect_data"},
+    {"state":"FL","city":"Miami","routing":"future_market","cluster":"South Florida","phone":null,"pricing_status":"collect_data"},
+    {"state":"FL","city":"Orlando","routing":"future_market","cluster":"Central Florida","phone":null,"pricing_status":"collect_data"}
+  ]
+}
