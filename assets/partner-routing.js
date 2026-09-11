@@ -17,7 +17,7 @@
   const normalize = value => String(value || '').trim().toLowerCase();
 
   function marketFor(city, state) {
-    if (!routing || !Array.isArray(routing.markets)) return { ...DEFAULT };
+    if (!routing || !Array.isArray(routing.markets)) return { ...DEFAULT, resolution_level: 'fallback' };
     const stateCode = String(state || '').trim().toUpperCase();
     const cityName = normalize(city);
 
@@ -25,7 +25,7 @@
       String(m.state_code || '').toUpperCase() === stateCode &&
       m.city && normalize(m.city) === cityName
     );
-    if (exact) return exact;
+    if (exact) return { ...exact, resolution_level: 'exact-city' };
 
     let region = null;
     if (cityCatalog && Array.isArray(cityCatalog.cities)) {
@@ -41,17 +41,17 @@
         String(m.state_code || '').toUpperCase() === stateCode &&
         !m.city && normalize(m.region) === normalize(region)
       );
-      if (regional) return regional;
+      if (regional) return { ...regional, resolution_level: 'regional' };
     }
 
     if (Array.isArray(routing.state_defaults)) {
       const statewide = routing.state_defaults.find(s =>
         String(s.state_code || '').toUpperCase() === stateCode
       );
-      if (statewide) return statewide;
+      if (statewide) return { ...statewide, resolution_level: 'statewide' };
     }
 
-    return { ...DEFAULT, state_code: stateCode, city };
+    return { ...DEFAULT, state_code: stateCode, city, resolution_level: 'fallback' };
   }
 
   function publicLabel(info) {
@@ -99,12 +99,13 @@
         region: info.region || 'Unassigned market',
         status: info.status || DEFAULT.status,
         territory_status: info.territory_status || DEFAULT.territory_status,
-        lead_priority: info.lead_priority || DEFAULT.lead_priority
+        lead_priority: info.lead_priority || DEFAULT.lead_priority,
+        resolution_level: info.resolution_level || 'fallback'
       };
     });
 
     ensureHidden(form, 'Selected Market Routing', 'selectedMarketRouting').value = classified
-      .map(x => `${x.city}, ${x.state} | ${x.region} | ${x.status} | ${x.territory_status} | priority ${x.lead_priority}`)
+      .map(x => `${x.city}, ${x.state} | ${x.region} | ${x.status} | ${x.territory_status} | ${x.resolution_level} | priority ${x.lead_priority}`)
       .join('; ');
     ensureHidden(form, 'Application Source', 'applicationSource').value = 'Nationwide Partner Page';
     ensureHidden(form, 'Routing Policy', 'routingPolicy').value = 'Application review only; selection does not establish coverage or create an SEO page';
@@ -131,6 +132,7 @@
       ensureHidden(form, 'Primary Market Status', 'primaryMarketStatus').value = primary.status || DEFAULT.status;
       ensureHidden(form, 'Primary Territory Status', 'primaryTerritoryStatus').value = primary.territory_status || DEFAULT.territory_status;
       ensureHidden(form, 'Primary Market Region', 'primaryMarketRegion').value = primary.region || DEFAULT.region;
+      ensureHidden(form, 'Primary Market Resolution Level', 'primaryMarketResolutionLevel').value = primary.resolution_level || 'fallback';
     }
   }
 
