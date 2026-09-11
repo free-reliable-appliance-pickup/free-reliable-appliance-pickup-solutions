@@ -46,6 +46,15 @@ function classify(city,state){
   return {...FALLBACK,state_code:sc,city,resolution_level:'fallback'};
 }
 
+function routingDecision(info){
+  const status=String(info&&info.status||FALLBACK.status);
+  const territory=String(info&&info.territory_status||FALLBACK.territory_status);
+  if(status==='direct')return {decision:'DIRECT_OPERATION',tier:'direct-operations',action:'Review qualification and dispatch through the established company market.'};
+  if(status==='partner-supported'||territory==='assigned')return {decision:'PARTNER_NETWORK',tier:'assigned-partner',action:'Review qualification and route to the assigned approved partner.'};
+  if(status==='partner-recruiting')return {decision:'RECRUITING_QUEUE',tier:'partner-recruiting',action:'Keep as an intake lead while local partner coverage is being recruited; do not promise pickup.'};
+  return {decision:'NATIONAL_INTAKE',tier:'request-only',action:'Accept for review only; confirm local coverage before offering or scheduling pickup.'};
+}
+
 function findField(form,names){
   for(const name of names){
     const el=form.querySelector(`[name="${name}"]`)||form.querySelector('#'+name);
@@ -70,6 +79,7 @@ function qualify(form){
   const state=findField(form,['state','State','pickup_state','Primary State']);
   if(!city||!state)return;
   const info=classify(city.value,state.value);
+  const route=routingDecision(info);
   hidden(form,'Routing City',city.value.trim());
   hidden(form,'Routing State Code',stateCode(state.value));
   hidden(form,'Routing Region',info.region||FALLBACK.region);
@@ -80,6 +90,10 @@ function qualify(form){
   hidden(form,'Routing Phone',info.phone||'');
   hidden(form,'Routing Partner ID',info.partner_id||'');
   hidden(form,'Routing Backup Partner ID',info.backup_partner_id||'');
+  hidden(form,'Routing Decision',route.decision);
+  hidden(form,'Routing Network Tier',route.tier);
+  hidden(form,'Routing Next Action',route.action);
+  hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed');
   hidden(form,'Routing Source','Canonical market-routing.json');
   hidden(form,'SEO Page Creation','Disabled');
   const condition=findField(form,['condition','Condition','Appliance Condition']);
@@ -122,5 +136,5 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 });
 
-window.FreeReliableCustomerRouting={classify,qualify,load,siteBase};
+window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision};
 })();
