@@ -214,6 +214,10 @@
       };
     });
 
+    /* The original partner page has a small bootstrap city list as a no-JS-data fallback.
+       Once the canonical catalog loads, all later add/remove/clear operations must keep
+       using the canonical renderer instead of falling back to that bootstrap list. */
+    window.render = renderCanonical;
     renderCanonical();
   }
 
