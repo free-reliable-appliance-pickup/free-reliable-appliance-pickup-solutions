@@ -7,6 +7,17 @@ const FALLBACK={status:'request-only',territory_status:'available',region:'Unass
 let routing=null,cities=null,loadPromise=null;
 const n=v=>String(v||'').trim().toLowerCase();
 
+/* Support both the primary custom domain and the legacy GitHub Pages project URL. */
+function siteBase(){
+  const host=(location.hostname||'').toLowerCase();
+  if(host.endsWith('.github.io')){
+    const first=(location.pathname||'/').split('/').filter(Boolean)[0];
+    return first ? '/'+first+'/' : '/';
+  }
+  return '/';
+}
+function siteUrl(path){return siteBase()+String(path||'').replace(/^\/+/, '');}
+
 function stateCode(value){
   const raw=String(value||'').trim();
   if(raw.length===2)return raw.toUpperCase();
@@ -81,8 +92,8 @@ function qualify(form){
 function load(){
   if(loadPromise)return loadPromise;
   loadPromise=Promise.all([
-    fetch('/data/market-routing.json',{cache:'no-store'}),
-    fetch('/data/cities.json',{cache:'no-store'})
+    fetch(siteUrl('data/market-routing.json'),{cache:'no-store'}),
+    fetch(siteUrl('data/cities.json'),{cache:'no-store'})
   ]).then(async([r,c])=>{
     if(r.ok)routing=await r.json();
     if(c.ok)cities=await c.json();
@@ -102,7 +113,6 @@ function wireForm(form){
   },true);
 }
 
-/* Start loading immediately so routing data is normally ready before a customer submits. */
 load();
 
 document.addEventListener('DOMContentLoaded',()=>{
@@ -112,5 +122,5 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 });
 
-window.FreeReliableCustomerRouting={classify,qualify,load};
+window.FreeReliableCustomerRouting={classify,qualify,load,siteBase};
 })();
