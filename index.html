@@ -351,7 +351,7 @@ section{padding:24px 18px}
 <meta property="og:image" content="https://freereliableappliancepickup.com/assets/major-appliance-pickup-photo-1.jpg">
 <meta property="og:image:alt" content="Real major household appliance handled by Free Reliable Appliance Pickup">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://freereliableappliancepickup.com/#website","url":"https://freereliableappliancepickup.com/","name":"Free Reliable Appliance Pickup","alternateName":"Reliable Appliance Pickup","publisher":{"@id":"https://freereliableappliancepickup.com/#organization"}}</script>
-<script src="/assets/customer-routing.js" defer></script>
+<script src="assets/customer-routing.js" defer></script>
 </head>
 
 <body>
@@ -470,32 +470,32 @@ local demand and available coverage.
 
 <div class="card">
 <h3>Washers</h3>
-<p>Top-load and front-load washing machines.</p>
+<p>Tell us whether the washer fills, drains and spins, and mention leaks or error codes.</p><a href="washer-dryer-pickup/">Washer pickup details</a>
 </div>
 
 <div class="card">
 <h3>Dryers</h3>
-<p>Electric and gas dryers.</p>
+<p>Include whether the dryer heats and tumbles, and whether it uses gas or electricity.</p><a href="washer-dryer-pickup/">Dryer pickup details</a>
 </div>
 
 <div class="card">
 <h3>Washer &amp; Dryer Sets</h3>
-<p>A priority pickup category in many markets.</p>
+<p>Working sets are a priority. Describe the condition of each machine separately, including stacked units.</p><a href="washer-dryer-pickup/">Washer and dryer set pickup</a>
 </div>
 
 <div class="card">
 <h3>Refrigerators</h3>
-<p>Side-by-side, French-door and standard refrigerators.</p>
+<p>Tell us whether both compartments stay cold. Include dimensions and interior photos when possible.</p><a href="refrigerator-pickup/">Refrigerator pickup details</a>
 </div>
 
 <div class="card">
 <h3>Stoves &amp; Ranges</h3>
-<p>Electric and gas stoves and ranges.</p>
+<p>List the fuel type and whether the oven and all burners work. Mention built-in installations.</p><a href="stove-oven-pickup/">Stove and oven pickup details</a>
 </div>
 
 <div class="card">
 <h3>Freezers</h3>
-<p>Upright and chest freezers.</p>
+<p>Tell us whether it holds freezing temperature, its approximate size and where it is located.</p><a href="freezer-pickup/">Freezer pickup details</a>
 </div>
 
 </div>
@@ -503,7 +503,8 @@ local demand and available coverage.
 <div class="warning">
 <strong>Microwaves:</strong>
 standalone microwaves are not accepted. They must be included
-with another qualifying major appliance.
+with another qualifying major appliance.<br>
+<strong>Dishwashers:</strong> accepted only with two or more major working appliances.
 </div>
 
 </section>
@@ -538,15 +539,15 @@ pickup access and available direct or partner coverage.
 
 <section id="nationwide">
 
-<h2>Nationwide Appliance Pickup Requests</h2>
+<h2>Our National Appliance Pickup Network</h2>
 
 <p class="lead">
 Customers can submit pickup requests from all 50 states.
 </p>
 
 <p>
-Outside direct-service areas, requests may be reviewed
-for available pickup partners or future service coverage.
+Our central team reviews your appliance details and location. In established markets, a direct team or approved local partner may handle the pickup. In other areas, we check for available partners; submitting a request does not reserve a pickup.<br><br>
+Before a pickup is scheduled, the team must confirm appliance eligibility, access and availability with you. Free pickup is available for qualifying working appliances or loads where about 80% are working. Describe each appliance in a mixed load so we can review it accurately.
 </p>
 
 <div class="states" aria-label="All 50 U.S. states">
@@ -607,7 +608,7 @@ for available pickup partners or future service coverage.
 
 <section id="priority-local-markets">
 <h2>Priority Regional & Local Markets</h2>
-<p>Our location pages are organized around meaningful service regions and established operating markets rather than a separate search page for every city.</p>
+<p>Find your regional contact and pickup information below. Availability depends on your city, appliance condition and the local team’s current route.</p>
 <div class="grid">
 <div class="card"><h3>Established Local Operations</h3><p><a href="portland-appliance-pickup/">Portland</a> · <a href="salem-appliance-pickup/">Salem</a> · <a href="denver-appliance-pickup/">Denver</a> · <a href="aurora-appliance-pickup/">Aurora</a></p></div>
 <div class="card"><h3>California Regions</h3><p><a href="los-angeles-county-appliance-pickup/">Los Angeles County</a> · <a href="inland-empire-appliance-pickup/">Inland Empire</a> · <a href="orange-county-appliance-pickup/">Orange County</a> · <a href="riverside-county-appliance-pickup/">Riverside County</a> · <a href="san-diego-county-appliance-pickup/">San Diego County</a> · <a href="sf-bay-area-appliance-pickup/">Bay Area</a> · <a href="central-valley-appliance-pickup/">Central Valley</a> · <a href="central-coast-appliance-pickup/">Central Coast</a></p></div>
@@ -1057,8 +1058,11 @@ return;
 
 coverageCheckButton.disabled = true;
 coverageCheckButton.textContent = "Checking…";
+try {
+if (!window.FreeReliableCustomerRouting) throw new Error("Routing unavailable");
 await window.FreeReliableCustomerRouting.load();
 const route = window.FreeReliableCustomerRouting.classify(city,state);
+if (route.resolution_level === "fallback") throw new Error("Coverage data unavailable");
 const direct = route.status === "direct" || route.status === "partner-supported";
 const recruiting = route.status === "partner-recruiting";
 const region = route.region && !route.region.includes("statewide intake") ? " in " + route.region : "";
@@ -1077,8 +1081,20 @@ stateSelect.value = state;
 stateSelect.dispatchEvent(new Event("change"));
 coverageType.value = route.status;
 coverageCheckResult.insertAdjacentHTML("beforeend", ' <a href="#request">Continue to pickup request</a>.');
+} catch (error) {
+coverageCheckResult.className = "coverage-result is-visible is-limited";
+coverageCheckResult.textContent = "We could not check coverage right now. You can still send a pickup request below so our team can review your area.";
+const link = document.createElement("a");
+link.href = "#request";
+link.textContent = " Continue to pickup request";
+coverageCheckResult.appendChild(link);
+document.getElementById("city").value = city;
+stateSelect.value = state;
+stateSelect.dispatchEvent(new Event("change"));
+} finally {
 coverageCheckButton.disabled = false;
 coverageCheckButton.textContent = "Check Area";
+}
 });
 
 </script>
