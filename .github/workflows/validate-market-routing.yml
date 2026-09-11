@@ -157,7 +157,13 @@ jobs:
               'data/cities.json',
               'state_defaults',
               'Nationwide Partner Page',
-              'does not establish coverage or create an SEO page'
+              'does not establish coverage or create an SEO page',
+              'window.render = renderCanonical',
+              "resolution_level: 'exact-city'",
+              "resolution_level: 'regional'",
+              "resolution_level: 'statewide'",
+              "resolution_level: 'fallback'",
+              'Primary Market Resolution Level'
           ]
           for token in required_partner_tokens:
               if token not in partner_script:
@@ -200,5 +206,5 @@ jobs:
               if token not in homepage:
                   sys.exit(f'homepage coverage checker missing required token: {token}')
 
-          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); routing decision tests passed; partner/customer safeguards passed; automatic city-page creation remains disabled')
+          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); routing decision tests passed; canonical partner picker and resolution metadata protected; customer safeguards passed; automatic city-page creation remains disabled')
           PY
