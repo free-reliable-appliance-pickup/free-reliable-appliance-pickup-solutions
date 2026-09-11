@@ -1,0 +1,37 @@
+{
+  "version": "2026-09-11",
+  "purpose": "Internal event ledger for measuring lead routing performance, partner response and completed pickup outcomes.",
+  "rules": {
+    "containsPrivateOperationalData": true,
+    "publishAsSeoContent": false,
+    "recordOutcomeForEveryRoutedLead": true
+  },
+  "eventTypes": [
+    "request_received",
+    "qualified",
+    "not_qualified",
+    "partner_offered",
+    "partner_accepted",
+    "partner_declined",
+    "backup_offered",
+    "pickup_scheduled",
+    "pickup_completed",
+    "pickup_cancelled",
+    "lead_expired"
+  ],
+  "eventTemplate": {
+    "event_id": null,
+    "lead_id": null,
+    "event_type": null,
+    "partner_id": null,
+    "assignment_id": null,
+    "state_code": null,
+    "region": null,
+    "city": null,
+    "occurred_at": null,
+    "response_minutes": null,
+    "revenue_cents": null,
+    "notes": null
+  },
+  "events": []
+}
