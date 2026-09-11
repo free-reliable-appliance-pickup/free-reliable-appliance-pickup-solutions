@@ -3,7 +3,7 @@ name: Validate market routing and SEO safety
 on:
   push:
     paths:
-      - 'data/market-routing.json'
+      - 'data/**.json'
       - 'sitemap.xml'
       - '**-appliance-pickup/index.html'
       - '.github/workflows/validate-market-routing.yml'
@@ -18,79 +18,126 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate routing JSON and SEO policy
+      - name: Validate nationwide routing data and SEO policy
         shell: bash
         run: |
           python3 - <<'PY'
           import json, pathlib, re, sys
 
           root = pathlib.Path('.')
-          routing_path = root / 'data' / 'market-routing.json'
-          sitemap_path = root / 'sitemap.xml'
-
+          data_dir = root / 'data'
           errors = []
 
-          try:
-              routing = json.loads(routing_path.read_text(encoding='utf-8'))
-          except Exception as e:
-              print(f'ERROR: data/market-routing.json is invalid JSON: {e}')
-              sys.exit(1)
+          # Every operational data file must remain valid JSON.
+          parsed = {}
+          for path in sorted(data_dir.glob('*.json')):
+              try:
+                  parsed[path.name] = json.loads(path.read_text(encoding='utf-8'))
+              except Exception as e:
+                  errors.append(f'{path} is invalid JSON: {e}')
 
+          routing = parsed.get('market-routing.json', {})
           rules = routing.get('rules', {})
           statuses = routing.get('statuses', {})
+          territory_statuses = routing.get('territoryStatuses', {})
           markets = routing.get('markets', [])
 
           required_statuses = {'direct', 'partner-supported', 'partner-recruiting', 'request-only'}
+          required_territory = {'protected', 'assigned', 'available', 'waitlist'}
+
           missing = required_statuses - set(statuses)
           if missing:
               errors.append('Missing routing status definitions: ' + ', '.join(sorted(missing)))
+          missing_territory = required_territory - set(territory_statuses)
+          if missing_territory:
+              errors.append('Missing territory status definitions: ' + ', '.join(sorted(missing_territory)))
 
           if rules.get('defaultStatus') != 'request-only':
               errors.append('defaultStatus must remain request-only for unverified markets.')
-
-          allowed_city = set(rules.get('indexableCityStatuses', []))
-          if allowed_city != {'direct', 'partner-supported'}:
+          if rules.get('defaultTerritoryStatus') != 'available':
+              errors.append('defaultTerritoryStatus must remain available.')
+          if rules.get('automaticCityPageCreation') is not False:
+              errors.append('automaticCityPageCreation must remain false.')
+          if set(rules.get('indexableCityStatuses', [])) != {'direct', 'partner-supported'}:
               errors.append('indexableCityStatuses must be exactly direct and partner-supported.')
 
+          required_fields = {
+              'state','state_code','region','status','territory_status','partner_id',
+              'backup_partner_id','lead_priority','pricing_status','monthly_price_cents'
+          }
           for i, market in enumerate(markets, start=1):
+              missing_fields = required_fields - set(market)
+              if missing_fields:
+                  errors.append(f'Market #{i} missing fields: {sorted(missing_fields)}')
               status = market.get('status')
+              territory = market.get('territory_status')
               if status not in required_statuses:
                   errors.append(f'Market #{i} has invalid status: {status!r}')
-              if not market.get('state') or not market.get('region'):
-                  errors.append(f'Market #{i} is missing state or region.')
+              if territory not in required_territory:
+                  errors.append(f'Market #{i} has invalid territory_status: {territory!r}')
+              if status == 'direct' and territory == 'available':
+                  errors.append(f'Direct market #{i} cannot be publicly available territory.')
+              if status == 'partner-supported' and rules.get('partnerAssignmentRequiredForPartnerSupported') and not market.get('partner_id'):
+                  errors.append(f'Partner-supported market #{i} requires partner_id.')
+              if market.get('monthly_price_cents') is not None and market.get('pricing_status') not in {'priced','active'}:
+                  errors.append(f'Market #{i} has a price without priced/active pricing_status.')
 
+          # City catalog is application/routing support only and must have unique city/state pairs.
+          city_catalog = parsed.get('cities.json', {})
+          seen = set()
+          for i, city in enumerate(city_catalog.get('cities', []), start=1):
+              key = (str(city.get('city','')).strip().lower(), str(city.get('state_code','')).strip().upper())
+              if not all(key):
+                  errors.append(f'City catalog row #{i} missing city or state_code.')
+              elif key in seen:
+                  errors.append(f'Duplicate city/state in catalog: {key[0]}, {key[1]}')
+              seen.add(key)
+          notes = ' '.join(city_catalog.get('notes', [])).lower()
+          if 'must not automatically become indexable' not in notes:
+              errors.append('cities.json must explicitly prohibit automatic indexable city pages.')
+
+          # Partner registry must protect private identities and require approval/assignment.
+          partners = parsed.get('partners.json', {})
+          partner_rules = partners.get('rules', {})
+          if partner_rules.get('approvalRequired') is not True:
+              errors.append('Partner approval must remain required.')
+          if partner_rules.get('territoryAssignmentRequired') is not True:
+              errors.append('Partner territory assignment must remain required.')
+          if partner_rules.get('publicPartnerIdentity') is not False:
+              errors.append('Partner identity must remain private by default.')
+
+          assignment = parsed.get('territory-assignment-schema.json', {})
+          assignment_rules = assignment.get('rules', {})
+          if assignment_rules and assignment_rules.get('assignmentDoesNotCreateSeoPage') is not True:
+              errors.append('Territory assignment must never automatically create an SEO page.')
+
+          sitemap_path = root / 'sitemap.xml'
           sitemap = sitemap_path.read_text(encoding='utf-8')
           sitemap_urls = set(re.findall(r'<loc>(https://freereliableappliancepickup\.com/[^<]*)</loc>', sitemap))
 
-          # Thin retired city pages must remain noindex and must not appear in sitemap.
           for page in root.glob('*-appliance-pickup/index.html'):
               text = page.read_text(encoding='utf-8', errors='ignore')
               size = page.stat().st_size
               slug = page.parent.name
               url = f'https://freereliableappliancepickup.com/{slug}/'
-
-              # Consolidated pages are recognizable by their canonical to /service-areas/.
-              retired = 'canonical" href="https://freereliableappliancepickup.com/service-areas/' in text or \
-                        "canonical' href='https://freereliableappliancepickup.com/service-areas/" in text
-
+              retired = 'canonical" href="https://freereliableappliancepickup.com/service-areas/' in text or "canonical' href='https://freereliableappliancepickup.com/service-areas/" in text
               if retired:
                   if 'noindex' not in text.lower():
                       errors.append(f'Retired page lost noindex: {page}')
                   if url in sitemap_urls:
                       errors.append(f'Retired page leaked into sitemap: {url}')
-
-              # Catch accidental reintroduction of tiny indexable city pages.
               if size < 2500 and 'noindex' not in text.lower():
                   errors.append(f'Small city page is indexable ({size} bytes): {page}')
 
           if errors:
-              print('SEO ROUTING SAFETY CHECK FAILED')
-              for e in errors:
-                  print(' -', e)
+              print('NATIONWIDE ROUTING / SEO SAFETY CHECK FAILED')
+              for error in errors:
+                  print(' -', error)
               sys.exit(1)
 
-          print('Routing JSON valid.')
+          print('All operational JSON files are valid.')
           print(f'Markets configured: {len(markets)}')
+          print(f'Priority cities checked: {len(seen)}')
           print(f'Sitemap URLs checked: {len(sitemap_urls)}')
-          print('Retired thin city pages remain protected from indexing.')
+          print('Partner, territory and city-page safety rules verified.')
           PY
