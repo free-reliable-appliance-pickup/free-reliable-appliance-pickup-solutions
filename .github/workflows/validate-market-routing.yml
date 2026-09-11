@@ -115,7 +115,15 @@ jobs:
                   return 'statewide', defaults_by_code[code]
               return 'fallback', {'status':'request-only','territory_status':'available','lead_priority':3}
 
-          def expect(city, code, level, status, region=None, phone=None):
+          def decision(row):
+              status=str(row.get('status') or 'request-only')
+              territory=str(row.get('territory_status') or 'available')
+              if status=='direct': return 'DIRECT_OPERATION'
+              if status=='partner-supported' or territory=='assigned': return 'PARTNER_NETWORK'
+              if status=='partner-recruiting': return 'RECRUITING_QUEUE'
+              return 'NATIONAL_INTAKE'
+
+          def expect(city, code, level, status, region=None, phone=None, expected_decision=None):
               got_level,row=resolve(city,code)
               if got_level != level:
                   sys.exit(f'{city}, {code}: expected level {level}, got {got_level}')
@@ -125,18 +133,20 @@ jobs:
                   sys.exit(f'{city}, {code}: expected region {region}, got {row.get("region")}')
               if phone is not None and row.get('phone') != phone:
                   sys.exit(f'{city}, {code}: expected phone {phone}, got {row.get("phone")}')
+              if expected_decision is not None and decision(row) != expected_decision:
+                  sys.exit(f'{city}, {code}: expected decision {expected_decision}, got {decision(row)}')
 
-          # Regression tests mirror the production routing order: exact city -> regional market -> statewide intake.
-          expect('Portland','OR','exact','direct','Portland Metro','503-868-4455')
-          expect('Beaverton','OR','regional','direct','Portland Metro','503-868-4455')
-          expect('Keizer','OR','regional','direct','Salem Metro','503-868-4455')
-          expect('Denver','CO','exact','direct','Denver Metro','720-604-7498')
-          expect('Wheat Ridge','CO','regional','direct','Denver Metro','720-604-7498')
-          expect('Victorville','CA','regional','partner-recruiting','Victorville Valley','909-375-6685')
-          expect('Lancaster','CA','regional','partner-recruiting','Antelope Valley','310-774-4304')
-          expect('Astoria','OR','regional','partner-recruiting','Oregon Coast','503-868-4455')
-          expect('Dallas','TX','regional','partner-recruiting','Dallas-Fort Worth')
-          expect('Columbus','OH','statewide','request-only','Ohio statewide intake')
+          # Regression tests mirror production routing order and customer-network decisions.
+          expect('Portland','OR','exact','direct','Portland Metro','503-868-4455','DIRECT_OPERATION')
+          expect('Beaverton','OR','regional','direct','Portland Metro','503-868-4455','DIRECT_OPERATION')
+          expect('Keizer','OR','regional','direct','Salem Metro','503-868-4455','DIRECT_OPERATION')
+          expect('Denver','CO','exact','direct','Denver Metro','720-604-7498','DIRECT_OPERATION')
+          expect('Wheat Ridge','CO','regional','direct','Denver Metro','720-604-7498','DIRECT_OPERATION')
+          expect('Victorville','CA','regional','partner-recruiting','Victorville Valley','909-375-6685','RECRUITING_QUEUE')
+          expect('Lancaster','CA','regional','partner-recruiting','Antelope Valley','310-774-4304','RECRUITING_QUEUE')
+          expect('Astoria','OR','regional','partner-recruiting','Oregon Coast','503-868-4455','RECRUITING_QUEUE')
+          expect('Dallas','TX','regional','partner-recruiting','Dallas-Fort Worth',None,'RECRUITING_QUEUE')
+          expect('Columbus','OH','statewide','request-only','Ohio statewide intake',None,'NATIONAL_INTAKE')
 
           partner_script=pathlib.Path('assets/partner-routing.js').read_text()
           partner_page=pathlib.Path('partners/index.html').read_text()
@@ -171,10 +181,24 @@ jobs:
           if "fetch(siteUrl('data/market-routing.json')" not in customer_script or "fetch(siteUrl('data/cities.json')" not in customer_script:
               sys.exit('customer routing must keep base-aware canonical data loading')
 
+          required_customer_decision_tokens=[
+              "decision:'DIRECT_OPERATION'",
+              "decision:'PARTNER_NETWORK'",
+              "decision:'RECRUITING_QUEUE'",
+              "decision:'NATIONAL_INTAKE'",
+              "hidden(form,'Routing Decision',route.decision)",
+              "hidden(form,'Routing Network Tier',route.tier)",
+              "hidden(form,'Routing Next Action',route.action)",
+              "hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed')"
+          ]
+          for token in required_customer_decision_tokens:
+              if token not in customer_script:
+                  sys.exit(f'customer routing decision safeguard missing required token: {token}')
+
           homepage=pathlib.Path('index.html').read_text()
           for token in ['id="coverage-checker"','id="coverage-city"','id="coverage-state"','FreeReliableCustomerRouting.classify(city,state)']:
               if token not in homepage:
                   sys.exit(f'homepage coverage checker missing required token: {token}')
 
-          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); representative resolution tests passed; partner/customer routing safeguards passed; automatic city-page creation remains disabled')
+          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); routing decision tests passed; partner/customer safeguards passed; automatic city-page creation remains disabled')
           PY
