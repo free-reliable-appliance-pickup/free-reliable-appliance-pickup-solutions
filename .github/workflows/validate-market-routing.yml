@@ -7,6 +7,8 @@ on:
       - 'sitemap.xml'
       - 'index.html'
       - 'assets/customer-routing.js'
+      - 'assets/partner-routing.js'
+      - 'partners/index.html'
       - '**-appliance-pickup/index.html'
       - '.github/workflows/validate-market-routing.yml'
   pull_request:
@@ -15,6 +17,8 @@ on:
       - 'sitemap.xml'
       - 'index.html'
       - 'assets/customer-routing.js'
+      - 'assets/partner-routing.js'
+      - 'partners/index.html'
       - '**-appliance-pickup/index.html'
       - '.github/workflows/validate-market-routing.yml'
 
@@ -134,5 +138,31 @@ jobs:
           expect('Dallas','TX','regional','partner-recruiting','Dallas-Fort Worth')
           expect('Columbus','OH','statewide','request-only','Ohio statewide intake')
 
-          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); representative resolution tests passed; automatic city-page creation remains disabled')
+          partner_script=pathlib.Path('assets/partner-routing.js').read_text()
+          partner_page=pathlib.Path('partners/index.html').read_text()
+          customer_script=pathlib.Path('assets/customer-routing.js').read_text()
+
+          required_partner_tokens=[
+              'data/market-routing.json',
+              'data/cities.json',
+              'state_defaults',
+              'Nationwide Partner Page',
+              'does not establish coverage or create an SEO page'
+          ]
+          for token in required_partner_tokens:
+              if token not in partner_script:
+                  sys.exit(f'partner routing safeguard missing required token: {token}')
+
+          if 'assets/partner-routing.js' not in partner_page and '../assets/partner-routing.js' not in partner_page:
+              sys.exit('partner page must load assets/partner-routing.js')
+          if 'assets/customer-routing.js' in partner_page or '../assets/customer-routing.js' in partner_page:
+              sys.exit('partner page must not load customer-routing.js')
+          if 'automaticCityPageCreation' in partner_page:
+              sys.exit('partner page must not contain city-page generation controls')
+          if "automaticCityPageCreation') is not False" not in pathlib.Path('.github/workflows/validate-market-routing.yml').read_text():
+              sys.exit('validator must continue enforcing automaticCityPageCreation=false')
+          if "fetch(siteUrl('data/market-routing.json')" not in customer_script or "fetch(siteUrl('data/cities.json')" not in customer_script:
+              sys.exit('customer routing must keep base-aware canonical data loading')
+
+          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); representative resolution tests passed; partner/customer routing safeguards passed; automatic city-page creation remains disabled')
           PY
