@@ -41,6 +41,15 @@ jobs:
               'portland-appliance-pickup','salem-appliance-pickup',
               'denver-appliance-pickup','aurora-appliance-pickup'
           }
+          approved_nonlocation={
+              '', 'about', 'appliance-pickup-checklist', 'contact',
+              'free-pickup-qualification', 'freezer-pickup',
+              'how-appliance-pickup-works', 'old-appliance-disposal-options',
+              'partners', 'refrigerator-pickup', 'service-areas',
+              'stove-oven-pickup', 'washer-dryer-pickup'
+          }
+          approved_indexable_paths=approved_locations | approved_nonlocation
+
           errors=[]
           html=list(Path('.').glob('**/index.html'))+[Path('index.html')]
           html=list(dict.fromkeys(p for p in html if p.exists() and '.git' not in p.parts and '.github' not in p.parts))
@@ -51,6 +60,13 @@ jobs:
               low=s.lower()
               if 'noindex' not in low:
                   indexable.append(p)
+                  rel='' if str(p)=='index.html' else str(p.parent).replace('\\','/').strip('/')
+
+                  # Exact allowlist guard. This blocks accidental scaled city/location pages,
+                  # including nested paths that do not end in -appliance-pickup.
+                  if rel not in approved_indexable_paths:
+                      errors.append(f'UNAPPROVED INDEXABLE PATH {p} ({rel})')
+
                   slug='' if str(p)=='index.html' else p.parent.name
                   if slug.endswith('-appliance-pickup') and slug not in approved_locations:
                       errors.append(f'UNAPPROVED INDEXABLE LOCATION {p}')
@@ -81,6 +97,15 @@ jobs:
               if url not in locs:
                   errors.append(f'INDEXABLE NOT IN SITEMAP {p} -> {url}')
 
+          # The sitemap itself must not contain any URL outside the same approved set.
+          for url in sorted(locs):
+              if not url.startswith(base):
+                  errors.append(f'FOREIGN SITEMAP URL {url}')
+                  continue
+              rel=url[len(base):].strip('/')
+              if rel not in approved_indexable_paths:
+                  errors.append(f'UNAPPROVED SITEMAP URL {url}')
+
           retired=[
               'palm-desert-appliance-pickup','palm-springs-appliance-pickup',
               'rancho-mirage-appliance-pickup','indian-wells-appliance-pickup',
@@ -99,5 +124,5 @@ jobs:
               print('\n'.join(errors))
               sys.exit(1)
 
-          print(f'PASS: {len(indexable)} indexable HTML pages checked; approved-market guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
+          print(f'PASS: {len(indexable)} indexable HTML pages checked; exact allowlist, approved-market guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
           PY
