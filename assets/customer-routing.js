@@ -15,8 +15,8 @@ function stateCode(value){
 }
 
 function classify(city,state){
-  if(!routing||!Array.isArray(routing.markets))return {...FALLBACK,state_code:stateCode(state),city};
   const sc=stateCode(state),cn=n(city);
+  if(!routing||!Array.isArray(routing.markets))return {...FALLBACK,state_code:sc,city};
   let region=null;
   if(cities&&Array.isArray(cities.cities)){
     const c=cities.cities.find(x=>stateCode(x.state_code||x.state)===sc&&n(x.city)===cn);
@@ -27,6 +27,10 @@ function classify(city,state){
   if(region){
     const m=routing.markets.find(x=>stateCode(x.state_code||x.state)===sc&&!x.city&&n(x.region)===n(region));
     if(m)return m;
+  }
+  if(Array.isArray(routing.state_defaults)){
+    const s=routing.state_defaults.find(x=>stateCode(x.state_code||x.state)===sc);
+    if(s)return {...s,city,region:s.region||((s.state||sc)+' statewide intake')};
   }
   return {...FALLBACK,state_code:sc,city};
 }
