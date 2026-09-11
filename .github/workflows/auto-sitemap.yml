@@ -20,113 +20,52 @@ jobs:
   sitemap:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout full history
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Rebuild and push sitemaps safely
+      - name: Rebuild sitemaps
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          for attempt in 1 2 3 4; do
-            echo "Sitemap attempt $attempt"
-            git fetch origin main
-            git reset --hard origin/main
-
-            python3 <<'PY'
+          python3 <<'PY'
           from pathlib import Path
-          import re
-          import subprocess
-          import xml.etree.ElementTree as ET
-
-          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          import re, subprocess, xml.etree.ElementTree as ET
+          BASE = "https://freereliableappliancepickup.com/"
           NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
           IMG_NS = "http://www.google.com/schemas/sitemap-image/1.1"
-          ET.register_namespace('', NS)
-          ET.register_namespace('image', IMG_NS)
-
-          root = Path('.')
-          all_pages = [Path('index.html')]
-          all_pages += sorted(p for p in root.rglob('index.html') if p != Path('index.html') and '.github' not in p.parts)
-
-          def page_text(path):
-              return path.read_text(encoding='utf-8', errors='ignore')
-
-          def is_indexable(path):
-              text = page_text(path)
-              match = re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>', text, flags=re.I)
-              return not (match and 'noindex' in match.group(0).lower())
-
-          def lastmod(path):
-              try:
-                  return subprocess.check_output(
-                      ['git','log','-1','--format=%cs','--',str(path)],
-                      text=True
-                  ).strip() or None
-              except Exception:
-                  return None
-
-          def appliance_images(path):
-              text = page_text(path)
-              names = re.findall(r'(major-appliance-pickup-photo-[123]\.jpg)', text, flags=re.I)
-              seen = []
-              for name in names:
-                  name = name.lower()
-                  if name not in seen:
-                      seen.append(name)
-              return [BASE + 'assets/' + name for name in seen]
-
-          pages = [p for p in all_pages if is_indexable(p)]
-
-          def write_sitemap(filename):
-              urlset = ET.Element(ET.QName(NS, 'urlset'))
-              seen = set()
-              image_count = 0
-              for page in pages:
-                  if page == Path('index.html'):
-                      url = BASE
-                  else:
-                      rel = page.parent.as_posix().strip('/')
-                      url = BASE + rel + '/'
-                  if url in seen:
-                      continue
-                  seen.add(url)
-                  u = ET.SubElement(urlset, ET.QName(NS, 'url'))
-                  ET.SubElement(u, ET.QName(NS, 'loc')).text = url
-                  modified = lastmod(page)
-                  if modified:
-                      ET.SubElement(u, ET.QName(NS, 'lastmod')).text = modified
-                  for image_url in appliance_images(page):
-                      image = ET.SubElement(u, ET.QName(IMG_NS, 'image'))
-                      ET.SubElement(image, ET.QName(IMG_NS, 'loc')).text = image_url
-                      image_count += 1
-              ET.indent(urlset, space='  ')
-              ET.ElementTree(urlset).write(filename, encoding='utf-8', xml_declaration=True)
-              return len(seen), image_count
-
-          count, images = write_sitemap('sitemap.xml')
-          write_sitemap('sitemap-new.xml')
-          print(f'Generated focused sitemaps with {count} indexable URLs and {images} appliance-image references')
+          ET.register_namespace('', NS); ET.register_namespace('image', IMG_NS)
+          pages=[Path('index.html')]+sorted(p for p in Path('.').rglob('index.html') if p!=Path('index.html') and '.github' not in p.parts)
+          def text(p): return p.read_text(encoding='utf-8',errors='ignore')
+          def indexable(p):
+              m=re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>',text(p),re.I)
+              return not (m and 'noindex' in m.group(0).lower())
+          def lastmod(p):
+              try: return subprocess.check_output(['git','log','-1','--format=%cs','--',str(p)],text=True).strip() or None
+              except: return None
+          def images(p):
+              found=[]
+              for n in re.findall(r'(major-appliance-pickup-photo-[123]\.jpg)',text(p),re.I):
+                  n=n.lower()
+                  if n not in found: found.append(n)
+              return [BASE+'assets/'+n for n in found]
+          pages=[p for p in pages if indexable(p)]
+          def write(fn):
+              root=ET.Element(ET.QName(NS,'urlset')); seen=set()
+              for p in pages:
+                  url=BASE if p==Path('index.html') else BASE+p.parent.as_posix().strip('/')+'/'
+                  if url in seen: continue
+                  seen.add(url); u=ET.SubElement(root,ET.QName(NS,'url')); ET.SubElement(u,ET.QName(NS,'loc')).text=url
+                  lm=lastmod(p)
+                  if lm: ET.SubElement(u,ET.QName(NS,'lastmod')).text=lm
+                  for im in images(p):
+                      x=ET.SubElement(u,ET.QName(IMG_NS,'image')); ET.SubElement(x,ET.QName(IMG_NS,'loc')).text=im
+              ET.indent(root,space='  '); ET.ElementTree(root).write(fn,encoding='utf-8',xml_declaration=True)
+              return len(seen)
+          print('Indexable URLs:',write('sitemap.xml')); write('sitemap-new.xml')
           PY
-
-            if git diff --quiet -- sitemap.xml sitemap-new.xml; then
-              echo "Sitemaps already current"
-              exit 0
-            fi
-
-            git add sitemap.xml sitemap-new.xml
-            git commit -m "Auto rebuild focused image sitemaps"
-            if git push origin HEAD:main; then
-              echo "Sitemaps pushed successfully"
-              exit 0
-            fi
-
-            echo "Main advanced during push; retrying from latest main"
-            sleep 2
-          done
-
-          echo "Main kept advancing. Leaving this run successful because the newest push triggers a fresh sitemap rebuild."
-          exit 0
+          git add sitemap.xml sitemap-new.xml
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Rebuild sitemap from indexable pages on custom domain"
+          git pull --rebase origin main || true
+          git push origin HEAD:main || true
