@@ -19,13 +19,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Audit indexable pages, canonicals, sitemap and retired-link leaks
+      - name: Audit indexable pages, approved markets, canonicals, sitemap and retired-link leaks
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re, sys
 
           base='https://freereliableappliancepickup.com/'
+          approved_locations={
+              'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
+              'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
+              'utah-appliance-pickup','idaho-appliance-pickup',
+              'inland-empire-appliance-pickup','orange-county-appliance-pickup',
+              'riverside-county-appliance-pickup','los-angeles-county-appliance-pickup',
+              'central-coast-appliance-pickup','central-valley-appliance-pickup',
+              'san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup',
+              'phoenix-metro-appliance-pickup','las-vegas-valley-appliance-pickup',
+              'puget-sound-appliance-pickup','treasure-valley-appliance-pickup',
+              'wasatch-front-appliance-pickup',
+              'portland-appliance-pickup','salem-appliance-pickup',
+              'denver-appliance-pickup','aurora-appliance-pickup'
+          }
           errors=[]
           html=list(Path('.').glob('**/index.html'))+[Path('index.html')]
           html=list(dict.fromkeys(p for p in html if p.exists() and '.git' not in p.parts and '.github' not in p.parts))
@@ -36,6 +50,9 @@ jobs:
               low=s.lower()
               if 'noindex' not in low:
                   indexable.append(p)
+                  slug='' if str(p)=='index.html' else p.parent.name
+                  if slug.endswith('-appliance-pickup') and slug not in approved_locations:
+                      errors.append(f'UNAPPROVED INDEXABLE LOCATION {p}')
                   c=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',s,re.I)
                   if not c:
                       errors.append(f'MISSING CANONICAL {p}')
@@ -45,6 +62,15 @@ jobs:
                       errors.append(f'MISSING TITLE {p}')
                   if '<h1' not in low:
                       errors.append(f'MISSING H1 {p}')
+
+          # Every approved active market must exist and stay indexable.
+          for slug in sorted(approved_locations):
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  errors.append(f'APPROVED LOCATION MISSING {p}')
+                  continue
+              if 'noindex' in p.read_text(encoding='utf-8',errors='ignore').lower():
+                  errors.append(f'APPROVED LOCATION NOINDEX {p}')
 
           sitemap=Path('sitemap.xml').read_text(encoding='utf-8',errors='ignore')
           locs=set(re.findall(r'<loc>(.*?)</loc>',sitemap))
@@ -72,5 +98,5 @@ jobs:
               print('\n'.join(errors))
               sys.exit(1)
 
-          print(f'PASS: {len(indexable)} indexable HTML pages checked; sitemap/canonicals/titles/H1/retired-link leaks clean')
+          print(f'PASS: {len(indexable)} indexable HTML pages checked; approved-market guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
           PY
