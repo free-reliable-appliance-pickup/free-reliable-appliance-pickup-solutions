@@ -62,7 +62,7 @@ jobs:
               sys.exit(f'state defaults must cover exactly all 50 states; missing={missing}, extra={extra}')
 
           region_rows={}
-          exact_rows=set()
+          exact_map={}
           for row in markets:
               code=row.get('state_code'); region=row.get('region'); city=row.get('city')
               if row.get('status') not in valid_status: sys.exit(f'invalid market status: {row}')
@@ -73,18 +73,21 @@ jobs:
               if row.get('backup_partner_id') and row.get('backup_partner_id')==row.get('partner_id'): sys.exit(f'backup partner duplicates primary: {row}')
               if city:
                   key=(code,city.strip().lower())
-                  if key in exact_rows: sys.exit(f'duplicate exact city route: {key}')
-                  exact_rows.add(key)
+                  if key in exact_map: sys.exit(f'duplicate exact city route: {key}')
+                  exact_map[key]=row
               else:
                   key=(code,(region or '').strip().lower())
                   if key in region_rows: sys.exit(f'duplicate regional route: {key}')
                   region_rows[key]=row
 
+          city_map={}
           regional=statewide=exact_count=0
           for c in cities.get('cities',[]):
               code=c.get('state_code'); region=(c.get('region') or '').strip().lower()
-              exact=(code,(c.get('city') or '').strip().lower())
-              if exact in exact_rows:
+              city=(c.get('city') or '').strip().lower()
+              city_map[(code,city)]=c
+              exact=(code,city)
+              if exact in exact_map:
                   exact_count+=1
                   continue
               if (code,region) in region_rows:
@@ -95,5 +98,39 @@ jobs:
                   continue
               sys.exit(f'city catalog cannot resolve through exact, regional, or statewide route: {c}')
 
-          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); automatic city-page creation remains disabled')
+          def resolve(city, code):
+              cn=city.strip().lower(); code=code.upper()
+              if (code,cn) in exact_map:
+                  return 'exact', exact_map[(code,cn)]
+              catalog=city_map.get((code,cn))
+              if catalog:
+                  region=(catalog.get('region') or '').strip().lower()
+                  if (code,region) in region_rows:
+                      return 'regional', region_rows[(code,region)]
+              if code in defaults_by_code:
+                  return 'statewide', defaults_by_code[code]
+              return 'fallback', {'status':'request-only','territory_status':'available','lead_priority':3}
+
+          def expect(city, code, level, status, region=None, phone=None):
+              got_level,row=resolve(city,code)
+              if got_level != level:
+                  sys.exit(f'{city}, {code}: expected level {level}, got {got_level}')
+              if row.get('status') != status:
+                  sys.exit(f'{city}, {code}: expected status {status}, got {row.get("status")}')
+              if region is not None and row.get('region') != region:
+                  sys.exit(f'{city}, {code}: expected region {region}, got {row.get("region")}')
+              if phone is not None and row.get('phone') != phone:
+                  sys.exit(f'{city}, {code}: expected phone {phone}, got {row.get("phone")}')
+
+          # Regression tests mirror the production routing order: exact city -> regional market -> statewide intake.
+          expect('Portland','OR','exact','direct','Portland Metro','503-868-4455')
+          expect('Denver','CO','exact','direct','Denver Metro','720-604-7498')
+          expect('Wheat Ridge','CO','regional','direct','Denver Metro','720-604-7498')
+          expect('Victorville','CA','regional','partner-recruiting','Victorville Valley','909-375-6685')
+          expect('Lancaster','CA','regional','partner-recruiting','Antelope Valley','310-774-4304')
+          expect('Astoria','OR','regional','partner-recruiting','Oregon Coast','503-868-4455')
+          expect('Dallas','TX','regional','partner-recruiting','Dallas-Fort Worth')
+          expect('Columbus','OH','statewide','request-only','Ohio statewide intake')
+
+          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); representative resolution tests passed; automatic city-page creation remains disabled')
           PY
