@@ -1,0 +1,40 @@
+{
+  "version": "2026-09-11",
+  "purpose": "Canonical field model for qualifying and routing appliance pickup requests to direct operations or approved local partners.",
+  "required": ["lead_id","created_at","city","state_code","zip","appliance_types","condition","coverage_status","route_status"],
+  "fields": {
+    "lead_id": "Unique request identifier",
+    "created_at": "ISO-8601 timestamp",
+    "customer_name": "Customer name",
+    "customer_phone": "Customer phone",
+    "customer_email": "Customer email",
+    "address": "Pickup address; private operational data",
+    "city": "Pickup city",
+    "state_code": "Two-letter state code",
+    "zip": "Pickup ZIP code",
+    "appliance_types": "One or more major appliance types",
+    "condition": "fully-working | needs-repair | not-working | unknown",
+    "floor": "first | second | third | basement | garage | outside | other",
+    "stairs": "none | one | two | three-plus | unknown",
+    "access": "easy | doorway-hallway | tight | door-removal | unknown",
+    "photos_received": "Boolean",
+    "coverage_status": "direct | partner-supported | partner-recruiting | request-only",
+    "territory_status": "protected | assigned | available | waitlist",
+    "primary_partner_id": "Approved partner identifier or null",
+    "backup_partner_id": "Backup approved partner identifier or null",
+    "route_status": "new | qualification-review | offered | accepted | declined | completed | cancelled | no-coverage",
+    "qualification_result": "qualified | conditional | not-qualified | pending",
+    "outcome": "Operational result",
+    "revenue_cents": "Partner/network revenue when applicable",
+    "quality_score": "Internal lead quality score"
+  },
+  "privacy": {
+    "customerContactPublic": false,
+    "customerAddressPublic": false,
+    "partnerContactPublic": false
+  },
+  "seo": {
+    "leadDataCreatesPublicPages": false,
+    "routingDataCreatesPublicPages": false
+  }
+}
