@@ -1,0 +1,92 @@
+name: Wire Customer Routing Into Live Pickup Forms
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/wire-customer-routing.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  wire-routing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add routing helper only to customer pickup form pages
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          script = '<script src="/assets/customer-routing.js" defer></script>'
+          changed = []
+
+          for path in Path('.').rglob('*.html'):
+              text = path.read_text(encoding='utf-8')
+              lower = text.lower()
+
+              # Only customer pickup forms: Formspree + city/state + appliance fields.
+              # This deliberately excludes the partner application workflow.
+              is_formspree = 'formspree.io' in lower
+              has_city = 'name="city"' in lower or "name='city'" in lower or 'name="pickup_city"' in lower or "name='pickup_city'" in lower
+              has_state = 'name="state"' in lower or "name='state'" in lower or 'name="pickup_state"' in lower or "name='pickup_state'" in lower
+              has_appliance = 'name="appliance"' in lower or "name='appliance'" in lower or 'name="appliance type"' in lower or "name='appliance type'" in lower
+
+              if not (is_formspree and has_city and has_state and has_appliance):
+                  continue
+              if '/assets/customer-routing.js' in text:
+                  continue
+              if '</head>' not in lower:
+                  continue
+
+              idx = lower.index('</head>')
+              text = text[:idx] + script + '\n' + text[idx:]
+              path.write_text(text, encoding='utf-8')
+              changed.append(str(path))
+
+          print('Wired customer routing into:')
+          for p in changed:
+              print(' -', p)
+          print('Total changed:', len(changed))
+          PY
+
+      - name: Verify partner application was not wired to customer routing
+        run: |
+          if grep -q '/assets/customer-routing.js' partners/index.html; then
+            echo 'ERROR: partner application incorrectly received customer routing helper'
+            exit 1
+          fi
+
+      - name: Verify every customer pickup form loads routing helper
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          failures=[]
+          for path in Path('.').rglob('*.html'):
+              text=path.read_text(encoding='utf-8')
+              lower=text.lower()
+              target=('formspree.io' in lower and
+                      ('name="city"' in lower or "name='city'" in lower or 'name="pickup_city"' in lower or "name='pickup_city'" in lower) and
+                      ('name="state"' in lower or "name='state'" in lower or 'name="pickup_state"' in lower or "name='pickup_state'" in lower) and
+                      ('name="appliance"' in lower or "name='appliance'" in lower or 'name="appliance type"' in lower or "name='appliance type'" in lower))
+              if target and '/assets/customer-routing.js' not in text:
+                  failures.append(str(path))
+          if failures:
+              print('Missing routing helper:', failures)
+              raise SystemExit(1)
+          print('All detected customer pickup forms are wired.')
+          PY
+
+      - name: Commit generated wiring changes
+        run: |
+          if git diff --quiet; then
+            echo 'No wiring changes needed.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add '*.html' ':/*/*.html'
+          git commit -m 'Wire routing engine into live customer pickup forms'
+          git push
