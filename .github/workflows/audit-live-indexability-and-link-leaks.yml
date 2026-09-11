@@ -1,0 +1,85 @@
+name: Audit Live Indexability And Link Leaks
+
+on:
+  push:
+    paths:
+      - '.github/workflows/audit-live-indexability-and-link-leaks.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit live headers and active-to-inactive links
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from urllib.parse import urljoin, urlparse
+          import re, xml.etree.ElementTree as ET
+
+          BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          active_urls=[e.text.strip() for e in root.findall('.//s:loc',ns) if e.text]
+          active=set(active_urls)
+          href_re=re.compile(r'href\s*=\s*["\']([^"\']+)["\']',re.I)
+
+          def file_for(url):
+              if url.rstrip('/')==BASE.rstrip('/'):
+                  return Path('index.html')
+              if not url.startswith(BASE): return None
+              rel=url[len(BASE):].split('#',1)[0].split('?',1)[0].strip('/')
+              if not rel: return Path('index.html')
+              p=Path(rel)
+              return p if p.suffix else p/'index.html'
+
+          leaked=[]
+          for src in active_urls:
+              fp=file_for(src)
+              if not fp or not fp.exists(): continue
+              raw=fp.read_text(encoding='utf-8',errors='ignore')
+              for href in href_re.findall(raw):
+                  if href.startswith(('#','tel:','mailto:','javascript:','data:')): continue
+                  dest=urljoin(src,href)
+                  u=urlparse(dest)
+                  if u.netloc!='free-reliable-appliance-pickup.github.io': continue
+                  clean=u._replace(fragment='',query='').geturl()
+                  if clean.endswith('/index.html'): clean=clean[:-10]
+                  target=file_for(clean)
+                  if target and target.exists() and clean not in active:
+                      t=target.read_text(encoding='utf-8',errors='ignore')
+                      noindex=bool(re.search(r'<meta\s+name=["\']robots["\'][^>]*noindex',t,re.I))
+                      leaked.append((src,clean,noindex))
+
+          print('ACTIVE_TO_NON_SITEMAP_INTERNAL_LINKS',len(set(leaked)))
+          print('ACTIVE_TO_NOINDEX_LINKS',sum(1 for x in set(leaked) if x[2]))
+          for src,dst,noindex in sorted(set(leaked))[:150]:
+              print('LEAK', 'noindex='+str(noindex), src, '->', dst)
+          PY
+
+          echo '--- LIVE RESPONSE HEADERS ---'
+          urls=(
+            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/portland-appliance-pickup/'
+            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-appliance-pickup/'
+            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/palm-springs-appliance-pickup/'
+            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/sitemap.xml'
+            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/robots.txt'
+          )
+          for u in "${urls[@]}"; do
+            echo "URL $u"
+            curl -sS -I -L --max-redirs 5 "$u" | grep -Ei '^(HTTP/|content-type:|x-robots-tag:|location:|cache-control:|etag:|last-modified:|content-length:)' || true
+          done
+
+          echo '--- LIVE ROBOTS META CHECK ---'
+          for u in \
+            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/' \
+            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/portland-appliance-pickup/' \
+            'https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/los-angeles-appliance-pickup/'; do
+            echo "URL $u"
+            curl -sS -L "$u" | grep -Eio '<meta[^>]+(robots|googlebot)[^>]*>' | head -10 || true
+          done
