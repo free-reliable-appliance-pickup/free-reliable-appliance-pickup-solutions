@@ -20,7 +20,7 @@ jobs:
           from pathlib import Path
           import re
 
-          BASE = "https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/"
+          BASE = "https://freereliableappliancepickup.com/"
 
           state_names = {
               "california": "California",
