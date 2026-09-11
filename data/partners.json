@@ -1,0 +1,19 @@
+{
+  "version": "2026-09-11",
+  "purpose": "Internal partner registry for nationwide appliance pickup routing. Do not publish partner contact details in public SEO pages.",
+  "rules": {
+    "approvalRequired": true,
+    "territoryAssignmentRequired": true,
+    "allowBackupPartner": true,
+    "maxApplicationCities": 50,
+    "publicPartnerIdentity": false
+  },
+  "partnerStatuses": {
+    "applicant": "Application received; not approved for routing.",
+    "approved": "Approved operator eligible for territory assignment.",
+    "active": "Approved operator currently receiving routed opportunities.",
+    "paused": "Temporarily not receiving new opportunities.",
+    "inactive": "Not eligible for routing."
+  },
+  "partners": []
+}
