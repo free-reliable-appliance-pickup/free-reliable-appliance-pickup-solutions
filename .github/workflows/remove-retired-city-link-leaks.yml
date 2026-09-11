@@ -1,0 +1,91 @@
+name: Remove Retired City Link Leaks
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-retired-city-link-leaks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace active links to retired location pages
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          from urllib.parse import urljoin, urlparse
+          import re, xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          HOST='freereliableappliancepickup.com'
+          SERVICE=BASE+'service-areas/'
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          active_urls=[e.text.strip() for e in root.findall('.//s:loc',ns) if e.text]
+          active=set(active_urls)
+          href_re=re.compile(r'href\s*=\s*(["\'])([^"\']+)\1',re.I)
+
+          def file_for(url):
+              if url.rstrip('/')==BASE.rstrip('/'):
+                  return Path('index.html')
+              if not url.startswith(BASE): return None
+              rel=url[len(BASE):].split('#',1)[0].split('?',1)[0].strip('/')
+              if not rel: return Path('index.html')
+              p=Path(rel)
+              return p if p.suffix else p/'index.html'
+
+          changed=[]
+          for src in active_urls:
+              fp=file_for(src)
+              if not fp or not fp.exists() or fp.suffix.lower()!='.html':
+                  continue
+              raw=fp.read_text(encoding='utf-8',errors='ignore')
+
+              def repl(m):
+                  href=m.group(2)
+                  if href.startswith(('#','tel:','mailto:','javascript:','data:')):
+                      return m.group(0)
+                  dest=urljoin(src,href)
+                  u=urlparse(dest)
+                  if u.netloc!=HOST:
+                      return m.group(0)
+                  clean=u._replace(fragment='',query='').geturl()
+                  if clean.endswith('/index.html'):
+                      clean=clean[:-10]
+                  if clean in active or not clean.startswith(BASE):
+                      return m.group(0)
+                  rel=clean[len(BASE):].strip('/')
+                  if 'appliance-pickup' not in rel:
+                      return m.group(0)
+                  target=file_for(clean)
+                  if not target or not target.exists():
+                      return m.group(0)
+                  t=target.read_text(encoding='utf-8',errors='ignore')
+                  if not re.search(r'<meta\s+name=["\']robots["\'][^>]*noindex',t,re.I):
+                      return m.group(0)
+                  # Preserve quote style but send users and crawlers to the consolidated hub.
+                  return f'href={m.group(1)}{SERVICE}{m.group(1)}'
+
+              new=href_re.sub(repl,raw)
+              if new!=raw:
+                  fp.write_text(new,encoding='utf-8')
+                  changed.append(str(fp))
+
+          print('UPDATED_FILES',len(changed))
+          print('\n'.join(changed))
+          PY
+      - name: Commit repaired internal links
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html' '*/index.html' || true
+          if git diff --cached --quiet; then echo 'No retired-city link leaks found'; exit 0; fi
+          git commit -m "Remove internal links to retired city pages"
+          git push
