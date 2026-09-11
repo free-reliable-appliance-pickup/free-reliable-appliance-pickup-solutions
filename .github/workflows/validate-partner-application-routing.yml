@@ -1,0 +1,52 @@
+name: Validate partner application routing
+
+on:
+  push:
+    paths:
+      - 'assets/partner-routing.js'
+      - 'partners/index.html'
+      - '.github/workflows/validate-partner-application-routing.yml'
+  pull_request:
+    paths:
+      - 'assets/partner-routing.js'
+      - 'partners/index.html'
+      - '.github/workflows/validate-partner-application-routing.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Protect partner application decisions
+        run: |
+          python - <<'PY'
+          import pathlib, sys
+
+          script = pathlib.Path('assets/partner-routing.js').read_text()
+          page = pathlib.Path('partners/index.html').read_text()
+
+          required = [
+              'DIRECT_OVERFLOW_CANDIDATE',
+              'ASSIGNED_MARKET_WAITLIST',
+              'RECRUITING_PRIORITY',
+              'FUTURE_MARKET',
+              'Partner Application Decisions',
+              'Partner Application Decision',
+              'Partner Application Next Action',
+              'applicationDecision',
+              'window.FreeReliablePartnerRouting',
+              'does not establish coverage or create an SEO page'
+          ]
+          for token in required:
+              if token not in script:
+                  sys.exit(f'missing partner routing safeguard: {token}')
+
+          if 'assets/partner-routing.js' not in page and '../assets/partner-routing.js' not in page:
+              sys.exit('partner page must load partner-routing.js')
+          if 'assets/customer-routing.js' in page or '../assets/customer-routing.js' in page:
+              sys.exit('partner page must not load customer-routing.js')
+          if 'automaticCityPageCreation' in page:
+              sys.exit('partner page must not contain automatic city-page controls')
+
+          print('PASS: partner application decisions and SEO-safety routing safeguards are protected')
+          PY
