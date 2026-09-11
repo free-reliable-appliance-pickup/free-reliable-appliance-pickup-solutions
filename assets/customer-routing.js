@@ -3,7 +3,7 @@
 (function(){
 'use strict';
 
-const FALLBACK={status:'request-only',territory_status:'available',region:'Unassigned market',lead_priority:3,partner_id:null,backup_partner_id:null};
+const FALLBACK={status:'request-only',territory_status:'available',region:'Unassigned market',lead_priority:3,partner_id:null,backup_partner_id:null,phone:null};
 let routing=null,cities=null,loadPromise=null;
 const n=v=>String(v||'').trim().toLowerCase();
 
@@ -16,23 +16,23 @@ function stateCode(value){
 
 function classify(city,state){
   const sc=stateCode(state),cn=n(city);
-  if(!routing||!Array.isArray(routing.markets))return {...FALLBACK,state_code:sc,city};
+  if(!routing||!Array.isArray(routing.markets))return {...FALLBACK,state_code:sc,city,resolution_level:'fallback'};
   let region=null;
   if(cities&&Array.isArray(cities.cities)){
     const c=cities.cities.find(x=>stateCode(x.state_code||x.state)===sc&&n(x.city)===cn);
     if(c)region=c.region||null;
   }
   const exact=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&m.city&&n(m.city)===cn);
-  if(exact)return exact;
+  if(exact)return {...exact,resolution_level:'exact-city'};
   if(region){
     const m=routing.markets.find(x=>stateCode(x.state_code||x.state)===sc&&!x.city&&n(x.region)===n(region));
-    if(m)return m;
+    if(m)return {...m,resolution_level:'regional'};
   }
   if(Array.isArray(routing.state_defaults)){
     const s=routing.state_defaults.find(x=>stateCode(x.state_code||x.state)===sc);
-    if(s)return {...s,city,region:s.region||((s.state||sc)+' statewide intake')};
+    if(s)return {...s,city,region:s.region||((s.state||sc)+' statewide intake'),resolution_level:'statewide'};
   }
-  return {...FALLBACK,state_code:sc,city};
+  return {...FALLBACK,state_code:sc,city,resolution_level:'fallback'};
 }
 
 function findField(form,names){
@@ -59,10 +59,14 @@ function qualify(form){
   const state=findField(form,['state','State','pickup_state','Primary State']);
   if(!city||!state)return;
   const info=classify(city.value,state.value);
+  hidden(form,'Routing City',city.value.trim());
+  hidden(form,'Routing State Code',stateCode(state.value));
   hidden(form,'Routing Region',info.region||FALLBACK.region);
+  hidden(form,'Routing Resolution Level',info.resolution_level||'fallback');
   hidden(form,'Routing Market Status',info.status||FALLBACK.status);
   hidden(form,'Routing Territory Status',info.territory_status||FALLBACK.territory_status);
   hidden(form,'Routing Priority',info.lead_priority||FALLBACK.lead_priority);
+  hidden(form,'Routing Phone',info.phone||'');
   hidden(form,'Routing Partner ID',info.partner_id||'');
   hidden(form,'Routing Backup Partner ID',info.backup_partner_id||'');
   hidden(form,'Routing Source','Canonical market-routing.json');
