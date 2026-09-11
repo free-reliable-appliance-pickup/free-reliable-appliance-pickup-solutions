@@ -1,0 +1,115 @@
+name: Audit Internal Link Graph
+
+on:
+  push:
+    paths:
+      - '.github/workflows/audit-internal-link-graph.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Analyze sitemap crawl depth and internal links
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from urllib.parse import urljoin, urlparse
+          from collections import defaultdict, deque
+          import re, xml.etree.ElementTree as ET
+
+          BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          HOST='free-reliable-appliance-pickup.github.io'
+          PREFIX='/free-reliable-appliance-pickup-solutions/'
+
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          sitemap_urls=[el.text.strip() for el in root.findall('.//s:loc',ns) if el.text]
+          active=set(sitemap_urls)
+
+          def url_to_file(url):
+              if url==BASE or url.rstrip('/')==BASE.rstrip('/'):
+                  return Path('index.html')
+              if not url.startswith(BASE): return None
+              rel=url[len(BASE):].split('#',1)[0].split('?',1)[0].strip('/')
+              if not rel: return Path('index.html')
+              p=Path(rel)
+              if p.suffix:
+                  return p
+              return p/'index.html'
+
+          graph=defaultdict(set)
+          inlinks=defaultdict(set)
+          broken=[]
+          href_re=re.compile(r'href\s*=\s*["\']([^"\']+)["\']',re.I)
+
+          for src in sitemap_urls:
+              fp=url_to_file(src)
+              if not fp or not fp.exists():
+                  print('MISSING_SITEMAP_FILE',src,fp)
+                  continue
+              raw=fp.read_text(encoding='utf-8',errors='ignore')
+              for href in href_re.findall(raw):
+                  href=href.strip()
+                  if not href or href.startswith(('#','mailto:','tel:','javascript:','data:')):
+                      continue
+                  dest=urljoin(src,href)
+                  parsed=urlparse(dest)
+                  if parsed.netloc!=HOST or not parsed.path.startswith(PREFIX):
+                      continue
+                  clean=parsed._replace(fragment='',query='').geturl()
+                  if clean.endswith('/index.html'):
+                      clean=clean[:-10]
+                  # Normalize directory URLs to trailing slash when they map to a folder index.
+                  rel=parsed.path[len(PREFIX):].strip('/')
+                  candidate=Path(rel)
+                  if rel and not candidate.suffix and (candidate/'index.html').exists():
+                      clean=BASE+rel+'/'
+                  elif not rel:
+                      clean=BASE
+                  graph[src].add(clean)
+                  inlinks[clean].add(src)
+                  target=url_to_file(clean)
+                  if target is not None and not target.exists():
+                      broken.append((src,clean,str(target)))
+
+          depths={BASE:0}
+          q=deque([BASE])
+          while q:
+              u=q.popleft()
+              for v in graph.get(u,()):
+                  if v in active and v not in depths:
+                      depths[v]=depths[u]+1
+                      q.append(v)
+
+          print('SITEMAP_URLS',len(sitemap_urls))
+          print('REACHABLE_FROM_HOME',sum(u in depths for u in sitemap_urls))
+          print('UNREACHABLE_FROM_HOME',sum(u not in depths for u in sitemap_urls))
+          print('BROKEN_INTERNAL_TARGETS',len(set(broken)))
+          print('ZERO_ACTIVE_INLINKS',sum(not (inlinks.get(u,set()) & active) for u in sitemap_urls if u!=BASE))
+
+          print('\nCRAWL_DEPTH_DISTRIBUTION')
+          for d in sorted(set(depths.values())):
+              print(d,sum(1 for u in sitemap_urls if depths.get(u)==d))
+
+          print('\nUNREACHABLE_ACTIVE_URLS')
+          for u in sitemap_urls:
+              if u not in depths: print(u)
+
+          print('\nLOWEST_ACTIVE_INLINK_COUNTS')
+          rows=[]
+          for u in sitemap_urls:
+              if u==BASE: continue
+              count=len(inlinks.get(u,set()) & active)
+              rows.append((count,depths.get(u,999),u))
+          for count,depth,u in sorted(rows)[:30]:
+              print(f'inlinks={count:2d} depth={depth if depth<999 else "NA"} | {u}')
+
+          print('\nBROKEN_INTERNAL_LINKS')
+          for src,dest,target in sorted(set(broken))[:100]:
+              print(src,'->',dest,'| missing',target)
+          PY
