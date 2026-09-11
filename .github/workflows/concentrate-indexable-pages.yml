@@ -1,0 +1,84 @@
+name: Concentrate Indexable Pages
+
+on:
+  push:
+    paths:
+      - '.github/workflows/concentrate-indexable-pages.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Noindex non-sitemap location pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, xml.etree.ElementTree as ET
+
+          BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          active=set()
+          for el in root.findall('.//s:loc',ns):
+              if not el.text: continue
+              u=el.text.strip()
+              if u.startswith(BASE):
+                  slug=u[len(BASE):].strip('/')
+                  if slug: active.add(slug)
+
+          changed=[]
+          skipped_active=[]
+          for p in Path('.').glob('*/index.html'):
+              slug=p.parent.name
+              if 'appliance-pickup' not in slug:
+                  continue
+              if slug in active:
+                  skipped_active.append(slug)
+                  continue
+
+              text=p.read_text(encoding='utf-8',errors='ignore')
+              original=text
+
+              robots_re=re.compile(r'<meta\s+name=["\']robots["\'][^>]*>',re.I)
+              googlebot_re=re.compile(r'<meta\s+name=["\']googlebot["\'][^>]*>',re.I)
+
+              if robots_re.search(text):
+                  text=robots_re.sub('<meta name="robots" content="noindex, follow">',text,count=1)
+              else:
+                  m=re.search(r'<head[^>]*>',text,re.I)
+                  if m:
+                      text=text[:m.end()]+'\n<meta name="robots" content="noindex, follow">'+text[m.end():]
+
+              if googlebot_re.search(text):
+                  text=googlebot_re.sub('<meta name="googlebot" content="noindex, follow">',text,count=1)
+
+              if text != original:
+                  p.write_text(text,encoding='utf-8')
+                  changed.append(slug)
+
+          print(f'ACTIVE_SITEMAP_SLUGS_KEPT_INDEXABLE={len(skipped_active)}')
+          print(f'NON_SITEMAP_LOCATION_PAGES_NOINDEXED={len(changed)}')
+          for slug in changed:
+              print('NOINDEX',slug)
+          PY
+
+      - name: Commit indexability cleanup
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' || true
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Focus indexing on active high-quality service pages"
+          git push
