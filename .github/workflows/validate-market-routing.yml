@@ -1,0 +1,96 @@
+name: Validate market routing and SEO safety
+
+on:
+  push:
+    paths:
+      - 'data/market-routing.json'
+      - 'sitemap.xml'
+      - '**-appliance-pickup/index.html'
+      - '.github/workflows/validate-market-routing.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate routing JSON and SEO policy
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, re, sys
+
+          root = pathlib.Path('.')
+          routing_path = root / 'data' / 'market-routing.json'
+          sitemap_path = root / 'sitemap.xml'
+
+          errors = []
+
+          try:
+              routing = json.loads(routing_path.read_text(encoding='utf-8'))
+          except Exception as e:
+              print(f'ERROR: data/market-routing.json is invalid JSON: {e}')
+              sys.exit(1)
+
+          rules = routing.get('rules', {})
+          statuses = routing.get('statuses', {})
+          markets = routing.get('markets', [])
+
+          required_statuses = {'direct', 'partner-supported', 'partner-recruiting', 'request-only'}
+          missing = required_statuses - set(statuses)
+          if missing:
+              errors.append('Missing routing status definitions: ' + ', '.join(sorted(missing)))
+
+          if rules.get('defaultStatus') != 'request-only':
+              errors.append('defaultStatus must remain request-only for unverified markets.')
+
+          allowed_city = set(rules.get('indexableCityStatuses', []))
+          if allowed_city != {'direct', 'partner-supported'}:
+              errors.append('indexableCityStatuses must be exactly direct and partner-supported.')
+
+          for i, market in enumerate(markets, start=1):
+              status = market.get('status')
+              if status not in required_statuses:
+                  errors.append(f'Market #{i} has invalid status: {status!r}')
+              if not market.get('state') or not market.get('region'):
+                  errors.append(f'Market #{i} is missing state or region.')
+
+          sitemap = sitemap_path.read_text(encoding='utf-8')
+          sitemap_urls = set(re.findall(r'<loc>(https://freereliableappliancepickup\.com/[^<]*)</loc>', sitemap))
+
+          # Thin retired city pages must remain noindex and must not appear in sitemap.
+          for page in root.glob('*-appliance-pickup/index.html'):
+              text = page.read_text(encoding='utf-8', errors='ignore')
+              size = page.stat().st_size
+              slug = page.parent.name
+              url = f'https://freereliableappliancepickup.com/{slug}/'
+
+              # Consolidated pages are recognizable by their canonical to /service-areas/.
+              retired = 'canonical" href="https://freereliableappliancepickup.com/service-areas/' in text or \
+                        "canonical' href='https://freereliableappliancepickup.com/service-areas/" in text
+
+              if retired:
+                  if 'noindex' not in text.lower():
+                      errors.append(f'Retired page lost noindex: {page}')
+                  if url in sitemap_urls:
+                      errors.append(f'Retired page leaked into sitemap: {url}')
+
+              # Catch accidental reintroduction of tiny indexable city pages.
+              if size < 2500 and 'noindex' not in text.lower():
+                  errors.append(f'Small city page is indexable ({size} bytes): {page}')
+
+          if errors:
+              print('SEO ROUTING SAFETY CHECK FAILED')
+              for e in errors:
+                  print(' -', e)
+              sys.exit(1)
+
+          print('Routing JSON valid.')
+          print(f'Markets configured: {len(markets)}')
+          print(f'Sitemap URLs checked: {len(sitemap_urls)}')
+          print('Retired thin city pages remain protected from indexing.')
+          PY
