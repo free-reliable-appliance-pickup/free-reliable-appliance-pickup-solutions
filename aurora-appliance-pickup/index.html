@@ -441,6 +441,9 @@ Send your appliance information for pickup review.
 
 <form action="https://formspree.io/f/mvzeapzd"
 method="POST">
+<label for="actual-pickup-city">Pickup City</label>
+<input id="actual-pickup-city" type="text" name="city" value="Aurora" autocomplete="address-level2" required style="width:100%;padding:12px">
+
 
 <label for="pickup-name">Full Name</label><br>
 
@@ -448,7 +451,7 @@ method="POST">
 type="text"
 name="name"
 required
-style="width:100%;padding:12px">
+style="width:100%;padding:12px" autocomplete="name">
 
 <br><br>
 
@@ -459,7 +462,7 @@ style="width:100%;padding:12px">
 type="tel"
 name="phone"
 required
-style="width:100%;padding:12px">
+style="width:100%;padding:12px" autocomplete="tel">
 
 <br><br>
 
@@ -469,7 +472,7 @@ style="width:100%;padding:12px">
 <input id="pickup-email"
 type="email"
 name="email"
-style="width:100%;padding:12px">
+style="width:100%;padding:12px" autocomplete="email">
 
 <br><br>
 
@@ -480,7 +483,7 @@ style="width:100%;padding:12px">
 type="text"
 name="address"
 required
-style="width:100%;padding:12px">
+style="width:100%;padding:12px" autocomplete="street-address">
 
 <br><br>
 
@@ -491,7 +494,7 @@ style="width:100%;padding:12px">
 type="text"
 name="zip"
 required
-style="width:100%;padding:12px">
+style="width:100%;padding:12px" autocomplete="postal-code" inputmode="numeric">
 
 <br><br>
 
@@ -622,7 +625,7 @@ placeholder="Tell us how you will send the appliance photos">
 
 
 <input type="hidden" name="state" value="Colorado">
-<input type="hidden" name="city" value="Aurora">
+
 <input type="hidden" name="_subject" value="Aurora Colorado Appliance Pickup Request">
 <button
 type="submit"
