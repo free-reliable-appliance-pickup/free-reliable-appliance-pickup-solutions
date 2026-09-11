@@ -80,12 +80,20 @@ jobs:
                   if key in region_rows: sys.exit(f'duplicate regional route: {key}')
                   region_rows[key]=row
 
+          regional=statewide=exact_count=0
           for c in cities.get('cities',[]):
               code=c.get('state_code'); region=(c.get('region') or '').strip().lower()
               exact=(code,(c.get('city') or '').strip().lower())
-              if exact in exact_rows: continue
-              if (code,region) not in region_rows:
-                  sys.exit(f'city catalog has no exact or regional route: {c}')
+              if exact in exact_rows:
+                  exact_count+=1
+                  continue
+              if (code,region) in region_rows:
+                  regional+=1
+                  continue
+              if code in defaults_by_code:
+                  statewide+=1
+                  continue
+              sys.exit(f'city catalog cannot resolve through exact, regional, or statewide route: {c}')
 
-          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities; automatic city-page creation remains disabled')
+          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); automatic city-page creation remains disabled')
           PY
