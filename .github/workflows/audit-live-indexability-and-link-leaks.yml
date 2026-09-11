@@ -21,7 +21,8 @@ jobs:
           from urllib.parse import urljoin, urlparse
           import re, xml.etree.ElementTree as ET
 
-          BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          BASE='https://freereliableappliancepickup.com/'
+          HOST='freereliableappliancepickup.com'
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           active_urls=[e.text.strip() for e in root.findall('.//s:loc',ns) if e.text]
@@ -46,7 +47,7 @@ jobs:
                   if href.startswith(('#','tel:','mailto:','javascript:','data:')): continue
                   dest=urljoin(src,href)
                   u=urlparse(dest)
-                  if u.netloc!='free-reliable-appliance-pickup.github.io': continue
+                  if u.netloc!=HOST: continue
                   clean=u._replace(fragment='',query='').geturl()
                   if clean.endswith('/index.html'): clean=clean[:-10]
                   if clean in active or not clean.startswith(BASE): continue
@@ -61,5 +62,5 @@ jobs:
           print('ACTIVE_LINKS_TO_NON_SITEMAP_APPLIANCE_PAGES',len(leaks))
           print('OF_THOSE_NOINDEX',sum(1 for x in leaks if x[2]))
           for src,dst,noindex in sorted(leaks):
-              print('CITY_LEAK', 'noindex='+str(noindex), src, '->', dst)
+              print('CITY_LEAK','noindex='+str(noindex),src,'->',dst)
           PY
