@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-11.2",
+  "version": "2026-09-11.3",
   "purpose": "Operational coverage routing for the nationwide appliance pickup partner network. This file is not a promise of pickup availability. Customer requests remain subject to qualification and confirmed local coverage.",
   "statuses": {
     "direct": "Established market served by Free Reliable Appliance Pickup operations.",
@@ -29,19 +29,24 @@
     {"state":"Oregon","state_code":"OR","region":"Salem Metro","city":"Salem","status":"direct","territory_status":"protected","partner_id":null,"backup_partner_id":null,"lead_priority":1,"phone":"503-868-4455","pricing_status":"not_for_sale","monthly_price_cents":null},
     {"state":"Colorado","state_code":"CO","region":"Denver Metro","city":"Denver","status":"direct","territory_status":"protected","partner_id":null,"backup_partner_id":null,"lead_priority":1,"phone":"720-604-7498","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"Colorado","state_code":"CO","region":"Denver Metro","city":"Aurora","status":"direct","territory_status":"protected","partner_id":null,"backup_partner_id":null,"lead_priority":1,"phone":"720-604-7498","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Colorado","state_code":"CO","region":"Denver Metro","status":"direct","territory_status":"protected","partner_id":null,"backup_partner_id":null,"lead_priority":1,"phone":"720-604-7498","pricing_status":"not_for_sale","monthly_price_cents":null},
 
     {"state":"California","state_code":"CA","region":"Los Angeles County","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"California","state_code":"CA","region":"Inland Empire","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"909-375-6685","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"California","state_code":"CA","region":"San Gabriel Valley","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"909-375-6685","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"California","state_code":"CA","region":"Orange County","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"909-375-6685","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"California","state_code":"CA","region":"Riverside County","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"909-375-6685","pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"California","state_code":"CA","region":"Coachella Valley","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"909-375-6685","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"California","state_code":"CA","region":"San Diego County","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"California","state_code":"CA","region":"San Francisco Bay Area","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"California","state_code":"CA","region":"Central Valley","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"California","state_code":"CA","region":"Central Coast","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"310-774-4304","pricing_status":"collect_data","monthly_price_cents":null},
 
+    {"state":"Washington","state_code":"WA","region":"Clark County","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"503-868-4455","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"Washington","state_code":"WA","region":"Puget Sound","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":"503-868-4455","pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"Arizona","state_code":"AZ","region":"Phoenix Metro","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"Nevada","state_code":"NV","region":"Las Vegas Valley","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
+    {"state":"Nevada","state_code":"NV","region":"Reno-Sparks","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"Utah","state_code":"UT","region":"Wasatch Front","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
     {"state":"Idaho","state_code":"ID","region":"Treasure Valley","status":"partner-recruiting","territory_status":"available","partner_id":null,"backup_partner_id":null,"lead_priority":2,"phone":null,"pricing_status":"collect_data","monthly_price_cents":null},
 
