@@ -1,3 +1,4 @@
+# Recheck after city-specific differentiation
 name: Verify Active Content Quality
 
 on:
@@ -37,8 +38,6 @@ jobs:
               for tag in ['script','style']:
                   x=re.sub(rf'<{tag}\b[^>]*>.*?</{tag}>',' ',x,flags=re.I|re.S)
               if core:
-                  # Forms, global navigation, headers and footers are shared UI boilerplate,
-                  # not the local editorial/service content we want to compare.
                   for tag in ['form','nav','header','footer']:
                       x=re.sub(rf'<{tag}\b[^>]*>.*?</{tag}>',' ',x,flags=re.I|re.S)
               x=re.sub(r'<!--.*?-->',' ',x,flags=re.S)
