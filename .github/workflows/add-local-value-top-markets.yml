@@ -65,3 +65,5 @@ jobs:
           git add las-vegas-appliance-pickup/index.html phoenix-appliance-pickup/index.html seattle-appliance-pickup/index.html
           git diff --cached --quiet || git commit -m "Add unique local guidance to top market pages"
           git push
+
+# trigger-run-2
