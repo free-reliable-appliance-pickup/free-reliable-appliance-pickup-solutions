@@ -1,0 +1,81 @@
+name: Verify Active Content Quality
+
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-active-content-quality.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check active sitemap forms, funnels and similarity
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, html, itertools, xml.etree.ElementTree as ET
+
+          BASE='https://free-reliable-appliance-pickup.github.io/free-reliable-appliance-pickup-solutions/'
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          active=[]
+          for el in root.findall('.//s:loc',ns):
+              if not el.text: continue
+              u=el.text.strip()
+              if u.startswith(BASE):
+                  slug=u[len(BASE):].strip('/')
+                  if slug and 'appliance-pickup' in slug and (Path(slug)/'index.html').exists():
+                      active.append(slug)
+
+          def words(raw):
+              x=re.sub(r'<script\b[^>]*>.*?</script>',' ',raw,flags=re.I|re.S)
+              x=re.sub(r'<style\b[^>]*>.*?</style>',' ',x,flags=re.I|re.S)
+              x=re.sub(r'<[^>]+>',' ',x)
+              x=html.unescape(x).lower()
+              return re.findall(r"[a-z0-9']+",x)
+
+          def shingles(ws,n=5):
+              return {' '.join(ws[i:i+n]) for i in range(max(0,len(ws)-n+1))}
+
+          rows=[]
+          for slug in active:
+              raw=(Path(slug)/'index.html').read_text(encoding='utf-8',errors='ignore')
+              ws=words(raw)
+              tokens=set(slug.replace('-appliance-pickup','').split('-'))
+              norm=['city' if w in tokens and len(w)>2 else w for w in ws]
+              rows.append({
+                  'slug':slug,'words':len(ws),'form':'formspree.io/f/mvzeapzd' in raw,
+                  'funnel':'../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw,
+                  'noindex':bool(re.search(r'<meta\s+name=["\']robots["\'][^>]*noindex',raw,re.I)),
+                  'sh':shingles(norm)
+              })
+
+          print('ACTIVE_LOCATION_MARKET_PAGES',len(rows))
+          print('WITH_LOCAL_FORM',sum(r['form'] for r in rows))
+          print('STILL_FUNNELING_HOME',sum(r['funnel'] for r in rows))
+          print('NOINDEX_ACTIVE',sum(r['noindex'] for r in rows))
+          print('UNDER_350_WORDS',sum(r['words']<350 for r in rows))
+          print('\nPAGES_WITHOUT_LOCAL_FORM')
+          for r in rows:
+              if not r['form']: print(r['slug'])
+          print('\nPAGES_STILL_FUNNELING')
+          for r in rows:
+              if r['funnel']: print(r['slug'])
+
+          pairs=[]
+          for a,b in itertools.combinations(rows,2):
+              union=a['sh']|b['sh']; inter=a['sh']&b['sh']
+              score=len(inter)/len(union) if union else 0
+              pairs.append((score,a['slug'],b['slug']))
+          print('\nMOST_SIMILAR_ACTIVE_PAIRS')
+          for score,a,b in sorted(pairs,reverse=True)[:30]:
+              print(f'{score:.3f} | {a} <-> {b}')
+          print('\nLOWEST_ACTIVE_WORD_COUNTS')
+          for r in sorted(rows,key=lambda x:x['words'])[:20]:
+              print(f"{r['words']:4d} | {r['slug']}")
+          PY
