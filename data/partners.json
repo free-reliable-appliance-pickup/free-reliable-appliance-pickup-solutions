@@ -1,19 +1,45 @@
 {
-  "version": "2026-09-11",
+  "version": "2026-09-11.2",
   "purpose": "Internal partner registry for nationwide appliance pickup routing. Do not publish partner contact details in public SEO pages.",
   "rules": {
     "approvalRequired": true,
-    "territoryAssignmentRequired": true,
+    "territoryAssignmentRequiredForPrimaryAccess": true,
+    "sharedLeadAccessRequiresApproval": true,
     "allowBackupPartner": true,
     "maxApplicationCities": 50,
-    "publicPartnerIdentity": false
+    "publicPartnerIdentity": false,
+    "applicationDoesNotEstablishCoverage": true,
+    "applicationDoesNotCreateSeoPage": true,
+    "paidAccessRequiresSeparateDisclosureAndAgreement": true
   },
   "partnerStatuses": {
     "applicant": "Application received; not approved for routing.",
-    "approved": "Approved operator eligible for territory assignment.",
-    "active": "Approved operator currently receiving routed opportunities.",
+    "approved": "Approved operator eligible for configured lead access or territory assignment.",
+    "active": "Approved operator currently eligible for routed opportunities under an active access configuration.",
     "paused": "Temporarily not receiving new opportunities.",
     "inactive": "Not eligible for routing."
+  },
+  "accessModes": ["shared", "primary", "backup", "waitlist"],
+  "partnerTemplate": {
+    "partner_id": null,
+    "status": "applicant",
+    "business_name": null,
+    "primary_city": null,
+    "primary_state_code": null,
+    "preferred_access_model": null,
+    "preference_tier": "STANDARD_REVIEW",
+    "routing_score": 0,
+    "response_time": null,
+    "service_radius_miles": null,
+    "daily_capacity": null,
+    "inside_stairs_capability": null,
+    "availability": null,
+    "appliance_capabilities": [],
+    "preferred_cities": [],
+    "approved_access_modes": [],
+    "approved_on": null,
+    "paused_on": null,
+    "notes": null
   },
   "partners": []
 }
