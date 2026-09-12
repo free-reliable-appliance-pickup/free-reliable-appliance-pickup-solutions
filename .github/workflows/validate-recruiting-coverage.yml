@@ -1,0 +1,22 @@
+name: Validate recruiting coverage language
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*-appliance-pickup/index.html'
+      - 'data/market-routing.json'
+      - 'scripts/validate-recruiting-coverage.py'
+      - '.github/workflows/validate-recruiting-coverage.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate recruiting coverage language
+        run: python3 scripts/validate-recruiting-coverage.py
