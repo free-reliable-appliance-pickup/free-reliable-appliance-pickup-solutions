@@ -21,6 +21,9 @@ jobs:
           import re, html, xml.etree.ElementTree as ET
 
           BASE='https://freereliableappliancepickup.com/'
+          INFORMATIONAL={
+              'landlord-property-manager-appliance-pickup'
+          }
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           urls=[x.text.strip() for x in root.findall('.//s:loc',ns) if x.text]
@@ -41,7 +44,7 @@ jobs:
           rows=[]
           for slug in sorted(active):
               p=Path(slug)/'index.html'
-              if not p.exists() or 'appliance-pickup' not in slug:
+              if not p.exists() or not slug.endswith('-appliance-pickup') or slug in INFORMATIONAL:
                   continue
               raw=p.read_text(encoding='utf-8',errors='ignore')
               rows.append((slug,words(raw),'formspree.io/f/mvzeapzd' in raw,'../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw,'noindex' in raw.lower()))
