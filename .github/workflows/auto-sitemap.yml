@@ -1,50 +1,38 @@
 # Maintains only approved indexable page URLs plus owned appliance-image discovery references.
 name: Auto Rebuild Sitemap
-
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - sitemap.xml
-      - sitemap-new.xml
+    paths-ignore: [sitemap.xml,sitemap-new.xml]
   workflow_dispatch:
-
 permissions:
   contents: write
-
 concurrency:
   group: auto-sitemap-main
   cancel-in-progress: true
-
 jobs:
   sitemap:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        with: {fetch-depth: 0}
       - name: Rebuild sitemaps from approved indexable pages only
         shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           python3 <<'PY'
           from pathlib import Path
           import re, subprocess, sys, xml.etree.ElementTree as ET
-          BASE="https://freereliableappliancepickup.com/"; NS="http://www.sitemaps.org/schemas/sitemap/0.9"; IMG_NS="http://www.google.com/schemas/sitemap-image/1.1"
-          ET.register_namespace('',NS); ET.register_namespace('image',IMG_NS)
-          approved_locations={'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup','arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup','utah-appliance-pickup','idaho-appliance-pickup','portland-appliance-pickup','salem-appliance-pickup','denver-appliance-pickup','aurora-appliance-pickup','inland-empire-appliance-pickup','los-angeles-county-appliance-pickup','riverside-county-appliance-pickup','orange-county-appliance-pickup','san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup'}
-          approved_nonlocation={'','about','appliance-pickup-checklist','contact','free-pickup-qualification','freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup','old-appliance-disposal-options','partners','refrigerator-pickup','service-areas','stove-oven-pickup','washer-dryer-pickup'}
-          approved=approved_locations|approved_nonlocation
+          BASE="https://freereliableappliancepickup.com/"; NS="http://www.sitemaps.org/schemas/sitemap/0.9"; IMG_NS="http://www.google.com/schemas/sitemap-image/1.1"; ET.register_namespace('',NS); ET.register_namespace('image',IMG_NS)
+          approved_locations={'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup','arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup','utah-appliance-pickup','idaho-appliance-pickup','portland-appliance-pickup','salem-appliance-pickup','denver-appliance-pickup','aurora-appliance-pickup','inland-empire-appliance-pickup','los-angeles-county-appliance-pickup','riverside-county-appliance-pickup','orange-county-appliance-pickup','san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup','central-valley-appliance-pickup'}
+          approved_nonlocation={'','about','appliance-pickup-checklist','contact','free-pickup-qualification','freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup','old-appliance-disposal-options','partners','refrigerator-pickup','service-areas','stove-oven-pickup','washer-dryer-pickup'}; approved=approved_locations|approved_nonlocation
           pages=[Path('index.html')]+sorted(p for p in Path('.').rglob('index.html') if p!=Path('index.html') and '.github' not in p.parts and '.git' not in p.parts)
           def text(p): return p.read_text(encoding='utf-8',errors='ignore')
           def indexable(p):
-              m=re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>',text(p),re.I)
-              return not (m and 'noindex' in m.group(0).lower())
+              m=re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>',text(p),re.I); return not (m and 'noindex' in m.group(0).lower())
           def relpath(p): return '' if p==Path('index.html') else p.parent.as_posix().strip('/')
           unexpected=[str(p) for p in pages if indexable(p) and relpath(p) not in approved]
-          if unexpected:
-              print('ERROR: unapproved indexable pages detected; sitemap not rebuilt:'); [print(' -',p) for p in unexpected]; sys.exit(1)
+          if unexpected: print('ERROR: unapproved indexable pages detected; sitemap not rebuilt:'); [print(' -',p) for p in unexpected]; sys.exit(1)
           pages=[p for p in pages if indexable(p) and relpath(p) in approved]
           def lastmod(p):
               try: return subprocess.check_output(['git','log','-1','--format=%cs','--',str(p)],text=True).strip() or None
@@ -68,6 +56,4 @@ jobs:
           PY
           git add sitemap.xml sitemap-new.xml
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Rebuild sitemap from approved indexable pages"
-          git pull --rebase origin main || true
-          git push origin HEAD:main || true
+          git commit -m "Rebuild sitemap from approved indexable pages"; git pull --rebase origin main || true; git push origin HEAD:main || true
