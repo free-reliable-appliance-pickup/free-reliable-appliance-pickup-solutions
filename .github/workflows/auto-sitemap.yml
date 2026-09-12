@@ -47,7 +47,8 @@ jobs:
               'utah-appliance-pickup','idaho-appliance-pickup',
               'portland-appliance-pickup','salem-appliance-pickup',
               'denver-appliance-pickup','aurora-appliance-pickup',
-              'inland-empire-appliance-pickup'
+              'inland-empire-appliance-pickup','los-angeles-county-appliance-pickup',
+              'riverside-county-appliance-pickup','orange-county-appliance-pickup'
           }
           approved_nonlocation={
               '', 'about', 'appliance-pickup-checklist', 'contact',
