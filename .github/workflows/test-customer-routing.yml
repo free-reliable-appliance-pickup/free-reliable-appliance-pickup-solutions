@@ -1,0 +1,33 @@
+name: Test customer routing
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/customer-routing.js'
+      - 'data/market-routing.json'
+      - 'data/cities.json'
+      - 'scripts/test-customer-routing.js'
+      - '.github/workflows/test-customer-routing.yml'
+  pull_request:
+    paths:
+      - 'assets/customer-routing.js'
+      - 'data/market-routing.json'
+      - 'data/cities.json'
+      - 'scripts/test-customer-routing.js'
+      - '.github/workflows/test-customer-routing.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run customer routing regression tests
+        run: node scripts/test-customer-routing.js
