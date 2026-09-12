@@ -34,10 +34,11 @@ jobs:
               'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
               'utah-appliance-pickup','idaho-appliance-pickup',
               'portland-appliance-pickup','salem-appliance-pickup',
-              'denver-appliance-pickup','aurora-appliance-pickup'
+              'denver-appliance-pickup','aurora-appliance-pickup',
+              'inland-empire-appliance-pickup'
           }
           recruiting_noindex_locations={
-              'inland-empire-appliance-pickup','orange-county-appliance-pickup',
+              'orange-county-appliance-pickup',
               'riverside-county-appliance-pickup','los-angeles-county-appliance-pickup',
               'central-coast-appliance-pickup','central-valley-appliance-pickup',
               'san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup',
@@ -138,5 +139,5 @@ jobs:
               print('\n'.join(errors))
               sys.exit(1)
 
-          print(f'PASS: {len(indexable)} indexable HTML pages checked; exact allowlist, recruiting-location noindex guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
+          print(f'PASS: {len(indexable)} indexable HTML pages checked; exact allowlist, controlled recruiting-location noindex guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
           PY
