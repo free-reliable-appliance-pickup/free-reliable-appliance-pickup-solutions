@@ -29,8 +29,6 @@ jobs:
 
           base='https://freereliableappliancepickup.com/'
 
-          # State hubs may remain indexable as broad coverage/request resources.
-          # Local/regional SEO pages are indexable only where direct operating coverage is established.
           approved_locations={
               'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
               'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
@@ -50,9 +48,9 @@ jobs:
           approved_nonlocation={
               '', 'about', 'appliance-pickup-checklist', 'contact',
               'free-pickup-qualification', 'freezer-pickup',
-              'how-appliance-pickup-works', 'old-appliance-disposal-options',
-              'partners', 'refrigerator-pickup', 'service-areas',
-              'stove-oven-pickup', 'washer-dryer-pickup'
+              'how-appliance-pickup-works', 'landlord-property-manager-appliance-pickup',
+              'old-appliance-disposal-options', 'partners', 'refrigerator-pickup',
+              'service-areas', 'stove-oven-pickup', 'washer-dryer-pickup'
           }
           approved_indexable_paths=approved_locations | approved_nonlocation
 
@@ -78,7 +76,7 @@ jobs:
                   errors.append(f'UNAPPROVED INDEXABLE PATH {p} ({rel})')
 
               slug='' if str(p)=='index.html' else p.parent.name
-              if slug.endswith('-appliance-pickup') and slug not in approved_locations:
+              if slug.endswith('-appliance-pickup') and slug not in approved_locations and slug not in approved_nonlocation:
                   errors.append(f'UNAPPROVED INDEXABLE LOCATION {p}')
 
               c=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',s,re.I)
