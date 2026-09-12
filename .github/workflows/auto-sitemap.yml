@@ -38,18 +38,15 @@ jobs:
           ET.register_namespace('', NS)
           ET.register_namespace('image', IMG_NS)
 
+          # Broad state hubs may remain indexable. Location pages are limited to
+          # established direct-operation markets. Recruiting/request-only regions
+          # stay off the sitemap until coverage becomes real and is promoted.
           approved_locations={
               'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
               'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
               'utah-appliance-pickup','idaho-appliance-pickup',
-              'inland-empire-appliance-pickup','orange-county-appliance-pickup',
-              'riverside-county-appliance-pickup','los-angeles-county-appliance-pickup',
-              'central-coast-appliance-pickup','central-valley-appliance-pickup',
-              'san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup',
-              'phoenix-metro-appliance-pickup','las-vegas-valley-appliance-pickup',
-              'puget-sound-appliance-pickup','treasure-valley-appliance-pickup',
-              'wasatch-front-appliance-pickup','portland-appliance-pickup',
-              'salem-appliance-pickup','denver-appliance-pickup','aurora-appliance-pickup'
+              'portland-appliance-pickup','salem-appliance-pickup',
+              'denver-appliance-pickup','aurora-appliance-pickup'
           }
           approved_nonlocation={
               '', 'about', 'appliance-pickup-checklist', 'contact',
