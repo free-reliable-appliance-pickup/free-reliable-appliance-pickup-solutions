@@ -35,7 +35,17 @@ jobs:
               'Partner Application Next Action',
               'applicationDecision',
               'window.FreeReliablePartnerRouting',
-              'does not establish coverage or create an SEO page'
+              'does not establish coverage or create an SEO page',
+              'PRIMARY_TERRITORY_CANDIDATE',
+              'FAST_SHARED_LEAD_CANDIDATE',
+              'TERRITORY_INTEREST',
+              'SHARED_LEAD_INTEREST',
+              'Partner Preference Tier',
+              'Partner Routing Score',
+              'Shared Lead Interest',
+              'Exclusive Territory Interest',
+              'Partner Routing Summary',
+              'preferenceProfile'
           ]
           for token in required:
               if token not in script:
@@ -73,5 +83,5 @@ jobs:
               if token not in page:
                   sys.exit(f'missing partner matching field: {token}')
 
-          print('PASS: partner application decisions, lead-access preferences and SEO-safety routing safeguards are protected')
+          print('PASS: partner application decisions, preference scoring, lead-access choices and SEO-safety safeguards are protected')
           PY
