@@ -30,7 +30,7 @@ jobs:
       - name: Validate routing safeguards
         run: |
           python - <<'PY'
-          import json, pathlib, sys
+          import json, pathlib, re, sys
 
           for p in pathlib.Path('data').glob('*.json'):
               json.loads(p.read_text())
@@ -45,9 +45,14 @@ jobs:
           if rules.get('defaultTerritoryStatus')!='available': sys.exit('rules.defaultTerritoryStatus must be available')
           if rules.get('automaticCityPageCreation') is not False: sys.exit('automaticCityPageCreation must remain false')
           if rules.get('indexableCityStatuses') != ['direct','partner-supported']: sys.exit('indexableCityStatuses must remain direct and partner-supported only')
+          if rules.get('qualificationRequired') is not True: sys.exit('qualificationRequired must remain true')
+          if rules.get('coverageConfirmationRequired') is not True: sys.exit('coverageConfirmationRequired must remain true')
+          if rules.get('partnerAssignmentRequiredForPartnerSupported') is not True: sys.exit('partnerAssignmentRequiredForPartnerSupported must remain true')
 
           valid_status={'direct','partner-supported','partner-recruiting','request-only'}
           valid_territory={'protected','assigned','available','waitlist'}
+          valid_pricing={'not_for_sale','collect_data','active'}
+          phone_re=re.compile(r'^\d{3}-\d{3}-\d{4}$')
           state_codes={
             'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
           }
@@ -60,6 +65,10 @@ jobs:
               if row.get('status') not in valid_status: sys.exit(f'invalid state default status: {row}')
               if row.get('territory_status') not in valid_territory: sys.exit(f'invalid state default territory status: {row}')
               if not isinstance(row.get('lead_priority'),int) or not 1 <= row['lead_priority'] <= 5: sys.exit(f'invalid state default priority: {row}')
+              if row.get('territory_status')=='assigned' or row.get('partner_id'):
+                  sys.exit(f'state defaults cannot claim assigned partner coverage: {row}')
+              if row.get('status')=='direct':
+                  sys.exit(f'state defaults cannot claim statewide direct coverage: {row}')
 
           if set(defaults_by_code)!=state_codes:
               missing=sorted(state_codes-set(defaults_by_code)); extra=sorted(set(defaults_by_code)-state_codes)
@@ -69,12 +78,38 @@ jobs:
           exact_map={}
           for row in markets:
               code=row.get('state_code'); region=row.get('region'); city=row.get('city')
-              if row.get('status') not in valid_status: sys.exit(f'invalid market status: {row}')
-              if row.get('territory_status') not in valid_territory: sys.exit(f'invalid market territory status: {row}')
+              status=row.get('status'); territory=row.get('territory_status')
+              partner=row.get('partner_id'); phone=row.get('phone')
+              pricing=row.get('pricing_status')
+              monthly=row.get('monthly_price_cents')
+
+              if code not in state_codes: sys.exit(f'invalid market state code: {row}')
+              if not region or not str(region).strip(): sys.exit(f'market route missing region: {row}')
+              if status not in valid_status: sys.exit(f'invalid market status: {row}')
+              if territory not in valid_territory: sys.exit(f'invalid market territory status: {row}')
               if not isinstance(row.get('lead_priority'),int) or not 1 <= row['lead_priority'] <= 5: sys.exit(f'invalid market priority: {row}')
-              if row.get('status')=='partner-supported' and not row.get('partner_id'): sys.exit(f'partner-supported market missing partner_id: {row}')
-              if row.get('territory_status')=='assigned' and not row.get('partner_id'): sys.exit(f'assigned territory missing partner_id: {row}')
-              if row.get('backup_partner_id') and row.get('backup_partner_id')==row.get('partner_id'): sys.exit(f'backup partner duplicates primary: {row}')
+              if pricing is not None and pricing not in valid_pricing: sys.exit(f'invalid pricing status: {row}')
+              if monthly is not None and (not isinstance(monthly,int) or monthly < 0): sys.exit(f'invalid monthly price: {row}')
+              if pricing!='active' and monthly is not None: sys.exit(f'non-active pricing must not publish a monthly price: {row}')
+              if pricing=='active' and (monthly is None or monthly <= 0): sys.exit(f'active pricing requires positive monthly price: {row}')
+              if phone is not None and not phone_re.match(str(phone)): sys.exit(f'invalid routing phone format: {row}')
+
+              if status=='direct':
+                  if territory!='protected': sys.exit(f'direct market must be protected: {row}')
+                  if partner: sys.exit(f'direct market must not have partner_id: {row}')
+                  if not phone: sys.exit(f'direct market must have routing phone: {row}')
+              if status=='partner-supported':
+                  if not partner: sys.exit(f'partner-supported market missing partner_id: {row}')
+                  if territory not in {'assigned','protected'}: sys.exit(f'partner-supported market must be assigned/protected: {row}')
+              if status=='partner-recruiting':
+                  if partner: sys.exit(f'partner-recruiting market must not already have partner_id: {row}')
+                  if territory!='available': sys.exit(f'partner-recruiting market must remain available: {row}')
+              if status=='request-only':
+                  if partner: sys.exit(f'request-only market must not have partner_id: {row}')
+                  if territory=='assigned': sys.exit(f'request-only market cannot be assigned: {row}')
+
+              if territory=='assigned' and not partner: sys.exit(f'assigned territory missing partner_id: {row}')
+              if row.get('backup_partner_id') and row.get('backup_partner_id')==partner: sys.exit(f'backup partner duplicates primary: {row}')
               if city:
                   key=(code,city.strip().lower())
                   if key in exact_map: sys.exit(f'duplicate exact city route: {key}')
@@ -89,7 +124,10 @@ jobs:
           for c in cities.get('cities',[]):
               code=c.get('state_code'); region=(c.get('region') or '').strip().lower()
               city=(c.get('city') or '').strip().lower()
-              city_map[(code,city)]=c
+              if code not in state_codes or not city: sys.exit(f'invalid city catalog row: {c}')
+              key=(code,city)
+              if key in city_map: sys.exit(f'duplicate city catalog row: {key}')
+              city_map[key]=c
               exact=(code,city)
               if exact in exact_map:
                   exact_count+=1
@@ -136,7 +174,6 @@ jobs:
               if expected_decision is not None and decision(row) != expected_decision:
                   sys.exit(f'{city}, {code}: expected decision {expected_decision}, got {decision(row)}')
 
-          # Regression tests mirror production routing order and customer-network decisions.
           expect('Portland','OR','exact','direct','Portland Metro','503-868-4455','DIRECT_OPERATION')
           expect('Beaverton','OR','regional','direct','Portland Metro','503-868-4455','DIRECT_OPERATION')
           expect('Keizer','OR','regional','direct','Salem Metro','503-868-4455','DIRECT_OPERATION')
@@ -153,21 +190,14 @@ jobs:
           customer_script=pathlib.Path('assets/customer-routing.js').read_text()
 
           required_partner_tokens=[
-              'data/market-routing.json',
-              'data/cities.json',
-              'state_defaults',
-              'Nationwide Partner Page',
-              'does not establish coverage or create an SEO page',
-              'window.render = renderCanonical',
-              "resolution_level: 'exact-city'",
-              "resolution_level: 'regional'",
-              "resolution_level: 'statewide'",
-              "resolution_level: 'fallback'",
+              'data/market-routing.json','data/cities.json','state_defaults','Nationwide Partner Page',
+              'does not establish coverage or create an SEO page','window.render = renderCanonical',
+              "resolution_level: 'exact-city'","resolution_level: 'regional'",
+              "resolution_level: 'statewide'","resolution_level: 'fallback'",
               'Primary Market Resolution Level'
           ]
           for token in required_partner_tokens:
-              if token not in partner_script:
-                  sys.exit(f'partner routing safeguard missing required token: {token}')
+              if token not in partner_script: sys.exit(f'partner routing safeguard missing required token: {token}')
 
           if 'assets/partner-routing.js' not in partner_page and '../assets/partner-routing.js' not in partner_page:
               sys.exit('partner page must load assets/partner-routing.js')
@@ -177,34 +207,26 @@ jobs:
               sys.exit('partner page must not contain city-page generation controls')
           required_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','id="territorySummary"']
           for token in required_matching_fields:
-              if token not in partner_page:
-                  sys.exit(f'partner capability matching field missing: {token}')
+              if token not in partner_page: sys.exit(f'partner capability matching field missing: {token}')
           for token in ['publicLabel(market)','classifySelection();']:
-              if token not in partner_script:
-                  sys.exit(f'partner territory status display missing: {token}')
+              if token not in partner_script: sys.exit(f'partner territory status display missing: {token}')
           if "automaticCityPageCreation') is not False" not in pathlib.Path('.github/workflows/validate-market-routing.yml').read_text():
               sys.exit('validator must continue enforcing automaticCityPageCreation=false')
           if "fetch(siteUrl('data/market-routing.json')" not in customer_script or "fetch(siteUrl('data/cities.json')" not in customer_script:
               sys.exit('customer routing must keep base-aware canonical data loading')
 
           required_customer_decision_tokens=[
-              "decision:'DIRECT_OPERATION'",
-              "decision:'PARTNER_NETWORK'",
-              "decision:'RECRUITING_QUEUE'",
-              "decision:'NATIONAL_INTAKE'",
-              "hidden(form,'Routing Decision',route.decision)",
-              "hidden(form,'Routing Network Tier',route.tier)",
+              "decision:'DIRECT_OPERATION'","decision:'PARTNER_NETWORK'","decision:'RECRUITING_QUEUE'","decision:'NATIONAL_INTAKE'",
+              "hidden(form,'Routing Decision',route.decision)","hidden(form,'Routing Network Tier',route.tier)",
               "hidden(form,'Routing Next Action',route.action)",
               "hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed')"
           ]
           for token in required_customer_decision_tokens:
-              if token not in customer_script:
-                  sys.exit(f'customer routing decision safeguard missing required token: {token}')
+              if token not in customer_script: sys.exit(f'customer routing decision safeguard missing required token: {token}')
 
           homepage=pathlib.Path('index.html').read_text()
           for token in ['id="coverage-checker"','id="coverage-city"','id="coverage-state"','FreeReliableCustomerRouting.classify(city,state)']:
-              if token not in homepage:
-                  sys.exit(f'homepage coverage checker missing required token: {token}')
+              if token not in homepage: sys.exit(f'homepage coverage checker missing required token: {token}')
 
-          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); routing decision tests passed; canonical partner picker and resolution metadata protected; customer safeguards passed; automatic city-page creation remains disabled')
+          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); route/status/territory/pricing consistency clean; routing decision tests passed; automatic city-page creation remains disabled')
           PY
