@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - '.github/workflows/audit-content-uniqueness.yml'
+      - 'sitemap.xml'
+      - '**-appliance-pickup/index.html'
 
 permissions:
   contents: read
@@ -14,13 +16,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Analyze city-page uniqueness and usability
+      - name: Analyze active indexable market-page uniqueness and usability
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
-          import re, html, itertools
+          import re, html, itertools, xml.etree.ElementTree as ET
           from difflib import SequenceMatcher
+
+          BASE='https://freereliableappliancepickup.com/'
+          INFORMATIONAL={'landlord-property-manager-appliance-pickup'}
 
           def visible_text(raw):
               raw = re.sub(r'<script\b[^>]*>.*?</script>', ' ', raw, flags=re.I|re.S)
@@ -33,16 +38,27 @@ jobs:
               raw = re.sub(r'\s+', ' ', raw).strip().lower()
               return raw
 
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          slugs=[]
+          for el in root.findall('.//s:loc',ns):
+              if not el.text: continue
+              u=el.text.strip()
+              if not u.startswith(BASE): continue
+              slug=u[len(BASE):].strip('/')
+              if slug in INFORMATIONAL: continue
+              if slug.endswith('-appliance-pickup') and (Path(slug)/'index.html').exists():
+                  slugs.append(slug)
+
           pages = []
-          for p in Path('.').glob('*/index.html'):
-              slug = p.parent.name
-              if 'appliance-pickup' not in slug:
-                  continue
+          for slug in slugs:
+              p=Path(slug)/'index.html'
               raw = p.read_text(encoding='utf-8', errors='ignore')
               txt = visible_text(raw)
               words = re.findall(r"[a-z0-9']+", txt)
               has_form = 'formspree.io/f/mvzeapzd' in raw
               funnels_home = ('../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw)
+              noindex=bool(re.search(r'<meta\s+name=["\']robots["\'][^>]*noindex',raw,re.I))
               pages.append({
                   'slug': slug,
                   'path': str(p),
@@ -51,20 +67,26 @@ jobs:
                   'words': len(words),
                   'has_form': has_form,
                   'funnels_home': funnels_home,
+                  'noindex': noindex,
               })
 
-          print('CITY_PAGE_COUNT', len(pages))
+          print('INDEXABLE_MARKET_PAGE_COUNT', len(pages))
           print('WITH_LOCAL_FORM', sum(x['has_form'] for x in pages))
           print('FUNNEL_TO_HOMEPAGE_FORM', sum(x['funnels_home'] for x in pages))
+          print('NOINDEX_IN_SITEMAP_MARKETS',sum(x['noindex'] for x in pages))
           print('UNDER_350_WORDS', sum(x['words'] < 350 for x in pages))
           print('UNDER_500_WORDS', sum(x['words'] < 500 for x in pages))
+
+          if any(x['noindex'] for x in pages):
+              bad=[x['slug'] for x in pages if x['noindex']]
+              raise SystemExit(f'Indexable market page in sitemap is noindex: {bad}')
+
           print('\nLOWEST_WORD_COUNT')
           for x in sorted(pages, key=lambda x:x['words'])[:20]:
               print(f"{x['words']:4d} | form={x['has_form']} funnel={x['funnels_home']} | {x['slug']}")
 
           pairs=[]
           for a,b in itertools.combinations(pages,2):
-              # Compare visible text after replacing each slug's city words to reduce false uniqueness from city names.
               ta=a['txt']
               tb=b['txt']
               for slug in (a['slug'], b['slug']):
@@ -78,9 +100,4 @@ jobs:
           print('\nMOST_SIMILAR_PAIRS')
           for ratio,a,b in sorted(pairs, reverse=True)[:30]:
               print(f"{ratio:.3f} | {a} <-> {b}")
-
-          print('\nPAGES_STILL_FUNNELING')
-          for x in pages:
-              if x['funnels_home']:
-                  print(x['slug'])
           PY
