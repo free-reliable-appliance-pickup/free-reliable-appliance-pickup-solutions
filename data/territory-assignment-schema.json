@@ -1,16 +1,26 @@
 {
-  "version": "2026-09-11",
+  "version": "2026-09-11.2",
   "purpose": "Internal territory assignment records connecting approved partners to operational markets without creating public SEO pages.",
   "rules": {
     "approvedPartnerRequired": true,
-    "activeAssignmentRequiredForRouting": true,
+    "activeAssignmentRequiredForPrimaryAndBackupRouting": true,
     "assignmentDoesNotCreateSeoPage": true,
+    "assignmentDoesNotChangeIndexability": true,
+    "marketSeoStatusManagedSeparately": true,
     "publicPartnerIdentity": false,
-    "allowPrimaryAndBackupAssignments": true
+    "allowPrimaryAndBackupAssignments": true,
+    "applicationPreferenceDoesNotCreateAssignment": true,
+    "automaticCityPageCreation": false
+  },
+  "roles": {
+    "primary": "Approved primary operator for the defined territory.",
+    "backup": "Approved backup or overflow operator for the defined territory.",
+    "shared": "Approved partner eligible for shared opportunities in the defined market without primary-territory status.",
+    "waitlist": "Future-review record only; not eligible for routed customer contact solely from this role."
   },
   "assignmentStatuses": {
     "pending": "Assignment is being reviewed and cannot receive leads.",
-    "active": "Assignment is approved and eligible to receive routed leads.",
+    "active": "Assignment is approved and eligible for routing according to its role and partner-access policy.",
     "paused": "Assignment is temporarily unavailable for new leads.",
     "ended": "Assignment is no longer active."
   },
@@ -25,6 +35,9 @@
     "service_radius_miles": null,
     "appliance_types": ["washer", "dryer", "refrigerator", "freezer", "stove", "range", "oven"],
     "daily_capacity": null,
+    "response_time": null,
+    "inside_stairs_capability": null,
+    "lead_access_mode": null,
     "monthly_price_cents": null,
     "starts_on": null,
     "ends_on": null,
