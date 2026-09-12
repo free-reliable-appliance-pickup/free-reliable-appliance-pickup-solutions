@@ -6,6 +6,7 @@ on:
       - 'data/partner-access-policy.json'
       - 'data/partners.json'
       - 'data/territory-assignment-schema.json'
+      - 'data/territory-pricing.json'
       - 'data/market-routing.json'
       - '.github/workflows/validate-partner-access-policy.yml'
   pull_request:
@@ -13,6 +14,7 @@ on:
       - 'data/partner-access-policy.json'
       - 'data/partners.json'
       - 'data/territory-assignment-schema.json'
+      - 'data/territory-pricing.json'
       - 'data/market-routing.json'
       - '.github/workflows/validate-partner-access-policy.yml'
 
@@ -29,11 +31,13 @@ jobs:
           access=json.loads(pathlib.Path('data/partner-access-policy.json').read_text())
           partners=json.loads(pathlib.Path('data/partners.json').read_text())
           assignments=json.loads(pathlib.Path('data/territory-assignment-schema.json').read_text())
+          pricing=json.loads(pathlib.Path('data/territory-pricing.json').read_text())
           markets=json.loads(pathlib.Path('data/market-routing.json').read_text())
 
           ar=access.get('rules',{})
           pr=partners.get('rules',{})
           tr=assignments.get('rules',{})
+          rr=pricing.get('rules',{})
           mr=markets.get('rules',{})
 
           required_true=[
@@ -53,13 +57,22 @@ jobs:
             (tr,'assignmentDoesNotCreateSeoPage'),
             (tr,'assignmentDoesNotChangeIndexability'),
             (tr,'marketSeoStatusManagedSeparately'),
-            (tr,'applicationPreferenceDoesNotCreateAssignment')
+            (tr,'applicationPreferenceDoesNotCreateAssignment'),
+            (rr,'priceRequiresManualApproval'),
+            (rr,'selectionDoesNotReserveTerritory'),
+            (rr,'paymentDoesNotCreateSeoPage'),
+            (rr,'paymentDoesNotChangeIndexability'),
+            (rr,'paymentDoesNotEstablishCoverage'),
+            (rr,'applicationDoesNotCreatePaidAccess'),
+            (rr,'paidAccessRequiresSeparateDisclosureAndAgreement')
           ]
           for obj,key in required_true:
               if obj.get(key) is not True: sys.exit(f'{key} must remain true')
 
+          if rr.get('directMarketsForSale') is not False: sys.exit('direct markets must not be for sale')
           if ar.get('automaticCityPageCreation') is not False: sys.exit('partner access policy automaticCityPageCreation must remain false')
           if tr.get('automaticCityPageCreation') is not False: sys.exit('territory assignment automaticCityPageCreation must remain false')
+          if rr.get('automaticCityPageCreation') is not False: sys.exit('pricing automaticCityPageCreation must remain false')
           if mr.get('automaticCityPageCreation') is not False: sys.exit('market routing automaticCityPageCreation must remain false')
           if mr.get('indexableCityStatuses') != ['direct','partner-supported']:
               sys.exit('market SEO indexability must remain limited to direct and partner-supported')
@@ -73,11 +86,22 @@ jobs:
               sys.exit('backup access must require an active territory assignment')
           if modes['shared'].get('requiresApprovedPartner') is not True:
               sys.exit('shared access must require approved partner')
-          if modes['waitlist'].get('guaranteesLeadVolume') is not False:
-              sys.exit('waitlist cannot guarantee lead volume')
           for name,mode in modes.items():
               if mode.get('guaranteesLeadVolume') is not False: sys.exit(f'{name} cannot guarantee lead volume')
               if mode.get('guaranteesExclusivity') is not False: sys.exit(f'{name} cannot guarantee exclusivity')
+
+          price_models=pricing.get('accessPricingModels',{})
+          if set(price_models) != {'shared_per_lead','primary_monthly','backup_monthly'}:
+              sys.exit('pricing models must remain shared_per_lead, primary_monthly, backup_monthly')
+          for name,model in price_models.items():
+              if model.get('enabled') is not False: sys.exit(f'{name} must remain disabled until separately approved')
+              if model.get('price_cents') is not None: sys.exit(f'{name} must not publish a live price yet')
+              if model.get('requiresApprovedPartner') is not True: sys.exit(f'{name} requires approved partner')
+              if model.get('requiresSeparateAgreement') is not True: sys.exit(f'{name} requires separate agreement')
+              if model.get('guaranteesLeadVolume') is not False: sys.exit(f'{name} cannot guarantee lead volume')
+              if model.get('guaranteesExclusivity') is not False: sys.exit(f'{name} cannot guarantee exclusivity')
+              if model.get('createsSeoPage') is not False: sys.exit(f'{name} cannot create SEO pages')
+              if model.get('changesMarketIndexability') is not False: sys.exit(f'{name} cannot change market indexability')
 
           mapping=access.get('preferenceTierMapping',{})
           expected={'PRIMARY_TERRITORY_CANDIDATE','FAST_SHARED_LEAD_CANDIDATE','TERRITORY_INTEREST','SHARED_LEAD_INTEREST','STANDARD_REVIEW'}
@@ -91,5 +115,5 @@ jobs:
           for key in ['preferred_access_model','preference_tier','routing_score','response_time','service_radius_miles','daily_capacity','inside_stairs_capability','availability','appliance_capabilities','preferred_cities','approved_access_modes']:
               if key not in template: sys.exit(f'partner template missing {key}')
 
-          print('PASS: partner lead-access roles are operationally separated from service coverage and SEO indexability; automatic city-page creation remains disabled')
+          print('PASS: partner access, monetization, service coverage and SEO indexability remain separated; all paid models are disabled until explicit approval')
           PY
