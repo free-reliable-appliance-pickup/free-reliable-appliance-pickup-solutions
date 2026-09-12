@@ -28,6 +28,7 @@ jobs:
 
           BASE='https://freereliableappliancepickup.com/'
           HOST='freereliableappliancepickup.com'
+          NON_LOCATION_GUIDES={'landlord-property-manager-appliance-pickup'}
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           active_urls=[e.text.strip() for e in root.findall('.//s:loc',ns) if e.text]
@@ -68,9 +69,9 @@ jobs:
                   if u.netloc!=HOST or dest in active or not dest.startswith(BASE):
                       continue
                   rel=dest[len(BASE):].strip('/')
-                  # This guard is intentionally limited to retired location-style pages.
-                  # Useful noindex guides may remain linked with noindex,follow.
-                  if 'appliance-pickup' not in rel:
+                  # Only treat directory-style *-appliance-pickup slugs as location
+                  # pages. Assets and informational guides are not location leaks.
+                  if '/' in rel or not rel.endswith('-appliance-pickup') or rel in NON_LOCATION_GUIDES:
                       continue
                   target=file_for(dest)
                   if not target or not target.exists():
