@@ -23,7 +23,7 @@ jobs:
 
           # Keep broad state hubs plus only the few city markets with established
           # direct operating coverage. Recruiting/request-only regions stay useful
-          # for users but remain noindex until coverage is actually established.
+          # for customer routing but remain noindex until coverage is established.
           KEEP={
             'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
             'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
@@ -31,8 +31,17 @@ jobs:
             'portland-appliance-pickup','salem-appliance-pickup',
             'denver-appliance-pickup','aurora-appliance-pickup'
           }
+          RECRUITING={
+            'inland-empire-appliance-pickup','orange-county-appliance-pickup',
+            'riverside-county-appliance-pickup','los-angeles-county-appliance-pickup',
+            'central-coast-appliance-pickup','central-valley-appliance-pickup',
+            'san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup',
+            'phoenix-metro-appliance-pickup','las-vegas-valley-appliance-pickup',
+            'puget-sound-appliance-pickup','treasure-valley-appliance-pickup',
+            'wasatch-front-appliance-pickup'
+          }
 
-          changed=[]
+          noindexed=[]
           for p in Path('.').glob('*/index.html'):
               slug=p.parent.name
               if not slug.endswith('-appliance-pickup') or slug in KEEP:
@@ -55,17 +64,42 @@ jobs:
 
               if s!=old:
                   p.write_text(s,encoding='utf-8')
-                  changed.append(slug)
+                  noindexed.append(slug)
 
-          print('NOINDEXED_LOCATION_PAGES',len(changed))
-          print('\n'.join(changed))
+          # Do not funnel ranking signals from approved/indexable pages into
+          # recruiting-only location pages. Keep the visible region names when
+          # useful, but remove the hyperlink until real coverage is promoted.
+          unlinked=[]
+          anchor_re=re.compile(r'<a\b[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>',re.I|re.S)
+          html=[Path('index.html')]+list(Path('.').glob('*/index.html'))
+          for p in html:
+              if not p.exists():
+                  continue
+              s=p.read_text(encoding='utf-8',errors='ignore')
+              if 'noindex' in s.lower():
+                  continue
+              old=s
+              def repl(m):
+                  href=m.group(1).lower()
+                  if any(slug in href for slug in RECRUITING):
+                      return m.group(2)
+                  return m.group(0)
+              s=anchor_re.sub(repl,s)
+              if s!=old:
+                  p.write_text(s,encoding='utf-8')
+                  unlinked.append(str(p))
+
+          print('NOINDEXED_LOCATION_PAGES',len(noindexed))
+          print('\n'.join(noindexed))
+          print('UNLINKED_INDEXABLE_PAGES',len(unlinked))
+          print('\n'.join(unlinked))
           PY
       - name: Commit cleanup
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- '*-appliance-pickup/index.html' || true
+          git add -- '*.html' '*/*.html' || true
           if git diff --cached --quiet; then echo 'No changes needed'; exit 0; fi
-          git commit -m "Reduce doorway-page footprint and focus service areas"
+          git commit -m "Reduce doorway-page footprint and remove recruiting links"
           git push
