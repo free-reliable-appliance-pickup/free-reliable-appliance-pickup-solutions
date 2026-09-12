@@ -1,0 +1,52 @@
+name: Upgrade partner capability matching
+
+on:
+  push:
+    paths:
+      - '.github/workflows/upgrade-partner-matching.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add richer partner matching fields
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          p=Path('partners/index.html')
+          s=p.read_text(encoding='utf-8')
+          old=s
+
+          if 'id="matched-request-details"' not in s:
+              section='''<section class="card" id="matched-request-details"><h2>What a Matched Pickup Request Can Include</h2><p>When provided by the customer, routing information can include the city or ZIP code, appliance type, condition, photos, floor level, stairs, access notes and other pickup details. Contact details remain controlled until the request is assigned through the network.</p><div class="steps"><div class="step"><strong>Location</strong>City or ZIP code and the applicable routing market.</div><div class="step"><strong>Appliance & Condition</strong>Appliance type plus working, repairable, nonworking or unknown condition details when submitted.</div><div class="step"><strong>Photos & Access</strong>Photos when provided, floor level, stairs, doorway or access notes.</div><div class="step"><strong>Assignment Status</strong>Routing and territory status used to determine whether an approved partner is eligible for review.</div></div></section>'''
+              s=s.replace('<section class="card" id="territories">',section+'<section class="card" id="territories">',1)
+
+          fields='''<div><label for="operatorType">Operator / Business Type *</label><select id="operatorType" name="Operator Business Type" required><option value="">Select</option><option>Appliance reseller or refurbisher</option><option>Appliance repair shop</option><option>Recycler or scrap operator</option><option>Junk removal or hauler</option><option>Property cleanout operator</option><option>Independent pickup operator</option><option>Other</option></select></div><div><label for="conditionPreference">Condition Preference *</label><select id="conditionPreference" name="Condition Preference" required><option value="">Select</option><option>Working appliances</option><option>Working and repairable appliances</option><option>Nonworking or scrap appliances</option><option>Mixed loads</option><option>Any condition reviewed case by case</option></select></div><div><label for="crewSize">Crew Capability *</label><select id="crewSize" name="Crew Capability" required><option value="">Select</option><option>1-person operator</option><option>2-person crew available</option><option>3+ person crew available</option><option>Crew varies by pickup</option></select></div><div><label for="maxStairs">Maximum Stairs / Floors *</label><select id="maxStairs" name="Maximum Stairs Floors" required><option value="">Select</option><option>Ground floor only</option><option>1 flight</option><option>2 flights</option><option>3+ flights</option><option>Case by case</option></select></div><div><label for="storageCapacity">Storage / Refurbishment Capacity *</label><select id="storageCapacity" name="Storage Refurbishment Capacity" required><option value="">Select</option><option>No storage</option><option>1–3 appliances</option><option>4–10 appliances</option><option>11–25 appliances</option><option>26+ appliances</option></select></div><div><label for="notificationPreference">Preferred Notification Method *</label><select id="notificationPreference" name="Preferred Notification Method" required><option value="">Select</option><option>Text</option><option>Email</option><option>Text and email</option></select></div><div><label for="refrigerationCapability">Refrigerator / Freezer Capability *</label><select id="refrigerationCapability" name="Refrigeration Freezer Capability" required><option value="">Select</option><option>Yes</option><option>No</option><option>Case by case</option></select></div><div><label for="commercialCapability">Property Manager / Commercial Capability *</label><select id="commercialCapability" name="Property Manager Commercial Capability" required><option value="">Select</option><option>Yes, recurring and multi-unit pickups</option><option>Residential only</option><option>Case by case</option></select></div>'''
+          marker='<div><label for="experience">Experience *</label>'
+          if 'name="Operator Business Type"' not in s:
+              s=s.replace(marker,fields+marker,1)
+
+          s=s.replace('Tell us about your service area, appliance experience, equipment and operating schedule.','Tell us about your service area, equipment, condition preferences, storage or refurbishment setup, recurring-property work and operating schedule.')
+
+          if s!=old:
+              p.write_text(s,encoding='utf-8')
+              print('UPDATED partners/index.html')
+          else:
+              print('NO CHANGES NEEDED')
+          PY
+      - name: Commit partner matching upgrade
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add partners/index.html
+          if git diff --cached --quiet; then echo 'No changes needed'; exit 0; fi
+          git commit -m "Add richer partner capability matching fields"
+          git push
