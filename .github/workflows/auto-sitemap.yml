@@ -38,9 +38,6 @@ jobs:
           ET.register_namespace('', NS)
           ET.register_namespace('image', IMG_NS)
 
-          # Broad state hubs may remain indexable. Location pages are limited to
-          # established direct-operation markets plus individually validated
-          # regional hubs that have passed the page-quality gate.
           approved_locations={
               'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
               'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
@@ -48,7 +45,8 @@ jobs:
               'portland-appliance-pickup','salem-appliance-pickup',
               'denver-appliance-pickup','aurora-appliance-pickup',
               'inland-empire-appliance-pickup','los-angeles-county-appliance-pickup',
-              'riverside-county-appliance-pickup','orange-county-appliance-pickup'
+              'riverside-county-appliance-pickup','orange-county-appliance-pickup',
+              'san-diego-county-appliance-pickup'
           }
           approved_nonlocation={
               '', 'about', 'appliance-pickup-checklist', 'contact',
