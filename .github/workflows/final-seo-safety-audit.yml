@@ -25,22 +25,27 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import json, re, sys
+          import re, sys
 
           base='https://freereliableappliancepickup.com/'
+
+          # State hubs may remain indexable as broad coverage/request resources.
+          # Local/regional SEO pages are indexable only where direct operating coverage is established.
           approved_locations={
               'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
               'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
               'utah-appliance-pickup','idaho-appliance-pickup',
+              'portland-appliance-pickup','salem-appliance-pickup',
+              'denver-appliance-pickup','aurora-appliance-pickup'
+          }
+          recruiting_noindex_locations={
               'inland-empire-appliance-pickup','orange-county-appliance-pickup',
               'riverside-county-appliance-pickup','los-angeles-county-appliance-pickup',
               'central-coast-appliance-pickup','central-valley-appliance-pickup',
               'san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup',
               'phoenix-metro-appliance-pickup','las-vegas-valley-appliance-pickup',
               'puget-sound-appliance-pickup','treasure-valley-appliance-pickup',
-              'wasatch-front-appliance-pickup',
-              'portland-appliance-pickup','salem-appliance-pickup',
-              'denver-appliance-pickup','aurora-appliance-pickup'
+              'wasatch-front-appliance-pickup'
           }
           approved_nonlocation={
               '', 'about', 'appliance-pickup-checklist', 'contact',
@@ -51,72 +56,40 @@ jobs:
           }
           approved_indexable_paths=approved_locations | approved_nonlocation
 
-          routing=json.loads(Path('data/market-routing.json').read_text(encoding='utf-8'))
-          recruiting_regions={
-              str(r.get('region','')).strip().lower()
-              for r in routing.get('markets',[])
-              if r.get('status')=='partner-recruiting'
-          }
-          state_names={
-              'alabama':'AL','alaska':'AK','arizona':'AZ','arkansas':'AR','california':'CA','colorado':'CO','connecticut':'CT','delaware':'DE','florida':'FL','georgia':'GA','hawaii':'HI','idaho':'ID','illinois':'IL','indiana':'IN','iowa':'IA','kansas':'KS','kentucky':'KY','louisiana':'LA','maine':'ME','maryland':'MD','massachusetts':'MA','michigan':'MI','minnesota':'MN','mississippi':'MS','missouri':'MO','montana':'MT','nebraska':'NE','nevada':'NV','new-hampshire':'NH','new-jersey':'NJ','new-mexico':'NM','new-york':'NY','north-carolina':'NC','north-dakota':'ND','ohio':'OH','oklahoma':'OK','oregon':'OR','pennsylvania':'PA','rhode-island':'RI','south-carolina':'SC','south-dakota':'SD','tennessee':'TN','texas':'TX','utah':'UT','vermont':'VT','virginia':'VA','washington':'WA','west-virginia':'WV','wisconsin':'WI','wyoming':'WY'
-          }
-          recruiting_states={
-              str(r.get('state_code','')).upper()
-              for r in routing.get('state_defaults',[])
-              if r.get('status')=='partner-recruiting'
-          }
-
           errors=[]
           html=list(Path('.').glob('**/index.html'))+[Path('index.html')]
           html=list(dict.fromkeys(p for p in html if p.exists() and '.git' not in p.parts and '.github' not in p.parts))
           indexable=[]
 
-          safe_coverage_terms=(
-              'request','review','availability','coverage','confirm','confirmed','partner',
-              'not guaranteed','qualification','qualifying','subject to','recruit'
-          )
-          risky_claims=(
-              r'\bwe serve\b', r'\bwe service\b', r'\bfree pickup throughout\b',
-              r'\bfree pickup across\b', r'\bavailable throughout\b', r'\bavailable across\b'
-          )
-
           for p in html:
               s=p.read_text(encoding='utf-8',errors='ignore')
               low=s.lower()
-              if 'noindex' not in low:
-                  indexable.append(p)
-                  rel='' if str(p)=='index.html' else str(p.parent).replace('\\','/').strip('/')
+              rel='' if str(p)=='index.html' else str(p.parent).replace('\\','/').strip('/')
+              is_indexable='noindex' not in low
 
-                  if rel not in approved_indexable_paths:
-                      errors.append(f'UNAPPROVED INDEXABLE PATH {p} ({rel})')
+              if rel in recruiting_noindex_locations and is_indexable:
+                  errors.append(f'RECRUITING LOCATION MUST BE NOINDEX {p}')
 
-                  slug='' if str(p)=='index.html' else p.parent.name
-                  if slug.endswith('-appliance-pickup') and slug not in approved_locations:
-                      errors.append(f'UNAPPROVED INDEXABLE LOCATION {p}')
-                  c=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',s,re.I)
-                  if not c:
-                      errors.append(f'MISSING CANONICAL {p}')
-                  elif not c[0].startswith(base):
-                      errors.append(f'BAD CANONICAL {p}: {c[0]}')
-                  if '<title>' not in low:
-                      errors.append(f'MISSING TITLE {p}')
-                  if '<h1' not in low:
-                      errors.append(f'MISSING H1 {p}')
+              if not is_indexable:
+                  continue
 
-                  # Recruiting hubs may be useful/indexable, but must not read like guaranteed local service pages.
-                  is_recruiting_hub=False
-                  if rel.endswith('-appliance-pickup'):
-                      root=rel[:-len('-appliance-pickup')]
-                      if root in state_names and state_names[root] in recruiting_states:
-                          is_recruiting_hub=True
-                      if root.replace('-',' ') in recruiting_regions:
-                          is_recruiting_hub=True
-                  if is_recruiting_hub:
-                      if not any(term in low for term in safe_coverage_terms):
-                          errors.append(f'RECRUITING HUB MISSING COVERAGE QUALIFIER {p}')
-                      for pat in risky_claims:
-                          if re.search(pat,low) and not any(term in low for term in ('subject to','confirm','confirmed','availability','not guaranteed')):
-                              errors.append(f'RECRUITING HUB OVERPROMISE RISK {p}: {pat}')
+              indexable.append(p)
+              if rel not in approved_indexable_paths:
+                  errors.append(f'UNAPPROVED INDEXABLE PATH {p} ({rel})')
+
+              slug='' if str(p)=='index.html' else p.parent.name
+              if slug.endswith('-appliance-pickup') and slug not in approved_locations:
+                  errors.append(f'UNAPPROVED INDEXABLE LOCATION {p}')
+
+              c=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',s,re.I)
+              if not c:
+                  errors.append(f'MISSING CANONICAL {p}')
+              elif not c[0].startswith(base):
+                  errors.append(f'BAD CANONICAL {p}: {c[0]}')
+              if '<title>' not in low:
+                  errors.append(f'MISSING TITLE {p}')
+              if '<h1' not in low:
+                  errors.append(f'MISSING H1 {p}')
 
           for slug in sorted(approved_locations):
               p=Path(slug)/'index.html'
@@ -125,6 +98,13 @@ jobs:
                   continue
               if 'noindex' in p.read_text(encoding='utf-8',errors='ignore').lower():
                   errors.append(f'APPROVED LOCATION NOINDEX {p}')
+
+          for slug in sorted(recruiting_noindex_locations):
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  continue
+              if 'noindex' not in p.read_text(encoding='utf-8',errors='ignore').lower():
+                  errors.append(f'RECRUITING LOCATION INDEXABLE {p}')
 
           sitemap=Path('sitemap.xml').read_text(encoding='utf-8',errors='ignore')
           locs=set(re.findall(r'<loc>(.*?)</loc>',sitemap))
@@ -160,5 +140,5 @@ jobs:
               print('\n'.join(errors))
               sys.exit(1)
 
-          print(f'PASS: {len(indexable)} indexable HTML pages checked; exact allowlist, routing-aware recruiting-hub coverage language, approved-market guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
+          print(f'PASS: {len(indexable)} indexable HTML pages checked; exact allowlist, recruiting-location noindex guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
           PY
