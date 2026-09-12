@@ -1,0 +1,95 @@
+name: Validate partner access policy
+
+on:
+  push:
+    paths:
+      - 'data/partner-access-policy.json'
+      - 'data/partners.json'
+      - 'data/territory-assignment-schema.json'
+      - 'data/market-routing.json'
+      - '.github/workflows/validate-partner-access-policy.yml'
+  pull_request:
+    paths:
+      - 'data/partner-access-policy.json'
+      - 'data/partners.json'
+      - 'data/territory-assignment-schema.json'
+      - 'data/market-routing.json'
+      - '.github/workflows/validate-partner-access-policy.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate partner access is separated from SEO status
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+
+          access=json.loads(pathlib.Path('data/partner-access-policy.json').read_text())
+          partners=json.loads(pathlib.Path('data/partners.json').read_text())
+          assignments=json.loads(pathlib.Path('data/territory-assignment-schema.json').read_text())
+          markets=json.loads(pathlib.Path('data/market-routing.json').read_text())
+
+          ar=access.get('rules',{})
+          pr=partners.get('rules',{})
+          tr=assignments.get('rules',{})
+          mr=markets.get('rules',{})
+
+          required_true=[
+            (ar,'approvalRequiredBeforeLeadAccess'),
+            (ar,'sharedLeadAccessRequiresApproval'),
+            (ar,'applicationPreferenceDoesNotCreateAssignment'),
+            (ar,'applicationPreferenceDoesNotEstablishCoverage'),
+            (ar,'applicationPreferenceDoesNotCreateSeoPage'),
+            (ar,'territoryAssignmentDoesNotCreateSeoPage'),
+            (ar,'marketSeoStatusManagedSeparately'),
+            (ar,'paidAccessRequiresSeparateDisclosureAndAgreement'),
+            (pr,'approvalRequired'),
+            (pr,'sharedLeadAccessRequiresApproval'),
+            (pr,'applicationDoesNotEstablishCoverage'),
+            (pr,'applicationDoesNotCreateSeoPage'),
+            (tr,'approvedPartnerRequired'),
+            (tr,'assignmentDoesNotCreateSeoPage'),
+            (tr,'assignmentDoesNotChangeIndexability'),
+            (tr,'marketSeoStatusManagedSeparately'),
+            (tr,'applicationPreferenceDoesNotCreateAssignment')
+          ]
+          for obj,key in required_true:
+              if obj.get(key) is not True: sys.exit(f'{key} must remain true')
+
+          if ar.get('automaticCityPageCreation') is not False: sys.exit('partner access policy automaticCityPageCreation must remain false')
+          if tr.get('automaticCityPageCreation') is not False: sys.exit('territory assignment automaticCityPageCreation must remain false')
+          if mr.get('automaticCityPageCreation') is not False: sys.exit('market routing automaticCityPageCreation must remain false')
+          if mr.get('indexableCityStatuses') != ['direct','partner-supported']:
+              sys.exit('market SEO indexability must remain limited to direct and partner-supported')
+
+          modes=access.get('accessModes',{})
+          if set(modes) != {'shared','primary','backup','waitlist'}:
+              sys.exit(f'access modes changed unexpectedly: {sorted(modes)}')
+          if modes['primary'].get('requiresActiveTerritoryAssignment') is not True:
+              sys.exit('primary access must require an active territory assignment')
+          if modes['backup'].get('requiresActiveTerritoryAssignment') is not True:
+              sys.exit('backup access must require an active territory assignment')
+          if modes['shared'].get('requiresApprovedPartner') is not True:
+              sys.exit('shared access must require approved partner')
+          if modes['waitlist'].get('guaranteesLeadVolume') is not False:
+              sys.exit('waitlist cannot guarantee lead volume')
+          for name,mode in modes.items():
+              if mode.get('guaranteesLeadVolume') is not False: sys.exit(f'{name} cannot guarantee lead volume')
+              if mode.get('guaranteesExclusivity') is not False: sys.exit(f'{name} cannot guarantee exclusivity')
+
+          mapping=access.get('preferenceTierMapping',{})
+          expected={'PRIMARY_TERRITORY_CANDIDATE','FAST_SHARED_LEAD_CANDIDATE','TERRITORY_INTEREST','SHARED_LEAD_INTEREST','STANDARD_REVIEW'}
+          if set(mapping)!=expected: sys.exit('preference tier mapping is incomplete')
+
+          roles=assignments.get('roles',{})
+          if set(roles) != {'primary','backup','shared','waitlist'}:
+              sys.exit('territory roles must remain primary, backup, shared, waitlist')
+
+          template=partners.get('partnerTemplate',{})
+          for key in ['preferred_access_model','preference_tier','routing_score','response_time','service_radius_miles','daily_capacity','inside_stairs_capability','availability','appliance_capabilities','preferred_cities','approved_access_modes']:
+              if key not in template: sys.exit(f'partner template missing {key}')
+
+          print('PASS: partner lead-access roles are operationally separated from service coverage and SEO indexability; automatic city-page creation remains disabled')
+          PY
