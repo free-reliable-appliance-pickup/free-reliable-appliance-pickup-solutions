@@ -123,6 +123,32 @@ jobs:
               if s!=old:
                   homepage.write_text(s,encoding='utf-8')
 
+          # Competitor-inspired partner conversion upgrade, implemented truthfully.
+          # We collect partner preferences for shared lead alerts vs. exclusive
+          # territory consideration, but do not claim billing/unlock features are live.
+          partner=Path('partners/index.html')
+          if partner.exists():
+              s=partner.read_text(encoding='utf-8',errors='ignore')
+              old=s
+              s=s.replace(
+                '<nav><a href="../">Home</a><a href="#how">How It Works</a><a href="#territories">Choose Cities</a><a href="#apply">Apply</a></nav>',
+                '<nav><a href="../">Home</a><a href="#how">How It Works</a><a href="#lead-access">Lead Access</a><a href="#territories">Choose Cities</a><a href="#apply">Apply</a></nav>'
+              )
+              if 'id="lead-access"' not in s:
+                  lead_section='''<section class="card" id="lead-access"><h2>Partner Lead Access & Territory Preferences</h2><p>Approved partners can tell us how they would prefer to receive opportunities as the network grows. These selections help us design routing and territory assignments; they are not a purchase, subscription, exclusivity promise or guarantee of lead volume.</p><div class="steps"><div class="step"><strong>Shared Lead Alerts</strong>Receive notice when a qualifying request matches one of your selected markets. Initial alerts can be limited to useful request details until assignment is confirmed.</div><div class="step"><strong>Exclusive Territory Interest</strong>Tell us which markets you would consider operating as a primary partner if exclusive or priority territory access becomes available.</div><div class="step"><strong>Review Before Contact</strong>Appliance type, condition, photos when available, city and access details can be reviewed before a request is assigned.</div><div class="step"><strong>Partner Fit Matters</strong>Routing can consider service radius, vehicle, appliance capability, inside-pickup ability, response time and current capacity.</div></div><div class="green"><strong>Important:</strong> lead-access and territory options are currently application preferences used for partner review and future network configuration. Any paid lead or subscription feature will be disclosed separately before a partner is charged.</div></section>'''
+                  marker='<section class="card" id="territories">'
+                  s=s.replace(marker,lead_section+marker,1)
+              access_fields='''<div><label for="leadModel">Preferred Lead Access Model *</label><select id="leadModel" name="Preferred Lead Access Model" required><option value="">Select</option><option>Shared lead alerts</option><option>Exclusive or priority territory interest</option><option>Interested in both</option><option>Not sure yet</option></select></div><div><label for="responseTime">Typical Response Time *</label><select id="responseTime" name="Typical Response Time" required><option value="">Select</option><option>Within 15 minutes</option><option>Within 1 hour</option><option>Within 4 hours</option><option>Same day</option><option>Next business day</option></select></div>'''
+              form_marker='<div><label for="experience">Experience *</label>'
+              if 'name="Preferred Lead Access Model"' not in s:
+                  s=s.replace(form_marker,access_fields+form_marker,1)
+              s=s.replace(
+                'I understand city selection is an application preference and does not guarantee territory, exclusivity, coverage or lead volume.',
+                'I understand city selection and lead-access choices are application preferences and do not guarantee territory, exclusivity, coverage, lead volume or pricing. Any paid feature requires separate disclosure and agreement.'
+              )
+              if s!=old:
+                  partner.write_text(s,encoding='utf-8')
+
           print('NOINDEXED_LOCATION_PAGES',len(noindexed))
           print('\n'.join(noindexed))
           print('UNLINKED_INDEXABLE_PAGES',len(unlinked))
@@ -135,5 +161,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- '*.html' '*/*.html' || true
           if git diff --cached --quiet; then echo 'No changes needed'; exit 0; fi
-          git commit -m "Reduce doorway-page footprint and tighten coverage claims"
+          git commit -m "Reduce doorway-page footprint and upgrade partner routing preferences"
           git push
