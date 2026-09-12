@@ -1,0 +1,63 @@
+{
+  "version": "2026-09-11.1",
+  "purpose": "Operational partner-access policy for nationwide appliance pickup routing. This file controls how approved partners may receive opportunities; it does not create public pages, establish service coverage, or change SEO indexability.",
+  "rules": {
+    "approvalRequiredBeforeLeadAccess": true,
+    "activeAssignmentRequiredForPrimaryTerritory": true,
+    "sharedLeadAccessRequiresApproval": true,
+    "applicationPreferenceDoesNotCreateAssignment": true,
+    "applicationPreferenceDoesNotEstablishCoverage": true,
+    "applicationPreferenceDoesNotCreateSeoPage": true,
+    "territoryAssignmentDoesNotCreateSeoPage": true,
+    "marketSeoStatusManagedSeparately": true,
+    "publicPartnerIdentity": false,
+    "paidAccessRequiresSeparateDisclosureAndAgreement": true,
+    "automaticCityPageCreation": false
+  },
+  "accessModes": {
+    "shared": {
+      "label": "Shared lead access",
+      "description": "An approved partner may receive a qualifying opportunity that also matches other eligible partners. Assignment and customer contact access remain controlled by routing policy.",
+      "requiresActiveTerritoryAssignment": false,
+      "requiresApprovedPartner": true,
+      "guaranteesLeadVolume": false,
+      "guaranteesExclusivity": false
+    },
+    "primary": {
+      "label": "Primary territory access",
+      "description": "An approved partner may be designated as the primary operator for a defined market after explicit territory review and assignment.",
+      "requiresActiveTerritoryAssignment": true,
+      "requiresApprovedPartner": true,
+      "guaranteesLeadVolume": false,
+      "guaranteesExclusivity": false
+    },
+    "backup": {
+      "label": "Backup or overflow access",
+      "description": "An approved partner may receive opportunities when a primary or direct operation needs backup capacity.",
+      "requiresActiveTerritoryAssignment": true,
+      "requiresApprovedPartner": true,
+      "guaranteesLeadVolume": false,
+      "guaranteesExclusivity": false
+    },
+    "waitlist": {
+      "label": "Future territory waitlist",
+      "description": "An approved or applicant partner may be retained for future review but cannot receive routed customer contact solely because of waitlist status.",
+      "requiresActiveTerritoryAssignment": false,
+      "requiresApprovedPartner": false,
+      "guaranteesLeadVolume": false,
+      "guaranteesExclusivity": false
+    }
+  },
+  "preferenceTierMapping": {
+    "PRIMARY_TERRITORY_CANDIDATE": ["primary", "shared"],
+    "FAST_SHARED_LEAD_CANDIDATE": ["shared", "backup"],
+    "TERRITORY_INTEREST": ["primary", "waitlist"],
+    "SHARED_LEAD_INTEREST": ["shared"],
+    "STANDARD_REVIEW": ["waitlist"]
+  },
+  "leadDisclosure": {
+    "preAssignmentFields": ["city", "state", "appliance_type", "condition", "photos_when_provided", "floor", "stairs", "access_notes", "pickup_notes"],
+    "customerContactRequiresAssignmentOrAuthorizedSharedAccess": true,
+    "publicCustomerContact": false
+  }
+}
