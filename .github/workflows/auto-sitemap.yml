@@ -51,9 +51,9 @@ jobs:
           approved_nonlocation={
               '', 'about', 'appliance-pickup-checklist', 'contact',
               'free-pickup-qualification', 'freezer-pickup',
-              'how-appliance-pickup-works', 'old-appliance-disposal-options',
-              'partners', 'refrigerator-pickup', 'service-areas',
-              'stove-oven-pickup', 'washer-dryer-pickup'
+              'how-appliance-pickup-works', 'landlord-property-manager-appliance-pickup',
+              'old-appliance-disposal-options', 'partners', 'refrigerator-pickup',
+              'service-areas', 'stove-oven-pickup', 'washer-dryer-pickup'
           }
           approved=approved_locations | approved_nonlocation
 
@@ -72,7 +72,6 @@ jobs:
           def relpath(p):
               return '' if p==Path('index.html') else p.parent.as_posix().strip('/')
 
-          # Refuse to publish a sitemap if an unexpected indexable path appears.
           unexpected=[str(p) for p in pages if indexable(p) and relpath(p) not in approved]
           if unexpected:
               print('ERROR: unapproved indexable pages detected; sitemap not rebuilt:')
