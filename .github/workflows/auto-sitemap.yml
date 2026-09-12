@@ -39,14 +39,15 @@ jobs:
           ET.register_namespace('image', IMG_NS)
 
           # Broad state hubs may remain indexable. Location pages are limited to
-          # established direct-operation markets. Recruiting/request-only regions
-          # stay off the sitemap until coverage becomes real and is promoted.
+          # established direct-operation markets plus individually validated
+          # regional hubs that have passed the page-quality gate.
           approved_locations={
               'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
               'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
               'utah-appliance-pickup','idaho-appliance-pickup',
               'portland-appliance-pickup','salem-appliance-pickup',
-              'denver-appliance-pickup','aurora-appliance-pickup'
+              'denver-appliance-pickup','aurora-appliance-pickup',
+              'inland-empire-appliance-pickup'
           }
           approved_nonlocation={
               '', 'about', 'appliance-pickup-checklist', 'contact',
