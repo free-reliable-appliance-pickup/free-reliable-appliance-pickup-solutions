@@ -35,11 +35,11 @@ jobs:
               'utah-appliance-pickup','idaho-appliance-pickup',
               'portland-appliance-pickup','salem-appliance-pickup',
               'denver-appliance-pickup','aurora-appliance-pickup',
-              'inland-empire-appliance-pickup'
+              'inland-empire-appliance-pickup','los-angeles-county-appliance-pickup',
+              'riverside-county-appliance-pickup'
           }
           recruiting_noindex_locations={
               'orange-county-appliance-pickup',
-              'riverside-county-appliance-pickup','los-angeles-county-appliance-pickup',
               'central-coast-appliance-pickup','central-valley-appliance-pickup',
               'san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup',
               'phoenix-metro-appliance-pickup','las-vegas-valley-appliance-pickup',
