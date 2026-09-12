@@ -21,67 +21,19 @@ jobs:
         run: |
           python - <<'PY'
           import pathlib, sys
-
-          script = pathlib.Path('assets/partner-routing.js').read_text()
-          page = pathlib.Path('partners/index.html').read_text()
-
-          required = [
-              'DIRECT_OVERFLOW_CANDIDATE',
-              'ASSIGNED_MARKET_WAITLIST',
-              'RECRUITING_PRIORITY',
-              'FUTURE_MARKET',
-              'Partner Application Decisions',
-              'Partner Application Decision',
-              'Partner Application Next Action',
-              'applicationDecision',
-              'window.FreeReliablePartnerRouting',
-              'does not establish coverage or create an SEO page',
-              'PRIMARY_TERRITORY_CANDIDATE',
-              'FAST_SHARED_LEAD_CANDIDATE',
-              'TERRITORY_INTEREST',
-              'SHARED_LEAD_INTEREST',
-              'Partner Preference Tier',
-              'Partner Routing Score',
-              'Shared Lead Interest',
-              'Exclusive Territory Interest',
-              'Partner Routing Summary',
-              'preferenceProfile'
-          ]
+          script=pathlib.Path('assets/partner-routing.js').read_text()
+          page=pathlib.Path('partners/index.html').read_text()
+          required=['DIRECT_OVERFLOW_CANDIDATE','ASSIGNED_MARKET_WAITLIST','RECRUITING_PRIORITY','FUTURE_MARKET','Partner Application Decisions','Partner Application Decision','Partner Application Next Action','applicationDecision','window.FreeReliablePartnerRouting','does not establish coverage or create an SEO page','PRIMARY_TERRITORY_CANDIDATE','FAST_SHARED_LEAD_CANDIDATE','TERRITORY_INTEREST','SHARED_LEAD_INTEREST','Partner Preference Tier','Partner Routing Score','Shared Lead Interest','Exclusive Territory Interest','Partner Routing Summary','preferenceProfile','Partner Capability Profile','Difficult Access Fit','Refrigeration Route Fit','Property Manager Route Fit','operatorType','conditionPreference','crewSize','maxStairs','storageCapacity','notificationPreference','refrigerationCapability','commercialCapability']
           for token in required:
-              if token not in script:
-                  sys.exit(f'missing partner routing safeguard: {token}')
-
-          if 'assets/partner-routing.js' not in page and '../assets/partner-routing.js' not in page:
-              sys.exit('partner page must load partner-routing.js')
-          if 'assets/customer-routing.js' in page or '../assets/customer-routing.js' in page:
-              sys.exit('partner page must not load customer-routing.js')
-          if 'automaticCityPageCreation' in page:
-              sys.exit('partner page must not contain automatic city-page controls')
-
-          competitor_fields = [
-              'Preferred Lead Access Model',
-              'Shared lead alerts',
-              'Exclusive or priority territory interest',
-              'Typical Response Time',
-              'Within 15 minutes',
-              'lead-access and territory options are currently application preferences',
-              'Any paid feature requires separate disclosure and agreement.'
-          ]
+              if token not in script: sys.exit(f'missing partner routing safeguard: {token}')
+          if 'assets/partner-routing.js' not in page and '../assets/partner-routing.js' not in page: sys.exit('partner page must load partner-routing.js')
+          if 'assets/customer-routing.js' in page or '../assets/customer-routing.js' in page: sys.exit('partner page must not load customer-routing.js')
+          if 'automaticCityPageCreation' in page: sys.exit('partner page must not contain automatic city-page controls')
+          competitor_fields=['Preferred Lead Access Model','Shared lead alerts','Exclusive or priority territory interest','Typical Response Time','Within 15 minutes','lead-access and territory options are currently application preferences','Any paid feature requires separate disclosure and agreement.']
           for token in competitor_fields:
-              if token not in page:
-                  sys.exit(f'missing competitor-inspired partner field or disclosure: {token}')
-
-          core_matching_fields = [
-              'Service Radius',
-              'Daily Pickup Capacity',
-              'Inside and Stairs Capability',
-              'Availability',
-              'Appliance Capabilities',
-              'Selected Cities'
-          ]
+              if token not in page: sys.exit(f'missing competitor-inspired partner field or disclosure: {token}')
+          core_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','Selected Cities','Operator Business Type','Condition Preference','Crew Capability','Maximum Stairs Floors','Storage Refurbishment Capacity','Preferred Notification Method','Refrigeration Freezer Capability','Property Manager Commercial Capability','What a Matched Pickup Request Can Include','Contact details remain controlled until the request is assigned through the network.']
           for token in core_matching_fields:
-              if token not in page:
-                  sys.exit(f'missing partner matching field: {token}')
-
-          print('PASS: partner application decisions, preference scoring, lead-access choices and SEO-safety safeguards are protected')
+              if token not in page: sys.exit(f'missing partner matching field: {token}')
+          print('PASS: partner application decisions, capability matching, preference scoring, lead-access choices and SEO-safety safeguards are protected')
           PY
