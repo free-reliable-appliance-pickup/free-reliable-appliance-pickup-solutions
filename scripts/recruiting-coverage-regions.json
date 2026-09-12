@@ -1,0 +1,8 @@
+{
+  "purpose": "SEO safety reference for indexable recruiting hubs. This file is not a service promise.",
+  "rules": {
+    "require_qualification_language": true,
+    "require_coverage_confirmation_language": true,
+    "prohibit_unqualified_guaranteed_service_claims": true
+  }
+}
