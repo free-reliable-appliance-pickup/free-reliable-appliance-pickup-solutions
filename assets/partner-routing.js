@@ -47,6 +47,41 @@
     return { decision: 'FUTURE_MARKET', action: 'Keep as a future-market application; no service coverage or territory is promised by submission.' };
   }
 
+  function preferenceProfile() {
+    const leadModel = String((document.getElementById('leadModel') || {}).value || '').trim();
+    const responseTime = String((document.getElementById('responseTime') || {}).value || '').trim();
+    const radius = String((document.getElementById('radius') || {}).value || '').trim();
+    const capacity = String((document.getElementById('capacity') || {}).value || '').trim();
+    const inside = String((document.getElementById('insidePickup') || {}).value || '').trim();
+    const availability = String((document.getElementById('availability') || {}).value || '').trim();
+
+    const shared = /shared|both/i.test(leadModel);
+    const exclusive = /exclusive|priority|both/i.test(leadModel);
+    const fastResponse = /15 minutes|1 hour/i.test(responseTime);
+    const sameDay = /same day|24 hours/i.test(availability);
+    const highCapacity = /4–5|6\+/i.test(capacity);
+    const broadRadius = /40 miles|50 miles|More than 50 miles/i.test(radius);
+    const insideReady = /Inside pickup/i.test(inside);
+
+    let tier = 'STANDARD_REVIEW';
+    if (exclusive && fastResponse && (highCapacity || broadRadius)) tier = 'PRIMARY_TERRITORY_CANDIDATE';
+    else if (shared && fastResponse) tier = 'FAST_SHARED_LEAD_CANDIDATE';
+    else if (exclusive) tier = 'TERRITORY_INTEREST';
+    else if (shared) tier = 'SHARED_LEAD_INTEREST';
+
+    let score = 0;
+    if (fastResponse) score += 3;
+    else if (/4 hours|Same day/i.test(responseTime)) score += 2;
+    else if (responseTime) score += 1;
+    if (sameDay) score += 2;
+    if (highCapacity) score += 2;
+    if (broadRadius) score += 1;
+    if (insideReady) score += 1;
+    if (shared && exclusive) score += 1;
+
+    return { leadModel, responseTime, radius, capacity, inside, availability, shared, exclusive, tier, score };
+  }
+
   function publicLabel(info) {
     const decision = applicationDecision(info).decision;
     if (decision === 'DIRECT_OVERFLOW_CANDIDATE') return 'Established operation — backup or overflow applications may be reviewed';
@@ -69,6 +104,7 @@
     const selectedInput = document.getElementById('selectedCitiesInput');
     if (!form || !selectedInput) return;
     const raw = String(selectedInput.value || '').split(';').map(v => v.trim()).filter(Boolean);
+    const profile = preferenceProfile();
     const classified = raw.map(item => {
       const comma = item.lastIndexOf(',');
       const city = comma >= 0 ? item.slice(0, comma).trim() : item;
@@ -79,6 +115,11 @@
     });
     ensureHidden(form, 'Selected Market Routing', 'selectedMarketRouting').value = classified.map(x => `${x.city}, ${x.state} | ${x.region} | ${x.status} | ${x.territory_status} | ${x.resolution_level} | ${x.application_decision} | priority ${x.lead_priority}`).join('; ');
     ensureHidden(form, 'Partner Application Decisions', 'partnerApplicationDecisions').value = classified.map(x => `${x.city}, ${x.state}: ${x.application_decision}`).join('; ');
+    ensureHidden(form, 'Partner Preference Tier', 'partnerPreferenceTier').value = profile.tier;
+    ensureHidden(form, 'Partner Routing Score', 'partnerRoutingScore').value = String(profile.score);
+    ensureHidden(form, 'Shared Lead Interest', 'sharedLeadInterest').value = profile.shared ? 'yes' : 'no';
+    ensureHidden(form, 'Exclusive Territory Interest', 'exclusiveTerritoryInterest').value = profile.exclusive ? 'yes' : 'no';
+    ensureHidden(form, 'Partner Routing Summary', 'partnerRoutingSummary').value = `lead=${profile.leadModel || 'unspecified'} | response=${profile.responseTime || 'unspecified'} | radius=${profile.radius || 'unspecified'} | capacity=${profile.capacity || 'unspecified'} | inside=${profile.inside || 'unspecified'} | availability=${profile.availability || 'unspecified'} | tier=${profile.tier} | score=${profile.score}`;
     ensureHidden(form, 'Application Source', 'applicationSource').value = 'Nationwide Partner Page';
     ensureHidden(form, 'Routing Policy', 'routingPolicy').value = 'Application review only; selection does not establish coverage or create an SEO page';
     const summary = document.getElementById('territorySummary');
@@ -123,6 +164,6 @@
     try { const [routingResponse,cityResponse]=await Promise.all([fetch('../data/market-routing.json',{cache:'no-store'}),fetch('../data/cities.json',{cache:'no-store'})]); if(routingResponse.ok)routing=await routingResponse.json(); if(cityResponse.ok)cityCatalog=await cityResponse.json(); } catch (_) {}
     syncCanonicalCityPicker(); classifySelection(); document.dispatchEvent(new CustomEvent('partner-routing-ready'));
   }
-  document.addEventListener('DOMContentLoaded',function(){const form=document.getElementById('partnerForm');if(form)form.addEventListener('submit',classifySelection,true);loadRouting();});
-  window.FreeReliablePartnerRouting={classify:marketFor,label:publicLabel,decision:applicationDecision,refresh:classifySelection,syncCityPicker:syncCanonicalCityPicker};
+  document.addEventListener('DOMContentLoaded',function(){const form=document.getElementById('partnerForm');if(form)form.addEventListener('submit',classifySelection,true);['leadModel','responseTime','radius','capacity','insidePickup','availability'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('change',classifySelection);});loadRouting();});
+  window.FreeReliablePartnerRouting={classify:marketFor,label:publicLabel,decision:applicationDecision,preference:preferenceProfile,refresh:classifySelection,syncCityPicker:syncCanonicalCityPicker};
 })();
