@@ -12,12 +12,12 @@
     if (!routing || !Array.isArray(routing.markets)) return { ...DEFAULT, resolution_level: 'fallback' };
     const stateCode=String(state||'').trim().toUpperCase(), cityName=normalize(city);
     const exact=routing.markets.find(m=>String(m.state_code||'').toUpperCase()===stateCode&&m.city&&normalize(m.city)===cityName);
-    if(exact)return {...exact,resolution_level:'exact-city'};
+    if(exact)return {...exact,resolution_level: 'exact-city'};
     let region=null;
     if(cityCatalog&&Array.isArray(cityCatalog.cities)){const c=cityCatalog.cities.find(x=>String(x.state_code||'').toUpperCase()===stateCode&&normalize(x.city)===cityName);if(c&&c.region)region=c.region;}
-    if(region){const regional=routing.markets.find(m=>String(m.state_code||'').toUpperCase()===stateCode&&!m.city&&normalize(m.region)===normalize(region));if(regional)return {...regional,resolution_level:'regional'};}
-    if(Array.isArray(routing.state_defaults)){const statewide=routing.state_defaults.find(s=>String(s.state_code||'').toUpperCase()===stateCode);if(statewide)return {...statewide,resolution_level:'statewide'};}
-    return {...DEFAULT,state_code:stateCode,city,resolution_level:'fallback'};
+    if(region){const regional=routing.markets.find(m=>String(m.state_code||'').toUpperCase()===stateCode&&!m.city&&normalize(m.region)===normalize(region));if(regional)return {...regional,resolution_level: 'regional'};}
+    if(Array.isArray(routing.state_defaults)){const statewide=routing.state_defaults.find(s=>String(s.state_code||'').toUpperCase()===stateCode);if(statewide)return {...statewide,resolution_level: 'statewide'};}
+    return {...DEFAULT,state_code:stateCode,city,resolution_level: 'fallback'};
   }
 
   function applicationDecision(info) {
