@@ -2,8 +2,13 @@ name: Audit Live Indexability And Link Leaks
 
 on:
   push:
+    branches: [main]
     paths:
+      - '**/index.html'
+      - 'index.html'
+      - 'sitemap.xml'
       - '.github/workflows/audit-live-indexability-and-link-leaks.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,13 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Find active links to non-sitemap appliance location pages
+      - name: Block active links to retired appliance location pages
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
           from urllib.parse import urljoin, urlparse
-          import re, xml.etree.ElementTree as ET
+          import re, sys, xml.etree.ElementTree as ET
 
           BASE='https://freereliableappliancepickup.com/'
           HOST='freereliableappliancepickup.com'
@@ -29,38 +34,58 @@ jobs:
           active=set(active_urls)
           href_re=re.compile(r'href\s*=\s*["\']([^"\']+)["\']',re.I)
 
+          def normalize(url):
+              u=urlparse(url)
+              clean=u._replace(fragment='',query='').geturl()
+              if clean.endswith('/index.html'):
+                  clean=clean[:-10]
+              return clean
+
           def file_for(url):
+              url=normalize(url)
               if url.rstrip('/')==BASE.rstrip('/'):
                   return Path('index.html')
-              if not url.startswith(BASE): return None
-              rel=url[len(BASE):].split('#',1)[0].split('?',1)[0].strip('/')
-              if not rel: return Path('index.html')
+              if not url.startswith(BASE):
+                  return None
+              rel=url[len(BASE):].strip('/')
+              if not rel:
+                  return Path('index.html')
               p=Path(rel)
               return p if p.suffix else p/'index.html'
 
           leaks=set()
           for src in active_urls:
               fp=file_for(src)
-              if not fp or not fp.exists(): continue
+              if not fp or not fp.exists():
+                  continue
               raw=fp.read_text(encoding='utf-8',errors='ignore')
               for href in href_re.findall(raw):
-                  if href.startswith(('#','tel:','mailto:','javascript:','data:')): continue
-                  dest=urljoin(src,href)
+                  href=href.strip()
+                  if not href or href.startswith(('#','tel:','mailto:','javascript:','data:')):
+                      continue
+                  dest=normalize(urljoin(src,href))
                   u=urlparse(dest)
-                  if u.netloc!=HOST: continue
-                  clean=u._replace(fragment='',query='').geturl()
-                  if clean.endswith('/index.html'): clean=clean[:-10]
-                  if clean in active or not clean.startswith(BASE): continue
-                  rel=clean[len(BASE):].strip('/')
-                  if 'appliance-pickup' not in rel: continue
-                  target=file_for(clean)
-                  if not target or not target.exists(): continue
-                  t=target.read_text(encoding='utf-8',errors='ignore')
-                  noindex=bool(re.search(r'<meta\s+name=["\']robots["\'][^>]*noindex',t,re.I))
-                  leaks.add((src,clean,noindex))
+                  if u.netloc!=HOST or dest in active or not dest.startswith(BASE):
+                      continue
+                  rel=dest[len(BASE):].strip('/')
+                  # This guard is intentionally limited to retired location-style pages.
+                  # Useful noindex guides may remain linked with noindex,follow.
+                  if 'appliance-pickup' not in rel:
+                      continue
+                  target=file_for(dest)
+                  if not target or not target.exists():
+                      continue
+                  text=target.read_text(encoding='utf-8',errors='ignore')
+                  noindex=bool(re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*noindex',text,re.I))
+                  leaks.add((src,dest,noindex))
 
-          print('ACTIVE_LINKS_TO_NON_SITEMAP_APPLIANCE_PAGES',len(leaks))
-          print('OF_THOSE_NOINDEX',sum(1 for x in leaks if x[2]))
+          print('ACTIVE_LINKS_TO_NON_SITEMAP_APPLIANCE_LOCATION_PAGES',len(leaks))
           for src,dst,noindex in sorted(leaks):
-              print('CITY_LEAK','noindex='+str(noindex),src,'->',dst)
+              print('RETIRED_LOCATION_LINK','noindex='+str(noindex),src,'->',dst)
+
+          if leaks:
+              print('ERROR: approved/indexable pages link to retired or non-sitemap appliance location pages.')
+              sys.exit(1)
+
+          print('PASS: no active links to retired/non-sitemap appliance location pages.')
           PY
