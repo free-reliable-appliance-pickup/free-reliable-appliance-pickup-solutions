@@ -31,6 +31,11 @@ jobs:
             'portland-appliance-pickup','salem-appliance-pickup',
             'denver-appliance-pickup','aurora-appliance-pickup'
           }
+          # Informational guides can legitimately end in -appliance-pickup without
+          # being geographic doorway pages. Never classify these as location pages.
+          INFORMATIONAL={
+            'landlord-property-manager-appliance-pickup'
+          }
           RECRUITING={
             'inland-empire-appliance-pickup','orange-county-appliance-pickup',
             'riverside-county-appliance-pickup','los-angeles-county-appliance-pickup',
@@ -44,7 +49,7 @@ jobs:
           noindexed=[]
           for p in Path('.').glob('*/index.html'):
               slug=p.parent.name
-              if not slug.endswith('-appliance-pickup') or slug in KEEP:
+              if not slug.endswith('-appliance-pickup') or slug in KEEP or slug in INFORMATIONAL:
                   continue
 
               s=p.read_text(encoding='utf-8',errors='ignore')
