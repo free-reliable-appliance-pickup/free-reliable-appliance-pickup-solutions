@@ -6,6 +6,8 @@ on:
   push:
     paths:
       - '.github/workflows/verify-active-content-quality.yml'
+      - 'sitemap.xml'
+      - '**-appliance-pickup/index.html'
 
 permissions:
   contents: read
@@ -23,6 +25,7 @@ jobs:
           import re, html, itertools, xml.etree.ElementTree as ET
 
           BASE='https://freereliableappliancepickup.com/'
+          INFORMATIONAL={'landlord-property-manager-appliance-pickup'}
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           active=[]
@@ -31,7 +34,9 @@ jobs:
               u=el.text.strip()
               if u.startswith(BASE):
                   slug=u[len(BASE):].strip('/')
-                  if slug and 'appliance-pickup' in slug and (Path(slug)/'index.html').exists():
+                  if slug in INFORMATIONAL:
+                      continue
+                  if slug and slug.endswith('-appliance-pickup') and (Path(slug)/'index.html').exists():
                       active.append(slug)
 
           def visible_words(raw, core=False):
@@ -72,6 +77,10 @@ jobs:
           print('NOINDEX_ACTIVE',sum(r['noindex'] for r in rows))
           print('UNDER_350_TOTAL_WORDS',sum(r['words']<350 for r in rows))
           print('UNDER_300_CORE_WORDS',sum(r['core_words']<300 for r in rows))
+
+          if any(r['noindex'] for r in rows):
+              bad=[r['slug'] for r in rows if r['noindex']]
+              raise SystemExit(f'Indexable sitemap market pages must not be noindex: {bad}')
 
           pairs=[]
           for a,b in itertools.combinations(rows,2):
