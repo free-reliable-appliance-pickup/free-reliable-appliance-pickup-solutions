@@ -94,6 +94,35 @@ jobs:
                   p.write_text(s,encoding='utf-8')
                   unlinked.append(str(p))
 
+          # Keep homepage language and structured data aligned with the operational
+          # routing model. Regional numbers route requests; they do not by themselves
+          # prove established direct service throughout every named recruiting region.
+          homepage=Path('index.html')
+          if homepage.exists():
+              s=homepage.read_text(encoding='utf-8',errors='ignore')
+              old=s
+              s=s.replace(
+                '<p>Priority markets use regional phone numbers and local service pages so customers can submit appliance condition, photos, city or ZIP code and access information to the correct coverage area.</p>',
+                '<p>Priority markets use regional request routing and coverage resources so customers can submit appliance condition, photos, city or ZIP code and access information for the correct review path.</p>'
+              )
+              s=s.replace(
+                '<p>Find your regional contact and pickup information below. Availability depends on your city, appliance condition and the local team’s current route.</p>',
+                '<p>Find regional request-routing information below. Established local operations are identified separately; other priority regions remain subject to partner availability and request review.</p>'
+              )
+              s=s.replace(
+                '<!-- Southern California coverage --><section id="southern-california"><h2>Southern California Appliance Pickup Areas</h2><p>Browse San Bernardino County, Inland Empire, Riverside County, Orange County, San Gabriel Valley and Los Angeles County service hubs.</p>',
+                '<!-- Southern California coverage --><section id="southern-california"><h2>Southern California Appliance Pickup Request Areas</h2><p>These Southern California regions are part of our request-routing network. Listing a region does not mean direct pickup is established in every city; availability is confirmed after review.</p>'
+              )
+              # Remove region-specific areaServed claims from contactPoint schema.
+              # The organization-level U.S. areaServed remains accurate for nationwide request intake.
+              s=re.sub(
+                r'\{"@type":"ContactPoint","contactType":"customer service","telephone":"(\+1-[0-9-]+)","areaServed":\[[^\]]*\]\}',
+                r'{"@type":"ContactPoint","contactType":"pickup request routing","telephone":"\1"}',
+                s
+              )
+              if s!=old:
+                  homepage.write_text(s,encoding='utf-8')
+
           print('NOINDEXED_LOCATION_PAGES',len(noindexed))
           print('\n'.join(noindexed))
           print('UNLINKED_INDEXABLE_PAGES',len(unlinked))
@@ -106,5 +135,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- '*.html' '*/*.html' || true
           if git diff --cached --quiet; then echo 'No changes needed'; exit 0; fi
-          git commit -m "Reduce doorway-page footprint and remove recruiting links"
+          git commit -m "Reduce doorway-page footprint and tighten coverage claims"
           git push
