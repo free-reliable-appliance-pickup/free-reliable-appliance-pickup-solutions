@@ -21,20 +21,13 @@ jobs:
           from pathlib import Path
           import re
 
-          # Keep broad state/region pages and the few core city markets with
-          # substantial, market-specific content and real operating coverage.
-          # Everything else matching *-appliance-pickup remains consolidated/noindex.
+          # Keep broad state hubs plus only the few city markets with established
+          # direct operating coverage. Recruiting/request-only regions stay useful
+          # for users but remain noindex until coverage is actually established.
           KEEP={
             'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
             'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
             'utah-appliance-pickup','idaho-appliance-pickup',
-            'inland-empire-appliance-pickup','orange-county-appliance-pickup',
-            'riverside-county-appliance-pickup','los-angeles-county-appliance-pickup',
-            'central-coast-appliance-pickup','central-valley-appliance-pickup',
-            'san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup',
-            'phoenix-metro-appliance-pickup','las-vegas-valley-appliance-pickup',
-            'puget-sound-appliance-pickup','treasure-valley-appliance-pickup',
-            'wasatch-front-appliance-pickup',
             'portland-appliance-pickup','salem-appliance-pickup',
             'denver-appliance-pickup','aurora-appliance-pickup'
           }
