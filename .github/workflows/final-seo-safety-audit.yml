@@ -26,118 +26,50 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re, sys
-
           base='https://freereliableappliancepickup.com/'
-
-          approved_locations={
-              'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
-              'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
-              'utah-appliance-pickup','idaho-appliance-pickup',
-              'portland-appliance-pickup','salem-appliance-pickup',
-              'denver-appliance-pickup','aurora-appliance-pickup',
-              'inland-empire-appliance-pickup','los-angeles-county-appliance-pickup',
-              'riverside-county-appliance-pickup','orange-county-appliance-pickup',
-              'san-diego-county-appliance-pickup'
-          }
-          recruiting_noindex_locations={
-              'central-coast-appliance-pickup','central-valley-appliance-pickup',
-              'sf-bay-area-appliance-pickup',
-              'phoenix-metro-appliance-pickup','las-vegas-valley-appliance-pickup',
-              'puget-sound-appliance-pickup','treasure-valley-appliance-pickup',
-              'wasatch-front-appliance-pickup'
-          }
-          approved_nonlocation={
-              '', 'about', 'appliance-pickup-checklist', 'contact',
-              'free-pickup-qualification', 'freezer-pickup',
-              'how-appliance-pickup-works', 'landlord-property-manager-appliance-pickup',
-              'old-appliance-disposal-options', 'partners', 'refrigerator-pickup',
-              'service-areas', 'stove-oven-pickup', 'washer-dryer-pickup'
-          }
-          approved_indexable_paths=approved_locations | approved_nonlocation
-
+          approved_locations={'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup','arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup','utah-appliance-pickup','idaho-appliance-pickup','portland-appliance-pickup','salem-appliance-pickup','denver-appliance-pickup','aurora-appliance-pickup','inland-empire-appliance-pickup','los-angeles-county-appliance-pickup','riverside-county-appliance-pickup','orange-county-appliance-pickup','san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup'}
+          recruiting_noindex_locations={'central-coast-appliance-pickup','central-valley-appliance-pickup','phoenix-metro-appliance-pickup','las-vegas-valley-appliance-pickup','puget-sound-appliance-pickup','treasure-valley-appliance-pickup','wasatch-front-appliance-pickup'}
+          approved_nonlocation={'','about','appliance-pickup-checklist','contact','free-pickup-qualification','freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup','old-appliance-disposal-options','partners','refrigerator-pickup','service-areas','stove-oven-pickup','washer-dryer-pickup'}
+          approved_indexable_paths=approved_locations|approved_nonlocation
           errors=[]
           html=list(Path('.').glob('**/index.html'))+[Path('index.html')]
           html=list(dict.fromkeys(p for p in html if p.exists() and '.git' not in p.parts and '.github' not in p.parts))
           indexable=[]
-
           for p in html:
-              s=p.read_text(encoding='utf-8',errors='ignore')
-              low=s.lower()
-              rel='' if str(p)=='index.html' else str(p.parent).replace('\\','/').strip('/')
-              is_indexable='noindex' not in low
-
-              if rel in recruiting_noindex_locations and is_indexable:
-                  errors.append(f'RECRUITING LOCATION MUST BE NOINDEX {p}')
-
-              if not is_indexable:
-                  continue
-
+              s=p.read_text(encoding='utf-8',errors='ignore'); low=s.lower(); rel='' if str(p)=='index.html' else str(p.parent).replace('\\','/').strip('/'); is_indexable='noindex' not in low
+              if rel in recruiting_noindex_locations and is_indexable: errors.append(f'RECRUITING LOCATION MUST BE NOINDEX {p}')
+              if not is_indexable: continue
               indexable.append(p)
-              if rel not in approved_indexable_paths:
-                  errors.append(f'UNAPPROVED INDEXABLE PATH {p} ({rel})')
-
+              if rel not in approved_indexable_paths: errors.append(f'UNAPPROVED INDEXABLE PATH {p} ({rel})')
               slug='' if str(p)=='index.html' else p.parent.name
-              if slug.endswith('-appliance-pickup') and slug not in approved_locations and slug not in approved_nonlocation:
-                  errors.append(f'UNAPPROVED INDEXABLE LOCATION {p}')
-
+              if slug.endswith('-appliance-pickup') and slug not in approved_locations and slug not in approved_nonlocation: errors.append(f'UNAPPROVED INDEXABLE LOCATION {p}')
               c=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',s,re.I)
-              if not c:
-                  errors.append(f'MISSING CANONICAL {p}')
-              elif not c[0].startswith(base):
-                  errors.append(f'BAD CANONICAL {p}: {c[0]}')
-              if '<title>' not in low:
-                  errors.append(f'MISSING TITLE {p}')
-              if '<h1' not in low:
-                  errors.append(f'MISSING H1 {p}')
-
+              if not c: errors.append(f'MISSING CANONICAL {p}')
+              elif not c[0].startswith(base): errors.append(f'BAD CANONICAL {p}: {c[0]}')
+              if '<title>' not in low: errors.append(f'MISSING TITLE {p}')
+              if '<h1' not in low: errors.append(f'MISSING H1 {p}')
           for slug in sorted(approved_locations):
               p=Path(slug)/'index.html'
-              if not p.exists():
-                  errors.append(f'APPROVED LOCATION MISSING {p}')
-                  continue
-              if 'noindex' in p.read_text(encoding='utf-8',errors='ignore').lower():
-                  errors.append(f'APPROVED LOCATION NOINDEX {p}')
-
+              if not p.exists(): errors.append(f'APPROVED LOCATION MISSING {p}'); continue
+              if 'noindex' in p.read_text(encoding='utf-8',errors='ignore').lower(): errors.append(f'APPROVED LOCATION NOINDEX {p}')
           for slug in sorted(recruiting_noindex_locations):
               p=Path(slug)/'index.html'
-              if not p.exists():
-                  continue
-              if 'noindex' not in p.read_text(encoding='utf-8',errors='ignore').lower():
-                  errors.append(f'RECRUITING LOCATION INDEXABLE {p}')
-
-          sitemap=Path('sitemap.xml').read_text(encoding='utf-8',errors='ignore')
-          locs=set(re.findall(r'<loc>(.*?)</loc>',sitemap))
+              if p.exists() and 'noindex' not in p.read_text(encoding='utf-8',errors='ignore').lower(): errors.append(f'RECRUITING LOCATION INDEXABLE {p}')
+          sitemap=Path('sitemap.xml').read_text(encoding='utf-8',errors='ignore'); locs=set(re.findall(r'<loc>(.*?)</loc>',sitemap))
           for p in indexable:
               rel='' if str(p)=='index.html' else str(p.parent).replace('\\','/')+'/'
               url=base+rel
-              if url not in locs:
-                  errors.append(f'INDEXABLE NOT IN SITEMAP {p} -> {url}')
-
+              if url not in locs: errors.append(f'INDEXABLE NOT IN SITEMAP {p} -> {url}')
           for url in sorted(locs):
-              if not url.startswith(base):
-                  errors.append(f'FOREIGN SITEMAP URL {url}')
-                  continue
+              if not url.startswith(base): errors.append(f'FOREIGN SITEMAP URL {url}'); continue
               rel=url[len(base):].strip('/')
-              if rel not in approved_indexable_paths:
-                  errors.append(f'UNAPPROVED SITEMAP URL {url}')
-
-          retired=[
-              'palm-desert-appliance-pickup','palm-springs-appliance-pickup',
-              'rancho-mirage-appliance-pickup','indian-wells-appliance-pickup',
-              'la-quinta-appliance-pickup','cathedral-city-appliance-pickup',
-              'indio-appliance-pickup','keizer-appliance-pickup',
-              'stockton-appliance-pickup','wheat-ridge'
-          ]
+              if rel not in approved_indexable_paths: errors.append(f'UNAPPROVED SITEMAP URL {url}')
+          retired=['palm-desert-appliance-pickup','palm-springs-appliance-pickup','rancho-mirage-appliance-pickup','indian-wells-appliance-pickup','la-quinta-appliance-pickup','cathedral-city-appliance-pickup','indio-appliance-pickup','keizer-appliance-pickup','stockton-appliance-pickup','wheat-ridge']
           for p in indexable:
               s=p.read_text(encoding='utf-8',errors='ignore').lower()
               for r in retired:
-                  if ('href="/'+r+'/' in s or "href='/"+r+"/" in s or
-                      'href="../'+r+'/' in s or "href='../"+r+"/" in s):
-                      errors.append(f'RETIRED LINK LEAK {p}: {r}')
-
+                  if ('href="/'+r+'/' in s or "href='/"+r+"/" in s or 'href="../'+r+'/' in s or "href='../"+r+"/" in s): errors.append(f'RETIRED LINK LEAK {p}: {r}')
           if errors:
-              print('\n'.join(errors))
-              sys.exit(1)
-
+              print('\n'.join(errors)); sys.exit(1)
           print(f'PASS: {len(indexable)} indexable HTML pages checked; exact allowlist, controlled recruiting-location noindex guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
           PY
