@@ -28,13 +28,21 @@ function stateCode(value){
 function classify(city,state){
   const sc=stateCode(state),cn=n(city);
   if(!routing||!Array.isArray(routing.markets))return {...FALLBACK,state_code:sc,city,resolution_level:'fallback'};
+
+  /* Exact city routes always win. */
+  const exact=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&m.city&&n(m.city)===cn);
+  if(exact)return {...exact,resolution_level:'exact-city'};
+
+  /* Regional landing-page forms sometimes submit a region/county label in the city field.
+     Match that label directly to the canonical regional route before falling back statewide. */
+  const namedRegion=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&!m.city&&n(m.region)===cn);
+  if(namedRegion)return {...namedRegion,resolution_level:'regional'};
+
   let region=null;
   if(cities&&Array.isArray(cities.cities)){
     const c=cities.cities.find(x=>stateCode(x.state_code||x.state)===sc&&n(x.city)===cn);
     if(c)region=c.region||null;
   }
-  const exact=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&m.city&&n(m.city)===cn);
-  if(exact)return {...exact,resolution_level:'exact-city'};
   if(region){
     const m=routing.markets.find(x=>stateCode(x.state_code||x.state)===sc&&!x.city&&n(x.region)===n(region));
     if(m)return {...m,resolution_level:'regional'};
