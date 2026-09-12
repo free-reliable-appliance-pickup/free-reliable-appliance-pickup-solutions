@@ -48,5 +48,30 @@ jobs:
           if 'automaticCityPageCreation' in page:
               sys.exit('partner page must not contain automatic city-page controls')
 
-          print('PASS: partner application decisions and SEO-safety routing safeguards are protected')
+          competitor_fields = [
+              'Preferred Lead Access Model',
+              'Shared lead alerts',
+              'Exclusive or priority territory interest',
+              'Typical Response Time',
+              'Within 15 minutes',
+              'lead-access and territory options are currently application preferences',
+              'Any paid feature requires separate disclosure and agreement.'
+          ]
+          for token in competitor_fields:
+              if token not in page:
+                  sys.exit(f'missing competitor-inspired partner field or disclosure: {token}')
+
+          core_matching_fields = [
+              'Service Radius',
+              'Daily Pickup Capacity',
+              'Inside and Stairs Capability',
+              'Availability',
+              'Appliance Capabilities',
+              'Selected Cities'
+          ]
+          for token in core_matching_fields:
+              if token not in page:
+                  sys.exit(f'missing partner matching field: {token}')
+
+          print('PASS: partner application decisions, lead-access preferences and SEO-safety routing safeguards are protected')
           PY
