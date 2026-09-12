@@ -1,25 +1,75 @@
 {
-  "version": "2026-09-11",
-  "purpose": "Internal territory pricing framework. Prices are not public offers and must be approved before a partner is charged or assigned a market.",
+  "version": "2026-09-11.2",
+  "purpose": "Internal partner monetization framework for shared lead access and territory subscriptions. This file does not publish prices, establish coverage, reserve a territory, or create public SEO pages.",
   "currency": "USD",
-  "billing": "monthly",
   "rules": {
     "defaultPricingStatus": "collect_data",
     "directMarketsForSale": false,
     "priceRequiresManualApproval": true,
     "selectionDoesNotReserveTerritory": true,
-    "paymentDoesNotCreateSEOPage": true
+    "paymentDoesNotCreateSeoPage": true,
+    "paymentDoesNotChangeIndexability": true,
+    "paymentDoesNotEstablishCoverage": true,
+    "applicationDoesNotCreatePaidAccess": true,
+    "paidAccessRequiresSeparateDisclosureAndAgreement": true,
+    "publicPricePublicationRequiredBeforeCharge": false,
+    "automaticCityPageCreation": false
   },
   "pricingStatuses": {
     "not_for_sale": "Protected direct-operation territory.",
-    "collect_data": "Gather lead volume and market performance before setting price.",
+    "collect_data": "Gather lead volume and market performance before setting any offer.",
     "review": "Pricing under manual review.",
-    "available": "Approved for partner subscription offer.",
-    "assigned": "Territory currently assigned."
+    "available": "Commercial terms may be offered after separate disclosure and agreement.",
+    "assigned": "Commercial access has been explicitly approved for an eligible partner."
   },
-  "planningRangeCents": {
-    "minimum": 20000,
-    "maximum": 40000
+  "accessPricingModels": {
+    "shared_per_lead": {
+      "label": "Shared lead access",
+      "billing_unit": "per-lead",
+      "enabled": false,
+      "price_cents": null,
+      "requiresApprovedPartner": true,
+      "requiresSeparateAgreement": true,
+      "guaranteesLeadVolume": false,
+      "guaranteesExclusivity": false,
+      "createsSeoPage": false,
+      "changesMarketIndexability": false
+    },
+    "primary_monthly": {
+      "label": "Primary territory subscription",
+      "billing_unit": "monthly",
+      "enabled": false,
+      "price_cents": null,
+      "requiresApprovedPartner": true,
+      "requiresActiveTerritoryAssignment": true,
+      "requiresSeparateAgreement": true,
+      "guaranteesLeadVolume": false,
+      "guaranteesExclusivity": false,
+      "createsSeoPage": false,
+      "changesMarketIndexability": false
+    },
+    "backup_monthly": {
+      "label": "Backup or overflow territory access",
+      "billing_unit": "monthly",
+      "enabled": false,
+      "price_cents": null,
+      "requiresApprovedPartner": true,
+      "requiresActiveTerritoryAssignment": true,
+      "requiresSeparateAgreement": true,
+      "guaranteesLeadVolume": false,
+      "guaranteesExclusivity": false,
+      "createsSeoPage": false,
+      "changesMarketIndexability": false
+    }
+  },
+  "planning": {
+    "territorySubscriptionRangeCents": {
+      "minimum": 20000,
+      "maximum": 40000,
+      "status": "internal-planning-only"
+    },
+    "sharedLeadPriceCents": null,
+    "sharedLeadPricingStatus": "collect_data"
   },
   "markets": []
 }
