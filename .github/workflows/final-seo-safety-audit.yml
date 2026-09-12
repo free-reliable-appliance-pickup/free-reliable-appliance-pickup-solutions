@@ -9,6 +9,7 @@ on:
       - 'index.html'
       - 'sitemap.xml'
       - 'robots.txt'
+      - 'data/market-routing.json'
       - '.github/workflows/final-seo-safety-audit.yml'
   workflow_dispatch:
 
@@ -20,11 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Audit indexable pages, approved markets, canonicals, sitemap and retired-link leaks
+      - name: Audit indexable pages, approved markets, canonicals, sitemap, coverage claims and retired-link leaks
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re, sys
+          import json, re, sys
 
           base='https://freereliableappliancepickup.com/'
           approved_locations={
@@ -50,10 +51,34 @@ jobs:
           }
           approved_indexable_paths=approved_locations | approved_nonlocation
 
+          routing=json.loads(Path('data/market-routing.json').read_text(encoding='utf-8'))
+          recruiting_regions={
+              str(r.get('region','')).strip().lower()
+              for r in routing.get('markets',[])
+              if r.get('status')=='partner-recruiting'
+          }
+          state_names={
+              'alabama':'AL','alaska':'AK','arizona':'AZ','arkansas':'AR','california':'CA','colorado':'CO','connecticut':'CT','delaware':'DE','florida':'FL','georgia':'GA','hawaii':'HI','idaho':'ID','illinois':'IL','indiana':'IN','iowa':'IA','kansas':'KS','kentucky':'KY','louisiana':'LA','maine':'ME','maryland':'MD','massachusetts':'MA','michigan':'MI','minnesota':'MN','mississippi':'MS','missouri':'MO','montana':'MT','nebraska':'NE','nevada':'NV','new-hampshire':'NH','new-jersey':'NJ','new-mexico':'NM','new-york':'NY','north-carolina':'NC','north-dakota':'ND','ohio':'OH','oklahoma':'OK','oregon':'OR','pennsylvania':'PA','rhode-island':'RI','south-carolina':'SC','south-dakota':'SD','tennessee':'TN','texas':'TX','utah':'UT','vermont':'VT','virginia':'VA','washington':'WA','west-virginia':'WV','wisconsin':'WI','wyoming':'WY'
+          }
+          recruiting_states={
+              str(r.get('state_code','')).upper()
+              for r in routing.get('state_defaults',[])
+              if r.get('status')=='partner-recruiting'
+          }
+
           errors=[]
           html=list(Path('.').glob('**/index.html'))+[Path('index.html')]
           html=list(dict.fromkeys(p for p in html if p.exists() and '.git' not in p.parts and '.github' not in p.parts))
           indexable=[]
+
+          safe_coverage_terms=(
+              'request','review','availability','coverage','confirm','confirmed','partner',
+              'not guaranteed','qualification','qualifying','subject to','recruit'
+          )
+          risky_claims=(
+              r'\bwe serve\b', r'\bwe service\b', r'\bfree pickup throughout\b',
+              r'\bfree pickup across\b', r'\bavailable throughout\b', r'\bavailable across\b'
+          )
 
           for p in html:
               s=p.read_text(encoding='utf-8',errors='ignore')
@@ -62,8 +87,6 @@ jobs:
                   indexable.append(p)
                   rel='' if str(p)=='index.html' else str(p.parent).replace('\\','/').strip('/')
 
-                  # Exact allowlist guard. This blocks accidental scaled city/location pages,
-                  # including nested paths that do not end in -appliance-pickup.
                   if rel not in approved_indexable_paths:
                       errors.append(f'UNAPPROVED INDEXABLE PATH {p} ({rel})')
 
@@ -80,7 +103,21 @@ jobs:
                   if '<h1' not in low:
                       errors.append(f'MISSING H1 {p}')
 
-          # Every approved active market must exist and stay indexable.
+                  # Recruiting hubs may be useful/indexable, but must not read like guaranteed local service pages.
+                  is_recruiting_hub=False
+                  if rel.endswith('-appliance-pickup'):
+                      root=rel[:-len('-appliance-pickup')]
+                      if root in state_names and state_names[root] in recruiting_states:
+                          is_recruiting_hub=True
+                      if root.replace('-',' ') in recruiting_regions:
+                          is_recruiting_hub=True
+                  if is_recruiting_hub:
+                      if not any(term in low for term in safe_coverage_terms):
+                          errors.append(f'RECRUITING HUB MISSING COVERAGE QUALIFIER {p}')
+                      for pat in risky_claims:
+                          if re.search(pat,low) and not any(term in low for term in ('subject to','confirm','confirmed','availability','not guaranteed')):
+                              errors.append(f'RECRUITING HUB OVERPROMISE RISK {p}: {pat}')
+
           for slug in sorted(approved_locations):
               p=Path(slug)/'index.html'
               if not p.exists():
@@ -97,7 +134,6 @@ jobs:
               if url not in locs:
                   errors.append(f'INDEXABLE NOT IN SITEMAP {p} -> {url}')
 
-          # The sitemap itself must not contain any URL outside the same approved set.
           for url in sorted(locs):
               if not url.startswith(base):
                   errors.append(f'FOREIGN SITEMAP URL {url}')
@@ -124,5 +160,5 @@ jobs:
               print('\n'.join(errors))
               sys.exit(1)
 
-          print(f'PASS: {len(indexable)} indexable HTML pages checked; exact allowlist, approved-market guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
+          print(f'PASS: {len(indexable)} indexable HTML pages checked; exact allowlist, routing-aware recruiting-hub coverage language, approved-market guard, sitemap, canonicals, titles, H1s and retired-link checks clean')
           PY
