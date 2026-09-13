@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "purpose": "Non-payment nationwide intake routing and activity tracking",
+  "payment_enabled": false,
+  "buyer_charging_enabled": false,
+  "priority_states": [
+    "CA",
+    "OR",
+    "WA",
+    "CO"
+  ],
+  "default_state_status": "NEW_MARKET",
+  "priority_state_status": "PRIORITY",
+  "notes": [
+    "Priority means the request should be reviewed first because current owner/partner coverage exists or is being actively handled.",
+    "New Market means the request should still be accepted and measured so future territory demand can be evaluated.",
+    "This file does not promise pickup availability and does not create paid territories.",
+    "Payment processors, subscriptions, buyer charges and territory sales remain disabled until the business proves demand."
+  ]
+}
