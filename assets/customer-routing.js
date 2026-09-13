@@ -135,18 +135,30 @@ function wireForm(form){
   },true);
 }
 
-/* If a page has its own pickup form, keep request buttons on that page instead of
-   sending the customer back to the homepage form. Pages without a local form keep
-   their normal homepage request link. */
+function isCustomerPickupForm(form){
+  return !!(findField(form,['city','City','pickup_city'])&&findField(form,['state','State','pickup_state'])&&findField(form,['appliance','Appliance','Appliance Type']));
+}
+
+/* Keep request buttons on the current market page whenever that page already has
+   a real customer pickup form. Older pages may use #pickup while newer pages use
+   #request, so resolve the actual form section instead of assuming one anchor. */
 function preferLocalRequestForm(){
-  if(!document.getElementById('request'))return;
+  const forms=Array.from(document.querySelectorAll('form[action*="formspree.io"]'));
+  const form=forms.find(isCustomerPickupForm);
+  if(!form)return;
+
+  let target=form.closest('section');
+  if(!target)target=form;
+  if(!target.id)target.id='request';
+  const localHref='#'+target.id;
+
   const selectors=[
     'a[href="/#request"]',
     'a[href="../#request"]',
     'a[href="./#request"]',
     'a[href="https://freereliableappliancepickup.com/#request"]'
   ];
-  document.querySelectorAll(selectors.join(',')).forEach(link=>link.setAttribute('href','#request'));
+  document.querySelectorAll(selectors.join(',')).forEach(link=>link.setAttribute('href',localHref));
 }
 
 load();
@@ -154,8 +166,7 @@ load();
 document.addEventListener('DOMContentLoaded',()=>{
   preferLocalRequestForm();
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
-    const hasCustomerFields=findField(form,['city','City','pickup_city'])&&findField(form,['state','State','pickup_state'])&&findField(form,['appliance','Appliance','Appliance Type']);
-    if(hasCustomerFields)wireForm(form);
+    if(isCustomerPickupForm(form))wireForm(form);
   });
 });
 
