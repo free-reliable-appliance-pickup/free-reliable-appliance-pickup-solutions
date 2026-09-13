@@ -41,6 +41,9 @@
   <url>
     <loc>https://freereliableappliancepickup.com/california-appliance-pickup/</loc>
     <lastmod>2026-09-12</lastmod>
+    <image:image>
+      <image:loc>https://freereliableappliancepickup.com/assets/major-appliance-pickup-photo-1.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://freereliableappliancepickup.com/central-coast-appliance-pickup/</loc>
@@ -206,5 +209,8 @@
   <url>
     <loc>https://freereliableappliancepickup.com/washington-appliance-pickup/</loc>
     <lastmod>2026-09-12</lastmod>
+    <image:image>
+      <image:loc>https://freereliableappliancepickup.com/assets/major-appliance-pickup-photo-3.jpg</image:loc>
+    </image:image>
   </url>
 </urlset>
