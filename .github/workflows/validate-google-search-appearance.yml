@@ -1,0 +1,107 @@
+name: Validate Google Search Appearance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - '**/index.html'
+      - 'sitemap.xml'
+      - 'assets/**'
+      - '.github/workflows/validate-google-search-appearance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify every active indexable page has text-result and image-result signals
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, sys, xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          root=ET.parse('sitemap.xml').getroot()
+          urls=[x.text.strip() for x in root.findall('.//s:loc',ns) if x.text]
+
+          failures=[]
+          checked=0
+          market_checked=0
+
+          def file_for(url):
+              if url==BASE:
+                  return Path('index.html')
+              slug=url[len(BASE):].strip('/')
+              return Path(slug)/'index.html'
+
+          def has(raw, pattern):
+              return bool(re.search(pattern, raw, re.I|re.S))
+
+          for url in urls:
+              if not url.startswith(BASE):
+                  failures.append(f'NON-CANONICAL DOMAIN IN SITEMAP: {url}')
+                  continue
+              p=file_for(url)
+              if not p.exists():
+                  failures.append(f'MISSING ACTIVE PAGE: {p}')
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              low=raw.lower()
+              checked += 1
+
+              checks={
+                  'title': has(raw,r'<title>[^<]{8,}</title>'),
+                  'meta description': has(raw,r'<meta\b[^>]*name=["\']description["\'][^>]*content=["\'][^"\']{40,}["\']'),
+                  'indexable robots': has(raw,r'<meta\b[^>]*name=["\']robots["\'][^>]*content=["\'][^"\']*index[^"\']*follow'),
+                  'large image preview': 'max-image-preview:large' in low,
+                  'canonical': has(raw,r'<link\b[^>]*rel=["\']canonical["\'][^>]*href=["\']https://freereliableappliancepickup\.com/'),
+                  'favicon': has(raw,r'<link\b[^>]*rel=["\'](?:shortcut\s+)?icon["\']'),
+                  'og site name': 'property="og:site_name"' in low or "property='og:site_name'" in low,
+                  'og url': 'property="og:url"' in low or "property='og:url'" in low,
+                  'og title': 'property="og:title"' in low or "property='og:title'" in low,
+                  'og description': 'property="og:description"' in low or "property='og:description'" in low,
+                  'twitter large image card': 'summary_large_image' in low,
+                  'WebPage structured data': '"@type":"webpage"' in low or '"@type": "webpage"' in low,
+                  'website relationship': '#website' in low,
+              }
+              for label,ok in checks.items():
+                  if not ok:
+                      failures.append(f'{p}: missing {label}')
+
+              # All active appliance-pickup market pages should also carry the shared brand,
+              # a page image, and breadcrumb/service context so Google can understand both
+              # the normal text result and visual/image result.
+              slug='' if url==BASE else url[len(BASE):].strip('/')
+              if slug.endswith('-appliance-pickup'):
+                  market_checked += 1
+                  if 'site-brand.css' not in low:
+                      failures.append(f'{p}: missing shared nationwide brand CSS')
+                  if 'og:image' not in low:
+                      failures.append(f'{p}: missing og:image')
+                  if 'breadcrumb' not in low:
+                      failures.append(f'{p}: missing breadcrumb context')
+                  if 'noindex' in low:
+                      failures.append(f'{p}: active market page contains noindex')
+
+          home=Path('index.html').read_text(encoding='utf-8',errors='ignore').lower()
+          if '"@type":"website"' not in home and '"@type": "website"' not in home:
+              failures.append('index.html: missing WebSite structured data for Google site-name eligibility')
+          if '"@type":"organization"' not in home and '"@type": "organization"' not in home:
+              failures.append('index.html: missing Organization structured data')
+
+          print('ACTIVE_SITEMAP_PAGES_CHECKED',checked)
+          print('ACTIVE_MARKET_PAGES_CHECKED',market_checked)
+          if failures:
+              print('\nSEARCH_APPEARANCE_FAILURES')
+              for f in failures:
+                  print('-',f)
+              sys.exit(1)
+          print('\nPASS: all active sitemap pages have a consistent Google text-result foundation; active market pages also have image-result and nationwide-brand signals.')
+          PY
