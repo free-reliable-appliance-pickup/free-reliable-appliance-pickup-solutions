@@ -1,4 +1,5 @@
 name: Strengthen Salem Ranking Foundation
+# One-time SEO foundation update for the Salem test market.
 
 on:
   push:
@@ -25,9 +26,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           python3 - <<'PY'
           from pathlib import Path
-          import re
-
-          BASE = 'https://freereliableappliancepickup.com/'
 
           def read(path):
               return Path(path).read_text(encoding='utf-8')
@@ -35,7 +33,6 @@ jobs:
           def write(path, text):
               Path(path).write_text(text, encoding='utf-8')
 
-          # 1) Strengthen the Salem page around the exact local intent already earning visibility.
           path = 'salem-appliance-pickup/index.html'
           s = read(path)
           old_title = 'Free Appliance Pickup Salem OR | Appliance Removal'
@@ -57,7 +54,6 @@ jobs:
                   s = s.replace('<section id="request">', neighborhood_section + '<section id="request">', 1)
           write(path, s)
 
-          # 2) Strengthen parent/state links with descriptive anchors.
           path = 'oregon-appliance-pickup/index.html'
           s = read(path)
           s = s.replace('<a href="../portland-appliance-pickup/">Portland</a>', '<a href="../portland-appliance-pickup/">Free Appliance Pickup Portland OR</a>')
@@ -70,7 +66,6 @@ jobs:
                   s = s.replace(marker, extra + marker, 1)
           write(path, s)
 
-          # 3) Give the Salem page stronger links from appliance-topic pages.
           local_links = '''<section class="local-market-links"><h2>Oregon Local Appliance Pickup Pages</h2><p>For local pickup details and a city-specific request form, visit <a href="../salem-appliance-pickup/">Free Appliance Pickup Salem OR</a> or <a href="../portland-appliance-pickup/">Free Appliance Pickup Portland OR</a>. These pages explain local route coverage, access details and qualification requirements.</p></section>'''
           for path in ['washer-dryer-pickup/index.html','refrigerator-pickup/index.html','freezer-pickup/index.html','stove-oven-pickup/index.html']:
               p = Path(path)
@@ -81,14 +76,12 @@ jobs:
                   s = s.replace('</main>', local_links + '</main>', 1)
               write(path, s)
 
-          # 4) Make the service-area hub pass stronger descriptive relevance to established cities.
           path = 'service-areas/index.html'
           s = read(path)
           s = s.replace('<a href="../portland-appliance-pickup/">Portland, Oregon</a>', '<a href="../portland-appliance-pickup/">Free Appliance Pickup Portland, Oregon</a>')
           s = s.replace('<a href="../salem-appliance-pickup/">Salem, Oregon</a>', '<a href="../salem-appliance-pickup/">Free Appliance Pickup Salem, Oregon</a>')
           write(path, s)
 
-          # 5) If the homepage does not already link directly to Salem/Portland, add a concise established-market block.
           path = 'index.html'
           s = read(path)
           if 'href="/salem-appliance-pickup/"' not in s:
