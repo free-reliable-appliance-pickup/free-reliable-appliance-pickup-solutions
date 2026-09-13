@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Buyer Sign In | Appliance Opportunity Marketplace</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f7f5;color:#222}.wrap{width:min(720px,94%);margin:auto}header{background:#075c34;color:#fff;padding:28px 0}main{padding:24px 0}.panel{background:#fff;border:1px solid #d8e4dc;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:18px}label{display:block;font-weight:700;margin-top:12px}input{width:100%;padding:12px;border:1px solid #c9d7ce;border-radius:8px;margin-top:6px;font-size:16px}.btn{margin-top:16px;background:#087443;color:#fff;border:0;border-radius:8px;padding:12px 16px;font-weight:700;font-size:16px;cursor:pointer}.secondary{background:#eef4f0;color:#075c34}.status{margin-top:14px;padding:12px;border-radius:8px;background:#eef9f3}.error{background:#fff0f0;color:#8a1c1c}.muted{color:#666}.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button{border:1px solid #d8e4dc;background:#fff;padding:9px 12px;border-radius:8px;font-weight:700;cursor:pointer}.hidden{display:none}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Buyer Access</h1><p>For approved and applying appliance professionals.</p></div></header>
+<main class="wrap">
+<section class="panel">
+<div class="tabs"><button id="showSignIn">Sign In</button><button id="showCreate">Create Account</button></div>
+<div id="signInBox">
+<h2>Sign in</h2>
+<label>Email<input id="signinEmail" type="email" autocomplete="email"></label>
+<label>Password<input id="signinPassword" type="password" autocomplete="current-password"></label>
+<button class="btn" id="signInBtn">Sign In</button>
+</div>
+<div id="createBox" class="hidden">
+<h2>Create buyer account</h2>
+<p class="muted">New accounts start as pending. Marketplace access is activated after approval.</p>
+<label>Full Name<input id="fullName" type="text"></label>
+<label>Business Name<input id="businessName" type="text"></label>
+<label>Email<input id="createEmail" type="email" autocomplete="email"></label>
+<label>Password<input id="createPassword" type="password" autocomplete="new-password" minlength="8"></label>
+<button class="btn" id="createBtn">Create Account</button>
+</div>
+<div id="status" class="status">Your customer-facing website is separate from this private buyer login.</div>
+<p><a href="./buyer-dashboard.html">Buyer Dashboard</a> · <a href="./">Marketplace Home</a></p>
+</section>
+</main>
+<script>
+const SUPABASE_URL='https://hutsrafyktcxpgilogdj.supabase.co';
+const API_KEY='sb_publishable_eSxdhKuBxrC-Sw7FwmYxGA_oBYCTCgg';
+const STORAGE_KEY='sb-hutsrafyktcxpgilogdj-auth-token';
+const statusEl=document.getElementById('status');
+function status(msg,err=false){statusEl.textContent=msg;statusEl.className=err?'status error':'status';}
+function show(which){document.getElementById('signInBox').classList.toggle('hidden',which!=='signin');document.getElementById('createBox').classList.toggle('hidden',which!=='create');}
+document.getElementById('showSignIn').onclick=()=>show('signin');
+document.getElementById('showCreate').onclick=()=>show('create');
+async function api(path,body){return fetch(SUPABASE_URL+path,{method:'POST',headers:{apikey:API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});}
+document.getElementById('createBtn').onclick=async()=>{
+ const email=document.getElementById('createEmail').value.trim(); const password=document.getElementById('createPassword').value; const full_name=document.getElementById('fullName').value.trim(); const business_name=document.getElementById('businessName').value.trim();
+ if(!email||password.length<8){status('Enter a valid email and a password of at least 8 characters.',true);return;}
+ status('Creating account...');
+ try{const r=await api('/auth/v1/signup',{email,password,data:{full_name,business_name}});const d=await r.json();if(!r.ok)throw new Error(d.msg||d.message||'Could not create account');if(d.access_token){localStorage.setItem(STORAGE_KEY,JSON.stringify(d));status('Account created and signed in. Your buyer profile is pending approval.');}else status('Account created. Check your email if confirmation is required, then sign in.');}catch(e){status(e.message,true);}
+};
+document.getElementById('signInBtn').onclick=async()=>{
+ const email=document.getElementById('signinEmail').value.trim(); const password=document.getElementById('signinPassword').value;
+ status('Signing in...');
+ try{const r=await api('/auth/v1/token?grant_type=password',{email,password});const d=await r.json();if(!r.ok)throw new Error(d.msg||d.message||'Sign in failed');localStorage.setItem(STORAGE_KEY,JSON.stringify(d));status('Signed in. Opening buyer dashboard...');setTimeout(()=>location.href='./buyer-dashboard.html',500);}catch(e){status(e.message,true);}
+};
+</script>
+</body>
+</html>
