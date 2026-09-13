@@ -1,0 +1,193 @@
+name: Optimize Search Result Appearance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/optimize-search-result-appearance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: optimize-search-result-appearance
+  cancel-in-progress: true
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add Google text-result and image-result signals to approved pages
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import html as htmlmod
+          import json
+          import re
+
+          BASE = 'https://freereliableappliancepickup.com/'
+          SITE_NAME = 'Free Reliable Appliance Pickup'
+          LOGO = BASE + 'file_00000000b7c082308dccc73e5bd3acd2.png'
+
+          approved_locations = {
+              'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
+              'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
+              'utah-appliance-pickup','idaho-appliance-pickup','portland-appliance-pickup',
+              'salem-appliance-pickup','denver-appliance-pickup','aurora-appliance-pickup',
+              'inland-empire-appliance-pickup','los-angeles-appliance-pickup',
+              'los-angeles-county-appliance-pickup','riverside-county-appliance-pickup',
+              'orange-county-appliance-pickup','san-diego-county-appliance-pickup',
+              'sf-bay-area-appliance-pickup','central-valley-appliance-pickup',
+              'central-coast-appliance-pickup','las-vegas-valley-appliance-pickup',
+              'phoenix-appliance-pickup','phoenix-metro-appliance-pickup','puget-sound-appliance-pickup'
+          }
+          approved_nonlocation = {
+              '', 'about','appliance-pickup-checklist','contact','free-pickup-qualification',
+              'freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup',
+              'old-appliance-disposal-options','partners','refrigerator-pickup','service-areas',
+              'stove-oven-pickup','washer-dryer-pickup'
+          }
+          approved = approved_locations | approved_nonlocation
+
+          def page_path(slug):
+              return Path('index.html') if slug == '' else Path(slug) / 'index.html'
+
+          def get_attr(tag, attr):
+              m = re.search(r'\b' + re.escape(attr) + r'\s*=\s*(["\'])(.*?)\1', tag, re.I | re.S)
+              return htmlmod.unescape(m.group(2).strip()) if m else ''
+
+          def find_meta(raw, *, name=None, prop=None):
+              for tag in re.findall(r'<meta\b[^>]*>', raw, re.I | re.S):
+                  if name and get_attr(tag, 'name').lower() == name.lower():
+                      return tag
+                  if prop and get_attr(tag, 'property').lower() == prop.lower():
+                      return tag
+              return None
+
+          def find_link(raw, rel):
+              for tag in re.findall(r'<link\b[^>]*>', raw, re.I | re.S):
+                  if rel.lower() in get_attr(tag, 'rel').lower().split():
+                      return tag
+              return None
+
+          def insert_head(raw, block):
+              return re.sub(r'</head\s*>', block.rstrip() + '\n</head>', raw, count=1, flags=re.I)
+
+          changed = []
+          for slug in sorted(approved):
+              p = page_path(slug)
+              if not p.exists():
+                  continue
+              raw = p.read_text(encoding='utf-8', errors='ignore')
+              original = raw
+
+              robot_tag = find_meta(raw, name='robots')
+              if robot_tag and 'noindex' in get_attr(robot_tag, 'content').lower():
+                  continue
+              robot = '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'
+              if robot_tag:
+                  raw = raw.replace(robot_tag, robot, 1)
+              else:
+                  raw = insert_head(raw, robot)
+
+              title_match = re.search(r'<title\b[^>]*>(.*?)</title\s*>', raw, re.I | re.S)
+              title = htmlmod.unescape(re.sub(r'\s+', ' ', title_match.group(1)).strip()) if title_match else SITE_NAME
+
+              desc_tag = find_meta(raw, name='description')
+              description = get_attr(desc_tag, 'content') if desc_tag else ''
+
+              canonical_tag = find_link(raw, 'canonical')
+              canonical = get_attr(canonical_tag, 'href') if canonical_tag else (BASE if slug == '' else BASE + slug + '/')
+
+              if not find_link(raw, 'icon'):
+                  raw = insert_head(raw, '<link rel="icon" type="image/png" href="' + LOGO + '">')
+
+              page_num = 1 + (sum(ord(c) for c in slug) % 3 if slug else 1)
+              default_image = BASE + f'assets/major-appliance-pickup-photo-{page_num}.jpg'
+              existing_og_image = find_meta(raw, prop='og:image')
+              image = get_attr(existing_og_image, 'content') if existing_og_image else default_image
+
+              additions = []
+              if not find_meta(raw, prop='og:site_name'):
+                  additions.append(f'<meta property="og:site_name" content="{SITE_NAME}">')
+              if not find_meta(raw, prop='og:type'):
+                  additions.append('<meta property="og:type" content="website">')
+              if not find_meta(raw, prop='og:url'):
+                  additions.append(f'<meta property="og:url" content="{htmlmod.escape(canonical, quote=True)}">')
+              if not find_meta(raw, prop='og:title'):
+                  additions.append(f'<meta property="og:title" content="{htmlmod.escape(title, quote=True)}">')
+              if description and not find_meta(raw, prop='og:description'):
+                  additions.append(f'<meta property="og:description" content="{htmlmod.escape(description, quote=True)}">')
+              if not existing_og_image:
+                  additions.append(f'<meta property="og:image" content="{image}">')
+                  additions.append('<meta property="og:image:alt" content="Real major household appliance handled by Free Reliable Appliance Pickup">')
+              if not find_meta(raw, name='twitter:card'):
+                  additions.append('<meta name="twitter:card" content="summary_large_image">')
+
+              if additions:
+                  raw = insert_head(raw, '\n'.join(additions))
+
+              # Add a WebPage entity so Google has a consistent page name, URL and primary image signal.
+              if not re.search(r'"@type"\s*:\s*"WebPage"', raw):
+                  web_page = {
+                      '@context': 'https://schema.org',
+                      '@type': 'WebPage',
+                      '@id': canonical + '#webpage',
+                      'url': canonical,
+                      'name': title,
+                      'isPartOf': {'@id': BASE + '#website'},
+                      'primaryImageOfPage': {'@type': 'ImageObject', 'url': image},
+                  }
+                  if description:
+                      web_page['description'] = description
+                  raw = insert_head(raw, '<script type="application/ld+json">' + json.dumps(web_page, separators=(',', ':')) + '</script>')
+
+              # Google's preferred site-name signal belongs on the domain-level home page.
+              if slug == '' and not re.search(r'"@type"\s*:\s*"WebSite"', raw):
+                  website = {
+                      '@context': 'https://schema.org',
+                      '@type': 'WebSite',
+                      '@id': BASE + '#website',
+                      'url': BASE,
+                      'name': SITE_NAME,
+                      'alternateName': ['Reliable Appliance Pickup', 'Free Reliable Appliance Pickup & Removal']
+                  }
+                  raw = insert_head(raw, '<script type="application/ld+json">' + json.dumps(website, separators=(',', ':')) + '</script>')
+
+              if slug == '' and not re.search(r'"@id"\s*:\s*"https://freereliableappliancepickup\.com/#organization"', raw):
+                  organization = {
+                      '@context': 'https://schema.org',
+                      '@type': 'Organization',
+                      '@id': BASE + '#organization',
+                      'name': SITE_NAME,
+                      'url': BASE,
+                      'logo': {'@type': 'ImageObject', 'url': LOGO}
+                  }
+                  raw = insert_head(raw, '<script type="application/ld+json">' + json.dumps(organization, separators=(',', ':')) + '</script>')
+
+              if raw != original:
+                  p.write_text(raw, encoding='utf-8')
+                  changed.append(str(p))
+
+          print('Updated approved pages:', len(changed))
+          for item in changed:
+              print(' -', item)
+          PY
+
+          git add index.html '*/index.html'
+          if git diff --cached --quiet; then
+            echo 'No page changes needed.'
+            exit 0
+          fi
+          git commit -m "Strengthen Google text and image result eligibility"
+          git pull --rebase origin main || true
+          git push origin HEAD:main
