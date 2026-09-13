@@ -1066,10 +1066,14 @@ if (route.resolution_level === "fallback") throw new Error("Coverage data unavai
 const direct = route.status === "direct" || route.status === "partner-supported";
 const recruiting = route.status === "partner-recruiting";
 const region = route.region && !route.region.includes("statewide intake") ? " in " + route.region : "";
+const phoneDigits = String(route.phone || "").replace(/\D/g, "");
+const directPhone = phoneDigits.length === 10
+? ' You can also <a href="tel:+1' + phoneDigits + '">call ' + route.phone + '</a>.'
+: "";
 
 coverageCheckResult.className = "coverage-result is-visible" + (direct ? "" : " is-limited");
 if(direct){
-coverageCheckResult.innerHTML = "<strong>Established coverage" + region + ".</strong> Your appliance still needs qualification. Continue below to send condition, photos and access details.";
+coverageCheckResult.innerHTML = "<strong>Established coverage" + region + ".</strong> Your appliance still needs qualification. Continue below to send condition, photos and access details." + directPhone;
 }else if(recruiting){
 coverageCheckResult.innerHTML = "<strong>Request review available" + region + ".</strong> We are building local partner coverage here. Submit the request below and pickup will be confirmed only if qualified coverage is available.";
 }else{
