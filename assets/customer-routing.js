@@ -135,14 +135,29 @@ function wireForm(form){
   },true);
 }
 
+/* If a page has its own pickup form, keep request buttons on that page instead of
+   sending the customer back to the homepage form. Pages without a local form keep
+   their normal homepage request link. */
+function preferLocalRequestForm(){
+  if(!document.getElementById('request'))return;
+  const selectors=[
+    'a[href="/#request"]',
+    'a[href="../#request"]',
+    'a[href="./#request"]',
+    'a[href="https://freereliableappliancepickup.com/#request"]'
+  ];
+  document.querySelectorAll(selectors.join(',')).forEach(link=>link.setAttribute('href','#request'));
+}
+
 load();
 
 document.addEventListener('DOMContentLoaded',()=>{
+  preferLocalRequestForm();
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
     const hasCustomerFields=findField(form,['city','City','pickup_city'])&&findField(form,['state','State','pickup_state'])&&findField(form,['appliance','Appliance','Appliance Type']);
     if(hasCustomerFields)wireForm(form);
   });
 });
 
-window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision};
+window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision,preferLocalRequestForm};
 })();
