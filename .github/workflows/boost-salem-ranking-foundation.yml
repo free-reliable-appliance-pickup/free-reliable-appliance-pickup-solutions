@@ -1,0 +1,113 @@
+name: Strengthen Salem Ranking Foundation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/boost-salem-ranking-foundation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Improve Salem relevance and sitewide internal linking
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          BASE = 'https://freereliableappliancepickup.com/'
+
+          def read(path):
+              return Path(path).read_text(encoding='utf-8')
+
+          def write(path, text):
+              Path(path).write_text(text, encoding='utf-8')
+
+          # 1) Strengthen the Salem page around the exact local intent already earning visibility.
+          path = 'salem-appliance-pickup/index.html'
+          s = read(path)
+          old_title = 'Free Appliance Pickup Salem OR | Appliance Removal'
+          new_title = 'Free Appliance Pickup Salem OR | Removal & Recycling'
+          old_desc = 'Request qualifying appliance pickup in Salem, Oregon for washers, dryers, refrigerators, freezers, stoves and ranges. Working appliances receive priority.'
+          new_desc = 'Free appliance pickup in Salem, Oregon for qualifying washers, dryers, refrigerators, freezers, stoves and ranges. Local request review for Salem and nearby routes.'
+          s = s.replace(old_title, new_title)
+          s = s.replace(old_desc, new_desc)
+
+          neighborhood_section = '''
+<section id="salem-neighborhoods"><h2>Salem Neighborhoods &amp; ZIP Codes We Review</h2><p>We review qualifying appliance pickup requests across Salem, including West Salem, Grant, Highland, Northgate, Morningside, Faye Wright, Sunnyslope, South Gateway, Southeast Salem, Northeast Salem and East Lancaster. Exact coverage is confirmed from the pickup address, appliance condition, access and the current route.</p><p>Common Salem ZIP codes include 97301, 97302, 97304, 97305, 97306 and 97317. Keizer and nearby Mid-Willamette Valley requests may also be reviewed when route coverage is available.</p></section>
+<section id="salem-appliance-guides"><h2>Salem Appliance Pickup by Type</h2><p>Use these guides to prepare the appliance before submitting the Salem request. Each guide explains the condition details, photos and access information that help us review pickup eligibility.</p><div class="links"><a href="../washer-dryer-pickup/">Washer &amp; Dryer Pickup in Salem</a><a href="../refrigerator-pickup/">Refrigerator Pickup in Salem</a><a href="../freezer-pickup/">Freezer Pickup in Salem</a><a href="../stove-oven-pickup/">Stove &amp; Oven Pickup in Salem</a><a href="../free-pickup-qualification/">Free Pickup Qualification</a></div></section>
+'''
+          if 'id="salem-neighborhoods"' not in s:
+              marker = '<section><h2>Photos and Access Details</h2>'
+              if marker in s:
+                  s = s.replace(marker, neighborhood_section + marker, 1)
+              else:
+                  s = s.replace('<section id="request">', neighborhood_section + '<section id="request">', 1)
+          write(path, s)
+
+          # 2) Strengthen parent/state links with descriptive anchors.
+          path = 'oregon-appliance-pickup/index.html'
+          s = read(path)
+          s = s.replace('<a href="../portland-appliance-pickup/">Portland</a>', '<a href="../portland-appliance-pickup/">Free Appliance Pickup Portland OR</a>')
+          s = s.replace('<a href="../salem-appliance-pickup/">Salem</a>', '<a href="../salem-appliance-pickup/">Free Appliance Pickup Salem OR</a>')
+          s = s.replace('Use the <a href="../salem-appliance-pickup/">Salem</a> page for local details.', 'Use the <a href="../salem-appliance-pickup/">Free Appliance Pickup Salem OR</a> page for local pickup details, qualification information, access guidance and the Salem request form.')
+          if 'Salem local pickup page is our primary Mid-Willamette Valley resource' not in s:
+              marker = '<section><h2>Appliances We Review</h2>'
+              extra = '<section><h2>Oregon Local Pickup Pages</h2><p>The <a href="../salem-appliance-pickup/">Salem local pickup page is our primary Mid-Willamette Valley resource</a>, while the <a href="../portland-appliance-pickup/">Portland appliance pickup page</a> covers the Portland metro route. These local pages contain the most specific request and access information for their established markets.</p></section>'
+              if marker in s:
+                  s = s.replace(marker, extra + marker, 1)
+          write(path, s)
+
+          # 3) Give the Salem page stronger links from appliance-topic pages.
+          local_links = '''<section class="local-market-links"><h2>Oregon Local Appliance Pickup Pages</h2><p>For local pickup details and a city-specific request form, visit <a href="../salem-appliance-pickup/">Free Appliance Pickup Salem OR</a> or <a href="../portland-appliance-pickup/">Free Appliance Pickup Portland OR</a>. These pages explain local route coverage, access details and qualification requirements.</p></section>'''
+          for path in ['washer-dryer-pickup/index.html','refrigerator-pickup/index.html','freezer-pickup/index.html','stove-oven-pickup/index.html']:
+              p = Path(path)
+              if not p.exists():
+                  continue
+              s = read(path)
+              if 'class="local-market-links"' not in s:
+                  s = s.replace('</main>', local_links + '</main>', 1)
+              write(path, s)
+
+          # 4) Make the service-area hub pass stronger descriptive relevance to established cities.
+          path = 'service-areas/index.html'
+          s = read(path)
+          s = s.replace('<a href="../portland-appliance-pickup/">Portland, Oregon</a>', '<a href="../portland-appliance-pickup/">Free Appliance Pickup Portland, Oregon</a>')
+          s = s.replace('<a href="../salem-appliance-pickup/">Salem, Oregon</a>', '<a href="../salem-appliance-pickup/">Free Appliance Pickup Salem, Oregon</a>')
+          write(path, s)
+
+          # 5) If the homepage does not already link directly to Salem/Portland, add a concise established-market block.
+          path = 'index.html'
+          s = read(path)
+          if 'href="/salem-appliance-pickup/"' not in s:
+              block = '''
+<section class="soft" id="established-local-markets"><div class="wrap"><h2 class="section-title">Established Local Appliance Pickup Markets</h2><p class="section-intro">Use the local page for the most specific pickup, qualification and access information in an established market.</p><div class="priority"><a class="pill" href="/salem-appliance-pickup/">Free Appliance Pickup Salem OR</a><a class="pill" href="/portland-appliance-pickup/">Free Appliance Pickup Portland OR</a><a class="pill" href="/denver-appliance-pickup/">Free Appliance Pickup Denver CO</a><a class="pill" href="/aurora-appliance-pickup/">Free Appliance Pickup Aurora CO</a></div></div></section>
+'''
+              marker = '<section id="request" class="soft">'
+              if marker in s:
+                  s = s.replace(marker, block + marker, 1)
+          write(path, s)
+
+          print('Salem ranking foundation updated without creating thin city doorway pages.')
+          PY
+
+          git add index.html salem-appliance-pickup/index.html oregon-appliance-pickup/index.html service-areas/index.html washer-dryer-pickup/index.html refrigerator-pickup/index.html freezer-pickup/index.html stove-oven-pickup/index.html
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Strengthen Salem local relevance and internal links"
+          git pull --rebase origin main || true
+          git push origin HEAD:main
