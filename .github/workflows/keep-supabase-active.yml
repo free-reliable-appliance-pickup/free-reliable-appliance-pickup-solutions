@@ -9,9 +9,34 @@ jobs:
   keepalive:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase keepalive table
+      - name: Validate Supabase secret is configured
+        env:
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: |
-          curl --fail --silent --show-error \
-            -H "apikey: ${{ secrets.SUPABASE_SECRET_KEY }}" \
-            "https://hutsrafyktcxpgilogdj.supabase.co/rest/v1/keepalive?select=id&limit=1" \
-            -o /dev/null
+          if [ -z "$SUPABASE_SECRET_KEY" ]; then
+            echo "SUPABASE_SECRET_KEY is missing from repository Actions secrets."
+            exit 1
+          fi
+          case "$SUPABASE_SECRET_KEY" in
+            sb_secret_*) echo "Supabase secret is present and has the expected prefix." ;;
+            *) echo "SUPABASE_SECRET_KEY is present but does not start with sb_secret_."; exit 1 ;;
+          esac
+
+      - name: Ping Supabase keepalive table
+        env:
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: |
+          status=$(curl --silent --show-error \
+            --user-agent "github-actions-supabase-keepalive/1.0" \
+            -H "apikey: $SUPABASE_SECRET_KEY" \
+            -H "Accept: application/json" \
+            -o response.txt \
+            -w "%{http_code}" \
+            "https://hutsrafyktcxpgilogdj.supabase.co/rest/v1/keepalive?select=id&limit=1")
+          echo "Supabase HTTP status: $status"
+          if [ "$status" -lt 200 ] || [ "$status" -ge 300 ]; then
+            echo "Supabase response:"
+            cat response.txt
+            exit 1
+          fi
+          echo "Supabase keepalive succeeded."
