@@ -9,9 +9,9 @@ jobs:
   keepalive:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase Data API
+      - name: Ping Supabase keepalive table
         run: |
           curl --fail --silent --show-error \
-            -H "apikey: sb_publishable_eSxdhKuBxrC-Sw7FwmYxGA_oBYCTCgg" \
-            "https://hutsrafyktcxpgilogdj.supabase.co/rest/v1/" \
+            -H "apikey: ${{ secrets.SUPABASE_SECRET_KEY }}" \
+            "https://hutsrafyktcxpgilogdj.supabase.co/rest/v1/keepalive?select=id&limit=1" \
             -o /dev/null
