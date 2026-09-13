@@ -1,0 +1,131 @@
+name: Normalize Official Brand Image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/normalize-official-brand-image.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: normalize-official-brand-image
+  cancel-in-progress: true
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use the live website logo everywhere Google can read it
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          BRAND=BASE+'file_00000000b7c082308dccc73e5bd3acd2.png'
+          OLD=BASE+'assets/free-reliable-appliance-pickup-logo.svg'
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          root=ET.parse('sitemap.xml').getroot()
+          urls=[x.text.strip() for x in root.findall('.//s:loc',ns) if x.text and x.text.strip().startswith(BASE)]
+
+          def file_for(url):
+              if url==BASE:
+                  return Path('index.html')
+              return Path(url[len(BASE):].strip('/'))/'index.html'
+
+          def set_meta(raw, key_attr, key_value, content, prop=False):
+              attr='property' if prop else 'name'
+              pat=rf'<meta\b[^>]*{attr}=["\']{re.escape(key_value)}["\'][^>]*>'
+              replacement=f'<meta {attr}="{key_value}" content="{content}">'
+              if re.search(pat,raw,re.I):
+                  return re.sub(pat,replacement,raw,count=1,flags=re.I)
+              return raw.replace('</head>',replacement+'\n</head>',1)
+
+          changed=[]
+          for url in urls:
+              p=file_for(url)
+              if not p.exists():
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              before=raw
+
+              # Retire any old green-only logo references in markup.
+              raw=raw.replace(OLD,BRAND)
+              raw=raw.replace('/assets/free-reliable-appliance-pickup-logo.svg','/file_00000000b7c082308dccc73e5bd3acd2.png')
+
+              # One official favicon/logo across all active pages.
+              icon_pat=r'<link\b[^>]*rel=["\'](?:shortcut\s+)?icon["\'][^>]*>'
+              icon='<link rel="icon" type="image/png" href="/file_00000000b7c082308dccc73e5bd3acd2.png">'
+              if re.search(icon_pat,raw,re.I):
+                  raw=re.sub(icon_pat,icon,raw,count=1,flags=re.I)
+              else:
+                  raw=raw.replace('</head>',icon+'\n</head>',1)
+
+              apple_pat=r'<link\b[^>]*rel=["\']apple-touch-icon["\'][^>]*>'
+              apple='<link rel="apple-touch-icon" href="/file_00000000b7c082308dccc73e5bd3acd2.png">'
+              if re.search(apple_pat,raw,re.I):
+                  raw=re.sub(apple_pat,apple,raw,count=1,flags=re.I)
+              else:
+                  raw=raw.replace('</head>',apple+'\n</head>',1)
+
+              # Tell Google/social previews that the same current website artwork is the branded page image.
+              raw=set_meta(raw,'property','og:image',BRAND,prop=True)
+              raw=set_meta(raw,'property','og:image:alt','Free Reliable Appliance Pickup official logo and appliance pickup artwork',prop=True)
+              raw=set_meta(raw,'name','twitter:image',BRAND)
+              raw=set_meta(raw,'name','twitter:card','summary_large_image')
+
+              # Where WebPage schema already declares a primary image, normalize it to the current logo artwork.
+              raw=re.sub(
+                  r'("primaryImageOfPage"\s*:\s*\{\s*"@type"\s*:\s*"ImageObject"\s*,\s*"url"\s*:\s*")[^"]+("\s*\})',
+                  lambda m:m.group(1)+BRAND+m.group(2),
+                  raw,
+                  flags=re.I
+              )
+
+              # Normalize Organization logo string or ImageObject URL when already present.
+              raw=re.sub(
+                  r'("logo"\s*:\s*")[^"]+("\s*[,}])',
+                  lambda m:m.group(1)+BRAND+m.group(2),
+                  raw,
+                  flags=re.I
+              )
+              raw=re.sub(
+                  r'("logo"\s*:\s*\{\s*"@type"\s*:\s*"ImageObject"\s*,\s*"url"\s*:\s*")[^"]+("\s*\})',
+                  lambda m:m.group(1)+BRAND+m.group(2),
+                  raw,
+                  flags=re.I
+              )
+
+              if raw!=before:
+                  p.write_text(raw,encoding='utf-8')
+                  changed.append(str(p))
+
+          print('Updated active pages:',len(changed))
+          for p in changed:
+              print(' -',p)
+          PY
+
+          # Remove the retired green-only refrigerator/check SVG so Google can age it out of image results.
+          git rm -f assets/free-reliable-appliance-pickup-logo.svg 2>/dev/null || true
+
+          git add index.html '*/index.html' assets || true
+          if git diff --cached --quiet; then
+            echo "No brand normalization changes needed."
+            exit 0
+          fi
+
+          git commit -m "Use current website logo across Google search surfaces"
+          git pull --rebase origin main || true
+          git push origin HEAD:main
