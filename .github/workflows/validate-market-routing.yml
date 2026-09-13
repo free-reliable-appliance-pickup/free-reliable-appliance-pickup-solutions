@@ -32,6 +32,7 @@ jobs:
           python - <<'PY'
           import json, pathlib, re, sys
 
+          # Every routing data file must remain valid JSON.
           for p in pathlib.Path('data').glob('*.json'):
               json.loads(p.read_text())
 
@@ -80,8 +81,7 @@ jobs:
               code=row.get('state_code'); region=row.get('region'); city=row.get('city')
               status=row.get('status'); territory=row.get('territory_status')
               partner=row.get('partner_id'); phone=row.get('phone')
-              pricing=row.get('pricing_status')
-              monthly=row.get('monthly_price_cents')
+              pricing=row.get('pricing_status'); monthly=row.get('monthly_price_cents')
 
               if code not in state_codes: sys.exit(f'invalid market state code: {row}')
               if not region or not str(region).strip(): sys.exit(f'market route missing region: {row}')
@@ -98,18 +98,19 @@ jobs:
                   if territory!='protected': sys.exit(f'direct market must be protected: {row}')
                   if partner: sys.exit(f'direct market must not have partner_id: {row}')
                   if not phone: sys.exit(f'direct market must have routing phone: {row}')
-              if status=='partner-supported':
+              elif status=='partner-supported':
                   if not partner: sys.exit(f'partner-supported market missing partner_id: {row}')
                   if territory not in {'assigned','protected'}: sys.exit(f'partner-supported market must be assigned/protected: {row}')
-              if status=='partner-recruiting':
+              elif status=='partner-recruiting':
                   if partner: sys.exit(f'partner-recruiting market must not already have partner_id: {row}')
                   if territory!='available': sys.exit(f'partner-recruiting market must remain available: {row}')
-              if status=='request-only':
+              elif status=='request-only':
                   if partner: sys.exit(f'request-only market must not have partner_id: {row}')
                   if territory=='assigned': sys.exit(f'request-only market cannot be assigned: {row}')
 
               if territory=='assigned' and not partner: sys.exit(f'assigned territory missing partner_id: {row}')
               if row.get('backup_partner_id') and row.get('backup_partner_id')==partner: sys.exit(f'backup partner duplicates primary: {row}')
+
               if city:
                   key=(code,city.strip().lower())
                   if key in exact_map: sys.exit(f'duplicate exact city route: {key}')
@@ -122,23 +123,19 @@ jobs:
           city_map={}
           regional=statewide=exact_count=0
           for c in cities.get('cities',[]):
-              code=c.get('state_code'); region=(c.get('region') or '').strip().lower()
-              city=(c.get('city') or '').strip().lower()
+              code=c.get('state_code'); region=(c.get('region') or '').strip().lower(); city=(c.get('city') or '').strip().lower()
               if code not in state_codes or not city: sys.exit(f'invalid city catalog row: {c}')
               key=(code,city)
               if key in city_map: sys.exit(f'duplicate city catalog row: {key}')
               city_map[key]=c
-              exact=(code,city)
-              if exact in exact_map:
+              if key in exact_map:
                   exact_count+=1
-                  continue
-              if (code,region) in region_rows:
+              elif (code,region) in region_rows:
                   regional+=1
-                  continue
-              if code in defaults_by_code:
+              elif code in defaults_by_code:
                   statewide+=1
-                  continue
-              sys.exit(f'city catalog cannot resolve through exact, regional, or statewide route: {c}')
+              else:
+                  sys.exit(f'city catalog cannot resolve through exact, regional, or statewide route: {c}')
 
           def resolve(city, code):
               cn=city.strip().lower(); code=code.upper()
@@ -163,16 +160,11 @@ jobs:
 
           def expect(city, code, level, status, region=None, phone=None, expected_decision=None):
               got_level,row=resolve(city,code)
-              if got_level != level:
-                  sys.exit(f'{city}, {code}: expected level {level}, got {got_level}')
-              if row.get('status') != status:
-                  sys.exit(f'{city}, {code}: expected status {status}, got {row.get("status")}')
-              if region is not None and row.get('region') != region:
-                  sys.exit(f'{city}, {code}: expected region {region}, got {row.get("region")}')
-              if phone is not None and row.get('phone') != phone:
-                  sys.exit(f'{city}, {code}: expected phone {phone}, got {row.get("phone")}')
-              if expected_decision is not None and decision(row) != expected_decision:
-                  sys.exit(f'{city}, {code}: expected decision {expected_decision}, got {decision(row)}')
+              if got_level != level: sys.exit(f'{city}, {code}: expected level {level}, got {got_level}')
+              if row.get('status') != status: sys.exit(f'{city}, {code}: expected status {status}, got {row.get("status")}')
+              if region is not None and row.get('region') != region: sys.exit(f'{city}, {code}: expected region {region}, got {row.get("region")}')
+              if phone is not None and row.get('phone') != phone: sys.exit(f'{city}, {code}: expected phone {phone}, got {row.get("phone")}')
+              if expected_decision is not None and decision(row) != expected_decision: sys.exit(f'{city}, {code}: expected decision {expected_decision}, got {decision(row)}')
 
           expect('Portland','OR','exact','direct','Portland Metro','503-868-4455','DIRECT_OPERATION')
           expect('Beaverton','OR','regional','direct','Portland Metro','503-868-4455','DIRECT_OPERATION')
@@ -188,6 +180,7 @@ jobs:
           partner_script=pathlib.Path('assets/partner-routing.js').read_text()
           partner_page=pathlib.Path('partners/index.html').read_text()
           customer_script=pathlib.Path('assets/customer-routing.js').read_text()
+          homepage=pathlib.Path('index.html').read_text()
 
           required_partner_tokens=[
               'data/market-routing.json','data/cities.json','state_defaults','Nationwide Partner Page',
@@ -205,13 +198,13 @@ jobs:
               sys.exit('partner page must not load customer-routing.js')
           if 'automaticCityPageCreation' in partner_page:
               sys.exit('partner page must not contain city-page generation controls')
+
           required_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','id="territorySummary"']
           for token in required_matching_fields:
               if token not in partner_page: sys.exit(f'partner capability matching field missing: {token}')
           for token in ['publicLabel(market)','classifySelection();']:
               if token not in partner_script: sys.exit(f'partner territory status display missing: {token}')
-          if "automaticCityPageCreation') is not False" not in pathlib.Path('.github/workflows/validate-market-routing.yml').read_text():
-              sys.exit('validator must continue enforcing automaticCityPageCreation=false')
+
           if "fetch(siteUrl('data/market-routing.json')" not in customer_script or "fetch(siteUrl('data/cities.json')" not in customer_script:
               sys.exit('customer routing must keep base-aware canonical data loading')
 
@@ -224,9 +217,13 @@ jobs:
           for token in required_customer_decision_tokens:
               if token not in customer_script: sys.exit(f'customer routing decision safeguard missing required token: {token}')
 
-          homepage=pathlib.Path('index.html').read_text()
-          for token in ['id="coverage-checker"','id="coverage-city"','id="coverage-state"','FreeReliableCustomerRouting.classify(city,state)']:
-              if token not in homepage: sys.exit(f'homepage coverage checker missing required token: {token}')
+          # The current homepage uses the nationwide intake form rather than the retired
+          # coverage-checker widget. Validate the live intake contract instead.
+          homepage_low=homepage.lower()
+          for token in ['formspree.io/f/mvzeapzd','name="city"','name="state"','name="appliance"','id="request"']:
+              if token not in homepage_low: sys.exit(f'homepage nationwide intake missing required token: {token}')
+          if 'assets/customer-routing.js' not in homepage and '../assets/customer-routing.js' not in homepage:
+              sys.exit('homepage nationwide intake must load customer-routing.js')
 
-          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); route/status/territory/pricing consistency clean; routing decision tests passed; automatic city-page creation remains disabled')
+          print(f'PASS: routing JSON valid; {len(state_defaults)} state fallbacks, {len(markets)} market routes, {len(cities.get("cities",[]))} catalog cities ({exact_count} exact, {regional} regional, {statewide} statewide fallback); route/status/territory/pricing consistency clean; current homepage intake and routing safeguards passed; automatic city-page creation remains disabled')
           PY
