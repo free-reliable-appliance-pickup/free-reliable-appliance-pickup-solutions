@@ -1,5 +1,6 @@
 /* Shared public website branding. */
 * { box-sizing: border-box; }
+html { scroll-behavior:smooth; }
 body.site-branded { margin:0; padding:0; max-width:none; width:100%; background:#fff; color:#17324a; font-family:Arial,Helvetica,sans-serif; line-height:1.55; }
 .site-branded .site-header { padding:0; background:#fff; color:#17324a; text-align:left; }
 .site-brand-row { max-width:1180px; margin:auto; padding:18px 20px; display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
@@ -27,6 +28,29 @@ body.site-branded { margin:0; padding:0; max-width:none; width:100%; background:
 .site-branded footer a { color:#fff; }
 .site-branded main img { max-width:100%; }
 .site-branded .site-document { max-width:1050px; margin:30px auto; padding:0 20px; }
+
+/* Shared city-page request experience. */
+.site-branded #request { scroll-margin-top:18px; }
+.site-branded .site-request-panel { background:linear-gradient(135deg,#f1faf3,#fff); border:1px solid #cfe5d5; border-radius:18px; padding:28px; box-shadow:0 12px 32px rgba(17,53,79,.08); }
+.site-branded .site-request-panel h2 { margin-top:0; font-size:clamp(27px,4vw,36px); }
+.site-branded .site-request-intro { color:#49677a; max-width:820px; }
+.site-branded .site-request-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }
+.site-branded .site-request-field { display:flex; flex-direction:column; gap:6px; min-width:0; }
+.site-branded .site-request-field.full { grid-column:1/-1; }
+.site-branded .site-request-field label { color:#063f70; font-weight:800; }
+.site-branded .site-request-field input,
+.site-branded .site-request-field select,
+.site-branded .site-request-field textarea { width:100%; min-width:0; padding:13px 14px; border:1px solid #bcd3c3; border-radius:10px; background:#fff; color:#17324a; font:inherit; }
+.site-branded .site-request-field textarea { min-height:120px; resize:vertical; }
+.site-branded .site-request-field input:focus,
+.site-branded .site-request-field select:focus,
+.site-branded .site-request-field textarea:focus { outline:3px solid rgba(10,94,147,.18); border-color:#0a5e93; }
+.site-branded .site-request-submit { justify-self:start; border:0; border-radius:999px; background:#0b8f2e; color:#fff; padding:15px 24px; font:inherit; font-weight:900; cursor:pointer; }
+.site-branded .site-request-submit:hover { filter:brightness(.94); }
+.site-branded .site-request-note { margin:8px 0 0; color:#5f7482; font-size:14px; }
+.site-branded .site-contact-strip { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 2px; }
+.site-branded .site-contact-strip a { display:inline-block; border-radius:999px; padding:10px 16px; background:#edf8ef; border:1px solid #c9e8ce; color:#075c34; text-decoration:none; font-weight:800; }
+.site-branded .site-footer-inner { max-width:1180px; margin:auto; padding:28px 20px; text-align:center; }
 a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset:4px; }
 @media(max-width:850px) {
  .site-brand-row { justify-content:center; text-align:center; }
@@ -48,4 +72,8 @@ a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset
  .site-hero p { font-size:17px; }
  .site-hero-art img { max-width:205px; }
  .site-branded input,.site-branded select,.site-branded textarea { max-width:100%; }
+ .site-branded .site-request-panel { padding:18px; }
+ .site-branded .site-request-grid { grid-template-columns:1fr; }
+ .site-branded .site-request-field.full { grid-column:auto; }
+ .site-branded .site-request-submit { width:100%; }
 }
