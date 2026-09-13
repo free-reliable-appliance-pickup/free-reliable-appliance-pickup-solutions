@@ -13,6 +13,5 @@ jobs:
         run: |
           curl --fail --silent --show-error \
             -H "apikey: sb_publishable_eSxdhKuBxrC-Sw7FwmYxGA_oBYCTCgg" \
-            -H "Authorization: Bearer sb_publishable_eSxdhKuBxrC-Sw7FwmYxGA_oBYCTCgg" \
             "https://hutsrafyktcxpgilogdj.supabase.co/rest/v1/" \
             -o /dev/null
