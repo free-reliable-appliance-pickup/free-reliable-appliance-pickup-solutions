@@ -1,4 +1,5 @@
 name: Audit Approved Request Actions
+# Protect approved customer-facing SEO pages from broken request buttons or missing intake forms.
 
 on:
   push:
