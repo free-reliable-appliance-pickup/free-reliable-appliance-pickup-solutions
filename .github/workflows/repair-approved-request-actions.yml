@@ -31,32 +31,30 @@ jobs:
               'puget-sound-appliance-pickup': 'Washington',
           }
 
-          form = '''
-<section id="request" class="site-request-panel">
-  <h2>Request Appliance Pickup</h2>
-  <p class="site-request-intro">Submit the appliance condition, exact pickup location, stairs and access details. Free pickup is qualification-based and route availability must be confirmed.</p>
-  <form action="https://formspree.io/f/mvzeapzd" method="POST">
-    <input type="hidden" name="_subject" value="{subject} Appliance Pickup Request">
-    <input type="hidden" name="state" value="{state}">
-    <input type="hidden" name="source_page" value="{slug}">
-    <div class="site-request-grid">
-      <div class="site-request-field"><label>Full Name<input type="text" name="name" required autocomplete="name"></label></div>
-      <div class="site-request-field"><label>Phone<input type="tel" name="phone" required autocomplete="tel"></label></div>
-      <div class="site-request-field"><label>Email<input type="email" name="email" autocomplete="email"></label></div>
-      <div class="site-request-field"><label>Street Address<input type="text" name="address" required autocomplete="street-address"></label></div>
-      <div class="site-request-field"><label>City<input type="text" name="city" required autocomplete="address-level2"></label></div>
-      <div class="site-request-field"><label>ZIP Code<input type="text" name="zip" required autocomplete="postal-code" inputmode="numeric"></label></div>
-      <div class="site-request-field"><label>Appliance Type<select name="appliance" required><option value="">Select appliance</option><option>Refrigerator</option><option>Washer</option><option>Dryer</option><option>Washer &amp; Dryer Set</option><option>Stove / Range</option><option>Oven</option><option>Freezer</option><option>Dishwasher with qualifying appliances</option><option>Multiple Appliances</option><option>Other Major Appliance</option></select></label></div>
-      <div class="site-request-field"><label>Condition<select name="condition" required><option value="">Select condition</option><option>Fully working</option><option>Needs minor repair</option><option>Not working</option><option>Unknown</option><option>Mixed load - majority working</option></select></label></div>
-      <div class="site-request-field"><label>Location / Floor<select name="floor" required><option value="">Select location</option><option>1st floor</option><option>2nd floor</option><option>3rd floor or higher</option><option>Basement</option><option>Garage</option><option>Outside / Driveway</option><option>Other</option></select></label></div>
-      <div class="site-request-field"><label>Stairs<select name="stairs" required><option value="">Select stairs</option><option>No stairs</option><option>1 flight</option><option>2 flights</option><option>3+ flights</option><option>Unknown</option></select></label></div>
-      <div class="site-request-field full"><label>Access Details<input type="text" name="access" placeholder="Gate, elevator, narrow hallway, parking, doorway, long carry, etc."></label></div>
-      <div class="site-request-field full"><label>Appliance Details / Message<textarea name="message" rows="5" placeholder="List every appliance, whether each one works, brand/model if known, and whether photos are available."></textarea></label></div>
-      <div class="site-request-field full"><button class="site-request-submit" type="submit">Submit Pickup Request</button><p class="site-request-note">Submitting a request does not guarantee free pickup. Eligibility and route availability must be confirmed.</p></div>
-    </div>
-  </form>
-</section>
-'''
+          form = (
+              '<section id="request" class="site-request-panel">\n'
+              '<h2>Request Appliance Pickup</h2>\n'
+              '<p class="site-request-intro">Submit the appliance condition, exact pickup location, stairs and access details. Free pickup is qualification-based and route availability must be confirmed.</p>\n'
+              '<form action="https://formspree.io/f/mvzeapzd" method="POST">\n'
+              '<input type="hidden" name="_subject" value="{subject} Appliance Pickup Request">\n'
+              '<input type="hidden" name="state" value="{state}">\n'
+              '<input type="hidden" name="source_page" value="{slug}">\n'
+              '<div class="site-request-grid">\n'
+              '<div class="site-request-field"><label>Full Name<input type="text" name="name" required autocomplete="name"></label></div>\n'
+              '<div class="site-request-field"><label>Phone<input type="tel" name="phone" required autocomplete="tel"></label></div>\n'
+              '<div class="site-request-field"><label>Email<input type="email" name="email" autocomplete="email"></label></div>\n'
+              '<div class="site-request-field"><label>Street Address<input type="text" name="address" required autocomplete="street-address"></label></div>\n'
+              '<div class="site-request-field"><label>City<input type="text" name="city" required autocomplete="address-level2"></label></div>\n'
+              '<div class="site-request-field"><label>ZIP Code<input type="text" name="zip" required autocomplete="postal-code" inputmode="numeric"></label></div>\n'
+              '<div class="site-request-field"><label>Appliance Type<select name="appliance" required><option value="">Select appliance</option><option>Refrigerator</option><option>Washer</option><option>Dryer</option><option>Washer &amp; Dryer Set</option><option>Stove / Range</option><option>Oven</option><option>Freezer</option><option>Dishwasher with qualifying appliances</option><option>Multiple Appliances</option><option>Other Major Appliance</option></select></label></div>\n'
+              '<div class="site-request-field"><label>Condition<select name="condition" required><option value="">Select condition</option><option>Fully working</option><option>Needs minor repair</option><option>Not working</option><option>Unknown</option><option>Mixed load - majority working</option></select></label></div>\n'
+              '<div class="site-request-field"><label>Location / Floor<select name="floor" required><option value="">Select location</option><option>1st floor</option><option>2nd floor</option><option>3rd floor or higher</option><option>Basement</option><option>Garage</option><option>Outside / Driveway</option><option>Other</option></select></label></div>\n'
+              '<div class="site-request-field"><label>Stairs<select name="stairs" required><option value="">Select stairs</option><option>No stairs</option><option>1 flight</option><option>2 flights</option><option>3+ flights</option><option>Unknown</option></select></label></div>\n'
+              '<div class="site-request-field full"><label>Access Details<input type="text" name="access" placeholder="Gate, elevator, narrow hallway, parking, doorway, long carry, etc."></label></div>\n'
+              '<div class="site-request-field full"><label>Appliance Details / Message<textarea name="message" rows="5" placeholder="List every appliance, whether each one works, brand/model if known, and whether photos are available."></textarea></label></div>\n'
+              '<div class="site-request-field full"><button class="site-request-submit" type="submit">Submit Pickup Request</button><p class="site-request-note">Submitting a request does not guarantee free pickup. Eligibility and route availability must be confirmed.</p></div>\n'
+              '</div>\n</form>\n</section>\n'
+          )
 
           changed = []
           for slug, state in targets.items():
