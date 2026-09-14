@@ -46,9 +46,7 @@ jobs:
               Path('la-crescenta-appliance-pickup/index.html'),
           }
           logo_url = 'https://freereliableappliancepickup.com/file_00000000b7c082308dccc73e5bd3acd2.png'
-          provider_pattern = re.compile(
-              r'("provider":\{"@type":"Organization","name":"Free Reliable Appliance Pickup","url":"https://freereliableappliancepickup.com/",)("telephone":)'
-          )
+          provider_prefix = '"provider":{"@type":"Organization","name":"Free Reliable Appliance Pickup",'
 
           changed = set()
           for path, desc in descriptions.items():
@@ -78,13 +76,13 @@ jobs:
               text = path.read_text()
               if f'"logo":"{logo_url}"' in text:
                   continue
-              new_text, count = provider_pattern.subn(
-                  rf'\1"logo":"{logo_url}",\2',
-                  text,
-                  count=1,
-              )
-              if count != 1:
+              if provider_prefix not in text:
                   raise SystemExit(f'Expected provider Organization without logo in {path}')
+              new_text = text.replace(
+                  provider_prefix,
+                  provider_prefix + f'"logo":"{logo_url}",',
+                  1,
+              )
               path.write_text(new_text)
               changed.add(str(path))
 
