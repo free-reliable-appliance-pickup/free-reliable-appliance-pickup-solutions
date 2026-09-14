@@ -1,0 +1,85 @@
+name: Fix priority page audit findings
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-priority-page-audit-findings.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fix meta descriptions and organization logo schema
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          descriptions = {
+              Path('fontana-appliance-pickup/index.html'): 'Request qualifying free appliance pickup, removal and recycling review in Fontana, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('anaheim-appliance-pickup/index.html'): 'Request qualifying free appliance pickup, removal and recycling review in Anaheim, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('temecula-appliance-pickup/index.html'): 'Request qualifying free appliance pickup, removal and recycling review in Temecula, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('upland-appliance-pickup/index.html'): 'Request qualifying free appliance pickup, removal and recycling review in Upland, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+          }
+
+          logo_paths = {
+              Path('fontana-appliance-pickup/index.html'),
+              Path('anaheim-appliance-pickup/index.html'),
+              Path('temecula-appliance-pickup/index.html'),
+              Path('keizer-appliance-pickup/index.html'),
+          }
+
+          logo_url = 'https://freereliableappliancepickup.com/file_00000000b7c082308dccc73e5bd3acd2.png'
+          changed = []
+
+          for path, desc in descriptions.items():
+              text = path.read_text()
+              new_text, count = re.subn(
+                  r'<meta name="description" content="[^"]*">',
+                  f'<meta name="description" content="{desc}">',
+                  text,
+                  count=1,
+              )
+              if count != 1:
+                  raise SystemExit(f'Expected one meta description in {path}, found {count}')
+              if new_text != text:
+                  path.write_text(new_text)
+                  changed.append(str(path))
+
+          provider_pattern = re.compile(
+              r'("provider":\{"@type":"Organization","name":"Free Reliable Appliance Pickup","url":"https://freereliableappliancepickup.com/",)("telephone":)'
+          )
+          for path in logo_paths:
+              text = path.read_text()
+              if f'"logo":"{logo_url}"' in text:
+                  continue
+              new_text, count = provider_pattern.subn(
+                  rf'\1"logo":"{logo_url}",\2',
+                  text,
+                  count=1,
+              )
+              if count != 1:
+                  raise SystemExit(f'Expected provider Organization without logo in {path}')
+              path.write_text(new_text)
+              if str(path) not in changed:
+                  changed.append(str(path))
+
+          print('Changed:', ', '.join(changed))
+          PY
+      - name: Commit audit fixes
+        run: |
+          if git diff --quiet; then
+            echo 'No changes needed'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fontana-appliance-pickup/index.html anaheim-appliance-pickup/index.html temecula-appliance-pickup/index.html upland-appliance-pickup/index.html keizer-appliance-pickup/index.html
+          git commit -m 'Fix priority page SEO audit findings'
+          git push
