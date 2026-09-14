@@ -22,12 +22,12 @@ jobs:
 
           path = Path('landlord-property-manager-appliance-pickup/index.html')
           text = path.read_text()
-          old = 'Appliance pickup guidance for landlords and property managers handling turnovers, replacements and multiple units. Submit photos, condition and access for review.'
-          new = 'Appliance pickup for landlords and property managers handling turnovers, replacements and multiple units. Submit photos, condition and access details for review.'
+          old = 'Appliance pickup for landlords and property managers handling turnovers, replacements and multiple units. Submit photos, condition and access details for review.'
+          new = 'Appliance pickup for landlords and property managers handling turnovers, replacements and multiple units. Submit photos, condition and access for review.'
           if old not in text:
-              raise SystemExit('Expected landlord meta description not found')
+              raise SystemExit('Expected current landlord meta description not found')
           path.write_text(text.replace(old, new, 1))
-          print('Updated landlord page meta description')
+          print('Updated landlord page meta description to 153 characters')
           PY
       - name: Commit landlord meta cleanup
         run: |
@@ -38,5 +38,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add landlord-property-manager-appliance-pickup/index.html
-          git commit -m 'Trim landlord page search snippet'
+          git commit -m 'Finalize landlord page search snippet'
           git push
