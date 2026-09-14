@@ -1,0 +1,52 @@
+name: Add Fontana and Anaheim homepage links
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-fontana-anaheim-home-links.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Add direct priority links
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text()
+          old = '<a class="pill" href="/inland-empire-appliance-pickup/">Inland Empire</a><a class="pill" href="/service-areas/">Seattle Area</a>'
+          new = '<a class="pill" href="/inland-empire-appliance-pickup/">Inland Empire</a><a class="pill" href="/fontana-appliance-pickup/">Fontana</a><a class="pill" href="/service-areas/">Seattle Area</a>'
+          if new not in text:
+              if old not in text:
+                  raise SystemExit('Inland Empire insertion marker not found')
+              text = text.replace(old, new, 1)
+
+          old2 = '<a class="pill" href="/orange-county-appliance-pickup/">Orange County</a><a class="pill" href="/riverside-county-appliance-pickup/">Riverside County</a>'
+          new2 = '<a class="pill" href="/orange-county-appliance-pickup/">Orange County</a><a class="pill" href="/anaheim-appliance-pickup/">Anaheim</a><a class="pill" href="/riverside-county-appliance-pickup/">Riverside County</a>'
+          if new2 not in text:
+              if old2 not in text:
+                  raise SystemExit('Orange County insertion marker not found')
+              text = text.replace(old2, new2, 1)
+
+          path.write_text(text)
+          print('Added direct homepage links to Fontana and Anaheim')
+          PY
+      - name: Commit homepage discovery links
+        run: |
+          if git diff --quiet; then
+            echo 'No changes needed'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Strengthen Fontana and Anaheim homepage discovery'
+          git push
