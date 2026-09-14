@@ -48,6 +48,7 @@ jobs:
           }
           logo_url = 'https://freereliableappliancepickup.com/file_00000000b7c082308dccc73e5bd3acd2.png'
           provider_prefix = '"provider":{"@type":"Organization","name":"Free Reliable Appliance Pickup",'
+          standalone_org = '{"@type":"Organization","@id":"https://freereliableappliancepickup.com/#organization","name":"Free Reliable Appliance Pickup","url":"https://freereliableappliancepickup.com/"}'
 
           changed = set()
           for path, desc in descriptions.items():
@@ -77,9 +78,13 @@ jobs:
               text = path.read_text()
               if f'"logo":"{logo_url}"' in text:
                   continue
-              if provider_prefix not in text:
-                  raise SystemExit(f'Expected provider Organization without logo in {path}')
-              text = text.replace(provider_prefix, provider_prefix + f'"logo":"{logo_url}",', 1)
+              if provider_prefix in text:
+                  text = text.replace(provider_prefix, provider_prefix + f'"logo":"{logo_url}",', 1)
+              elif standalone_org in text:
+                  replacement = standalone_org[:-1] + f',"logo":"{logo_url}"' + '}'
+                  text = text.replace(standalone_org, replacement, 1)
+              else:
+                  raise SystemExit(f'Expected Organization without logo in {path}')
               path.write_text(text)
               changed.add(str(path))
 
