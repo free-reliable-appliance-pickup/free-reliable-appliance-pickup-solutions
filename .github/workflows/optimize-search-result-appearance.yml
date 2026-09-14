@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Add Google text-result and image-result signals to approved pages
+      - name: Normalize Google text, image, WebSite and breadcrumb signals
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -33,33 +33,18 @@ jobs:
           import html as htmlmod
           import json
           import re
+          import xml.etree.ElementTree as ET
 
           BASE = 'https://freereliableappliancepickup.com/'
           SITE_NAME = 'Free Reliable Appliance Pickup'
           LOGO = BASE + 'file_00000000b7c082308dccc73e5bd3acd2.png'
+          NS = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
 
-          approved_locations = {
-              'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
-              'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
-              'utah-appliance-pickup','idaho-appliance-pickup','portland-appliance-pickup',
-              'salem-appliance-pickup','denver-appliance-pickup','aurora-appliance-pickup',
-              'inland-empire-appliance-pickup','los-angeles-appliance-pickup',
-              'los-angeles-county-appliance-pickup','riverside-county-appliance-pickup',
-              'orange-county-appliance-pickup','san-diego-county-appliance-pickup',
-              'sf-bay-area-appliance-pickup','central-valley-appliance-pickup',
-              'central-coast-appliance-pickup','las-vegas-valley-appliance-pickup',
-              'phoenix-appliance-pickup','phoenix-metro-appliance-pickup','puget-sound-appliance-pickup'
-          }
-          approved_nonlocation = {
-              '', 'about','appliance-pickup-checklist','contact','free-pickup-qualification',
-              'freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup',
-              'old-appliance-disposal-options','partners','refrigerator-pickup','service-areas',
-              'stove-oven-pickup','washer-dryer-pickup'
-          }
-          approved = approved_locations | approved_nonlocation
-
-          def page_path(slug):
-              return Path('index.html') if slug == '' else Path(slug) / 'index.html'
+          def file_for(url):
+              if url == BASE:
+                  return Path('index.html'), ''
+              slug = url[len(BASE):].strip('/')
+              return Path(slug) / 'index.html', slug
 
           def get_attr(tag, attr):
               m = re.search(r'\b' + re.escape(attr) + r'\s*=\s*(["\'])(.*?)\1', tag, re.I | re.S)
@@ -80,24 +65,21 @@ jobs:
               return None
 
           def insert_head(raw, block):
-              return re.sub(r'</head\s*>', block.rstrip() + '\n</head>', raw, count=1, flags=re.I)
+              if re.search(r'</head\s*>', raw, re.I):
+                  return re.sub(r'</head\s*>', block.rstrip() + '\n</head>', raw, count=1, flags=re.I)
+              return raw
 
+          root = ET.parse('sitemap.xml').getroot()
+          urls = [x.text.strip() for x in root.findall('.//s:loc', NS) if x.text and x.text.strip().startswith(BASE)]
           changed = []
-          for slug in sorted(approved):
-              p = page_path(slug)
+
+          for url in urls:
+              p, slug = file_for(url)
               if not p.exists():
                   continue
+
               raw = p.read_text(encoding='utf-8', errors='ignore')
               original = raw
-
-              robot_tag = find_meta(raw, name='robots')
-              if robot_tag and 'noindex' in get_attr(robot_tag, 'content').lower():
-                  continue
-              robot = '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'
-              if robot_tag:
-                  raw = raw.replace(robot_tag, robot, 1)
-              else:
-                  raw = insert_head(raw, robot)
 
               title_match = re.search(r'<title\b[^>]*>(.*?)</title\s*>', raw, re.I | re.S)
               title = htmlmod.unescape(re.sub(r'\s+', ' ', title_match.group(1)).strip()) if title_match else SITE_NAME
@@ -106,15 +88,21 @@ jobs:
               description = get_attr(desc_tag, 'content') if desc_tag else ''
 
               canonical_tag = find_link(raw, 'canonical')
-              canonical = get_attr(canonical_tag, 'href') if canonical_tag else (BASE if slug == '' else BASE + slug + '/')
+              canonical = get_attr(canonical_tag, 'href') if canonical_tag else url
+
+              robot_tag = find_meta(raw, name='robots')
+              robot = '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'
+              if robot_tag:
+                  raw = raw.replace(robot_tag, robot, 1)
+              else:
+                  raw = insert_head(raw, robot)
 
               if not find_link(raw, 'icon'):
                   raw = insert_head(raw, '<link rel="icon" type="image/png" href="' + LOGO + '">')
 
-              page_num = 1 + (sum(ord(c) for c in slug) % 3 if slug else 1)
-              default_image = BASE + f'assets/major-appliance-pickup-photo-{page_num}.jpg'
               existing_og_image = find_meta(raw, prop='og:image')
-              image = get_attr(existing_og_image, 'content') if existing_og_image else default_image
+              page_num = 1 + (sum(ord(c) for c in slug) % 3 if slug else 1)
+              image = get_attr(existing_og_image, 'content') if existing_og_image else BASE + f'assets/major-appliance-pickup-photo-{page_num}.jpg'
 
               additions = []
               if not find_meta(raw, prop='og:site_name'):
@@ -128,17 +116,18 @@ jobs:
               if description and not find_meta(raw, prop='og:description'):
                   additions.append(f'<meta property="og:description" content="{htmlmod.escape(description, quote=True)}">')
               if not existing_og_image:
-                  additions.append(f'<meta property="og:image" content="{image}">')
+                  additions.append(f'<meta property="og:image" content="{htmlmod.escape(image, quote=True)}">')
                   additions.append('<meta property="og:image:alt" content="Real major household appliance handled by Free Reliable Appliance Pickup">')
               if not find_meta(raw, name='twitter:card'):
                   additions.append('<meta name="twitter:card" content="summary_large_image">')
-
+              if not find_meta(raw, name='twitter:image'):
+                  additions.append(f'<meta name="twitter:image" content="{htmlmod.escape(image, quote=True)}">')
               if additions:
                   raw = insert_head(raw, '\n'.join(additions))
 
-              # Add a WebPage entity so Google has a consistent page name, URL and primary image signal.
-              if not re.search(r'"@type"\s*:\s*"WebPage"', raw):
-                  web_page = {
+              # Every active page should explicitly connect to the domain-level WebSite entity.
+              if '#website' not in raw.lower():
+                  webpage = {
                       '@context': 'https://schema.org',
                       '@type': 'WebPage',
                       '@id': canonical + '#webpage',
@@ -148,37 +137,39 @@ jobs:
                       'primaryImageOfPage': {'@type': 'ImageObject', 'url': image},
                   }
                   if description:
-                      web_page['description'] = description
-                  raw = insert_head(raw, '<script type="application/ld+json">' + json.dumps(web_page, separators=(',', ':')) + '</script>')
+                      webpage['description'] = description
+                  raw = insert_head(raw, '<script type="application/ld+json">' + json.dumps(webpage, ensure_ascii=False, separators=(',', ':')) + '</script>')
 
-              # Google's preferred site-name signal belongs on the domain-level home page.
-              if slug == '' and not re.search(r'"@type"\s*:\s*"WebSite"', raw):
+              # Active market pages get a simple breadcrumb trail even when they were added later.
+              if slug.endswith('-appliance-pickup') and 'breadcrumb' not in raw.lower():
+                  crumbs = {
+                      '@context': 'https://schema.org',
+                      '@type': 'BreadcrumbList',
+                      'itemListElement': [
+                          {'@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': BASE},
+                          {'@type': 'ListItem', 'position': 2, 'name': 'Service Areas', 'item': BASE + 'service-areas/'},
+                          {'@type': 'ListItem', 'position': 3, 'name': title, 'item': canonical},
+                      ],
+                  }
+                  raw = insert_head(raw, '<script type="application/ld+json">' + json.dumps(crumbs, ensure_ascii=False, separators=(',', ':')) + '</script>')
+
+              if slug == '' and not re.search(r'"@type"\s*:\s*"WebSite"', raw, re.I):
                   website = {
                       '@context': 'https://schema.org',
                       '@type': 'WebSite',
                       '@id': BASE + '#website',
                       'url': BASE,
                       'name': SITE_NAME,
-                      'alternateName': ['Reliable Appliance Pickup', 'Free Reliable Appliance Pickup & Removal']
+                      'alternateName': ['Reliable Appliance Pickup', 'Free Reliable Appliance Pickup & Removal'],
                   }
                   raw = insert_head(raw, '<script type="application/ld+json">' + json.dumps(website, separators=(',', ':')) + '</script>')
-
-              if slug == '' and not re.search(r'"@id"\s*:\s*"https://freereliableappliancepickup\.com/#organization"', raw):
-                  organization = {
-                      '@context': 'https://schema.org',
-                      '@type': 'Organization',
-                      '@id': BASE + '#organization',
-                      'name': SITE_NAME,
-                      'url': BASE,
-                      'logo': {'@type': 'ImageObject', 'url': LOGO}
-                  }
-                  raw = insert_head(raw, '<script type="application/ld+json">' + json.dumps(organization, separators=(',', ':')) + '</script>')
 
               if raw != original:
                   p.write_text(raw, encoding='utf-8')
                   changed.append(str(p))
 
-          print('Updated approved pages:', len(changed))
+          print('ACTIVE_SITEMAP_URLS', len(urls))
+          print('UPDATED_PAGES', len(changed))
           for item in changed:
               print(' -', item)
           PY
@@ -188,6 +179,7 @@ jobs:
             echo 'No page changes needed.'
             exit 0
           fi
-          git commit -m "Strengthen Google text and image result eligibility"
+
+          git commit -m "Normalize active pages for Google search appearance"
           git pull --rebase origin main || true
           git push origin HEAD:main
