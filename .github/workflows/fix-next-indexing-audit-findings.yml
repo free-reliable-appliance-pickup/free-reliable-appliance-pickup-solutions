@@ -1,0 +1,103 @@
+name: Fix next indexing audit findings
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-next-indexing-audit-findings.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fix targeted title meta and schema findings
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          descriptions = {
+              Path('monrovia-appliance-pickup/index.html'): 'Request qualifying free appliance pickup, removal and recycling review in Monrovia, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('la-canada-flintridge-appliance-pickup/index.html'): 'Request qualifying free appliance pickup in La Cañada Flintridge, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('la-crescenta-appliance-pickup/index.html'): 'Request qualifying free appliance pickup in La Crescenta, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('westminster-appliance-pickup/index.html'): 'Request qualifying free appliance pickup in Westminster, CO for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('central-coast-appliance-pickup/index.html'): "Request qualifying appliance pickup, removal and recycling review across California's Central Coast for washers, dryers, refrigerators, freezers and stoves.",
+          }
+
+          title_replacements = {
+              Path('la-canada-flintridge-appliance-pickup/index.html'): (
+                  'Free Appliance Pickup La Cañada Flintridge CA | Removal & Recycling',
+                  'Free Appliance Pickup La Cañada Flintridge CA | Removal'
+              ),
+              Path('central-coast-appliance-pickup/index.html'): (
+                  'California Central Coast Appliance Pickup | Free Appliance Removal',
+                  'Central Coast CA Appliance Pickup | Removal & Recycling'
+              ),
+          }
+
+          logo_paths = {
+              Path('monrovia-appliance-pickup/index.html'),
+              Path('la-canada-flintridge-appliance-pickup/index.html'),
+              Path('la-crescenta-appliance-pickup/index.html'),
+          }
+          logo_url = 'https://freereliableappliancepickup.com/file_00000000b7c082308dccc73e5bd3acd2.png'
+          provider_pattern = re.compile(
+              r'("provider":\{"@type":"Organization","name":"Free Reliable Appliance Pickup","url":"https://freereliableappliancepickup.com/",)("telephone":)'
+          )
+
+          changed = set()
+          for path, desc in descriptions.items():
+              text = path.read_text()
+              new_text, count = re.subn(
+                  r'<meta name="description" content="[^"]*">',
+                  f'<meta name="description" content="{desc}">',
+                  text,
+                  count=1,
+              )
+              if count != 1:
+                  raise SystemExit(f'Expected one meta description in {path}, found {count}')
+              if new_text != text:
+                  path.write_text(new_text)
+                  changed.add(str(path))
+
+          for path, (old, new) in title_replacements.items():
+              text = path.read_text()
+              if old not in text:
+                  raise SystemExit(f'Expected title text not found in {path}')
+              new_text = text.replace(old, new)
+              if new_text != text:
+                  path.write_text(new_text)
+                  changed.add(str(path))
+
+          for path in logo_paths:
+              text = path.read_text()
+              if f'"logo":"{logo_url}"' in text:
+                  continue
+              new_text, count = provider_pattern.subn(
+                  rf'\1"logo":"{logo_url}",\2',
+                  text,
+                  count=1,
+              )
+              if count != 1:
+                  raise SystemExit(f'Expected provider Organization without logo in {path}')
+              path.write_text(new_text)
+              changed.add(str(path))
+
+          print('Changed:', ', '.join(sorted(changed)) if changed else 'none')
+          PY
+      - name: Commit targeted audit fixes
+        run: |
+          if git diff --quiet; then
+            echo 'No changes needed'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add monrovia-appliance-pickup/index.html la-canada-flintridge-appliance-pickup/index.html la-crescenta-appliance-pickup/index.html westminster-appliance-pickup/index.html central-coast-appliance-pickup/index.html
+          git commit -m 'Fix next indexing page audit findings'
+          git push
