@@ -1,0 +1,63 @@
+name: Audit Approved Request Actions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'assets/**'
+      - 'data/approved-indexable-locations.txt'
+      - '.github/workflows/audit-approved-request-actions.yml'
+  pull_request:
+    paths:
+      - '**/*.html'
+      - 'assets/**'
+      - 'data/approved-indexable-locations.txt'
+      - '.github/workflows/audit-approved-request-actions.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate approved pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import sys
+
+          root = Path('.')
+          approved_file = root / 'data' / 'approved-indexable-locations.txt'
+          pages = [line.strip() for line in approved_file.read_text(encoding='utf-8').splitlines() if line.strip()]
+
+          required = {
+              'brand stylesheet': '/assets/site-brand.css',
+              'customer routing script': '/assets/customer-routing.js',
+              'same-page request link': 'href="#request"',
+              'request section anchor': 'id="request"',
+              'Formspree endpoint': 'https://formspree.io/f/mvzeapzd',
+          }
+
+          failures = []
+          for slug in pages:
+              page = root / slug / 'index.html'
+              if not page.exists():
+                  failures.append(f'{slug}: missing index.html')
+                  continue
+              text = page.read_text(encoding='utf-8', errors='replace')
+              for label, needle in required.items():
+                  if needle not in text:
+                      failures.append(f'{slug}: missing {label}')
+
+          print(f'Checked {len(pages)} approved indexable pages.')
+          if failures:
+              print('\nApproved-page request-action audit FAILED:')
+              for item in failures:
+                  print(f' - {item}')
+              sys.exit(1)
+
+          print('All approved pages have the branded UI, same-page request action, routing script, request anchor, and Formspree endpoint.')
