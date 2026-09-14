@@ -29,7 +29,8 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           from collections import defaultdict
-          import re, html, xml.etree.ElementTree as ET
+          from html.parser import HTMLParser
+          import html, xml.etree.ElementTree as ET
 
           BASE='https://freereliableappliancepickup.com/'
           root=ET.parse('sitemap.xml').getroot()
@@ -45,9 +46,32 @@ jobs:
               p=Path(rel)
               return p if p.suffix else p/'index.html'
 
-          def get(pattern,text):
-              m=re.search(pattern,text,re.I|re.S)
-              return html.unescape(re.sub(r'<[^>]+>',' ',m.group(1)).strip()) if m else ''
+          class MetaParser(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.title=''; self.h1=''; self.desc=''; self.canonical=''
+                  self._capture=None; self._buf=[]
+              def handle_starttag(self, tag, attrs):
+                  a={k.lower():(v or '') for k,v in attrs}
+                  tag=tag.lower()
+                  if tag=='title' and not self.title:
+                      self._capture='title'; self._buf=[]
+                  elif tag=='h1' and not self.h1:
+                      self._capture='h1'; self._buf=[]
+                  elif tag=='meta' and a.get('name','').lower()=='description' and not self.desc:
+                      self.desc=a.get('content','').strip()
+                  elif tag=='link' and 'canonical' in a.get('rel','').lower() and not self.canonical:
+                      self.canonical=a.get('href','').strip()
+              def handle_endtag(self, tag):
+                  tag=tag.lower()
+                  if self._capture==tag:
+                      value=' '.join(''.join(self._buf).split())
+                      if tag=='title': self.title=value
+                      elif tag=='h1': self.h1=value
+                      self._capture=None; self._buf=[]
+              def handle_data(self, data):
+                  if self._capture:
+                      self._buf.append(data)
 
           rows=[]
           for url in urls:
@@ -55,16 +79,9 @@ jobs:
               if p is None or not p.exists():
                   rows.append((url,'','','','MISSING'))
                   continue
-              s=p.read_text(encoding='utf-8',errors='ignore')
-              title=get(r'<title[^>]*>(.*?)</title>',s)
-              desc=get(r'<meta\s+name=["\']description["\'][^>]*content=["\']([^"\']*)["\']',s)
-              if not desc:
-                  desc=get(r'<meta\s+content=["\']([^"\']*)["\'][^>]*name=["\']description["\']',s)
-              h1=get(r'<h1[^>]*>(.*?)</h1>',s)
-              can=get(r'<link\s+rel=["\']canonical["\'][^>]*href=["\']([^"\']+)["\']',s)
-              if not can:
-                  can=get(r'<link\s+href=["\']([^"\']+)["\'][^>]*rel=["\']canonical["\']',s)
-              rows.append((url,title,desc,h1,can))
+              parser=MetaParser()
+              parser.feed(p.read_text(encoding='utf-8',errors='ignore'))
+              rows.append((url,html.unescape(parser.title),html.unescape(parser.desc),html.unescape(parser.h1),parser.canonical))
 
           print('ACTIVE_URLS',len(rows))
           print('MISSING_TITLE',sum(not r[1] for r in rows))
