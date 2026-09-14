@@ -43,9 +43,9 @@ jobs:
           s = s.replace(old_desc, new_desc)
 
           neighborhood_section = '''
-<section id="salem-neighborhoods"><h2>Salem Neighborhoods &amp; ZIP Codes We Review</h2><p>We review qualifying appliance pickup requests across Salem, including West Salem, Grant, Highland, Northgate, Morningside, Faye Wright, Sunnyslope, South Gateway, Southeast Salem, Northeast Salem and East Lancaster. Exact coverage is confirmed from the pickup address, appliance condition, access and the current route.</p><p>Common Salem ZIP codes include 97301, 97302, 97304, 97305, 97306 and 97317. Keizer and nearby Mid-Willamette Valley requests may also be reviewed when route coverage is available.</p></section>
-<section id="salem-appliance-guides"><h2>Salem Appliance Pickup by Type</h2><p>Use these guides to prepare the appliance before submitting the Salem request. Each guide explains the condition details, photos and access information that help us review pickup eligibility.</p><div class="links"><a href="../washer-dryer-pickup/">Washer &amp; Dryer Pickup in Salem</a><a href="../refrigerator-pickup/">Refrigerator Pickup in Salem</a><a href="../freezer-pickup/">Freezer Pickup in Salem</a><a href="../stove-oven-pickup/">Stove &amp; Oven Pickup in Salem</a><a href="../free-pickup-qualification/">Free Pickup Qualification</a></div></section>
-'''
+          <section id="salem-neighborhoods"><h2>Salem Neighborhoods &amp; ZIP Codes We Review</h2><p>We review qualifying appliance pickup requests across Salem, including West Salem, Grant, Highland, Northgate, Morningside, Faye Wright, Sunnyslope, South Gateway, Southeast Salem, Northeast Salem and East Lancaster. Exact coverage is confirmed from the pickup address, appliance condition, access and the current route.</p><p>Common Salem ZIP codes include 97301, 97302, 97304, 97305, 97306 and 97317. Keizer and nearby Mid-Willamette Valley requests may also be reviewed when route coverage is available.</p></section>
+          <section id="salem-appliance-guides"><h2>Salem Appliance Pickup by Type</h2><p>Use these guides to prepare the appliance before submitting the Salem request. Each guide explains the condition details, photos and access information that help us review pickup eligibility.</p><div class="links"><a href="../washer-dryer-pickup/">Washer &amp; Dryer Pickup in Salem</a><a href="../refrigerator-pickup/">Refrigerator Pickup in Salem</a><a href="../freezer-pickup/">Freezer Pickup in Salem</a><a href="../stove-oven-pickup/">Stove &amp; Oven Pickup in Salem</a><a href="../free-pickup-qualification/">Free Pickup Qualification</a></div></section>
+          '''
           if 'id="salem-neighborhoods"' not in s:
               marker = '<section><h2>Photos and Access Details</h2>'
               if marker in s:
@@ -86,8 +86,8 @@ jobs:
           s = read(path)
           if 'href="/salem-appliance-pickup/"' not in s:
               block = '''
-<section class="soft" id="established-local-markets"><div class="wrap"><h2 class="section-title">Established Local Appliance Pickup Markets</h2><p class="section-intro">Use the local page for the most specific pickup, qualification and access information in an established market.</p><div class="priority"><a class="pill" href="/salem-appliance-pickup/">Free Appliance Pickup Salem OR</a><a class="pill" href="/portland-appliance-pickup/">Free Appliance Pickup Portland OR</a><a class="pill" href="/denver-appliance-pickup/">Free Appliance Pickup Denver CO</a><a class="pill" href="/aurora-appliance-pickup/">Free Appliance Pickup Aurora CO</a></div></div></section>
-'''
+          <section class="soft" id="established-local-markets"><div class="wrap"><h2 class="section-title">Established Local Appliance Pickup Markets</h2><p class="section-intro">Use the local page for the most specific pickup, qualification and access information in an established market.</p><div class="priority"><a class="pill" href="/salem-appliance-pickup/">Free Appliance Pickup Salem OR</a><a class="pill" href="/portland-appliance-pickup/">Free Appliance Pickup Portland OR</a><a class="pill" href="/denver-appliance-pickup/">Free Appliance Pickup Denver CO</a><a class="pill" href="/aurora-appliance-pickup/">Free Appliance Pickup Aurora CO</a></div></div></section>
+          '''
               marker = '<section id="request" class="soft">'
               if marker in s:
                   s = s.replace(marker, block + marker, 1)
