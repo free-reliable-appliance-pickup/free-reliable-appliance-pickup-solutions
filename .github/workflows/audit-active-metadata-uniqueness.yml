@@ -1,4 +1,5 @@
 name: Audit Active Metadata Uniqueness
+# Revalidated after the approved-page request-action repair pass.
 
 on:
   push:
