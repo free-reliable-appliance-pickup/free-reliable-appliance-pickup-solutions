@@ -1,0 +1,58 @@
+name: Trim secondary page meta descriptions
+
+on:
+  push:
+    paths:
+      - '.github/workflows/trim-secondary-page-meta.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Shorten flagged meta descriptions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          descriptions = {
+              Path('fullerton-appliance-pickup/index.html'): 'Request qualifying free appliance pickup, removal and recycling review in Fullerton, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('tigard-appliance-pickup/index.html'): 'Request qualifying free appliance pickup, removal and recycling review in Tigard, OR for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('claremont-appliance-pickup/index.html'): 'Request qualifying free appliance pickup, removal and recycling review in Claremont, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+              Path('glendora-appliance-pickup/index.html'): 'Request qualifying free appliance pickup, removal and recycling review in Glendora, CA for washers, dryers, refrigerators, freezers, stoves and ranges.',
+          }
+
+          changed = []
+          for path, desc in descriptions.items():
+              text = path.read_text()
+              new_text, count = re.subn(
+                  r'<meta name="description" content="[^"]*">',
+                  f'<meta name="description" content="{desc}">',
+                  text,
+                  count=1,
+              )
+              if count != 1:
+                  raise SystemExit(f'Expected one meta description in {path}, found {count}')
+              if new_text != text:
+                  path.write_text(new_text)
+                  changed.append(str(path))
+
+          print('Changed:', ', '.join(changed) if changed else 'none')
+          PY
+      - name: Commit meta fixes
+        run: |
+          if git diff --quiet; then
+            echo 'No changes needed'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fullerton-appliance-pickup/index.html tigard-appliance-pickup/index.html claremont-appliance-pickup/index.html glendora-appliance-pickup/index.html
+          git commit -m 'Trim secondary city meta descriptions'
+          git push
