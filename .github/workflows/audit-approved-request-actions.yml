@@ -42,6 +42,10 @@ jobs:
               'request section anchor': 'id="request"',
               'Formspree endpoint': 'https://formspree.io/f/mvzeapzd',
           }
+          forbidden = {
+              'homepage request redirect': 'href="/#request"',
+              'parent-page request redirect': 'href="../#request"',
+          }
 
           failures = []
           for slug in pages:
@@ -53,6 +57,9 @@ jobs:
               for label, needle in required.items():
                   if needle not in text:
                       failures.append(f'{slug}: missing {label}')
+              for label, needle in forbidden.items():
+                  if needle in text:
+                      failures.append(f'{slug}: contains {label}')
 
           print(f'Checked {len(pages)} approved indexable pages.')
           if failures:
@@ -61,4 +68,4 @@ jobs:
                   print(f' - {item}')
               sys.exit(1)
 
-          print('All approved pages have the branded UI, same-page request action, routing script, request anchor, and Formspree endpoint.')
+          print('All approved pages use the branded UI, routing script, same-page request links, request anchors, and Formspree endpoint.')
