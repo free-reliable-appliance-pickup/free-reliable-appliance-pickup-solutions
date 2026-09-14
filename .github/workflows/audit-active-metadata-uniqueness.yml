@@ -4,6 +4,15 @@ name: Audit Active Metadata Uniqueness
 on:
   push:
     paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - 'data/approved-indexable-locations.txt'
+      - '.github/workflows/audit-active-metadata-uniqueness.yml'
+  pull_request:
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - 'data/approved-indexable-locations.txt'
       - '.github/workflows/audit-active-metadata-uniqueness.yml'
 
 permissions:
