@@ -52,6 +52,26 @@ body.site-branded { margin:0; padding:0; max-width:none; width:100%; background:
 .site-branded .site-contact-strip a { display:inline-block; border-radius:999px; padding:10px 16px; background:#edf8ef; border:1px solid #c9e8ce; color:#075c34; text-decoration:none; font-weight:800; }
 .site-branded .site-footer-inner { max-width:1180px; margin:auto; padding:28px 20px; text-align:center; }
 a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset:4px; }
+
+/* Premium washer/dryer proof gallery.
+   The shared routing script inserts this section on the seven California premium
+   washer/dryer regional pages. Five seven-photo strips = 35 real pickup photos. */
+.site-branded .site-laundry-photo-showcase { overflow-x:auto; background:linear-gradient(145deg,#f7fcf8,#fff,#eef8f2); border:1px solid #cfe5d5; }
+.site-branded .site-laundry-photo-showcase h2 { margin-top:0; font-size:clamp(28px,4vw,38px); }
+.site-branded .site-laundry-photo-showcase h2::after { content:" — 35 Real Pickup Photos"; color:#0b8f2e; }
+.site-branded .site-laundry-photo-showcase > p::after { content:" Browse all 35 real washer and dryer examples below; on a phone, swipe sideways to view the full photo strips."; font-weight:700; }
+.site-branded .site-laundry-photo-showcase > div { display:block !important; min-width:760px; }
+.site-branded .site-laundry-photo-showcase figure { display:block; margin:0 0 12px !important; width:100%; }
+.site-branded .site-laundry-photo-showcase figure img { display:none !important; }
+.site-branded .site-laundry-photo-showcase figure::before,
+.site-branded .site-laundry-photo-showcase figure::after { content:""; display:block; width:100%; aspect-ratio:7/1; margin:0 0 12px; background-repeat:no-repeat; background-size:100% 100%; background-position:center; border:1px solid #d5e6dc; border-radius:14px; box-shadow:0 8px 20px rgba(17,61,40,.12); }
+.site-branded .site-laundry-photo-showcase figure:nth-child(1)::before { background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp'); }
+.site-branded .site-laundry-photo-showcase figure:nth-child(1)::after { background-image:url('/assets/laundry/real-washer-dryer-gallery-2.webp'); }
+.site-branded .site-laundry-photo-showcase figure:nth-child(2)::before { background-image:url('/assets/laundry/real-washer-dryer-gallery-3.webp'); }
+.site-branded .site-laundry-photo-showcase figure:nth-child(2)::after { background-image:url('/assets/laundry/real-washer-dryer-gallery-4.webp'); }
+.site-branded .site-laundry-photo-showcase figure:nth-child(3)::before { background-image:url('/assets/laundry/real-washer-dryer-gallery-5.webp'); }
+.site-branded .site-laundry-photo-showcase figure:nth-child(3)::after { display:none; }
+
 @media(max-width:850px) {
  .site-brand-row { justify-content:center; text-align:center; }
  .site-hours { width:100%; }
@@ -76,4 +96,6 @@ a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset
  .site-branded .site-request-grid { grid-template-columns:1fr; }
  .site-branded .site-request-field.full { grid-column:auto; }
  .site-branded .site-request-submit { width:100%; }
+ .site-branded .site-laundry-photo-showcase { padding-left:15px; padding-right:15px; }
+ .site-branded .site-laundry-photo-showcase > div { min-width:700px; }
 }
