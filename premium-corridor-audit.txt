@@ -1,5 +1,5 @@
 Premium Corridor SEO Audit — 2026-09-15
-Pages passing all checks: 22/25
+Pages passing all checks: 25/25
 Missing page files: 0
 PASS Montrose: failed=none
 PASS La Crescenta: failed=none
@@ -22,9 +22,9 @@ PASS Claremont: failed=none
 PASS Pomona: failed=none
 PASS Montclair: failed=none
 PASS Ontario: failed=none
-CHECK Upland: failed=breadcrumb_schema
-CHECK Rancho Cucamonga: failed=breadcrumb_schema
-CHECK Fontana: failed=breadcrumb_schema
+PASS Upland: failed=none
+PASS Rancho Cucamonga: failed=none
+PASS Fontana: failed=none
 PASS San Bernardino: failed=none
 
 Strategy applied: exact city/service titles, descriptive internal links, browseable corridor hierarchy, sharp real-photo fallbacks, accurate qualification language, Service/FAQ/Breadcrumb checks, request-form checks, and sitemap coverage.
