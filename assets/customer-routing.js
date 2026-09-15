@@ -161,14 +161,119 @@ function preferLocalRequestForm(){
   document.querySelectorAll(selectors.join(',')).forEach(link=>link.setAttribute('href',localHref));
 }
 
+/* Real washer/dryer photography for priority laundry pages.
+   Uses only business-owned photos supplied for this website and does not create
+   new location pages or change pickup qualification rules. */
+function pagePath(){
+  let p=location.pathname||'/';
+  const base=siteBase();
+  if(base!=='/'&&p.startsWith(base.slice(0,-1)))p=p.slice(base.length-1)||'/';
+  if(!p.startsWith('/'))p='/'+p;
+  if(!p.endsWith('/'))p+='/';
+  return p;
+}
+
+const WASHER_DRYER_PHOTOS={
+  '/washer-dryer-pickup/':{
+    src:'assets/washer-dryer-photos/washer-dryer-pickup-frontload-set.jpg',
+    alt:'Real washer and dryer set submitted for appliance pickup'
+  },
+  '/california-washer-dryer-pickup/':{
+    src:'assets/washer-dryer-photos/washer-dryer-pickup-modern-topload-set.jpg',
+    alt:'Real washer and dryer set for pickup in California'
+  },
+  '/southern-california-washer-dryer-pickup/':{
+    src:'assets/washer-dryer-photos/washer-dryer-pickup-gray-topload-set.jpg',
+    alt:'Real washer and dryer set for pickup in Southern California'
+  },
+  '/san-gabriel-inland-empire-washer-dryer-pickup/':{
+    src:'assets/washer-dryer-photos/washer-dryer-pickup-stacked-set.jpg',
+    alt:'Real washer and dryer set for San Gabriel Valley and Inland Empire pickup'
+  },
+  '/los-angeles-county-washer-dryer-pickup/':{
+    src:'assets/washer-dryer-photos/washer-dryer-pickup-frontload-set.jpg',
+    alt:'Real washer and dryer set for pickup in Los Angeles County'
+  },
+  '/orange-county-washer-dryer-pickup/':{
+    src:'assets/washer-dryer-photos/washer-dryer-pickup-modern-topload-set.jpg',
+    alt:'Real washer and dryer set for pickup in Orange County'
+  },
+  '/riverside-county-washer-dryer-pickup/':{
+    src:'assets/washer-dryer-photos/washer-dryer-pickup-gray-topload-set.jpg',
+    alt:'Real washer and dryer set for pickup in Riverside County'
+  },
+  '/san-bernardino-county-washer-dryer-pickup/':{
+    src:'assets/washer-dryer-photos/washer-dryer-pickup-stacked-set.jpg',
+    alt:'Real washer and dryer set for pickup in San Bernardino County'
+  }
+};
+
+function enhanceWasherDryerPhotos(){
+  const path=pagePath();
+  const config=WASHER_DRYER_PHOTOS[path];
+  if(!config)return;
+
+  const hero=document.querySelector('.site-hero-art img');
+  if(hero){
+    hero.src=siteUrl(config.src);
+    hero.alt=config.alt;
+    hero.removeAttribute('width');
+    hero.removeAttribute('height');
+    hero.decoding='async';
+    hero.style.width='100%';
+    hero.style.height='auto';
+    hero.style.maxHeight='420px';
+    hero.style.objectFit='cover';
+    hero.style.borderRadius='16px';
+    hero.style.boxShadow='0 12px 28px rgba(0,0,0,.18)';
+  }
+
+  /* Replace the older generic proof image on the nationwide laundry hub with
+     a small gallery of real washer/dryer examples. */
+  if(path==='/washer-dryer-pickup/'){
+    const proof=document.querySelector('.real-appliance-proof');
+    if(proof){
+      const photos=[
+        ['washer-dryer-pickup-frontload-set.jpg','Real front-load washer and dryer set from appliance pickup inventory'],
+        ['washer-dryer-pickup-modern-topload-set.jpg','Real modern top-load washer and dryer set from appliance pickup inventory'],
+        ['washer-dryer-pickup-gray-topload-set.jpg','Real gray washer and dryer set from appliance pickup inventory'],
+        ['washer-dryer-pickup-stacked-set.jpg','Real stacked washer and dryer set from appliance pickup inventory']
+      ];
+      proof.innerHTML='<h2>Real Washer & Dryer Pickup Photos</h2><p>Examples of real washers and dryers handled through our appliance pickup work. Each customer request is reviewed separately for condition, location, access and current local coverage.</p><div class="washer-dryer-photo-grid"></div>';
+      const grid=proof.querySelector('.washer-dryer-photo-grid');
+      if(grid){
+        grid.style.display='grid';
+        grid.style.gridTemplateColumns='repeat(auto-fit,minmax(220px,1fr))';
+        grid.style.gap='14px';
+        photos.forEach(([file,alt])=>{
+          const figure=document.createElement('figure');
+          figure.style.margin='0';
+          const img=document.createElement('img');
+          img.src=siteUrl('assets/washer-dryer-photos/'+file);
+          img.alt=alt;
+          img.loading='lazy';
+          img.decoding='async';
+          img.style.width='100%';
+          img.style.height='260px';
+          img.style.objectFit='cover';
+          img.style.borderRadius='10px';
+          figure.appendChild(img);
+          grid.appendChild(figure);
+        });
+      }
+    }
+  }
+}
+
 load();
 
 document.addEventListener('DOMContentLoaded',()=>{
   preferLocalRequestForm();
+  enhanceWasherDryerPhotos();
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
     if(isCustomerPickupForm(form))wireForm(form);
   });
 });
 
-window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision,preferLocalRequestForm};
+window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision,preferLocalRequestForm,enhanceWasherDryerPhotos};
 })();
