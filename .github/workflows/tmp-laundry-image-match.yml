@@ -20,11 +20,12 @@ jobs:
           python-version: '3.12'
       - name: Compare gallery images with repository originals
         run: |
-          python -m pip install --quiet pillow imagehash
+          python -m pip install --quiet opencv-python-headless pillow
           python - <<'PY'
           from pathlib import Path
+          import cv2
+          import numpy as np
           from PIL import Image, ImageOps
-          import imagehash
 
           targets = [
               Path('assets/laundry/washer-dryer-set.jpg'),
@@ -36,50 +37,83 @@ jobs:
           ]
           exts = {'.jpg', '.jpeg', '.png', '.webp'}
           candidates = [p for p in Path('.').iterdir() if p.is_file() and p.suffix.lower() in exts]
+          orb = cv2.ORB_create(nfeatures=5000, scaleFactor=1.2, nlevels=8, fastThreshold=7)
+          bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False)
 
-          def hashes(path):
+          def load_gray(path):
               with Image.open(path) as im:
                   im = ImageOps.exif_transpose(im).convert('RGB')
-                  size = im.size
-                  return (
-                      imagehash.phash(im, hash_size=16),
-                      imagehash.dhash(im, hash_size=16),
-                      imagehash.average_hash(im, hash_size=16),
-                      size,
-                  )
+                  arr = np.asarray(im)
+              return cv2.cvtColor(arr, cv2.COLOR_RGB2GRAY)
 
-          candidate_hashes = {}
+          def descriptors(gray):
+              # Keep processing fast while retaining enough local detail.
+              h, w = gray.shape
+              m = max(h, w)
+              if m > 1800:
+                  scale = 1800.0 / m
+                  gray = cv2.resize(gray, (round(w*scale), round(h*scale)), interpolation=cv2.INTER_AREA)
+              kp, des = orb.detectAndCompute(gray, None)
+              return kp, des
+
+          cand_data = {}
           for p in candidates:
               try:
-                  candidate_hashes[p] = hashes(p)
+                  g = load_gray(p)
+                  variants = []
+                  for rot in (0, 1, 2, 3):
+                      rg = np.rot90(g, rot).copy() if rot else g
+                      kp, des = descriptors(rg)
+                      variants.append((rot, kp, des))
+                  with Image.open(p) as im:
+                      size = ImageOps.exif_transpose(im).size
+                  cand_data[p] = (variants, size)
               except Exception as e:
                   print(f'SKIP {p}: {e}')
 
-          lines = []
-          lines.append(f'Candidates scanned: {len(candidate_hashes)}')
-          lines.append('Lower score means closer visual match. Exact/near-exact resized copies should score very low.')
-          lines.append('')
+          lines = [f'Candidates scanned: {len(cand_data)}',
+                   'ORB local-feature matching. Higher good-match count and inlier count indicate the same underlying photo, even after resize/crop/compression.', '']
+
           for target in targets:
-              th = hashes(target)
+              tg = load_gray(target)
+              tkp, tdes = descriptors(tg)
               scored = []
-              for p, ch in candidate_hashes.items():
-                  # Perceptual + edge + average hashes. pHash carries most weight.
-                  score = (th[0] - ch[0]) * 3 + (th[1] - ch[1]) + (th[2] - ch[2])
-                  scored.append((score, th[0] - ch[0], th[1] - ch[1], th[2] - ch[2], p, ch[3]))
-              scored.sort(key=lambda x: x[0])
-              lines.append(f'TARGET: {target} | dimensions={th[3]} | bytes={target.stat().st_size}')
-              for score, pd, dd, ad, p, size in scored[:8]:
-                  lines.append(f'  score={score:4d} phash={pd:3d} dhash={dd:3d} ahash={ad:3d} candidate={p} dimensions={size} bytes={p.stat().st_size}')
+              for p, (variants, size) in cand_data.items():
+                  best = (0, 0, 999.0, 0)
+                  for rot, ckp, cdes in variants:
+                      if tdes is None or cdes is None or len(tdes) < 2 or len(cdes) < 2:
+                          continue
+                      matches = bf.knnMatch(tdes, cdes, k=2)
+                      good = [m for pair in matches if len(pair)==2 for m,n in [pair] if m.distance < 0.72*n.distance]
+                      inliers = 0
+                      if len(good) >= 8:
+                          src = np.float32([tkp[m.queryIdx].pt for m in good]).reshape(-1,1,2)
+                          dst = np.float32([ckp[m.trainIdx].pt for m in good]).reshape(-1,1,2)
+                          H, mask = cv2.findHomography(src, dst, cv2.RANSAC, 5.0)
+                          if mask is not None:
+                              inliers = int(mask.sum())
+                      med = float(np.median([m.distance for m in good])) if good else 999.0
+                      candidate_tuple = (inliers, len(good), -med, -rot)
+                      best_tuple = (best[0], best[1], -best[2], -best[3])
+                      if candidate_tuple > best_tuple:
+                          best = (inliers, len(good), med, rot)
+                  scored.append((best[0], best[1], best[2], best[3], p, size))
+              scored.sort(key=lambda x: (x[0], x[1], -x[2]), reverse=True)
+              with Image.open(target) as im:
+                  tsize = ImageOps.exif_transpose(im).size
+              lines.append(f'TARGET: {target} | dimensions={tsize} | bytes={target.stat().st_size} | keypoints={len(tkp)}')
+              for inliers, good, med, rot, p, size in scored[:10]:
+                  lines.append(f'  inliers={inliers:4d} good={good:4d} median_distance={med:6.1f} rotation={rot*90:3d} candidate={p} dimensions={size} bytes={p.stat().st_size}')
               lines.append('')
 
           report = '\n'.join(lines) + '\n'
           print(report)
-          Path('laundry-image-match-report.txt').write_text(report, encoding='utf-8')
+          Path('laundry-image-feature-match-report.txt').write_text(report, encoding='utf-8')
           PY
-      - name: Save match report
+      - name: Save feature-match report
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add laundry-image-match-report.txt
-          git diff --cached --quiet || git commit -m 'Report laundry image source matches'
+          git add laundry-image-feature-match-report.txt
+          git diff --cached --quiet || git commit -m 'Report feature matches for laundry originals'
           git push
