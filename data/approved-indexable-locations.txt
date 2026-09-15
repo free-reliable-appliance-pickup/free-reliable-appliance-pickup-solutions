@@ -104,6 +104,9 @@ claremont-washer-dryer-pickup
 pomona-washer-dryer-pickup
 montclair-washer-dryer-pickup
 ontario-washer-dryer-pickup
+upland-washer-dryer-pickup
+rancho-cucamonga-washer-dryer-pickup
+fontana-washer-dryer-pickup
 highland-washer-dryer-pickup
 san-bernardino-washer-dryer-pickup
 loma-linda-washer-dryer-pickup
