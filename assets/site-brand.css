@@ -53,13 +53,9 @@ body.site-branded { margin:0; padding:0; max-width:none; width:100%; background:
 .site-branded .site-footer-inner { max-width:1180px; margin:auto; padding:28px 20px; text-align:center; }
 a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset:4px; }
 
-/* Premium washer/dryer proof gallery.
-   The shared routing script inserts this section on the seven California premium
-   washer/dryer regional pages. Five seven-photo strips = 35 real pickup photos. */
+/* Premium washer/dryer proof gallery. */
 .site-branded .site-laundry-photo-showcase { overflow-x:auto; background:linear-gradient(145deg,#f7fcf8,#fff,#eef8f2); border:1px solid #cfe5d5; }
 .site-branded .site-laundry-photo-showcase h2 { margin-top:0; font-size:clamp(28px,4vw,38px); }
-.site-branded .site-laundry-photo-showcase h2::after { content:" — 35 Real Pickup Photos"; color:#0b8f2e; }
-.site-branded .site-laundry-photo-showcase > p::after { content:" Browse all 35 real washer and dryer examples below; on a phone, swipe sideways to view the full photo strips."; font-weight:700; }
 .site-branded .site-laundry-photo-showcase > div { display:block !important; min-width:760px; }
 .site-branded .site-laundry-photo-showcase figure { display:block; margin:0 0 12px !important; width:100%; }
 .site-branded .site-laundry-photo-showcase figure img { display:none !important; }
@@ -81,12 +77,58 @@ a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset
 .site-branded .site-city-laundry-search .card h3 { margin-top:0; color:#075c34; }
 .site-branded .site-city-laundry-search .note { margin-top:16px; padding:15px; background:#eaf8f0; border-left:5px solid #087443; border-radius:9px; }
 
+/* Different real washer/dryer hero set on each premium city page. */
+body.site-branded:has(input[name="_subject"][value*="Washer Dryer"]) .site-hero-art { width:min(420px,100%); aspect-ratio:1/1; border-radius:20px; background-repeat:no-repeat; background-size:700% 100%; background-color:#fff; box-shadow:0 16px 38px rgba(0,27,16,.14); overflow:hidden; }
+body.site-branded:has(input[name="_subject"][value*="Washer Dryer"]) .site-hero-art img { width:100%; height:100%; opacity:0; }
+body.site-branded:has(input[name="city"][value="Montrose"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:0% 50%;}
+body.site-branded:has(input[name="city"][value="La Crescenta"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:16.6667% 50%;}
+body.site-branded:has(input[name="city"][value="La Cañada Flintridge"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:33.3333% 50%;}
+body.site-branded:has(input[name="city"][value="Altadena"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:50% 50%;}
+body.site-branded:has(input[name="city"][value="Pasadena"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:66.6667% 50%;}
+body.site-branded:has(input[name="city"][value="San Gabriel"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:83.3333% 50%;}
+body.site-branded:has(input[name="city"][value="San Marino"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:100% 50%;}
+body.site-branded:has(input[name="city"][value="Sierra Madre"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-2.webp');background-position:0% 50%;}
+body.site-branded:has(input[name="city"][value="Arcadia"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-2.webp');background-position:16.6667% 50%;}
+body.site-branded:has(input[name="city"][value="Monrovia"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-2.webp');background-position:33.3333% 50%;}
+body.site-branded:has(input[name="city"][value="Duarte"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-2.webp');background-position:50% 50%;}
+body.site-branded:has(input[name="city"][value="Azusa"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-2.webp');background-position:66.6667% 50%;}
+body.site-branded:has(input[name="city"][value="Glendora"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-2.webp');background-position:83.3333% 50%;}
+body.site-branded:has(input[name="city"][value="Covina"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-2.webp');background-position:100% 50%;}
+body.site-branded:has(input[name="city"][value="West Covina"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-3.webp');background-position:0% 50%;}
+body.site-branded:has(input[name="city"][value="San Dimas"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-3.webp');background-position:16.6667% 50%;}
+body.site-branded:has(input[name="city"][value="La Verne"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-3.webp');background-position:33.3333% 50%;}
+body.site-branded:has(input[name="city"][value="Claremont"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-3.webp');background-position:50% 50%;}
+body.site-branded:has(input[name="city"][value="Pomona"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-3.webp');background-position:66.6667% 50%;}
+body.site-branded:has(input[name="city"][value="Montclair"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-3.webp');background-position:83.3333% 50%;}
+body.site-branded:has(input[name="city"][value="Ontario"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-3.webp');background-position:100% 50%;}
+body.site-branded:has(input[name="city"][value="Upland"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-4.webp');background-position:0% 50%;}
+body.site-branded:has(input[name="city"][value="Rancho Cucamonga"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-4.webp');background-position:16.6667% 50%;}
+body.site-branded:has(input[name="city"][value="Fontana"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-4.webp');background-position:33.3333% 50%;}
+body.site-branded:has(input[name="city"][value="San Bernardino"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-4.webp');background-position:50% 50%;}
+body.site-branded:has(input[name="city"][value="Chino Hills"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-4.webp');background-position:66.6667% 50%;}
+body.site-branded:has(input[name="city"][value="Highland"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-4.webp');background-position:83.3333% 50%;}
+body.site-branded:has(input[name="city"][value="Loma Linda"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-4.webp');background-position:100% 50%;}
+body.site-branded:has(input[name="city"][value="Yucaipa"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-5.webp');background-position:0% 50%;}
+body.site-branded:has(input[name="city"][value="Oak Glen"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-5.webp');background-position:16.6667% 50%;}
+body.site-branded:has(input[name="city"][value="Anaheim Hills"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-5.webp');background-position:33.3333% 50%;}
+body.site-branded:has(input[name="city"][value="Brea"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-5.webp');background-position:50% 50%;}
+body.site-branded:has(input[name="city"][value="Yorba Linda"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-5.webp');background-position:66.6667% 50%;}
+body.site-branded:has(input[name="city"][value="Irvine"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-5.webp');background-position:83.3333% 50%;}
+body.site-branded:has(input[name="city"][value="Newport Beach"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-5.webp');background-position:100% 50%;}
+body.site-branded:has(input[name="city"][value="Mission Viejo"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:0% 50%;}
+body.site-branded:has(input[name="city"][value="Lake Forest"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:16.6667% 50%;}
+body.site-branded:has(input[name="city"][value="Calimesa"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:33.3333% 50%;}
+body.site-branded:has(input[name="city"][value="Cherry Valley"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:50% 50%;}
+body.site-branded:has(input[name="city"][value="Beaumont"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:66.6667% 50%;}
+body.site-branded:has(input[name="city"][value="Banning"]) .site-hero-art{background-image:url('/assets/laundry/real-washer-dryer-gallery-1.webp');background-position:83.3333% 50%;}
+
 @media(max-width:850px) {
  .site-brand-row { justify-content:center; text-align:center; }
  .site-hours { width:100%; }
  .site-hero-grid { grid-template-columns:1fr; }
  .site-hero-art { order:-1; }
  .site-hero-art img { max-width:250px; }
+ body.site-branded:has(input[name="_subject"][value*="Washer Dryer"]) .site-hero-art { width:min(300px,100%); }
  .site-branded .site-hero { padding:34px 20px; }
 }
 @media(max-width:520px) {
@@ -100,6 +142,7 @@ a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset
  .site-hero h1 { font-size:32px; }
  .site-hero p { font-size:17px; }
  .site-hero-art img { max-width:205px; }
+ body.site-branded:has(input[name="_subject"][value*="Washer Dryer"]) .site-hero-art { width:min(250px,100%); }
  .site-branded input,.site-branded select,.site-branded textarea { max-width:100%; }
  .site-branded .site-request-panel { padding:18px; }
  .site-branded .site-request-grid { grid-template-columns:1fr; }
