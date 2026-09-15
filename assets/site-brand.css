@@ -72,6 +72,15 @@ a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset
 .site-branded .site-laundry-photo-showcase figure:nth-child(3)::before { background-image:url('/assets/laundry/real-washer-dryer-gallery-5.webp'); }
 .site-branded .site-laundry-photo-showcase figure:nth-child(3)::after { display:none; }
 
+/* Premium city washer/dryer search section. */
+.site-branded .site-city-laundry-search { background:linear-gradient(145deg,#fff,#f4fbf7); border:1px solid #cfe4d7; border-radius:18px; box-shadow:0 14px 34px rgba(16,62,42,.08); }
+.site-branded .site-city-laundry-search > h2 { margin-top:0; font-size:clamp(27px,4vw,36px); }
+.site-branded .site-city-laundry-search > p { color:#3f5e50; }
+.site-branded .site-city-laundry-search .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+.site-branded .site-city-laundry-search .card { padding:18px; background:#fff; border:1px solid #d8e8df; border-radius:14px; box-shadow:0 8px 20px rgba(17,61,40,.07); }
+.site-branded .site-city-laundry-search .card h3 { margin-top:0; color:#075c34; }
+.site-branded .site-city-laundry-search .note { margin-top:16px; padding:15px; background:#eaf8f0; border-left:5px solid #087443; border-radius:9px; }
+
 @media(max-width:850px) {
  .site-brand-row { justify-content:center; text-align:center; }
  .site-hours { width:100%; }
@@ -98,4 +107,5 @@ a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset
  .site-branded .site-request-submit { width:100%; }
  .site-branded .site-laundry-photo-showcase { padding-left:15px; padding-right:15px; }
  .site-branded .site-laundry-photo-showcase > div { min-width:700px; }
+ .site-branded .site-city-laundry-search { padding:18px; }
 }
