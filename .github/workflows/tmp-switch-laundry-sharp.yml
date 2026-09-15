@@ -1,0 +1,38 @@
+name: Temporary switch laundry page to sharp photos
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  update-page:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Switch washer dryer page to sharp real photos
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('washer-dryer-pickup/index.html')
+          s=p.read_text()
+          s=s.replace('/assets/laundry/washer-dryer-set.jpg','/assets/laundry/washer-dryer-set-sharp.jpg')
+          old_start='<div class="laundry-gallery">'
+          start=s.index(old_start)
+          end=s.index('</div><p><a href="#request">Request washer or dryer pickup →</a></p></section>', start)
+          gallery='''<div class="laundry-gallery"><figure><a href="/assets/laundry/washer-dryer-set-sharp.jpg"><img src="/assets/laundry/washer-dryer-set-sharp.jpg" alt="Real washer and dryer pickup photo" width="1400" height="1050" loading="lazy" decoding="async"></a><figcaption>Real washer and dryer pickup photo</figcaption></figure><figure><a href="/assets/laundry/real-laundry-pickup-1.jpg"><img src="/assets/laundry/real-laundry-pickup-1.jpg" alt="Real laundry appliance from our pickup work" width="1200" height="1600" loading="lazy" decoding="async"></a><figcaption>Real laundry appliance from our pickup work</figcaption></figure><figure><a href="/assets/laundry/real-laundry-pickup-2.jpg"><img src="/assets/laundry/real-laundry-pickup-2.jpg" alt="Washer or dryer from a real appliance pickup" width="1200" height="1600" loading="lazy" decoding="async"></a><figcaption>Real appliance pickup photo</figcaption></figure><figure><a href="/assets/laundry/real-laundry-pickup-3.jpg"><img src="/assets/laundry/real-laundry-pickup-3.jpg" alt="Real washer or dryer appliance photo" width="1200" height="1600" loading="lazy" decoding="async"></a><figcaption>Real washer or dryer appliance</figcaption></figure><figure><a href="/assets/laundry/real-laundry-pickup-4.jpg"><img src="/assets/laundry/real-laundry-pickup-4.jpg" alt="Laundry appliance from our real inventory and pickup work" width="1200" height="1600" loading="lazy" decoding="async"></a><figcaption>Real laundry appliance photo</figcaption></figure><figure><a href="/assets/laundry/real-laundry-pickup-5.jpg"><img src="/assets/laundry/real-laundry-pickup-5.jpg" alt="Real washer or dryer pickup inventory photo" width="1200" height="1600" loading="lazy" decoding="async"></a><figcaption>Real washer or dryer pickup photo</figcaption></figure></div>'''
+          s=s[:start]+gallery+s[end:]
+          s=s.replace('width="1000" height="750" fetchpriority="high"','width="1400" height="1050" fetchpriority="high"')
+          p.write_text(s)
+          PY
+      - name: Commit corrected laundry page
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add washer-dryer-pickup/index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Use sharp real laundry photos on washer dryer page"
+          git push
