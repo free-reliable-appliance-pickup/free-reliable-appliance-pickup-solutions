@@ -168,6 +168,23 @@ const COMPRESSED_LAUNDRY_REPLACEMENTS={
   'washer-dryer-pickup-stacked-set.jpg':'stacked-laundry-center.jpg'
 };
 
+/* One existing city page targets washer-only, dryer-only and complete-set searches.
+   These are presentation enhancements only; no new city URLs are generated here. */
+const PREMIUM_CITY_LAUNDRY_SEARCH={
+  '/pasadena-washer-dryer-pickup/':{city:'Pasadena',area:'San Gabriel Valley',washer:'For Pasadena washer pickup requests, tell us whether the machine fills, washes, drains and spins. Apartments, garages and multi-unit properties are welcome for review when floor level, stairs and loading access are included.',dryer:'For Pasadena dryer pickup requests, identify gas or electric service and whether the drum turns and produces heat. Clear access and parking details help the local route review.',set:'A working matching washer and dryer set in Pasadena receives strong priority because both machines can often be handled together for reuse.'},
+  '/la-canada-flintridge-washer-dryer-pickup/':{city:'La Cañada Flintridge',area:'western San Gabriel Valley',washer:'For La Cañada Flintridge washer pickup, include tested functions plus driveway grade, gates, steps and carrying distance when the laundry room is away from the driveway.',dryer:'For La Cañada Flintridge dryer pickup, identify gas or electric, whether it turns and heats, and any narrow side-yard or interior access that affects removal.',set:'Complete working washer and dryer sets in La Cañada Flintridge receive strong priority, especially when photos show both machines and the full removal path.'},
+  '/arcadia-washer-dryer-pickup/':{city:'Arcadia',area:'San Gabriel Valley',washer:'Arcadia washer pickup requests are reviewed faster when photos show the machine, model label and access from the laundry area to the pickup vehicle.',dryer:'For Arcadia dryer pickup, identify gas or electric service, heating performance and any stairs, gates or tight doorways before scheduling.',set:'Working washer and dryer sets in Arcadia receive strong consideration because matching pairs can often be routed together for reuse.'},
+  '/monrovia-washer-dryer-pickup/':{city:'Monrovia',area:'San Gabriel Valley',washer:'For Monrovia washer pickup, report whether the machine fills, agitates or tumbles, drains and spins, plus any leaks or error codes.',dryer:'For Monrovia dryer pickup, identify gas or electric, whether the drum turns and whether it produces heat. Include garage, side-yard or interior access details.',set:'A complete working laundry pair in Monrovia can receive priority review when both appliances are submitted in the same request.'},
+  '/azusa-washer-dryer-pickup/':{city:'Azusa',area:'San Gabriel Valley',washer:'Azusa washer pickup requests should include clear photos and a short condition check: fill, wash, drain and spin, plus floor level and stairs.',dryer:'Azusa dryer pickup requests should identify gas or electric service and whether the drum turns and heats so the appliance can be reviewed correctly.',set:'Working washer and dryer sets in Azusa receive strong priority when both machines are complete, accessible and ready for route review.'},
+  '/covina-washer-dryer-pickup/':{city:'Covina',area:'San Gabriel Valley',washer:'For free washer pickup review in Covina, send photos, tested functions and any access details such as apartments, stairs, garages or narrow gates.',dryer:'For free dryer pickup review in Covina, tell us gas or electric, whether it turns and heats, and where the dryer is located on the property.',set:'Matching working washer and dryer sets in Covina receive especially strong consideration because they can often stay together for reuse.'},
+  '/west-covina-washer-dryer-pickup/':{city:'West Covina',area:'San Gabriel Valley',washer:'West Covina washer pickup requests are easiest to review when the working condition, floor level, parking and removal path are clear from the start.',dryer:'West Covina dryer pickup requests should identify gas or electric service, heating status and whether stairs or long carries are involved.',set:'Complete working washer and dryer sets in West Covina receive priority review when both appliances and the access path are shown clearly.'},
+  '/pomona-washer-dryer-pickup/':{city:'Pomona',area:'Pomona Valley',washer:'For Pomona washer pickup, include clear appliance photos, whether it completes a cycle and whether the machine is on the ground floor, in a garage or inside the home.',dryer:'For Pomona dryer pickup, identify gas or electric, drum and heat condition, plus stairs, gates and parking access.',set:'Pomona sits on the transition between the San Gabriel Valley and Inland Empire routes, making complete working washer and dryer sets especially useful for coordinated pickup review.'},
+  '/ontario-washer-dryer-pickup/':{city:'Ontario',area:'Inland Empire',washer:'Ontario washer pickup requests should include tested washer functions, photos, floor level and loading access so the Inland Empire route can review the request efficiently.',dryer:'Ontario dryer pickup requests should identify gas or electric service and whether the drum turns and heats, along with any apartment or stair access.',set:'Working matching washer and dryer sets in Ontario receive strong priority because both machines can often be routed together.'},
+  '/rancho-cucamonga-washer-dryer-pickup/':{city:'Rancho Cucamonga',area:'Inland Empire',washer:'For Rancho Cucamonga washer pickup, include machine condition plus driveway, gate, stair and carrying-distance details when access is not straightforward.',dryer:'For Rancho Cucamonga dryer pickup, identify gas or electric service, heat performance and where the dryer sits relative to vehicle access.',set:'Clean, complete working washer and dryer sets in Rancho Cucamonga receive strong priority for local reuse routing.'},
+  '/fontana-washer-dryer-pickup/':{city:'Fontana',area:'Inland Empire',washer:'Fontana washer pickup requests are reviewed using the machine condition, clear photos, floor level, stairs and local route capacity.',dryer:'Fontana dryer pickup requests should identify gas or electric service, drum movement and heat so the correct type of appliance can be routed.',set:'Working washer and dryer sets in Fontana receive especially strong consideration when both machines are submitted together.'},
+  '/san-bernardino-washer-dryer-pickup/':{city:'San Bernardino',area:'Inland Empire',washer:'For San Bernardino washer pickup, send clear photos and report whether the machine fills, washes, drains and spins, plus any access limitations.',dryer:'For San Bernardino dryer pickup, identify gas or electric service, whether the drum turns and whether it heats. Include stairs, gates and loading access.',set:'Complete working washer and dryer sets in San Bernardino receive strong priority within the Inland Empire pickup network.'}
+};
+
 function replaceCompressedLaundryPhotos(){
   document.querySelectorAll('img[src*="/assets/washer-dryer-photos/"]').forEach(img=>{
     const raw=String(img.getAttribute('src')||'');
@@ -214,13 +231,33 @@ function enhanceWasherDryerPhotos(){
   buildLaundryGallery(path);
 }
 
+function enhanceCityLaundrySearchTerms(){
+  if(document.querySelector('.site-city-laundry-search'))return;
+  const config=PREMIUM_CITY_LAUNDRY_SEARCH[pagePath()];if(!config)return;
+  const main=document.querySelector('main');if(!main)return;
+  const section=document.createElement('section');section.className='site-city-laundry-search';
+  const intro=document.createElement('h2');intro.textContent='Free Washer, Dryer & Laundry Set Pickup in '+config.city;
+  const lead=document.createElement('p');lead.textContent='This '+config.area+' page is organized around the three searches customers use most: free washer pickup, free dryer pickup, and free washer & dryer pickup in '+config.city+'. Qualification still depends on appliance condition, safe access and current route availability.';
+  const grid=document.createElement('div');grid.className='grid';
+  const items=[
+    ['Free Washer Pickup in '+config.city,config.washer],
+    ['Free Dryer Pickup in '+config.city,config.dryer],
+    ['Free Washer & Dryer Pickup in '+config.city,config.set]
+  ];
+  items.forEach(([title,text])=>{const card=document.createElement('div');card.className='card';const h3=document.createElement('h3');h3.textContent=title;const p=document.createElement('p');p.textContent=text;card.append(h3,p);grid.appendChild(card);});
+  const note=document.createElement('div');note.className='note';note.innerHTML='<strong>Best chance for free pickup:</strong> fully working machines and complete working sets receive the strongest consideration. Send clear appliance and access photos for review.';
+  section.append(intro,lead,grid,note);
+  const first=main.querySelector('section');
+  if(first&&first.nextSibling)main.insertBefore(section,first.nextSibling);else main.appendChild(section);
+}
+
 load();
 document.addEventListener('DOMContentLoaded',()=>{
   replaceCompressedLaundryPhotos();
   document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);
-  preferLocalRequestForm();enhanceWasherDryerPhotos();
+  preferLocalRequestForm();enhanceWasherDryerPhotos();enhanceCityLaundrySearchTerms();
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});
 });
 
-window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision,preferLocalRequestForm,enhanceWasherDryerPhotos,replaceCompressedLaundryPhotos,priority909};
+window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision,preferLocalRequestForm,enhanceWasherDryerPhotos,enhanceCityLaundrySearchTerms,replaceCompressedLaundryPhotos,priority909};
 })();
