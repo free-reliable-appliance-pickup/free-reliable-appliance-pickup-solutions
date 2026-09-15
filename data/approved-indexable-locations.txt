@@ -98,3 +98,5 @@ azusa-washer-dryer-pickup
 glendora-washer-dryer-pickup
 san-dimas-washer-dryer-pickup
 la-verne-washer-dryer-pickup
+covina-washer-dryer-pickup
+west-covina-washer-dryer-pickup
