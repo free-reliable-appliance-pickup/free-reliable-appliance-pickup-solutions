@@ -7,7 +7,6 @@ const FALLBACK={status:'request-only',territory_status:'available',region:'Unass
 let routing=null,cities=null,loadPromise=null;
 const n=v=>String(v||'').trim().toLowerCase();
 
-/* Support both the primary custom domain and the legacy GitHub Pages project URL. */
 function siteBase(){
   const host=(location.hostname||'').toLowerCase();
   if(host.endsWith('.github.io')){
@@ -28,16 +27,10 @@ function stateCode(value){
 function classify(city,state){
   const sc=stateCode(state),cn=n(city);
   if(!routing||!Array.isArray(routing.markets))return {...FALLBACK,state_code:sc,city,resolution_level:'fallback'};
-
-  /* Exact city routes always win. */
   const exact=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&m.city&&n(m.city)===cn);
   if(exact)return {...exact,resolution_level:'exact-city'};
-
-  /* Regional landing-page forms sometimes submit a region/county label in the city field.
-     Match that label directly to the canonical regional route before falling back statewide. */
   const namedRegion=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&!m.city&&n(m.region)===cn);
   if(namedRegion)return {...namedRegion,resolution_level:'regional'};
-
   let region=null;
   if(cities&&Array.isArray(cities.cities)){
     const c=cities.cities.find(x=>stateCode(x.state_code||x.state)===sc&&n(x.city)===cn);
@@ -80,6 +73,7 @@ function hidden(form,name,value){
     form.appendChild(el);
   }
   el.value=value==null?'':String(value);
+  return el;
 }
 
 function qualify(form){
@@ -124,6 +118,8 @@ function load(){
 }
 
 function wireForm(form){
+  if(form.dataset.customerRoutingWired==='1')return;
+  form.dataset.customerRoutingWired='1';
   form.addEventListener('submit',async function routeBeforeSubmit(event){
     if(form.dataset.customerRoutingQualified==='1')return;
     event.preventDefault();
@@ -139,31 +135,6 @@ function isCustomerPickupForm(form){
   return !!(findField(form,['city','City','pickup_city'])&&findField(form,['state','State','pickup_state'])&&findField(form,['appliance','Appliance','Appliance Type']));
 }
 
-/* Keep request buttons on the current market page whenever that page already has
-   a real customer pickup form. Older pages may use #pickup while newer pages use
-   #request, so resolve the actual form section instead of assuming one anchor. */
-function preferLocalRequestForm(){
-  const forms=Array.from(document.querySelectorAll('form[action*="formspree.io"]'));
-  const form=forms.find(isCustomerPickupForm);
-  if(!form)return;
-
-  let target=form.closest('section');
-  if(!target)target=form;
-  if(!target.id)target.id='request';
-  const localHref='#'+target.id;
-
-  const selectors=[
-    'a[href="/#request"]',
-    'a[href="../#request"]',
-    'a[href="./#request"]',
-    'a[href="https://freereliableappliancepickup.com/#request"]'
-  ];
-  document.querySelectorAll(selectors.join(',')).forEach(link=>link.setAttribute('href',localHref));
-}
-
-/* Real washer/dryer photography for priority laundry pages.
-   Uses only business-owned photos supplied for this website and does not create
-   new location pages or change pickup qualification rules. */
 function pagePath(){
   let p=location.pathname||'/';
   const base=siteBase();
@@ -174,48 +145,87 @@ function pagePath(){
 }
 
 const WASHER_DRYER_PHOTOS={
-  '/washer-dryer-pickup/':{
-    src:'assets/washer-dryer-photos/washer-dryer-pickup-frontload-set.jpg',
-    alt:'Real washer and dryer set submitted for appliance pickup'
-  },
-  '/california-washer-dryer-pickup/':{
-    src:'assets/washer-dryer-photos/washer-dryer-pickup-modern-topload-set.jpg',
-    alt:'Real washer and dryer set for pickup in California'
-  },
-  '/southern-california-washer-dryer-pickup/':{
-    src:'assets/washer-dryer-photos/washer-dryer-pickup-gray-topload-set.jpg',
-    alt:'Real washer and dryer set for pickup in Southern California'
-  },
-  '/san-gabriel-inland-empire-washer-dryer-pickup/':{
-    src:'assets/washer-dryer-photos/washer-dryer-pickup-stacked-set.jpg',
-    alt:'Real washer and dryer set for San Gabriel Valley and Inland Empire pickup'
-  },
-  '/los-angeles-county-washer-dryer-pickup/':{
-    src:'assets/washer-dryer-photos/washer-dryer-pickup-frontload-set.jpg',
-    alt:'Real washer and dryer set for pickup in Los Angeles County'
-  },
-  '/orange-county-washer-dryer-pickup/':{
-    src:'assets/washer-dryer-photos/washer-dryer-pickup-modern-topload-set.jpg',
-    alt:'Real washer and dryer set for pickup in Orange County'
-  },
-  '/riverside-county-washer-dryer-pickup/':{
-    src:'assets/washer-dryer-photos/washer-dryer-pickup-gray-topload-set.jpg',
-    alt:'Real washer and dryer set for pickup in Riverside County'
-  },
-  '/san-bernardino-county-washer-dryer-pickup/':{
-    src:'assets/washer-dryer-photos/washer-dryer-pickup-stacked-set.jpg',
-    alt:'Real washer and dryer set for pickup in San Bernardino County'
-  }
+  '/california-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real washer and dryer set for pickup in California'},
+  '/southern-california-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real washer and dryer set for pickup in Southern California'},
+  '/san-gabriel-inland-empire-washer-dryer-pickup/':{hero:'stacked-laundry-center.jpg',alt:'Real washer and dryer set for San Gabriel Valley and Inland Empire pickup'},
+  '/los-angeles-county-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real washer and dryer set for pickup in Los Angeles County'},
+  '/orange-county-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real washer and dryer set for pickup in Orange County'},
+  '/riverside-county-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real washer and dryer set for pickup in Riverside County'},
+  '/san-bernardino-county-washer-dryer-pickup/':{hero:'stacked-laundry-center.jpg',alt:'Real washer and dryer set for pickup in San Bernardino County'}
 };
+
+const CA_WASHER_DRYER_PAGES=new Set(Object.keys(WASHER_DRYER_PHOTOS));
+const LAUNDRY_GALLERY=[
+  ['front-load-laundry-set.jpg','Front-load washer and dryer set from our appliance work'],
+  ['laundry-pair.jpg','Washer and dryer pair from our appliance work'],
+  ['washer-dryer-set.jpg','Washer and dryer set available for pickup review'],
+  ['stacked-laundry-center.jpg','Stacked laundry center from our appliance work'],
+  ['top-load-washer.jpg','Top-load washer from our appliance work'],
+  ['front-load-dryer.jpg','Front-load dryer from our appliance work']
+];
+
+function ensureRegionalState(form){
+  if(findField(form,['state','State','pickup_state','Primary State']))return;
+  if(CA_WASHER_DRYER_PAGES.has(pagePath()))hidden(form,'state','CA');
+}
+
+function preferLocalRequestForm(){
+  const forms=Array.from(document.querySelectorAll('form[action*="formspree.io"]'));
+  forms.forEach(ensureRegionalState);
+  const form=forms.find(isCustomerPickupForm);
+  if(!form)return;
+  let target=form.closest('section');
+  if(!target)target=form;
+  if(!target.id)target.id='request';
+  const localHref='#'+target.id;
+  const selectors=['a[href="/#request"]','a[href="../#request"]','a[href="./#request"]','a[href="https://freereliableappliancepickup.com/#request"]'];
+  document.querySelectorAll(selectors.join(',')).forEach(link=>link.setAttribute('href',localHref));
+}
+
+function buildLaundryGallery(path){
+  if(document.querySelector('.site-laundry-photo-showcase'))return;
+  const main=document.querySelector('main');
+  if(!main)return;
+  const pageIndex=Math.max(0,Object.keys(WASHER_DRYER_PHOTOS).indexOf(path));
+  const picks=[LAUNDRY_GALLERY[pageIndex%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+2)%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+4)%LAUNDRY_GALLERY.length]];
+  const section=document.createElement('section');
+  section.className='site-laundry-photo-showcase';
+  const h2=document.createElement('h2');
+  h2.textContent='Real Washer & Dryer Photos';
+  const p=document.createElement('p');
+  p.textContent='Real appliance photos from our pickup work and inventory. Send clear photos of your own washer or dryer so we can review condition, access and local route availability.';
+  const grid=document.createElement('div');
+  grid.style.display='grid';
+  grid.style.gridTemplateColumns='repeat(auto-fit,minmax(210px,1fr))';
+  grid.style.gap='14px';
+  picks.forEach(([file,alt])=>{
+    const figure=document.createElement('figure');
+    figure.style.margin='0';
+    const img=document.createElement('img');
+    img.src=siteUrl('assets/laundry/'+file);
+    img.alt=alt;
+    img.loading='lazy';
+    img.decoding='async';
+    img.style.width='100%';
+    img.style.height='250px';
+    img.style.objectFit='cover';
+    img.style.borderRadius='12px';
+    img.style.boxShadow='0 8px 22px rgba(0,0,0,.12)';
+    figure.appendChild(img);
+    grid.appendChild(figure);
+  });
+  section.append(h2,p,grid);
+  main.insertBefore(section,main.firstChild);
+}
 
 function enhanceWasherDryerPhotos(){
   const path=pagePath();
   const config=WASHER_DRYER_PHOTOS[path];
   if(!config)return;
-
+  const src=siteUrl('assets/laundry/'+config.hero);
   const hero=document.querySelector('.site-hero-art img');
   if(hero){
-    hero.src=siteUrl(config.src);
+    hero.src=src;
     hero.alt=config.alt;
     hero.removeAttribute('width');
     hero.removeAttribute('height');
@@ -227,47 +237,12 @@ function enhanceWasherDryerPhotos(){
     hero.style.borderRadius='16px';
     hero.style.boxShadow='0 12px 28px rgba(0,0,0,.18)';
   }
-
-  /* Replace the older generic proof image on the nationwide laundry hub with
-     a small gallery of real washer/dryer examples. */
-  if(path==='/washer-dryer-pickup/'){
-    const proof=document.querySelector('.real-appliance-proof');
-    if(proof){
-      const photos=[
-        ['washer-dryer-pickup-frontload-set.jpg','Real front-load washer and dryer set from appliance pickup inventory'],
-        ['washer-dryer-pickup-modern-topload-set.jpg','Real modern top-load washer and dryer set from appliance pickup inventory'],
-        ['washer-dryer-pickup-gray-topload-set.jpg','Real gray washer and dryer set from appliance pickup inventory'],
-        ['washer-dryer-pickup-stacked-set.jpg','Real stacked washer and dryer set from appliance pickup inventory']
-      ];
-      proof.innerHTML='<h2>Real Washer & Dryer Pickup Photos</h2><p>Examples of real washers and dryers handled through our appliance pickup work. Each customer request is reviewed separately for condition, location, access and current local coverage.</p><div class="washer-dryer-photo-grid"></div>';
-      const grid=proof.querySelector('.washer-dryer-photo-grid');
-      if(grid){
-        grid.style.display='grid';
-        grid.style.gridTemplateColumns='repeat(auto-fit,minmax(220px,1fr))';
-        grid.style.gap='14px';
-        photos.forEach(([file,alt])=>{
-          const figure=document.createElement('figure');
-          figure.style.margin='0';
-          const img=document.createElement('img');
-          img.src=siteUrl('assets/washer-dryer-photos/'+file);
-          img.alt=alt;
-          img.loading='lazy';
-          img.decoding='async';
-          img.style.width='100%';
-          img.style.height='260px';
-          img.style.objectFit='cover';
-          img.style.borderRadius='10px';
-          figure.appendChild(img);
-          grid.appendChild(figure);
-        });
-      }
-    }
-  }
+  buildLaundryGallery(path);
 }
 
 load();
-
 document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);
   preferLocalRequestForm();
   enhanceWasherDryerPhotos();
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
