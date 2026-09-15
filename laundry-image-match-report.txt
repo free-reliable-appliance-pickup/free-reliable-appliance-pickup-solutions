@@ -1,0 +1,63 @@
+Candidates scanned: 47
+Lower score means closer visual match. Exact/near-exact resized copies should score very low.
+
+TARGET: assets/laundry/washer-dryer-set.jpg | dimensions=(1000, 750) | bytes=49001
+  score= 520 phash=108 dhash=122 ahash= 74 candidate=IMG-20241210-WA0011.jpg dimensions=(1200, 1600) bytes=128496
+  score= 521 phash=108 dhash=132 ahash= 65 candidate=file_00000000051c81fda2fa9f1edefd32f7.png dimensions=(1122, 1402) bytes=1893915
+  score= 529 phash=110 dhash=113 ahash= 86 candidate=IMG-20240403-WA0010.jpg dimensions=(1200, 1600) bytes=209407
+  score= 545 phash=128 dhash=113 ahash= 48 candidate=IMG-20241025-WA0016.jpg dimensions=(1536, 2048) bytes=256449
+  score= 550 phash=110 dhash=123 ahash= 97 candidate=IMG-20231121-WA0022.jpg dimensions=(1152, 2048) bytes=445824
+  score= 559 phash=120 dhash=124 ahash= 75 candidate=20240417_112815-1.jpg dimensions=(3024, 4032) bytes=4555209
+  score= 568 phash=122 dhash=117 ahash= 85 candidate=file_00000000c83c81fda2a01221bfec9161.png dimensions=(1086, 1448) bytes=2279761
+  score= 569 phash=114 dhash=113 ahash=114 candidate=file_000000008da081fd8dd858919da22113.png dimensions=(1402, 1122) bytes=2021212
+
+TARGET: assets/laundry/front-load-laundry-set.jpg | dimensions=(750, 1000) | bytes=192657
+  score= 578 phash=118 dhash=119 ahash=105 candidate=file_000000008da081fd8dd858919da22113.png dimensions=(1402, 1122) bytes=2021212
+  score= 591 phash=116 dhash=123 ahash=120 candidate=file_000000000e8081fdbe92da2bbd600d88.png dimensions=(1402, 1122) bytes=1977597
+  score= 593 phash=112 dhash=122 ahash=135 candidate=20250728_145218.jpg dimensions=(3024, 4032) bytes=2463628
+  score= 593 phash=116 dhash=108 ahash=137 candidate=Screenshot_20260806_124045_OfferUp.jpg dimensions=(1080, 2340) bytes=1003646
+  score= 615 phash=122 dhash=132 ahash=117 candidate=file_0000000005b881fdb20b9d62a80b2f15.png dimensions=(1535, 1025) bytes=2158354
+  score= 615 phash=118 dhash=118 ahash=143 candidate=20241112_145206.jpg dimensions=(3024, 4032) bytes=2840885
+  score= 616 phash=114 dhash=135 ahash=139 candidate=IMG-20230720-WA0018.jpg dimensions=(1500, 2000) bytes=602727
+  score= 617 phash=118 dhash=117 ahash=146 candidate=file_00000000c83c81fda2a01221bfec9161.png dimensions=(1086, 1448) bytes=2279761
+
+TARGET: assets/laundry/stacked-laundry-center.jpg | dimensions=(750, 1000) | bytes=92412
+  score= 456 phash=108 dhash=106 ahash= 26 candidate=IMG-20230720-WA0018.jpg dimensions=(1500, 2000) bytes=602727
+  score= 525 phash=116 dhash=127 ahash= 50 candidate=20250919_180839.jpg dimensions=(3024, 4032) bytes=4465331
+  score= 560 phash=120 dhash=132 ahash= 68 candidate=IMG-20241025-WA0016.jpg dimensions=(1536, 2048) bytes=256449
+  score= 568 phash=118 dhash=138 ahash= 76 candidate=file_00000000b7c082308dccc73e5bd3acd2.png dimensions=(1254, 1254) bytes=1855610
+  score= 568 phash=118 dhash=127 ahash= 87 candidate=file_000000002cb881fd8111c9573d07f85e.png dimensions=(1402, 1122) bytes=2521478
+  score= 571 phash=126 dhash=135 ahash= 58 candidate=IMG-20241210-WA0011.jpg dimensions=(1200, 1600) bytes=128496
+  score= 587 phash=120 dhash=124 ahash=103 candidate=IMG-20230715-WA0046.jpg dimensions=(1600, 1200) bytes=282268
+  score= 595 phash=116 dhash=114 ahash=133 candidate=a_realistic_collage_of_photos_showing_the_same_sty.png dimensions=(1448, 1086) bytes=2804194
+
+TARGET: assets/laundry/top-load-washer.jpg | dimensions=(750, 1000) | bytes=68536
+  score= 512 phash=114 dhash= 96 ahash= 74 candidate=IMG-20241025-WA0016.jpg dimensions=(1536, 2048) bytes=256449
+  score= 555 phash=116 dhash=128 ahash= 79 candidate=20250801_160150_HDR.jpg dimensions=(3024, 4032) bytes=3946289
+  score= 559 phash=118 dhash=115 ahash= 90 candidate=file_000000006b2481fd8fe8dcc869126f44-1.png dimensions=(1402, 1122) bytes=2528541
+  score= 559 phash=118 dhash=115 ahash= 90 candidate=file_000000006b2481fd8fe8dcc869126f44.png dimensions=(1402, 1122) bytes=2528541
+  score= 570 phash=112 dhash=129 ahash=105 candidate=1784621739001-1.png dimensions=(2730, 1535) bytes=5124096
+  score= 578 phash=114 dhash=119 ahash=117 candidate=file_000000007de48230a4182142b566e3c8.png dimensions=(1536, 1024) bytes=2572481
+  score= 578 phash=110 dhash=125 ahash=123 candidate=file_000000004a788230942790ac4f6ca364.png dimensions=(1536, 1024) bytes=2632500
+  score= 589 phash=116 dhash=118 ahash=123 candidate=a_realistic_collage_of_photos_showing_the_same_sty.png dimensions=(1448, 1086) bytes=2804194
+
+TARGET: assets/laundry/front-load-dryer.jpg | dimensions=(750, 1000) | bytes=100077
+  score= 514 phash=116 dhash=100 ahash= 66 candidate=IMG-20240403-WA0010.jpg dimensions=(1200, 1600) bytes=209407
+  score= 562 phash=112 dhash=123 ahash=103 candidate=20240806_153155.jpg dimensions=(3024, 4032) bytes=3008329
+  score= 565 phash=124 dhash=108 ahash= 85 candidate=file_000000000e8081fdbe92da2bbd600d88.png dimensions=(1402, 1122) bytes=1977597
+  score= 576 phash=124 dhash=103 ahash=101 candidate=20240417_112815-1.jpg dimensions=(3024, 4032) bytes=4555209
+  score= 581 phash=114 dhash=122 ahash=117 candidate=file_000000004eec81f88840b515bdf5bc27.png dimensions=(1402, 1122) bytes=1328882
+  score= 583 phash=124 dhash=113 ahash= 98 candidate=20250728_145218.jpg dimensions=(3024, 4032) bytes=2463628
+  score= 592 phash=116 dhash=112 ahash=132 candidate=file_0000000074ac81fbba79ddc435106a41.png dimensions=(1536, 1024) bytes=2363036
+  score= 597 phash=118 dhash=128 ahash=115 candidate=20230206_101140-1.jpg dimensions=(3024, 4032) bytes=5501907
+
+TARGET: assets/laundry/laundry-pair.jpg | dimensions=(750, 1000) | bytes=115034
+  score= 546 phash=110 dhash= 96 ahash=120 candidate=file_000000000e8081fdbe92da2bbd600d88.png dimensions=(1402, 1122) bytes=1977597
+  score= 575 phash=118 dhash=112 ahash=109 candidate=IMG-20240403-WA0010.jpg dimensions=(1200, 1600) bytes=209407
+  score= 594 phash=114 dhash=117 ahash=135 candidate=file_000000004fd881fd859304045e1f3cbc.png dimensions=(1402, 1122) bytes=2594253
+  score= 595 phash=118 dhash=105 ahash=136 candidate=Screenshot_20230928-003314_Gallery.jpg dimensions=(1080, 2220) bytes=1219130
+  score= 598 phash=126 dhash=107 ahash=113 candidate=IMG-20230805-WA0003.jpg dimensions=(1200, 1600) bytes=406682
+  score= 605 phash=116 dhash=126 ahash=131 candidate=20250923_151633.jpg dimensions=(3024, 4032) bytes=5060740
+  score= 605 phash=114 dhash=125 ahash=138 candidate=file_000000004a788230942790ac4f6ca364.png dimensions=(1536, 1024) bytes=2632500
+  score= 606 phash=114 dhash=123 ahash=141 candidate=file_000000006b2481fd8fe8dcc869126f44-1.png dimensions=(1402, 1122) bytes=2528541
+
