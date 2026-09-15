@@ -1,3 +1,4 @@
+# One-time migration: replace old compressed laundry image references on active pages.
 name: Replace Compressed Laundry Images
 
 on:
@@ -40,7 +41,6 @@ jobs:
             '/assets/washer-dryer-photos/washer-dryer-pickup-stacked-set.jpg':'/assets/laundry/stacked-laundry-center.jpg',
           }
 
-          # Verify every replacement target exists before editing anything.
           for target in replacements.values():
               p=Path(target.lstrip('/'))
               if not p.exists():
@@ -68,7 +68,6 @@ jobs:
                   if n:
                       counts[old]+=n
                       raw=raw.replace(old,new)
-                      # Also catches absolute URLs because the path substring is the same.
               if raw!=before:
                   p.write_text(raw,encoding='utf-8')
                   changed.append(str(p))
