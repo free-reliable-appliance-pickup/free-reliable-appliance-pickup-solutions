@@ -106,3 +106,10 @@ montclair-washer-dryer-pickup
 ontario-washer-dryer-pickup
 highland-washer-dryer-pickup
 san-bernardino-washer-dryer-pickup
+loma-linda-washer-dryer-pickup
+yucaipa-washer-dryer-pickup
+oak-glen-washer-dryer-pickup
+calimesa-washer-dryer-pickup
+cherry-valley-washer-dryer-pickup
+beaumont-washer-dryer-pickup
+banning-washer-dryer-pickup
