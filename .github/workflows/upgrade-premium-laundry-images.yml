@@ -1,0 +1,103 @@
+name: Upgrade Premium Laundry Images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/upgrade-premium-laundry-images.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upgrade-premium-laundry-images
+  cancel-in-progress: true
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use one sharp real photo in each premium washer dryer hero
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          pages = [
+            'montrose','la-crescenta','altadena','pasadena','san-marino','san-gabriel','sierra-madre',
+            'arcadia','monrovia','duarte','azusa','glendora','covina','west-covina','san-dimas','la-verne',
+            'claremont','pomona','montclair','ontario','upland','rancho-cucamonga','fontana','san-bernardino'
+          ]
+
+          photos = [
+            '/assets/laundry/washer-dryer-set-sharp.jpg',
+            '/assets/laundry/real-laundry-pickup-1.jpg',
+            '/assets/laundry/real-laundry-pickup-2.jpg',
+            '/assets/laundry/real-laundry-pickup-3.jpg',
+            '/assets/laundry/real-laundry-pickup-4.jpg',
+            '/assets/laundry/real-laundry-pickup-5.jpg',
+            '/assets/laundry/front-load-laundry-set.jpg',
+            '/assets/laundry/laundry-pair.jpg',
+            '/assets/laundry/stacked-laundry-center.jpg'
+          ]
+
+          changed=[]
+          base='https://freereliableappliancepickup.com'
+
+          for i,slug in enumerate(pages):
+              p=Path(f'{slug}-washer-dryer-pickup/index.html')
+              if not p.exists():
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              before=raw
+              photo=photos[i % len(photos)]
+              absolute=base+photo
+
+              # Keep exactly one image in the hero artwork container and use a larger real source.
+              raw=re.sub(
+                  r'(<div class="site-hero-art"[^>]*>\s*)<img\b[^>]*>(\s*</div>)',
+                  lambda m: m.group(1)+f'<img src="{photo}" alt="Real washer and dryer set for local pickup service" fetchpriority="high" decoding="async">'+m.group(2),
+                  raw,
+                  count=1,
+                  flags=re.I|re.S
+              )
+
+              # Keep social/search image references aligned with the hero image.
+              raw=re.sub(r'(<meta\b[^>]*property=["\']og:image["\'][^>]*content=["\'])[^"\']+(["\'][^>]*>)',rf'\1{absolute}\2',raw,count=1,flags=re.I)
+              raw=re.sub(r'(<meta\b[^>]*name=["\']twitter:image["\'][^>]*content=["\'])[^"\']+(["\'][^>]*>)',rf'\1{absolute}\2',raw,count=1,flags=re.I)
+              raw=re.sub(
+                  r'("primaryImageOfPage"\s*:\s*\{\s*"@type"\s*:\s*"ImageObject"\s*,\s*"url"\s*:\s*")[^"]+("\s*\})',
+                  lambda m:m.group(1)+absolute+m.group(2),
+                  raw,
+                  count=1,
+                  flags=re.I
+              )
+
+              raw=re.sub(r'/assets/site-brand\.css\?v=[^"\']+', '/assets/site-brand.css?v=20260915b', raw)
+
+              if raw != before:
+                  p.write_text(raw,encoding='utf-8')
+                  changed.append(str(p))
+
+          print('Updated premium washer/dryer pages:',len(changed))
+          for name in changed:
+              print(' -',name)
+          PY
+
+          git add '*-washer-dryer-pickup/index.html'
+          if git diff --cached --quiet; then
+            echo "No premium laundry image changes needed."
+            exit 0
+          fi
+
+          git commit -m "Use sharp single-photo heroes on premium laundry pages"
+          git pull --rebase origin main || true
+          git push origin HEAD:main
