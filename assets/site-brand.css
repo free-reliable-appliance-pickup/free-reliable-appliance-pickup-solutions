@@ -53,13 +53,9 @@ body.site-branded { margin:0; padding:0; max-width:none; width:100%; background:
 .site-branded .site-footer-inner { max-width:1180px; margin:auto; padding:28px 20px; text-align:center; }
 a:focus-visible,button:focus-visible { outline:3px solid #0a5e93; outline-offset:4px; }
 
-/* Premium washer/dryer proof gallery.
-   The shared routing script inserts this section on the seven California premium
-   washer/dryer regional pages. Five seven-photo strips = 35 real pickup photos. */
+/* Premium washer/dryer proof gallery. */
 .site-branded .site-laundry-photo-showcase { overflow-x:auto; background:linear-gradient(145deg,#f7fcf8,#fff,#eef8f2); border:1px solid #cfe5d5; }
 .site-branded .site-laundry-photo-showcase h2 { margin-top:0; font-size:clamp(28px,4vw,38px); }
-.site-branded .site-laundry-photo-showcase h2::after { content:" — 35 Real Pickup Photos"; color:#0b8f2e; }
-.site-branded .site-laundry-photo-showcase > p::after { content:" Browse all 35 real washer and dryer examples below; on a phone, swipe sideways to view the full photo strips."; font-weight:700; }
 .site-branded .site-laundry-photo-showcase > div { display:block !important; min-width:760px; }
 .site-branded .site-laundry-photo-showcase figure { display:block; margin:0 0 12px !important; width:100%; }
 .site-branded .site-laundry-photo-showcase figure img { display:none !important; }
