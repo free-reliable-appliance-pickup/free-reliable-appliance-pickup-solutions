@@ -116,3 +116,7 @@ calimesa-washer-dryer-pickup
 cherry-valley-washer-dryer-pickup
 beaumont-washer-dryer-pickup
 banning-washer-dryer-pickup
+brea-washer-dryer-pickup
+yorba-linda-washer-dryer-pickup
+anaheim-hills-washer-dryer-pickup
+chino-hills-washer-dryer-pickup
