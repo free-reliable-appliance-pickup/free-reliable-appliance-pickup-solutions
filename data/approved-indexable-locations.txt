@@ -121,3 +121,5 @@ yorba-linda-washer-dryer-pickup
 anaheim-hills-washer-dryer-pickup
 chino-hills-washer-dryer-pickup
 south-orange-county-washer-dryer-pickup
+mission-viejo-washer-dryer-pickup
+lake-forest-washer-dryer-pickup
