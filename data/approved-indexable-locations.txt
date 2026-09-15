@@ -102,3 +102,7 @@ covina-washer-dryer-pickup
 west-covina-washer-dryer-pickup
 claremont-washer-dryer-pickup
 pomona-washer-dryer-pickup
+montclair-washer-dryer-pickup
+ontario-washer-dryer-pickup
+highland-washer-dryer-pickup
+san-bernardino-washer-dryer-pickup
