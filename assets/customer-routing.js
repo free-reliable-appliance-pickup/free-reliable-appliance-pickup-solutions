@@ -161,6 +161,25 @@ const WASHER_DRYER_PHOTOS={
 
 const CA_WASHER_DRYER_PAGES=new Set(Object.keys(WASHER_DRYER_PHOTOS));
 const LAUNDRY_GALLERY=[['front-load-laundry-set.jpg','Front-load washer and dryer set from our appliance work'],['laundry-pair.jpg','Washer and dryer pair from our appliance work'],['washer-dryer-set.jpg','Washer and dryer set available for pickup review'],['stacked-laundry-center.jpg','Stacked laundry center from our appliance work'],['top-load-washer.jpg','Top-load washer from our appliance work'],['front-load-dryer.jpg','Front-load dryer from our appliance work']];
+const COMPRESSED_LAUNDRY_REPLACEMENTS={
+  'washer-dryer-pickup-frontload-set.jpg':'front-load-laundry-set.jpg',
+  'washer-dryer-pickup-gray-topload-set.jpg':'laundry-pair.jpg',
+  'washer-dryer-pickup-modern-topload-set.jpg':'washer-dryer-set.jpg',
+  'washer-dryer-pickup-stacked-set.jpg':'stacked-laundry-center.jpg'
+};
+
+function replaceCompressedLaundryPhotos(){
+  document.querySelectorAll('img[src*="/assets/washer-dryer-photos/"]').forEach(img=>{
+    const raw=String(img.getAttribute('src')||'');
+    const file=raw.split('?')[0].split('/').pop();
+    const replacement=COMPRESSED_LAUNDRY_REPLACEMENTS[file];
+    if(!replacement)return;
+    img.src=siteUrl('assets/laundry/'+replacement);
+    img.removeAttribute('width');
+    img.removeAttribute('height');
+    img.decoding='async';
+  });
+}
 
 function ensureRegionalState(form){if(findField(form,['state','State','pickup_state','Primary State']))return;if(CA_WASHER_DRYER_PAGES.has(pagePath()))hidden(form,'state','CA');}
 
@@ -197,10 +216,11 @@ function enhanceWasherDryerPhotos(){
 
 load();
 document.addEventListener('DOMContentLoaded',()=>{
+  replaceCompressedLaundryPhotos();
   document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);
   preferLocalRequestForm();enhanceWasherDryerPhotos();
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});
 });
 
-window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision,preferLocalRequestForm,enhanceWasherDryerPhotos,priority909};
+window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision,preferLocalRequestForm,enhanceWasherDryerPhotos,replaceCompressedLaundryPhotos,priority909};
 })();
