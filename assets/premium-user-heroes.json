@@ -12,5 +12,9 @@
       "assets/laundry/user-heroes/la-crescenta-08.txt"
     ],
     "alt": "Real washer and dryer set provided for La Crescenta pickup service"
+  },
+  "/san-dimas-washer-dryer-pickup/": {
+    "src": "assets/laundry/user-heroes/san-dimas-user-15.jpg",
+    "alt": "Real washer and dryer set provided for San Dimas pickup service"
   }
 }
