@@ -132,3 +132,11 @@ san-juan-capistrano-washer-dryer-pickup
 san-clemente-washer-dryer-pickup
 laguna-hills-washer-dryer-pickup
 aliso-viejo-washer-dryer-pickup
+trabuco-canyon-washer-dryer-pickup
+ladera-ranch-washer-dryer-pickup
+coto-de-caza-washer-dryer-pickup
+laguna-woods-washer-dryer-pickup
+laguna-beach-washer-dryer-pickup
+dana-point-washer-dryer-pickup
+costa-mesa-washer-dryer-pickup
+huntington-beach-washer-dryer-pickup
