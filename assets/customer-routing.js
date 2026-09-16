@@ -69,5 +69,7 @@ function enhanceCityLaundrySearchTerms(){if(document.querySelector('.site-city-l
 
 load();
 document.addEventListener('DOMContentLoaded',()=>{replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();enhanceCityLaundrySearchTerms();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
+/* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
+window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});
 window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision,preferLocalRequestForm,enhanceWasherDryerPhotos,enhanceCityLaundrySearchTerms,replaceCompressedLaundryPhotos,priority909};
 })();
