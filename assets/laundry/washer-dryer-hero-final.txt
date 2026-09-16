@@ -1,1 +1,0 @@
-I’m replacing this with the image blob in the next commit.
