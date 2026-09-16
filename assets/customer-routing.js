@@ -1,16 +1,19 @@
-/* Customer request routing helper for Free Reliable Appliance Pickup.
+/* Customer request routing + premium washer/dryer presentation helper.
    Operational metadata only. Never creates city URLs or indexable pages. */
 (function(){
 'use strict';
+
 const FALLBACK={status:'request-only',territory_status:'available',region:'Unassigned market',lead_priority:3,partner_id:null,backup_partner_id:null,phone:null};
 const PRIORITY_909_PHONE='909-375-6685';
 let routing=null,cities=null,loadPromise=null;
 const n=v=>String(v||'').trim().toLowerCase();
+
 const CA_909_PRIORITY={
 'montrose':'San Gabriel Valley','la crescenta':'San Gabriel Valley','la cañada flintridge':'San Gabriel Valley','la canada flintridge':'San Gabriel Valley','altadena':'San Gabriel Valley','pasadena':'San Gabriel Valley','south pasadena':'San Gabriel Valley','san marino':'San Gabriel Valley','san gabriel':'San Gabriel Valley','sierra madre':'San Gabriel Valley','arcadia':'San Gabriel Valley','monrovia':'San Gabriel Valley','duarte':'San Gabriel Valley','azusa':'San Gabriel Valley','glendora':'San Gabriel Valley','covina':'San Gabriel Valley','west covina':'San Gabriel Valley','san dimas':'San Gabriel Valley','la verne':'San Gabriel Valley','claremont':'San Gabriel Valley','pomona':'San Gabriel Valley','el monte':'San Gabriel Valley','south el monte':'San Gabriel Valley','baldwin park':'San Gabriel Valley','montebello':'San Gabriel Valley','la puente':'San Gabriel Valley','whittier':'San Gabriel Valley','norwalk':'San Gabriel Valley','downey':'San Gabriel Valley','rowland heights':'San Gabriel Valley','diamond bar':'San Gabriel Valley',
 'montclair':'Inland Empire','ontario':'Inland Empire','upland':'Inland Empire','rancho cucamonga':'Inland Empire','fontana':'Inland Empire','san bernardino':'Inland Empire','highland':'Inland Empire','loma linda':'Inland Empire','yucaipa':'Inland Empire','oak glen':'Inland Empire','grand terrace':'Inland Empire','bloomington':'Inland Empire','rialto':'Inland Empire','colton':'Inland Empire','redlands':'Inland Empire','muscoy':'Inland Empire','arrowhead farms':'Inland Empire','north san bernardino':'Inland Empire',
 'riverside':'Riverside County','eastvale':'Riverside County','norco':'Riverside County','moreno valley':'Riverside County','corona':'Riverside County','jurupa valley':'Riverside County','calimesa':'Riverside County','cherry valley':'Riverside County','beaumont':'Riverside County','banning':'Riverside County','temecula':'Riverside County','murrieta':'Riverside County','menifee':'Riverside County',
-'brea':'Orange County','yorba linda':'Orange County','anaheim hills':'Orange County'};
+'brea':'Orange County','yorba linda':'Orange County','anaheim hills':'Orange County','irvine':'Orange County','newport beach':'Orange County','mission viejo':'Orange County','lake forest':'Orange County','laguna niguel':'Orange County','rancho santa margarita':'Orange County','san juan capistrano':'Orange County','san clemente':'Orange County','laguna hills':'Orange County','aliso viejo':'Orange County'};
+
 function siteBase(){const host=(location.hostname||'').toLowerCase();if(host.endsWith('.github.io')){const first=(location.pathname||'/').split('/').filter(Boolean)[0];return first?'/'+first+'/':'/';}return '/';}
 function siteUrl(path){return siteBase()+String(path||'').replace(/^\/+/, '');}
 function stateCode(value){const raw=String(value||'').trim();if(raw.length===2)return raw.toUpperCase();const map={alabama:'AL',alaska:'AK',arizona:'AZ',arkansas:'AR',california:'CA',colorado:'CO',connecticut:'CT',delaware:'DE',florida:'FL',georgia:'GA',hawaii:'HI',idaho:'ID',illinois:'IL',indiana:'IN',iowa:'IA',kansas:'KS',kentucky:'KY',louisiana:'LA',maine:'ME',maryland:'MD',massachusetts:'MA',michigan:'MI',minnesota:'MN',mississippi:'MS',missouri:'MO',montana:'MT',nebraska:'NE',nevada:'NV','new hampshire':'NH','new jersey':'NJ','new mexico':'NM','new york':'NY','north carolina':'NC','north dakota':'ND',ohio:'OH',oklahoma:'OK',oregon:'OR',pennsylvania:'PA','rhode island':'RI','south carolina':'SC','south dakota':'SD',tennessee:'TN',texas:'TX',utah:'UT',vermont:'VT',virginia:'VA',washington:'WA','west virginia':'WV',wisconsin:'WI',wyoming:'WY'};return map[n(raw)]||raw.toUpperCase();}
@@ -24,121 +27,47 @@ function load(){if(loadPromise)return loadPromise;loadPromise=Promise.all([fetch
 function wireForm(form){if(form.dataset.customerRoutingWired==='1')return;form.dataset.customerRoutingWired='1';form.addEventListener('submit',async function(event){if(form.dataset.customerRoutingQualified==='1')return;event.preventDefault();await load();qualify(form);form.dataset.customerRoutingQualified='1';if(typeof form.requestSubmit==='function')form.requestSubmit(event.submitter||undefined);else form.submit();},true);}
 function isCustomerPickupForm(form){return !!(findField(form,['city','City','pickup_city'])&&findField(form,['state','State','pickup_state'])&&findField(form,['appliance','Appliance','Appliance Type']));}
 function pagePath(){let p=location.pathname||'/',base=siteBase();if(base!=='/'&&p.startsWith(base.slice(0,-1)))p=p.slice(base.length-1)||'/';if(!p.startsWith('/'))p='/'+p;if(!p.endsWith('/'))p+='/';return p;}
-const WASHER_DRYER_PHOTOS={
-'/california-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real washer and dryer set for pickup in California'},
-'/southern-california-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in Southern California'},
-'/san-gabriel-inland-empire-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for San Gabriel Valley and Inland Empire pickup'},
-'/los-angeles-county-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real washer and dryer set for pickup in Los Angeles County'},
-'/orange-county-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in Orange County'},
-'/south-orange-county-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in South Orange County'},
-'/riverside-county-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real washer and dryer set for pickup in Riverside County'},
-'/san-bernardino-county-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in San Bernardino County'},
-'/montrose-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in Montrose'},
-'/la-crescenta-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in La Crescenta'},
-'/la-canada-flintridge-washer-dryer-pickup/':{hero:'heroes/la-canada-premium-set.webp',alt:'Real premium washer and dryer set for pickup in La Cañada Flintridge'},
-'/altadena-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in Altadena'},
-'/pasadena-washer-dryer-pickup/':{hero:'heroes/pasadena-premium-set.webp',alt:'Real premium washer and dryer set for pickup in Pasadena'},
-'/south-pasadena-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real matching washer and dryer set for pickup in South Pasadena'},
-'/san-marino-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in San Marino'},
-'/san-gabriel-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in San Gabriel'},
-'/sierra-madre-washer-dryer-pickup/':{hero:'real-laundry-pickup-4.jpg',alt:'Real matching washer and dryer set for pickup in Sierra Madre'},
-'/arcadia-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in Arcadia'},
-'/monrovia-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in Monrovia'},
-'/duarte-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real matching washer and dryer set for pickup in Duarte'},
-'/azusa-washer-dryer-pickup/':{hero:'real-laundry-pickup-4.jpg',alt:'Real matching washer and dryer set for pickup in Azusa'},
-'/glendora-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in Glendora'},
-'/covina-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in Covina'},
-'/west-covina-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in West Covina'},
-'/san-dimas-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real matching washer and dryer set for pickup in San Dimas'},
-'/la-verne-washer-dryer-pickup/':{hero:'real-laundry-pickup-4.jpg',alt:'Real matching washer and dryer set for pickup in La Verne'},
-'/claremont-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in Claremont'},
-'/pomona-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in Pomona'},
-'/montclair-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in Montclair'},
-'/ontario-washer-dryer-pickup/':{hero:'heroes/ontario-premium-set.webp',alt:'Real premium washer and dryer set for pickup in Ontario'},
-'/upland-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real matching washer and dryer set for pickup in Upland'},
-'/rancho-cucamonga-washer-dryer-pickup/':{hero:'heroes/rancho-cucamonga-premium-set.webp',alt:'Real premium washer and dryer set for pickup in Rancho Cucamonga'},
-'/fontana-washer-dryer-pickup/':{hero:'real-laundry-pickup-4.jpg',alt:'Real matching washer and dryer set for pickup in Fontana'},
-'/san-bernardino-washer-dryer-pickup/':{hero:'heroes/san-bernardino-premium-set.webp',alt:'Real premium washer and dryer set for pickup in San Bernardino'},
-'/chino-hills-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in Chino Hills'},
-'/highland-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in Highland'},
-'/loma-linda-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in Loma Linda'},
-'/yucaipa-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real matching washer and dryer set for pickup in Yucaipa'},
-'/oak-glen-washer-dryer-pickup/':{hero:'real-laundry-pickup-4.jpg',alt:'Real matching washer and dryer set for pickup in Oak Glen'},
-'/anaheim-hills-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in Anaheim Hills'},
-'/brea-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in Brea'},
-'/yorba-linda-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in Yorba Linda'},
-'/irvine-washer-dryer-pickup/':{hero:'real-laundry-pickup-4.jpg',alt:'Real matching washer and dryer set for pickup in Irvine'},
-'/newport-beach-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in Newport Beach'},
-'/mission-viejo-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in Mission Viejo'},
-'/lake-forest-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in Lake Forest'},
-'/laguna-niguel-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real matching washer and dryer set for pickup in Laguna Niguel'},
-'/rancho-santa-margarita-washer-dryer-pickup/':{hero:'real-laundry-pickup-4.jpg',alt:'Real matching washer and dryer set for pickup in Rancho Santa Margarita'},
-'/san-juan-capistrano-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in San Juan Capistrano'},
-'/san-clemente-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in San Clemente'},
-'/laguna-hills-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in Laguna Hills'},
-'/aliso-viejo-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real matching washer and dryer set for pickup in Aliso Viejo'},
-'/calimesa-washer-dryer-pickup/':{hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in Calimesa'},
-'/cherry-valley-washer-dryer-pickup/':{hero:'washer-dryer-set-sharp.jpg',alt:'Real matching washer and dryer set for pickup in Cherry Valley'},
-'/beaumont-washer-dryer-pickup/':{hero:'laundry-pair.jpg',alt:'Real matching washer and dryer set for pickup in Beaumont'},
-'/banning-washer-dryer-pickup/':{hero:'washer-dryer-set.jpg',alt:'Real matching washer and dryer set for pickup in Banning'}};
+
+/* IMPORTANT: every hero in this rotation is a complete washer + dryer set. */
+const COMPLETE_SET_HEROES=[
+'front-load-laundry-set.jpg',
+'laundry-pair.jpg',
+'washer-dryer-set.jpg',
+'washer-dryer-set-sharp.jpg',
+'heroes/la-canada-premium-set.webp',
+'heroes/pasadena-premium-set.webp',
+'heroes/ontario-premium-set.webp',
+'heroes/rancho-cucamonga-premium-set.webp',
+'heroes/san-bernardino-premium-set.webp'
+];
+
+const PREMIUM_WD_SLUGS=[
+'california','southern-california','san-gabriel-inland-empire','los-angeles-county','orange-county','south-orange-county','riverside-county','san-bernardino-county',
+'montrose','la-crescenta','la-canada-flintridge','altadena','pasadena','south-pasadena','san-marino','san-gabriel','sierra-madre','arcadia','monrovia','duarte','azusa','glendora','covina','west-covina','san-dimas','la-verne','claremont','pomona','montclair','ontario','upland','rancho-cucamonga','fontana','san-bernardino','chino-hills','highland','loma-linda','yucaipa','oak-glen',
+'anaheim-hills','brea','yorba-linda','irvine','newport-beach','mission-viejo','lake-forest','laguna-niguel','rancho-santa-margarita','san-juan-capistrano','san-clemente','laguna-hills','aliso-viejo','calimesa','cherry-valley','beaumont','banning'
+];
+
+const CITY_LABEL_OVERRIDES={
+'la-crescenta':'La Crescenta','la-canada-flintridge':'La Cañada Flintridge','san-gabriel-inland-empire':'San Gabriel Valley & Inland Empire','los-angeles-county':'Los Angeles County','orange-county':'Orange County','south-orange-county':'South Orange County','riverside-county':'Riverside County','san-bernardino-county':'San Bernardino County','rancho-cucamonga':'Rancho Cucamonga','rancho-santa-margarita':'Rancho Santa Margarita','san-juan-capistrano':'San Juan Capistrano','san-clemente':'San Clemente','newport-beach':'Newport Beach','mission-viejo':'Mission Viejo','lake-forest':'Lake Forest','laguna-niguel':'Laguna Niguel','laguna-hills':'Laguna Hills','aliso-viejo':'Aliso Viejo','chino-hills':'Chino Hills','anaheim-hills':'Anaheim Hills','cherry-valley':'Cherry Valley','south-pasadena':'South Pasadena','san-marino':'San Marino','san-gabriel':'San Gabriel','sierra-madre':'Sierra Madre','west-covina':'West Covina','san-dimas':'San Dimas','la-verne':'La Verne','loma-linda':'Loma Linda','oak-glen':'Oak Glen'
+};
+function slugLabel(slug){if(CITY_LABEL_OVERRIDES[slug])return CITY_LABEL_OVERRIDES[slug];return slug.split('-').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');}
+const WASHER_DRYER_PHOTOS={};
+PREMIUM_WD_SLUGS.forEach((slug,i)=>{const label=slugLabel(slug);WASHER_DRYER_PHOTOS['/'+slug+'-washer-dryer-pickup/']={hero:COMPLETE_SET_HEROES[i%COMPLETE_SET_HEROES.length],alt:'Real washer and dryer set for pickup in '+label};});
+/* Keep La Crescenta on a confirmed side-by-side/front-load pair. */
+WASHER_DRYER_PHOTOS['/la-crescenta-washer-dryer-pickup/']={hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in La Crescenta'};
+
 const CA_WASHER_DRYER_PAGES=new Set(Object.keys(WASHER_DRYER_PHOTOS));
-const LAUNDRY_GALLERY=[['front-load-laundry-set.jpg','Front-load washer and dryer set from our appliance work'],['laundry-pair.jpg','Washer and dryer pair from our appliance work'],['washer-dryer-set.jpg','Washer and dryer set available for pickup review'],['stacked-laundry-center.jpg','Stacked laundry center from our appliance work'],['top-load-washer.jpg','Top-load washer from our appliance work'],['front-load-dryer.jpg','Front-load dryer from our appliance work']];
-const COMPRESSED_LAUNDRY_REPLACEMENTS={'washer-dryer-pickup-frontload-set.jpg':'front-load-laundry-set.jpg','washer-dryer-pickup-gray-topload-set.jpg':'laundry-pair.jpg','washer-dryer-pickup-modern-topload-set.jpg':'washer-dryer-set.jpg','washer-dryer-pickup-stacked-set.jpg':'stacked-laundry-center.jpg'};
-const PREMIUM_CITY_LAUNDRY_SEARCH={};
-`montrose|Montrose|western San Gabriel Valley|compact foothill streets, garage or side-yard access
-la-crescenta|La Crescenta|western San Gabriel Valley|hillside driveways, gates, steps or longer carries
-la-canada-flintridge|La Cañada Flintridge|western San Gabriel Valley|driveway grade, gates, steps or carrying distance
-altadena|Altadena|foothill San Gabriel Valley|driveways, detached garages, side yards or steps
-pasadena|Pasadena|San Gabriel Valley|apartments, garages, stairs, parking or loading access
-south-pasadena|South Pasadena|San Gabriel Valley|apartments, driveways, stairs, gates or parking access
-san-gabriel|San Gabriel|San Gabriel Valley|homes, duplexes, apartments, gates or parking access
-san-marino|San Marino|San Gabriel Valley|side-yard paths, gates, driveways or longer residential carries
-sierra-madre|Sierra Madre|foothill San Gabriel Valley|narrow streets, driveway grade, stairs or gates
-arcadia|Arcadia|San Gabriel Valley|driveways, gates, stairs or tight doorways
-monrovia|Monrovia|San Gabriel Valley|garage, side-yard or interior access
-duarte|Duarte|San Gabriel Valley|condos, homes, garages, stairs or parking access
-azusa|Azusa|San Gabriel Valley|floor level, stairs, gates or garage access
-glendora|Glendora|eastern San Gabriel Valley|foothill driveways, gates, garages or longer carries
-covina|Covina|San Gabriel Valley|apartments, stairs, garages or narrow gates
-west-covina|West Covina|San Gabriel Valley|floor level, parking, stairs or longer carries
-san-dimas|San Dimas|eastern San Gabriel Valley|driveways, garages, gates or mixed grades
-la-verne|La Verne|eastern San Gabriel Valley|garages, driveways, gates or foothill access
-claremont|Claremont|Pomona Valley|homes, apartments, stairs or parking access
-pomona|Pomona|Pomona Valley|ground-floor, garage, gate, stair or parking access
-montclair|Montclair|Pomona Valley–Inland Empire corridor|apartments, garages, stairs or parking access
-ontario|Ontario|Inland Empire|floor level, loading access, apartments or stairs
-upland|Upland|Inland Empire|foothill driveways, gates, garages or stairs
-rancho-cucamonga|Rancho Cucamonga|Inland Empire|driveways, gates, stairs or carrying distance
-fontana|Fontana|Inland Empire|floor level, stairs, garage or loading access
-san-bernardino|San Bernardino|Inland Empire|stairs, gates, garages or loading access
-chino-hills|Chino Hills|Inland Empire|hillside driveways, gates, stairs or longer carries
-highland|Highland|Inland Empire|sloped driveways, stairs, gates or longer carries
-loma-linda|Loma Linda|Inland Empire|apartments, condos, elevators, garages or parking
-yucaipa|Yucaipa|Inland Empire|larger lots, driveways, gates or carrying distance
-oak-glen|Oak Glen|Inland Empire foothills|driveway length, grade, gates or rural-property access
-anaheim-hills|Anaheim Hills|Orange County|hillside driveways, gates, stairs or longer carries
-brea|Brea|North Orange County|homes, condos, garages, stairs or parking
-yorba-linda|Yorba Linda|North Orange County|larger properties, gates, side yards or longer carries
-irvine|Irvine|Orange County|condos, apartments, elevators, loading zones or gated access
-newport-beach|Newport Beach|Orange County|condos, multi-unit buildings, elevators or limited loading access
-mission-viejo|Mission Viejo|South Orange County|hillside driveways, garages, gates or steps
-lake-forest|Lake Forest|South Orange County|condos, homes, garages, gates or parking
-laguna-niguel|Laguna Niguel|South Orange County|hillside streets, garages, gates, stairs or carrying distance
-rancho-santa-margarita|Rancho Santa Margarita|South Orange County|gated communities, garages, stairs or driveway access
-san-juan-capistrano|San Juan Capistrano|South Orange County|gates, long driveways, garages or carrying distance
-san-clemente|San Clemente|South Orange County|hillside access, condos, garages, stairs or limited parking
-laguna-hills|Laguna Hills|South Orange County|homes, condos, garages, stairs or gated access
-aliso-viejo|Aliso Viejo|South Orange County|condos, townhomes, garages, stairs or loading access
-calimesa|Calimesa|Riverside County–Inland Empire corridor|driveways, garages, gates or carrying distance
-cherry-valley|Cherry Valley|Riverside County|larger lots, long driveways, gates or carrying distance
-beaumont|Beaumont|San Gorgonio Pass|garages, driveways, gates or stairs
-banning|Banning|San Gorgonio Pass|driveway, garage, gates, stairs or longer carries`.trim().split('\n').forEach(line=>{const [slug,city,area,access]=line.split('|');PREMIUM_CITY_LAUNDRY_SEARCH['/'+slug+'-washer-dryer-pickup/']=[city,area,access];});
+const LAUNDRY_GALLERY=COMPLETE_SET_HEROES.map((file,i)=>[file,'Real washer and dryer set '+(i+1)+' from our appliance work']);
+const COMPRESSED_LAUNDRY_REPLACEMENTS={'washer-dryer-pickup-frontload-set.jpg':'front-load-laundry-set.jpg','washer-dryer-pickup-gray-topload-set.jpg':'laundry-pair.jpg','washer-dryer-pickup-modern-topload-set.jpg':'washer-dryer-set.jpg','washer-dryer-pickup-stacked-set.jpg':'washer-dryer-set-sharp.jpg'};
+
 function replaceCompressedLaundryPhotos(){document.querySelectorAll('img[src*="/assets/washer-dryer-photos/"]').forEach(img=>{const raw=String(img.getAttribute('src')||''),file=raw.split('?')[0].split('/').pop(),replacement=COMPRESSED_LAUNDRY_REPLACEMENTS[file];if(!replacement)return;img.src=siteUrl('assets/laundry/'+replacement);img.removeAttribute('width');img.removeAttribute('height');img.decoding='async';});}
 function ensureRegionalState(form){if(findField(form,['state','State','pickup_state','Primary State']))return;if(CA_WASHER_DRYER_PAGES.has(pagePath()))hidden(form,'state','CA');}
 function preferLocalRequestForm(){const forms=Array.from(document.querySelectorAll('form[action*="formspree.io"]'));forms.forEach(ensureRegionalState);const form=forms.find(isCustomerPickupForm);if(!form)return;let target=form.closest('section');if(!target)target=form;if(!target.id)target.id='request';const localHref='#'+target.id,selectors=['a[href="/#request"]','a[href="../#request"]','a[href="./#request"]','a[href="https://freereliableappliancepickup.com/#request"]'];document.querySelectorAll(selectors.join(',')).forEach(link=>link.setAttribute('href',localHref));}
-function buildLaundryGallery(path){if(document.querySelector('.site-laundry-photo-showcase'))return;const main=document.querySelector('main');if(!main)return;const pageIndex=Math.max(0,Object.keys(WASHER_DRYER_PHOTOS).indexOf(path)),picks=[LAUNDRY_GALLERY[pageIndex%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+2)%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+4)%LAUNDRY_GALLERY.length]],section=document.createElement('section');section.className='site-laundry-photo-showcase';const h2=document.createElement('h2');h2.textContent='Real Washer & Dryer Photos';const p=document.createElement('p');p.textContent='Real appliance photos from our pickup work and inventory. Send clear photos of your own washer or dryer so we can review condition, access and local route availability.';const grid=document.createElement('div');grid.style.display='grid';grid.style.gridTemplateColumns='repeat(auto-fit,minmax(210px,1fr))';grid.style.gap='14px';picks.forEach(([file,alt])=>{const figure=document.createElement('figure'),img=document.createElement('img');figure.style.margin='0';img.src=siteUrl('assets/laundry/'+file);img.alt=alt;img.loading='lazy';img.decoding='async';img.style.width='100%';img.style.height='250px';img.style.objectFit='cover';img.style.borderRadius='12px';img.style.boxShadow='0 8px 22px rgba(0,0,0,.12)';figure.appendChild(img);grid.appendChild(figure);});section.append(h2,p,grid);main.insertBefore(section,main.firstChild);}
-function enhanceWasherDryerPhotos(){const path=pagePath(),config=WASHER_DRYER_PHOTOS[path];if(!config)return;const src=siteUrl('assets/laundry/'+config.hero),hero=document.querySelector('.site-hero-art img');if(hero){hero.src=src;hero.alt=config.alt;hero.removeAttribute('width');hero.removeAttribute('height');hero.decoding='async';hero.style.width='100%';hero.style.height='auto';hero.style.maxHeight='420px';hero.style.objectFit='contain';hero.style.background='#f5f7f6';hero.style.borderRadius='16px';hero.style.boxShadow='0 12px 28px rgba(0,0,0,.18)';}buildLaundryGallery(path);}
-function enhanceCityLaundrySearchTerms(){if(document.querySelector('.site-city-laundry-search'))return;const row=PREMIUM_CITY_LAUNDRY_SEARCH[pagePath()];if(!row)return;const [city,area,access]=row,main=document.querySelector('main');if(!main)return;const section=document.createElement('section');section.className='site-city-laundry-search';const intro=document.createElement('h2');intro.textContent='Free Washer, Dryer & Laundry Set Pickup in '+city;const lead=document.createElement('p');lead.textContent='This '+area+' page covers the three searches customers use most: free washer pickup, free dryer pickup, and free washer & dryer pickup in '+city+'. Qualification depends on appliance condition, safe access and current route availability.';const grid=document.createElement('div');grid.className='grid';const items=[['Free Washer Pickup in '+city,'For washer pickup review in '+city+', send clear photos and tell us whether the machine fills, washes, drains and spins. Include '+access+' when they affect removal.'],['Free Dryer Pickup in '+city,'For dryer pickup review in '+city+', identify gas or electric service and whether the drum turns and produces heat. Include '+access+' when relevant.'],['Free Washer & Dryer Pickup in '+city,'Complete working washer and dryer sets in '+city+' receive especially strong consideration because both machines can often be routed together for reuse.']];items.forEach(([title,text])=>{const card=document.createElement('div'),h3=document.createElement('h3'),p=document.createElement('p');card.className='card';h3.textContent=title;p.textContent=text;card.append(h3,p);grid.appendChild(card);});const note=document.createElement('div');note.className='note';note.innerHTML='<strong>Best chance for free pickup:</strong> fully working machines and complete working sets receive the strongest consideration. Send clear appliance and access photos for review.';section.append(intro,lead,grid,note);const first=main.querySelector('section');if(first&&first.nextSibling)main.insertBefore(section,first.nextSibling);else main.appendChild(section);}
-load();document.addEventListener('DOMContentLoaded',()=>{replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();enhanceCityLaundrySearchTerms();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
+function buildLaundryGallery(path){if(document.querySelector('.site-laundry-photo-showcase'))return;const main=document.querySelector('main');if(!main)return;const pageIndex=Math.max(0,Object.keys(WASHER_DRYER_PHOTOS).indexOf(path)),picks=[LAUNDRY_GALLERY[pageIndex%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+3)%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+6)%LAUNDRY_GALLERY.length]],section=document.createElement('section');section.className='site-laundry-photo-showcase';const h2=document.createElement('h2');h2.textContent='Real Washer & Dryer Set Photos';const p=document.createElement('p');p.textContent='Real washer and dryer set photos from our appliance work and inventory. Send clear photos of your own machines so we can review condition, access and local route availability.';const grid=document.createElement('div');picks.forEach(([file,alt])=>{const figure=document.createElement('figure'),img=document.createElement('img');figure.style.margin='0';img.src=siteUrl('assets/laundry/'+file);img.alt=alt;img.loading='lazy';img.decoding='async';figure.appendChild(img);grid.appendChild(figure);});section.append(h2,p,grid);main.insertBefore(section,main.firstChild);}
+function enhanceWasherDryerPhotos(){const path=pagePath(),config=WASHER_DRYER_PHOTOS[path];if(!config)return;const src=siteUrl('assets/laundry/'+config.hero),hero=document.querySelector('.site-hero-art img');if(hero){hero.src=src+(src.includes('?')?'&':'?')+'premium-set=20260915';hero.alt=config.alt;hero.removeAttribute('width');hero.removeAttribute('height');hero.decoding='async';hero.style.width='100%';hero.style.height='auto';hero.style.maxHeight='520px';hero.style.objectFit='contain';hero.style.background='#f5f7f6';hero.style.borderRadius='16px';hero.style.boxShadow='0 12px 28px rgba(0,0,0,.18)';}buildLaundryGallery(path);}
+function enhanceCityLaundrySearchTerms(){if(document.querySelector('.site-city-laundry-search'))return;const path=pagePath(),config=WASHER_DRYER_PHOTOS[path];if(!config)return;const slug=path.replace(/^\//,'').replace(/-washer-dryer-pickup\/$/,'');if(['california','southern-california','san-gabriel-inland-empire','los-angeles-county','orange-county','south-orange-county','riverside-county','san-bernardino-county'].includes(slug))return;const city=slugLabel(slug),main=document.querySelector('main');if(!main)return;const section=document.createElement('section');section.className='site-city-laundry-search';const h2=document.createElement('h2');h2.textContent='Free Washer, Dryer & Laundry Set Pickup in '+city;const lead=document.createElement('p');lead.textContent='Customers in '+city+' can submit washers, dryers and complete laundry sets for pickup review. Qualification depends on appliance condition, safe access and current route availability.';const grid=document.createElement('div');grid.className='grid';[['Free Washer Pickup in '+city,'Send clear photos and describe whether the washer fills, washes, drains and spins.'],['Free Dryer Pickup in '+city,'Identify gas or electric service and whether the drum turns and produces heat.'],['Free Washer & Dryer Pickup in '+city,'Complete working washer and dryer sets receive especially strong consideration because both machines can often be routed together for reuse.']].forEach(([title,text])=>{const card=document.createElement('div'),h3=document.createElement('h3'),p=document.createElement('p');card.className='card';h3.textContent=title;p.textContent=text;card.append(h3,p);grid.appendChild(card);});const note=document.createElement('div');note.className='note';note.innerHTML='<strong>Best chance for free pickup:</strong> fully working machines and complete working sets receive the strongest consideration. Send clear appliance and access photos for review.';section.append(h2,lead,grid,note);const first=main.querySelector('section');if(first&&first.nextSibling)main.insertBefore(section,first.nextSibling);else main.appendChild(section);}
+
+load();
+document.addEventListener('DOMContentLoaded',()=>{replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();enhanceCityLaundrySearchTerms();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
 window.FreeReliableCustomerRouting={classify,qualify,load,siteBase,routingDecision,preferLocalRequestForm,enhanceWasherDryerPhotos,enhanceCityLaundrySearchTerms,replaceCompressedLaundryPhotos,priority909};
 })();
