@@ -1,0 +1,55 @@
+name: Finish Premium Washer Dryer Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/finish-premium-washer-pages.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  finish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add remaining premium pages to both sitemaps
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          base='https://freereliableappliancepickup.com/'
+          slugs=[
+            'south-pasadena-washer-dryer-pickup',
+            'laguna-niguel-washer-dryer-pickup',
+            'rancho-santa-margarita-washer-dryer-pickup',
+            'san-juan-capistrano-washer-dryer-pickup',
+            'san-clemente-washer-dryer-pickup',
+            'laguna-hills-washer-dryer-pickup',
+            'aliso-viejo-washer-dryer-pickup',
+          ]
+          for filename in ('sitemap.xml','sitemap-new.xml'):
+            p=Path(filename)
+            text=p.read_text(encoding='utf-8')
+            additions=[]
+            for slug in slugs:
+              url=base+slug+'/'
+              if url not in text:
+                additions.append(f'  <url><loc>{url}</loc><lastmod>2026-09-16</lastmod></url>')
+            if additions:
+              if '</urlset>' not in text:
+                raise SystemExit(f'{filename}: missing </urlset>')
+              text=text.replace('</urlset>', '\n'.join(additions)+'\n</urlset>')
+              p.write_text(text,encoding='utf-8')
+              print(filename, 'added', len(additions))
+            else:
+              print(filename, 'already complete')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add sitemap.xml sitemap-new.xml
+          if git diff --cached --quiet; then
+            echo 'No sitemap changes needed.'
+          else
+            git commit -m 'Add remaining premium washer dryer pages to sitemaps'
+            git push
+          fi
