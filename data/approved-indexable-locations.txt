@@ -84,6 +84,7 @@ riverside-county-washer-dryer-pickup
 san-bernardino-county-washer-dryer-pickup
 fresno-washer-dryer-pickup
 pasadena-washer-dryer-pickup
+south-pasadena-washer-dryer-pickup
 san-gabriel-washer-dryer-pickup
 altadena-washer-dryer-pickup
 san-marino-washer-dryer-pickup
@@ -125,3 +126,9 @@ mission-viejo-washer-dryer-pickup
 lake-forest-washer-dryer-pickup
 irvine-washer-dryer-pickup
 newport-beach-washer-dryer-pickup
+laguna-niguel-washer-dryer-pickup
+rancho-santa-margarita-washer-dryer-pickup
+san-juan-capistrano-washer-dryer-pickup
+san-clemente-washer-dryer-pickup
+laguna-hills-washer-dryer-pickup
+aliso-viejo-washer-dryer-pickup
