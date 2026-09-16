@@ -1,0 +1,16 @@
+{
+  "/la-crescenta-washer-dryer-pickup/": {
+    "mime": "image/jpeg",
+    "parts": [
+      "assets/laundry/user-heroes/la-crescenta-01.txt",
+      "assets/laundry/user-heroes/la-crescenta-02.txt",
+      "assets/laundry/user-heroes/la-crescenta-03.txt",
+      "assets/laundry/user-heroes/la-crescenta-04.txt",
+      "assets/laundry/user-heroes/la-crescenta-05.txt",
+      "assets/laundry/user-heroes/la-crescenta-06.txt",
+      "assets/laundry/user-heroes/la-crescenta-07.txt",
+      "assets/laundry/user-heroes/la-crescenta-08.txt"
+    ],
+    "alt": "Real washer and dryer set provided for La Crescenta pickup service"
+  }
+}
