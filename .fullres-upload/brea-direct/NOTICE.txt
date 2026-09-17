@@ -1,0 +1,1 @@
+Direct Git blob restoration is being used because the staged Base64 transport did not reproduce the verified original. The target Brea photo is verified at 166610 bytes with SHA-256 c46b3397a6471dc81141dec83546d7735ce4ed6f19bc5105bdf2d07fea968cbe.
