@@ -1,0 +1,71 @@
+name: Restore full-resolution washer dryer hero images
+
+on:
+  push:
+    paths:
+      - '.github/workflows/restore-full-resolution-laundry-heroes.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  restore-heroes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Rebuild sharp hero from original full-resolution photo
+        run: |
+          python -m pip install --quiet pillow
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+
+          src = Path('file_00000000051c81fda2fa9f1edefd32f7.png')
+          if not src.exists():
+              raise SystemExit(f'Missing original hero source: {src}')
+
+          outdir = Path('assets/laundry')
+          outdir.mkdir(parents=True, exist_ok=True)
+
+          with Image.open(src) as im:
+              im = ImageOps.exif_transpose(im).convert('RGB')
+              im = im.rotate(-90, expand=True)
+              im = ImageOps.fit(im, (1600, 1200), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
+              for name in ('washer-dryer-set-sharp.jpg', 'washer-dryer-set.jpg'):
+                  dst = outdir / name
+                  im.save(dst, 'JPEG', quality=95, optimize=True, progressive=True, subsampling=0)
+                  print(name, dst.stat().st_size, 'bytes')
+
+          # Never allow these hero files to regress to tiny compressed versions again.
+          minimum = 180_000
+          for name in ('washer-dryer-set-sharp.jpg', 'washer-dryer-set.jpg'):
+              p = outdir / name
+              if p.stat().st_size < minimum:
+                  raise SystemExit(f'{name} is too small: {p.stat().st_size} bytes')
+
+          report = Path('washer-dryer-hero-resolution-report.txt')
+          report.write_text(
+              '\n'.join(
+                  f'{name}: {(outdir / name).stat().st_size} bytes'
+                  for name in ('washer-dryer-set-sharp.jpg', 'washer-dryer-set.jpg')
+              ) + '\n',
+              encoding='utf-8'
+          )
+          PY
+
+      - name: Commit restored hero files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/laundry/washer-dryer-set-sharp.jpg \
+                  assets/laundry/washer-dryer-set.jpg \
+                  washer-dryer-hero-resolution-report.txt
+          git diff --cached --quiet || git commit -m 'Restore sharp washer dryer hero files from original photo'
+          git push
