@@ -1,6 +1,7 @@
 name: Match recovered Orange County originals with ORB
 
 # Report-only matcher: this workflow never changes city pages or the approved hero manifest.
+# Rerun requested 2026-09-17 to finish remaining verified hero recovery.
 on:
   workflow_dispatch:
   push:
@@ -61,7 +62,6 @@ jobs:
               arr = np.frombuffer(raw, dtype=np.uint8).reshape(count, 32)
               target_desc[route] = arr
 
-          # Byte-deduplicate candidates so copies under multiple names do not fake a runner-up gap.
           unique = {}
           for p in sorted(originals_dir.iterdir()):
               if not p.is_file() or p.suffix.lower() not in {'.jpg','.jpeg','.png','.webp'}:
@@ -97,7 +97,6 @@ jobs:
           for route, tdesc in target_desc.items():
               ranked = []
               for c in candidates:
-                  # KNN ratio test, target descriptors -> all candidate descriptors.
                   pairs = matcher.knnMatch(tdesc, c['desc'], k=2)
                   good_075 = []
                   good_085 = []
@@ -120,8 +119,6 @@ jobs:
                   exactish = sum(d <= 12 for d in nearest)
                   very_close = sum(d <= 20 for d in nearest)
                   close = sum(d <= 28 for d in nearest)
-
-                  # Lower score is better. Strong exact/near feature reuse dominates.
                   score = (
                       median_top10
                       - 4.0 * len(good_075)
