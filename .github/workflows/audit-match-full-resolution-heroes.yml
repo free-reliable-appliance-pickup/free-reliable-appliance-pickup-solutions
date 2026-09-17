@@ -1,0 +1,184 @@
+name: Audit original full-resolution hero matches
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/audit-match-full-resolution-heroes.yml'
+      - 'assets/laundry/original-user-heroes/**'
+      - 'assets/laundry/premium-real-sets-36-grid.webp'
+
+permissions:
+  contents: write
+
+jobs:
+  match:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install image audit dependencies
+        run: python -m pip install --quiet pillow numpy
+
+      - name: Match each old grid cell to its original upload
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          import numpy as np, json, math, os
+
+          sprite_path = Path('assets/laundry/premium-real-sets-36-grid.webp')
+          originals_dir = Path('assets/laundry/original-user-heroes')
+          out_path = Path('assets/laundry/original-match-report.json')
+
+          cities = [
+            'La Crescenta','La Cañada Flintridge','Pasadena','South Pasadena','San Marino','Altadena',
+            'Sierra Madre','Arcadia','Monrovia','Duarte','Azusa','Glendora',
+            'Covina','West Covina','San Dimas','La Verne','Claremont','Pomona',
+            'Montclair','Upland','Rancho Cucamonga','Fontana','San Bernardino','Anaheim Hills',
+            'Brea','Yorba Linda','Irvine','Newport Beach','Mission Viejo','Lake Forest',
+            'Laguna Niguel','Rancho Santa Margarita','San Juan Capistrano','San Clemente','Laguna Hills','Aliso Viejo'
+          ]
+          routes = [c.lower().replace('ñ','n').replace(' ','-') + '-washer-dryer-pickup' for c in cities]
+          # Correct punctuation/diacritics are irrelevant to matching; explicit route override where needed.
+          routes[1] = 'la-canada-flintridge-washer-dryer-pickup'
+
+          if not sprite_path.exists():
+            raise SystemExit(f'Missing sprite: {sprite_path}')
+          originals = sorted(p for p in originals_dir.iterdir() if p.is_file() and p.suffix.lower() in {'.jpg','.jpeg','.png','.webp'})
+          if not originals:
+            raise SystemExit('No original uploads found')
+
+          def open_rgb(p):
+            with Image.open(p) as im:
+              return ImageOps.exif_transpose(im).convert('RGB').copy()
+
+          def cover(im, size, centering=(0.5,0.5)):
+            return ImageOps.fit(im, size, method=Image.Resampling.LANCZOS, centering=centering)
+
+          def contain(im, size, bg):
+            c = ImageOps.contain(im, size, method=Image.Resampling.LANCZOS)
+            canvas = Image.new('RGB', size, bg)
+            canvas.paste(c, ((size[0]-c.width)//2, (size[1]-c.height)//2))
+            return canvas
+
+          def arr(im, size=(96,72)):
+            return np.asarray(im.resize(size, Image.Resampling.LANCZOS), dtype=np.float32)
+
+          def gray(a):
+            return a[...,0]*0.299 + a[...,1]*0.587 + a[...,2]*0.114
+
+          def score_pair(ref, cand):
+            a = arr(ref); b = arr(cand)
+            # Lightly normalize global exposure so re-encoding/brightness differences do not dominate.
+            ga, gb = gray(a), gray(b)
+            am, bm = ga.mean(), gb.mean()
+            b2 = np.clip(b + (am-bm), 0, 255)
+            gb2 = gray(b2)
+            mae = float(np.mean(np.abs(a-b2)))
+            gx_a = np.diff(ga, axis=1); gx_b = np.diff(gb2, axis=1)
+            gy_a = np.diff(ga, axis=0); gy_b = np.diff(gb2, axis=0)
+            edge = float((np.mean(np.abs(gx_a-gx_b)) + np.mean(np.abs(gy_a-gy_b))) / 2)
+            aa = ga.ravel()-ga.mean(); bb = gb2.ravel()-gb2.mean()
+            den = float(np.linalg.norm(aa)*np.linalg.norm(bb))
+            corr = float(np.dot(aa,bb)/den) if den else 0.0
+            corr = max(-1.0,min(1.0,corr))
+            return mae + 0.35*edge + 35.0*(1.0-corr), {'mae':round(mae,3),'edge':round(edge,3),'corr':round(corr,5)}
+
+          # Preload once; preserve exact source dimensions and byte sizes in report.
+          source = {}
+          for p in originals:
+            try:
+              im = open_rgb(p)
+              source[p.name] = {'image':im, 'width':im.width, 'height':im.height, 'bytes':p.stat().st_size}
+            except Exception as e:
+              print('Skipping unreadable', p, e)
+
+          sprite = open_rgb(sprite_path)
+          cw, ch = sprite.width//6, sprite.height//6
+          report = {
+            'generated_from': str(sprite_path),
+            'sprite_dimensions': [sprite.width,sprite.height],
+            'cell_dimensions': [cw,ch],
+            'original_count': len(source),
+            'matches': []
+          }
+
+          centerings = [(0.5,0.5),(0.5,0.25),(0.5,0.75),(0.35,0.5),(0.65,0.5)]
+          for i, city in enumerate(cities):
+            row, col = divmod(i,6)
+            cell = sprite.crop((col*cw,row*ch,(col+1)*cw,(row+1)*ch))
+            candidates = []
+            for name, meta in source.items():
+              im = meta['image']
+              variants = []
+              for c in centerings:
+                variants.append((f'cover-{c[0]:.2f}-{c[1]:.2f}', cover(im,(cw,ch),c)))
+              variants.append(('stretch', im.resize((cw,ch),Image.Resampling.LANCZOS)))
+              variants.append(('contain-white', contain(im,(cw,ch),(255,255,255))))
+              variants.append(('contain-black', contain(im,(cw,ch),(0,0,0))))
+              best = None
+              for mode, v in variants:
+                s, detail = score_pair(cell,v)
+                if best is None or s < best[0]:
+                  best = (s,mode,detail)
+              candidates.append({
+                'filename': name,
+                'score': round(best[0],4),
+                'mode': best[1],
+                'metrics': best[2],
+                'width': meta['width'], 'height': meta['height'], 'bytes': meta['bytes']
+              })
+            candidates.sort(key=lambda x:x['score'])
+            top = candidates[:5]
+            gap = round(top[1]['score']-top[0]['score'],4) if len(top)>1 else None
+            ratio = round(top[1]['score']/max(top[0]['score'],0.0001),4) if len(top)>1 else None
+            report['matches'].append({
+              'set': i+1,
+              'city': city,
+              'route': '/' + routes[i] + '/',
+              'best': top[0],
+              'runner_up_gap': gap,
+              'runner_up_ratio': ratio,
+              'top5': top
+            })
+            print(f"#{i+1:02d} {city:24s} -> {top[0]['filename']:36s} score={top[0]['score']:8.3f} gap={gap}")
+
+          # Known exact assignments are a hard validation check. Do not publish a misleading report if these fail.
+          known = {
+            15:'1000274641(3).jpg',
+            16:'1000274683(5).jpg',
+            17:'1000274700(10).jpg'
+          }
+          validation = {}
+          ok = True
+          for n, expected in known.items():
+            got = report['matches'][n-1]['best']['filename']
+            validation[str(n)] = {'expected':expected,'matched':got,'ok':got==expected}
+            ok = ok and (got==expected)
+          report['known_assignment_validation'] = validation
+          report['known_assignment_validation_ok'] = ok
+
+          out_path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          if not ok:
+            print('Known assignment validation failed; report retained for diagnosis but workflow will fail.')
+            raise SystemExit(2)
+          PY
+
+      - name: Commit audit report
+        run: |
+          if git diff --quiet -- assets/laundry/original-match-report.json && git ls-files --error-unmatch assets/laundry/original-match-report.json >/dev/null 2>&1; then
+            echo 'Audit report unchanged.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/laundry/original-match-report.json
+          git commit -m 'Audit full-resolution city hero matches'
+          git push
