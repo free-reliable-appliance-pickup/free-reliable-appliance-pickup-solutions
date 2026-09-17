@@ -1,0 +1,26 @@
+{
+  "purpose": "Keep unresolved premium washer/dryer city heroes separate from manually verified assignments. These routes must not be auto-added to assets/premium-user-heroes.json from the historical 6x6 grid or automated image matching alone.",
+  "policy": {
+    "do_not_auto_assign": true,
+    "authoritative_manifest": "assets/premium-user-heroes.json",
+    "reason": "The historical grid matcher fails known manually verified assignments, so grid position and match score are evidence only, not approval.",
+    "required_before_approval": "Manual confirmation from prior assignment evidence or a direct visual/original-file match that preserves the user's assigned city photo."
+  },
+  "pending_routes": [
+    {"route":"/south-pasadena-washer-dryer-pickup/","city":"South Pasadena","status":"pending-manual-verification","note":"Historical grid set 4 has a weak/ambiguous automated match and must not be promoted automatically."},
+    {"route":"/san-bernardino-washer-dryer-pickup/","city":"San Bernardino","status":"pending-manual-verification","note":"Historical grid set 23 has a strong image similarity match, but the grid is not authoritative because other known city assignments differ from final manual assignments."},
+    {"route":"/anaheim-hills-washer-dryer-pickup/","city":"Anaheim Hills","status":"pending-manual-verification"},
+    {"route":"/brea-washer-dryer-pickup/","city":"Brea","status":"pending-manual-verification"},
+    {"route":"/yorba-linda-washer-dryer-pickup/","city":"Yorba Linda","status":"pending-manual-verification"},
+    {"route":"/irvine-washer-dryer-pickup/","city":"Irvine","status":"pending-manual-verification"},
+    {"route":"/newport-beach-washer-dryer-pickup/","city":"Newport Beach","status":"pending-manual-verification"},
+    {"route":"/mission-viejo-washer-dryer-pickup/","city":"Mission Viejo","status":"pending-manual-verification"},
+    {"route":"/lake-forest-washer-dryer-pickup/","city":"Lake Forest","status":"pending-manual-verification"},
+    {"route":"/laguna-niguel-washer-dryer-pickup/","city":"Laguna Niguel","status":"pending-manual-verification"},
+    {"route":"/rancho-santa-margarita-washer-dryer-pickup/","city":"Rancho Santa Margarita","status":"pending-manual-verification"},
+    {"route":"/san-juan-capistrano-washer-dryer-pickup/","city":"San Juan Capistrano","status":"pending-manual-verification"},
+    {"route":"/san-clemente-washer-dryer-pickup/","city":"San Clemente","status":"pending-manual-verification"},
+    {"route":"/laguna-hills-washer-dryer-pickup/","city":"Laguna Hills","status":"pending-manual-verification"},
+    {"route":"/aliso-viejo-washer-dryer-pickup/","city":"Aliso Viejo","status":"pending-manual-verification"}
+  ]
+}
