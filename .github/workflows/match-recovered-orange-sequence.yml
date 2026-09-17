@@ -1,0 +1,182 @@
+name: Match recovered Orange County sequence to originals
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/match-recovered-orange-sequence.yml'
+      - 'assets/laundry/recovered-orange-county-sequence-hashes.json'
+      - 'assets/laundry/original-user-heroes/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: recovered-orange-sequence-match
+  cancel-in-progress: true
+
+jobs:
+  match:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install image matching dependency
+        run: python -m pip install --quiet pillow
+
+      - name: Compare recovered fingerprints with repository originals
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          import hashlib, json, sys
+
+          input_path = Path('assets/laundry/recovered-orange-county-sequence-hashes.json')
+          originals_dir = Path('assets/laundry/original-user-heroes')
+          output_path = Path('assets/laundry/recovered-orange-sequence-original-matches.json')
+
+          data = json.loads(input_path.read_text(encoding='utf-8'))
+          targets = data.get('images', [])
+          known = data.get('known_validation', {})
+
+          def bits_to_hex(bits):
+              value = 0
+              for bit in bits:
+                  value = (value << 1) | int(bool(bit))
+              width = (len(bits) + 3) // 4
+              return f'{value:0{width}x}'
+
+          def hashes(path):
+              with Image.open(path) as raw:
+                  im = ImageOps.exif_transpose(raw).convert('L')
+                  a = im.resize((16, 16), Image.Resampling.LANCZOS)
+                  px = list(a.getdata())
+                  mean = sum(px) / len(px)
+                  ah = bits_to_hex([p >= mean for p in px])
+
+                  d = im.resize((17, 16), Image.Resampling.LANCZOS)
+                  dp = list(d.getdata())
+                  dh_bits = []
+                  for y in range(16):
+                      row = dp[y * 17:(y + 1) * 17]
+                      dh_bits.extend(row[x] > row[x + 1] for x in range(16))
+                  dh = bits_to_hex(dh_bits)
+                  return ah, dh, raw.width, raw.height
+
+          def hamming_hex(a, b):
+              return (int(a, 16) ^ int(b, 16)).bit_count()
+
+          candidate_paths = sorted(
+              p for p in originals_dir.iterdir()
+              if p.is_file() and p.suffix.lower() in {'.jpg', '.jpeg', '.png', '.webp'}
+          )
+
+          # Deduplicate byte-identical originals so duplicate filenames do not create false runner-up ambiguity.
+          unique = {}
+          for p in candidate_paths:
+              digest = hashlib.sha256(p.read_bytes()).hexdigest()
+              unique.setdefault(digest, p)
+
+          originals = []
+          for digest, p in unique.items():
+              try:
+                  ah, dh, width, height = hashes(p)
+                  originals.append({
+                      'filename': p.name,
+                      'path': str(p).replace('\\', '/'),
+                      'width': width,
+                      'height': height,
+                      'bytes': p.stat().st_size,
+                      'sha256': digest,
+                      'ahash16': ah,
+                      'dhash16': dh,
+                  })
+              except Exception as e:
+                  print('Skipping unreadable original', p, e)
+
+          report = {
+              'purpose': 'Report-only comparison of recovered phone-photo fingerprints against repository full-resolution originals. Never auto-apply these matches to city pages.',
+              'auto_apply': False,
+              'hash_method': data.get('hash_method'),
+              'target_count': len(targets),
+              'distinct_original_count': len(originals),
+              'matches': [],
+          }
+
+          for target in targets:
+              ta = target['ahash16']
+              td = target['dhash16']
+              ranked = []
+              for original in originals:
+                  a_dist = hamming_hex(ta, original['ahash16'])
+                  d_dist = hamming_hex(td, original['dhash16'])
+                  total = a_dist + d_dist
+                  ranked.append({
+                      'filename': original['filename'],
+                      'path': original['path'],
+                      'width': original['width'],
+                      'height': original['height'],
+                      'bytes': original['bytes'],
+                      'sha256': original['sha256'],
+                      'ahash_distance': a_dist,
+                      'dhash_distance': d_dist,
+                      'combined_hamming_distance': total,
+                  })
+              ranked.sort(key=lambda x: (x['combined_hamming_distance'], x['ahash_distance'], x['dhash_distance'], x['filename'].lower()))
+              top = ranked[:5]
+              gap = None
+              if len(top) > 1:
+                  gap = top[1]['combined_hamming_distance'] - top[0]['combined_hamming_distance']
+              entry = {
+                  'set': target.get('set'),
+                  'city': target.get('city'),
+                  'target_filename': target.get('filename'),
+                  'best': top[0] if top else None,
+                  'runner_up_gap': gap,
+                  'top5': top,
+              }
+              if target.get('description_anchor'):
+                  entry['description_anchor'] = target['description_anchor']
+              report['matches'].append(entry)
+              if top:
+                  print(f"#{target.get('set'):02d} {target.get('city'):24s} -> {top[0]['filename']:36s} distance={top[0]['combined_hamming_distance']:3d} gap={gap}")
+
+          expected_set = known.get('set')
+          expected_original = known.get('expected_original')
+          validation = {'set': expected_set, 'city': known.get('city'), 'expected_original': expected_original}
+          if expected_set is not None and expected_original:
+              match = next((m for m in report['matches'] if m.get('set') == expected_set), None)
+              got = match.get('best', {}).get('filename') if match and match.get('best') else None
+              validation['matched_original'] = got
+              validation['ok'] = got == expected_original
+          else:
+              validation['ok'] = False
+              validation['error'] = 'Missing known validation anchor in input file.'
+
+          report['known_validation'] = validation
+          report['known_validation_ok'] = bool(validation.get('ok'))
+          output_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          print('Known validation:', validation)
+          if not report['known_validation_ok']:
+              raise SystemExit('Known Rancho Santa Margarita anchor failed; report is not safe for promotion review.')
+          print('PASS: known Rancho Santa Margarita anchor validated. Report remains review-only.')
+          PY
+
+      - name: Commit report only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/laundry/recovered-orange-sequence-original-matches.json
+          if git diff --cached --quiet; then
+            echo 'Recovered Orange sequence report unchanged.'
+          else
+            git commit -m 'Report recovered Orange County original matches'
+            git push
+          fi
