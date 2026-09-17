@@ -1,0 +1,142 @@
+name: Normalize Customer Request Actions
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**/*.html'
+      - '.github/workflows/normalize-customer-request-actions.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  normalize-request-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Keep customer request actions on the local form
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          changed = []
+          detected = []
+
+          def is_customer_form_page(text):
+              lower = text.lower()
+              return (
+                  'formspree.io' in lower
+                  and ('name="city"' in lower or "name='city'" in lower or 'name="pickup_city"' in lower or "name='pickup_city'" in lower)
+                  and ('name="state"' in lower or "name='state'" in lower or 'name="pickup_state"' in lower or "name='pickup_state'" in lower)
+                  and ('name="appliance"' in lower or "name='appliance'" in lower or 'name="appliance type"' in lower or "name='appliance type'" in lower)
+              )
+
+          anchor_re = re.compile(r'<a\b(?P<attrs>[^>]*)>(?P<label>.*?)</a>', re.I | re.S)
+          href_re = re.compile(r'\bhref\s*=\s*(["\'])([^"\']*)\1', re.I)
+          request_id_re = re.compile(r'\bid\s*=\s*(["\'])request\1', re.I)
+          form_re = re.compile(r'<form\b[^>]*\baction\s*=\s*(["\'])https://formspree\.io/[^"\']+\1[^>]*>', re.I | re.S)
+
+          for path in Path('.').rglob('*.html'):
+              text = path.read_text(encoding='utf-8', errors='replace')
+              if not is_customer_form_page(text):
+                  continue
+
+              detected.append(str(path))
+              original = text
+
+              # Every customer pickup form page gets a local #request target.
+              if not request_id_re.search(text):
+                  form = form_re.search(text)
+                  if form:
+                      section_start = text.lower().rfind('<section', 0, form.start())
+                      if section_start >= 0:
+                          section_end = text.find('>', section_start)
+                          opening = text[section_start:section_end + 1]
+                          if not re.search(r'\bid\s*=', opening, re.I):
+                              opening = opening[:-1] + ' id="request">'
+                              text = text[:section_start] + opening + text[section_end + 1:]
+                          else:
+                              text = text[:form.start()] + '<span id="request" aria-hidden="true"></span>\n' + text[form.start():]
+                      else:
+                          text = text[:form.start()] + '<span id="request" aria-hidden="true"></span>\n' + text[form.start():]
+
+              # On a page with its own pickup form, every visible Request link/button
+              # should open that local form instead of navigating elsewhere.
+              def localize_request_anchor(match):
+                  tag = match.group(0)
+                  attrs = match.group('attrs')
+                  label_html = match.group('label')
+                  label = re.sub(r'<[^>]+>', ' ', label_html)
+                  label = re.sub(r'\s+', ' ', label).strip().lower()
+                  if 'request' not in label:
+                      return tag
+                  href = href_re.search(attrs)
+                  if href:
+                      replacement_attrs = href_re.sub('href="#request"', attrs, count=1)
+                  else:
+                      replacement_attrs = attrs + ' href="#request"'
+                  return '<a' + replacement_attrs + '>' + label_html + '</a>'
+
+              text = anchor_re.sub(localize_request_anchor, text)
+
+              # Catch legacy request targets even when link wording is unusual.
+              text = re.sub(r'href\s*=\s*(["\'])(?:https://freereliableappliancepickup\.com/|/|\.\./|\./)#request\1', 'href="#request"', text, flags=re.I)
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(str(path))
+
+          print(f'Detected customer pickup form pages: {len(detected)}')
+          print(f'Normalized pages: {len(changed)}')
+          for item in changed:
+              print(' -', item)
+
+      - name: Verify request actions
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          failures = []
+          checked = 0
+          for path in Path('.').rglob('*.html'):
+              text = path.read_text(encoding='utf-8', errors='replace')
+              lower = text.lower()
+              customer = (
+                  'formspree.io' in lower
+                  and ('name="city"' in lower or "name='city'" in lower or 'name="pickup_city"' in lower or "name='pickup_city'" in lower)
+                  and ('name="state"' in lower or "name='state'" in lower or 'name="pickup_state"' in lower or "name='pickup_state'" in lower)
+                  and ('name="appliance"' in lower or "name='appliance'" in lower or 'name="appliance type"' in lower or "name='appliance type'" in lower)
+              )
+              if not customer:
+                  continue
+              checked += 1
+              if not re.search(r'\bid\s*=\s*(["\'])request\1', text, re.I):
+                  failures.append(f'{path}: missing #request target')
+              if re.search(r'href\s*=\s*(["\'])(?:https://freereliableappliancepickup\.com/|/|\.\./|\./)#request\1', text, re.I):
+                  failures.append(f'{path}: legacy request redirect remains')
+
+          if not checked:
+              raise SystemExit('No customer pickup form pages detected.')
+          if failures:
+              print('Request-action verification FAILED:')
+              for item in failures:
+                  print(' -', item)
+              raise SystemExit(1)
+          print(f'PASS: {checked} customer pickup form pages keep request actions on their local form.')
+
+      - name: Commit normalized request actions
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'No request-action changes needed.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- '*.html' '**/*.html'
+          git commit -m 'Keep pickup request buttons on local forms'
+          git push
