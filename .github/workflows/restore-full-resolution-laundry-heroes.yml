@@ -1,4 +1,4 @@
-name: Restore full-resolution washer dryer hero images
+name: Protect original full-resolution washer dryer photos
 
 on:
   push:
@@ -6,66 +6,31 @@ on:
       - '.github/workflows/restore-full-resolution-laundry-heroes.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  restore-heroes:
+  verify-original:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Rebuild sharp hero from original full-resolution photo
+      - name: Verify original photo without modifying it
+        shell: bash
         run: |
-          python -m pip install --quiet pillow
-          python - <<'PY'
-          from pathlib import Path
-          from PIL import Image, ImageOps
+          set -euo pipefail
+          src='file_00000000051c81fda2fa9f1edefd32f7.png'
 
-          src = Path('file_00000000051c81fda2fa9f1edefd32f7.png')
-          if not src.exists():
-              raise SystemExit(f'Missing original hero source: {src}')
+          if [[ ! -f "$src" ]]; then
+            echo "Missing original full-resolution photo: $src" >&2
+            exit 1
+          fi
 
-          outdir = Path('assets/laundry')
-          outdir.mkdir(parents=True, exist_ok=True)
+          bytes=$(wc -c < "$src")
+          sha256=$(sha256sum "$src" | awk '{print $1}')
+          printf 'Original photo preserved exactly as committed.\nFile: %s\nBytes: %s\nSHA-256: %s\n' "$src" "$bytes" "$sha256"
 
-          with Image.open(src) as im:
-              im = ImageOps.exif_transpose(im).convert('RGB')
-              im = im.rotate(-90, expand=True)
-              im = ImageOps.fit(im, (1600, 1200), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
-              for name in ('washer-dryer-set-sharp.jpg', 'washer-dryer-set.jpg'):
-                  dst = outdir / name
-                  im.save(dst, 'JPEG', quality=95, optimize=True, progressive=True, subsampling=0)
-                  print(name, dst.stat().st_size, 'bytes')
-
-          # Never allow these hero files to regress to tiny compressed versions again.
-          minimum = 180_000
-          for name in ('washer-dryer-set-sharp.jpg', 'washer-dryer-set.jpg'):
-              p = outdir / name
-              if p.stat().st_size < minimum:
-                  raise SystemExit(f'{name} is too small: {p.stat().st_size} bytes')
-
-          report = Path('washer-dryer-hero-resolution-report.txt')
-          report.write_text(
-              '\n'.join(
-                  f'{name}: {(outdir / name).stat().st_size} bytes'
-                  for name in ('washer-dryer-set-sharp.jpg', 'washer-dryer-set.jpg')
-              ) + '\n',
-              encoding='utf-8'
-          )
-          PY
-
-      - name: Commit restored hero files
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/laundry/washer-dryer-set-sharp.jpg \
-                  assets/laundry/washer-dryer-set.jpg \
-                  washer-dryer-hero-resolution-report.txt
-          git diff --cached --quiet || git commit -m 'Restore sharp washer dryer hero files from original photo'
-          git push
+          # Important: this workflow intentionally does NOT resize, crop, rotate,
+          # convert, recompress, or overwrite any user photo. Display cropping
+          # belongs in CSS (object-fit/object-position), never in the image bytes.
