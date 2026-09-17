@@ -22,26 +22,26 @@ jobs:
       - name: Reconstruct only when every transport chunk is present
         shell: python
         run: |
-          import base64, hashlib, json, os
+          import base64, hashlib, json
           from pathlib import Path
 
           specs = {
             'san-dimas': {
-              'parts': 5,
+              'parts': 19,
               'file': '1000274641(3).jpg',
               'size': 324184,
               'sha256': 'a7ab8d1b61a51c493149ab1720e1c997c6a4bda451357c298cbdcea1b31a98e4',
               'page': '/san-dimas-washer-dryer-pickup/'
             },
             'la-verne': {
-              'parts': 5,
+              'parts': 21,
               'file': '1000274683(5).jpg',
               'size': 368294,
               'sha256': '5b98b7088646d6e7d0df0c180793ea5a146d369588aa0a8e31664e80f81a7525',
               'page': '/la-verne-washer-dryer-pickup/'
             },
             'claremont': {
-              'parts': 7,
+              'parts': 29,
               'file': '1000274700(10).jpg',
               'size': 511446,
               'sha256': '87185bf73ea5d70fdb3eaf8a9e2e85d5c0343acfa188935485c012a5c5177251',
@@ -57,9 +57,7 @@ jobs:
                   if not p.is_file():
                       missing.append(str(p))
           if missing:
-              print(f'Waiting for {len(missing)} transport chunk(s).')
-              Path('.fullres-not-ready').write_text('waiting\n')
-              raise SystemExit(0)
+              raise SystemExit(f'Missing {len(missing)} exact transport chunk(s); refusing partial reconstruction.')
 
           outdir = Path('assets/laundry/original-user-heroes')
           outdir.mkdir(parents=True, exist_ok=True)
@@ -84,16 +82,11 @@ jobs:
               print(f'VERIFIED {slug}: {target} ({len(data)} bytes)')
 
           mapping_path.write_text(json.dumps(mapping, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-          Path('.fullres-ready').write_text('ready\n')
 
       - name: Commit exact originals and remove temporary transport chunks
         shell: bash
         run: |
-          if [ ! -f .fullres-ready ]; then
-            echo 'Not all chunks are present yet.'
-            exit 0
-          fi
-          rm -rf .fullres-upload .fullres-ready .fullres-not-ready
+          rm -rf .fullres-upload
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
