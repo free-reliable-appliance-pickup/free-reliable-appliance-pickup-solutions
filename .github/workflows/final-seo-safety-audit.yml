@@ -3,7 +3,7 @@ name: Final SEO safety audit
 on:
   push:
     branches: [main]
-    paths: ['**/index.html','index.html','sitemap.xml','robots.txt','data/market-routing.json','data/approved-indexable-locations.txt','.github/workflows/final-seo-safety-audit.yml']
+    paths: ['**/index.html','index.html','sitemap.xml','sitemap-regular-washer-dryer.xml','robots.txt','data/market-routing.json','data/approved-indexable-locations.txt','.github/workflows/final-seo-safety-audit.yml']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Audit indexable pages, approved markets, canonicals, sitemap and retired-link leaks
+      - name: Audit indexable pages, approved markets, canonicals, sitemaps and retired-link leaks
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -47,12 +47,16 @@ jobs:
           for slug in recruiting_noindex_locations:
               p=Path(slug)/'index.html'
               if p.exists() and 'noindex' not in p.read_text(encoding='utf-8',errors='ignore').lower(): errors.append(f'RECRUITING LOCATION INDEXABLE {p}')
-          sitemap=Path('sitemap.xml').read_text(encoding='utf-8',errors='ignore')
-          locs=set(re.findall(r'<loc>(.*?)</loc>',sitemap))
+          sitemap_files=[Path('sitemap.xml'),Path('sitemap-regular-washer-dryer.xml')]
+          locs=set()
+          for sitemap_file in sitemap_files:
+              if sitemap_file.exists():
+                  sitemap=sitemap_file.read_text(encoding='utf-8',errors='ignore')
+                  locs.update(re.findall(r'<loc>(.*?)</loc>',sitemap))
           for p in indexable:
               rel='' if p==Path('index.html') else p.parent.as_posix().strip('/')+'/'
               url=base+rel
-              if url not in locs: errors.append(f'INDEXABLE NOT IN SITEMAP {p} -> {url}')
+              if url not in locs: errors.append(f'INDEXABLE NOT IN SITEMAPS {p} -> {url}')
           for url in sorted(locs):
               if not url.startswith(base): errors.append(f'FOREIGN SITEMAP URL {url}'); continue
               rel=url[len(base):].strip('/')
@@ -64,5 +68,5 @@ jobs:
                   if f'href="/{r}/' in s or f"href='/{r}/" in s or f'href="../{r}/' in s or f"href='../{r}/" in s: errors.append(f'RETIRED LINK LEAK {p}: {r}')
           if errors:
               print('\n'.join(errors)); sys.exit(1)
-          print(f'PASS: {len(indexable)} indexable HTML pages checked; approved paths, sitemap, canonicals, titles, H1s and retired-link checks clean')
+          print(f'PASS: {len(indexable)} indexable HTML pages checked; approved paths, sitemaps, canonicals, titles, H1s and retired-link checks clean')
           PY
