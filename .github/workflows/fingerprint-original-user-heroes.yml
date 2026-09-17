@@ -1,4 +1,4 @@
-name: Fingerprint original user heroes
+name: Match recovered city photos to originals
 
 on:
   workflow_dispatch:
@@ -6,16 +6,17 @@ on:
     paths:
       - '.github/workflows/fingerprint-original-user-heroes.yml'
       - 'assets/laundry/original-user-heroes/**'
+      - 'assets/laundry/recovered-corridor-target-hashes.json'
 
 permissions:
   contents: write
 
 concurrency:
-  group: fingerprint-original-user-heroes
+  group: match-recovered-city-heroes
   cancel-in-progress: true
 
 jobs:
-  fingerprint:
+  match:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,53 +27,68 @@ jobs:
           python-version: '3.12'
       - name: Install Pillow and NumPy
         run: python -m pip install --quiet pillow numpy
-      - name: Build compact visual fingerprints
+      - name: Match recovered city images to original uploads
         run: |
           python - <<'PY'
           from pathlib import Path
           from PIL import Image, ImageOps
-          import numpy as np, json, base64, hashlib
+          import numpy as np, json, hashlib
 
           root=Path('assets/laundry/original-user-heroes')
-          out=Path('assets/laundry/original-user-hero-fingerprints.json')
-          rows=[]
+          targets=json.load(open('assets/laundry/recovered-corridor-target-hashes.json',encoding='utf-8'))['images']
+          out=Path('assets/laundry/recovered-corridor-original-matches.json')
+
+          def bits_to_hex(bits):
+              bits=np.asarray(bits,dtype=np.uint8).ravel()
+              if len(bits)%4: bits=np.pad(bits,(0,4-len(bits)%4))
+              return ''.join(format(int(bits[i])*8+int(bits[i+1])*4+int(bits[i+2])*2+int(bits[i+3]),'x') for i in range(0,len(bits),4))
+          def ahash(im,n=16):
+              a=np.asarray(im.convert('L').resize((n,n),Image.Resampling.LANCZOS),dtype=np.float32)
+              return bits_to_hex(a>a.mean())
+          def dhash(im,n=16):
+              a=np.asarray(im.convert('L').resize((n+1,n),Image.Resampling.LANCZOS),dtype=np.float32)
+              return bits_to_hex(a[:,1:]>a[:,:-1])
+          def phash(im,n=16,high=32):
+              a=np.asarray(im.convert('L').resize((high,high),Image.Resampling.LANCZOS),dtype=np.float64)
+              k=np.arange(high)[:,None]; x=np.arange(high)[None,:]
+              C=np.cos(np.pi*(x+0.5)*k/high); C[0,:]*=1/np.sqrt(2); C*=np.sqrt(2/high)
+              low=(C@a@C.T)[:n,:n]
+              med=np.median(low.ravel()[1:]); bits=low>med; bits[0,0]=False
+              return bits_to_hex(bits)
+          def ham(a,b): return (int(a,16)^int(b,16)).bit_count()
+
+          originals=[]
           for p in sorted(root.iterdir()):
-              if not p.is_file() or p.suffix.lower() not in {'.jpg','.jpeg','.png','.webp'}:
-                  continue
+              if not p.is_file() or p.suffix.lower() not in {'.jpg','.jpeg','.png','.webp'}: continue
               try:
                   raw=p.read_bytes()
                   with Image.open(p) as im:
                       im=ImageOps.exif_transpose(im).convert('RGB')
-                      w,h=im.size
-                      # Direct normalized thumbnails. These are fingerprints only, never served on the site.
-                      rgb=np.asarray(im.resize((32,32),Image.Resampling.LANCZOS),dtype=np.uint8)
-                      gray=np.asarray(im.convert('L').resize((32,32),Image.Resampling.LANCZOS),dtype=np.uint8)
-                      # center crop fingerprint catches cases where old derivatives used object-fit: cover.
-                      crop=ImageOps.fit(im,(32,32),method=Image.Resampling.LANCZOS,centering=(0.5,0.5))
-                      crop_rgb=np.asarray(crop,dtype=np.uint8)
-                  rows.append({
-                      'filename':p.name,
-                      'path':str(p).replace('\\','/'),
-                      'width':w,'height':h,'bytes':len(raw),
-                      'sha256':hashlib.sha256(raw).hexdigest(),
-                      'git_blob_sha':hashlib.sha1(f'blob {len(raw)}\\0'.encode()+raw).hexdigest(),
-                      'rgb32':base64.b64encode(rgb.tobytes()).decode(),
-                      'gray32':base64.b64encode(gray.tobytes()).decode(),
-                      'cover32':base64.b64encode(crop_rgb.tobytes()).decode()
-                  })
-              except Exception as e:
-                  print('skip',p,e)
-          out.write_text(json.dumps({'count':len(rows),'images':rows},indent=2)+'\n',encoding='utf-8')
-          print('fingerprinted',len(rows),'images')
+                      h={'ahash16':ahash(im),'dhash16':dhash(im),'phash16':phash(im)}
+                      w,ht=im.size
+                  originals.append({'filename':p.name,'path':str(p).replace('\\','/'),'width':w,'height':ht,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),**h})
+              except Exception as e: print('skip',p,e)
+
+          matches=[]
+          for t in targets:
+              ranked=[]
+              for o in originals:
+                  da=ham(t['ahash16'],o['ahash16']); dd=ham(t['dhash16'],o['dhash16']); dp=ham(t['phash16'],o['phash16'])
+                  score=dp + 0.65*dd + 0.35*da
+                  ranked.append({'filename':o['filename'],'path':o['path'],'width':o['width'],'height':o['height'],'bytes':o['bytes'],'sha256':o['sha256'],'score':round(score,2),'phash_distance':dp,'dhash_distance':dd,'ahash_distance':da})
+              ranked.sort(key=lambda r:r['score'])
+              matches.append({'target_filename':t['filename'],'best':ranked[0],'runner_up_gap':round(ranked[1]['score']-ranked[0]['score'],2),'top5':ranked[:5]})
+              print(t['filename'],'=>',ranked[0]['filename'],'score',ranked[0]['score'],'gap',round(ranked[1]['score']-ranked[0]['score'],2))
+          out.write_text(json.dumps({'original_count':len(originals),'matches':matches},indent=2)+'\n',encoding='utf-8')
           PY
-      - name: Commit fingerprints
+      - name: Commit compact match report
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/laundry/original-user-hero-fingerprints.json
+          git add assets/laundry/recovered-corridor-original-matches.json
           if git diff --cached --quiet; then
-            echo 'fingerprints unchanged'
+            echo 'match report unchanged'
           else
-            git commit -m 'Refresh original hero fingerprints'
+            git commit -m 'Match recovered corridor photos to originals'
             git push
           fi
