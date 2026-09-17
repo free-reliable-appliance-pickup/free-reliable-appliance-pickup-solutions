@@ -1,0 +1,2953 @@
+{
+  "generated_from": "assets/laundry/premium-real-sets-36-grid.webp",
+  "sprite_dimensions": [
+    840,
+    630
+  ],
+  "cell_dimensions": [
+    140,
+    105
+  ],
+  "distinct_originals": 74,
+  "matches": [
+    {
+      "set": 1,
+      "city": "La Crescenta",
+      "route": "/la-crescenta-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+        "filename": "20240903_134418.jpg",
+        "score": 10.2442,
+        "mode": "cover-center",
+        "mae": 9.7804,
+        "corr": 0.984542,
+        "width": 3024,
+        "height": 4032,
+        "bytes": 5314617,
+        "sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2"
+      },
+      "runner_up_gap": 51.1831,
+      "runner_up_ratio": 5.9963,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+          "filename": "20240903_134418.jpg",
+          "score": 10.2442,
+          "mode": "cover-center",
+          "mae": 9.7804,
+          "corr": 0.984542,
+          "width": 3024,
+          "height": 4032,
+          "bytes": 5314617,
+          "sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0033.jpg",
+          "filename": "IMG-20240504-WA0033.jpg",
+          "score": 61.4273,
+          "mode": "cover-center",
+          "mae": 47.115,
+          "corr": 0.522924,
+          "width": 900,
+          "height": 1600,
+          "bytes": 178661,
+          "sha256": "4c4834faa27471f68c193ea51c4c86bea44a95c723063535ac29a1ce4c01b1bb"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+          "filename": "IMG-20240504-WA0030.jpg",
+          "score": 61.6155,
+          "mode": "cover-center",
+          "mae": 47.7053,
+          "corr": 0.536326,
+          "width": 900,
+          "height": 1600,
+          "bytes": 194636,
+          "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241010-WA0140.jpg",
+          "filename": "IMG-20241010-WA0140.jpg",
+          "score": 74.3331,
+          "mode": "cover-center",
+          "mae": 52.0164,
+          "corr": 0.256109,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 420218,
+          "sha256": "9212e9eb4268e920e1e9bbcfb092489a45552374b7cc74a05941742360a3fed2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
+          "filename": "IMG-20230603-WA0032-2.jpg",
+          "score": 75.7176,
+          "mode": "cover-center",
+          "mae": 54.5751,
+          "corr": 0.295251,
+          "width": 2000,
+          "height": 1500,
+          "bytes": 680652,
+          "sha256": "f429c5fc660c69e5961701849457143c2236c052c288e122ecc2aa9b55fe1d15"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "city": "La Cañada Flintridge",
+      "route": "/la-canada-flintridge-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+        "filename": "Screenshot_20260613-111015.png",
+        "score": 69.0207,
+        "mode": "cover-center",
+        "mae": 51.1693,
+        "corr": 0.404954,
+        "width": 720,
+        "height": 1612,
+        "bytes": 612432,
+        "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+      },
+      "runner_up_gap": 7.8067,
+      "runner_up_ratio": 1.1131,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+          "filename": "Screenshot_20260613-111015.png",
+          "score": 69.0207,
+          "mode": "cover-center",
+          "mae": 51.1693,
+          "corr": 0.404954,
+          "width": 720,
+          "height": 1612,
+          "bytes": 612432,
+          "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241010-WA0140.jpg",
+          "filename": "IMG-20241010-WA0140.jpg",
+          "score": 76.8274,
+          "mode": "stretch",
+          "mae": 55.1994,
+          "corr": 0.279067,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 420218,
+          "sha256": "9212e9eb4268e920e1e9bbcfb092489a45552374b7cc74a05941742360a3fed2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241012-WA0136.jpg",
+          "filename": "IMG-20241012-WA0136.jpg",
+          "score": 78.8394,
+          "mode": "cover-center",
+          "mae": 59.3001,
+          "corr": 0.34869,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 201253,
+          "sha256": "4492355a7a9bc1a6e423e14b764361da4362a0809aedfb16d6186734f748399d"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 79.0887,
+          "mode": "cover-center",
+          "mae": 57.6363,
+          "corr": 0.28492,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/20240604_131005.jpg",
+          "filename": "20240604_131005.jpg",
+          "score": 81.031,
+          "mode": "stretch",
+          "mae": 59.9443,
+          "corr": 0.297111,
+          "width": 3024,
+          "height": 4032,
+          "bytes": 4418996,
+          "sha256": "49b7150cab1a3ddb2b365e9dcb62cf7661697416214a96f872821342c67fbb9b"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "city": "Pasadena",
+      "route": "/pasadena-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+        "filename": "IMG-20240504-WA0030.jpg",
+        "score": 8.9018,
+        "mode": "cover-center",
+        "mae": 8.4683,
+        "corr": 0.985549,
+        "width": 900,
+        "height": 1600,
+        "bytes": 194636,
+        "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b"
+      },
+      "runner_up_gap": 53.2633,
+      "runner_up_ratio": 6.9834,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+          "filename": "IMG-20240504-WA0030.jpg",
+          "score": 8.9018,
+          "mode": "cover-center",
+          "mae": 8.4683,
+          "corr": 0.985549,
+          "width": 900,
+          "height": 1600,
+          "bytes": 194636,
+          "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0033.jpg",
+          "filename": "IMG-20240504-WA0033.jpg",
+          "score": 62.1651,
+          "mode": "cover-center",
+          "mae": 47.3064,
+          "corr": 0.50471,
+          "width": 900,
+          "height": 1600,
+          "bytes": 178661,
+          "sha256": "4c4834faa27471f68c193ea51c4c86bea44a95c723063535ac29a1ce4c01b1bb"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+          "filename": "20240903_134418.jpg",
+          "score": 63.9678,
+          "mode": "cover-center",
+          "mae": 49.4236,
+          "corr": 0.515194,
+          "width": 3024,
+          "height": 4032,
+          "bytes": 5314617,
+          "sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg",
+          "filename": "IMG-20240921-WA0120.jpg",
+          "score": 69.4138,
+          "mode": "stretch",
+          "mae": 51.5516,
+          "corr": 0.404594,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 763613,
+          "sha256": "ddc55e859f6fe2e5688f11da37a7ff0db4cb433b77698cc964584051bc574e6c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0025.jpg",
+          "filename": "IMG-20240504-WA0025.jpg",
+          "score": 72.9352,
+          "mode": "stretch",
+          "mae": 53.6623,
+          "corr": 0.357571,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152951,
+          "sha256": "dd157ce7f4b137c2c5f36e485f9c3c0af90a15e873b7ade9fdd95d339b9f4574"
+        }
+      ]
+    },
+    {
+      "set": 4,
+      "city": "South Pasadena",
+      "route": "/south-pasadena-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+        "filename": "Screenshot_20260613-111015.png",
+        "score": 73.6491,
+        "mode": "cover-center",
+        "mae": 51.6077,
+        "corr": 0.265286,
+        "width": 720,
+        "height": 1612,
+        "bytes": 612432,
+        "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+      },
+      "runner_up_gap": 4.387,
+      "runner_up_ratio": 1.0596,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+          "filename": "Screenshot_20260613-111015.png",
+          "score": 73.6491,
+          "mode": "cover-center",
+          "mae": 51.6077,
+          "corr": 0.265286,
+          "width": 720,
+          "height": 1612,
+          "bytes": 612432,
+          "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250317-WA0028.jpg",
+          "filename": "IMG-20250317-WA0028.jpg",
+          "score": 78.0361,
+          "mode": "cover-center",
+          "mae": 54.5039,
+          "corr": 0.215595,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 319906,
+          "sha256": "fa1bf0a601e54d070957175ff8fc827cb5e41cfe5caede74f57516a78cf73376"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 80.5473,
+          "mode": "stretch",
+          "mae": 55.0893,
+          "corr": 0.151398,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 80.9366,
+          "mode": "cover-center",
+          "mae": 54.9265,
+          "corr": 0.132995,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241016-WA0081.jpg",
+          "filename": "IMG-20241016-WA0081.jpg",
+          "score": 82.0296,
+          "mode": "cover-center",
+          "mae": 60.1518,
+          "corr": 0.270739,
+          "width": 2048,
+          "height": 1536,
+          "bytes": 193077,
+          "sha256": "5c86310b71dc0f4ec2b728e5e952046fb99544482eec4783f4d93cf9f91ebe3a"
+        }
+      ]
+    },
+    {
+      "set": 5,
+      "city": "San Marino",
+      "route": "/san-marino-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+        "filename": "IMG-20240320-WA0108.jpg",
+        "score": 61.7716,
+        "mode": "cover-center",
+        "mae": 36.3229,
+        "corr": 0.151707,
+        "width": 1200,
+        "height": 1600,
+        "bytes": 112576,
+        "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+      },
+      "runner_up_gap": 0.9054,
+      "runner_up_ratio": 1.0147,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+          "filename": "IMG-20240320-WA0108.jpg",
+          "score": 61.7716,
+          "mode": "cover-center",
+          "mae": 36.3229,
+          "corr": 0.151707,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 112576,
+          "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250728-WA0015.jpg",
+          "filename": "IMG-20250728-WA0015.jpg",
+          "score": 62.677,
+          "mode": "stretch",
+          "mae": 39.0316,
+          "corr": 0.21182,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 228583,
+          "sha256": "7cf1ada308b280658b5655b1463e8cf7d360b5f9e3d6d05a3f91b0f874a33ef3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 64.872,
+          "mode": "cover-center",
+          "mae": 41.4031,
+          "corr": 0.217702,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg",
+          "filename": "Screenshot_20260814_233429_Gallery.jpg",
+          "score": 65.5512,
+          "mode": "cover-center",
+          "mae": 40.433,
+          "corr": 0.16273,
+          "width": 1080,
+          "height": 2400,
+          "bytes": 440307,
+          "sha256": "20d9d7ed3ec2ef5b997a2106b278cd118e0eec1affd304c9bb22a86cf4f60a7a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240514-WA0115.jpg",
+          "filename": "IMG-20240514-WA0115.jpg",
+          "score": 66.6752,
+          "mode": "cover-center",
+          "mae": 45.118,
+          "corr": 0.281427,
+          "width": 1600,
+          "height": 1200,
+          "bytes": 237530,
+          "sha256": "2253115d385ec9dceb7f2123437fb6910b6ecf6ea6e82ba72a9d5cad04cb416a"
+        }
+      ]
+    },
+    {
+      "set": 6,
+      "city": "Altadena",
+      "route": "/altadena-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg",
+        "filename": "IMG-20241127-WA0053.jpg",
+        "score": 7.8561,
+        "mode": "cover-center",
+        "mae": 7.3177,
+        "corr": 0.982053,
+        "width": 1200,
+        "height": 1600,
+        "bytes": 182075,
+        "sha256": "6c296581b655c1a6abd4ded71b26c99257d4f77212cc2776852c8355dc3c716b"
+      },
+      "runner_up_gap": 30.529,
+      "runner_up_ratio": 4.886,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg",
+          "filename": "IMG-20241127-WA0053.jpg",
+          "score": 7.8561,
+          "mode": "cover-center",
+          "mae": 7.3177,
+          "corr": 0.982053,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 182075,
+          "sha256": "6c296581b655c1a6abd4ded71b26c99257d4f77212cc2776852c8355dc3c716b"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250322-WA0082.jpg",
+          "filename": "IMG-20250322-WA0082.jpg",
+          "score": 38.3851,
+          "mode": "cover-center",
+          "mae": 28.5002,
+          "corr": 0.670503,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 334129,
+          "sha256": "6a9376008dd240b8f124802c2a33016b1c15a5f96abe423e81d2b182586baf86"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250317-WA0028.jpg",
+          "filename": "IMG-20250317-WA0028.jpg",
+          "score": 39.0459,
+          "mode": "cover-center",
+          "mae": 29.3952,
+          "corr": 0.67831,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 319906,
+          "sha256": "fa1bf0a601e54d070957175ff8fc827cb5e41cfe5caede74f57516a78cf73376"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 49.3152,
+          "mode": "cover-center",
+          "mae": 35.3234,
+          "corr": 0.533605,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241012-WA0036.jpg",
+          "filename": "IMG-20241012-WA0036.jpg",
+          "score": 50.3935,
+          "mode": "cover-center",
+          "mae": 37.4197,
+          "corr": 0.567541,
+          "width": 900,
+          "height": 1600,
+          "bytes": 125744,
+          "sha256": "bd46cacd2d53e7397bec907d7e4e2826b4e32452346183cd92608f1967174130"
+        }
+      ]
+    },
+    {
+      "set": 7,
+      "city": "Sierra Madre",
+      "route": "/sierra-madre-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20250322-WA0082.jpg",
+        "filename": "IMG-20250322-WA0082.jpg",
+        "score": 65.6664,
+        "mode": "cover-center",
+        "mae": 45.7891,
+        "corr": 0.337423,
+        "width": 1536,
+        "height": 2048,
+        "bytes": 334129,
+        "sha256": "6a9376008dd240b8f124802c2a33016b1c15a5f96abe423e81d2b182586baf86"
+      },
+      "runner_up_gap": 1.1765,
+      "runner_up_ratio": 1.0179,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250322-WA0082.jpg",
+          "filename": "IMG-20250322-WA0082.jpg",
+          "score": 65.6664,
+          "mode": "cover-center",
+          "mae": 45.7891,
+          "corr": 0.337423,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 334129,
+          "sha256": "6a9376008dd240b8f124802c2a33016b1c15a5f96abe423e81d2b182586baf86"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 66.8429,
+          "mode": "cover-center",
+          "mae": 45.1013,
+          "corr": 0.27528,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+          "filename": "Screenshot_20260613-111015.png",
+          "score": 67.4029,
+          "mode": "cover-center",
+          "mae": 45.9131,
+          "corr": 0.283673,
+          "width": 720,
+          "height": 1612,
+          "bytes": 612432,
+          "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250317-WA0028.jpg",
+          "filename": "IMG-20250317-WA0028.jpg",
+          "score": 67.5324,
+          "mode": "cover-center",
+          "mae": 46.1056,
+          "corr": 0.285774,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 319906,
+          "sha256": "fa1bf0a601e54d070957175ff8fc827cb5e41cfe5caede74f57516a78cf73376"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241012-WA0036.jpg",
+          "filename": "IMG-20241012-WA0036.jpg",
+          "score": 67.7387,
+          "mode": "cover-center",
+          "mae": 47.0962,
+          "corr": 0.311917,
+          "width": 900,
+          "height": 1600,
+          "bytes": 125744,
+          "sha256": "bd46cacd2d53e7397bec907d7e4e2826b4e32452346183cd92608f1967174130"
+        }
+      ]
+    },
+    {
+      "set": 8,
+      "city": "Arcadia",
+      "route": "/arcadia-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+        "filename": "IMG-20240503-WA0030.jpg",
+        "score": 11.4611,
+        "mode": "cover-center",
+        "mae": 11.0394,
+        "corr": 0.985944,
+        "width": 1536,
+        "height": 2048,
+        "bytes": 477436,
+        "sha256": "83279d7cfe38572226b34427ae8196c208119d52fce2e381f760eb1822c66123"
+      },
+      "runner_up_gap": 64.325,
+      "runner_up_ratio": 6.6125,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+          "filename": "IMG-20240503-WA0030.jpg",
+          "score": 11.4611,
+          "mode": "cover-center",
+          "mae": 11.0394,
+          "corr": 0.985944,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 477436,
+          "sha256": "83279d7cfe38572226b34427ae8196c208119d52fce2e381f760eb1822c66123"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0003.jpg",
+          "filename": "IMG-20241130-WA0003.jpg",
+          "score": 75.7861,
+          "mode": "stretch",
+          "mae": 58.59,
+          "corr": 0.426794,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 156784,
+          "sha256": "6dc8da6fb1915f11a5a098752580969baa807fdf8b9c81693e1f696b835f3839"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0008.jpg",
+          "filename": "IMG-20241130-WA0008.jpg",
+          "score": 76.206,
+          "mode": "cover-center",
+          "mae": 58.5892,
+          "corr": 0.412773,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 160171,
+          "sha256": "e2ff5754e45d0457856d3d22f30f6eb83dc10c800548759ca22da04873a44ff5"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240214-WA0030.jpg",
+          "filename": "IMG-20240214-WA0030.jpg",
+          "score": 80.6241,
+          "mode": "cover-center",
+          "mae": 61.236,
+          "corr": 0.353729,
+          "width": 768,
+          "height": 1024,
+          "bytes": 120797,
+          "sha256": "c9afb3633440b197111cca9574d8b659c1f58876bdeb2bcc24dd15cb60f6fc42"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 83.4881,
+          "mode": "cover-center",
+          "mae": 62.8319,
+          "corr": 0.311457,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        }
+      ]
+    },
+    {
+      "set": 9,
+      "city": "Monrovia",
+      "route": "/monrovia-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240928-WA0019.jpg",
+        "filename": "IMG-20240928-WA0019.jpg",
+        "score": 10.2832,
+        "mode": "cover-center",
+        "mae": 9.6953,
+        "corr": 0.980403,
+        "width": 1536,
+        "height": 2048,
+        "bytes": 668600,
+        "sha256": "7b1636d6dd208724464a25ca943f43cc98fbacf507637c48f72c3d1cddf36790"
+      },
+      "runner_up_gap": 44.27,
+      "runner_up_ratio": 5.3051,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240928-WA0019.jpg",
+          "filename": "IMG-20240928-WA0019.jpg",
+          "score": 10.2832,
+          "mode": "cover-center",
+          "mae": 9.6953,
+          "corr": 0.980403,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 668600,
+          "sha256": "7b1636d6dd208724464a25ca943f43cc98fbacf507637c48f72c3d1cddf36790"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0003.jpg",
+          "filename": "IMG-20241130-WA0003.jpg",
+          "score": 54.5532,
+          "mode": "stretch",
+          "mae": 41.3118,
+          "corr": 0.558621,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 156784,
+          "sha256": "6dc8da6fb1915f11a5a098752580969baa807fdf8b9c81693e1f696b835f3839"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0008.jpg",
+          "filename": "IMG-20241130-WA0008.jpg",
+          "score": 56.9809,
+          "mode": "stretch",
+          "mae": 41.9591,
+          "corr": 0.499275,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 160171,
+          "sha256": "e2ff5754e45d0457856d3d22f30f6eb83dc10c800548759ca22da04873a44ff5"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0007.jpg",
+          "filename": "IMG-20240825-WA0007.jpg",
+          "score": 59.9707,
+          "mode": "cover-center",
+          "mae": 43.31,
+          "corr": 0.444642,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 766000,
+          "sha256": "e38466a7552859384b0b0d6cb27e53c02f599bb32084065f125a5ba0ba56bd48"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/1789506239608.jpg",
+          "filename": "1789506239608.jpg",
+          "score": 60.7899,
+          "mode": "cover-center",
+          "mae": 46.3097,
+          "corr": 0.517329,
+          "width": 360,
+          "height": 480,
+          "bytes": 38366,
+          "sha256": "a0c15e404172d019b0af8e77d52cbf1325559971915bb77a187b626cf94e0ad0"
+        }
+      ]
+    },
+    {
+      "set": 10,
+      "city": "Duarte",
+      "route": "/duarte-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+        "filename": "IMG-20240825-WA0018.jpg",
+        "score": 36.4363,
+        "mode": "cover-center",
+        "mae": 25.9658,
+        "corr": 0.650983,
+        "width": 1200,
+        "height": 1600,
+        "bytes": 288903,
+        "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+      },
+      "runner_up_gap": 0.0521,
+      "runner_up_ratio": 1.0014,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 36.4363,
+          "mode": "cover-center",
+          "mae": 25.9658,
+          "corr": 0.650983,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg",
+          "filename": "Screenshot_20260814_233429_Gallery.jpg",
+          "score": 36.4884,
+          "mode": "cover-center",
+          "mae": 27.6443,
+          "corr": 0.705197,
+          "width": 1080,
+          "height": 2400,
+          "bytes": 440307,
+          "sha256": "20d9d7ed3ec2ef5b997a2106b278cd118e0eec1affd304c9bb22a86cf4f60a7a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240130-WA0151.jpg",
+          "filename": "IMG-20240130-WA0151.jpg",
+          "score": 36.9016,
+          "mode": "cover-center",
+          "mae": 28.5376,
+          "corr": 0.721199,
+          "width": 900,
+          "height": 1600,
+          "bytes": 218978,
+          "sha256": "2793677f2c99ac6359b57a3e6743b51c96a99963685aa3d06f95e1a4b3765ce6"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+          "filename": "IMG-20240320-WA0108.jpg",
+          "score": 40.1753,
+          "mode": "stretch",
+          "mae": 30.7699,
+          "corr": 0.686486,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 112576,
+          "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240217-WA0007.jpg",
+          "filename": "IMG-20240217-WA0007.jpg",
+          "score": 43.5703,
+          "mode": "cover-center",
+          "mae": 30.9076,
+          "corr": 0.577912,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 240708,
+          "sha256": "e61b79ff97d30f08e8909802fbe5f712a4c1e2f0cfa193659ac1e70c08bb3932"
+        }
+      ]
+    },
+    {
+      "set": 11,
+      "city": "Azusa",
+      "route": "/azusa-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+        "filename": "IMG-20240510-WA0002.jpg",
+        "score": 6.9552,
+        "mode": "cover-center",
+        "mae": 6.6929,
+        "corr": 0.991258,
+        "width": 900,
+        "height": 1600,
+        "bytes": 134642,
+        "sha256": "3b0d46d859ee34fbae9958eccb0e6417de4d18b20a410424fa4c8de1cfc1f2e0"
+      },
+      "runner_up_gap": 33.794,
+      "runner_up_ratio": 5.8588,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+          "filename": "IMG-20240510-WA0002.jpg",
+          "score": 6.9552,
+          "mode": "cover-center",
+          "mae": 6.6929,
+          "corr": 0.991258,
+          "width": 900,
+          "height": 1600,
+          "bytes": 134642,
+          "sha256": "3b0d46d859ee34fbae9958eccb0e6417de4d18b20a410424fa4c8de1cfc1f2e0"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+          "filename": "IMG-20240320-WA0108.jpg",
+          "score": 40.7492,
+          "mode": "stretch",
+          "mae": 32.8561,
+          "corr": 0.736896,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 112576,
+          "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240130-WA0151.jpg",
+          "filename": "IMG-20240130-WA0151.jpg",
+          "score": 42.4108,
+          "mode": "cover-center",
+          "mae": 33.4091,
+          "corr": 0.699942,
+          "width": 900,
+          "height": 1600,
+          "bytes": 218978,
+          "sha256": "2793677f2c99ac6359b57a3e6743b51c96a99963685aa3d06f95e1a4b3765ce6"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg",
+          "filename": "IMG-20231201-WA0016.jpg",
+          "score": 43.9501,
+          "mode": "cover-center",
+          "mae": 35.1505,
+          "corr": 0.706679,
+          "width": 900,
+          "height": 1600,
+          "bytes": 294866,
+          "sha256": "437f6e8e77b537380de1865b51bc6b03c04b939b5cd964885d23eea274667c63"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240217-WA0007.jpg",
+          "filename": "IMG-20240217-WA0007.jpg",
+          "score": 44.5298,
+          "mode": "cover-center",
+          "mae": 34.5336,
+          "corr": 0.666793,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 240708,
+          "sha256": "e61b79ff97d30f08e8909802fbe5f712a4c1e2f0cfa193659ac1e70c08bb3932"
+        }
+      ]
+    },
+    {
+      "set": 12,
+      "city": "Glendora",
+      "route": "/glendora-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240516-WA0070.jpg",
+        "filename": "IMG-20240516-WA0070.jpg",
+        "score": 43.7918,
+        "mode": "cover-center",
+        "mae": 33.3543,
+        "corr": 0.652085,
+        "width": 900,
+        "height": 1600,
+        "bytes": 131274,
+        "sha256": "1c65542a2bf406775a9bab90958ce408cce5a8be75e13e38c924d2a9d92addf3"
+      },
+      "runner_up_gap": 17.0952,
+      "runner_up_ratio": 1.3904,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240516-WA0070.jpg",
+          "filename": "IMG-20240516-WA0070.jpg",
+          "score": 43.7918,
+          "mode": "cover-center",
+          "mae": 33.3543,
+          "corr": 0.652085,
+          "width": 900,
+          "height": 1600,
+          "bytes": 131274,
+          "sha256": "1c65542a2bf406775a9bab90958ce408cce5a8be75e13e38c924d2a9d92addf3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 60.887,
+          "mode": "cover-center",
+          "mae": 41.7543,
+          "corr": 0.362242,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240512-WA0002.jpg",
+          "filename": "IMG-20240512-WA0002.jpg",
+          "score": 61.8647,
+          "mode": "cover-center",
+          "mae": 44.6275,
+          "corr": 0.425427,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 702559,
+          "sha256": "a75dd12ef757687553ee07782850b506675edaa4becf7fddaf6cff78a5c232ef"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg",
+          "filename": "IMG-20231201-WA0016.jpg",
+          "score": 62.0636,
+          "mode": "cover-center",
+          "mae": 44.7177,
+          "corr": 0.421805,
+          "width": 900,
+          "height": 1600,
+          "bytes": 294866,
+          "sha256": "437f6e8e77b537380de1865b51bc6b03c04b939b5cd964885d23eea274667c63"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241026-WA0032.jpg",
+          "filename": "IMG-20241026-WA0032.jpg",
+          "score": 63.4985,
+          "mode": "stretch",
+          "mae": 46.4852,
+          "corr": 0.43289,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 178866,
+          "sha256": "d8b86b7f178f8e909a8d33622d1d01bde13eb84e6172a2c0daf1cfdef3766191"
+        }
+      ]
+    },
+    {
+      "set": 13,
+      "city": "Covina",
+      "route": "/covina-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+        "filename": "20240903_134418.jpg",
+        "score": 10.3765,
+        "mode": "cover-center",
+        "mae": 9.9176,
+        "corr": 0.984704,
+        "width": 3024,
+        "height": 4032,
+        "bytes": 5314617,
+        "sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2"
+      },
+      "runner_up_gap": 51.6575,
+      "runner_up_ratio": 5.9783,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+          "filename": "20240903_134418.jpg",
+          "score": 10.3765,
+          "mode": "cover-center",
+          "mae": 9.9176,
+          "corr": 0.984704,
+          "width": 3024,
+          "height": 4032,
+          "bytes": 5314617,
+          "sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0033.jpg",
+          "filename": "IMG-20240504-WA0033.jpg",
+          "score": 62.034,
+          "mode": "cover-center",
+          "mae": 47.6156,
+          "corr": 0.519387,
+          "width": 900,
+          "height": 1600,
+          "bytes": 178661,
+          "sha256": "4c4834faa27471f68c193ea51c4c86bea44a95c723063535ac29a1ce4c01b1bb"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+          "filename": "IMG-20240504-WA0030.jpg",
+          "score": 62.4459,
+          "mode": "cover-center",
+          "mae": 48.3018,
+          "corr": 0.528528,
+          "width": 900,
+          "height": 1600,
+          "bytes": 194636,
+          "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241010-WA0140.jpg",
+          "filename": "IMG-20241010-WA0140.jpg",
+          "score": 74.7062,
+          "mode": "cover-center",
+          "mae": 52.3026,
+          "corr": 0.253214,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 420218,
+          "sha256": "9212e9eb4268e920e1e9bbcfb092489a45552374b7cc74a05941742360a3fed2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
+          "filename": "IMG-20230603-WA0032-2.jpg",
+          "score": 75.4582,
+          "mode": "cover-center",
+          "mae": 54.382,
+          "corr": 0.297459,
+          "width": 2000,
+          "height": 1500,
+          "bytes": 680652,
+          "sha256": "f429c5fc660c69e5961701849457143c2236c052c288e122ecc2aa9b55fe1d15"
+        }
+      ]
+    },
+    {
+      "set": 14,
+      "city": "West Covina",
+      "route": "/west-covina-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+        "filename": "Screenshot_20260613-111015.png",
+        "score": 67.9931,
+        "mode": "cover-center",
+        "mae": 50.389,
+        "corr": 0.413196,
+        "width": 720,
+        "height": 1612,
+        "bytes": 612432,
+        "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+      },
+      "runner_up_gap": 7.5437,
+      "runner_up_ratio": 1.1109,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+          "filename": "Screenshot_20260613-111015.png",
+          "score": 67.9931,
+          "mode": "cover-center",
+          "mae": 50.389,
+          "corr": 0.413196,
+          "width": 720,
+          "height": 1612,
+          "bytes": 612432,
+          "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241010-WA0140.jpg",
+          "filename": "IMG-20241010-WA0140.jpg",
+          "score": 75.5368,
+          "mode": "stretch",
+          "mae": 54.3577,
+          "corr": 0.294031,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 420218,
+          "sha256": "9212e9eb4268e920e1e9bbcfb092489a45552374b7cc74a05941742360a3fed2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 78.8838,
+          "mode": "cover-center",
+          "mae": 57.3112,
+          "corr": 0.280913,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241012-WA0136.jpg",
+          "filename": "IMG-20241012-WA0136.jpg",
+          "score": 79.284,
+          "mode": "cover-center",
+          "mae": 59.4733,
+          "corr": 0.339644,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 201253,
+          "sha256": "4492355a7a9bc1a6e423e14b764361da4362a0809aedfb16d6186734f748399d"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/20240604_131005.jpg",
+          "filename": "20240604_131005.jpg",
+          "score": 81.2724,
+          "mode": "stretch",
+          "mae": 60.0412,
+          "corr": 0.292294,
+          "width": 3024,
+          "height": 4032,
+          "bytes": 4418996,
+          "sha256": "49b7150cab1a3ddb2b365e9dcb62cf7661697416214a96f872821342c67fbb9b"
+        }
+      ]
+    },
+    {
+      "set": 15,
+      "city": "San Dimas",
+      "route": "/san-dimas-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+        "filename": "IMG-20240504-WA0030.jpg",
+        "score": 9.4835,
+        "mode": "cover-center",
+        "mae": 8.9781,
+        "corr": 0.983153,
+        "width": 900,
+        "height": 1600,
+        "bytes": 194636,
+        "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b"
+      },
+      "runner_up_gap": 51.6775,
+      "runner_up_ratio": 6.4492,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+          "filename": "IMG-20240504-WA0030.jpg",
+          "score": 9.4835,
+          "mode": "cover-center",
+          "mae": 8.9781,
+          "corr": 0.983153,
+          "width": 900,
+          "height": 1600,
+          "bytes": 194636,
+          "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0033.jpg",
+          "filename": "IMG-20240504-WA0033.jpg",
+          "score": 61.161,
+          "mode": "cover-center",
+          "mae": 46.5472,
+          "corr": 0.512875,
+          "width": 900,
+          "height": 1600,
+          "bytes": 178661,
+          "sha256": "4c4834faa27471f68c193ea51c4c86bea44a95c723063535ac29a1ce4c01b1bb"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+          "filename": "20240903_134418.jpg",
+          "score": 63.0151,
+          "mode": "cover-center",
+          "mae": 48.5569,
+          "corr": 0.518058,
+          "width": 3024,
+          "height": 4032,
+          "bytes": 5314617,
+          "sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg",
+          "filename": "IMG-20240921-WA0120.jpg",
+          "score": 69.5875,
+          "mode": "stretch",
+          "mae": 51.628,
+          "corr": 0.40135,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 763613,
+          "sha256": "ddc55e859f6fe2e5688f11da37a7ff0db4cb433b77698cc964584051bc574e6c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0025.jpg",
+          "filename": "IMG-20240504-WA0025.jpg",
+          "score": 72.2595,
+          "mode": "stretch",
+          "mae": 53.2023,
+          "corr": 0.364762,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152951,
+          "sha256": "dd157ce7f4b137c2c5f36e485f9c3c0af90a15e873b7ade9fdd95d339b9f4574"
+        }
+      ]
+    },
+    {
+      "set": 16,
+      "city": "La Verne",
+      "route": "/la-verne-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+        "filename": "Screenshot_20260613-111015.png",
+        "score": 73.2814,
+        "mode": "cover-center",
+        "mae": 51.1304,
+        "corr": 0.261632,
+        "width": 720,
+        "height": 1612,
+        "bytes": 612432,
+        "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+      },
+      "runner_up_gap": 3.9736,
+      "runner_up_ratio": 1.0542,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+          "filename": "Screenshot_20260613-111015.png",
+          "score": 73.2814,
+          "mode": "cover-center",
+          "mae": 51.1304,
+          "corr": 0.261632,
+          "width": 720,
+          "height": 1612,
+          "bytes": 612432,
+          "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250317-WA0028.jpg",
+          "filename": "IMG-20250317-WA0028.jpg",
+          "score": 77.255,
+          "mode": "cover-center",
+          "mae": 53.9229,
+          "corr": 0.222263,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 319906,
+          "sha256": "fa1bf0a601e54d070957175ff8fc827cb5e41cfe5caede74f57516a78cf73376"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 80.4847,
+          "mode": "stretch",
+          "mae": 54.988,
+          "corr": 0.150112,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 80.7617,
+          "mode": "cover-center",
+          "mae": 54.8124,
+          "corr": 0.135023,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241016-WA0081.jpg",
+          "filename": "IMG-20241016-WA0081.jpg",
+          "score": 81.0839,
+          "mode": "cover-center",
+          "mae": 59.4754,
+          "corr": 0.279719,
+          "width": 2048,
+          "height": 1536,
+          "bytes": 193077,
+          "sha256": "5c86310b71dc0f4ec2b728e5e952046fb99544482eec4783f4d93cf9f91ebe3a"
+        }
+      ]
+    },
+    {
+      "set": 17,
+      "city": "Claremont",
+      "route": "/claremont-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+        "filename": "IMG-20240320-WA0108.jpg",
+        "score": 61.5222,
+        "mode": "cover-center",
+        "mae": 35.9952,
+        "corr": 0.149101,
+        "width": 1200,
+        "height": 1600,
+        "bytes": 112576,
+        "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+      },
+      "runner_up_gap": 0.6495,
+      "runner_up_ratio": 1.0106,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+          "filename": "IMG-20240320-WA0108.jpg",
+          "score": 61.5222,
+          "mode": "cover-center",
+          "mae": 35.9952,
+          "corr": 0.149101,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 112576,
+          "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250728-WA0015.jpg",
+          "filename": "IMG-20250728-WA0015.jpg",
+          "score": 62.1717,
+          "mode": "stretch",
+          "mae": 38.8663,
+          "corr": 0.223151,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 228583,
+          "sha256": "7cf1ada308b280658b5655b1463e8cf7d360b5f9e3d6d05a3f91b0f874a33ef3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 64.6558,
+          "mode": "cover-center",
+          "mae": 41.2435,
+          "corr": 0.219593,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240514-WA0115.jpg",
+          "filename": "IMG-20240514-WA0115.jpg",
+          "score": 65.7692,
+          "mode": "cover-center",
+          "mae": 44.3682,
+          "corr": 0.286635,
+          "width": 1600,
+          "height": 1200,
+          "bytes": 237530,
+          "sha256": "2253115d385ec9dceb7f2123437fb6910b6ecf6ea6e82ba72a9d5cad04cb416a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg",
+          "filename": "Screenshot_20260814_233429_Gallery.jpg",
+          "score": 66.0785,
+          "mode": "cover-center",
+          "mae": 40.6348,
+          "corr": 0.15188,
+          "width": 1080,
+          "height": 2400,
+          "bytes": 440307,
+          "sha256": "20d9d7ed3ec2ef5b997a2106b278cd118e0eec1affd304c9bb22a86cf4f60a7a"
+        }
+      ]
+    },
+    {
+      "set": 18,
+      "city": "Pomona",
+      "route": "/pomona-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg",
+        "filename": "IMG-20241127-WA0053.jpg",
+        "score": 8.3341,
+        "mode": "cover-center",
+        "mae": 7.7385,
+        "corr": 0.980147,
+        "width": 1200,
+        "height": 1600,
+        "bytes": 182075,
+        "sha256": "6c296581b655c1a6abd4ded71b26c99257d4f77212cc2776852c8355dc3c716b"
+      },
+      "runner_up_gap": 29.4162,
+      "runner_up_ratio": 4.5296,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg",
+          "filename": "IMG-20241127-WA0053.jpg",
+          "score": 8.3341,
+          "mode": "cover-center",
+          "mae": 7.7385,
+          "corr": 0.980147,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 182075,
+          "sha256": "6c296581b655c1a6abd4ded71b26c99257d4f77212cc2776852c8355dc3c716b"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250322-WA0082.jpg",
+          "filename": "IMG-20250322-WA0082.jpg",
+          "score": 37.7503,
+          "mode": "cover-center",
+          "mae": 28.0555,
+          "corr": 0.676841,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 334129,
+          "sha256": "6a9376008dd240b8f124802c2a33016b1c15a5f96abe423e81d2b182586baf86"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250317-WA0028.jpg",
+          "filename": "IMG-20250317-WA0028.jpg",
+          "score": 38.9521,
+          "mode": "cover-center",
+          "mae": 29.3855,
+          "corr": 0.681115,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 319906,
+          "sha256": "fa1bf0a601e54d070957175ff8fc827cb5e41cfe5caede74f57516a78cf73376"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 49.1507,
+          "mode": "cover-center",
+          "mae": 35.2227,
+          "corr": 0.535735,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241012-WA0036.jpg",
+          "filename": "IMG-20241012-WA0036.jpg",
+          "score": 49.3436,
+          "mode": "cover-center",
+          "mae": 36.5202,
+          "corr": 0.572555,
+          "width": 900,
+          "height": 1600,
+          "bytes": 125744,
+          "sha256": "bd46cacd2d53e7397bec907d7e4e2826b4e32452346183cd92608f1967174130"
+        }
+      ]
+    },
+    {
+      "set": 19,
+      "city": "Montclair",
+      "route": "/montclair-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20250322-WA0082.jpg",
+        "filename": "IMG-20250322-WA0082.jpg",
+        "score": 65.6298,
+        "mode": "cover-center",
+        "mae": 45.878,
+        "corr": 0.341607,
+        "width": 1536,
+        "height": 2048,
+        "bytes": 334129,
+        "sha256": "6a9376008dd240b8f124802c2a33016b1c15a5f96abe423e81d2b182586baf86"
+      },
+      "runner_up_gap": 0.7897,
+      "runner_up_ratio": 1.012,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250322-WA0082.jpg",
+          "filename": "IMG-20250322-WA0082.jpg",
+          "score": 65.6298,
+          "mode": "cover-center",
+          "mae": 45.878,
+          "corr": 0.341607,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 334129,
+          "sha256": "6a9376008dd240b8f124802c2a33016b1c15a5f96abe423e81d2b182586baf86"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 66.4195,
+          "mode": "cover-center",
+          "mae": 44.9303,
+          "corr": 0.283692,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250317-WA0028.jpg",
+          "filename": "IMG-20250317-WA0028.jpg",
+          "score": 67.5867,
+          "mode": "cover-center",
+          "mae": 46.1549,
+          "corr": 0.285608,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 319906,
+          "sha256": "fa1bf0a601e54d070957175ff8fc827cb5e41cfe5caede74f57516a78cf73376"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+          "filename": "Screenshot_20260613-111015.png",
+          "score": 67.7381,
+          "mode": "cover-center",
+          "mae": 46.0769,
+          "corr": 0.277962,
+          "width": 720,
+          "height": 1612,
+          "bytes": 612432,
+          "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241012-WA0036.jpg",
+          "filename": "IMG-20241012-WA0036.jpg",
+          "score": 67.8577,
+          "mode": "cover-center",
+          "mae": 47.0557,
+          "corr": 0.3066,
+          "width": 900,
+          "height": 1600,
+          "bytes": 125744,
+          "sha256": "bd46cacd2d53e7397bec907d7e4e2826b4e32452346183cd92608f1967174130"
+        }
+      ]
+    },
+    {
+      "set": 20,
+      "city": "Upland",
+      "route": "/upland-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+        "filename": "IMG-20240503-WA0030.jpg",
+        "score": 11.678,
+        "mode": "cover-center",
+        "mae": 11.2559,
+        "corr": 0.985932,
+        "width": 1536,
+        "height": 2048,
+        "bytes": 477436,
+        "sha256": "83279d7cfe38572226b34427ae8196c208119d52fce2e381f760eb1822c66123"
+      },
+      "runner_up_gap": 64.3337,
+      "runner_up_ratio": 6.509,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+          "filename": "IMG-20240503-WA0030.jpg",
+          "score": 11.678,
+          "mode": "cover-center",
+          "mae": 11.2559,
+          "corr": 0.985932,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 477436,
+          "sha256": "83279d7cfe38572226b34427ae8196c208119d52fce2e381f760eb1822c66123"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0003.jpg",
+          "filename": "IMG-20241130-WA0003.jpg",
+          "score": 76.0117,
+          "mode": "stretch",
+          "mae": 58.723,
+          "corr": 0.423709,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 156784,
+          "sha256": "6dc8da6fb1915f11a5a098752580969baa807fdf8b9c81693e1f696b835f3839"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0008.jpg",
+          "filename": "IMG-20241130-WA0008.jpg",
+          "score": 76.53,
+          "mode": "cover-center",
+          "mae": 58.8069,
+          "corr": 0.409231,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 160171,
+          "sha256": "e2ff5754e45d0457856d3d22f30f6eb83dc10c800548759ca22da04873a44ff5"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240214-WA0030.jpg",
+          "filename": "IMG-20240214-WA0030.jpg",
+          "score": 80.9033,
+          "mode": "cover-center",
+          "mae": 61.404,
+          "corr": 0.350023,
+          "width": 768,
+          "height": 1024,
+          "bytes": 120797,
+          "sha256": "c9afb3633440b197111cca9574d8b659c1f58876bdeb2bcc24dd15cb60f6fc42"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 83.4081,
+          "mode": "cover-center",
+          "mae": 62.7627,
+          "corr": 0.311822,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        }
+      ]
+    },
+    {
+      "set": 21,
+      "city": "Rancho Cucamonga",
+      "route": "/rancho-cucamonga-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240928-WA0019.jpg",
+        "filename": "IMG-20240928-WA0019.jpg",
+        "score": 9.9446,
+        "mode": "cover-center",
+        "mae": 9.41,
+        "corr": 0.982181,
+        "width": 1536,
+        "height": 2048,
+        "bytes": 668600,
+        "sha256": "7b1636d6dd208724464a25ca943f43cc98fbacf507637c48f72c3d1cddf36790"
+      },
+      "runner_up_gap": 45.2464,
+      "runner_up_ratio": 5.5498,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240928-WA0019.jpg",
+          "filename": "IMG-20240928-WA0019.jpg",
+          "score": 9.9446,
+          "mode": "cover-center",
+          "mae": 9.41,
+          "corr": 0.982181,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 668600,
+          "sha256": "7b1636d6dd208724464a25ca943f43cc98fbacf507637c48f72c3d1cddf36790"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0003.jpg",
+          "filename": "IMG-20241130-WA0003.jpg",
+          "score": 55.191,
+          "mode": "stretch",
+          "mae": 41.7385,
+          "corr": 0.551584,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 156784,
+          "sha256": "6dc8da6fb1915f11a5a098752580969baa807fdf8b9c81693e1f696b835f3839"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0008.jpg",
+          "filename": "IMG-20241130-WA0008.jpg",
+          "score": 57.6133,
+          "mode": "stretch",
+          "mae": 42.3036,
+          "corr": 0.489675,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 160171,
+          "sha256": "e2ff5754e45d0457856d3d22f30f6eb83dc10c800548759ca22da04873a44ff5"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0007.jpg",
+          "filename": "IMG-20240825-WA0007.jpg",
+          "score": 61.7264,
+          "mode": "cover-center",
+          "mae": 44.4982,
+          "corr": 0.425725,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 766000,
+          "sha256": "e38466a7552859384b0b0d6cb27e53c02f599bb32084065f125a5ba0ba56bd48"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/1789506239608.jpg",
+          "filename": "1789506239608.jpg",
+          "score": 62.0238,
+          "mode": "cover-center",
+          "mae": 47.1416,
+          "corr": 0.503927,
+          "width": 360,
+          "height": 480,
+          "bytes": 38366,
+          "sha256": "a0c15e404172d019b0af8e77d52cbf1325559971915bb77a187b626cf94e0ad0"
+        }
+      ]
+    },
+    {
+      "set": 22,
+      "city": "Fontana",
+      "route": "/fontana-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240130-WA0151.jpg",
+        "filename": "IMG-20240130-WA0151.jpg",
+        "score": 36.8026,
+        "mode": "cover-center",
+        "mae": 28.3665,
+        "corr": 0.718797,
+        "width": 900,
+        "height": 1600,
+        "bytes": 218978,
+        "sha256": "2793677f2c99ac6359b57a3e6743b51c96a99963685aa3d06f95e1a4b3765ce6"
+      },
+      "runner_up_gap": 0.3271,
+      "runner_up_ratio": 1.0089,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240130-WA0151.jpg",
+          "filename": "IMG-20240130-WA0151.jpg",
+          "score": 36.8026,
+          "mode": "cover-center",
+          "mae": 28.3665,
+          "corr": 0.718797,
+          "width": 900,
+          "height": 1600,
+          "bytes": 218978,
+          "sha256": "2793677f2c99ac6359b57a3e6743b51c96a99963685aa3d06f95e1a4b3765ce6"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg",
+          "filename": "Screenshot_20260814_233429_Gallery.jpg",
+          "score": 37.1297,
+          "mode": "cover-center",
+          "mae": 27.9414,
+          "corr": 0.693725,
+          "width": 1080,
+          "height": 2400,
+          "bytes": 440307,
+          "sha256": "20d9d7ed3ec2ef5b997a2106b278cd118e0eec1affd304c9bb22a86cf4f60a7a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 37.5522,
+          "mode": "cover-center",
+          "mae": 26.3946,
+          "corr": 0.628082,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+          "filename": "IMG-20240320-WA0108.jpg",
+          "score": 39.8283,
+          "mode": "stretch",
+          "mae": 30.3036,
+          "corr": 0.682508,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 112576,
+          "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240217-WA0007.jpg",
+          "filename": "IMG-20240217-WA0007.jpg",
+          "score": 43.0432,
+          "mode": "cover-center",
+          "mae": 30.2949,
+          "corr": 0.575057,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 240708,
+          "sha256": "e61b79ff97d30f08e8909802fbe5f712a4c1e2f0cfa193659ac1e70c08bb3932"
+        }
+      ]
+    },
+    {
+      "set": 23,
+      "city": "San Bernardino",
+      "route": "/san-bernardino-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+        "filename": "IMG-20240510-WA0002.jpg",
+        "score": 7.1321,
+        "mode": "cover-center",
+        "mae": 6.8604,
+        "corr": 0.990941,
+        "width": 900,
+        "height": 1600,
+        "bytes": 134642,
+        "sha256": "3b0d46d859ee34fbae9958eccb0e6417de4d18b20a410424fa4c8de1cfc1f2e0"
+      },
+      "runner_up_gap": 33.7012,
+      "runner_up_ratio": 5.7253,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+          "filename": "IMG-20240510-WA0002.jpg",
+          "score": 7.1321,
+          "mode": "cover-center",
+          "mae": 6.8604,
+          "corr": 0.990941,
+          "width": 900,
+          "height": 1600,
+          "bytes": 134642,
+          "sha256": "3b0d46d859ee34fbae9958eccb0e6417de4d18b20a410424fa4c8de1cfc1f2e0"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+          "filename": "IMG-20240320-WA0108.jpg",
+          "score": 40.8333,
+          "mode": "stretch",
+          "mae": 32.9312,
+          "corr": 0.736594,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 112576,
+          "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240130-WA0151.jpg",
+          "filename": "IMG-20240130-WA0151.jpg",
+          "score": 42.3919,
+          "mode": "cover-center",
+          "mae": 33.5046,
+          "corr": 0.703758,
+          "width": 900,
+          "height": 1600,
+          "bytes": 218978,
+          "sha256": "2793677f2c99ac6359b57a3e6743b51c96a99963685aa3d06f95e1a4b3765ce6"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240217-WA0007.jpg",
+          "filename": "IMG-20240217-WA0007.jpg",
+          "score": 44.0387,
+          "mode": "cover-center",
+          "mae": 34.1356,
+          "corr": 0.669895,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 240708,
+          "sha256": "e61b79ff97d30f08e8909802fbe5f712a4c1e2f0cfa193659ac1e70c08bb3932"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg",
+          "filename": "IMG-20231201-WA0016.jpg",
+          "score": 44.1375,
+          "mode": "cover-center",
+          "mae": 35.3534,
+          "corr": 0.707198,
+          "width": 900,
+          "height": 1600,
+          "bytes": 294866,
+          "sha256": "437f6e8e77b537380de1865b51bc6b03c04b939b5cd964885d23eea274667c63"
+        }
+      ]
+    },
+    {
+      "set": 24,
+      "city": "Anaheim Hills",
+      "route": "/anaheim-hills-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240516-WA0070.jpg",
+        "filename": "IMG-20240516-WA0070.jpg",
+        "score": 43.523,
+        "mode": "cover-center",
+        "mae": 33.3072,
+        "corr": 0.65947,
+        "width": 900,
+        "height": 1600,
+        "bytes": 131274,
+        "sha256": "1c65542a2bf406775a9bab90958ce408cce5a8be75e13e38c924d2a9d92addf3"
+      },
+      "runner_up_gap": 17.5053,
+      "runner_up_ratio": 1.4022,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240516-WA0070.jpg",
+          "filename": "IMG-20240516-WA0070.jpg",
+          "score": 43.523,
+          "mode": "cover-center",
+          "mae": 33.3072,
+          "corr": 0.65947,
+          "width": 900,
+          "height": 1600,
+          "bytes": 131274,
+          "sha256": "1c65542a2bf406775a9bab90958ce408cce5a8be75e13e38c924d2a9d92addf3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 61.0283,
+          "mode": "cover-center",
+          "mae": 41.8931,
+          "corr": 0.362161,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg",
+          "filename": "IMG-20231201-WA0016.jpg",
+          "score": 62.1475,
+          "mode": "cover-center",
+          "mae": 44.6766,
+          "corr": 0.417637,
+          "width": 900,
+          "height": 1600,
+          "bytes": 294866,
+          "sha256": "437f6e8e77b537380de1865b51bc6b03c04b939b5cd964885d23eea274667c63"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240512-WA0002.jpg",
+          "filename": "IMG-20240512-WA0002.jpg",
+          "score": 62.3375,
+          "mode": "cover-center",
+          "mae": 44.9505,
+          "corr": 0.420432,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 702559,
+          "sha256": "a75dd12ef757687553ee07782850b506675edaa4becf7fddaf6cff78a5c232ef"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241026-WA0032.jpg",
+          "filename": "IMG-20241026-WA0032.jpg",
+          "score": 62.9894,
+          "mode": "stretch",
+          "mae": 45.9813,
+          "corr": 0.433066,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 178866,
+          "sha256": "d8b86b7f178f8e909a8d33622d1d01bde13eb84e6172a2c0daf1cfdef3766191"
+        }
+      ]
+    },
+    {
+      "set": 25,
+      "city": "Brea",
+      "route": "/brea-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+        "filename": "20240903_134418.jpg",
+        "score": 10.2829,
+        "mode": "cover-center",
+        "mae": 9.8269,
+        "corr": 0.984798,
+        "width": 3024,
+        "height": 4032,
+        "bytes": 5314617,
+        "sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2"
+      },
+      "runner_up_gap": 51.2977,
+      "runner_up_ratio": 5.9886,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+          "filename": "20240903_134418.jpg",
+          "score": 10.2829,
+          "mode": "cover-center",
+          "mae": 9.8269,
+          "corr": 0.984798,
+          "width": 3024,
+          "height": 4032,
+          "bytes": 5314617,
+          "sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0033.jpg",
+          "filename": "IMG-20240504-WA0033.jpg",
+          "score": 61.5806,
+          "mode": "cover-center",
+          "mae": 47.2055,
+          "corr": 0.52083,
+          "width": 900,
+          "height": 1600,
+          "bytes": 178661,
+          "sha256": "4c4834faa27471f68c193ea51c4c86bea44a95c723063535ac29a1ce4c01b1bb"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+          "filename": "IMG-20240504-WA0030.jpg",
+          "score": 62.2181,
+          "mode": "cover-center",
+          "mae": 48.021,
+          "corr": 0.526764,
+          "width": 900,
+          "height": 1600,
+          "bytes": 194636,
+          "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241010-WA0140.jpg",
+          "filename": "IMG-20241010-WA0140.jpg",
+          "score": 74.1871,
+          "mode": "cover-center",
+          "mae": 51.8186,
+          "corr": 0.254384,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 420218,
+          "sha256": "9212e9eb4268e920e1e9bbcfb092489a45552374b7cc74a05941742360a3fed2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
+          "filename": "IMG-20230603-WA0032-2.jpg",
+          "score": 75.1244,
+          "mode": "cover-center",
+          "mae": 54.1613,
+          "corr": 0.301229,
+          "width": 2000,
+          "height": 1500,
+          "bytes": 680652,
+          "sha256": "f429c5fc660c69e5961701849457143c2236c052c288e122ecc2aa9b55fe1d15"
+        }
+      ]
+    },
+    {
+      "set": 26,
+      "city": "Yorba Linda",
+      "route": "/yorba-linda-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+        "filename": "Screenshot_20260613-111015.png",
+        "score": 68.0846,
+        "mode": "cover-center",
+        "mae": 50.4506,
+        "corr": 0.412201,
+        "width": 720,
+        "height": 1612,
+        "bytes": 612432,
+        "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+      },
+      "runner_up_gap": 7.8177,
+      "runner_up_ratio": 1.1148,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+          "filename": "Screenshot_20260613-111015.png",
+          "score": 68.0846,
+          "mode": "cover-center",
+          "mae": 50.4506,
+          "corr": 0.412201,
+          "width": 720,
+          "height": 1612,
+          "bytes": 612432,
+          "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241010-WA0140.jpg",
+          "filename": "IMG-20241010-WA0140.jpg",
+          "score": 75.9023,
+          "mode": "stretch",
+          "mae": 54.5306,
+          "corr": 0.287609,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 420218,
+          "sha256": "9212e9eb4268e920e1e9bbcfb092489a45552374b7cc74a05941742360a3fed2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241012-WA0136.jpg",
+          "filename": "IMG-20241012-WA0136.jpg",
+          "score": 79.0508,
+          "mode": "cover-center",
+          "mae": 59.31,
+          "corr": 0.341972,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 201253,
+          "sha256": "4492355a7a9bc1a6e423e14b764361da4362a0809aedfb16d6186734f748399d"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 79.076,
+          "mode": "cover-center",
+          "mae": 57.4221,
+          "corr": 0.278204,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/20240604_131005.jpg",
+          "filename": "20240604_131005.jpg",
+          "score": 81.1721,
+          "mode": "stretch",
+          "mae": 59.9146,
+          "corr": 0.291416,
+          "width": 3024,
+          "height": 4032,
+          "bytes": 4418996,
+          "sha256": "49b7150cab1a3ddb2b365e9dcb62cf7661697416214a96f872821342c67fbb9b"
+        }
+      ]
+    },
+    {
+      "set": 27,
+      "city": "Irvine",
+      "route": "/irvine-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+        "filename": "IMG-20240504-WA0030.jpg",
+        "score": 9.141,
+        "mode": "cover-center",
+        "mae": 8.6803,
+        "corr": 0.984643,
+        "width": 900,
+        "height": 1600,
+        "bytes": 194636,
+        "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b"
+      },
+      "runner_up_gap": 51.7306,
+      "runner_up_ratio": 6.6592,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+          "filename": "IMG-20240504-WA0030.jpg",
+          "score": 9.141,
+          "mode": "cover-center",
+          "mae": 8.6803,
+          "corr": 0.984643,
+          "width": 900,
+          "height": 1600,
+          "bytes": 194636,
+          "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0033.jpg",
+          "filename": "IMG-20240504-WA0033.jpg",
+          "score": 60.8716,
+          "mode": "cover-center",
+          "mae": 46.3642,
+          "corr": 0.516421,
+          "width": 900,
+          "height": 1600,
+          "bytes": 178661,
+          "sha256": "4c4834faa27471f68c193ea51c4c86bea44a95c723063535ac29a1ce4c01b1bb"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+          "filename": "20240903_134418.jpg",
+          "score": 63.248,
+          "mode": "cover-center",
+          "mae": 48.894,
+          "corr": 0.521532,
+          "width": 3024,
+          "height": 4032,
+          "bytes": 5314617,
+          "sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg",
+          "filename": "IMG-20240921-WA0120.jpg",
+          "score": 69.8918,
+          "mode": "stretch",
+          "mae": 51.9362,
+          "corr": 0.401481,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 763613,
+          "sha256": "ddc55e859f6fe2e5688f11da37a7ff0db4cb433b77698cc964584051bc574e6c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240504-WA0025.jpg",
+          "filename": "IMG-20240504-WA0025.jpg",
+          "score": 71.9636,
+          "mode": "stretch",
+          "mae": 53.0957,
+          "corr": 0.371072,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152951,
+          "sha256": "dd157ce7f4b137c2c5f36e485f9c3c0af90a15e873b7ade9fdd95d339b9f4574"
+        }
+      ]
+    },
+    {
+      "set": 28,
+      "city": "Newport Beach",
+      "route": "/newport-beach-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+        "filename": "Screenshot_20260613-111015.png",
+        "score": 73.658,
+        "mode": "cover-center",
+        "mae": 51.4185,
+        "corr": 0.258682,
+        "width": 720,
+        "height": 1612,
+        "bytes": 612432,
+        "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+      },
+      "runner_up_gap": 3.7963,
+      "runner_up_ratio": 1.0515,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+          "filename": "Screenshot_20260613-111015.png",
+          "score": 73.658,
+          "mode": "cover-center",
+          "mae": 51.4185,
+          "corr": 0.258682,
+          "width": 720,
+          "height": 1612,
+          "bytes": 612432,
+          "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250317-WA0028.jpg",
+          "filename": "IMG-20250317-WA0028.jpg",
+          "score": 77.4543,
+          "mode": "cover-center",
+          "mae": 54.1835,
+          "corr": 0.224307,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 319906,
+          "sha256": "fa1bf0a601e54d070957175ff8fc827cb5e41cfe5caede74f57516a78cf73376"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 80.5173,
+          "mode": "stretch",
+          "mae": 55.1023,
+          "corr": 0.152833,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 80.7177,
+          "mode": "cover-center",
+          "mae": 54.8215,
+          "corr": 0.136793,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241016-WA0081.jpg",
+          "filename": "IMG-20241016-WA0081.jpg",
+          "score": 81.5585,
+          "mode": "cover-center",
+          "mae": 59.8341,
+          "corr": 0.275852,
+          "width": 2048,
+          "height": 1536,
+          "bytes": 193077,
+          "sha256": "5c86310b71dc0f4ec2b728e5e952046fb99544482eec4783f4d93cf9f91ebe3a"
+        }
+      ]
+    },
+    {
+      "set": 29,
+      "city": "Mission Viejo",
+      "route": "/mission-viejo-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+        "filename": "IMG-20240320-WA0108.jpg",
+        "score": 62.4845,
+        "mode": "cover-center",
+        "mae": 36.9656,
+        "corr": 0.14937,
+        "width": 1200,
+        "height": 1600,
+        "bytes": 112576,
+        "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+      },
+      "runner_up_gap": 0.8439,
+      "runner_up_ratio": 1.0135,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+          "filename": "IMG-20240320-WA0108.jpg",
+          "score": 62.4845,
+          "mode": "cover-center",
+          "mae": 36.9656,
+          "corr": 0.14937,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 112576,
+          "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250728-WA0015.jpg",
+          "filename": "IMG-20250728-WA0015.jpg",
+          "score": 63.3284,
+          "mode": "stretch",
+          "mae": 39.7528,
+          "corr": 0.214147,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 228583,
+          "sha256": "7cf1ada308b280658b5655b1463e8cf7d360b5f9e3d6d05a3f91b0f874a33ef3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 64.506,
+          "mode": "cover-center",
+          "mae": 41.37,
+          "corr": 0.2288,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg",
+          "filename": "Screenshot_20260814_233429_Gallery.jpg",
+          "score": 65.4272,
+          "mode": "cover-center",
+          "mae": 40.5485,
+          "corr": 0.170708,
+          "width": 1080,
+          "height": 2400,
+          "bytes": 440307,
+          "sha256": "20d9d7ed3ec2ef5b997a2106b278cd118e0eec1affd304c9bb22a86cf4f60a7a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240514-WA0115.jpg",
+          "filename": "IMG-20240514-WA0115.jpg",
+          "score": 65.862,
+          "mode": "cover-center",
+          "mae": 44.6935,
+          "corr": 0.294381,
+          "width": 1600,
+          "height": 1200,
+          "bytes": 237530,
+          "sha256": "2253115d385ec9dceb7f2123437fb6910b6ecf6ea6e82ba72a9d5cad04cb416a"
+        }
+      ]
+    },
+    {
+      "set": 30,
+      "city": "Lake Forest",
+      "route": "/lake-forest-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg",
+        "filename": "IMG-20241127-WA0053.jpg",
+        "score": 7.693,
+        "mode": "cover-center",
+        "mae": 7.2024,
+        "corr": 0.983645,
+        "width": 1200,
+        "height": 1600,
+        "bytes": 182075,
+        "sha256": "6c296581b655c1a6abd4ded71b26c99257d4f77212cc2776852c8355dc3c716b"
+      },
+      "runner_up_gap": 30.4631,
+      "runner_up_ratio": 4.9598,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg",
+          "filename": "IMG-20241127-WA0053.jpg",
+          "score": 7.693,
+          "mode": "cover-center",
+          "mae": 7.2024,
+          "corr": 0.983645,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 182075,
+          "sha256": "6c296581b655c1a6abd4ded71b26c99257d4f77212cc2776852c8355dc3c716b"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250322-WA0082.jpg",
+          "filename": "IMG-20250322-WA0082.jpg",
+          "score": 38.1561,
+          "mode": "cover-center",
+          "mae": 28.4925,
+          "corr": 0.677879,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 334129,
+          "sha256": "6a9376008dd240b8f124802c2a33016b1c15a5f96abe423e81d2b182586baf86"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250317-WA0028.jpg",
+          "filename": "IMG-20250317-WA0028.jpg",
+          "score": 38.4723,
+          "mode": "cover-center",
+          "mae": 29.16,
+          "corr": 0.68959,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 319906,
+          "sha256": "fa1bf0a601e54d070957175ff8fc827cb5e41cfe5caede74f57516a78cf73376"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241012-WA0036.jpg",
+          "filename": "IMG-20241012-WA0036.jpg",
+          "score": 49.2785,
+          "mode": "cover-center",
+          "mae": 36.6302,
+          "corr": 0.57839,
+          "width": 900,
+          "height": 1600,
+          "bytes": 125744,
+          "sha256": "bd46cacd2d53e7397bec907d7e4e2826b4e32452346183cd92608f1967174130"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 49.7172,
+          "mode": "cover-center",
+          "mae": 35.7608,
+          "corr": 0.534787,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        }
+      ]
+    },
+    {
+      "set": 31,
+      "city": "Laguna Niguel",
+      "route": "/laguna-niguel-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20250322-WA0082.jpg",
+        "filename": "IMG-20250322-WA0082.jpg",
+        "score": 66.0382,
+        "mode": "cover-center",
+        "mae": 46.0966,
+        "corr": 0.335283,
+        "width": 1536,
+        "height": 2048,
+        "bytes": 334129,
+        "sha256": "6a9376008dd240b8f124802c2a33016b1c15a5f96abe423e81d2b182586baf86"
+      },
+      "runner_up_gap": 0.8934,
+      "runner_up_ratio": 1.0135,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250322-WA0082.jpg",
+          "filename": "IMG-20250322-WA0082.jpg",
+          "score": 66.0382,
+          "mode": "cover-center",
+          "mae": 46.0966,
+          "corr": 0.335283,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 334129,
+          "sha256": "6a9376008dd240b8f124802c2a33016b1c15a5f96abe423e81d2b182586baf86"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 66.9316,
+          "mode": "cover-center",
+          "mae": 45.0387,
+          "corr": 0.270238,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260613-111015.png",
+          "filename": "Screenshot_20260613-111015.png",
+          "score": 67.3315,
+          "mode": "cover-center",
+          "mae": 45.7923,
+          "corr": 0.282027,
+          "width": 720,
+          "height": 1612,
+          "bytes": 612432,
+          "sha256": "2c8cfdc28699034600711e11bbd851efc2e17d242a465af9ac3c76a33739bf4a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241012-WA0036.jpg",
+          "filename": "IMG-20241012-WA0036.jpg",
+          "score": 67.7731,
+          "mode": "cover-center",
+          "mae": 47.0961,
+          "corr": 0.310764,
+          "width": 900,
+          "height": 1600,
+          "bytes": 125744,
+          "sha256": "bd46cacd2d53e7397bec907d7e4e2826b4e32452346183cd92608f1967174130"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20250317-WA0028.jpg",
+          "filename": "IMG-20250317-WA0028.jpg",
+          "score": 68.2348,
+          "mode": "cover-center",
+          "mae": 46.6135,
+          "corr": 0.279287,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 319906,
+          "sha256": "fa1bf0a601e54d070957175ff8fc827cb5e41cfe5caede74f57516a78cf73376"
+        }
+      ]
+    },
+    {
+      "set": 32,
+      "city": "Rancho Santa Margarita",
+      "route": "/rancho-santa-margarita-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+        "filename": "IMG-20240503-WA0030.jpg",
+        "score": 11.5463,
+        "mode": "cover-center",
+        "mae": 11.1345,
+        "corr": 0.986273,
+        "width": 1536,
+        "height": 2048,
+        "bytes": 477436,
+        "sha256": "83279d7cfe38572226b34427ae8196c208119d52fce2e381f760eb1822c66123"
+      },
+      "runner_up_gap": 63.8945,
+      "runner_up_ratio": 6.5338,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+          "filename": "IMG-20240503-WA0030.jpg",
+          "score": 11.5463,
+          "mode": "cover-center",
+          "mae": 11.1345,
+          "corr": 0.986273,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 477436,
+          "sha256": "83279d7cfe38572226b34427ae8196c208119d52fce2e381f760eb1822c66123"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0003.jpg",
+          "filename": "IMG-20241130-WA0003.jpg",
+          "score": 75.4408,
+          "mode": "stretch",
+          "mae": 58.3413,
+          "corr": 0.430016,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 156784,
+          "sha256": "6dc8da6fb1915f11a5a098752580969baa807fdf8b9c81693e1f696b835f3839"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0008.jpg",
+          "filename": "IMG-20241130-WA0008.jpg",
+          "score": 76.0489,
+          "mode": "cover-center",
+          "mae": 58.5698,
+          "corr": 0.417365,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 160171,
+          "sha256": "e2ff5754e45d0457856d3d22f30f6eb83dc10c800548759ca22da04873a44ff5"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240214-WA0030.jpg",
+          "filename": "IMG-20240214-WA0030.jpg",
+          "score": 80.3417,
+          "mode": "cover-center",
+          "mae": 61.0656,
+          "corr": 0.357463,
+          "width": 768,
+          "height": 1024,
+          "bytes": 120797,
+          "sha256": "c9afb3633440b197111cca9574d8b659c1f58876bdeb2bcc24dd15cb60f6fc42"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241125-WA0026.jpg",
+          "filename": "IMG-20241125-WA0026.jpg",
+          "score": 84.0308,
+          "mode": "cover-center",
+          "mae": 63.0501,
+          "corr": 0.300641,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 152923,
+          "sha256": "c276fb00c6067d529175f0ccdced7077c918a0e5a6ebc681d1c7739e79ce7704"
+        }
+      ]
+    },
+    {
+      "set": 33,
+      "city": "San Juan Capistrano",
+      "route": "/san-juan-capistrano-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240928-WA0019.jpg",
+        "filename": "IMG-20240928-WA0019.jpg",
+        "score": 9.961,
+        "mode": "cover-center",
+        "mae": 9.4202,
+        "corr": 0.981974,
+        "width": 1536,
+        "height": 2048,
+        "bytes": 668600,
+        "sha256": "7b1636d6dd208724464a25ca943f43cc98fbacf507637c48f72c3d1cddf36790"
+      },
+      "runner_up_gap": 45.0458,
+      "runner_up_ratio": 5.5222,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240928-WA0019.jpg",
+          "filename": "IMG-20240928-WA0019.jpg",
+          "score": 9.961,
+          "mode": "cover-center",
+          "mae": 9.4202,
+          "corr": 0.981974,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 668600,
+          "sha256": "7b1636d6dd208724464a25ca943f43cc98fbacf507637c48f72c3d1cddf36790"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0003.jpg",
+          "filename": "IMG-20241130-WA0003.jpg",
+          "score": 55.0068,
+          "mode": "stretch",
+          "mae": 41.6387,
+          "corr": 0.554397,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 156784,
+          "sha256": "6dc8da6fb1915f11a5a098752580969baa807fdf8b9c81693e1f696b835f3839"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241130-WA0008.jpg",
+          "filename": "IMG-20241130-WA0008.jpg",
+          "score": 57.9171,
+          "mode": "stretch",
+          "mae": 42.5761,
+          "corr": 0.488636,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 160171,
+          "sha256": "e2ff5754e45d0457856d3d22f30f6eb83dc10c800548759ca22da04873a44ff5"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/1789506239608.jpg",
+          "filename": "1789506239608.jpg",
+          "score": 61.2769,
+          "mode": "cover-center",
+          "mae": 46.6571,
+          "corr": 0.512675,
+          "width": 360,
+          "height": 480,
+          "bytes": 38366,
+          "sha256": "a0c15e404172d019b0af8e77d52cbf1325559971915bb77a187b626cf94e0ad0"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0007.jpg",
+          "filename": "IMG-20240825-WA0007.jpg",
+          "score": 61.6128,
+          "mode": "cover-center",
+          "mae": 44.2335,
+          "corr": 0.420691,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 766000,
+          "sha256": "e38466a7552859384b0b0d6cb27e53c02f599bb32084065f125a5ba0ba56bd48"
+        }
+      ]
+    },
+    {
+      "set": 34,
+      "city": "San Clemente",
+      "route": "/san-clemente-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg",
+        "filename": "Screenshot_20260814_233429_Gallery.jpg",
+        "score": 36.3682,
+        "mode": "cover-center",
+        "mae": 27.3784,
+        "corr": 0.700339,
+        "width": 1080,
+        "height": 2400,
+        "bytes": 440307,
+        "sha256": "20d9d7ed3ec2ef5b997a2106b278cd118e0eec1affd304c9bb22a86cf4f60a7a"
+      },
+      "runner_up_gap": 0.2885,
+      "runner_up_ratio": 1.0079,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg",
+          "filename": "Screenshot_20260814_233429_Gallery.jpg",
+          "score": 36.3682,
+          "mode": "cover-center",
+          "mae": 27.3784,
+          "corr": 0.700339,
+          "width": 1080,
+          "height": 2400,
+          "bytes": 440307,
+          "sha256": "20d9d7ed3ec2ef5b997a2106b278cd118e0eec1affd304c9bb22a86cf4f60a7a"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240130-WA0151.jpg",
+          "filename": "IMG-20240130-WA0151.jpg",
+          "score": 36.6567,
+          "mode": "cover-center",
+          "mae": 28.3314,
+          "corr": 0.722489,
+          "width": 900,
+          "height": 1600,
+          "bytes": 218978,
+          "sha256": "2793677f2c99ac6359b57a3e6743b51c96a99963685aa3d06f95e1a4b3765ce6"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 36.9801,
+          "mode": "cover-center",
+          "mae": 26.3356,
+          "corr": 0.645182,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+          "filename": "IMG-20240320-WA0108.jpg",
+          "score": 39.681,
+          "mode": "stretch",
+          "mae": 30.2958,
+          "corr": 0.687161,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 112576,
+          "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240217-WA0007.jpg",
+          "filename": "IMG-20240217-WA0007.jpg",
+          "score": 42.371,
+          "mode": "cover-center",
+          "mae": 29.6756,
+          "corr": 0.57682,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 240708,
+          "sha256": "e61b79ff97d30f08e8909802fbe5f712a4c1e2f0cfa193659ac1e70c08bb3932"
+        }
+      ]
+    },
+    {
+      "set": 35,
+      "city": "Laguna Hills",
+      "route": "/laguna-hills-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+        "filename": "IMG-20240510-WA0002.jpg",
+        "score": 7.0795,
+        "mode": "cover-center",
+        "mae": 6.822,
+        "corr": 0.991419,
+        "width": 900,
+        "height": 1600,
+        "bytes": 134642,
+        "sha256": "3b0d46d859ee34fbae9958eccb0e6417de4d18b20a410424fa4c8de1cfc1f2e0"
+      },
+      "runner_up_gap": 34.1168,
+      "runner_up_ratio": 5.8191,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+          "filename": "IMG-20240510-WA0002.jpg",
+          "score": 7.0795,
+          "mode": "cover-center",
+          "mae": 6.822,
+          "corr": 0.991419,
+          "width": 900,
+          "height": 1600,
+          "bytes": 134642,
+          "sha256": "3b0d46d859ee34fbae9958eccb0e6417de4d18b20a410424fa4c8de1cfc1f2e0"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+          "filename": "IMG-20240320-WA0108.jpg",
+          "score": 41.1963,
+          "mode": "stretch",
+          "mae": 33.2951,
+          "corr": 0.736626,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 112576,
+          "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240130-WA0151.jpg",
+          "filename": "IMG-20240130-WA0151.jpg",
+          "score": 42.2236,
+          "mode": "cover-center",
+          "mae": 33.4659,
+          "corr": 0.708075,
+          "width": 900,
+          "height": 1600,
+          "bytes": 218978,
+          "sha256": "2793677f2c99ac6359b57a3e6743b51c96a99963685aa3d06f95e1a4b3765ce6"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg",
+          "filename": "IMG-20231201-WA0016.jpg",
+          "score": 43.6387,
+          "mode": "cover-center",
+          "mae": 35.1139,
+          "corr": 0.715837,
+          "width": 900,
+          "height": 1600,
+          "bytes": 294866,
+          "sha256": "437f6e8e77b537380de1865b51bc6b03c04b939b5cd964885d23eea274667c63"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240217-WA0007.jpg",
+          "filename": "IMG-20240217-WA0007.jpg",
+          "score": 44.2489,
+          "mode": "cover-center",
+          "mae": 34.3905,
+          "corr": 0.671384,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 240708,
+          "sha256": "e61b79ff97d30f08e8909802fbe5f712a4c1e2f0cfa193659ac1e70c08bb3932"
+        }
+      ]
+    },
+    {
+      "set": 36,
+      "city": "Aliso Viejo",
+      "route": "/aliso-viejo-washer-dryer-pickup/",
+      "best": {
+        "source_path": "assets/laundry/original-user-heroes/IMG-20240516-WA0070.jpg",
+        "filename": "IMG-20240516-WA0070.jpg",
+        "score": 42.8407,
+        "mode": "cover-center",
+        "mae": 32.5899,
+        "corr": 0.658307,
+        "width": 900,
+        "height": 1600,
+        "bytes": 131274,
+        "sha256": "1c65542a2bf406775a9bab90958ce408cce5a8be75e13e38c924d2a9d92addf3"
+      },
+      "runner_up_gap": 18.3799,
+      "runner_up_ratio": 1.429,
+      "top5": [
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240516-WA0070.jpg",
+          "filename": "IMG-20240516-WA0070.jpg",
+          "score": 42.8407,
+          "mode": "cover-center",
+          "mae": 32.5899,
+          "corr": 0.658307,
+          "width": 900,
+          "height": 1600,
+          "bytes": 131274,
+          "sha256": "1c65542a2bf406775a9bab90958ce408cce5a8be75e13e38c924d2a9d92addf3"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+          "filename": "IMG-20240825-WA0018.jpg",
+          "score": 61.2206,
+          "mode": "cover-center",
+          "mae": 41.8058,
+          "corr": 0.352839,
+          "width": 1200,
+          "height": 1600,
+          "bytes": 288903,
+          "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg",
+          "filename": "IMG-20231201-WA0016.jpg",
+          "score": 62.2921,
+          "mode": "cover-center",
+          "mae": 44.8236,
+          "corr": 0.417716,
+          "width": 900,
+          "height": 1600,
+          "bytes": 294866,
+          "sha256": "437f6e8e77b537380de1865b51bc6b03c04b939b5cd964885d23eea274667c63"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20240512-WA0002.jpg",
+          "filename": "IMG-20240512-WA0002.jpg",
+          "score": 62.3909,
+          "mode": "cover-center",
+          "mae": 44.8396,
+          "corr": 0.414956,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 702559,
+          "sha256": "a75dd12ef757687553ee07782850b506675edaa4becf7fddaf6cff78a5c232ef"
+        },
+        {
+          "source_path": "assets/laundry/original-user-heroes/IMG-20241026-WA0032.jpg",
+          "filename": "IMG-20241026-WA0032.jpg",
+          "score": 62.9192,
+          "mode": "stretch",
+          "mae": 45.7571,
+          "corr": 0.427929,
+          "width": 1536,
+          "height": 2048,
+          "bytes": 178866,
+          "sha256": "d8b86b7f178f8e909a8d33622d1d01bde13eb84e6172a2c0daf1cfdef3766191"
+        }
+      ]
+    }
+  ],
+  "known_assignment_validation": {
+    "1": {
+      "expected": "IMG-20240403-WA0010.jpg",
+      "matched": "20240903_134418.jpg",
+      "ok": false
+    },
+    "15": {
+      "expected": "1000274641(3).jpg",
+      "matched": "IMG-20240504-WA0030.jpg",
+      "ok": false
+    },
+    "16": {
+      "expected": "1000274683(5).jpg",
+      "matched": "Screenshot_20260613-111015.png",
+      "ok": false
+    },
+    "17": {
+      "expected": "1000274700(10).jpg",
+      "matched": "IMG-20240320-WA0108.jpg",
+      "ok": false
+    }
+  },
+  "known_assignment_validation_ok": false
+}
