@@ -5,6 +5,8 @@ on:
     paths:
       - '.github/workflows/restore-full-resolution-laundry-heroes.yml'
       - 'file_00000000051c81fda2fa9f1edefd32f7.png'
+      - 'assets/laundry/washer-dryer-set-sharp.jpg'
+      - 'assets/laundry/washer-dryer-set.jpg'
       - 'assets/laundry/real-laundry-pickup-1.jpg'
       - 'assets/laundry/real-laundry-pickup-2.jpg'
       - 'assets/laundry/real-laundry-pickup-3.jpg'
@@ -40,17 +42,18 @@ jobs:
           if root_original.stat().st_size < 100_000:
               raise SystemExit(f'Original photo unexpectedly small: {root_original} ({root_original.stat().st_size} bytes)')
 
-          fallbacks = [
-              Path(f'assets/laundry/real-laundry-pickup-{n}.jpg')
-              for n in range(1, 6)
+          protected_photos = [
+              (Path('assets/laundry/washer-dryer-set-sharp.jpg'), 180_000),
+              (Path('assets/laundry/washer-dryer-set.jpg'), 180_000),
+              *[(Path(f'assets/laundry/real-laundry-pickup-{n}.jpg'), 150_000) for n in range(1, 6)],
           ]
-          for photo in fallbacks:
+          for photo, minimum in protected_photos:
               if not photo.is_file():
-                  raise SystemExit(f'Missing full-size laundry fallback: {photo}')
+                  raise SystemExit(f'Missing full-size laundry photo: {photo}')
               size = photo.stat().st_size
-              if size < 150_000:
-                  raise SystemExit(f'Laundry fallback is too small and may be compressed: {photo} ({size} bytes)')
-              print(f'OK full-size fallback: {photo} ({size} bytes)')
+              if size < minimum:
+                  raise SystemExit(f'Laundry photo is too small and may be compressed: {photo} ({size} bytes; minimum {minimum})')
+              print(f'OK full-size photo: {photo} ({size} bytes)')
 
           mapping_path = Path('assets/premium-user-heroes.json')
           mapping = json.loads(mapping_path.read_text(encoding='utf-8'))
