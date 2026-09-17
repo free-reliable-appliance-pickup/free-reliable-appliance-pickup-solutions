@@ -1,0 +1,188 @@
+name: Promote verified Orange County hero originals
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/promote-verified-orange-heroes.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: promote-verified-orange-heroes
+  cancel-in-progress: true
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Promote only the three validated high-confidence matches
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, re
+
+          ROOT = 'https://freereliableappliancepickup.com/'
+          VERSION = '20260917f'
+          manifest_path = Path('assets/premium-user-heroes.json')
+          manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+
+          matches = {
+              'irvine-washer-dryer-pickup': {
+                  'src': 'assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg',
+                  'alt': 'Real washer and dryer set provided for Irvine pickup service',
+                  'set': 24,
+                  'phone': '1000274642(3).jpg',
+                  'width': 1200,
+                  'height': 1600,
+                  'bytes': 182075,
+                  'sha256': '6c296581b655c1a6abd4ded71b26c99257d4f77212cc2776852c8355dc3c716b',
+                  'phash_distance': 2,
+                  'runner_up_gap': 58.1,
+              },
+              'lake-forest-washer-dryer-pickup': {
+                  'src': 'assets/laundry/original-user-heroes/IMG-20241116-WA0027.jpg',
+                  'alt': 'Real washer and dryer set provided for Lake Forest pickup service',
+                  'set': 25,
+                  'phone': '1000274647(3).jpg',
+                  'width': 1200,
+                  'height': 1600,
+                  'bytes': 286808,
+                  'sha256': '7aeca64995d4619f5442ac20fb1bc9a2eaf317bebc880a238c395967de22ceb5',
+                  'phash_distance': 2,
+                  'runner_up_gap': 63.65,
+              },
+              'mission-viejo-washer-dryer-pickup': {
+                  'src': 'assets/laundry/original-user-heroes/IMG-20241117-WA0023.jpg',
+                  'alt': 'Real washer and dryer set provided for Mission Viejo pickup service',
+                  'set': 26,
+                  'phone': '1000274645(2).jpg',
+                  'width': 1200,
+                  'height': 1600,
+                  'bytes': 135081,
+                  'sha256': '462e390c72265f8e16434b7615d5b3167ed20b6dc3fbe676fdb4333df62ed0e9',
+                  'phash_distance': 0,
+                  'runner_up_gap': 77.85,
+              },
+          }
+
+          def replace_once(text, pattern, repl, label, flags=0):
+              out, count = re.subn(pattern, repl, text, count=1, flags=flags)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected exactly one replacement, got {count}')
+              return out
+
+          for route, info in matches.items():
+              page = Path(route) / 'index.html'
+              if not page.exists():
+                  raise SystemExit(f'Missing page: {page}')
+              original_file = Path(info['src'])
+              if not original_file.exists():
+                  raise SystemExit(f'Missing original image: {original_file}')
+              if original_file.stat().st_size != info['bytes']:
+                  raise SystemExit(f'Original byte-size mismatch: {original_file}')
+
+              text = page.read_text(encoding='utf-8')
+              absolute = ROOT + info['src'] + f'?original-fullres={VERSION}'
+              relative = '/' + info['src'] + f'?original-fullres={VERSION}'
+
+              text = replace_once(
+                  text,
+                  r'(<meta\s+property="og:image"\s+content=")[^"]*(")',
+                  lambda m: m.group(1) + absolute + m.group(2),
+                  f'{route} og:image'
+              )
+              text = replace_once(
+                  text,
+                  r'(<meta\s+name="twitter:image"\s+content=")[^"]*(")',
+                  lambda m: m.group(1) + absolute + m.group(2),
+                  f'{route} twitter:image'
+              )
+              text = replace_once(
+                  text,
+                  r'("primaryImageOfPage"\s*:\s*\{[^{}]*?"url"\s*:\s*")[^"]*(")',
+                  lambda m: m.group(1) + absolute + m.group(2),
+                  f'{route} primaryImageOfPage',
+                  flags=re.S
+              )
+              text = replace_once(
+                  text,
+                  r'(<div\s+class="site-hero-art"><img\s+src=")[^"]*(")',
+                  lambda m: m.group(1) + relative + m.group(2),
+                  f'{route} visible hero'
+              )
+              text = replace_once(
+                  text,
+                  r'(<script[^>]*data-premium-hero-lock="1"[^>]*>.*?var\s+s=")[^"]*(")',
+                  lambda m: m.group(1) + relative + m.group(2),
+                  f'{route} hero lock',
+                  flags=re.S
+              )
+
+              page.write_text(text, encoding='utf-8')
+
+              key = '/' + route + '/'
+              manifest[key] = {
+                  'src': info['src'],
+                  'alt': info['alt'],
+                  'source_status': 'original-full-resolution-recovered',
+                  'original_width': info['width'],
+                  'original_height': info['height'],
+                  'original_size_bytes': info['bytes'],
+                  'original_sha256': info['sha256'],
+                  'recovered_from_set': info['set'],
+                  'recovered_phone_filename': info['phone'],
+                  'match_phash_distance': info['phash_distance'],
+                  'match_runner_up_gap': info['runner_up_gap'],
+              }
+
+              # Final guard: the page's static hero/social/structured references must use the original.
+              reread = page.read_text(encoding='utf-8')
+              if reread.count(absolute) < 3 or reread.count(relative) < 2:
+                  raise SystemExit(f'{route}: target original was not locked into all five expected locations')
+              print(f"PROMOTED {route} -> {info['src']}")
+
+          manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+
+      - name: Validate promoted manifest entries
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path('assets/premium-user-heroes.json').read_text(encoding='utf-8'))
+          expected = {
+              '/irvine-washer-dryer-pickup/': 'assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg',
+              '/lake-forest-washer-dryer-pickup/': 'assets/laundry/original-user-heroes/IMG-20241116-WA0027.jpg',
+              '/mission-viejo-washer-dryer-pickup/': 'assets/laundry/original-user-heroes/IMG-20241117-WA0023.jpg',
+          }
+          for route, src in expected.items():
+              got = manifest.get(route, {}).get('src')
+              if got != src:
+                  raise SystemExit(f'{route}: manifest mismatch: {got!r} != {src!r}')
+              if not Path(src).exists():
+                  raise SystemExit(f'{route}: original source file missing: {src}')
+              print('PASS', route, src)
+          PY
+
+      - name: Commit promoted originals
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            irvine-washer-dryer-pickup/index.html \
+            lake-forest-washer-dryer-pickup/index.html \
+            mission-viejo-washer-dryer-pickup/index.html \
+            assets/premium-user-heroes.json
+          if git diff --cached --quiet; then
+            echo 'No promotion changes needed.'
+          else
+            git commit -m 'Restore verified Irvine Lake Forest Mission Viejo originals'
+            git push
+          fi
