@@ -188,5 +188,18 @@
     "recovered_phone_filename": "1000274645(2).jpg",
     "match_phash_distance": 0,
     "match_runner_up_gap": 77.85
+  },
+  "/newport-beach-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg",
+    "alt": "Real washer and dryer set provided for Newport Beach pickup service",
+    "source_status": "original-full-resolution-recovered",
+    "original_width": 1080,
+    "original_height": 2400,
+    "original_size_bytes": 440307,
+    "original_sha256": "20d9d7ed3ec2ef5b997a2106b278cd118e0eec1affd304c9bb22a86cf4f60a7a",
+    "recovered_from_set": 33,
+    "recovered_phone_filename": "1000262425(2).jpg",
+    "match_phash_distance": 2,
+    "match_runner_up_gap": 123.85
   }
 }
