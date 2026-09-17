@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - '.github/workflows/promote-brea-original.yml'
-      - '.fullres-upload/brea/**'
+      - '.fullres-upload/brea/READY'
 
 permissions:
   contents: write
@@ -35,11 +35,13 @@ jobs:
           expected_sha = 'c46b3397a6471dc81141dec83546d7735ce4ed6f19bc5105bdf2d07fea968cbe'
           expected_size = 166610
           parts_dir = Path('.fullres-upload/brea')
-          parts = [parts_dir / f'part{i:02d}.b64' for i in range(5)]
-          missing = [str(p) for p in parts if not p.is_file()]
-          if missing:
-              print(f'Waiting for {len(missing)} Brea transport part(s).')
+          ready = parts_dir / 'READY'
+          if not ready.is_file():
+              print('Waiting for Brea READY marker.')
               raise SystemExit(0)
+          parts = sorted(parts_dir.glob('part*.b64'))
+          if not parts:
+              raise SystemExit('READY exists but no Brea transport parts were found')
 
           encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in parts)
           raw = base64.b64decode(encoded, validate=True)
@@ -90,6 +92,7 @@ jobs:
 
           for p in parts:
               p.unlink()
+          ready.unlink()
           try:
               parts_dir.rmdir()
               parts_dir.parent.rmdir()
@@ -99,7 +102,8 @@ jobs:
           reread = page.read_text(encoding='utf-8')
           if reread.count(absolute) < 3 or reread.count(relative) < 2:
               raise SystemExit('Brea page is not locked in all static image locations')
-          if len(image.read_bytes()) != expected_size or hashlib.sha256(image.read_bytes()).hexdigest() != expected_sha:
+          final = image.read_bytes()
+          if len(final) != expected_size or hashlib.sha256(final).hexdigest() != expected_sha:
               raise SystemExit('Brea original changed after reconstruction')
           print('Brea exact 166610-byte full-resolution original restored and locked successfully.')
           PY
