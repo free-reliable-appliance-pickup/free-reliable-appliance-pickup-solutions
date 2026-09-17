@@ -1,0 +1,78 @@
+name: Fingerprint original user heroes
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/fingerprint-original-user-heroes.yml'
+      - 'assets/laundry/original-user-heroes/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fingerprint-original-user-heroes
+  cancel-in-progress: true
+
+jobs:
+  fingerprint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Pillow and NumPy
+        run: python -m pip install --quiet pillow numpy
+      - name: Build compact visual fingerprints
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          import numpy as np, json, base64, hashlib
+
+          root=Path('assets/laundry/original-user-heroes')
+          out=Path('assets/laundry/original-user-hero-fingerprints.json')
+          rows=[]
+          for p in sorted(root.iterdir()):
+              if not p.is_file() or p.suffix.lower() not in {'.jpg','.jpeg','.png','.webp'}:
+                  continue
+              try:
+                  raw=p.read_bytes()
+                  with Image.open(p) as im:
+                      im=ImageOps.exif_transpose(im).convert('RGB')
+                      w,h=im.size
+                      # Direct normalized thumbnails. These are fingerprints only, never served on the site.
+                      rgb=np.asarray(im.resize((32,32),Image.Resampling.LANCZOS),dtype=np.uint8)
+                      gray=np.asarray(im.convert('L').resize((32,32),Image.Resampling.LANCZOS),dtype=np.uint8)
+                      # center crop fingerprint catches cases where old derivatives used object-fit: cover.
+                      crop=ImageOps.fit(im,(32,32),method=Image.Resampling.LANCZOS,centering=(0.5,0.5))
+                      crop_rgb=np.asarray(crop,dtype=np.uint8)
+                  rows.append({
+                      'filename':p.name,
+                      'path':str(p).replace('\\','/'),
+                      'width':w,'height':h,'bytes':len(raw),
+                      'sha256':hashlib.sha256(raw).hexdigest(),
+                      'git_blob_sha':hashlib.sha1(f'blob {len(raw)}\\0'.encode()+raw).hexdigest(),
+                      'rgb32':base64.b64encode(rgb.tobytes()).decode(),
+                      'gray32':base64.b64encode(gray.tobytes()).decode(),
+                      'cover32':base64.b64encode(crop_rgb.tobytes()).decode()
+                  })
+              except Exception as e:
+                  print('skip',p,e)
+          out.write_text(json.dumps({'count':len(rows),'images':rows},indent=2)+'\n',encoding='utf-8')
+          print('fingerprinted',len(rows),'images')
+          PY
+      - name: Commit fingerprints
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/laundry/original-user-hero-fingerprints.json
+          if git diff --cached --quiet; then
+            echo 'fingerprints unchanged'
+          else
+            git commit -m 'Refresh original hero fingerprints'
+            git push
+          fi
