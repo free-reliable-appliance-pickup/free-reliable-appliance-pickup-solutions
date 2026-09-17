@@ -1,0 +1,221 @@
+name: Match recovered Orange County with crop-aware variants
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/match-recovered-orange-augmented.yml'
+      - 'assets/laundry/recovered-orange-county-sequence-hashes.json'
+      - 'assets/laundry/original-user-heroes/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: recovered-orange-augmented-match
+  cancel-in-progress: true
+
+jobs:
+  match:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install image matching dependencies
+        run: python -m pip install --quiet pillow numpy scipy
+
+      - name: Compare recovered fingerprints against crop and padding variants
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          from scipy.fftpack import dct
+          import hashlib, json, math
+          import numpy as np
+
+          targets = json.loads(Path('assets/laundry/recovered-orange-county-sequence-hashes.json').read_text(encoding='utf-8'))['images']
+          originals_dir = Path('assets/laundry/original-user-heroes')
+          output_path = Path('assets/laundry/recovered-orange-augmented-matches.json')
+
+          def bits_to_hex(bits):
+              value = 0
+              for bit in bits:
+                  value = (value << 1) | int(bool(bit))
+              return f'{value:0{(len(bits)+3)//4}x}'
+
+          def hashes_image(im):
+              g = im.convert('L')
+              a = g.resize((16,16), Image.Resampling.LANCZOS)
+              ap = np.asarray(a, dtype=np.float32).reshape(-1)
+              ah = bits_to_hex(ap >= ap.mean())
+              d = g.resize((17,16), Image.Resampling.LANCZOS)
+              dp = np.asarray(d, dtype=np.float32)
+              dh = bits_to_hex((dp[:,:-1] > dp[:,1:]).reshape(-1))
+              p = g.resize((64,64), Image.Resampling.LANCZOS)
+              pp = np.asarray(p, dtype=np.float32)
+              coeff = dct(dct(pp, axis=0), axis=1)[:16,:16]
+              med = float(np.median(coeff))
+              pb = (coeff > med).reshape(-1)
+              pb[0] = False
+              ph = bits_to_hex(pb)
+              return ah, dh, ph
+
+          def hamming(a,b):
+              return (int(a,16)^int(b,16)).bit_count()
+
+          def centered_crop_ratio(im, ratio, xpos=0.5, ypos=0.5):
+              w,h = im.size
+              cur = w/h
+              if abs(cur-ratio) < 1e-6:
+                  return im.copy()
+              if cur > ratio:
+                  nw = max(1, int(round(h*ratio)))
+                  left = int(round((w-nw)*xpos))
+                  left = min(max(0,left), w-nw)
+                  return im.crop((left,0,left+nw,h))
+              nh = max(1, int(round(w/ratio)))
+              top = int(round((h-nh)*ypos))
+              top = min(max(0,top), h-nh)
+              return im.crop((0,top,w,top+nh))
+
+          def border_crop(im, frac):
+              w,h=im.size
+              dx=int(round(w*(1-frac)/2)); dy=int(round(h*(1-frac)/2))
+              return im.crop((dx,dy,w-dx,h-dy))
+
+          def pad_to_ratio(im, ratio, background, scale=0.92, ypos=0.5):
+              w,h=im.size
+              # Build a moderate canvas; hashes are scale-invariant after this point.
+              if ratio <= 1:
+                  cw=900; ch=max(1,int(round(cw/ratio)))
+              else:
+                  ch=900; cw=max(1,int(round(ch*ratio)))
+              maxw=max(1,int(cw*scale)); maxh=max(1,int(ch*scale))
+              factor=min(maxw/w,maxh/h)
+              nw=max(1,int(round(w*factor))); nh=max(1,int(round(h*factor)))
+              resized=im.resize((nw,nh), Image.Resampling.LANCZOS)
+              canvas=Image.new('RGB',(cw,ch),(background,background,background))
+              x=(cw-nw)//2
+              y=int(round((ch-nh)*ypos)); y=min(max(0,y),ch-nh)
+              canvas.paste(resized,(x,y))
+              return canvas
+
+          def variants(im):
+              yield 'full', im
+              for frac in (0.92,0.85,0.78,0.70):
+                  yield f'border_crop_{frac:.2f}', border_crop(im,frac)
+              ratios = [
+                  ('9x20',9/20),('9x16',9/16),('3x4',3/4),('4x5',4/5),
+                  ('1x1',1.0),('5x4',5/4),('4x3',4/3),('16x9',16/9)
+              ]
+              for name,ratio in ratios:
+                  for pos in (0.25,0.5,0.75):
+                      yield f'crop_{name}_p{pos:.2f}', centered_crop_ratio(im,ratio,pos,pos)
+              for name,ratio in (('9x20',9/20),('9x16',9/16),('3x4',3/4),('4x5',4/5),('1x1',1.0)):
+                  for bg in (0,255):
+                      for scale in (0.72,0.86,0.96):
+                          for ypos in (0.25,0.5,0.75):
+                              yield f'pad_{name}_bg{bg}_s{scale:.2f}_y{ypos:.2f}', pad_to_ratio(im,ratio,bg,scale,ypos)
+
+          # Deduplicate byte-identical originals.
+          unique={}
+          for p in sorted(originals_dir.iterdir()):
+              if p.is_file() and p.suffix.lower() in {'.jpg','.jpeg','.png','.webp'}:
+                  digest=hashlib.sha256(p.read_bytes()).hexdigest()
+                  unique.setdefault(digest,p)
+
+          candidate_variants=[]
+          metadata={}
+          for digest,p in unique.items():
+              try:
+                  with Image.open(p) as raw:
+                      im=ImageOps.exif_transpose(raw).convert('RGB')
+                      metadata[p.name]={
+                          'path':str(p).replace('\\','/'),
+                          'width':raw.width,'height':raw.height,
+                          'bytes':p.stat().st_size,'sha256':digest
+                      }
+                      seen=set()
+                      for variant_name,vim in variants(im):
+                          hv=hashes_image(vim)
+                          if hv in seen:
+                              continue
+                          seen.add(hv)
+                          candidate_variants.append((p.name,variant_name,*hv))
+              except Exception as e:
+                  print('skip',p,e)
+
+          report={
+              'purpose':'Report-only crop/padding-aware recovery for unresolved Orange County city photos. Never auto-apply.',
+              'auto_apply':False,
+              'variant_count':len(candidate_variants),
+              'matches':[]
+          }
+
+          for t in targets:
+              best_by_file={}
+              for filename,variant,ah,dh,ph in candidate_variants:
+                  ad=hamming(t['ahash16'],ah); dd=hamming(t['dhash16'],dh); pd=hamming(t['phash16'],ph)
+                  score=pd+0.65*dd+0.35*ad
+                  row=(score,pd,dd,ad,variant)
+                  if filename not in best_by_file or row < best_by_file[filename]:
+                      best_by_file[filename]=row
+              ranked=[]
+              for filename,(score,pd,dd,ad,variant) in best_by_file.items():
+                  row=dict(metadata[filename])
+                  row.update({
+                      'filename':filename,'variant':variant,'score':round(score,4),
+                      'phash_distance':pd,'dhash_distance':dd,'ahash_distance':ad
+                  })
+                  ranked.append(row)
+              ranked.sort(key=lambda x:(x['score'],x['phash_distance'],x['filename'].lower()))
+              top=ranked[:8]
+              gap=round(top[1]['score']-top[0]['score'],4) if len(top)>1 else None
+              report['matches'].append({
+                  'set':t.get('set'),'city':t.get('city'),'target_filename':t.get('filename'),
+                  'best':top[0] if top else None,'runner_up_gap':gap,'top8':top
+              })
+              b=top[0]
+              print(f"#{t['set']:02d} {t['city']:24s} -> {b['filename']:38s} {b['variant']:28s} score={b['score']:7.2f} p={b['phash_distance']:3d} gap={gap}")
+
+          # The method must retain exact/high-quality matches for anchors already verified.
+          anchors={
+              24:'IMG-20241127-WA0053.jpg',
+              25:'IMG-20241116-WA0027.jpg',
+              26:'IMG-20241117-WA0023.jpg',
+              28:'IMG-20231201-WA0016.jpg',
+              37:'20240903_134418.jpg',
+          }
+          validation=[]
+          ok=True
+          for setno,expected in anchors.items():
+              m=next(x for x in report['matches'] if x['set']==setno)
+              got=m['best']['filename']
+              row={'set':setno,'expected':expected,'matched':got,'ok':got==expected}
+              validation.append(row)
+              ok = ok and row['ok']
+          report['known_anchor_validation']=validation
+          report['known_anchor_validation_ok']=ok
+          output_path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          if not ok:
+              raise SystemExit('Augmented matcher failed one or more already-verified anchors; report written but must not be used for promotion.')
+          PY
+
+      - name: Commit report only
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/laundry/recovered-orange-augmented-matches.json || true
+          if git diff --cached --quiet; then
+            echo 'Augmented report unchanged or unavailable.'
+          else
+            git commit -m 'Report crop-aware Orange County original matches'
+            git push
+          fi
