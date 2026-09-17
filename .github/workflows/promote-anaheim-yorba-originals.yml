@@ -1,0 +1,139 @@
+name: Promote Anaheim Hills and Yorba Linda originals
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/promote-anaheim-yorba-originals.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: promote-anaheim-yorba-originals
+  cancel-in-progress: true
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Lock verified full-resolution originals
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, re
+
+          ROOT = 'https://freereliableappliancepickup.com/'
+          VERSION = '20260917g'
+          manifest_path = Path('assets/premium-user-heroes.json')
+          pending_path = Path('assets/laundry/pending-manual-hero-verification.json')
+          manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+          pending = json.loads(pending_path.read_text(encoding='utf-8'))
+
+          verified = {
+              'anaheim-hills-washer-dryer-pickup': {
+                  'src': 'assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg',
+                  'alt': 'Real washer and dryer set provided for Anaheim Hills pickup service',
+                  'set': 78,
+                  'phone': '1000274882(3).jpg',
+                  'width': 2000,
+                  'height': 1500,
+                  'bytes': 680652,
+                  'sha256': 'f429c5fc660c69e5961701849457143c2236c052c288e122ecc2aa9b55fe1d15',
+                  'phash_distance': 0,
+                  'runner_up_gap': 211.45,
+              },
+              'yorba-linda-washer-dryer-pickup': {
+                  'src': 'assets/laundry/original-user-heroes/IMG-20230604-WA0031.jpg',
+                  'alt': 'Real washer and dryer set provided for Yorba Linda pickup service',
+                  'set': 83,
+                  'phone': '1000274884(2).jpg',
+                  'width': 1500,
+                  'height': 2000,
+                  'bytes': 506831,
+                  'sha256': 'abe05463d7fadf5cea3d3cab331a55ad77c9b1905b1fb3119c80c4372a6587cc',
+                  'phash_distance': 0,
+                  'runner_up_gap': 218.35,
+              },
+          }
+
+          def replace_one(text, pattern, repl, label, flags=0):
+              out, n = re.subn(pattern, repl, text, count=1, flags=flags)
+              if n != 1:
+                  raise SystemExit(f'{label}: expected 1 replacement, got {n}')
+              return out
+
+          for route, info in verified.items():
+              page = Path(route) / 'index.html'
+              image = Path(info['src'])
+              if not page.is_file():
+                  raise SystemExit(f'Missing page {page}')
+              if not image.is_file():
+                  raise SystemExit(f'Missing original {image}')
+              if image.stat().st_size != info['bytes']:
+                  raise SystemExit(f'Unexpected byte size for {image}: {image.stat().st_size}')
+
+              text = page.read_text(encoding='utf-8')
+              absolute = ROOT + info['src'] + f'?original-fullres={VERSION}'
+              relative = '/' + info['src'] + f'?original-fullres={VERSION}'
+
+              text = replace_one(text, r'(<meta\s+property="og:image"\s+content=")[^"]*(")', lambda m:m.group(1)+absolute+m.group(2), route+' og:image')
+              text = replace_one(text, r'(<meta\s+name="twitter:image"\s+content=")[^"]*(")', lambda m:m.group(1)+absolute+m.group(2), route+' twitter:image')
+              text = replace_one(text, r'("primaryImageOfPage"\s*:\s*\{[^{}]*?"url"\s*:\s*")[^"]*(")', lambda m:m.group(1)+absolute+m.group(2), route+' primaryImage', flags=re.S)
+              text = replace_one(text, r'(<div\s+class="site-hero-art"><img\s+src=")[^"]*(")', lambda m:m.group(1)+relative+m.group(2), route+' visible hero')
+              text = replace_one(text, r'(<script[^>]*data-premium-hero-lock="1"[^>]*>.*?var\s+s=")[^"]*(")', lambda m:m.group(1)+relative+m.group(2), route+' hero lock', flags=re.S)
+              page.write_text(text, encoding='utf-8')
+
+              manifest['/' + route + '/'] = {
+                  'src': info['src'],
+                  'alt': info['alt'],
+                  'source_status': 'original-full-resolution-recovered',
+                  'original_width': info['width'],
+                  'original_height': info['height'],
+                  'original_size_bytes': info['bytes'],
+                  'original_sha256': info['sha256'],
+                  'recovered_from_set': info['set'],
+                  'recovered_phone_filename': info['phone'],
+                  'match_phash_distance': info['phash_distance'],
+                  'match_runner_up_gap': info['runner_up_gap'],
+              }
+
+              reread = page.read_text(encoding='utf-8')
+              if reread.count(absolute) < 3 or reread.count(relative) < 2:
+                  raise SystemExit(f'{route}: not locked into all expected static locations')
+              print('PROMOTED', route, '->', info['src'])
+
+          manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          promoted_routes = {'/anaheim-hills-washer-dryer-pickup/', '/yorba-linda-washer-dryer-pickup/'}
+          kept = []
+          for item in pending.get('pending_routes', []):
+              if item.get('route') in promoted_routes:
+                  continue
+              if item.get('route') == '/brea-washer-dryer-pickup/':
+                  item = dict(item)
+                  item['note'] = 'Manual set #80 and exact phone original 1000274887(2).jpg are recovered. Library original is 1152x1536 / 166610 bytes; repository currently contains only a small 423x564 matching copy, so keep pending until the true full-resolution original is imported.'
+              kept.append(item)
+          pending['pending_routes'] = kept
+          pending_path.write_text(json.dumps(pending, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit verified originals
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            anaheim-hills-washer-dryer-pickup/index.html \
+            yorba-linda-washer-dryer-pickup/index.html \
+            assets/premium-user-heroes.json \
+            assets/laundry/pending-manual-hero-verification.json
+          if git diff --cached --quiet; then
+            echo 'No changes needed.'
+          else
+            git commit -m 'Restore Anaheim Hills and Yorba Linda full-resolution heroes'
+            git push
+          fi
