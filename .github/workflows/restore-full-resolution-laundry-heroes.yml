@@ -4,33 +4,73 @@ on:
   push:
     paths:
       - '.github/workflows/restore-full-resolution-laundry-heroes.yml'
+      - 'file_00000000051c81fda2fa9f1edefd32f7.png'
+      - 'assets/laundry/real-laundry-pickup-1.jpg'
+      - 'assets/laundry/real-laundry-pickup-2.jpg'
+      - 'assets/laundry/real-laundry-pickup-3.jpg'
+      - 'assets/laundry/real-laundry-pickup-4.jpg'
+      - 'assets/laundry/real-laundry-pickup-5.jpg'
+      - 'assets/laundry/user-heroes/**'
+      - 'assets/premium-user-heroes.json'
+      - 'assets/premium-sharp-hero-fix.js'
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  verify-original:
+  verify-originals:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Verify original photo without modifying it
+      - name: Verify full-resolution originals and mapped user heroes
         shell: bash
         run: |
           set -euo pipefail
-          src='file_00000000051c81fda2fa9f1edefd32f7.png'
+          python - <<'PY'
+          import json
+          from pathlib import Path
 
-          if [[ ! -f "$src" ]]; then
-            echo "Missing original full-resolution photo: $src" >&2
-            exit 1
-          fi
+          root_original = Path('file_00000000051c81fda2fa9f1edefd32f7.png')
+          if not root_original.is_file():
+              raise SystemExit(f'Missing original full-resolution photo: {root_original}')
+          if root_original.stat().st_size < 100_000:
+              raise SystemExit(f'Original photo unexpectedly small: {root_original} ({root_original.stat().st_size} bytes)')
 
-          bytes=$(wc -c < "$src")
-          sha256=$(sha256sum "$src" | awk '{print $1}')
-          printf 'Original photo preserved exactly as committed.\nFile: %s\nBytes: %s\nSHA-256: %s\n' "$src" "$bytes" "$sha256"
+          fallbacks = [
+              Path(f'assets/laundry/real-laundry-pickup-{n}.jpg')
+              for n in range(1, 6)
+          ]
+          for photo in fallbacks:
+              if not photo.is_file():
+                  raise SystemExit(f'Missing full-size laundry fallback: {photo}')
+              size = photo.stat().st_size
+              if size < 150_000:
+                  raise SystemExit(f'Laundry fallback is too small and may be compressed: {photo} ({size} bytes)')
+              print(f'OK full-size fallback: {photo} ({size} bytes)')
 
-          # Important: this workflow intentionally does NOT resize, crop, rotate,
-          # convert, recompress, or overwrite any user photo. Display cropping
-          # belongs in CSS (object-fit/object-position), never in the image bytes.
+          mapping_path = Path('assets/premium-user-heroes.json')
+          mapping = json.loads(mapping_path.read_text(encoding='utf-8'))
+          for page, cfg in mapping.items():
+              if 'src' in cfg:
+                  source = Path(cfg['src'])
+                  if not source.is_file() or source.stat().st_size == 0:
+                      raise SystemExit(f'Missing mapped user hero for {page}: {source}')
+                  print(f'OK exact city hero: {page} -> {source} ({source.stat().st_size} bytes)')
+              elif cfg.get('parts'):
+                  for item in cfg['parts']:
+                      part = Path(item)
+                      if not part.is_file() or part.stat().st_size == 0:
+                          raise SystemExit(f'Missing mapped hero part for {page}: {part}')
+                  print(f'OK exact city hero parts: {page} ({len(cfg["parts"])} part(s))')
+              else:
+                  raise SystemExit(f'Invalid mapped hero entry for {page}: expected src or parts')
+
+          print('All protected full-resolution washer/dryer hero sources are present and non-empty.')
+          PY
+
+          # Do not resize, crop, rotate, convert, recompress, or overwrite user photos.
+          # Display sizing belongs in CSS/HTML; the original image bytes stay untouched.
