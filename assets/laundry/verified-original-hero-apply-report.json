@@ -1,5 +1,5 @@
 {
-  "purpose": "Use only manually verified original full-resolution photos without changing city/photo assignments.",
+  "purpose": "Keep each manually verified city assignment on its original full-resolution photo and prevent page scripts from overriding it.",
   "verified": [
     {
       "route": "la-crescenta-washer-dryer-pickup",
@@ -22,6 +22,11 @@
       "page": "claremont-washer-dryer-pickup/index.html"
     }
   ],
-  "changed_pages": [],
-  "changed_count": 0
+  "changed_pages": [
+    "la-crescenta-washer-dryer-pickup/index.html",
+    "san-dimas-washer-dryer-pickup/index.html",
+    "la-verne-washer-dryer-pickup/index.html",
+    "claremont-washer-dryer-pickup/index.html"
+  ],
+  "changed_count": 4
 }
