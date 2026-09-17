@@ -43,7 +43,9 @@ jobs:
           if not parts:
               raise SystemExit('READY exists but no Brea transport parts were found')
 
-          raw = b''.join(base64.b64decode(p.read_text(encoding='utf-8').strip(), validate=True) for p in parts)
+          encoded = ''.join(p.read_text(encoding='utf-8').strip().replace('=', '') for p in parts)
+          encoded += '=' * ((4 - len(encoded) % 4) % 4)
+          raw = base64.b64decode(encoded, validate=True)
           actual_sha = hashlib.sha256(raw).hexdigest()
           if len(raw) != expected_size or actual_sha != expected_sha:
               raise SystemExit(f'Brea transport verification failed: {len(raw)} bytes, {actual_sha}')
