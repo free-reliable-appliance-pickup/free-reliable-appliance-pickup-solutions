@@ -1,6 +1,7 @@
 {
   "purpose": "Fingerprint the recovered one-by-one washer/dryer photo sequence so Library-only phone photos can be compared against full-resolution originals already stored in GitHub without guessing or uploading compressed replacements.",
-  "hash_method": "16x16 average hash + 16x16 horizontal difference hash after EXIF transpose and grayscale conversion using Pillow LANCZOS resizing",
+  "hash_method": "16x16 average hash + 16x16 horizontal difference hash + 16x16 perceptual DCT hash after EXIF transpose and grayscale conversion. The perceptual hash uses a 64x64 LANCZOS input, top-left 16x16 DCT block, median threshold, and clears the DC bit to match the existing recovered-corridor fingerprint method.",
+  "score_method": "phash_distance + 0.65*dhash_distance + 0.35*ahash_distance",
   "auto_apply": false,
   "known_validation": {
     "set": 28,
@@ -8,19 +9,19 @@
     "expected_original": "IMG-20231201-WA0016.jpg"
   },
   "images": [
-    {"set":24,"city":"Irvine","filename":"1000274642(3).jpg","ahash16":"003f03ff03ff03ff000f007f0e7f0e7f1efe1efc3ffe1fff007f000300030003","dhash16":"fffffbff7fff7e7ffaadf2ef78effcfefcfcfcfcfcf8fcf9fbe7ff7fff77fdff"},
-    {"set":25,"city":"Lake Forest","filename":"1000274647(3).jpg","ahash16":"00600061c01f000c00003e7c7ffefffffffefffefffffffffffffffe0000c000","dhash16":"2bc307c70cbe037c607164c0cc8cadbaac82aca29ca09580a4828fae032c0899"},
-    {"set":26,"city":"Mission Viejo","filename":"1000274645(2).jpg","ahash16":"ffffffff7fff00ff1fff00017e007ffc3ffe3ffe3ffe3ffc7ffc7ffc00000000","dhash16":"6df277f25b766afffaf00f7fd081f4e1c25cd0d4f4d4d4c4d2c4cee4409cff30"},
-    {"set":27,"city":"Laguna Hills","filename":"1000263318.jpg","ahash16":"00f379e1fcfd7cfc7fbf71bf60bf60bf40bf60bf20bf31bf3fbf3fbf3e300000","dhash16":"6343e303c1a1b1bdc638c728c328d1a0d1a0cda0c360c76070606960606063c3"},
-    {"set":28,"city":"Rancho Santa Margarita","filename":"1000274723(2).jpg","ahash16":"dbff2103000001c07ffcfffffffffffe7ffefffcc000c00080008000c000c000","dhash16":"971fc61f26afc78dd691d4c4bcb2bc84fc84c4849215001f001f2077061f0413"},
-    {"set":29,"city":"Aliso Viejo","filename":"1000232286.jpg","ahash16":"0000d000e000f800fff0fff8fffcfff8fff8fff8fff8fe80e000f000e000c000","dhash16":"0000000000005100d926c1010180018181818181c183c08380a5008101800022"},
-    {"set":30,"city":"Laguna Niguel","filename":"1000273583(1).jpg","ahash16":"030402000000030102017ffe7fff4387410343867fff3fff5f0fff9f7f8f7fc7","dhash16":"be0cf66ce629de1bc43becdceedc9e0e9b269626d48cd8f8b85e9c38ec3cd40e"},
-    {"set":31,"city":"San Juan Capistrano","filename":"1000263150.png","ahash16":"3fe01ffc3ffe7fbe7f8273c321ff01ff00ff01ff137f3f7e3f7e3f7e007e0000","dhash16":"f10df3c8f04cc56cd616c6534b42cb40cb4067406640fc42ee426640e6c08ee0"},
-    {"set":32,"city":"San Clemente","filename":"1000273912(1).png","ahash16":"9fff9ffa9ffa9ff08ff00ff00ff0001044104ff00ff00ff00ff00ff00ff001f0","dhash16":"77f731e235e235e239e2bc42bc40b8f1b832b932b4d292729af299f29be0dbf4"},
-    {"set":33,"city":"Newport Beach","filename":"1000262425(2).jpg","ahash16":"00000000000000000000ffffffffffffffffffffffff00000000000000000000","dhash16":"00000000000048000000dff879e6fdc1dd896d92a87000000000000000000000"},
-    {"set":34,"city":"Laguna Beach","filename":"1000260608(2).jpg","ahash16":"00000000000000000000ffffffffffffffffffffffff00000000000000000000","dhash16":"000000004000000078080648e132c2e2fec7d8809dbf9bde0000000400000000"},
-    {"set":35,"city":"Dana Point","filename":"1000261196(3).jpg","ahash16":"ffffffffffffbfff7fff7fff7fff7fff7fff3ffc3ffc3ffc0000000000000000","dhash16":"d8009b00b8c07692e4c8d2ccd4a0c480d480d480e4806c8968c9b414f0188c48"},
-    {"set":36,"city":"Costa Mesa","filename":"1000262564(1).png","ahash16":"7b197f9007907f103f1b7f1f7f9f7f87760727e03fff4fff07f704fe00bc803c","dhash16":"a233f133dd33e133f937f93df938f025cc25cd25e5219d3c992699a039a83da0","description_anchor":"bright laundry-room set"},
-    {"set":37,"city":"Huntington Beach","filename":"1000274627.jpg","ahash16":"fe00fe00fe00fefcfffee7c68382c100e78cfffce8f8e000e0e0c000e020f020","dhash16":"000000104080048495820d8c2f061f2c9d18c59991d192921bc802c049c041e2","description_anchor":"matching Whirlpool Duet front-load set"}
+    {"set":24,"city":"Irvine","filename":"1000274642(3).jpg","ahash16":"003f03ff03ff03ff000f007f0e7f0e7f1efe1efc3ffe1fff007f000300030003","dhash16":"fffffbff7fff7e7ffaadf2ef78effcfefcfcfcfcfcf8fcf9fbe7ff7fff77fdff","phash16":"0023a8fc7edcd423f7106b9de02b654a2d5506bf5fe89e90c8157110e13b6bee"},
+    {"set":25,"city":"Lake Forest","filename":"1000274647(3).jpg","ahash16":"00600061c01f000c00003e7c7ffefffffffefffefffffffffffffffe0000c000","dhash16":"2bc307c70cbe037c607164c0cc8cadbaac82aca29ca09580a4828fae032c0899","phash16":"35543efe3aee9a88da00d049526a536f4ae8354c9554b57ea7f06fb83f90f400"},
+    {"set":26,"city":"Mission Viejo","filename":"1000274645(2).jpg","ahash16":"ffffffff7fff00ff1fff00017e007ffc3ffe3ffe3ffe3ffc7ffc7ffc00000000","dhash16":"6df277f25b766afffaf00f7fd081f4e1c25cd0d4f4d4d4c4d2c4cee4409cff30","phash16":"1002aafd3fd4c1562aafd42a2ad53d54955ec2abc2ab6f553d54d5ea80abca84"},
+    {"set":27,"city":"Laguna Hills","filename":"1000263318.jpg","ahash16":"00f379e1fcfd7cfc7fbf71bf60bf60bf40bf60bf20bf31bf3fbf3fbf3e300000","dhash16":"6343e303c1a1b1bdc638c728c328d1a0d1a0cda0c360c76070606960606063c3","phash16":"3019f90047f4baff3b1784dd38ee865f4fa231bc3b19f1e1b811c61bcc01483e"},
+    {"set":28,"city":"Rancho Santa Margarita","filename":"1000274723(2).jpg","ahash16":"dbff2103000001c07ffcfffffffffffe7ffefffcc000c00080008000c000c000","dhash16":"971fc61f26afc78dd691d4c4bcb2bc84fc84c4849215001f001f2077061f0413","phash16":"754380e32aef6b828141abd5ba8381ab91093f81bbff3b006311d7fbd3317385"},
+    {"set":29,"city":"Aliso Viejo","filename":"1000232286.jpg","ahash16":"0000d000e000f800fff0fff8fffcfff8fff8fff8fff8fe80e000f000e000c000","dhash16":"0000000000005100d926c1010180018181818181c183c08380a5008101800022","phash16":"509982de2f5662a595a9ed6ac295d2102b5a9fff35e86520c2b57a16c25b9c9a"},
+    {"set":30,"city":"Laguna Niguel","filename":"1000273583(1).jpg","ahash16":"030402000000030102017ffe7fff4387410343867fff3fff5f0fff9f7f8f7fc7","dhash16":"be0cf66ce629de1bc43becdceedc9e0e9b269626d48cd8f8b85e9c38ec3cd40e","phash16":"0c421fff47b91f4b2d40b77c913f6ed82a958c3b990091bcdf89390350db630d"},
+    {"set":31,"city":"San Juan Capistrano","filename":"1000263150.png","ahash16":"3fe01ffc3ffe7fbe7f8273c321ff01ff00ff01ff137f3f7e3f7e3f7e007e0000","dhash16":"f10df3c8f04cc56cd616c6534b42cb40cb4067406640fc42ee426640e6c08ee0","phash16":"104cc80bc71387e83b8adffc68a749d54719955bf8e8922fcfb10006cfde3552"},
+    {"set":32,"city":"San Clemente","filename":"1000273912(1).png","ahash16":"9fff9ffa9ffa9ff08ff00ff00ff0001044104ff00ff00ff00ff00ff00ff001f0","dhash16":"77f731e235e235e239e2bc42bc40b8f1b832b932b4d292729af299f29be0dbf4","phash16":"17d0aff881ffdfd720387d2a89e28e8a203a7d600957ce1e30751baf6509055d"},
+    {"set":33,"city":"Newport Beach","filename":"1000262425(2).jpg","ahash16":"00000000000000000000ffffffffffffffffffffffff00000000000000000000","dhash16":"00000000000048000000dff879e6fdc1dd896d92a87000000000000000000000","phash16":"10bdaf4a6f4250b5903daf4a2fd650bd54092f4082ffd4af7d002ad002ff772b"},
+    {"set":34,"city":"Laguna Beach","filename":"1000260608(2).jpg","ahash16":"00000000000000000000ffffffffffffffffffffffff00000000000000000000","dhash16":"000000004000000078080648e132c2e2fec7d8809dbf9bde0000000400000000","phash16":"4015d5ff3fea2a02d255f5d580085fef2f7fa01052912acaa802d77f47ff00b8"},
+    {"set":35,"city":"Dana Point","filename":"1000261196(3).jpg","ahash16":"ffffffffffffbfff7fff7fff7fff7fff7fff3ffc3ffc3ffc0000000000000000","dhash16":"d8009b00b8c07692e4c8d2ccd4a0c480d480d480e4806c8968c9b414f0188c48","phash16":"413faf807fc480bf7f013f01c02f7f40c2fd40f23fd0ebf02d02c12fe80b3a9d"},
+    {"set":36,"city":"Costa Mesa","filename":"1000262564(1).png","ahash16":"7b197f9007907f103f1b7f1f7f9f7f87760727e03fff4fff07f704fe00bc803c","dhash16":"a233f133dd33e133f937f93df938f025cc25cd25e5219d3c992699a039a83da0","phash16":"0690e0f61f85d82f7378a705b5ec65182d52b1f11d213c399e6a1b4d3e353ed4","description_anchor":"bright laundry-room set"},
+    {"set":37,"city":"Huntington Beach","filename":"1000274627.jpg","ahash16":"fe00fe00fe00fefcfffee7c68382c100e78cfffce8f8e000e0e0c000e020f020","dhash16":"000000104080048495820d8c2f061f2c9d18c59991d192921bc802c049c041e2","phash16":"5d11ed51a2fe40ae4cc82fc49331d13ba40f36c4c3fa6d3a3e0692ade0dd2cd5","description_anchor":"matching Whirlpool Duet front-load set"}
   ]
 }
