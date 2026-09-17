@@ -5,9 +5,72 @@
     "source_status": "original-full-resolution",
     "original_filename": "IMG-20240921-WA0122.jpg",
     "original_width": 1536,
-    "original_height": 2048,
-    "original_size_bytes": 454167,
-    "original_sha256": "5ec14ebc7fb7205a6ec60155e1678363f8bcc2397c6065b97449a91bc4aa48e0"
+    "original_height": 2048
+  },
+  "/la-canada-flintridge-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg",
+    "alt": "Real washer and dryer set provided for La Cañada Flintridge pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/altadena-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240425-WA0015.jpg",
+    "alt": "Real washer and dryer set provided for Altadena pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/pasadena-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240412-WA0010.jpg",
+    "alt": "Real washer and dryer set provided for Pasadena pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/san-marino-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240318-WA0047.jpg",
+    "alt": "Real washer and dryer set provided for San Marino pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/san-gabriel-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+    "alt": "Real washer and dryer set provided for San Gabriel pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/sierra-madre-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+    "alt": "Real washer and dryer set provided for Sierra Madre pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/arcadia-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+    "alt": "Real washer and dryer set provided for Arcadia pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/monrovia-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+    "alt": "Real washer and dryer set provided for Monrovia pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/duarte-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240512-WA0002.jpg",
+    "alt": "Real washer and dryer set provided for Duarte pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/azusa-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240425-WA0015.jpg",
+    "alt": "Real washer and dryer set provided for Azusa pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/glendora-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240822-WA0002.jpg",
+    "alt": "Real washer and dryer set provided for Glendora pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/covina-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+    "alt": "Real washer and dryer set provided for Covina pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/west-covina-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+    "alt": "Real washer and dryer set provided for West Covina pickup service",
+    "source_status": "original-full-resolution-repeat"
   },
   "/san-dimas-washer-dryer-pickup/": {
     "src": "assets/laundry/original-user-heroes/1000274641(3).jpg",
@@ -20,23 +83,53 @@
     "original_sha256": "a7ab8d1b61a51c493149ab1720e1c997c6a4bda451357c298cbdcea1b31a98e4"
   },
   "/la-verne-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000274683(5).jpg",
     "alt": "Real washer and dryer set provided for La Verne pickup service",
     "source_status": "original-full-resolution",
     "original_filename": "1000274683(5).jpg",
     "original_width": 864,
     "original_height": 1536,
     "original_size_bytes": 368294,
-    "original_sha256": "5b98b7088646d6e7d0df0c180793ea5a146d369588aa0a8e31664e80f81a7525",
-    "src": "assets/laundry/original-user-heroes/1000274683(5).jpg"
+    "original_sha256": "5b98b7088646d6e7d0df0c180793ea5a146d369588aa0a8e31664e80f81a7525"
   },
   "/claremont-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000274700(10).jpg",
     "alt": "Real washer and dryer set provided for Claremont pickup service",
     "source_status": "original-full-resolution",
     "original_filename": "1000274700(10).jpg",
     "original_width": 1152,
     "original_height": 1536,
     "original_size_bytes": 511446,
-    "original_sha256": "87185bf73ea5d70fdb3eaf8a9e2e85d5c0343acfa188935485c012a5c5177251",
-    "src": "assets/laundry/original-user-heroes/1000274700(10).jpg"
+    "original_sha256": "87185bf73ea5d70fdb3eaf8a9e2e85d5c0343acfa188935485c012a5c5177251"
+  },
+  "/pomona-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20230715-WA0046-2.jpg",
+    "alt": "Real washer and dryer set provided for Pomona pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/montclair-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240319-WA0036.jpg",
+    "alt": "Real washer and dryer set provided for Montclair pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/ontario-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20250728-WA0015.jpg",
+    "alt": "Real washer and dryer set provided for Ontario pickup service",
+    "source_status": "original-full-resolution"
+  },
+  "/upland-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+    "alt": "Real washer and dryer set provided for Upland pickup service",
+    "source_status": "original-full-resolution-repeat"
+  },
+  "/rancho-cucamonga-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg",
+    "alt": "Real washer and dryer set provided for Rancho Cucamonga pickup service",
+    "source_status": "original-full-resolution-repeat"
+  },
+  "/fontana-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
+    "alt": "Real washer and dryer set provided for Fontana pickup service",
+    "source_status": "original-full-resolution"
   }
 }
