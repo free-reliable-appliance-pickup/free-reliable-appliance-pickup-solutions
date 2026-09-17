@@ -19,8 +19,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Add routing helper only to customer pickup form pages
+        shell: python
         run: |
-          python - <<'PY'
           from pathlib import Path
           import re
 
@@ -41,10 +41,7 @@ jobs:
 
               if not (is_formspree and has_city and has_state and has_appliance):
                   continue
-
-              if routing_tag.search(text):
-                  continue
-              if '</head>' not in lower:
+              if routing_tag.search(text) or '</head>' not in lower:
                   continue
 
               depth = len(path.parent.parts)
@@ -55,194 +52,13 @@ jobs:
               path.write_text(text, encoding='utf-8')
               changed.append(str(path))
 
-          print('Wired customer routing into:')
-          for p in changed:
-              print(' -', p)
-          print('Total changed:', len(changed))
-          PY
-
-      - name: Write complete washer and dryer sets into premium page heroes
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          # Every file in this list is a confirmed COMPLETE washer + dryer pair.
-          complete_sets = [
-              'front-load-laundry-set.jpg',
-              'laundry-pair.jpg',
-              'washer-dryer-set.jpg',
-              'washer-dryer-set-sharp.jpg',
-              'heroes/la-canada-premium-set.webp',
-              'heroes/pasadena-premium-set.webp',
-              'heroes/ontario-premium-set.webp',
-              'heroes/rancho-cucamonga-premium-set.webp',
-              'heroes/san-bernardino-premium-set.webp',
-          ]
-
-          slugs = [
-              'california','southern-california','san-gabriel-inland-empire','los-angeles-county',
-              'orange-county','south-orange-county','riverside-county','san-bernardino-county',
-              'montrose','la-crescenta','la-canada-flintridge','altadena','pasadena','south-pasadena',
-              'san-marino','san-gabriel','sierra-madre','arcadia','monrovia','duarte','azusa','glendora',
-              'covina','west-covina','san-dimas','la-verne','claremont','pomona','montclair','ontario',
-              'upland','rancho-cucamonga','fontana','san-bernardino','chino-hills','highland','loma-linda',
-              'yucaipa','oak-glen','anaheim-hills','brea','yorba-linda','irvine','newport-beach',
-              'mission-viejo','lake-forest','laguna-niguel','rancho-santa-margarita','san-juan-capistrano',
-              'san-clemente','laguna-hills','aliso-viejo','calimesa','cherry-valley','beaumont','banning'
-          ]
-
-          labels = {
-              'la-crescenta':'La Crescenta','la-canada-flintridge':'La Cañada Flintridge',
-              'san-gabriel-inland-empire':'San Gabriel Valley & Inland Empire','los-angeles-county':'Los Angeles County',
-              'orange-county':'Orange County','south-orange-county':'South Orange County',
-              'riverside-county':'Riverside County','san-bernardino-county':'San Bernardino County',
-              'south-pasadena':'South Pasadena','san-marino':'San Marino','san-gabriel':'San Gabriel',
-              'sierra-madre':'Sierra Madre','west-covina':'West Covina','san-dimas':'San Dimas',
-              'la-verne':'La Verne','rancho-cucamonga':'Rancho Cucamonga','chino-hills':'Chino Hills',
-              'loma-linda':'Loma Linda','oak-glen':'Oak Glen','anaheim-hills':'Anaheim Hills',
-              'newport-beach':'Newport Beach','mission-viejo':'Mission Viejo','lake-forest':'Lake Forest',
-              'laguna-niguel':'Laguna Niguel','rancho-santa-margarita':'Rancho Santa Margarita',
-              'san-juan-capistrano':'San Juan Capistrano','san-clemente':'San Clemente',
-              'laguna-hills':'Laguna Hills','aliso-viejo':'Aliso Viejo','cherry-valley':'Cherry Valley'
-          }
-
-          hero_block = re.compile(
-              r'(<div\b[^>]*class=["\'][^"\']*\bsite-hero-art\b[^"\']*["\'][^>]*>\s*)(<img\b[^>]*>)(\s*</div>)',
-              re.I | re.S,
-          )
-          lock_re = re.compile(r'<script\b[^>]*data-premium-hero-lock=["\']1["\'][^>]*>.*?</script>\s*', re.I | re.S)
-          changed = []
-          found = []
-
-          for i, slug in enumerate(slugs):
-              path = Path(f'{slug}-washer-dryer-pickup/index.html')
-              if not path.exists():
-                  continue
-              found.append(slug)
-              text = path.read_text(encoding='utf-8')
-              hero = complete_sets[i % len(complete_sets)]
-              # La Crescenta explicitly uses a wide side-by-side pair, never a tower or single unit.
-              if slug == 'la-crescenta':
-                  hero = 'front-load-laundry-set.jpg'
-              label = labels.get(slug, ' '.join(w.capitalize() for w in slug.split('-')))
-              src = f'/assets/laundry/{hero}?premium-static=20260916'
-              alt = f'Real washer and dryer set for pickup in {label}'
-
-              def replace_img(match):
-                  img = match.group(2)
-                  if re.search(r'\bsrc\s*=', img, re.I):
-                      img = re.sub(r'\bsrc\s*=\s*["\'][^"\']*["\']', f'src="{src}"', img, count=1, flags=re.I)
-                  else:
-                      img = img[:-1] + f' src="{src}">'
-                  if re.search(r'\balt\s*=', img, re.I):
-                      img = re.sub(r'\balt\s*=\s*["\'][^"\']*["\']', f'alt="{alt}"', img, count=1, flags=re.I)
-                  else:
-                      img = img[:-1] + f' alt="{alt}">'
-                  img = re.sub(r'\b(?:width|height)\s*=\s*["\'][^"\']*["\']', '', img, flags=re.I)
-                  return match.group(1) + img + match.group(3)
-
-              new_text, count = hero_block.subn(replace_img, text, count=1)
-              if count == 0:
-                  print(f'WARNING: no site-hero-art image found in {path}')
-                  continue
-
-              # Remove an older generated lock, then append a final lock after page scripts.
-              new_text = lock_re.sub('', new_text)
-              lock = (
-                  f'<script data-premium-hero-lock="1">'
-                  f'(function(){{var s="{src}",a="{alt}";function f(){{var i=document.querySelector(".site-hero-art img");'
-                  f'if(i){{i.src=s;i.alt=a;i.style.objectFit="contain";}}}}'
-                  f'if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f();window.addEventListener("load",f);}})();'
-                  f'</script>'
-              )
-              if '</body>' in new_text.lower():
-                  pos = new_text.lower().rfind('</body>')
-                  new_text = new_text[:pos] + lock + '\n' + new_text[pos:]
-
-              if new_text != text:
-                  path.write_text(new_text, encoding='utf-8')
-                  changed.append(str(path))
-
-          print(f'Premium pages found: {len(found)}')
-          print(f'Premium hero files updated: {len(changed)}')
-          for p in changed:
-              print(' -', p)
-          PY
-
-      - name: Verify every premium hero is a complete washer and dryer set
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          approved = {
-              'front-load-laundry-set.jpg','laundry-pair.jpg','washer-dryer-set.jpg','washer-dryer-set-sharp.jpg',
-              'la-canada-premium-set.webp','pasadena-premium-set.webp','ontario-premium-set.webp',
-              'rancho-cucamonga-premium-set.webp','san-bernardino-premium-set.webp'
-          }
-          core_slugs = [
-              'la-crescenta','la-canada-flintridge','pasadena','south-pasadena','san-marino','altadena',
-              'sierra-madre','arcadia','monrovia','duarte','azusa','glendora','covina','west-covina','san-dimas',
-              'la-verne','claremont','pomona','montclair','upland','rancho-cucamonga','fontana','san-bernardino',
-              'irvine','newport-beach','mission-viejo','lake-forest','laguna-niguel','rancho-santa-margarita',
-              'san-juan-capistrano','san-clemente','laguna-hills','aliso-viejo','anaheim-hills','brea','yorba-linda'
-          ]
-          missing=[]
-          bad=[]
-          nohero=[]
-          hero_block = re.compile(r'<div\b[^>]*class=["\'][^"\']*\bsite-hero-art\b[^"\']*["\'][^>]*>\s*<img\b[^>]*\bsrc=["\']([^"\']+)["\']', re.I|re.S)
-
-          for slug in core_slugs:
-              path=Path(f'{slug}-washer-dryer-pickup/index.html')
-              if not path.exists():
-                  missing.append(str(path))
-                  continue
-              text=path.read_text(encoding='utf-8')
-              m=hero_block.search(text)
-              if not m:
-                  nohero.append(str(path))
-                  continue
-              filename=m.group(1).split('?')[0].rstrip('/').split('/')[-1]
-              if filename not in approved:
-                  bad.append(f'{path}: {m.group(1)}')
-              if 'data-premium-hero-lock="1"' not in text:
-                  bad.append(f'{path}: missing final premium hero lock')
-
-          if missing:
-              print('Missing premium city pages:')
-              print('\n'.join(missing))
-              raise SystemExit(1)
-          if nohero:
-              print('Premium pages without site hero image:')
-              print('\n'.join(nohero))
-              raise SystemExit(1)
-          if bad:
-              print('Invalid premium heroes:')
-              print('\n'.join(bad))
-              raise SystemExit(1)
-          print(f'PASS: all {len(core_slugs)} core premium city pages have approved complete washer + dryer set heroes.')
-          PY
-
-      - name: Verify partner application was not wired to customer routing
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          page = Path('partners/index.html').read_text(encoding='utf-8')
-          routing_tag = re.compile(
-              r'<script\b[^>]*\bsrc=["\'][^"\']*assets/customer-routing\.js(?:\?[^"\']*)?["\'][^>]*>\s*</script>',
-              re.I,
-          )
-          if routing_tag.search(page):
-              raise SystemExit('ERROR: partner application incorrectly received customer routing helper')
-          print('Partner application correctly excludes customer routing helper.')
-          PY
+          print(f'Routing helper added to {len(changed)} page(s).')
+          for item in changed:
+              print(' -', item)
 
       - name: Verify every customer pickup form loads routing helper exactly once
+        shell: python
         run: |
-          python - <<'PY'
           from pathlib import Path
           import re
 
@@ -250,46 +66,61 @@ jobs:
               r'<script\b[^>]*\bsrc=["\'][^"\']*assets/customer-routing\.js(?:\?[^"\']*)?["\'][^>]*>\s*</script>',
               re.I,
           )
-          missing=[]
-          duplicates=[]
-          detected=[]
+          missing = []
+          duplicates = []
+          detected = []
 
           for path in Path('.').rglob('*.html'):
-              text=path.read_text(encoding='utf-8')
-              lower=text.lower()
-              target=('formspree.io' in lower and
-                      ('name="city"' in lower or "name='city'" in lower or 'name="pickup_city"' in lower or "name='pickup_city'" in lower) and
-                      ('name="state"' in lower or "name='state'" in lower or 'name="pickup_state"' in lower or "name='pickup_state'" in lower) and
-                      ('name="appliance"' in lower or "name='appliance'" in lower or 'name="appliance type"' in lower or "name='appliance type'" in lower))
+              text = path.read_text(encoding='utf-8')
+              lower = text.lower()
+              target = (
+                  'formspree.io' in lower and
+                  ('name="city"' in lower or "name='city'" in lower or 'name="pickup_city"' in lower or "name='pickup_city'" in lower) and
+                  ('name="state"' in lower or "name='state'" in lower or 'name="pickup_state"' in lower or "name='pickup_state'" in lower) and
+                  ('name="appliance"' in lower or "name='appliance'" in lower or 'name="appliance type"' in lower or "name='appliance type'" in lower)
+              )
               if not target:
                   continue
-
               detected.append(str(path))
-              count=len(routing_tag.findall(text))
+              count = len(routing_tag.findall(text))
               if count == 0:
                   missing.append(str(path))
               elif count > 1:
                   duplicates.append(f'{path} ({count} loads)')
 
           if missing:
-              print('Missing routing helper:', missing)
-              raise SystemExit(1)
+              raise SystemExit('Missing routing helper: ' + ', '.join(missing))
           if duplicates:
-              print('Duplicate routing helper loads:', duplicates)
-              raise SystemExit(1)
+              raise SystemExit('Duplicate routing helper loads: ' + ', '.join(duplicates))
           if not detected:
               raise SystemExit('No customer pickup forms detected; wiring audit cannot pass silently')
-          print(f'All {len(detected)} detected customer pickup forms load routing exactly once.')
-          PY
+          print(f'PASS: all {len(detected)} detected customer pickup forms load routing exactly once.')
 
-      - name: Commit generated wiring and premium hero changes
+      - name: Confirm this workflow never changes premium hero photos
+        shell: python
+        run: |
+          from pathlib import Path
+          text = Path('.github/workflows/wire-customer-routing.yml').read_text(encoding='utf-8')
+          forbidden = [
+              'premium hero files updated',
+              'data-premium-hero-lock',
+              'complete_sets = [',
+              'Normalize premium washer dryer set heroes',
+          ]
+          hits = [item for item in forbidden if item in text]
+          if hits:
+              raise SystemExit('Hero-replacement logic returned to routing workflow: ' + ', '.join(hits))
+          print('PASS: customer-routing workflow does not rewrite city hero photos.')
+
+      - name: Commit routing wiring only
+        shell: bash
         run: |
           if git diff --quiet; then
-            echo 'No generated changes needed.'
+            echo 'No routing changes needed.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- '*.html' '**/*.html'
-          git commit -m 'Normalize premium washer dryer set heroes'
+          git commit -m 'Wire customer routing helper only'
           git push
