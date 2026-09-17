@@ -1,0 +1,101 @@
+name: Reconstruct Exact Original City Heroes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.fullres-upload/**'
+      - '.github/workflows/reconstruct-original-city-heroes.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reconstruct:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Reconstruct only when every transport chunk is present
+        shell: python
+        run: |
+          import base64, hashlib, json, os
+          from pathlib import Path
+
+          specs = {
+            'san-dimas': {
+              'parts': 5,
+              'file': '1000274641(3).jpg',
+              'size': 324184,
+              'sha256': 'a7ab8d1b61a51c493149ab1720e1c997c6a4bda451357c298cbdcea1b31a98e4',
+              'page': '/san-dimas-washer-dryer-pickup/'
+            },
+            'la-verne': {
+              'parts': 5,
+              'file': '1000274683(5).jpg',
+              'size': 368294,
+              'sha256': '5b98b7088646d6e7d0df0c180793ea5a146d369588aa0a8e31664e80f81a7525',
+              'page': '/la-verne-washer-dryer-pickup/'
+            },
+            'claremont': {
+              'parts': 7,
+              'file': '1000274700(10).jpg',
+              'size': 511446,
+              'sha256': '87185bf73ea5d70fdb3eaf8a9e2e85d5c0343acfa188935485c012a5c5177251',
+              'page': '/claremont-washer-dryer-pickup/'
+            }
+          }
+
+          transport = Path('.fullres-upload')
+          missing = []
+          for slug, spec in specs.items():
+              for i in range(1, spec['parts'] + 1):
+                  p = transport / slug / f'part-{i:02d}.txt'
+                  if not p.is_file():
+                      missing.append(str(p))
+          if missing:
+              print(f'Waiting for {len(missing)} transport chunk(s).')
+              Path('.fullres-not-ready').write_text('waiting\n')
+              raise SystemExit(0)
+
+          outdir = Path('assets/laundry/original-user-heroes')
+          outdir.mkdir(parents=True, exist_ok=True)
+          mapping_path = Path('assets/premium-user-heroes.json')
+          mapping = json.loads(mapping_path.read_text(encoding='utf-8'))
+
+          for slug, spec in specs.items():
+              encoded = ''.join((transport/slug/f'part-{i:02d}.txt').read_text(encoding='ascii').strip() for i in range(1, spec['parts']+1))
+              data = base64.b64decode(encoded, validate=True)
+              if len(data) != spec['size']:
+                  raise SystemExit(f'{slug}: size mismatch {len(data)} != {spec["size"]}')
+              digest = hashlib.sha256(data).hexdigest()
+              if digest != spec['sha256']:
+                  raise SystemExit(f'{slug}: SHA-256 mismatch {digest}')
+              target = outdir / spec['file']
+              target.write_bytes(data)
+              cfg = mapping[spec['page']]
+              cfg['src'] = target.as_posix()
+              cfg.pop('parts', None)
+              cfg.pop('mime', None)
+              cfg['source_status'] = 'original-full-resolution'
+              print(f'VERIFIED {slug}: {target} ({len(data)} bytes)')
+
+          mapping_path.write_text(json.dumps(mapping, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          Path('.fullres-ready').write_text('ready\n')
+
+      - name: Commit exact originals and remove temporary transport chunks
+        shell: bash
+        run: |
+          if [ ! -f .fullres-ready ]; then
+            echo 'Not all chunks are present yet.'
+            exit 0
+          fi
+          rm -rf .fullres-upload .fullres-ready .fullres-not-ready
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Install verified original full-resolution city heroes'
+          git push
