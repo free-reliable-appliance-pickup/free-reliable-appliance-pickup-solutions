@@ -37,6 +37,7 @@ jobs:
           root=Path('assets/laundry/original-user-heroes')
           targets=json.load(open('assets/laundry/recovered-corridor-target-hashes.json',encoding='utf-8'))['images']
           out=Path('assets/laundry/recovered-corridor-original-matches.json')
+          best_out=Path('assets/laundry/recovered-corridor-best-matches.json')
 
           def bits_to_hex(bits):
               bits=np.asarray(bits,dtype=np.uint8).ravel()
@@ -70,6 +71,7 @@ jobs:
               except Exception as e: print('skip',p,e)
 
           matches=[]
+          concise=[]
           for t in targets:
               ranked=[]
               for o in originals:
@@ -77,18 +79,21 @@ jobs:
                   score=dp + 0.65*dd + 0.35*da
                   ranked.append({'filename':o['filename'],'path':o['path'],'width':o['width'],'height':o['height'],'bytes':o['bytes'],'sha256':o['sha256'],'score':round(score,2),'phash_distance':dp,'dhash_distance':dd,'ahash_distance':da})
               ranked.sort(key=lambda r:r['score'])
-              matches.append({'target_filename':t['filename'],'best':ranked[0],'runner_up_gap':round(ranked[1]['score']-ranked[0]['score'],2),'top5':ranked[:5]})
-              print(t['filename'],'=>',ranked[0]['filename'],'score',ranked[0]['score'],'gap',round(ranked[1]['score']-ranked[0]['score'],2))
+              gap=round(ranked[1]['score']-ranked[0]['score'],2)
+              matches.append({'target_filename':t['filename'],'best':ranked[0],'runner_up_gap':gap,'top5':ranked[:5]})
+              concise.append({'target_filename':t['filename'],'best':ranked[0],'runner_up_gap':gap})
+              print(t['filename'],'=>',ranked[0]['filename'],'score',ranked[0]['score'],'gap',gap)
           out.write_text(json.dumps({'original_count':len(originals),'matches':matches},indent=2)+'\n',encoding='utf-8')
+          best_out.write_text(json.dumps({'matches':concise},indent=2)+'\n',encoding='utf-8')
           PY
-      - name: Commit compact match report
+      - name: Commit match reports
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/laundry/recovered-corridor-original-matches.json
+          git add assets/laundry/recovered-corridor-original-matches.json assets/laundry/recovered-corridor-best-matches.json
           if git diff --cached --quiet; then
-            echo 'match report unchanged'
+            echo 'match reports unchanged'
           else
-            git commit -m 'Match recovered corridor photos to originals'
+            git commit -m 'Refresh recovered corridor hero matches'
             git push
           fi
