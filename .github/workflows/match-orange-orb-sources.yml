@@ -1,0 +1,191 @@
+name: Match recovered Orange County originals with ORB
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/match-orange-orb-sources.yml'
+      - 'assets/laundry/orange-orb-targets.json.gz.b64'
+      - 'assets/laundry/original-user-heroes/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: match-orange-orb-sources
+  cancel-in-progress: true
+
+jobs:
+  match:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install feature-matching dependencies
+        run: python -m pip install --quiet opencv-python-headless numpy
+
+      - name: Compare Library-derived fingerprints with repository originals
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import base64, gzip, hashlib, json
+          import cv2
+          import numpy as np
+
+          encoded = Path('assets/laundry/orange-orb-targets.json.gz.b64').read_text().strip()
+          targets = json.loads(gzip.decompress(base64.b64decode(encoded)))['targets']
+          originals_dir = Path('assets/laundry/original-user-heroes')
+          report_path = Path('assets/laundry/recovered-orange-orb-source-matches.json')
+
+          orb = cv2.ORB_create(
+              nfeatures=1500,
+              scaleFactor=1.2,
+              nlevels=8,
+              edgeThreshold=15,
+              patchSize=31,
+              fastThreshold=8,
+          )
+          matcher = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False)
+
+          target_desc = {}
+          for route, info in targets.items():
+              raw = base64.b64decode(info['descriptors_b64'])
+              count = int(info['count'])
+              arr = np.frombuffer(raw, dtype=np.uint8).reshape(count, 32)
+              target_desc[route] = arr
+
+          # Byte-deduplicate candidates so copies under multiple names do not fake a runner-up gap.
+          unique = {}
+          for p in sorted(originals_dir.iterdir()):
+              if not p.is_file() or p.suffix.lower() not in {'.jpg','.jpeg','.png','.webp'}:
+                  continue
+              digest = hashlib.sha256(p.read_bytes()).hexdigest()
+              unique.setdefault(digest, p)
+
+          candidates = []
+          for digest, p in unique.items():
+              img = cv2.imread(str(p), cv2.IMREAD_GRAYSCALE)
+              if img is None:
+                  continue
+              kps, desc = orb.detectAndCompute(img, None)
+              if desc is None or len(desc) < 4:
+                  continue
+              candidates.append({
+                  'filename': p.name,
+                  'path': str(p).replace('\\','/'),
+                  'sha256': digest,
+                  'width': int(img.shape[1]),
+                  'height': int(img.shape[0]),
+                  'bytes': p.stat().st_size,
+                  'desc': desc,
+              })
+
+          report = {
+              'purpose': 'Report-only ORB feature comparison of exact Library-derived Orange County fingerprints against current repository originals. Never auto-apply.',
+              'auto_apply': False,
+              'candidate_count': len(candidates),
+              'targets': [],
+          }
+
+          for route, tdesc in target_desc.items():
+              ranked = []
+              for c in candidates:
+                  # KNN ratio test, target descriptors -> all candidate descriptors.
+                  pairs = matcher.knnMatch(tdesc, c['desc'], k=2)
+                  good_075 = []
+                  good_085 = []
+                  nearest = []
+                  for pair in pairs:
+                      if not pair:
+                          continue
+                      m = pair[0]
+                      nearest.append(int(m.distance))
+                      if len(pair) >= 2:
+                          n = pair[1]
+                          if m.distance < 0.75 * n.distance:
+                              good_075.append(int(m.distance))
+                          if m.distance < 0.85 * n.distance:
+                              good_085.append(int(m.distance))
+                  nearest.sort()
+                  top10 = nearest[:10]
+                  median_top10 = float(np.median(top10)) if top10 else 999.0
+                  mean_top10 = float(np.mean(top10)) if top10 else 999.0
+                  exactish = sum(d <= 12 for d in nearest)
+                  very_close = sum(d <= 20 for d in nearest)
+                  close = sum(d <= 28 for d in nearest)
+
+                  # Lower score is better. Strong exact/near feature reuse dominates.
+                  score = (
+                      median_top10
+                      - 4.0 * len(good_075)
+                      - 1.5 * len(good_085)
+                      - 5.0 * exactish
+                      - 2.0 * very_close
+                      - 0.5 * close
+                  )
+                  ranked.append({
+                      'filename': c['filename'],
+                      'path': c['path'],
+                      'sha256': c['sha256'],
+                      'width': c['width'],
+                      'height': c['height'],
+                      'bytes': c['bytes'],
+                      'score': round(score, 3),
+                      'ratio075_count': len(good_075),
+                      'ratio085_count': len(good_085),
+                      'distance_le_12': exactish,
+                      'distance_le_20': very_close,
+                      'distance_le_28': close,
+                      'median_top10_distance': round(median_top10, 3),
+                      'mean_top10_distance': round(mean_top10, 3),
+                      'nearest20': nearest[:20],
+                  })
+
+              ranked.sort(key=lambda x: (
+                  x['score'],
+                  -x['ratio075_count'],
+                  -x['distance_le_12'],
+                  x['median_top10_distance'],
+                  x['filename'].lower(),
+              ))
+              top = ranked[:8]
+              gap = round(top[1]['score'] - top[0]['score'], 3) if len(top) > 1 else None
+              target_info = targets[route]
+              report['targets'].append({
+                  'route': route,
+                  'target_filename': target_info['filename'],
+                  'target_sha256': target_info['sha256'],
+                  'target_width': target_info.get('width'),
+                  'target_height': target_info.get('height'),
+                  'best': top[0] if top else None,
+                  'runner_up_gap': gap,
+                  'top8': top,
+              })
+              if top:
+                  b = top[0]
+                  print(
+                      f"{route:22s} -> {b['filename']:38s} "
+                      f"score={b['score']:8.2f} r75={b['ratio075_count']:2d} "
+                      f"d12={b['distance_le_12']:2d} med10={b['median_top10_distance']:5.1f} gap={gap}"
+                  )
+
+          report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+          PY
+
+      - name: Commit report only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/laundry/recovered-orange-orb-source-matches.json
+          if git diff --cached --quiet; then
+            echo 'ORB source report unchanged.'
+          else
+            git commit -m 'Report ORB matches for recovered Orange County originals'
+            git push
+          fi
