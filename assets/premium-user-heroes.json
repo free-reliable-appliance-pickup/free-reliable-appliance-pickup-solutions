@@ -149,5 +149,44 @@
     "original_sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2",
     "recovered_from_set": 37,
     "recovered_phone_filename": "1000274627.jpg"
+  },
+  "/irvine-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg",
+    "alt": "Real washer and dryer set provided for Irvine pickup service",
+    "source_status": "original-full-resolution-recovered",
+    "original_width": 1200,
+    "original_height": 1600,
+    "original_size_bytes": 182075,
+    "original_sha256": "6c296581b655c1a6abd4ded71b26c99257d4f77212cc2776852c8355dc3c716b",
+    "recovered_from_set": 24,
+    "recovered_phone_filename": "1000274642(3).jpg",
+    "match_phash_distance": 2,
+    "match_runner_up_gap": 58.1
+  },
+  "/lake-forest-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20241116-WA0027.jpg",
+    "alt": "Real washer and dryer set provided for Lake Forest pickup service",
+    "source_status": "original-full-resolution-recovered",
+    "original_width": 1200,
+    "original_height": 1600,
+    "original_size_bytes": 286808,
+    "original_sha256": "7aeca64995d4619f5442ac20fb1bc9a2eaf317bebc880a238c395967de22ceb5",
+    "recovered_from_set": 25,
+    "recovered_phone_filename": "1000274647(3).jpg",
+    "match_phash_distance": 2,
+    "match_runner_up_gap": 63.65
+  },
+  "/mission-viejo-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20241117-WA0023.jpg",
+    "alt": "Real washer and dryer set provided for Mission Viejo pickup service",
+    "source_status": "original-full-resolution-recovered",
+    "original_width": 1200,
+    "original_height": 1600,
+    "original_size_bytes": 135081,
+    "original_sha256": "462e390c72265f8e16434b7615d5b3167ed20b6dc3fbe676fdb4333df62ed0e9",
+    "recovered_from_set": 26,
+    "recovered_phone_filename": "1000274645(2).jpg",
+    "match_phash_distance": 0,
+    "match_runner_up_gap": 77.85
   }
 }
