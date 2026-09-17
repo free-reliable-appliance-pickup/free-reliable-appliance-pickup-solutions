@@ -26,16 +26,19 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Replace only verified tiny hero references
+      - name: Apply verified full-resolution hero references
         run: |
           python - <<'PY'
           from pathlib import Path
           import json, re
 
           manifest = json.loads(Path('assets/premium-user-heroes.json').read_text(encoding='utf-8'))
-          stamp = '20260917'
+          stamp = '20260917b'
           changed = []
           verified = []
+
+          def repl_once(pattern, replacement, text, flags=0):
+              return re.sub(pattern, replacement, text, count=1, flags=flags)
 
           for route, meta in manifest.items():
               if meta.get('source_status') != 'original-full-resolution':
@@ -52,12 +55,50 @@ jobs:
 
               if not src.startswith('/'):
                   src = '/' + src
+              hero_url = src + '?original-fullres=' + stamp
+              absolute_url = 'https://freereliableappliancepickup.com' + hero_url
 
               old = page.read_text(encoding='utf-8')
-              new = re.sub(
-                  r"/assets/laundry/heroes/[^\"'\s?]+(?:\?[^\"'\s]*)?",
-                  src + '?original-fullres=' + stamp,
-                  old,
+              new = old
+
+              # Visible hero image.
+              new = repl_once(
+                  r'(<div class="site-hero-art"><img\b[^>]*\bsrc=")[^"]+(")',
+                  lambda m: m.group(1) + hero_url + m.group(2),
+                  new,
+                  re.S,
+              )
+
+              # Any page-specific load handler that can override the visible hero.
+              new = repl_once(
+                  r"(img\.src=')[^']+(')",
+                  lambda m: m.group(1) + hero_url + m.group(2),
+                  new,
+              )
+
+              # The final premium hero lock wins after other scripts load.
+              new = repl_once(
+                  r'(<script data-premium-hero-lock="1">.*?var s=")[^"]+(")',
+                  lambda m: m.group(1) + hero_url + m.group(2),
+                  new,
+                  re.S,
+              )
+
+              # Keep social/search image metadata aligned with the actual city hero.
+              new = repl_once(
+                  r'(<meta property="og:image" content=")[^"]+(")',
+                  lambda m: m.group(1) + absolute_url + m.group(2),
+                  new,
+              )
+              new = repl_once(
+                  r'(<meta name="twitter:image" content=")[^"]+(")',
+                  lambda m: m.group(1) + absolute_url + m.group(2),
+                  new,
+              )
+              new = repl_once(
+                  r'("primaryImageOfPage":\{"@type":"ImageObject","url":")[^"]+(")',
+                  lambda m: m.group(1) + absolute_url + m.group(2),
+                  new,
               )
 
               verified.append({'route': route, 'src': src, 'page': page.as_posix()})
@@ -66,10 +107,10 @@ jobs:
                   changed.append(page.as_posix())
                   print('Updated:', route, '=>', src)
               else:
-                  print('Already original or no tiny hero ref:', route)
+                  print('Already aligned:', route)
 
           report = {
-              'purpose': 'Use only manually verified original full-resolution photos without changing city/photo assignments.',
+              'purpose': 'Keep each manually verified city assignment on its original full-resolution photo and prevent page scripts from overriding it.',
               'verified': verified,
               'changed_pages': changed,
               'changed_count': len(changed),
