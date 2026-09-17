@@ -38,6 +38,7 @@ jobs:
           href_re = re.compile(r'\bhref\s*=\s*(["\'])([^"\']*)\1', re.I)
           request_id_re = re.compile(r'\bid\s*=\s*(["\'])request\1', re.I)
           form_re = re.compile(r'<form\b[^>]*\baction\s*=\s*(["\'])https://formspree\.io/[^"\']+\1[^>]*>', re.I | re.S)
+          class_re = re.compile(r'\bclass\s*=\s*(["\'])([^"\']*)\1', re.I)
 
           for path in Path('.').rglob('*.html'):
               text = path.read_text(encoding='utf-8', errors='replace')
@@ -46,6 +47,13 @@ jobs:
 
               detected.append(str(path))
               original = text
+
+              # Repair the one false-positive produced by the first normalizer run.
+              if str(path).replace('\\','/') == 'salem-appliance-pickup/index.html':
+                  text = text.replace(
+                      '<a href="#request">Keizer requests have a dedicated local page</a>',
+                      '<a href="../keizer-appliance-pickup/">Keizer requests have a dedicated local page</a>'
+                  )
 
               # Every customer pickup form page gets a local #request target.
               if not request_id_re.search(text):
@@ -63,15 +71,21 @@ jobs:
                       else:
                           text = text[:form.start()] + '<span id="request" aria-hidden="true"></span>\n' + text[form.start():]
 
-              # On a page with its own pickup form, every visible Request link/button
-              # should open that local form instead of navigating elsewhere.
+              # Only true request CTAs/navigation are localized. Ordinary prose links
+              # that merely contain the word "request" must keep their real destination.
               def localize_request_anchor(match):
                   tag = match.group(0)
                   attrs = match.group('attrs')
                   label_html = match.group('label')
                   label = re.sub(r'<[^>]+>', ' ', label_html)
                   label = re.sub(r'\s+', ' ', label).strip().lower()
-                  if 'request' not in label:
+                  classes = ''
+                  cm = class_re.search(attrs)
+                  if cm:
+                      classes = cm.group(2).lower()
+                  button_like = any(token in classes.split() for token in ('button','btn','cta'))
+                  request_cta = label.startswith('request') or (button_like and 'request' in label)
+                  if not request_cta:
                       return tag
                   href = href_re.search(attrs)
                   if href:
@@ -82,7 +96,7 @@ jobs:
 
               text = anchor_re.sub(localize_request_anchor, text)
 
-              # Catch legacy request targets even when link wording is unusual.
+              # Catch only legacy links whose actual destination is a request anchor.
               text = re.sub(r'href\s*=\s*(["\'])(?:https://freereliableappliancepickup\.com/|/|\.\./|\./)#request\1', 'href="#request"', text, flags=re.I)
 
               if text != original:
