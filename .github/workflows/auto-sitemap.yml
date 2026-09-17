@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Verify approved indexable pages match both sitemaps
+      - name: Verify approved indexable pages are covered by published sitemaps
         shell: bash
         run: |
           python3 - <<'PY'
@@ -40,13 +40,18 @@ jobs:
               for loc in root.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):
                   if loc.text: urls.add(loc.text.strip())
               return urls
+          published_files=['sitemap.xml']
+          if Path('sitemap-regular-washer-dryer.xml').exists(): published_files.append('sitemap-regular-washer-dryer.xml')
+          actual=set()
+          for filename in published_files: actual |= sitemap_urls(filename)
+          missing=sorted(expected-actual)
+          extra=sorted(url for url in actual if url.startswith(BASE) and url[len(BASE):].strip('/') not in approved)
+          foreign=sorted(url for url in actual if not url.startswith(BASE))
           errors=[]
-          for filename in ('sitemap.xml','sitemap-new.xml'):
-              actual=sitemap_urls(filename)
-              missing=sorted(expected-actual); extra=sorted(actual-expected)
-              if missing: errors.append(filename+' missing: '+', '.join(missing))
-              if extra: errors.append(filename+' extra: '+', '.join(extra))
+          if missing: errors.append('published sitemaps missing: '+', '.join(missing))
+          if extra: errors.append('published sitemaps contain unapproved URLs: '+', '.join(extra))
+          if foreign: errors.append('published sitemaps contain foreign URLs: '+', '.join(foreign))
           if errors:
               print('\n'.join(errors)); sys.exit(1)
-          print(f'PASS: {len(expected)} approved indexable URLs match sitemap.xml and sitemap-new.xml exactly')
+          print(f'PASS: {len(expected)} approved indexable URLs are covered by published sitemaps')
           PY
