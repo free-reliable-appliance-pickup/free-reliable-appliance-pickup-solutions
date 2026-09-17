@@ -1,8 +1,13 @@
 {
   "/la-crescenta-washer-dryer-pickup/": {
-    "src": "IMG-20240403-WA0010.jpg",
+    "src": "assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg",
     "alt": "Real washer and dryer set provided for La Crescenta pickup service",
-    "source_status": "original-full-resolution"
+    "source_status": "original-full-resolution",
+    "original_filename": "IMG-20240921-WA0122.jpg",
+    "original_width": 1536,
+    "original_height": 2048,
+    "original_size_bytes": 454167,
+    "original_sha256": "5ec14ebc7fb7205a6ec60155e1678363f8bcc2397c6065b97449a91bc4aa48e0"
   },
   "/san-dimas-washer-dryer-pickup/": {
     "src": "assets/laundry/original-user-heroes/1000274641(3).jpg",
