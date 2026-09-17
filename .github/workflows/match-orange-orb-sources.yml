@@ -1,5 +1,6 @@
 name: Match recovered Orange County originals with ORB
 
+# Report-only matcher: this workflow never changes city pages or the approved hero manifest.
 on:
   workflow_dispatch:
   push:
