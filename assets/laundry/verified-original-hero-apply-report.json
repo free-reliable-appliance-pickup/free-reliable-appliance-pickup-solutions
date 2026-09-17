@@ -1,0 +1,31 @@
+{
+  "purpose": "Use only manually verified original full-resolution photos without changing city/photo assignments.",
+  "verified": [
+    {
+      "route": "la-crescenta-washer-dryer-pickup",
+      "src": "/IMG-20240403-WA0010.jpg",
+      "page": "la-crescenta-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "san-dimas-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000274641(3).jpg",
+      "page": "san-dimas-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "la-verne-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000274683(5).jpg",
+      "page": "la-verne-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "claremont-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000274700(10).jpg",
+      "page": "claremont-washer-dryer-pickup/index.html"
+    }
+  ],
+  "changed_pages": [
+    "san-dimas-washer-dryer-pickup/index.html",
+    "la-verne-washer-dryer-pickup/index.html",
+    "claremont-washer-dryer-pickup/index.html"
+  ],
+  "changed_count": 3
+}
