@@ -17,7 +17,6 @@
     {"route":"/mission-viejo-washer-dryer-pickup/","city":"Mission Viejo","status":"pending-manual-verification"},
     {"route":"/lake-forest-washer-dryer-pickup/","city":"Lake Forest","status":"pending-manual-verification"},
     {"route":"/laguna-niguel-washer-dryer-pickup/","city":"Laguna Niguel","status":"pending-manual-verification"},
-    {"route":"/rancho-santa-margarita-washer-dryer-pickup/","city":"Rancho Santa Margarita","status":"pending-manual-verification"},
     {"route":"/san-juan-capistrano-washer-dryer-pickup/","city":"San Juan Capistrano","status":"pending-manual-verification"},
     {"route":"/san-clemente-washer-dryer-pickup/","city":"San Clemente","status":"pending-manual-verification"},
     {"route":"/laguna-hills-washer-dryer-pickup/","city":"Laguna Hills","status":"pending-manual-verification"},
