@@ -546,6 +546,84 @@
           "ahash_distance": 91
         }
       ]
+    },
+    {
+      "target_filename": "la-crescenta-washer-dryer-set.jpg",
+      "best": {
+        "filename": "IMG-20240921-WA0122.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg",
+        "width": 1536,
+        "height": 2048,
+        "bytes": 454167,
+        "sha256": "5ec14ebc7fb7205a6ec60155e1678363f8bcc2397c6065b97449a91bc4aa48e0",
+        "score": 5.9,
+        "phash_distance": 2,
+        "dhash_distance": 6,
+        "ahash_distance": 0
+      },
+      "runner_up_gap": 188.7,
+      "top5": [
+        {
+          "filename": "IMG-20240921-WA0122.jpg",
+          "path": "assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg",
+          "width": 1536,
+          "height": 2048,
+          "bytes": 454167,
+          "sha256": "5ec14ebc7fb7205a6ec60155e1678363f8bcc2397c6065b97449a91bc4aa48e0",
+          "score": 5.9,
+          "phash_distance": 2,
+          "dhash_distance": 6,
+          "ahash_distance": 0
+        },
+        {
+          "filename": "IMG-20241010-WA0140.jpg",
+          "path": "assets/laundry/original-user-heroes/IMG-20241010-WA0140.jpg",
+          "width": 1536,
+          "height": 2048,
+          "bytes": 420218,
+          "sha256": "9212e9eb4268e920e1e9bbcfb092489a45552374b7cc74a05941742360a3fed2",
+          "score": 194.6,
+          "phash_distance": 80,
+          "dhash_distance": 123,
+          "ahash_distance": 99
+        },
+        {
+          "filename": "IMG-20240921-WA0120.jpg",
+          "path": "assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg",
+          "width": 1536,
+          "height": 2048,
+          "bytes": 763613,
+          "sha256": "ddc55e859f6fe2e5688f11da37a7ff0db4cb433b77698cc964584051bc574e6c",
+          "score": 197.85,
+          "phash_distance": 108,
+          "dhash_distance": 114,
+          "ahash_distance": 45
+        },
+        {
+          "filename": "20240604_131005.jpg",
+          "path": "assets/laundry/original-user-heroes/20240604_131005.jpg",
+          "width": 3024,
+          "height": 4032,
+          "bytes": 4418996,
+          "sha256": "49b7150cab1a3ddb2b365e9dcb62cf7661697416214a96f872821342c67fbb9b",
+          "score": 218.65,
+          "phash_distance": 114,
+          "dhash_distance": 119,
+          "ahash_distance": 78
+        },
+        {
+          "filename": "IMG-20241116-WA0027.jpg",
+          "path": "assets/laundry/original-user-heroes/IMG-20241116-WA0027.jpg",
+          "width": 1200,
+          "height": 1600,
+          "bytes": 286808,
+          "sha256": "7aeca64995d4619f5442ac20fb1bc9a2eaf317bebc880a238c395967de22ceb5",
+          "score": 220.3,
+          "phash_distance": 112,
+          "dhash_distance": 123,
+          "ahash_distance": 81
+        }
+      ]
     }
   ]
 }
