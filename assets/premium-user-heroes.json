@@ -138,5 +138,16 @@
     "source_status": "original-full-resolution-recovered",
     "recovered_from_set": 28,
     "recovered_phone_filename": "1000274723(2).jpg"
+  },
+  "/huntington-beach-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/20240903_134418.jpg",
+    "alt": "Real Whirlpool Duet washer and dryer set provided for Huntington Beach pickup service",
+    "source_status": "original-full-resolution-recovered",
+    "original_width": 4032,
+    "original_height": 3024,
+    "original_size_bytes": 5314617,
+    "original_sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2",
+    "recovered_from_set": 37,
+    "recovered_phone_filename": "1000274627.jpg"
   }
 }
