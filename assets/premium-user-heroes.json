@@ -16,5 +16,13 @@
   "/san-dimas-washer-dryer-pickup/": {
     "src": "assets/laundry/user-heroes/san-dimas-user-15.jpg",
     "alt": "Real washer and dryer set provided for San Dimas pickup service"
+  },
+  "/la-verne-washer-dryer-pickup/": {
+    "mime": "image/jpeg",
+    "parts": [
+      "assets/laundry/user-heroes/la-verne-user-16-01.txt",
+      "assets/laundry/user-heroes/la-verne-user-16-02.txt"
+    ],
+    "alt": "Real washer and dryer set provided for La Verne pickup service"
   }
 }
