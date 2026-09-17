@@ -201,5 +201,31 @@
     "recovered_phone_filename": "1000262425(2).jpg",
     "match_phash_distance": 2,
     "match_runner_up_gap": 123.85
+  },
+  "/anaheim-hills-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
+    "alt": "Real washer and dryer set provided for Anaheim Hills pickup service",
+    "source_status": "original-full-resolution-recovered",
+    "original_width": 2000,
+    "original_height": 1500,
+    "original_size_bytes": 680652,
+    "original_sha256": "f429c5fc660c69e5961701849457143c2236c052c288e122ecc2aa9b55fe1d15",
+    "recovered_from_set": 78,
+    "recovered_phone_filename": "1000274882(3).jpg",
+    "match_phash_distance": 0,
+    "match_runner_up_gap": 211.45
+  },
+  "/yorba-linda-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20230604-WA0031.jpg",
+    "alt": "Real washer and dryer set provided for Yorba Linda pickup service",
+    "source_status": "original-full-resolution-recovered",
+    "original_width": 1500,
+    "original_height": 2000,
+    "original_size_bytes": 506831,
+    "original_sha256": "abe05463d7fadf5cea3d3cab331a55ad77c9b1905b1fb3119c80c4372a6587cc",
+    "recovered_from_set": 83,
+    "recovered_phone_filename": "1000274884(2).jpg",
+    "match_phash_distance": 0,
+    "match_runner_up_gap": 218.35
   }
 }

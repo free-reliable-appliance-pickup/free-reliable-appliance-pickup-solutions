@@ -7,19 +7,77 @@
     "required_before_approval": "Manual confirmation from prior assignment evidence or a direct visual/original-file match that preserves the user's assigned city photo."
   },
   "pending_routes": [
-    {"route":"/south-pasadena-washer-dryer-pickup/","city":"South Pasadena","status":"pending-manual-verification","note":"Historical grid set 4 has a weak/ambiguous automated match and must not be promoted automatically."},
-    {"route":"/san-bernardino-washer-dryer-pickup/","city":"San Bernardino","status":"pending-manual-verification","note":"Historical grid set 23 has a strong image similarity match, but the grid is not authoritative because other known city assignments differ from final manual assignments."},
-    {"route":"/anaheim-hills-washer-dryer-pickup/","city":"Anaheim Hills","status":"pending-manual-verification"},
-    {"route":"/brea-washer-dryer-pickup/","city":"Brea","status":"pending-manual-verification"},
-    {"route":"/yorba-linda-washer-dryer-pickup/","city":"Yorba Linda","status":"pending-manual-verification"},
-    {"route":"/laguna-niguel-washer-dryer-pickup/","city":"Laguna Niguel","status":"pending-manual-verification","note":"Recovered set 30 has only a 1.8-point runner-up gap; not safe to promote automatically."},
-    {"route":"/san-juan-capistrano-washer-dryer-pickup/","city":"San Juan Capistrano","status":"pending-manual-verification","note":"Recovered set 31 has only a 1.7-point runner-up gap; not safe to promote automatically."},
-    {"route":"/san-clemente-washer-dryer-pickup/","city":"San Clemente","status":"pending-manual-verification","note":"Recovered set 32 has only a 0.9-point runner-up gap; not safe to promote automatically."},
-    {"route":"/laguna-hills-washer-dryer-pickup/","city":"Laguna Hills","status":"pending-manual-verification","note":"Recovered set 27 has only a 1.05-point runner-up gap; not safe to promote automatically."},
-    {"route":"/aliso-viejo-washer-dryer-pickup/","city":"Aliso Viejo","status":"pending-manual-verification","note":"Recovered set 29 has only a 1.5-point runner-up gap; not safe to promote automatically."},
-    {"route":"/laguna-beach-washer-dryer-pickup/","city":"Laguna Beach","status":"pending-manual-verification","note":"Recovered set 34 has a moderate 19.55-point gap, but the perceptual distance is too high for automatic promotion without direct visual/manual corroboration."},
-    {"route":"/dana-point-washer-dryer-pickup/","city":"Dana Point","status":"pending-manual-verification","note":"Recovered set 35 has a moderate 17.9-point gap and high perceptual distance; keep pending until directly corroborated."},
-    {"route":"/costa-mesa-washer-dryer-pickup/","city":"Costa Mesa","status":"pending-manual-verification","note":"Recovered set 36 has only a 0.5-point runner-up gap despite the bright-laundry-room description anchor; do not promote automatically."},
-    {"route":"/trabuco-canyon-washer-dryer-pickup/","city":"Trabuco Canyon","status":"pending-manual-verification","note":"Recovered sequence identifies this as set 38, but the exact original-file fingerprint has not yet been recovered."}
+    {
+      "route": "/south-pasadena-washer-dryer-pickup/",
+      "city": "South Pasadena",
+      "status": "pending-manual-verification",
+      "note": "Historical grid set 4 has a weak/ambiguous automated match and must not be promoted automatically."
+    },
+    {
+      "route": "/san-bernardino-washer-dryer-pickup/",
+      "city": "San Bernardino",
+      "status": "pending-manual-verification",
+      "note": "Historical grid set 23 has a strong image similarity match, but the grid is not authoritative because other known city assignments differ from final manual assignments."
+    },
+    {
+      "route": "/brea-washer-dryer-pickup/",
+      "city": "Brea",
+      "status": "pending-manual-verification",
+      "note": "Manual set #80 and exact phone original 1000274887(2).jpg are recovered. Library original is 1152x1536 / 166610 bytes; repository currently contains only a small 423x564 matching copy, so keep pending until the true full-resolution original is imported."
+    },
+    {
+      "route": "/laguna-niguel-washer-dryer-pickup/",
+      "city": "Laguna Niguel",
+      "status": "pending-manual-verification",
+      "note": "Recovered set 30 has only a 1.8-point runner-up gap; not safe to promote automatically."
+    },
+    {
+      "route": "/san-juan-capistrano-washer-dryer-pickup/",
+      "city": "San Juan Capistrano",
+      "status": "pending-manual-verification",
+      "note": "Recovered set 31 has only a 1.7-point runner-up gap; not safe to promote automatically."
+    },
+    {
+      "route": "/san-clemente-washer-dryer-pickup/",
+      "city": "San Clemente",
+      "status": "pending-manual-verification",
+      "note": "Recovered set 32 has only a 0.9-point runner-up gap; not safe to promote automatically."
+    },
+    {
+      "route": "/laguna-hills-washer-dryer-pickup/",
+      "city": "Laguna Hills",
+      "status": "pending-manual-verification",
+      "note": "Recovered set 27 has only a 1.05-point runner-up gap; not safe to promote automatically."
+    },
+    {
+      "route": "/aliso-viejo-washer-dryer-pickup/",
+      "city": "Aliso Viejo",
+      "status": "pending-manual-verification",
+      "note": "Recovered set 29 has only a 1.5-point runner-up gap; not safe to promote automatically."
+    },
+    {
+      "route": "/laguna-beach-washer-dryer-pickup/",
+      "city": "Laguna Beach",
+      "status": "pending-manual-verification",
+      "note": "Recovered set 34 has a moderate 19.55-point gap, but the perceptual distance is too high for automatic promotion without direct visual/manual corroboration."
+    },
+    {
+      "route": "/dana-point-washer-dryer-pickup/",
+      "city": "Dana Point",
+      "status": "pending-manual-verification",
+      "note": "Recovered set 35 has a moderate 17.9-point gap and high perceptual distance; keep pending until directly corroborated."
+    },
+    {
+      "route": "/costa-mesa-washer-dryer-pickup/",
+      "city": "Costa Mesa",
+      "status": "pending-manual-verification",
+      "note": "Recovered set 36 has only a 0.5-point runner-up gap despite the bright-laundry-room description anchor; do not promote automatically."
+    },
+    {
+      "route": "/trabuco-canyon-washer-dryer-pickup/",
+      "city": "Trabuco Canyon",
+      "status": "pending-manual-verification",
+      "note": "Recovered sequence identifies this as set 38, but the exact original-file fingerprint has not yet been recovered."
+    }
   ]
 }
