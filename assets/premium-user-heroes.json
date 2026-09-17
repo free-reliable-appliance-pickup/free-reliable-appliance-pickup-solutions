@@ -131,5 +131,12 @@
     "src": "assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
     "alt": "Real washer and dryer set provided for Fontana pickup service",
     "source_status": "original-full-resolution"
+  },
+  "/rancho-santa-margarita-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg",
+    "alt": "Real washer and dryer set provided for Rancho Santa Margarita pickup service",
+    "source_status": "original-full-resolution-recovered",
+    "recovered_from_set": 28,
+    "recovered_phone_filename": "1000274723(2).jpg"
   }
 }
