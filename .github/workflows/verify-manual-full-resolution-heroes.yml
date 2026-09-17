@@ -1,0 +1,77 @@
+name: Verify manual full-resolution city heroes
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/verify-manual-full-resolution-heroes.yml'
+      - 'assets/premium-user-heroes.json'
+      - 'assets/premium-sharp-hero-fix.js'
+      - 'assets/customer-routing.js'
+      - '**/*-washer-dryer-pickup/index.html'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify every approved city page uses its original full-resolution hero
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, re, sys
+
+          manifest_path = Path('assets/premium-user-heroes.json')
+          manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+          failures = []
+          checked = 0
+
+          for route, info in manifest.items():
+              src = str(info.get('src', '')).lstrip('/')
+              if not src.startswith('assets/laundry/original-user-heroes/'):
+                  failures.append(f'{route}: manifest src is not an original-user-heroes file: {src}')
+                  continue
+
+              page = Path(route.strip('/')) / 'index.html'
+              if not page.is_file():
+                  failures.append(f'{route}: missing page {page}')
+                  continue
+
+              text = page.read_text(encoding='utf-8')
+              rel = '/' + src
+              absolute = 'https://freereliableappliancepickup.com/' + src
+              checked += 1
+
+              checks = {
+                  'Open Graph image': re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']' + re.escape(absolute), text, re.I),
+                  'Twitter image': re.search(r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']' + re.escape(absolute), text, re.I),
+                  'primaryImageOfPage': ('primaryImageOfPage' in text and absolute in text),
+                  'visible hero': re.search(r'class=["\']site-hero-art["\'][\s\S]{0,1200}?<img[^>]+src=["\']' + re.escape(rel), text, re.I),
+                  'hero lock': re.search(r'data-premium-hero-lock=["\']1["\'][\s\S]{0,2500}?' + re.escape(rel), text, re.I),
+              }
+
+              for label, ok in checks.items():
+                  if not ok:
+                      failures.append(f'{route}: {label} does not use {src}')
+
+              hero_match = re.search(r'class=["\']site-hero-art["\'][\s\S]{0,1200}?<img[^>]+src=["\']([^"\']+)', text, re.I)
+              if hero_match and '/assets/laundry/heroes/' in hero_match.group(1):
+                  failures.append(f'{route}: visible hero still uses old compressed hero path {hero_match.group(1)}')
+
+          print(f'Checked {checked} manually approved city hero pages.')
+          if failures:
+              print('\nFAILED:')
+              for failure in failures:
+                  print(' -', failure)
+              sys.exit(1)
+
+          print('PASS: every manually approved city page uses its exact original full-resolution hero in static HTML and metadata.')
+          PY
