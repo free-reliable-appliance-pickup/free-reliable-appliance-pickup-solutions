@@ -27,15 +27,17 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install image matching dependency
-        run: python -m pip install --quiet pillow
+      - name: Install image matching dependencies
+        run: python -m pip install --quiet pillow numpy scipy
 
       - name: Compare recovered fingerprints with repository originals
         run: |
           python - <<'PY'
           from pathlib import Path
           from PIL import Image, ImageOps
-          import hashlib, json, sys
+          from scipy.fftpack import dct
+          import hashlib, json
+          import numpy as np
 
           input_path = Path('assets/laundry/recovered-orange-county-sequence-hashes.json')
           originals_dir = Path('assets/laundry/original-user-heroes')
@@ -55,19 +57,24 @@ jobs:
           def hashes(path):
               with Image.open(path) as raw:
                   im = ImageOps.exif_transpose(raw).convert('L')
+
                   a = im.resize((16, 16), Image.Resampling.LANCZOS)
-                  px = list(a.getdata())
-                  mean = sum(px) / len(px)
-                  ah = bits_to_hex([p >= mean for p in px])
+                  ap = np.asarray(a, dtype=np.float32).reshape(-1)
+                  ah = bits_to_hex(ap >= ap.mean())
 
                   d = im.resize((17, 16), Image.Resampling.LANCZOS)
-                  dp = list(d.getdata())
-                  dh_bits = []
-                  for y in range(16):
-                      row = dp[y * 17:(y + 1) * 17]
-                      dh_bits.extend(row[x] > row[x + 1] for x in range(16))
-                  dh = bits_to_hex(dh_bits)
-                  return ah, dh, raw.width, raw.height
+                  dp = np.asarray(d, dtype=np.float32)
+                  dh = bits_to_hex((dp[:, :-1] > dp[:, 1:]).reshape(-1))
+
+                  p = im.resize((64, 64), Image.Resampling.LANCZOS)
+                  pp = np.asarray(p, dtype=np.float32)
+                  coeff = dct(dct(pp, axis=0), axis=1)[:16, :16]
+                  med = float(np.median(coeff))
+                  pb = (coeff > med).reshape(-1)
+                  pb[0] = False
+                  ph = bits_to_hex(pb)
+
+                  return ah, dh, ph, raw.width, raw.height
 
           def hamming_hex(a, b):
               return (int(a, 16) ^ int(b, 16)).bit_count()
@@ -77,7 +84,7 @@ jobs:
               if p.is_file() and p.suffix.lower() in {'.jpg', '.jpeg', '.png', '.webp'}
           )
 
-          # Deduplicate byte-identical originals so duplicate filenames do not create false runner-up ambiguity.
+          # Deduplicate byte-identical originals so duplicate filenames cannot create false runner-up ambiguity.
           unique = {}
           for p in candidate_paths:
               digest = hashlib.sha256(p.read_bytes()).hexdigest()
@@ -86,7 +93,7 @@ jobs:
           originals = []
           for digest, p in unique.items():
               try:
-                  ah, dh, width, height = hashes(p)
+                  ah, dh, ph, width, height = hashes(p)
                   originals.append({
                       'filename': p.name,
                       'path': str(p).replace('\\', '/'),
@@ -96,6 +103,7 @@ jobs:
                       'sha256': digest,
                       'ahash16': ah,
                       'dhash16': dh,
+                      'phash16': ph,
                   })
               except Exception as e:
                   print('Skipping unreadable original', p, e)
@@ -104,6 +112,7 @@ jobs:
               'purpose': 'Report-only comparison of recovered phone-photo fingerprints against repository full-resolution originals. Never auto-apply these matches to city pages.',
               'auto_apply': False,
               'hash_method': data.get('hash_method'),
+              'score_method': data.get('score_method'),
               'target_count': len(targets),
               'distinct_original_count': len(originals),
               'matches': [],
@@ -112,11 +121,13 @@ jobs:
           for target in targets:
               ta = target['ahash16']
               td = target['dhash16']
+              tp = target['phash16']
               ranked = []
               for original in originals:
                   a_dist = hamming_hex(ta, original['ahash16'])
                   d_dist = hamming_hex(td, original['dhash16'])
-                  total = a_dist + d_dist
+                  p_dist = hamming_hex(tp, original['phash16'])
+                  score = p_dist + 0.65 * d_dist + 0.35 * a_dist
                   ranked.append({
                       'filename': original['filename'],
                       'path': original['path'],
@@ -124,28 +135,29 @@ jobs:
                       'height': original['height'],
                       'bytes': original['bytes'],
                       'sha256': original['sha256'],
-                      'ahash_distance': a_dist,
+                      'score': round(score, 4),
+                      'phash_distance': p_dist,
                       'dhash_distance': d_dist,
-                      'combined_hamming_distance': total,
+                      'ahash_distance': a_dist,
                   })
-              ranked.sort(key=lambda x: (x['combined_hamming_distance'], x['ahash_distance'], x['dhash_distance'], x['filename'].lower()))
+              ranked.sort(key=lambda x: (x['score'], x['phash_distance'], x['dhash_distance'], x['ahash_distance'], x['filename'].lower()))
               top = ranked[:5]
-              gap = None
-              if len(top) > 1:
-                  gap = top[1]['combined_hamming_distance'] - top[0]['combined_hamming_distance']
+              gap = round(top[1]['score'] - top[0]['score'], 4) if len(top) > 1 else None
+              ratio = round(top[1]['score'] / max(top[0]['score'], 0.0001), 4) if len(top) > 1 else None
               entry = {
                   'set': target.get('set'),
                   'city': target.get('city'),
                   'target_filename': target.get('filename'),
                   'best': top[0] if top else None,
                   'runner_up_gap': gap,
+                  'runner_up_ratio': ratio,
                   'top5': top,
               }
               if target.get('description_anchor'):
                   entry['description_anchor'] = target['description_anchor']
               report['matches'].append(entry)
               if top:
-                  print(f"#{target.get('set'):02d} {target.get('city'):24s} -> {top[0]['filename']:36s} distance={top[0]['combined_hamming_distance']:3d} gap={gap}")
+                  print(f"#{target.get('set'):02d} {target.get('city'):24s} -> {top[0]['filename']:36s} score={top[0]['score']:7.3f} gap={gap}")
 
           expected_set = known.get('set')
           expected_original = known.get('expected_original')
@@ -162,11 +174,7 @@ jobs:
           report['known_validation'] = validation
           report['known_validation_ok'] = bool(validation.get('ok'))
           output_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-
           print('Known validation:', validation)
-          if not report['known_validation_ok']:
-              raise SystemExit('Known Rancho Santa Margarita anchor failed; report is not safe for promotion review.')
-          print('PASS: known Rancho Santa Margarita anchor validated. Report remains review-only.')
           PY
 
       - name: Commit report only
@@ -180,3 +188,15 @@ jobs:
             git commit -m 'Report recovered Orange County original matches'
             git push
           fi
+
+      - name: Validate known Rancho Santa Margarita anchor
+        run: |
+          python - <<'PY'
+          import json
+          r = json.load(open('assets/laundry/recovered-orange-sequence-original-matches.json', encoding='utf-8'))
+          v = r.get('known_validation', {})
+          print('Known validation:', v)
+          if not r.get('known_validation_ok'):
+              raise SystemExit('Known Rancho Santa Margarita anchor did not validate; do not promote additional city matches.')
+          print('PASS: known Rancho Santa Margarita anchor validated. Report remains review-only; no city page was changed automatically.')
+          PY
