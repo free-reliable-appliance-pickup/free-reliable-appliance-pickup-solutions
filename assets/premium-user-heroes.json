@@ -24,5 +24,12 @@
       "assets/laundry/user-heroes/la-verne-user-16-02.txt"
     ],
     "alt": "Real washer and dryer set provided for La Verne pickup service"
+  },
+  "/claremont-washer-dryer-pickup/": {
+    "mime": "image/jpeg",
+    "parts": [
+      "assets/laundry/user-heroes/claremont-user-17.txt"
+    ],
+    "alt": "Real washer and dryer set provided for Claremont pickup service"
   }
 }
