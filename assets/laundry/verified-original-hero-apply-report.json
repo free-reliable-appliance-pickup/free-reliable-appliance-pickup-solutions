@@ -23,12 +23,14 @@
     {"route":"ontario-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20250728-WA0015.jpg","page":"ontario-washer-dryer-pickup/index.html"},
     {"route":"upland-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg","page":"upland-washer-dryer-pickup/index.html"},
     {"route":"rancho-cucamonga-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg","page":"rancho-cucamonga-washer-dryer-pickup/index.html"},
-    {"route":"fontana-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg","page":"fontana-washer-dryer-pickup/index.html"}
+    {"route":"fontana-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg","page":"fontana-washer-dryer-pickup/index.html"},
+    {"route":"rancho-santa-margarita-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg","page":"rancho-santa-margarita-washer-dryer-pickup/index.html","recovered_from_set":28,"recovered_phone_filename":"1000274723(2).jpg"}
   ],
   "changed_pages": [
     "west-covina-washer-dryer-pickup/index.html",
     "upland-washer-dryer-pickup/index.html",
-    "rancho-cucamonga-washer-dryer-pickup/index.html"
+    "rancho-cucamonga-washer-dryer-pickup/index.html",
+    "rancho-santa-margarita-washer-dryer-pickup/index.html"
   ],
-  "changed_count": 3
+  "changed_count": 4
 }
