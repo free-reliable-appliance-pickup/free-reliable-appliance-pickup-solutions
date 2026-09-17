@@ -1,0 +1,308 @@
+{
+  "matches": [
+    {
+      "target_filename": "1000274660(7).jpg",
+      "best": {
+        "filename": "IMG-20240921-WA0122.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg",
+        "width": 1536,
+        "height": 2048,
+        "bytes": 454167,
+        "sha256": "5ec14ebc7fb7205a6ec60155e1678363f8bcc2397c6065b97449a91bc4aa48e0",
+        "score": 7.2,
+        "phash_distance": 2,
+        "dhash_distance": 8,
+        "ahash_distance": 0
+      },
+      "runner_up_gap": 187.4
+    },
+    {
+      "target_filename": "1000274698(4).jpg",
+      "best": {
+        "filename": "IMG-20240425-WA0015.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240425-WA0015.jpg",
+        "width": 1536,
+        "height": 2048,
+        "bytes": 422642,
+        "sha256": "2fe7bf90f2d9f3f361762a249ded50fef19954ab6fdc482df322a68d3c9ee3fc",
+        "score": 9.85,
+        "phash_distance": 2,
+        "dhash_distance": 11,
+        "ahash_distance": 2
+      },
+      "runner_up_gap": 193.7
+    },
+    {
+      "target_filename": "1000274705(3).jpg",
+      "best": {
+        "filename": "IMG-20240412-WA0010.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240412-WA0010.jpg",
+        "width": 1153,
+        "height": 2048,
+        "bytes": 385600,
+        "sha256": "c76232b4bcd3eba5e17a4d23f5be097dcfb55f491a1cc5a36d99cddb02617eec",
+        "score": 1.3,
+        "phash_distance": 0,
+        "dhash_distance": 2,
+        "ahash_distance": 0
+      },
+      "runner_up_gap": 181.5
+    },
+    {
+      "target_filename": "1000274716.jpg",
+      "best": {
+        "filename": "IMG-20240318-WA0047.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240318-WA0047.jpg",
+        "width": 1200,
+        "height": 1600,
+        "bytes": 299994,
+        "sha256": "cb42418a9590cb244cb65569c96ce086c4170cc87feacc4af576f1ecd1c39783",
+        "score": 5.2,
+        "phash_distance": 0,
+        "dhash_distance": 8,
+        "ahash_distance": 0
+      },
+      "runner_up_gap": 169.25
+    },
+    {
+      "target_filename": "1000274690(4).jpg",
+      "best": {
+        "filename": "IMG-20240504-WA0030.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+        "width": 900,
+        "height": 1600,
+        "bytes": 194636,
+        "sha256": "36b19fe9236f91779971370b9427b4e60196a522c1bd711823f70cb065358b2b",
+        "score": 4.9,
+        "phash_distance": 0,
+        "dhash_distance": 7,
+        "ahash_distance": 1
+      },
+      "runner_up_gap": 173.0
+    },
+    {
+      "target_filename": "1000274713(4).jpg",
+      "best": {
+        "filename": "IMG-20240825-WA0018.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+        "width": 1200,
+        "height": 1600,
+        "bytes": 288903,
+        "sha256": "81672cca638fb720b154ddce43cbc46a09fbebd70f4fd0565a65de733401b35c",
+        "score": 194.35,
+        "phash_distance": 104,
+        "dhash_distance": 104,
+        "ahash_distance": 65
+      },
+      "runner_up_gap": 3.8
+    },
+    {
+      "target_filename": "1000274715(2).jpg",
+      "best": {
+        "filename": "IMG-20240320-WA0108.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+        "width": 1200,
+        "height": 1600,
+        "bytes": 112576,
+        "sha256": "1561e5fda658a000de516a44cf71fe4bbd76bf58ec412bc72fbe1fa135850ad3",
+        "score": 20.7,
+        "phash_distance": 6,
+        "dhash_distance": 21,
+        "ahash_distance": 3
+      },
+      "runner_up_gap": 182.65
+    },
+    {
+      "target_filename": "1000274689(4).jpg",
+      "best": {
+        "filename": "IMG-20240510-WA0002.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+        "width": 900,
+        "height": 1600,
+        "bytes": 134642,
+        "sha256": "3b0d46d859ee34fbae9958eccb0e6417de4d18b20a410424fa4c8de1cfc1f2e0",
+        "score": 6.9,
+        "phash_distance": 2,
+        "dhash_distance": 7,
+        "ahash_distance": 1
+      },
+      "runner_up_gap": 152.5
+    },
+    {
+      "target_filename": "1000274688(5).jpg",
+      "best": {
+        "filename": "IMG-20240512-WA0002.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240512-WA0002.jpg",
+        "width": 1536,
+        "height": 2048,
+        "bytes": 702559,
+        "sha256": "a75dd12ef757687553ee07782850b506675edaa4becf7fddaf6cff78a5c232ef",
+        "score": 5.25,
+        "phash_distance": 2,
+        "dhash_distance": 5,
+        "ahash_distance": 0
+      },
+      "runner_up_gap": 188.05
+    },
+    {
+      "target_filename": "1000274698(5).jpg",
+      "best": {
+        "filename": "IMG-20240425-WA0015.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240425-WA0015.jpg",
+        "width": 1536,
+        "height": 2048,
+        "bytes": 422642,
+        "sha256": "2fe7bf90f2d9f3f361762a249ded50fef19954ab6fdc482df322a68d3c9ee3fc",
+        "score": 9.85,
+        "phash_distance": 2,
+        "dhash_distance": 11,
+        "ahash_distance": 2
+      },
+      "runner_up_gap": 193.7
+    },
+    {
+      "target_filename": "1000274667(5).jpg",
+      "best": {
+        "filename": "IMG-20240822-WA0002.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240822-WA0002.jpg",
+        "width": 1536,
+        "height": 2048,
+        "bytes": 379564,
+        "sha256": "6dfa88715e196b157cbef304812abbb2b0838e77c2e7ac6288d7afb382efb1d0",
+        "score": 2.3,
+        "phash_distance": 0,
+        "dhash_distance": 3,
+        "ahash_distance": 1
+      },
+      "runner_up_gap": 190.8
+    },
+    {
+      "target_filename": "1000274693(4).jpg",
+      "best": {
+        "filename": "IMG-20240503-WA0030.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+        "width": 1536,
+        "height": 2048,
+        "bytes": 477436,
+        "sha256": "83279d7cfe38572226b34427ae8196c208119d52fce2e381f760eb1822c66123",
+        "score": 3.65,
+        "phash_distance": 2,
+        "dhash_distance": 2,
+        "ahash_distance": 1
+      },
+      "runner_up_gap": 222.7
+    },
+    {
+      "target_filename": "1000274883.jpg",
+      "best": {
+        "filename": "IMG-20230715-WA0046-2.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20230715-WA0046-2.jpg",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 282268,
+        "sha256": "d59fb6c59342fc75be728eff1234a8818efa89a1110c85040db8f14fb112bb4f",
+        "score": 2.0,
+        "phash_distance": 0,
+        "dhash_distance": 2,
+        "ahash_distance": 2
+      },
+      "runner_up_gap": 194.1
+    },
+    {
+      "target_filename": "1000274877.jpg",
+      "best": {
+        "filename": "IMG-20240319-WA0036.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240319-WA0036.jpg",
+        "width": 1200,
+        "height": 1600,
+        "bytes": 271096,
+        "sha256": "3209882c0801c5012aee5f541aa49ec3b9023181dfed3b1a2edebf4c0e42b7ac",
+        "score": 6.25,
+        "phash_distance": 2,
+        "dhash_distance": 6,
+        "ahash_distance": 1
+      },
+      "runner_up_gap": 204.95
+    },
+    {
+      "target_filename": "1000274851.jpg",
+      "best": {
+        "filename": "IMG-20250728-WA0015.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20250728-WA0015.jpg",
+        "width": 1200,
+        "height": 1600,
+        "bytes": 228583,
+        "sha256": "7cf1ada308b280658b5655b1463e8cf7d360b5f9e3d6d05a3f91b0f874a33ef3",
+        "score": 4.95,
+        "phash_distance": 2,
+        "dhash_distance": 4,
+        "ahash_distance": 1
+      },
+      "runner_up_gap": 197.2
+    },
+    {
+      "target_filename": "1000274689(5).jpg",
+      "best": {
+        "filename": "IMG-20240510-WA0002.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+        "width": 900,
+        "height": 1600,
+        "bytes": 134642,
+        "sha256": "3b0d46d859ee34fbae9958eccb0e6417de4d18b20a410424fa4c8de1cfc1f2e0",
+        "score": 6.9,
+        "phash_distance": 2,
+        "dhash_distance": 7,
+        "ahash_distance": 1
+      },
+      "runner_up_gap": 152.5
+    },
+    {
+      "target_filename": "1000274887.jpg",
+      "best": {
+        "filename": "1780957912484.jpg",
+        "path": "assets/laundry/original-user-heroes/1780957912484.jpg",
+        "width": 423,
+        "height": 564,
+        "bytes": 27223,
+        "sha256": "0eefd424e10dc4e94cf69be1fae8f2292cac369a7890fba1eb74f6a58788d979",
+        "score": 5.9,
+        "phash_distance": 2,
+        "dhash_distance": 6,
+        "ahash_distance": 0
+      },
+      "runner_up_gap": 166.85
+    },
+    {
+      "target_filename": "1000274882.jpg",
+      "best": {
+        "filename": "IMG-20230603-WA0032-2.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
+        "width": 2000,
+        "height": 1500,
+        "bytes": 680652,
+        "sha256": "f429c5fc660c69e5961701849457143c2236c052c288e122ecc2aa9b55fe1d15",
+        "score": 3.3,
+        "phash_distance": 0,
+        "dhash_distance": 4,
+        "ahash_distance": 2
+      },
+      "runner_up_gap": 207.55
+    },
+    {
+      "target_filename": "la-crescenta-washer-dryer-set.jpg",
+      "best": {
+        "filename": "IMG-20240921-WA0122.jpg",
+        "path": "assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg",
+        "width": 1536,
+        "height": 2048,
+        "bytes": 454167,
+        "sha256": "5ec14ebc7fb7205a6ec60155e1678363f8bcc2397c6065b97449a91bc4aa48e0",
+        "score": 7.2,
+        "phash_distance": 2,
+        "dhash_distance": 8,
+        "ahash_distance": 0
+      },
+      "runner_up_gap": 187.4
+    }
+  ]
+}
