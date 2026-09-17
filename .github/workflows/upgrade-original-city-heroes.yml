@@ -1,0 +1,222 @@
+name: Upgrade city heroes to original resolution
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/upgrade-original-city-heroes.yml'
+      - 'assets/laundry/heroes/**'
+      - 'assets/laundry/original-user-heroes/**'
+      - 'assets/premium-user-heroes.json'
+
+permissions:
+  contents: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install image matching dependencies
+        run: python -m pip install --quiet pillow numpy
+
+      - name: Match tiny hero derivatives and update page paths
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          import numpy as np
+          import json, re, hashlib
+
+          root = Path('.')
+          hero_dir = Path('assets/laundry/heroes')
+          orig_dir = Path('assets/laundry/original-user-heroes')
+          manifest_path = Path('assets/premium-user-heroes.json')
+          report_path = Path('assets/laundry/hero-original-upgrade-report.json')
+          stamp = '20260917'
+
+          exts = {'.jpg', '.jpeg', '.png', '.webp'}
+
+          def open_rgb(path):
+              with Image.open(path) as im:
+                  return ImageOps.exif_transpose(im).convert('RGB').copy()
+
+          def small_arr(im, size=(72,54)):
+              return np.asarray(im.resize(size, Image.Resampling.LANCZOS), dtype=np.float32)
+
+          def score(a, b):
+              # Align overall exposure/color but preserve actual image structure.
+              delta = a.mean(axis=(0,1), keepdims=True) - b.mean(axis=(0,1), keepdims=True)
+              bb = np.clip(b + delta, 0, 255)
+              mae = float(np.mean(np.abs(a - bb)))
+              ga = a.mean(axis=2); gb = bb.mean(axis=2)
+              aa = ga.ravel() - ga.mean(); cc = gb.ravel() - gb.mean()
+              den = float(np.linalg.norm(aa) * np.linalg.norm(cc))
+              corr = float(np.dot(aa, cc) / den) if den else 0.0
+              corr = max(-1.0, min(1.0, corr))
+              return mae + 35.0 * (1.0 - corr), mae, corr
+
+          # Deduplicate byte-identical originals, preferring normal camera filenames.
+          originals = [p for p in orig_dir.iterdir() if p.is_file() and p.suffix.lower() in exts]
+          root_original = Path('IMG-20240403-WA0010.jpg')
+          if root_original.is_file():
+              originals.append(root_original)
+
+          groups = {}
+          for p in originals:
+              digest = hashlib.sha256(p.read_bytes()).hexdigest()
+              groups.setdefault(digest, []).append(p)
+
+          def preferred(paths):
+              def key(p):
+                  n = p.name.lower()
+                  return (
+                      0 if p == root_original else 1,
+                      1 if n.startswith('screenshot') else 0,
+                      1 if '-1.' in n or '-2.' in n else 0,
+                      len(n), n,
+                  )
+              return sorted(paths, key=key)[0]
+
+          originals = sorted((preferred(v) for v in groups.values()), key=lambda p: p.name.lower())
+          source = []
+          for p in originals:
+              try:
+                  im = open_rgb(p)
+                  source.append((p, im, p.stat().st_size))
+              except Exception as exc:
+                  print('Skipping unreadable original', p, exc)
+
+          matches = {}
+          for hp in sorted(p for p in hero_dir.iterdir() if p.is_file() and p.suffix.lower() in exts):
+              him = open_rgb(hp)
+              a = small_arr(him)
+              ranked = []
+              target_size = him.size
+              for op, oim, obytes in source:
+                  variants = [
+                      ('cover-center', ImageOps.fit(oim, target_size, method=Image.Resampling.LANCZOS, centering=(0.5,0.5))),
+                      ('stretch', oim.resize(target_size, Image.Resampling.LANCZOS)),
+                      ('contain-light', ImageOps.pad(oim, target_size, method=Image.Resampling.LANCZOS, color=(245,247,246), centering=(0.5,0.5))),
+                      ('contain-white', ImageOps.pad(oim, target_size, method=Image.Resampling.LANCZOS, color=(255,255,255), centering=(0.5,0.5))),
+                  ]
+                  best = None
+                  for mode, vim in variants:
+                      s, mae, corr = score(a, small_arr(vim))
+                      item = (s, mae, corr, mode)
+                      if best is None or item[0] < best[0]:
+                          best = item
+                  ranked.append({
+                      'source_path': str(op).replace('\\','/'),
+                      'filename': op.name,
+                      'score': round(best[0],4),
+                      'mae': round(best[1],4),
+                      'corr': round(best[2],6),
+                      'mode': best[3],
+                      'bytes': obytes,
+                      'width': oim.width,
+                      'height': oim.height,
+                  })
+              ranked.sort(key=lambda x: x['score'])
+              top = ranked[:3]
+              best = top[0]
+              gap = round(top[1]['score'] - best['score'], 4) if len(top) > 1 else 999.0
+              ratio = round(top[1]['score'] / max(best['score'], 0.0001), 4) if len(top) > 1 else 999.0
+              # Conservative: automatic replacement only when visual evidence is decisive.
+              confident = (best['score'] <= 28 and best['corr'] >= 0.88 and gap >= 8) or (best['score'] <= 18 and best['corr'] >= 0.94 and gap >= 4)
+              matches[hp.name] = {
+                  'hero_path': str(hp).replace('\\','/'),
+                  'hero_bytes': hp.stat().st_size,
+                  'hero_width': him.width,
+                  'hero_height': him.height,
+                  'best': best,
+                  'runner_up_gap': gap,
+                  'runner_up_ratio': ratio,
+                  'confident': confident,
+                  'top3': top,
+              }
+              print(f"{hp.name:42s} -> {best['filename']:36s} score={best['score']:7.3f} corr={best['corr']:.4f} gap={gap:7.3f} confident={confident}")
+
+          # Exact manually verified city assignments take priority over visual matching.
+          verified = {}
+          if manifest_path.is_file():
+              data = json.loads(manifest_path.read_text(encoding='utf-8'))
+              for route, meta in data.items():
+                  src = meta.get('src')
+                  if src and meta.get('source_status') == 'original-full-resolution':
+                      verified[route.strip('/')] = src
+
+          changed_pages = []
+          unresolved_refs = []
+          current_refs = {}
+
+          # Scan every HTML page. Only replace image references; no copy/design changes.
+          for html in root.rglob('*.html'):
+              if '.git' in html.parts:
+                  continue
+              text = html.read_text(encoding='utf-8')
+              original_text = text
+              route = '' if html.name != 'index.html' else ('' if html.parent == root else html.parent.as_posix())
+
+              # Manual verified route overrides, preserving the assigned city/photo pair.
+              if route in verified:
+                  src = verified[route]
+                  if not src.startswith('/'):
+                      src = '/' + src
+                  # Replace any current tiny hero URL in this page's hero and lock script.
+                  text = re.sub(r'/assets/laundry/heroes/[^"\'\s?]+(?:\?[^"\'\s]*)?', src + '?original-fullres=' + stamp, text)
+
+              # For all other pages, map the current tiny derivative to its exact original.
+              for hname, info in matches.items():
+                  token = '/assets/laundry/heroes/' + hname
+                  if token not in text:
+                      continue
+                  current_refs.setdefault(hname, []).append('/' + route + '/' if route else '/')
+                  if not info['confident']:
+                      unresolved_refs.append({'page': html.as_posix(), 'hero': hname, 'best': info['best'], 'gap': info['runner_up_gap']})
+                      continue
+                  src = '/' + info['best']['source_path'].lstrip('/')
+                  # Remove the old tiny-file cache query and use a clear full-resolution cache key.
+                  pattern = re.escape(token) + r'(?:\?[^"\'\s]*)?'
+                  text = re.sub(pattern, src + '?original-fullres=' + stamp, text)
+
+              if text != original_text:
+                  html.write_text(text, encoding='utf-8')
+                  changed_pages.append(html.as_posix())
+
+          report = {
+              'purpose': 'Replace tiny city hero derivatives with the same photos from original full-resolution user uploads.',
+              'preserves_city_photo_assignment': True,
+              'original_count': len(source),
+              'matches': matches,
+              'verified_route_overrides': verified,
+              'tiny_hero_references': current_refs,
+              'changed_pages': changed_pages,
+              'unresolved_references': unresolved_refs,
+          }
+          report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          print('Changed pages:', len(changed_pages))
+          for p in changed_pages:
+              print('  changed', p)
+          print('Unresolved tiny hero references:', len(unresolved_refs))
+          PY
+
+      - name: Commit original-resolution hero upgrades
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/laundry/hero-original-upgrade-report.json '*.html' '**/*.html' 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo 'No hero upgrades to commit.'
+          else
+            git commit -m 'Use original full-resolution city hero photos'
+            git push
+          fi
