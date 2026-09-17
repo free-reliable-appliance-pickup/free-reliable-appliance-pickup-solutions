@@ -7,9 +7,14 @@ on:
       - '.github/workflows/audit-match-full-resolution-heroes.yml'
       - 'assets/laundry/original-user-heroes/**'
       - 'assets/laundry/premium-real-sets-36-grid.webp'
+      - 'IMG-20240403-WA0010.jpg'
 
 permissions:
   contents: write
+
+concurrency:
+  group: exact-original-hero-audit
+  cancel-in-progress: true
 
 jobs:
   match:
@@ -26,12 +31,12 @@ jobs:
       - name: Install image audit dependencies
         run: python -m pip install --quiet pillow numpy
 
-      - name: Match each old grid cell to its original upload
+      - name: Match every old grid cell to the uploaded original
         run: |
           python - <<'PY'
           from pathlib import Path
           from PIL import Image, ImageOps
-          import numpy as np, json, math, os
+          import numpy as np, json, hashlib
 
           sprite_path = Path('assets/laundry/premium-real-sets-36-grid.webp')
           originals_dir = Path('assets/laundry/original-user-heroes')
@@ -45,140 +50,160 @@ jobs:
             'Brea','Yorba Linda','Irvine','Newport Beach','Mission Viejo','Lake Forest',
             'Laguna Niguel','Rancho Santa Margarita','San Juan Capistrano','San Clemente','Laguna Hills','Aliso Viejo'
           ]
-          routes = [c.lower().replace('ñ','n').replace(' ','-') + '-washer-dryer-pickup' for c in cities]
-          # Correct punctuation/diacritics are irrelevant to matching; explicit route override where needed.
-          routes[1] = 'la-canada-flintridge-washer-dryer-pickup'
-
-          if not sprite_path.exists():
-            raise SystemExit(f'Missing sprite: {sprite_path}')
-          originals = sorted(p for p in originals_dir.iterdir() if p.is_file() and p.suffix.lower() in {'.jpg','.jpeg','.png','.webp'})
-          if not originals:
-            raise SystemExit('No original uploads found')
+          routes = [
+            'la-crescenta','la-canada-flintridge','pasadena','south-pasadena','san-marino','altadena',
+            'sierra-madre','arcadia','monrovia','duarte','azusa','glendora',
+            'covina','west-covina','san-dimas','la-verne','claremont','pomona',
+            'montclair','upland','rancho-cucamonga','fontana','san-bernardino','anaheim-hills',
+            'brea','yorba-linda','irvine','newport-beach','mission-viejo','lake-forest',
+            'laguna-niguel','rancho-santa-margarita','san-juan-capistrano','san-clemente','laguna-hills','aliso-viejo'
+          ]
 
           def open_rgb(p):
             with Image.open(p) as im:
               return ImageOps.exif_transpose(im).convert('RGB').copy()
 
-          def cover(im, size, centering=(0.5,0.5)):
-            return ImageOps.fit(im, size, method=Image.Resampling.LANCZOS, centering=centering)
+          if not sprite_path.is_file():
+            raise SystemExit(f'Missing sprite: {sprite_path}')
 
-          def contain(im, size, bg):
-            c = ImageOps.contain(im, size, method=Image.Resampling.LANCZOS)
-            canvas = Image.new('RGB', size, bg)
-            canvas.paste(c, ((size[0]-c.width)//2, (size[1]-c.height)//2))
-            return canvas
+          candidate_paths = sorted(p for p in originals_dir.iterdir() if p.is_file() and p.suffix.lower() in {'.jpg','.jpeg','.png','.webp'})
+          root_la = Path('IMG-20240403-WA0010.jpg')
+          if root_la.is_file():
+            candidate_paths.append(root_la)
 
-          def arr(im, size=(96,72)):
-            return np.asarray(im.resize(size, Image.Resampling.LANCZOS), dtype=np.float32)
+          # Deduplicate exact byte-identical uploads so duplicate filenames cannot create false ambiguity.
+          groups = {}
+          for p in candidate_paths:
+            raw = p.read_bytes()
+            digest = hashlib.sha256(raw).hexdigest()
+            groups.setdefault(digest, []).append(p)
 
-          def gray(a):
-            return a[...,0]*0.299 + a[...,1]*0.587 + a[...,2]*0.114
+          def preferred(paths):
+            def key(p):
+              name = p.name.lower()
+              return (
+                0 if p == root_la else 1,
+                1 if name.startswith('screenshot') else 0,
+                1 if '-1.' in name or '-2.' in name else 0,
+                len(name), name
+              )
+            return sorted(paths, key=key)[0]
 
-          def score_pair(ref, cand):
-            a = arr(ref); b = arr(cand)
-            # Lightly normalize global exposure so re-encoding/brightness differences do not dominate.
-            ga, gb = gray(a), gray(b)
-            am, bm = ga.mean(), gb.mean()
-            b2 = np.clip(b + (am-bm), 0, 255)
-            gb2 = gray(b2)
-            mae = float(np.mean(np.abs(a-b2)))
-            gx_a = np.diff(ga, axis=1); gx_b = np.diff(gb2, axis=1)
-            gy_a = np.diff(ga, axis=0); gy_b = np.diff(gb2, axis=0)
-            edge = float((np.mean(np.abs(gx_a-gx_b)) + np.mean(np.abs(gy_a-gy_b))) / 2)
-            aa = ga.ravel()-ga.mean(); bb = gb2.ravel()-gb2.mean()
-            den = float(np.linalg.norm(aa)*np.linalg.norm(bb))
-            corr = float(np.dot(aa,bb)/den) if den else 0.0
-            corr = max(-1.0,min(1.0,corr))
-            return mae + 0.35*edge + 35.0*(1.0-corr), {'mae':round(mae,3),'edge':round(edge,3),'corr':round(corr,5)}
-
-          # Preload once; preserve exact source dimensions and byte sizes in report.
-          source = {}
-          for p in originals:
-            try:
-              im = open_rgb(p)
-              source[p.name] = {'image':im, 'width':im.width, 'height':im.height, 'bytes':p.stat().st_size}
-            except Exception as e:
-              print('Skipping unreadable', p, e)
+          reps = [preferred(v) for v in groups.values()]
+          reps.sort(key=lambda p:p.name.lower())
 
           sprite = open_rgb(sprite_path)
           cw, ch = sprite.width//6, sprite.height//6
+          thumb = (64,48)
+
+          def arr(im):
+            return np.asarray(im.resize(thumb, Image.Resampling.LANCZOS), dtype=np.float32)
+
+          def make_variants(im):
+            # The old 6x6 sheet displayed each source inside a 4:3 cell. Precompute likely transforms once.
+            return [
+              ('cover-center', arr(ImageOps.fit(im,(cw,ch),method=Image.Resampling.LANCZOS,centering=(0.5,0.5)))),
+              ('stretch', arr(im.resize((cw,ch),Image.Resampling.LANCZOS))),
+              ('contain', arr(ImageOps.pad(im,(cw,ch),method=Image.Resampling.LANCZOS,color=(245,247,246),centering=(0.5,0.5))))
+            ]
+
+          source = []
+          for p in reps:
+            try:
+              im = open_rgb(p)
+              source.append({
+                'path': str(p).replace('\\','/'),
+                'filename': p.name,
+                'width': im.width,
+                'height': im.height,
+                'bytes': p.stat().st_size,
+                'sha256': hashlib.sha256(p.read_bytes()).hexdigest(),
+                'variants': make_variants(im)
+              })
+            except Exception as e:
+              print('Skipping unreadable', p, e)
+
+          def score(a,b):
+            # Correct only global channel exposure; preserve structure and color differences.
+            delta = a.mean(axis=(0,1),keepdims=True)-b.mean(axis=(0,1),keepdims=True)
+            bb = np.clip(b+delta,0,255)
+            mae = float(np.mean(np.abs(a-bb)))
+            ga = a.mean(axis=2); gb = bb.mean(axis=2)
+            aa = ga.ravel()-ga.mean(); cc = gb.ravel()-gb.mean()
+            den = float(np.linalg.norm(aa)*np.linalg.norm(cc))
+            corr = float(np.dot(aa,cc)/den) if den else 0.0
+            corr = max(-1.0,min(1.0,corr))
+            return mae + 30.0*(1.0-corr), mae, corr
+
           report = {
             'generated_from': str(sprite_path),
             'sprite_dimensions': [sprite.width,sprite.height],
             'cell_dimensions': [cw,ch],
-            'original_count': len(source),
+            'distinct_originals': len(source),
             'matches': []
           }
 
-          centerings = [(0.5,0.5),(0.5,0.25),(0.5,0.75),(0.35,0.5),(0.65,0.5)]
-          for i, city in enumerate(cities):
-            row, col = divmod(i,6)
+          for i,(city,slug) in enumerate(zip(cities,routes)):
+            row,col = divmod(i,6)
             cell = sprite.crop((col*cw,row*ch,(col+1)*cw,(row+1)*ch))
-            candidates = []
-            for name, meta in source.items():
-              im = meta['image']
-              variants = []
-              for c in centerings:
-                variants.append((f'cover-{c[0]:.2f}-{c[1]:.2f}', cover(im,(cw,ch),c)))
-              variants.append(('stretch', im.resize((cw,ch),Image.Resampling.LANCZOS)))
-              variants.append(('contain-white', contain(im,(cw,ch),(255,255,255))))
-              variants.append(('contain-black', contain(im,(cw,ch),(0,0,0))))
-              best = None
-              for mode, v in variants:
-                s, detail = score_pair(cell,v)
-                if best is None or s < best[0]:
-                  best = (s,mode,detail)
-              candidates.append({
-                'filename': name,
-                'score': round(best[0],4),
-                'mode': best[1],
-                'metrics': best[2],
-                'width': meta['width'], 'height': meta['height'], 'bytes': meta['bytes']
+            a = arr(cell)
+            ranked=[]
+            for meta in source:
+              best=None
+              for mode,b in meta['variants']:
+                s,mae,corr=score(a,b)
+                if best is None or s<best[0]: best=(s,mode,mae,corr)
+              ranked.append({
+                'source_path':meta['path'],'filename':meta['filename'],'score':round(best[0],4),
+                'mode':best[1],'mae':round(best[2],4),'corr':round(best[3],6),
+                'width':meta['width'],'height':meta['height'],'bytes':meta['bytes'],'sha256':meta['sha256']
               })
-            candidates.sort(key=lambda x:x['score'])
-            top = candidates[:5]
-            gap = round(top[1]['score']-top[0]['score'],4) if len(top)>1 else None
-            ratio = round(top[1]['score']/max(top[0]['score'],0.0001),4) if len(top)>1 else None
+            ranked.sort(key=lambda x:x['score'])
+            top=ranked[:5]
+            gap=round(top[1]['score']-top[0]['score'],4) if len(top)>1 else None
+            ratio=round(top[1]['score']/max(top[0]['score'],0.0001),4) if len(top)>1 else None
             report['matches'].append({
-              'set': i+1,
-              'city': city,
-              'route': '/' + routes[i] + '/',
-              'best': top[0],
-              'runner_up_gap': gap,
-              'runner_up_ratio': ratio,
-              'top5': top
+              'set':i+1,'city':city,'route':'/'+slug+'-washer-dryer-pickup/',
+              'best':top[0],'runner_up_gap':gap,'runner_up_ratio':ratio,'top5':top
             })
-            print(f"#{i+1:02d} {city:24s} -> {top[0]['filename']:36s} score={top[0]['score']:8.3f} gap={gap}")
+            print(f"#{i+1:02d} {city:24s} -> {top[0]['filename']:36s} score={top[0]['score']:7.3f} gap={gap}")
 
-          # Known exact assignments are a hard validation check. Do not publish a misleading report if these fail.
-          known = {
+          known={
+            1:'IMG-20240403-WA0010.jpg',
             15:'1000274641(3).jpg',
             16:'1000274683(5).jpg',
             17:'1000274700(10).jpg'
           }
-          validation = {}
-          ok = True
-          for n, expected in known.items():
-            got = report['matches'][n-1]['best']['filename']
-            validation[str(n)] = {'expected':expected,'matched':got,'ok':got==expected}
-            ok = ok and (got==expected)
-          report['known_assignment_validation'] = validation
-          report['known_assignment_validation_ok'] = ok
-
+          validation={}
+          ok=True
+          for n,expected in known.items():
+            got=report['matches'][n-1]['best']['filename']
+            validation[str(n)]={'expected':expected,'matched':got,'ok':got==expected}
+            ok=ok and got==expected
+          report['known_assignment_validation']=validation
+          report['known_assignment_validation_ok']=ok
           out_path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          if not ok:
-            print('Known assignment validation failed; report retained for diagnosis but workflow will fail.')
-            raise SystemExit(2)
+          print('Known validation:',validation)
           PY
 
       - name: Commit audit report
         run: |
-          if git diff --quiet -- assets/laundry/original-match-report.json && git ls-files --error-unmatch assets/laundry/original-match-report.json >/dev/null 2>&1; then
-            echo 'Audit report unchanged.'
-            exit 0
-          fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add assets/laundry/original-match-report.json
-          git commit -m 'Audit full-resolution city hero matches'
-          git push
+          if git diff --cached --quiet; then
+            echo 'Audit report unchanged.'
+          else
+            git commit -m 'Audit full-resolution city hero matches'
+            git push
+          fi
+
+      - name: Validate known exact assignments
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('assets/laundry/original-match-report.json',encoding='utf-8'))
+          if not r.get('known_assignment_validation_ok'):
+              raise SystemExit('Known exact city assignments did not validate; do not apply remaining matches automatically.')
+          print('Known exact assignments validated. Report is safe for final review.')
+          PY
