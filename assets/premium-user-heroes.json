@@ -5,9 +5,9 @@
     "source_status": "original-full-resolution"
   },
   "/san-dimas-washer-dryer-pickup/": {
-    "src": "assets/laundry/user-heroes/san-dimas-user-15.jpg",
+    "src": "assets/laundry/original-user-heroes/1000274641(3).jpg",
     "alt": "Real washer and dryer set provided for San Dimas pickup service",
-    "source_status": "pending-original-binary-import",
+    "source_status": "original-full-resolution",
     "original_filename": "1000274641(3).jpg",
     "original_width": 1152,
     "original_height": 1536,
@@ -15,30 +15,23 @@
     "original_sha256": "a7ab8d1b61a51c493149ab1720e1c997c6a4bda451357c298cbdcea1b31a98e4"
   },
   "/la-verne-washer-dryer-pickup/": {
-    "mime": "image/jpeg",
-    "parts": [
-      "assets/laundry/user-heroes/la-verne-user-16-01.txt",
-      "assets/laundry/user-heroes/la-verne-user-16-02.txt"
-    ],
     "alt": "Real washer and dryer set provided for La Verne pickup service",
-    "source_status": "pending-original-binary-import",
+    "source_status": "original-full-resolution",
     "original_filename": "1000274683(5).jpg",
     "original_width": 864,
     "original_height": 1536,
     "original_size_bytes": 368294,
-    "original_sha256": "5b98b7088646d6e7d0df0c180793ea5a146d369588aa0a8e31664e80f81a7525"
+    "original_sha256": "5b98b7088646d6e7d0df0c180793ea5a146d369588aa0a8e31664e80f81a7525",
+    "src": "assets/laundry/original-user-heroes/1000274683(5).jpg"
   },
   "/claremont-washer-dryer-pickup/": {
-    "mime": "image/jpeg",
-    "parts": [
-      "assets/laundry/user-heroes/claremont-user-17.txt"
-    ],
     "alt": "Real washer and dryer set provided for Claremont pickup service",
-    "source_status": "pending-original-binary-import",
+    "source_status": "original-full-resolution",
     "original_filename": "1000274700(10).jpg",
     "original_width": 1152,
     "original_height": 1536,
     "original_size_bytes": 511446,
-    "original_sha256": "87185bf73ea5d70fdb3eaf8a9e2e85d5c0343acfa188935485c012a5c5177251"
+    "original_sha256": "87185bf73ea5d70fdb3eaf8a9e2e85d5c0343acfa188935485c012a5c5177251",
+    "src": "assets/laundry/original-user-heroes/1000274700(10).jpg"
   }
 }
