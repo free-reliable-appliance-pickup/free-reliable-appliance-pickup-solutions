@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/verify-manual-full-resolution-heroes.yml'
       - 'assets/premium-user-heroes.json'
+      - 'assets/laundry/pending-manual-hero-verification.json'
       - 'assets/premium-sharp-hero-fix.js'
       - 'assets/customer-routing.js'
       - '**/*-washer-dryer-pickup/index.html'
@@ -30,9 +31,16 @@ jobs:
           import json, re, sys
 
           manifest_path = Path('assets/premium-user-heroes.json')
+          pending_path = Path('assets/laundry/pending-manual-hero-verification.json')
           manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+          pending_data = json.loads(pending_path.read_text(encoding='utf-8')) if pending_path.is_file() else {'pending_routes': []}
+          pending_routes = {str(item.get('route', '')).strip() for item in pending_data.get('pending_routes', []) if item.get('route')}
           failures = []
           checked = 0
+
+          overlap = sorted(set(manifest) & pending_routes)
+          for route in overlap:
+              failures.append(f'{route}: route is both approved and pending; remove it from the pending list only when its exact original assignment is manually verified')
 
           for route, info in manifest.items():
               src = str(info.get('src', '')).lstrip('/')
@@ -67,11 +75,12 @@ jobs:
                   failures.append(f'{route}: visible hero still uses old compressed hero path {hero_match.group(1)}')
 
           print(f'Checked {checked} manually approved city hero pages.')
+          print(f'Protected {len(pending_routes)} pending city routes from accidental approval.')
           if failures:
               print('\nFAILED:')
               for failure in failures:
                   print(' -', failure)
               sys.exit(1)
 
-          print('PASS: every manually approved city page uses its exact original full-resolution hero in static HTML and metadata.')
+          print('PASS: every manually approved city page uses its exact original full-resolution hero in static HTML and metadata, with no overlap between approved and pending routes.')
           PY
