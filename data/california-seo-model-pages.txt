@@ -30,3 +30,8 @@ apple-valley-appliance-pickup
 temecula-appliance-pickup
 pasadena-appliance-pickup
 long-beach-appliance-pickup
+san-gabriel-valley-appliance-pickup
+coachella-valley-appliance-pickup
+sf-bay-area-appliance-pickup
+central-valley-appliance-pickup
+san-diego-county-appliance-pickup
