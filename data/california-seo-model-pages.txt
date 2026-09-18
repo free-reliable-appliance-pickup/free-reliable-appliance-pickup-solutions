@@ -1,0 +1,15 @@
+california-appliance-pickup
+los-angeles-appliance-pickup
+los-angeles-county-appliance-pickup
+riverside-appliance-pickup
+riverside-county-appliance-pickup
+san-bernardino-appliance-pickup
+san-bernardino-county-appliance-pickup
+victorville-appliance-pickup
+high-desert-appliance-pickup
+palm-springs-appliance-pickup
+palmdale-appliance-pickup
+lancaster-appliance-pickup
+orange-county-appliance-pickup
+inland-empire-appliance-pickup
+rancho-cucamonga-appliance-pickup
