@@ -1,4 +1,5 @@
 name: Audit Approved Request Actions
+# rerun-after-request-repair-2026-09-18
 # Protect approved customer-facing SEO pages from broken request buttons or missing intake forms.
 
 on:
