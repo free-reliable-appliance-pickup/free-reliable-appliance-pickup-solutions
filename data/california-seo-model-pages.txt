@@ -51,3 +51,15 @@ azusa-appliance-pickup
 arcadia-appliance-pickup
 monrovia-appliance-pickup
 pomona-appliance-pickup
+cathedral-city-appliance-pickup
+chino-appliance-pickup
+chino-hills-appliance-pickup
+indian-wells-appliance-pickup
+indio-appliance-pickup
+la-quinta-appliance-pickup
+menifee-appliance-pickup
+modesto-appliance-pickup
+montclair-appliance-pickup
+murrieta-appliance-pickup
+rancho-mirage-appliance-pickup
+redlands-appliance-pickup
