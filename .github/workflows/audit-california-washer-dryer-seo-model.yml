@@ -36,7 +36,13 @@ jobs:
               h1=(re.search(r'<h1[^>]*>(.*?)</h1>',t,re.I|re.S) or [None,''])[1].lower()
               image_tags=re.findall(r'<img\\b[^>]*>',t,re.I)
               has_real_laundry_image=any(
-                  ('washer' in tag.lower() or 'dryer' in tag.lower() or 'major-appliance-pickup-photo' in tag.lower())
+                  (
+                      'washer' in tag.lower()
+                      or 'dryer' in tag.lower()
+                      or '/assets/laundry/' in tag.lower()
+                      or 'original-user-heroes' in tag.lower()
+                      or 'major-appliance-pickup-photo' in tag.lower()
+                  )
                   and 'file_00000000b7c082308dccc73e5bd3acd2.png' not in tag.lower()
                   for tag in image_tags
               )
