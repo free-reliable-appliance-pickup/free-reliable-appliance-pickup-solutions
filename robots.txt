@@ -3,3 +3,4 @@ Allow: /
 
 Sitemap: https://freereliableappliancepickup.com/sitemap.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-regular-washer-dryer.xml
+Sitemap: https://freereliableappliancepickup.com/sitemap-images.xml
