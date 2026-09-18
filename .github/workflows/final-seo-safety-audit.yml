@@ -61,7 +61,7 @@ jobs:
               if not url.startswith(base): errors.append(f'FOREIGN SITEMAP URL {url}'); continue
               rel=url[len(base):].strip('/')
               if rel not in approved: errors.append(f'UNAPPROVED SITEMAP URL {url}')
-          retired=['palm-desert-appliance-pickup','palm-springs-appliance-pickup','rancho-mirage-appliance-pickup','indian-wells-appliance-pickup','la-quinta-appliance-pickup','cathedral-city-appliance-pickup','indio-appliance-pickup','stockton-appliance-pickup','wheat-ridge']
+          retired=['wheat-ridge']
           for p in indexable:
               s=p.read_text(encoding='utf-8',errors='ignore').lower()
               for r in retired:
