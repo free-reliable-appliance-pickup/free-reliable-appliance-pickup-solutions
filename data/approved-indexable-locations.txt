@@ -40,6 +40,7 @@ keizer-appliance-pickup
 arvada-appliance-pickup
 centennial-appliance-pickup
 temecula-appliance-pickup
+tustin-appliance-pickup
 tigard-appliance-pickup
 happy-valley-appliance-pickup
 oregon-city-appliance-pickup
