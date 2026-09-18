@@ -6,12 +6,5 @@
     "reason": "The historical grid matcher fails known manually verified assignments, so grid position and match score are evidence only, not approval.",
     "required_before_approval": "Manual confirmation from prior assignment evidence or a direct visual/original-file match that preserves the user's assigned city photo."
   },
-  "pending_routes": [
-    {
-      "route": "/trabuco-canyon-washer-dryer-pickup/",
-      "city": "Trabuco Canyon",
-      "status": "pending-manual-verification",
-      "note": "Recovered sequence identifies this as set 38, but the exact original-file fingerprint has not yet been recovered."
-    }
-  ]
+  "pending_routes": []
 }

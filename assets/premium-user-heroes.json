@@ -361,5 +361,18 @@
     "recovered_from_set": 36,
     "recovered_phone_filename": "1000262564(1).png",
     "manual_assignment": true
+  },
+  "/trabuco-canyon-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000274627(1).jpg",
+    "alt": "Real washer and dryer set provided for Trabuco Canyon pickup service",
+    "source_status": "original-full-resolution-manual-direct-upload",
+    "original_width": 1152,
+    "original_height": 1536,
+    "original_size_bytes": 479952,
+    "original_sha256": "eb50bea44ecb23d022ff1c99cfe995be493ebe5b7a5ba66384c559a955790830",
+    "recovered_from_set": 38,
+    "recovered_phone_filename": "1000274627(1).jpg",
+    "manual_assignment": true,
+    "sequence_evidence": "Final user washer/dryer re-upload immediately after set 37; exact bytes match 1000274627.jpg."
   }
 }
