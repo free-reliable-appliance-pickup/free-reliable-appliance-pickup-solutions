@@ -20,6 +20,7 @@ extra = [
     "appliance-pickup-checklist",
     "free-pickup-qualification",
     "how-appliance-pickup-works",
+    "about",
     "old-appliance-disposal-options",
     "landlord-property-manager-appliance-pickup",
     "high-desert-rv-appliance-pickup",
