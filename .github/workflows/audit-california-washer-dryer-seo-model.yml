@@ -44,7 +44,7 @@ jobs:
                   'customer routing': '/assets/customer-routing.js' in low,
                   'structured WebPage': ('"@type":"webpage"' in low or '"@type": "webpage"' in low),
                   'breadcrumb': 'breadcrumblist' in low,
-                  'real laundry proof': ('real washer' in low or 'washer-dryer' in low or 'washer dryer' in low),
+                  'real laundry proof': bool(re.search(r'<img\\b[^>]+src=["\\'][^"\\']+(?:washer|dryer|major-appliance-pickup-photo)[^"\\']*["\\']',t,re.I)),
               }
               for label,ok in checks.items():
                   if not ok:
