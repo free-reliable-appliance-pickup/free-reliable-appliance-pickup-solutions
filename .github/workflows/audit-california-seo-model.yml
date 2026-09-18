@@ -1,0 +1,63 @@
+name: Audit California SEO Gold Standard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/index.html'
+      - 'data/california-seo-model-pages.txt'
+      - '.github/workflows/audit-california-seo-model.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate California benchmark pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys
+
+          slugs=[x.strip() for x in Path('data/california-seo-model-pages.txt').read_text().splitlines() if x.strip()]
+          failures=[]
+          for slug in slugs:
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{slug}: missing page')
+                  continue
+              t=p.read_text(encoding='utf-8',errors='replace')
+              low=t.lower()
+              checks={
+                  'indexable robots': bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',t,re.I)),
+                  'self canonical': f'https://freereliableappliancepickup.com/{slug}/' in low,
+                  'title': bool(re.search(r'<title>[^<]{20,}</title>',t,re.I)),
+                  'H1': bool(re.search(r'<h1[^>]*>.+?</h1>',t,re.I|re.S)),
+                  'local ranking depth': 'local-ranking-depth-20260918' in low,
+                  'real appliance proof': ('major-appliance-pickup-photo' in low or 'real appliance example' in low),
+                  'site branding': '/assets/site-brand.css' in low,
+                  'request target': 'id="request"' in low or "id='request'" in low,
+                  'Formspree': 'https://formspree.io/f/mvzeapzd' in low,
+                  'customer routing': '/assets/customer-routing.js' in low,
+                  'structured WebPage': '"@type":"webpage"' in low or '"@type": "webpage"' in low,
+                  'breadcrumb': 'breadcrumblist' in low,
+              }
+              for label,ok in checks.items():
+                  if not ok:
+                      failures.append(f'{slug}: missing {label}')
+
+              # Benchmark pages should link to useful internal content, not stand alone.
+              internal=len(re.findall(r'href=["\'](?:\.\./|/)[a-z0-9-]+/',t,re.I))
+              if internal < 3:
+                  failures.append(f'{slug}: fewer than 3 useful internal links')
+
+          print(f'CALIFORNIA_BENCHMARK_PAGES {len(slugs)}')
+          if failures:
+              print('FAILURES')
+              for f in failures: print('-',f)
+              sys.exit(1)
+          print('PASS: California benchmark pages meet the gold-standard structure.')
