@@ -94,7 +94,7 @@
         "dhash_distance": 104,
         "ahash_distance": 65
       },
-      "runner_up_gap": 3.8
+      "runner_up_gap": 0.15
     },
     {
       "target_filename": "1000274715(2).jpg",
@@ -110,7 +110,7 @@
         "dhash_distance": 21,
         "ahash_distance": 3
       },
-      "runner_up_gap": 182.65
+      "runner_up_gap": 162.35
     },
     {
       "target_filename": "1000274689(4).jpg",
@@ -190,7 +190,7 @@
         "dhash_distance": 2,
         "ahash_distance": 1
       },
-      "runner_up_gap": 222.7
+      "runner_up_gap": 208.05
     },
     {
       "target_filename": "1000274883.jpg",
@@ -350,7 +350,7 @@
         "dhash_distance": 4,
         "ahash_distance": 1
       },
-      "runner_up_gap": 218.45
+      "runner_up_gap": 209.05
     },
     {
       "target_filename": "1000274666(5).jpg",
@@ -414,7 +414,7 @@
         "dhash_distance": 104,
         "ahash_distance": 65
       },
-      "runner_up_gap": 3.8
+      "runner_up_gap": 0.15
     },
     {
       "target_filename": "1000274855.jpg",
@@ -446,7 +446,7 @@
         "dhash_distance": 15,
         "ahash_distance": 0
       },
-      "runner_up_gap": 186.55
+      "runner_up_gap": 184.3
     },
     {
       "target_filename": "1000274853.jpg",
