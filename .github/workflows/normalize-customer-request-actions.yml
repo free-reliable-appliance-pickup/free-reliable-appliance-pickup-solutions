@@ -16,6 +16,99 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Ensure every approved page has a local request path
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          approved = [x.strip() for x in Path('data/approved-indexable-locations.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
+          changed = []
+
+          request_block = """<section id="request" class="site-request-panel">
+          <h2>Request Appliance Pickup</h2>
+          <p>Send the appliance type, working condition, exact pickup city, access details and photos when available. Free pickup is qualification-based and must be confirmed.</p>
+          <form action="https://formspree.io/f/mvzeapzd" method="POST">
+          <input type="hidden" name="source_page" value="{slug}">
+          <div class="site-request-grid">
+          <div class="site-request-field"><label>Name<input type="text" name="name" required autocomplete="name"></label></div>
+          <div class="site-request-field"><label>Phone<input type="tel" name="phone" required autocomplete="tel"></label></div>
+          <div class="site-request-field"><label>City<input type="text" name="city" required autocomplete="address-level2"></label></div>
+          <div class="site-request-field"><label>State<input type="text" name="state" value="California" required autocomplete="address-level1"></label></div>
+          <div class="site-request-field"><label>Appliance<select name="appliance" required><option value="">Select appliance</option><option>Refrigerator</option><option>Washer</option><option>Dryer</option><option>Washer &amp; Dryer Set</option><option>Stove / Range</option><option>Oven</option><option>Freezer</option><option>RV Appliance / Equipment</option><option>Multiple Appliances</option><option>Other Major Appliance</option></select></label></div>
+          <div class="site-request-field"><label>Condition<select name="condition" required><option value="">Select condition</option><option>Fully working</option><option>Needs minor repair</option><option>Not working</option><option>Unknown</option><option>Mixed load - majority working</option></select></label></div>
+          <div class="site-request-field full"><label>Access / Appliance Details<textarea name="message" rows="5" required placeholder="Floor, stairs, gates, parking, appliance condition, and photo availability."></textarea></label></div>
+          <div class="site-request-field full"><button class="site-request-submit" type="submit">Submit Pickup Request</button></div>
+          </div>
+          </form>
+          </section>"""
+
+          for slug in approved:
+              path = Path(slug) / 'index.html'
+              if not path.exists():
+                  continue
+              text = path.read_text(encoding='utf-8', errors='replace')
+              original = text
+              low = text.lower()
+
+              # Approved pages always load the customer-routing helper exactly once.
+              if 'assets/customer-routing.js' not in low and '</head>' in low:
+                  idx = low.index('</head>')
+                  text = text[:idx] + '<script src="/assets/customer-routing.js" defer></script>\n' + text[idx:]
+                  low = text.lower()
+
+              has_form = 'https://formspree.io/f/mvzeapzd' in low
+              has_request = 'id="request"' in low or "id='request'" in low
+
+              # If an approved page has no local form, add one without touching its hero/image content.
+              if not has_form:
+                  block = request_block.format(slug=slug)
+                  insert_at = text.lower().rfind('</main>')
+                  if insert_at < 0:
+                      insert_at = text.lower().rfind('<footer')
+                  if insert_at < 0:
+                      insert_at = text.lower().rfind('</body>')
+                  if insert_at < 0:
+                      insert_at = len(text)
+                  text = text[:insert_at] + '\n' + block + '\n' + text[insert_at:]
+                  low = text.lower()
+                  has_request = True
+
+              # Existing Formspree pages without a request target get the target on the form section.
+              if not has_request:
+                  m = re.search(r'<form\b[^>]*action=["\']https://formspree\.io/f/mvzeapzd["\'][^>]*>', text, re.I|re.S)
+                  if m:
+                      sec = text.lower().rfind('<section', 0, m.start())
+                      if sec >= 0:
+                          end = text.find('>', sec)
+                          opening = text[sec:end+1]
+                          if not re.search(r'\bid\s*=', opening, re.I):
+                              opening = opening[:-1] + ' id="request">'
+                              text = text[:sec] + opening + text[end+1:]
+                          else:
+                              text = text[:m.start()] + '<span id="request" aria-hidden="true"></span>\n' + text[m.start():]
+
+              low = text.lower()
+              if 'href="#request"' not in low and "href='#request'" not in low:
+                  cta = '<p class="site-inline-request"><a class="btn" href="#request">Request Pickup</a></p>\n'
+                  pos = text.lower().find('<main')
+                  if pos >= 0:
+                      pos = text.find('>', pos) + 1
+                      text = text[:pos] + '\n' + cta + text[pos:]
+                  else:
+                      pos = text.lower().find('</header>')
+                      if pos >= 0:
+                          pos += len('</header>')
+                          text = text[:pos] + '\n' + cta + text[pos:]
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(str(path))
+
+          print(f'Approved pages repaired: {len(changed)}')
+          for item in changed:
+              print(' -', item)
+
       - name: Keep customer request actions on the local form
         shell: python
         run: |
