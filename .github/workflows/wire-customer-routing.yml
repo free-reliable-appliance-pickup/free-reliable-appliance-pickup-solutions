@@ -102,10 +102,10 @@ jobs:
           from pathlib import Path
           text = Path('.github/workflows/wire-customer-routing.yml').read_text(encoding='utf-8')
           forbidden = [
-              'premium hero files updated',
-              'data-premium-hero-lock',
-              'complete_sets = [',
-              'Normalize premium washer dryer set heroes',
+              'premium hero files ' + 'updated',
+              'data-premium-' + 'hero-lock',
+              'complete_' + 'sets = [',
+              'Normalize premium washer dryer set ' + 'heroes',
           ]
           hits = [item for item in forbidden if item in text]
           if hits:
