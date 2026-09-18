@@ -49,4 +49,11 @@ jobs:
           git add sitemap-images.xml
           git commit -m "Refresh appliance image sitemap"
           git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push race detected; rebasing and retrying ($attempt/3)"
+            git pull --rebase origin main
+          done
+          exit 1
