@@ -252,5 +252,18 @@
     "match_score": 0.65,
     "match_phash_distance": 0,
     "match_runner_up_gap": 191.4
+  },
+  "/south-pasadena-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240318-WA0047.jpg",
+    "alt": "Real washer and dryer set provided for South Pasadena pickup service",
+    "source_status": "original-full-resolution-recovered-high-confidence",
+    "original_width": 1200,
+    "original_height": 1600,
+    "original_size_bytes": 299994,
+    "original_sha256": "cb42418a9590cb244cb65569c96ce086c4170cc87feacc4af576f1ecd1c39783",
+    "recovered_from_set": 4,
+    "recovered_target_filename": "1000274716.jpg",
+    "match_score": 5.2,
+    "match_runner_up_gap": 165.95
   }
 }
