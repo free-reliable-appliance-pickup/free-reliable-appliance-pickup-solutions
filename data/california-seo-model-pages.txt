@@ -19,3 +19,7 @@ anaheim-appliance-pickup
 san-jose-appliance-pickup
 oakland-appliance-pickup
 palm-desert-appliance-pickup
+san-diego-appliance-pickup
+san-francisco-appliance-pickup
+irvine-appliance-pickup
+bakersfield-appliance-pickup
