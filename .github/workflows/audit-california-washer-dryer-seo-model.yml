@@ -34,6 +34,12 @@ jobs:
               low=t.lower()
               title=(re.search(r'<title>(.*?)</title>',t,re.I|re.S) or [None,''])[1].lower()
               h1=(re.search(r'<h1[^>]*>(.*?)</h1>',t,re.I|re.S) or [None,''])[1].lower()
+              image_tags=re.findall(r'<img\\b[^>]*>',t,re.I)
+              has_real_laundry_image=any(
+                  ('washer' in tag.lower() or 'dryer' in tag.lower() or 'major-appliance-pickup-photo' in tag.lower())
+                  and 'file_00000000b7c082308dccc73e5bd3acd2.png' not in tag.lower()
+                  for tag in image_tags
+              )
               checks={
                   'indexable robots': ('name="robots"' in low and 'index' in low and 'follow' in low and 'noindex' not in low.split('</head>',1)[0]),
                   'self canonical': f'https://freereliableappliancepickup.com/{slug}/' in low,
@@ -44,7 +50,7 @@ jobs:
                   'customer routing': '/assets/customer-routing.js' in low,
                   'structured WebPage': ('"@type":"webpage"' in low or '"@type": "webpage"' in low),
                   'breadcrumb': 'breadcrumblist' in low,
-                  'real laundry proof': bool(re.search(r'<img\\b[^>]+src=["\\'][^"\\']+(?:washer|dryer|major-appliance-pickup-photo)[^"\\']*["\\']',t,re.I)),
+                  'real laundry proof': has_real_laundry_image,
               }
               for label,ok in checks.items():
                   if not ok:
