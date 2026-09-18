@@ -265,5 +265,101 @@
     "recovered_target_filename": "1000274716.jpg",
     "match_score": 5.2,
     "match_runner_up_gap": 165.95
+  },
+  "/laguna-hills-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000263318.jpg",
+    "alt": "Real washer and dryer set provided for Laguna Hills pickup service",
+    "source_status": "original-full-resolution-manual-direct-upload",
+    "original_width": 1536,
+    "original_height": 1264,
+    "original_size_bytes": 185031,
+    "original_sha256": "2fc0873893f26330b0f0e7467990462123ea018e953ff4dc91dbb6a42edaba83",
+    "recovered_from_set": 27,
+    "recovered_phone_filename": "1000263318.jpg",
+    "manual_assignment": true
+  },
+  "/aliso-viejo-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000232286.jpg",
+    "alt": "Real washer and dryer set provided for Aliso Viejo pickup service",
+    "source_status": "original-full-resolution-manual-direct-upload",
+    "original_width": 1152,
+    "original_height": 1536,
+    "original_size_bytes": 314203,
+    "original_sha256": "afb472181d36d28bc61a9fbccca72fc15dac529903de689760bd5f3ec63c980a",
+    "recovered_from_set": 29,
+    "recovered_phone_filename": "1000232286.jpg",
+    "manual_assignment": true
+  },
+  "/laguna-niguel-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000273583(1).jpg",
+    "alt": "Real washer and dryer set provided for Laguna Niguel pickup service",
+    "source_status": "original-full-resolution-manual-direct-upload",
+    "original_width": 1152,
+    "original_height": 1536,
+    "original_size_bytes": 428539,
+    "original_sha256": "1682a25ddde78842a02484f92e21cbf1487d32d247af075efbd77b69c06ed469",
+    "recovered_from_set": 30,
+    "recovered_phone_filename": "1000273583(1).jpg",
+    "manual_assignment": true
+  },
+  "/san-juan-capistrano-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000263150.png",
+    "alt": "Real washer and dryer set provided for San Juan Capistrano pickup service",
+    "source_status": "original-full-resolution-manual-direct-upload",
+    "original_width": 1536,
+    "original_height": 1152,
+    "original_size_bytes": 278135,
+    "original_sha256": "ed6d8f893e73de935cdfa2fdcd6a912948e13650ef066ca7d336091626a351ee",
+    "recovered_from_set": 31,
+    "recovered_phone_filename": "1000263150.png",
+    "manual_assignment": true
+  },
+  "/san-clemente-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000273912(1).png",
+    "alt": "Real washer and dryer set provided for San Clemente pickup service",
+    "source_status": "original-full-resolution-manual-direct-upload",
+    "original_width": 1152,
+    "original_height": 1536,
+    "original_size_bytes": 248932,
+    "original_sha256": "db852f3dfed7eca0afd4fe05f422b3cd66ac7fd5c4310260db552cafdcb3906b",
+    "recovered_from_set": 32,
+    "recovered_phone_filename": "1000273912(1).png",
+    "manual_assignment": true
+  },
+  "/laguna-beach-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000260608(2).jpg",
+    "alt": "Real washer and dryer set provided for Laguna Beach pickup service",
+    "source_status": "original-full-resolution-manual-direct-upload",
+    "original_width": 691,
+    "original_height": 1536,
+    "original_size_bytes": 119994,
+    "original_sha256": "f7bc5a95d7be975211bce3e7eabae50371e0a552245821b996737b8347596e46",
+    "recovered_from_set": 34,
+    "recovered_phone_filename": "1000260608(2).jpg",
+    "manual_assignment": true
+  },
+  "/dana-point-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000261196(3).jpg",
+    "alt": "Real washer and dryer set provided for Dana Point pickup service",
+    "source_status": "original-full-resolution-manual-direct-upload",
+    "original_width": 1536,
+    "original_height": 1536,
+    "original_size_bytes": 214142,
+    "original_sha256": "bfe7ff3e17872702c22847aa182fe197fe232be395fdd053493af3d1c11752b4",
+    "recovered_from_set": 35,
+    "recovered_phone_filename": "1000261196(3).jpg",
+    "manual_assignment": true
+  },
+  "/costa-mesa-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000262564(1).png",
+    "alt": "Real washer and dryer set provided for Costa Mesa pickup service",
+    "source_status": "original-full-resolution-manual-direct-upload",
+    "original_width": 1536,
+    "original_height": 1026,
+    "original_size_bytes": 261821,
+    "original_sha256": "08d9435797cf47fe2d471e846ccf52f76c17164fe3fd3ad4d12750154e78adbe",
+    "recovered_from_set": 36,
+    "recovered_phone_filename": "1000262564(1).png",
+    "manual_assignment": true
   }
 }
