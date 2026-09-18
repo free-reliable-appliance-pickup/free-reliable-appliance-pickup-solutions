@@ -23,3 +23,10 @@ san-diego-appliance-pickup
 san-francisco-appliance-pickup
 irvine-appliance-pickup
 bakersfield-appliance-pickup
+ontario-appliance-pickup
+fontana-appliance-pickup
+hesperia-appliance-pickup
+apple-valley-appliance-pickup
+temecula-appliance-pickup
+pasadena-appliance-pickup
+long-beach-appliance-pickup
