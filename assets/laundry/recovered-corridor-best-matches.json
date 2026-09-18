@@ -62,7 +62,7 @@
         "dhash_distance": 8,
         "ahash_distance": 0
       },
-      "runner_up_gap": 169.25
+      "runner_up_gap": 165.95
     },
     {
       "target_filename": "1000274690(4).jpg",
@@ -259,18 +259,18 @@
     {
       "target_filename": "1000274887.jpg",
       "best": {
-        "filename": "1780957912484.jpg",
-        "path": "assets/laundry/original-user-heroes/1780957912484.jpg",
-        "width": 423,
-        "height": 564,
-        "bytes": 27223,
-        "sha256": "0eefd424e10dc4e94cf69be1fae8f2292cac369a7890fba1eb74f6a58788d979",
-        "score": 5.9,
-        "phash_distance": 2,
-        "dhash_distance": 6,
+        "filename": "1000274887(2).jpg",
+        "path": "assets/laundry/original-user-heroes/1000274887(2).jpg",
+        "width": 1152,
+        "height": 1536,
+        "bytes": 166610,
+        "sha256": "c46b3397a6471dc81141dec83546d7735ce4ed6f19bc5105bdf2d07fea968cbe",
+        "score": 0.0,
+        "phash_distance": 0,
+        "dhash_distance": 0,
         "ahash_distance": 0
       },
-      "runner_up_gap": 166.85
+      "runner_up_gap": 5.9
     },
     {
       "target_filename": "1000274882.jpg",
