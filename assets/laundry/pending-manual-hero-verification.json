@@ -14,12 +14,6 @@
       "note": "Historical grid set 4 has a weak/ambiguous automated match and must not be promoted automatically."
     },
     {
-      "route": "/san-bernardino-washer-dryer-pickup/",
-      "city": "San Bernardino",
-      "status": "pending-manual-verification",
-      "note": "Historical grid set 23 has a strong image similarity match, but the grid is not authoritative because other known city assignments differ from final manual assignments."
-    },
-    {
       "route": "/laguna-niguel-washer-dryer-pickup/",
       "city": "Laguna Niguel",
       "status": "pending-manual-verification",
