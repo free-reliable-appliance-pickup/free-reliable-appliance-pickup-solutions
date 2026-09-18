@@ -227,5 +227,17 @@
     "recovered_phone_filename": "1000274884(2).jpg",
     "match_phash_distance": 0,
     "match_runner_up_gap": 218.35
+  },
+  "/brea-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/1000274887(2).jpg",
+    "alt": "Real washer and dryer set provided for Brea pickup service",
+    "source_status": "original-full-resolution-manual",
+    "original_width": 1152,
+    "original_height": 1536,
+    "original_size_bytes": 166610,
+    "original_sha256": "c46b3397a6471dc81141dec83546d7735ce4ed6f19bc5105bdf2d07fea968cbe",
+    "recovered_from_set": 80,
+    "recovered_phone_filename": "1000274887(2).jpg",
+    "manual_assignment": true
   }
 }
