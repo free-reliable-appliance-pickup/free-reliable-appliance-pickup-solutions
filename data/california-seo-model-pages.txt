@@ -13,3 +13,9 @@ lancaster-appliance-pickup
 orange-county-appliance-pickup
 inland-empire-appliance-pickup
 rancho-cucamonga-appliance-pickup
+sacramento-appliance-pickup
+fresno-appliance-pickup
+anaheim-appliance-pickup
+san-jose-appliance-pickup
+oakland-appliance-pickup
+palm-desert-appliance-pickup
