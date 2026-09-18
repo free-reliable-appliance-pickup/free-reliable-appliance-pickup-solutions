@@ -1,41 +1,107 @@
 {
-  "purpose": "Keep each verified premium washer/dryer city assignment on its original full-resolution photo and prevent page scripts from overriding it.",
-  "authoritative_manifest": "assets/premium-user-heroes.json",
-  "pending_manual_file": "assets/laundry/pending-manual-hero-verification.json",
-  "verified_count": 29,
-  "pending_manual_count": 14,
+  "purpose": "Keep each manually verified city assignment on its original full-resolution photo and prevent page scripts from overriding it.",
   "verified": [
-    {"route":"la-crescenta-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg","page":"la-crescenta-washer-dryer-pickup/index.html"},
-    {"route":"la-canada-flintridge-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg","page":"la-canada-flintridge-washer-dryer-pickup/index.html"},
-    {"route":"altadena-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240425-WA0015.jpg","page":"altadena-washer-dryer-pickup/index.html"},
-    {"route":"pasadena-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240412-WA0010.jpg","page":"pasadena-washer-dryer-pickup/index.html"},
-    {"route":"san-marino-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240318-WA0047.jpg","page":"san-marino-washer-dryer-pickup/index.html"},
-    {"route":"san-gabriel-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg","page":"san-gabriel-washer-dryer-pickup/index.html"},
-    {"route":"sierra-madre-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg","page":"sierra-madre-washer-dryer-pickup/index.html"},
-    {"route":"arcadia-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg","page":"arcadia-washer-dryer-pickup/index.html"},
-    {"route":"monrovia-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg","page":"monrovia-washer-dryer-pickup/index.html"},
-    {"route":"duarte-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240512-WA0002.jpg","page":"duarte-washer-dryer-pickup/index.html"},
-    {"route":"azusa-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240425-WA0015.jpg","page":"azusa-washer-dryer-pickup/index.html"},
-    {"route":"glendora-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240822-WA0002.jpg","page":"glendora-washer-dryer-pickup/index.html"},
-    {"route":"covina-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg","page":"covina-washer-dryer-pickup/index.html"},
-    {"route":"west-covina-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg","page":"west-covina-washer-dryer-pickup/index.html"},
-    {"route":"san-dimas-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/1000274641(3).jpg","page":"san-dimas-washer-dryer-pickup/index.html"},
-    {"route":"la-verne-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/1000274683(5).jpg","page":"la-verne-washer-dryer-pickup/index.html"},
-    {"route":"claremont-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/1000274700(10).jpg","page":"claremont-washer-dryer-pickup/index.html"},
-    {"route":"pomona-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20230715-WA0046-2.jpg","page":"pomona-washer-dryer-pickup/index.html"},
-    {"route":"montclair-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240319-WA0036.jpg","page":"montclair-washer-dryer-pickup/index.html"},
-    {"route":"ontario-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20250728-WA0015.jpg","page":"ontario-washer-dryer-pickup/index.html"},
-    {"route":"upland-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg","page":"upland-washer-dryer-pickup/index.html"},
-    {"route":"rancho-cucamonga-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg","page":"rancho-cucamonga-washer-dryer-pickup/index.html"},
-    {"route":"fontana-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg","page":"fontana-washer-dryer-pickup/index.html"},
-    {"route":"rancho-santa-margarita-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg","page":"rancho-santa-margarita-washer-dryer-pickup/index.html"},
-    {"route":"huntington-beach-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/20240903_134418.jpg","page":"huntington-beach-washer-dryer-pickup/index.html"},
-    {"route":"irvine-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg","page":"irvine-washer-dryer-pickup/index.html"},
-    {"route":"lake-forest-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20241116-WA0027.jpg","page":"lake-forest-washer-dryer-pickup/index.html"},
-    {"route":"mission-viejo-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/IMG-20241117-WA0023.jpg","page":"mission-viejo-washer-dryer-pickup/index.html"},
-    {"route":"newport-beach-washer-dryer-pickup","src":"/assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg","page":"newport-beach-washer-dryer-pickup/index.html"}
+    {
+      "route": "la-crescenta-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg",
+      "page": "la-crescenta-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "la-canada-flintridge-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240921-WA0122.jpg",
+      "page": "la-canada-flintridge-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "altadena-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240425-WA0015.jpg",
+      "page": "altadena-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "pasadena-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240412-WA0010.jpg",
+      "page": "pasadena-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "san-marino-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240318-WA0047.jpg",
+      "page": "san-marino-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "san-gabriel-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240504-WA0030.jpg",
+      "page": "san-gabriel-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "sierra-madre-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240825-WA0018.jpg",
+      "page": "sierra-madre-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "arcadia-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240320-WA0108.jpg",
+      "page": "arcadia-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "monrovia-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+      "page": "monrovia-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "duarte-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240512-WA0002.jpg",
+      "page": "duarte-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "azusa-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240425-WA0015.jpg",
+      "page": "azusa-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "glendora-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240822-WA0002.jpg",
+      "page": "glendora-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "covina-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+      "page": "covina-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "san-dimas-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000274641(3).jpg",
+      "page": "san-dimas-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "la-verne-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000274683(5).jpg",
+      "page": "la-verne-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "claremont-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000274700(10).jpg",
+      "page": "claremont-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "pomona-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20230715-WA0046-2.jpg",
+      "page": "pomona-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "montclair-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240319-WA0036.jpg",
+      "page": "montclair-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "ontario-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20250728-WA0015.jpg",
+      "page": "ontario-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "fontana-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
+      "page": "fontana-washer-dryer-pickup/index.html"
+    }
   ],
   "changed_pages": [],
-  "changed_count": 0,
-  "status": "Verified assignments are preserved at original resolution. Unresolved routes remain quarantined for manual verification and are not auto-promoted."
+  "changed_count": 0
 }
