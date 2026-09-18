@@ -34,7 +34,7 @@ jobs:
               low=t.lower()
               title=(re.search(r'<title>(.*?)</title>',t,re.I|re.S) or [None,''])[1].lower()
               h1=(re.search(r'<h1[^>]*>(.*?)</h1>',t,re.I|re.S) or [None,''])[1].lower()
-              image_tags=re.findall(r'<img\\b[^>]*>',t,re.I)
+              image_tags=re.findall(r'<img\b[^>]*>',t,re.I)
               has_real_laundry_image=any(
                   (
                       'washer' in tag.lower()
