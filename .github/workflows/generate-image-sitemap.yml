@@ -1,0 +1,52 @@
+name: Generate Image Sitemap
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/index.html'
+      - 'assets/**'
+      - 'data/california-seo-model-pages.txt'
+      - 'data/california-washer-dryer-seo-model-pages.txt'
+      - 'scripts/generate-image-sitemap.py'
+      - '.github/workflows/generate-image-sitemap.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image sitemap
+        run: python scripts/generate-image-sitemap.py
+      - name: Validate image sitemap
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          p=Path("sitemap-images.xml")
+          if not p.exists():
+              raise SystemExit("sitemap-images.xml missing")
+          root=ET.parse(p).getroot()
+          ns={"s":"http://www.sitemaps.org/schemas/sitemap/0.9","i":"http://www.google.com/schemas/sitemap-image/1.1"}
+          urls=root.findall("s:url",ns)
+          images=root.findall(".//i:image",ns)
+          print("pages",len(urls),"images",len(images))
+          if len(urls) < 50 or len(images) < 50:
+              raise SystemExit("image sitemap unexpectedly small")
+          PY
+      - name: Commit generated image sitemap
+        run: |
+          if git diff --quiet -- sitemap-images.xml; then
+            echo "No image sitemap changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap-images.xml
+          git commit -m "Refresh appliance image sitemap"
+          git pull --rebase origin main
+          git push origin HEAD:main
