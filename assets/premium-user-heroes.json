@@ -239,5 +239,18 @@
     "recovered_from_set": 80,
     "recovered_phone_filename": "1000274887(2).jpg",
     "manual_assignment": true
+  },
+  "/san-bernardino-washer-dryer-pickup/": {
+    "src": "assets/laundry/original-user-heroes/IMG-20240822-WA0011.jpg",
+    "alt": "Real washer and dryer set provided for San Bernardino pickup service",
+    "source_status": "original-full-resolution-recovered-high-confidence",
+    "original_width": 1536,
+    "original_height": 2048,
+    "original_size_bytes": 622876,
+    "original_sha256": "b7c2cf6ff1048a3424581312bb9791cd50f8adfee12555561648c01b6fab537a",
+    "recovered_from_set": 23,
+    "match_score": 0.65,
+    "match_phash_distance": 0,
+    "match_runner_up_gap": 191.4
   }
 }
