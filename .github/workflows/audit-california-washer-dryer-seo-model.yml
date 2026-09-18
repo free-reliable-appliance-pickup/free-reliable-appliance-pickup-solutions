@@ -1,0 +1,61 @@
+name: Audit California Washer Dryer SEO Model
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/index.html'
+      - 'data/california-washer-dryer-seo-model-pages.txt'
+      - '.github/workflows/audit-california-washer-dryer-seo-model.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate California washer dryer benchmark pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys
+
+          slugs=[x.strip() for x in Path('data/california-washer-dryer-seo-model-pages.txt').read_text().splitlines() if x.strip()]
+          failures=[]
+          for slug in slugs:
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{slug}: missing page')
+                  continue
+              t=p.read_text(encoding='utf-8',errors='replace')
+              low=t.lower()
+              title=(re.search(r'<title>(.*?)</title>',t,re.I|re.S) or [None,''])[1].lower()
+              h1=(re.search(r'<h1[^>]*>(.*?)</h1>',t,re.I|re.S) or [None,''])[1].lower()
+              checks={
+                  'indexable robots': ('name="robots"' in low and 'index' in low and 'follow' in low and 'noindex' not in low.split('</head>',1)[0]),
+                  'self canonical': f'https://freereliableappliancepickup.com/{slug}/' in low,
+                  'washer dryer title': ('washer' in title and 'dryer' in title),
+                  'washer dryer H1': ('washer' in h1 and 'dryer' in h1),
+                  'request target': ('id="request"' in low or "id='request'" in low),
+                  'Formspree': 'https://formspree.io/f/mvzeapzd' in low,
+                  'customer routing': '/assets/customer-routing.js' in low,
+                  'structured WebPage': ('"@type":"webpage"' in low or '"@type": "webpage"' in low),
+                  'breadcrumb': 'breadcrumblist' in low,
+                  'real laundry proof': ('real washer' in low or 'washer-dryer' in low or 'washer dryer' in low),
+              }
+              for label,ok in checks.items():
+                  if not ok:
+                      failures.append(f'{slug}: missing {label}')
+              internal=len(re.findall(r'href=["\'](?:\.\./|/)[a-z0-9-]+/',t,re.I))
+              if internal < 3:
+                  failures.append(f'{slug}: fewer than 3 useful internal links')
+
+          print(f'CALIFORNIA_WASHER_DRYER_BENCHMARK_PAGES {len(slugs)}')
+          if failures:
+              print('FAILURES')
+              for f in failures: print('-',f)
+              sys.exit(1)
+          print('PASS: California washer/dryer benchmark pages meet the model structure.')
