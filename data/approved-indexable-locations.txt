@@ -196,7 +196,6 @@ stockton-appliance-pickup
 victorville-appliance-pickup
 victorville-rv-appliance-pickup
 victorville-washer-dryer-pickup
-{rel}
 anaheim-washer-dryer-pickup
 avocado-heights-appliance-pickup
 avocado-heights-washer-dryer-pickup
