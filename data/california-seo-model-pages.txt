@@ -78,3 +78,4 @@ san-dimas-appliance-pickup
 stockton-appliance-pickup
 upland-appliance-pickup
 yucaipa-appliance-pickup
+tustin-appliance-pickup
