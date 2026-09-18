@@ -8,12 +8,6 @@
   },
   "pending_routes": [
     {
-      "route": "/south-pasadena-washer-dryer-pickup/",
-      "city": "South Pasadena",
-      "status": "pending-manual-verification",
-      "note": "Historical grid set 4 has a weak/ambiguous automated match and must not be promoted automatically."
-    },
-    {
       "route": "/laguna-niguel-washer-dryer-pickup/",
       "city": "Laguna Niguel",
       "status": "pending-manual-verification",
