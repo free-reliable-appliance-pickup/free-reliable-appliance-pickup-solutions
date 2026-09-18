@@ -40,7 +40,7 @@ jobs:
           PY
       - name: Commit generated image sitemap
         run: |
-          if git diff --quiet -- sitemap-images.xml; then
+          if [ -z "$(git status --porcelain -- sitemap-images.xml)" ]; then
             echo "No image sitemap changes"
             exit 0
           fi
