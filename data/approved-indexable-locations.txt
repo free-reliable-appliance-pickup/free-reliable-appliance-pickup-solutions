@@ -31,6 +31,8 @@ banning-washer-dryer-pickup
 beaumont-appliance-pickup
 beaumont-washer-dryer-pickup
 beaverton-appliance-pickup
+bell-gardens-appliance-pickup
+bell-gardens-washer-dryer-pickup
 bermuda-dunes-appliance-pickup
 brea-appliance-pickup
 brea-washer-dryer-pickup
@@ -46,10 +48,14 @@ chino-appliance-pickup
 chino-hills-appliance-pickup
 chino-hills-washer-dryer-pickup
 chino-washer-dryer-pickup
+city-of-industry-appliance-pickup
+city-of-industry-washer-dryer-pickup
 claremont-appliance-pickup
 claremont-washer-dryer-pickup
 coachella-valley-appliance-pickup
 colorado-appliance-pickup
+commerce-appliance-pickup
+commerce-washer-dryer-pickup
 corona-appliance-pickup
 costa-mesa-appliance-pickup
 costa-mesa-washer-dryer-pickup
@@ -225,6 +231,8 @@ santa-fe-springs-washer-dryer-pickup
 sf-bay-area-appliance-pickup
 sierra-madre-appliance-pickup
 sierra-madre-washer-dryer-pickup
+signal-hill-appliance-pickup
+signal-hill-washer-dryer-pickup
 south-el-monte-appliance-pickup
 south-el-monte-washer-dryer-pickup
 south-orange-county-washer-dryer-pickup
