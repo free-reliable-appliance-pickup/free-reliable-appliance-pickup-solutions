@@ -242,6 +242,7 @@ lake-elsinore-washer-dryer-pickup
 lake-forest-appliance-pickup
 lake-forest-washer-dryer-pickup
 lakewood-appliance-pickup
+lakewood-ca-appliance-pickup
 lakewood-washer-dryer-pickup
 lancaster-appliance-pickup
 lancaster-rv-appliance-pickup
