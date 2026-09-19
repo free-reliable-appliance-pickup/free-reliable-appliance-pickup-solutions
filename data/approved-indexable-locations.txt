@@ -57,6 +57,8 @@ california-appliance-pickup
 california-washer-dryer-pickup
 calimesa-appliance-pickup
 calimesa-washer-dryer-pickup
+carlsbad-appliance-pickup
+carlsbad-washer-dryer-pickup
 carson-appliance-pickup
 carson-washer-dryer-pickup
 cathedral-city-appliance-pickup
@@ -71,6 +73,8 @@ chino-appliance-pickup
 chino-hills-appliance-pickup
 chino-hills-washer-dryer-pickup
 chino-washer-dryer-pickup
+chula-vista-appliance-pickup
+chula-vista-washer-dryer-pickup
 city-of-industry-appliance-pickup
 city-of-industry-washer-dryer-pickup
 claremont-appliance-pickup
@@ -110,6 +114,8 @@ duarte-appliance-pickup
 duarte-washer-dryer-pickup
 eastvale-appliance-pickup
 eastvale-washer-dryer-pickup
+el-cajon-appliance-pickup
+el-cajon-washer-dryer-pickup
 el-mirage-appliance-pickup
 el-mirage-rv-appliance-pickup
 el-mirage-washer-dryer-pickup
@@ -117,6 +123,10 @@ el-monte-appliance-pickup
 el-monte-washer-dryer-pickup
 el-segundo-appliance-pickup
 el-segundo-washer-dryer-pickup
+encinitas-appliance-pickup
+encinitas-washer-dryer-pickup
+escondido-appliance-pickup
+escondido-washer-dryer-pickup
 fontana-appliance-pickup
 fontana-washer-dryer-pickup
 fountain-valley-appliance-pickup
@@ -180,6 +190,8 @@ la-habra-appliance-pickup
 la-habra-heights-appliance-pickup
 la-habra-heights-washer-dryer-pickup
 la-habra-washer-dryer-pickup
+la-mesa-appliance-pickup
+la-mesa-washer-dryer-pickup
 la-mirada-appliance-pickup
 la-mirada-washer-dryer-pickup
 la-palma-appliance-pickup
@@ -248,6 +260,8 @@ murrieta-appliance-pickup
 murrieta-washer-dryer-pickup
 muscoy-appliance-pickup
 muscoy-washer-dryer-pickup
+national-city-appliance-pickup
+national-city-washer-dryer-pickup
 nevada-appliance-pickup
 newport-beach-appliance-pickup
 newport-beach-washer-dryer-pickup
@@ -257,6 +271,8 @@ norwalk-appliance-pickup
 norwalk-washer-dryer-pickup
 oak-glen-washer-dryer-pickup
 oakland-appliance-pickup
+oceanside-appliance-pickup
+oceanside-washer-dryer-pickup
 ontario-appliance-pickup
 ontario-washer-dryer-pickup
 orange-appliance-pickup
@@ -323,6 +339,8 @@ san-clemente-appliance-pickup
 san-clemente-washer-dryer-pickup
 san-diego-appliance-pickup
 san-diego-county-appliance-pickup
+san-diego-county-washer-dryer-pickup
+san-diego-washer-dryer-pickup
 san-dimas-appliance-pickup
 san-dimas-washer-dryer-pickup
 san-fernando-appliance-pickup
@@ -335,6 +353,8 @@ san-gabriel-washer-dryer-pickup
 san-jose-appliance-pickup
 san-juan-capistrano-appliance-pickup
 san-juan-capistrano-washer-dryer-pickup
+san-marcos-appliance-pickup
+san-marcos-washer-dryer-pickup
 san-marino-appliance-pickup
 san-marino-washer-dryer-pickup
 santa-ana-appliance-pickup
@@ -344,6 +364,8 @@ santa-fe-springs-appliance-pickup
 santa-fe-springs-washer-dryer-pickup
 santa-monica-appliance-pickup
 santa-monica-washer-dryer-pickup
+santee-appliance-pickup
+santee-washer-dryer-pickup
 seal-beach-appliance-pickup
 seal-beach-washer-dryer-pickup
 sf-bay-area-appliance-pickup
@@ -384,6 +406,8 @@ victorville-rv-appliance-pickup
 victorville-washer-dryer-pickup
 villa-park-appliance-pickup
 villa-park-washer-dryer-pickup
+vista-appliance-pickup
+vista-washer-dryer-pickup
 walnut-appliance-pickup
 walnut-washer-dryer-pickup
 washington-appliance-pickup
