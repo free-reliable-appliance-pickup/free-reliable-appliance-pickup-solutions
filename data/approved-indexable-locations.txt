@@ -107,6 +107,8 @@ la-canada-flintridge-washer-dryer-pickup
 la-crescenta-appliance-pickup
 la-crescenta-washer-dryer-pickup
 la-habra-appliance-pickup
+la-habra-heights-appliance-pickup
+la-habra-heights-washer-dryer-pickup
 la-habra-washer-dryer-pickup
 la-puente-appliance-pickup
 la-puente-washer-dryer-pickup
@@ -207,6 +209,7 @@ san-diego-county-appliance-pickup
 san-dimas-appliance-pickup
 san-dimas-washer-dryer-pickup
 san-francisco-appliance-pickup
+san-gabriel-appliance-pickup
 san-gabriel-inland-empire-washer-dryer-pickup
 san-gabriel-valley-appliance-pickup
 san-gabriel-washer-dryer-pickup
@@ -222,6 +225,8 @@ santa-fe-springs-washer-dryer-pickup
 sf-bay-area-appliance-pickup
 sierra-madre-appliance-pickup
 sierra-madre-washer-dryer-pickup
+south-el-monte-appliance-pickup
+south-el-monte-washer-dryer-pickup
 south-orange-county-washer-dryer-pickup
 south-pasadena-washer-dryer-pickup
 south-san-jose-hills-appliance-pickup
@@ -230,6 +235,8 @@ southern-california-washer-dryer-pickup
 stockton-appliance-pickup
 sun-city-palm-desert-appliance-pickup
 temecula-appliance-pickup
+temple-city-appliance-pickup
+temple-city-washer-dryer-pickup
 thornton-appliance-pickup
 tigard-appliance-pickup
 torrance-appliance-pickup
