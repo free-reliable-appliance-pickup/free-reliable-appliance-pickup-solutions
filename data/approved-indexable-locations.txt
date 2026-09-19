@@ -34,8 +34,6 @@ baldwin-park-appliance-pickup
 baldwin-park-washer-dryer-pickup
 banning-appliance-pickup
 banning-washer-dryer-pickup
-bay-area-appliance-pickup
-bay-area-washer-dryer-pickup
 beaumont-appliance-pickup
 beaumont-washer-dryer-pickup
 beaverton-appliance-pickup
