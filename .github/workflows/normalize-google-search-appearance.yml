@@ -48,12 +48,12 @@ jobs:
               additions=[]
 
               title=text_value(raw,r'<title>(.*?)</title>','Free Reliable Appliance Pickup')
-              desc=text_value(raw,r'<meta\\b[^>]*name=["\\']description["\\'][^>]*content=["\\']([^"\\']+)["\\']',
+              desc=text_value(raw,r'<meta[^>]+name="description"[^>]+content="([^"]+)"',
                               'Free Reliable Appliance Pickup service information and request review.')
               if len(desc)<40:
                   desc='Free Reliable Appliance Pickup service information, qualification details, local routing and pickup request review.'
 
-              if not re.search(r'<link\\b[^>]*rel=["\\'](?:shortcut\\s+)?icon["\\']',raw,re.I):
+              if not re.search(r'<link[^>]+rel="(?:shortcut\\s+)?icon"',raw,re.I):
                   additions.append('<link rel="icon" type="image/png" href="/file_00000000b7c082308dccc73e5bd3acd2.png">')
               if 'property="og:site_name"' not in low and "property='og:site_name'" not in low:
                   additions.append('<meta property="og:site_name" content="Free Reliable Appliance Pickup">')
