@@ -1,0 +1,125 @@
+name: Normalize Google Search Appearance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/normalize-google-search-appearance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Normalize active sitemap pages
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, json, html, xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          DEFAULT_IMAGE=BASE+'file_00000000b7c082308dccc73e5bd3acd2.png'
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          root=ET.parse('sitemap.xml').getroot()
+          urls=[x.text.strip() for x in root.findall('.//s:loc',ns) if x.text and x.text.strip().startswith(BASE)]
+
+          def file_for(url):
+              if url==BASE:
+                  return Path('index.html')
+              return Path(url[len(BASE):].strip('/'))/'index.html'
+
+          def text_value(raw, pattern, fallback=''):
+              m=re.search(pattern,raw,re.I|re.S)
+              if not m: return fallback
+              return html.unescape(re.sub(r'<[^>]+>','',m.group(1))).strip()
+
+          changed=[]
+          for url in urls:
+              p=file_for(url)
+              if not p.exists():
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              low=raw.lower()
+              additions=[]
+
+              title=text_value(raw,r'<title>(.*?)</title>','Free Reliable Appliance Pickup')
+              desc=text_value(raw,r'<meta\\b[^>]*name=["\\']description["\\'][^>]*content=["\\']([^"\\']+)["\\']',
+                              'Free Reliable Appliance Pickup service information and request review.')
+              if len(desc)<40:
+                  desc='Free Reliable Appliance Pickup service information, qualification details, local routing and pickup request review.'
+
+              if not re.search(r'<link\\b[^>]*rel=["\\'](?:shortcut\\s+)?icon["\\']',raw,re.I):
+                  additions.append('<link rel="icon" type="image/png" href="/file_00000000b7c082308dccc73e5bd3acd2.png">')
+              if 'property="og:site_name"' not in low and "property='og:site_name'" not in low:
+                  additions.append('<meta property="og:site_name" content="Free Reliable Appliance Pickup">')
+              if 'property="og:url"' not in low and "property='og:url'" not in low:
+                  additions.append('<meta property="og:url" content="'+html.escape(url,quote=True)+'">')
+              if 'property="og:title"' not in low and "property='og:title'" not in low:
+                  additions.append('<meta property="og:title" content="'+html.escape(title,quote=True)+'">')
+              if 'property="og:description"' not in low and "property='og:description'" not in low:
+                  additions.append('<meta property="og:description" content="'+html.escape(desc,quote=True)+'">')
+              if 'summary_large_image' not in low:
+                  additions.append('<meta name="twitter:card" content="summary_large_image">')
+
+              slug='' if url==BASE else url[len(BASE):].strip('/')
+              if slug.endswith('-appliance-pickup'):
+                  if 'site-brand.css' not in low:
+                      additions.append('<link rel="stylesheet" href="/assets/site-brand.css?v=20260919normalize">')
+                  if 'property="og:image"' not in low and "property='og:image'" not in low:
+                      additions.append('<meta property="og:image" content="'+DEFAULT_IMAGE+'">')
+                  if 'breadcrumb' not in low:
+                      crumb={
+                        "@context":"https://schema.org",
+                        "@type":"BreadcrumbList",
+                        "itemListElement":[
+                          {"@type":"ListItem","position":1,"name":"Home","item":BASE},
+                          {"@type":"ListItem","position":2,"name":"Service Areas","item":BASE+"service-areas/"},
+                          {"@type":"ListItem","position":3,"name":title,"item":url}
+                        ]
+                      }
+                      additions.append('<script type="application/ld+json">'+json.dumps(crumb,separators=(',',':'))+'</script>')
+
+              if '"@type":"webpage"' not in low or '#website' not in low:
+                  webpage={
+                    "@context":"https://schema.org",
+                    "@type":"WebPage",
+                    "@id":url+"#webpage",
+                    "url":url,
+                    "name":title,
+                    "description":desc,
+                    "isPartOf":{"@id":BASE+"#website"}
+                  }
+                  additions.append('<script type="application/ld+json">'+json.dumps(webpage,separators=(',',':'))+'</script>')
+
+              if additions:
+                  marker='</head>'
+                  if marker not in raw.lower():
+                      continue
+                  i=raw.lower().rfind(marker)
+                  raw=raw[:i]+'\n'+'\n'.join(additions)+'\n'+raw[i:]
+                  p.write_text(raw,encoding='utf-8')
+                  changed.append(str(p))
+
+          print('NORMALIZED_PAGES',len(changed))
+          for p in changed[:80]:
+              print(' -',p)
+          if len(changed)>80:
+              print(' - ...',len(changed)-80,'more')
+          PY
+      - name: Commit normalized search appearance signals
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No normalization changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Normalize active Google search appearance signals"
+          git push
