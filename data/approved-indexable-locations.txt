@@ -43,6 +43,8 @@ cathedral-city-appliance-pickup
 centennial-appliance-pickup
 central-coast-appliance-pickup
 central-valley-appliance-pickup
+cerritos-appliance-pickup
+cerritos-washer-dryer-pickup
 cherry-valley-washer-dryer-pickup
 chino-appliance-pickup
 chino-hills-appliance-pickup
@@ -100,6 +102,8 @@ highland-washer-dryer-pickup
 hillsboro-appliance-pickup
 huntington-beach-appliance-pickup
 huntington-beach-washer-dryer-pickup
+huntington-park-appliance-pickup
+huntington-park-washer-dryer-pickup
 idaho-appliance-pickup
 indian-wells-appliance-pickup
 indio-appliance-pickup
@@ -118,6 +122,8 @@ la-habra-appliance-pickup
 la-habra-heights-appliance-pickup
 la-habra-heights-washer-dryer-pickup
 la-habra-washer-dryer-pickup
+la-mirada-appliance-pickup
+la-mirada-washer-dryer-pickup
 la-puente-appliance-pickup
 la-puente-washer-dryer-pickup
 la-quinta-appliance-pickup
@@ -260,6 +266,8 @@ tustin-appliance-pickup
 upland-appliance-pickup
 upland-washer-dryer-pickup
 utah-appliance-pickup
+vernon-appliance-pickup
+vernon-washer-dryer-pickup
 victorville-appliance-pickup
 victorville-rv-appliance-pickup
 victorville-washer-dryer-pickup
