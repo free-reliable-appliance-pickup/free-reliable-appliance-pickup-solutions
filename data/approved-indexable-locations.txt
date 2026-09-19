@@ -139,6 +139,8 @@ monrovia-appliance-pickup
 monrovia-washer-dryer-pickup
 montclair-appliance-pickup
 montclair-washer-dryer-pickup
+montebello-appliance-pickup
+montebello-washer-dryer-pickup
 montrose-washer-dryer-pickup
 moreno-valley-appliance-pickup
 murrieta-appliance-pickup
@@ -167,6 +169,8 @@ phelan-appliance-pickup
 phelan-rv-appliance-pickup
 phelan-washer-dryer-pickup
 phoenix-appliance-pickup
+pico-rivera-appliance-pickup
+pico-rivera-washer-dryer-pickup
 pomona-appliance-pickup
 pomona-washer-dryer-pickup
 portland-appliance-pickup
