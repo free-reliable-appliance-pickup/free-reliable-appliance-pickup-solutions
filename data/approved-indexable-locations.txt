@@ -154,6 +154,7 @@ garden-grove-appliance-pickup
 garden-grove-washer-dryer-pickup
 gardena-appliance-pickup
 gardena-washer-dryer-pickup
+glendale-appliance-pickup
 glendale-washer-dryer-pickup
 glendora-appliance-pickup
 glendora-washer-dryer-pickup
@@ -399,6 +400,7 @@ santa-barbara-washer-dryer-pickup
 santa-clara-appliance-pickup
 santa-clara-washer-dryer-pickup
 santa-clarita-appliance-pickup
+santa-clarita-washer-dryer-pickup
 santa-fe-springs-appliance-pickup
 santa-fe-springs-washer-dryer-pickup
 santa-maria-appliance-pickup
@@ -440,6 +442,7 @@ temple-city-washer-dryer-pickup
 thornton-appliance-pickup
 tigard-appliance-pickup
 torrance-appliance-pickup
+torrance-washer-dryer-pickup
 trabuco-canyon-washer-dryer-pickup
 tustin-appliance-pickup
 tustin-washer-dryer-pickup
