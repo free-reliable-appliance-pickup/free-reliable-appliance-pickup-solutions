@@ -44,6 +44,8 @@ beverly-hills-appliance-pickup
 beverly-hills-washer-dryer-pickup
 brea-appliance-pickup
 brea-washer-dryer-pickup
+buena-park-appliance-pickup
+buena-park-washer-dryer-pickup
 burbank-appliance-pickup
 burbank-washer-dryer-pickup
 calabasas-appliance-pickup
@@ -84,6 +86,8 @@ cudahy-appliance-pickup
 cudahy-washer-dryer-pickup
 culver-city-appliance-pickup
 culver-city-washer-dryer-pickup
+cypress-appliance-pickup
+cypress-washer-dryer-pickup
 dana-point-washer-dryer-pickup
 denver-appliance-pickup
 diamond-bar-appliance-pickup
@@ -108,6 +112,8 @@ fresno-appliance-pickup
 fresno-washer-dryer-pickup
 fullerton-appliance-pickup
 fullerton-washer-dryer-pickup
+garden-grove-appliance-pickup
+garden-grove-washer-dryer-pickup
 gardena-appliance-pickup
 gardena-washer-dryer-pickup
 glendale-washer-dryer-pickup
@@ -219,8 +225,10 @@ oak-glen-washer-dryer-pickup
 oakland-appliance-pickup
 ontario-appliance-pickup
 ontario-washer-dryer-pickup
+orange-appliance-pickup
 orange-county-appliance-pickup
 orange-county-washer-dryer-pickup
+orange-washer-dryer-pickup
 oregon-appliance-pickup
 oregon-city-appliance-pickup
 oxnard-appliance-pickup
@@ -241,6 +249,8 @@ phelan-washer-dryer-pickup
 phoenix-appliance-pickup
 pico-rivera-appliance-pickup
 pico-rivera-washer-dryer-pickup
+placentia-appliance-pickup
+placentia-washer-dryer-pickup
 pomona-appliance-pickup
 pomona-washer-dryer-pickup
 portland-appliance-pickup
@@ -293,6 +303,8 @@ santa-fe-springs-appliance-pickup
 santa-fe-springs-washer-dryer-pickup
 santa-monica-appliance-pickup
 santa-monica-washer-dryer-pickup
+seal-beach-appliance-pickup
+seal-beach-washer-dryer-pickup
 sf-bay-area-appliance-pickup
 sierra-madre-appliance-pickup
 sierra-madre-washer-dryer-pickup
@@ -317,6 +329,7 @@ tigard-appliance-pickup
 torrance-appliance-pickup
 trabuco-canyon-washer-dryer-pickup
 tustin-appliance-pickup
+tustin-washer-dryer-pickup
 upland-appliance-pickup
 upland-washer-dryer-pickup
 utah-appliance-pickup
@@ -333,6 +346,7 @@ west-covina-washer-dryer-pickup
 west-hollywood-appliance-pickup
 west-hollywood-washer-dryer-pickup
 westminster-appliance-pickup
+westminster-washer-dryer-pickup
 whittier-appliance-pickup
 whittier-washer-dryer-pickup
 yorba-linda-washer-dryer-pickup
