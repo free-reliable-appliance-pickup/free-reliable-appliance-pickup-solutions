@@ -163,6 +163,8 @@ la-habra-heights-washer-dryer-pickup
 la-habra-washer-dryer-pickup
 la-mirada-appliance-pickup
 la-mirada-washer-dryer-pickup
+la-palma-appliance-pickup
+la-palma-washer-dryer-pickup
 la-puente-appliance-pickup
 la-puente-washer-dryer-pickup
 la-quinta-appliance-pickup
@@ -189,6 +191,8 @@ lomita-appliance-pickup
 lomita-washer-dryer-pickup
 long-beach-appliance-pickup
 long-beach-washer-dryer-pickup
+los-alamitos-appliance-pickup
+los-alamitos-washer-dryer-pickup
 los-angeles-appliance-pickup
 los-angeles-county-appliance-pickup
 los-angeles-county-washer-dryer-pickup
@@ -319,6 +323,8 @@ south-pasadena-washer-dryer-pickup
 south-san-jose-hills-appliance-pickup
 south-san-jose-hills-washer-dryer-pickup
 southern-california-washer-dryer-pickup
+stanton-appliance-pickup
+stanton-washer-dryer-pickup
 stockton-appliance-pickup
 sun-city-palm-desert-appliance-pickup
 temecula-appliance-pickup
@@ -338,6 +344,8 @@ vernon-washer-dryer-pickup
 victorville-appliance-pickup
 victorville-rv-appliance-pickup
 victorville-washer-dryer-pickup
+villa-park-appliance-pickup
+villa-park-washer-dryer-pickup
 walnut-appliance-pickup
 walnut-washer-dryer-pickup
 washington-appliance-pickup
