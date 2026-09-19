@@ -77,6 +77,7 @@ commerce-washer-dryer-pickup
 compton-appliance-pickup
 compton-washer-dryer-pickup
 corona-appliance-pickup
+corona-washer-dryer-pickup
 costa-mesa-appliance-pickup
 costa-mesa-washer-dryer-pickup
 coto-de-caza-washer-dryer-pickup
@@ -97,6 +98,7 @@ downey-washer-dryer-pickup
 duarte-appliance-pickup
 duarte-washer-dryer-pickup
 eastvale-appliance-pickup
+eastvale-washer-dryer-pickup
 el-mirage-appliance-pickup
 el-mirage-rv-appliance-pickup
 el-mirage-washer-dryer-pickup
@@ -152,6 +154,7 @@ irvine-washer-dryer-pickup
 irwindale-appliance-pickup
 irwindale-washer-dryer-pickup
 jurupa-valley-appliance-pickup
+jurupa-valley-washer-dryer-pickup
 keizer-appliance-pickup
 la-canada-flintridge-appliance-pickup
 la-canada-flintridge-washer-dryer-pickup
@@ -176,6 +179,8 @@ laguna-hills-washer-dryer-pickup
 laguna-niguel-appliance-pickup
 laguna-niguel-washer-dryer-pickup
 laguna-woods-washer-dryer-pickup
+lake-elsinore-appliance-pickup
+lake-elsinore-washer-dryer-pickup
 lake-forest-appliance-pickup
 lake-forest-washer-dryer-pickup
 lakewood-appliance-pickup
@@ -206,6 +211,7 @@ manhattan-beach-washer-dryer-pickup
 maywood-appliance-pickup
 maywood-washer-dryer-pickup
 menifee-appliance-pickup
+menifee-washer-dryer-pickup
 mission-viejo-appliance-pickup
 mission-viejo-washer-dryer-pickup
 modesto-appliance-pickup
@@ -219,10 +225,14 @@ monterey-park-appliance-pickup
 monterey-park-washer-dryer-pickup
 montrose-washer-dryer-pickup
 moreno-valley-appliance-pickup
+moreno-valley-washer-dryer-pickup
 murrieta-appliance-pickup
+murrieta-washer-dryer-pickup
 nevada-appliance-pickup
 newport-beach-appliance-pickup
 newport-beach-washer-dryer-pickup
+norco-appliance-pickup
+norco-washer-dryer-pickup
 norwalk-appliance-pickup
 norwalk-washer-dryer-pickup
 oak-glen-washer-dryer-pickup
@@ -246,6 +256,8 @@ paramount-washer-dryer-pickup
 parker-appliance-pickup
 pasadena-appliance-pickup
 pasadena-washer-dryer-pickup
+perris-appliance-pickup
+perris-washer-dryer-pickup
 pga-west-appliance-pickup
 phelan-appliance-pickup
 phelan-rv-appliance-pickup
@@ -328,6 +340,7 @@ stanton-washer-dryer-pickup
 stockton-appliance-pickup
 sun-city-palm-desert-appliance-pickup
 temecula-appliance-pickup
+temecula-washer-dryer-pickup
 temple-city-appliance-pickup
 temple-city-washer-dryer-pickup
 thornton-appliance-pickup
@@ -357,6 +370,8 @@ westminster-appliance-pickup
 westminster-washer-dryer-pickup
 whittier-appliance-pickup
 whittier-washer-dryer-pickup
+wildomar-appliance-pickup
+wildomar-washer-dryer-pickup
 yorba-linda-washer-dryer-pickup
 yucaipa-appliance-pickup
 yucaipa-washer-dryer-pickup
