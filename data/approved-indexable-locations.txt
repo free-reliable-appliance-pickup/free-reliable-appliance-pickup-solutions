@@ -27,6 +27,7 @@ avocado-heights-washer-dryer-pickup
 azusa-appliance-pickup
 azusa-washer-dryer-pickup
 bakersfield-appliance-pickup
+bakersfield-washer-dryer-pickup
 baldwin-park-appliance-pickup
 baldwin-park-washer-dryer-pickup
 banning-appliance-pickup
@@ -66,6 +67,7 @@ cathedral-city-washer-dryer-pickup
 centennial-appliance-pickup
 central-coast-appliance-pickup
 central-valley-appliance-pickup
+central-valley-washer-dryer-pickup
 cerritos-appliance-pickup
 cerritos-washer-dryer-pickup
 cherry-valley-washer-dryer-pickup
@@ -253,6 +255,7 @@ menifee-washer-dryer-pickup
 mission-viejo-appliance-pickup
 mission-viejo-washer-dryer-pickup
 modesto-appliance-pickup
+modesto-washer-dryer-pickup
 monrovia-appliance-pickup
 monrovia-washer-dryer-pickup
 montclair-appliance-pickup
@@ -340,6 +343,7 @@ rosemead-washer-dryer-pickup
 rowland-heights-appliance-pickup
 rowland-heights-washer-dryer-pickup
 sacramento-appliance-pickup
+sacramento-washer-dryer-pickup
 salem-appliance-pickup
 san-bernardino-appliance-pickup
 san-bernardino-county-appliance-pickup
@@ -397,6 +401,7 @@ southern-california-washer-dryer-pickup
 stanton-appliance-pickup
 stanton-washer-dryer-pickup
 stockton-appliance-pickup
+stockton-washer-dryer-pickup
 sun-city-palm-desert-appliance-pickup
 temecula-appliance-pickup
 temecula-washer-dryer-pickup
@@ -418,6 +423,8 @@ victorville-rv-appliance-pickup
 victorville-washer-dryer-pickup
 villa-park-appliance-pickup
 villa-park-washer-dryer-pickup
+visalia-appliance-pickup
+visalia-washer-dryer-pickup
 vista-appliance-pickup
 vista-washer-dryer-pickup
 walnut-appliance-pickup
