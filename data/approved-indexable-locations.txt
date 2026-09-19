@@ -70,6 +70,7 @@ cathedral-city-appliance-pickup
 cathedral-city-washer-dryer-pickup
 centennial-appliance-pickup
 central-coast-appliance-pickup
+central-coast-washer-dryer-pickup
 central-valley-appliance-pickup
 central-valley-washer-dryer-pickup
 cerritos-appliance-pickup
@@ -302,6 +303,7 @@ orange-washer-dryer-pickup
 oregon-appliance-pickup
 oregon-city-appliance-pickup
 oxnard-appliance-pickup
+oxnard-washer-dryer-pickup
 palm-desert-appliance-pickup
 palm-desert-washer-dryer-pickup
 palm-springs-appliance-pickup
@@ -378,15 +380,21 @@ san-jose-appliance-pickup
 san-jose-washer-dryer-pickup
 san-juan-capistrano-appliance-pickup
 san-juan-capistrano-washer-dryer-pickup
+san-luis-obispo-appliance-pickup
+san-luis-obispo-washer-dryer-pickup
 san-marcos-appliance-pickup
 san-marcos-washer-dryer-pickup
 san-marino-appliance-pickup
 san-marino-washer-dryer-pickup
 santa-ana-appliance-pickup
 santa-ana-washer-dryer-pickup
+santa-barbara-appliance-pickup
+santa-barbara-washer-dryer-pickup
 santa-clarita-appliance-pickup
 santa-fe-springs-appliance-pickup
 santa-fe-springs-washer-dryer-pickup
+santa-maria-appliance-pickup
+santa-maria-washer-dryer-pickup
 santa-monica-appliance-pickup
 santa-monica-washer-dryer-pickup
 santee-appliance-pickup
@@ -427,6 +435,8 @@ tustin-washer-dryer-pickup
 upland-appliance-pickup
 upland-washer-dryer-pickup
 utah-appliance-pickup
+ventura-appliance-pickup
+ventura-washer-dryer-pickup
 vernon-appliance-pickup
 vernon-washer-dryer-pickup
 victorville-appliance-pickup
