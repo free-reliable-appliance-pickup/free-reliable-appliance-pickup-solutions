@@ -1,6 +1,8 @@
 adelanto-appliance-pickup
 adelanto-rv-appliance-pickup
 adelanto-washer-dryer-pickup
+alhambra-appliance-pickup
+alhambra-washer-dryer-pickup
 aliso-viejo-washer-dryer-pickup
 altadena-appliance-pickup
 altadena-washer-dryer-pickup
@@ -141,6 +143,8 @@ montclair-appliance-pickup
 montclair-washer-dryer-pickup
 montebello-appliance-pickup
 montebello-washer-dryer-pickup
+monterey-park-appliance-pickup
+monterey-park-washer-dryer-pickup
 montrose-washer-dryer-pickup
 moreno-valley-appliance-pickup
 murrieta-appliance-pickup
@@ -186,6 +190,8 @@ riverside-appliance-pickup
 riverside-county-appliance-pickup
 riverside-county-washer-dryer-pickup
 riverside-washer-dryer-pickup
+rosemead-appliance-pickup
+rosemead-washer-dryer-pickup
 rowland-heights-appliance-pickup
 rowland-heights-washer-dryer-pickup
 sacramento-appliance-pickup
