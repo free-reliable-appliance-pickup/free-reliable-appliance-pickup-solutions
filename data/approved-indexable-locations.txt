@@ -60,6 +60,7 @@ calimesa-washer-dryer-pickup
 carson-appliance-pickup
 carson-washer-dryer-pickup
 cathedral-city-appliance-pickup
+cathedral-city-washer-dryer-pickup
 centennial-appliance-pickup
 central-coast-appliance-pickup
 central-valley-appliance-pickup
@@ -74,7 +75,9 @@ city-of-industry-appliance-pickup
 city-of-industry-washer-dryer-pickup
 claremont-appliance-pickup
 claremont-washer-dryer-pickup
+coachella-appliance-pickup
 coachella-valley-appliance-pickup
+coachella-washer-dryer-pickup
 colorado-appliance-pickup
 colton-appliance-pickup
 colton-washer-dryer-pickup
@@ -97,6 +100,8 @@ cypress-appliance-pickup
 cypress-washer-dryer-pickup
 dana-point-washer-dryer-pickup
 denver-appliance-pickup
+desert-hot-springs-appliance-pickup
+desert-hot-springs-washer-dryer-pickup
 diamond-bar-appliance-pickup
 diamond-bar-washer-dryer-pickup
 downey-appliance-pickup
@@ -154,7 +159,9 @@ huntington-park-appliance-pickup
 huntington-park-washer-dryer-pickup
 idaho-appliance-pickup
 indian-wells-appliance-pickup
+indian-wells-washer-dryer-pickup
 indio-appliance-pickup
+indio-washer-dryer-pickup
 inglewood-appliance-pickup
 inglewood-washer-dryer-pickup
 inland-empire-appliance-pickup
@@ -180,6 +187,7 @@ la-palma-washer-dryer-pickup
 la-puente-appliance-pickup
 la-puente-washer-dryer-pickup
 la-quinta-appliance-pickup
+la-quinta-washer-dryer-pickup
 la-verne-appliance-pickup
 la-verne-washer-dryer-pickup
 ladera-ranch-washer-dryer-pickup
@@ -259,7 +267,9 @@ oregon-appliance-pickup
 oregon-city-appliance-pickup
 oxnard-appliance-pickup
 palm-desert-appliance-pickup
+palm-desert-washer-dryer-pickup
 palm-springs-appliance-pickup
+palm-springs-washer-dryer-pickup
 palmdale-appliance-pickup
 palmdale-rv-appliance-pickup
 palmdale-washer-dryer-pickup
@@ -286,6 +296,7 @@ puget-sound-appliance-pickup
 rancho-cucamonga-appliance-pickup
 rancho-cucamonga-washer-dryer-pickup
 rancho-mirage-appliance-pickup
+rancho-mirage-washer-dryer-pickup
 rancho-santa-margarita-appliance-pickup
 rancho-santa-margarita-washer-dryer-pickup
 redlands-appliance-pickup
