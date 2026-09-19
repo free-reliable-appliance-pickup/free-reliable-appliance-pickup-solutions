@@ -488,6 +488,8 @@ west-covina-washer-dryer-pickup
 west-hollywood-appliance-pickup
 west-hollywood-washer-dryer-pickup
 westminster-appliance-pickup
+westminster-ca-appliance-pickup
+westminster-ca-washer-dryer-pickup
 westminster-washer-dryer-pickup
 whittier-appliance-pickup
 whittier-washer-dryer-pickup
