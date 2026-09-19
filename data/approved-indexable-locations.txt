@@ -32,6 +32,8 @@ baldwin-park-appliance-pickup
 baldwin-park-washer-dryer-pickup
 banning-appliance-pickup
 banning-washer-dryer-pickup
+bay-area-appliance-pickup
+bay-area-washer-dryer-pickup
 beaumont-appliance-pickup
 beaumont-washer-dryer-pickup
 beaverton-appliance-pickup
@@ -41,6 +43,8 @@ bell-gardens-washer-dryer-pickup
 bell-washer-dryer-pickup
 bellflower-appliance-pickup
 bellflower-washer-dryer-pickup
+berkeley-appliance-pickup
+berkeley-washer-dryer-pickup
 bermuda-dunes-appliance-pickup
 beverly-hills-appliance-pickup
 beverly-hills-washer-dryer-pickup
@@ -137,6 +141,8 @@ fontana-appliance-pickup
 fontana-washer-dryer-pickup
 fountain-valley-appliance-pickup
 fountain-valley-washer-dryer-pickup
+fremont-appliance-pickup
+fremont-washer-dryer-pickup
 fresno-appliance-pickup
 fresno-washer-dryer-pickup
 fullerton-appliance-pickup
@@ -158,6 +164,8 @@ hawaiian-gardens-appliance-pickup
 hawaiian-gardens-washer-dryer-pickup
 hawthorne-appliance-pickup
 hawthorne-washer-dryer-pickup
+hayward-appliance-pickup
+hayward-washer-dryer-pickup
 hermosa-beach-appliance-pickup
 hermosa-beach-washer-dryer-pickup
 hesperia-appliance-pickup
@@ -282,6 +290,7 @@ norwalk-appliance-pickup
 norwalk-washer-dryer-pickup
 oak-glen-washer-dryer-pickup
 oakland-appliance-pickup
+oakland-washer-dryer-pickup
 oceanside-appliance-pickup
 oceanside-washer-dryer-pickup
 ontario-appliance-pickup
@@ -360,11 +369,13 @@ san-dimas-washer-dryer-pickup
 san-fernando-appliance-pickup
 san-fernando-washer-dryer-pickup
 san-francisco-appliance-pickup
+san-francisco-washer-dryer-pickup
 san-gabriel-appliance-pickup
 san-gabriel-inland-empire-washer-dryer-pickup
 san-gabriel-valley-appliance-pickup
 san-gabriel-washer-dryer-pickup
 san-jose-appliance-pickup
+san-jose-washer-dryer-pickup
 san-juan-capistrano-appliance-pickup
 san-juan-capistrano-washer-dryer-pickup
 san-marcos-appliance-pickup
