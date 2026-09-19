@@ -96,6 +96,8 @@ commerce-appliance-pickup
 commerce-washer-dryer-pickup
 compton-appliance-pickup
 compton-washer-dryer-pickup
+concord-appliance-pickup
+concord-washer-dryer-pickup
 corona-appliance-pickup
 corona-washer-dryer-pickup
 coronado-appliance-pickup
@@ -311,6 +313,8 @@ palm-springs-washer-dryer-pickup
 palmdale-appliance-pickup
 palmdale-rv-appliance-pickup
 palmdale-washer-dryer-pickup
+palo-alto-appliance-pickup
+palo-alto-washer-dryer-pickup
 paramount-appliance-pickup
 paramount-washer-dryer-pickup
 parker-appliance-pickup
@@ -345,6 +349,8 @@ redondo-beach-appliance-pickup
 redondo-beach-washer-dryer-pickup
 rialto-appliance-pickup
 rialto-washer-dryer-pickup
+richmond-appliance-pickup
+richmond-washer-dryer-pickup
 riverside-appliance-pickup
 riverside-county-appliance-pickup
 riverside-county-washer-dryer-pickup
@@ -390,6 +396,8 @@ santa-ana-appliance-pickup
 santa-ana-washer-dryer-pickup
 santa-barbara-appliance-pickup
 santa-barbara-washer-dryer-pickup
+santa-clara-appliance-pickup
+santa-clara-washer-dryer-pickup
 santa-clarita-appliance-pickup
 santa-fe-springs-appliance-pickup
 santa-fe-springs-washer-dryer-pickup
@@ -422,6 +430,8 @@ stanton-washer-dryer-pickup
 stockton-appliance-pickup
 stockton-washer-dryer-pickup
 sun-city-palm-desert-appliance-pickup
+sunnyvale-appliance-pickup
+sunnyvale-washer-dryer-pickup
 temecula-appliance-pickup
 temecula-washer-dryer-pickup
 temple-city-appliance-pickup
@@ -449,6 +459,8 @@ visalia-washer-dryer-pickup
 vista-appliance-pickup
 vista-washer-dryer-pickup
 walnut-appliance-pickup
+walnut-creek-appliance-pickup
+walnut-creek-washer-dryer-pickup
 walnut-washer-dryer-pickup
 washington-appliance-pickup
 west-covina-appliance-pickup
