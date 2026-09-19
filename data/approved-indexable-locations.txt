@@ -91,6 +91,8 @@ compton-appliance-pickup
 compton-washer-dryer-pickup
 corona-appliance-pickup
 corona-washer-dryer-pickup
+coronado-appliance-pickup
+coronado-washer-dryer-pickup
 costa-mesa-appliance-pickup
 costa-mesa-washer-dryer-pickup
 coto-de-caza-washer-dryer-pickup
@@ -103,6 +105,8 @@ culver-city-washer-dryer-pickup
 cypress-appliance-pickup
 cypress-washer-dryer-pickup
 dana-point-washer-dryer-pickup
+del-mar-appliance-pickup
+del-mar-washer-dryer-pickup
 denver-appliance-pickup
 desert-hot-springs-appliance-pickup
 desert-hot-springs-washer-dryer-pickup
@@ -168,6 +172,8 @@ huntington-beach-washer-dryer-pickup
 huntington-park-appliance-pickup
 huntington-park-washer-dryer-pickup
 idaho-appliance-pickup
+imperial-beach-appliance-pickup
+imperial-beach-washer-dryer-pickup
 indian-wells-appliance-pickup
 indian-wells-washer-dryer-pickup
 indio-appliance-pickup
@@ -220,6 +226,8 @@ lancaster-washer-dryer-pickup
 las-vegas-valley-appliance-pickup
 lawndale-appliance-pickup
 lawndale-washer-dryer-pickup
+lemon-grove-appliance-pickup
+lemon-grove-washer-dryer-pickup
 loma-linda-appliance-pickup
 loma-linda-washer-dryer-pickup
 lomita-appliance-pickup
@@ -308,6 +316,8 @@ placentia-washer-dryer-pickup
 pomona-appliance-pickup
 pomona-washer-dryer-pickup
 portland-appliance-pickup
+poway-appliance-pickup
+poway-washer-dryer-pickup
 puget-sound-appliance-pickup
 rancho-cucamonga-appliance-pickup
 rancho-cucamonga-washer-dryer-pickup
@@ -373,6 +383,8 @@ sierra-madre-appliance-pickup
 sierra-madre-washer-dryer-pickup
 signal-hill-appliance-pickup
 signal-hill-washer-dryer-pickup
+solana-beach-appliance-pickup
+solana-beach-washer-dryer-pickup
 south-el-monte-appliance-pickup
 south-el-monte-washer-dryer-pickup
 south-gate-appliance-pickup
