@@ -209,6 +209,7 @@ eastvale-appliance-pickup
 fountain-valley-washer-dryer-pickup
 fullerton-washer-dryer-pickup
 hacienda-heights-appliance-pickup
+hacienda-heights-washer-dryer-pickup
 irwindale-appliance-pickup
 irwindale-washer-dryer-pickup
 jurupa-valley-appliance-pickup
