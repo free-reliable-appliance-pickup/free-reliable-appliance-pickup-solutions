@@ -29,6 +29,7 @@ azusa-washer-dryer-pickup
 bakersfield-appliance-pickup
 baldwin-park-appliance-pickup
 baldwin-park-washer-dryer-pickup
+banning-appliance-pickup
 banning-washer-dryer-pickup
 beaumont-appliance-pickup
 beaumont-washer-dryer-pickup
@@ -42,6 +43,8 @@ bellflower-washer-dryer-pickup
 bermuda-dunes-appliance-pickup
 beverly-hills-appliance-pickup
 beverly-hills-washer-dryer-pickup
+bloomington-appliance-pickup
+bloomington-washer-dryer-pickup
 brea-appliance-pickup
 brea-washer-dryer-pickup
 buena-park-appliance-pickup
@@ -52,6 +55,7 @@ calabasas-appliance-pickup
 calabasas-washer-dryer-pickup
 california-appliance-pickup
 california-washer-dryer-pickup
+calimesa-appliance-pickup
 calimesa-washer-dryer-pickup
 carson-appliance-pickup
 carson-washer-dryer-pickup
@@ -72,6 +76,8 @@ claremont-appliance-pickup
 claremont-washer-dryer-pickup
 coachella-valley-appliance-pickup
 colorado-appliance-pickup
+colton-appliance-pickup
+colton-washer-dryer-pickup
 commerce-appliance-pickup
 commerce-washer-dryer-pickup
 compton-appliance-pickup
@@ -121,6 +127,8 @@ gardena-washer-dryer-pickup
 glendale-washer-dryer-pickup
 glendora-appliance-pickup
 glendora-washer-dryer-pickup
+grand-terrace-appliance-pickup
+grand-terrace-washer-dryer-pickup
 gresham-appliance-pickup
 hacienda-heights-appliance-pickup
 hacienda-heights-washer-dryer-pickup
@@ -137,6 +145,7 @@ hesperia-washer-dryer-pickup
 high-desert-appliance-pickup
 high-desert-rv-appliance-pickup
 high-desert-washer-dryer-pickup
+highland-appliance-pickup
 highland-washer-dryer-pickup
 hillsboro-appliance-pickup
 huntington-beach-appliance-pickup
@@ -191,6 +200,7 @@ lancaster-washer-dryer-pickup
 las-vegas-valley-appliance-pickup
 lawndale-appliance-pickup
 lawndale-washer-dryer-pickup
+loma-linda-appliance-pickup
 loma-linda-washer-dryer-pickup
 lomita-appliance-pickup
 lomita-washer-dryer-pickup
@@ -228,6 +238,8 @@ moreno-valley-appliance-pickup
 moreno-valley-washer-dryer-pickup
 murrieta-appliance-pickup
 murrieta-washer-dryer-pickup
+muscoy-appliance-pickup
+muscoy-washer-dryer-pickup
 nevada-appliance-pickup
 newport-beach-appliance-pickup
 newport-beach-washer-dryer-pickup
@@ -277,9 +289,11 @@ rancho-mirage-appliance-pickup
 rancho-santa-margarita-appliance-pickup
 rancho-santa-margarita-washer-dryer-pickup
 redlands-appliance-pickup
+redlands-washer-dryer-pickup
 redondo-beach-appliance-pickup
 redondo-beach-washer-dryer-pickup
 rialto-appliance-pickup
+rialto-washer-dryer-pickup
 riverside-appliance-pickup
 riverside-county-appliance-pickup
 riverside-county-washer-dryer-pickup
