@@ -410,6 +410,7 @@ santee-washer-dryer-pickup
 seal-beach-appliance-pickup
 seal-beach-washer-dryer-pickup
 sf-bay-area-appliance-pickup
+sf-bay-area-washer-dryer-pickup
 sierra-madre-appliance-pickup
 sierra-madre-washer-dryer-pickup
 signal-hill-appliance-pickup
