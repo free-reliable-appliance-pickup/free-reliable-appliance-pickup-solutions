@@ -66,6 +66,8 @@ dana-point-washer-dryer-pickup
 denver-appliance-pickup
 diamond-bar-appliance-pickup
 diamond-bar-washer-dryer-pickup
+downey-appliance-pickup
+downey-washer-dryer-pickup
 duarte-appliance-pickup
 duarte-washer-dryer-pickup
 eastvale-appliance-pickup
@@ -159,6 +161,8 @@ murrieta-appliance-pickup
 nevada-appliance-pickup
 newport-beach-appliance-pickup
 newport-beach-washer-dryer-pickup
+norwalk-appliance-pickup
+norwalk-washer-dryer-pickup
 oak-glen-washer-dryer-pickup
 oakland-appliance-pickup
 ontario-appliance-pickup
@@ -227,6 +231,7 @@ san-marino-washer-dryer-pickup
 santa-ana-appliance-pickup
 santa-ana-washer-dryer-pickup
 santa-clarita-appliance-pickup
+santa-fe-springs-appliance-pickup
 santa-fe-springs-washer-dryer-pickup
 sf-bay-area-appliance-pickup
 sierra-madre-appliance-pickup
@@ -235,6 +240,8 @@ signal-hill-appliance-pickup
 signal-hill-washer-dryer-pickup
 south-el-monte-appliance-pickup
 south-el-monte-washer-dryer-pickup
+south-gate-appliance-pickup
+south-gate-washer-dryer-pickup
 south-orange-county-washer-dryer-pickup
 south-pasadena-washer-dryer-pickup
 south-san-jose-hills-appliance-pickup
