@@ -3,10 +3,12 @@ adelanto-rv-appliance-pickup
 adelanto-washer-dryer-pickup
 alhambra-appliance-pickup
 alhambra-washer-dryer-pickup
+aliso-viejo-appliance-pickup
 aliso-viejo-washer-dryer-pickup
 altadena-appliance-pickup
 altadena-washer-dryer-pickup
 anaheim-appliance-pickup
+anaheim-hills-appliance-pickup
 anaheim-hills-washer-dryer-pickup
 anaheim-washer-dryer-pickup
 antelope-valley-appliance-pickup
@@ -75,6 +77,7 @@ central-valley-appliance-pickup
 central-valley-washer-dryer-pickup
 cerritos-appliance-pickup
 cerritos-washer-dryer-pickup
+cherry-valley-appliance-pickup
 cherry-valley-washer-dryer-pickup
 chino-appliance-pickup
 chino-hills-appliance-pickup
@@ -104,6 +107,7 @@ coronado-appliance-pickup
 coronado-washer-dryer-pickup
 costa-mesa-appliance-pickup
 costa-mesa-washer-dryer-pickup
+coto-de-caza-appliance-pickup
 coto-de-caza-washer-dryer-pickup
 covina-appliance-pickup
 covina-washer-dryer-pickup
@@ -113,6 +117,7 @@ culver-city-appliance-pickup
 culver-city-washer-dryer-pickup
 cypress-appliance-pickup
 cypress-washer-dryer-pickup
+dana-point-appliance-pickup
 dana-point-washer-dryer-pickup
 del-mar-appliance-pickup
 del-mar-washer-dryer-pickup
@@ -222,11 +227,15 @@ la-quinta-appliance-pickup
 la-quinta-washer-dryer-pickup
 la-verne-appliance-pickup
 la-verne-washer-dryer-pickup
+ladera-ranch-appliance-pickup
 ladera-ranch-washer-dryer-pickup
+laguna-beach-appliance-pickup
 laguna-beach-washer-dryer-pickup
+laguna-hills-appliance-pickup
 laguna-hills-washer-dryer-pickup
 laguna-niguel-appliance-pickup
 laguna-niguel-washer-dryer-pickup
+laguna-woods-appliance-pickup
 laguna-woods-washer-dryer-pickup
 lake-elsinore-appliance-pickup
 lake-elsinore-washer-dryer-pickup
@@ -276,6 +285,7 @@ montebello-appliance-pickup
 montebello-washer-dryer-pickup
 monterey-park-appliance-pickup
 monterey-park-washer-dryer-pickup
+montrose-appliance-pickup
 montrose-washer-dryer-pickup
 moreno-valley-appliance-pickup
 moreno-valley-washer-dryer-pickup
@@ -292,6 +302,7 @@ norco-appliance-pickup
 norco-washer-dryer-pickup
 norwalk-appliance-pickup
 norwalk-washer-dryer-pickup
+oak-glen-appliance-pickup
 oak-glen-washer-dryer-pickup
 oakland-appliance-pickup
 oakland-washer-dryer-pickup
@@ -380,8 +391,10 @@ san-fernando-washer-dryer-pickup
 san-francisco-appliance-pickup
 san-francisco-washer-dryer-pickup
 san-gabriel-appliance-pickup
+san-gabriel-inland-empire-appliance-pickup
 san-gabriel-inland-empire-washer-dryer-pickup
 san-gabriel-valley-appliance-pickup
+san-gabriel-valley-washer-dryer-pickup
 san-gabriel-washer-dryer-pickup
 san-jose-appliance-pickup
 san-jose-washer-dryer-pickup
@@ -423,10 +436,13 @@ south-el-monte-appliance-pickup
 south-el-monte-washer-dryer-pickup
 south-gate-appliance-pickup
 south-gate-washer-dryer-pickup
+south-orange-county-appliance-pickup
 south-orange-county-washer-dryer-pickup
+south-pasadena-appliance-pickup
 south-pasadena-washer-dryer-pickup
 south-san-jose-hills-appliance-pickup
 south-san-jose-hills-washer-dryer-pickup
+southern-california-appliance-pickup
 southern-california-washer-dryer-pickup
 stanton-appliance-pickup
 stanton-washer-dryer-pickup
@@ -443,6 +459,7 @@ thornton-appliance-pickup
 tigard-appliance-pickup
 torrance-appliance-pickup
 torrance-washer-dryer-pickup
+trabuco-canyon-appliance-pickup
 trabuco-canyon-washer-dryer-pickup
 tustin-appliance-pickup
 tustin-washer-dryer-pickup
@@ -477,7 +494,7 @@ whittier-appliance-pickup
 whittier-washer-dryer-pickup
 wildomar-appliance-pickup
 wildomar-washer-dryer-pickup
+yorba-linda-appliance-pickup
 yorba-linda-washer-dryer-pickup
 yucaipa-appliance-pickup
 yucaipa-washer-dryer-pickup
-san-gabriel-valley-washer-dryer-pickup
