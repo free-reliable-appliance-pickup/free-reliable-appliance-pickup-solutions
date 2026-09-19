@@ -18,6 +18,8 @@ apple-valley-washer-dryer-pickup
 arcadia-appliance-pickup
 arcadia-washer-dryer-pickup
 arizona-appliance-pickup
+artesia-appliance-pickup
+artesia-washer-dryer-pickup
 arvada-appliance-pickup
 aurora-appliance-pickup
 avocado-heights-appliance-pickup
@@ -31,14 +33,20 @@ banning-washer-dryer-pickup
 beaumont-appliance-pickup
 beaumont-washer-dryer-pickup
 beaverton-appliance-pickup
+bell-appliance-pickup
 bell-gardens-appliance-pickup
 bell-gardens-washer-dryer-pickup
+bell-washer-dryer-pickup
+bellflower-appliance-pickup
+bellflower-washer-dryer-pickup
 bermuda-dunes-appliance-pickup
 brea-appliance-pickup
 brea-washer-dryer-pickup
 california-appliance-pickup
 california-washer-dryer-pickup
 calimesa-washer-dryer-pickup
+carson-appliance-pickup
+carson-washer-dryer-pickup
 cathedral-city-appliance-pickup
 centennial-appliance-pickup
 central-coast-appliance-pickup
@@ -64,6 +72,8 @@ costa-mesa-washer-dryer-pickup
 coto-de-caza-washer-dryer-pickup
 covina-appliance-pickup
 covina-washer-dryer-pickup
+cudahy-appliance-pickup
+cudahy-washer-dryer-pickup
 dana-point-washer-dryer-pickup
 denver-appliance-pickup
 diamond-bar-appliance-pickup
@@ -92,6 +102,8 @@ gresham-appliance-pickup
 hacienda-heights-appliance-pickup
 hacienda-heights-washer-dryer-pickup
 happy-valley-appliance-pickup
+hawaiian-gardens-appliance-pickup
+hawaiian-gardens-washer-dryer-pickup
 hesperia-appliance-pickup
 hesperia-rv-appliance-pickup
 hesperia-washer-dryer-pickup
@@ -138,6 +150,7 @@ laguna-woods-washer-dryer-pickup
 lake-forest-appliance-pickup
 lake-forest-washer-dryer-pickup
 lakewood-appliance-pickup
+lakewood-washer-dryer-pickup
 lancaster-appliance-pickup
 lancaster-rv-appliance-pickup
 lancaster-washer-dryer-pickup
@@ -149,6 +162,10 @@ los-angeles-appliance-pickup
 los-angeles-county-appliance-pickup
 los-angeles-county-washer-dryer-pickup
 los-angeles-washer-dryer-pickup
+lynwood-appliance-pickup
+lynwood-washer-dryer-pickup
+maywood-appliance-pickup
+maywood-washer-dryer-pickup
 menifee-appliance-pickup
 mission-viejo-appliance-pickup
 mission-viejo-washer-dryer-pickup
@@ -183,6 +200,8 @@ palm-springs-appliance-pickup
 palmdale-appliance-pickup
 palmdale-rv-appliance-pickup
 palmdale-washer-dryer-pickup
+paramount-appliance-pickup
+paramount-washer-dryer-pickup
 parker-appliance-pickup
 pasadena-appliance-pickup
 pasadena-washer-dryer-pickup
