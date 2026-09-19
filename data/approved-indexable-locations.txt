@@ -66,6 +66,8 @@ coachella-valley-appliance-pickup
 colorado-appliance-pickup
 commerce-appliance-pickup
 commerce-washer-dryer-pickup
+compton-appliance-pickup
+compton-washer-dryer-pickup
 corona-appliance-pickup
 costa-mesa-appliance-pickup
 costa-mesa-washer-dryer-pickup
@@ -88,6 +90,8 @@ el-mirage-rv-appliance-pickup
 el-mirage-washer-dryer-pickup
 el-monte-appliance-pickup
 el-monte-washer-dryer-pickup
+el-segundo-appliance-pickup
+el-segundo-washer-dryer-pickup
 fontana-appliance-pickup
 fontana-washer-dryer-pickup
 fountain-valley-appliance-pickup
@@ -96,6 +100,8 @@ fresno-appliance-pickup
 fresno-washer-dryer-pickup
 fullerton-appliance-pickup
 fullerton-washer-dryer-pickup
+gardena-appliance-pickup
+gardena-washer-dryer-pickup
 glendora-appliance-pickup
 glendora-washer-dryer-pickup
 gresham-appliance-pickup
@@ -104,6 +110,10 @@ hacienda-heights-washer-dryer-pickup
 happy-valley-appliance-pickup
 hawaiian-gardens-appliance-pickup
 hawaiian-gardens-washer-dryer-pickup
+hawthorne-appliance-pickup
+hawthorne-washer-dryer-pickup
+hermosa-beach-appliance-pickup
+hermosa-beach-washer-dryer-pickup
 hesperia-appliance-pickup
 hesperia-rv-appliance-pickup
 hesperia-washer-dryer-pickup
@@ -119,6 +129,8 @@ huntington-park-washer-dryer-pickup
 idaho-appliance-pickup
 indian-wells-appliance-pickup
 indio-appliance-pickup
+inglewood-appliance-pickup
+inglewood-washer-dryer-pickup
 inland-empire-appliance-pickup
 irvine-appliance-pickup
 irvine-washer-dryer-pickup
@@ -155,7 +167,11 @@ lancaster-appliance-pickup
 lancaster-rv-appliance-pickup
 lancaster-washer-dryer-pickup
 las-vegas-valley-appliance-pickup
+lawndale-appliance-pickup
+lawndale-washer-dryer-pickup
 loma-linda-washer-dryer-pickup
+lomita-appliance-pickup
+lomita-washer-dryer-pickup
 long-beach-appliance-pickup
 long-beach-washer-dryer-pickup
 los-angeles-appliance-pickup
@@ -164,6 +180,8 @@ los-angeles-county-washer-dryer-pickup
 los-angeles-washer-dryer-pickup
 lynwood-appliance-pickup
 lynwood-washer-dryer-pickup
+manhattan-beach-appliance-pickup
+manhattan-beach-washer-dryer-pickup
 maywood-appliance-pickup
 maywood-washer-dryer-pickup
 menifee-appliance-pickup
@@ -222,6 +240,8 @@ rancho-mirage-appliance-pickup
 rancho-santa-margarita-appliance-pickup
 rancho-santa-margarita-washer-dryer-pickup
 redlands-appliance-pickup
+redondo-beach-appliance-pickup
+redondo-beach-washer-dryer-pickup
 rialto-appliance-pickup
 riverside-appliance-pickup
 riverside-county-appliance-pickup
