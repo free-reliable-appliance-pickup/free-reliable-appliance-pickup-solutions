@@ -1,0 +1,217 @@
+name: Promote Bay Area Central Valley Gold Standard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/promote-bay-area-central-valley-gold-standard.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Promote Bay Area and Central Valley pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          cities={
+            'san-francisco':('San Francisco',['oakland','berkeley','palo-alto'],'Bay Area'),
+            'san-jose':('San Jose',['santa-clara','sunnyvale','fremont'],'Bay Area'),
+            'oakland':('Oakland',['berkeley','hayward','san-francisco'],'Bay Area'),
+            'berkeley':('Berkeley',['oakland','richmond','san-francisco'],'Bay Area'),
+            'fremont':('Fremont',['san-jose','hayward','santa-clara'],'Bay Area'),
+            'hayward':('Hayward',['oakland','fremont','san-jose'],'Bay Area'),
+            'richmond':('Richmond',['berkeley','oakland','concord'],'Bay Area'),
+            'concord':('Concord',['walnut-creek','richmond','oakland'],'Bay Area'),
+            'palo-alto':('Palo Alto',['sunnyvale','santa-clara','san-jose'],'Bay Area'),
+            'santa-clara':('Santa Clara',['san-jose','sunnyvale','fremont'],'Bay Area'),
+            'sunnyvale':('Sunnyvale',['santa-clara','palo-alto','san-jose'],'Bay Area'),
+            'walnut-creek':('Walnut Creek',['concord','oakland','richmond'],'Bay Area'),
+            'sf-bay-area':('San Francisco Bay Area',['san-francisco','oakland','san-jose'],'Bay Area'),
+            'sacramento':('Sacramento',['stockton','modesto','fresno'],'Central Valley'),
+            'fresno':('Fresno',['visalia','bakersfield','modesto'],'Central Valley'),
+            'stockton':('Stockton',['sacramento','modesto','fresno'],'Central Valley'),
+            'modesto':('Modesto',['stockton','fresno','sacramento'],'Central Valley'),
+            'bakersfield':('Bakersfield',['fresno','visalia','modesto'],'Central Valley'),
+            'visalia':('Visalia',['fresno','bakersfield','modesto'],'Central Valley'),
+            'central-valley':('Central Valley',['sacramento','fresno','stockton'],'Central Valley'),
+          }
+
+          appliance=[f'{c}-appliance-pickup' for c in cities]
+          laundry=[f'{c}-washer-dryer-pickup' for c in cities]
+          failures=[]
+          changed=[]
+
+          def dname(slug):
+              return cities.get(slug,(slug.replace('-',' ').title(),[],''))[0]
+
+          def parent(kind,region):
+              if region=='Bay Area':
+                  return ('sf-bay-area-washer-dryer-pickup','San Francisco Bay Area Washer & Dryer Pickup') if kind=='laundry' else ('sf-bay-area-appliance-pickup','San Francisco Bay Area Appliance Pickup')
+              return ('central-valley-washer-dryer-pickup','Central Valley Washer & Dryer Pickup') if kind=='laundry' else ('central-valley-appliance-pickup','Central Valley Appliance Pickup')
+
+          def add_depth(s,slug,name,neighbors,region,kind):
+              suffix='washer-dryer-pickup' if kind=='laundry' else 'appliance-pickup'
+              service='Washer &amp; Dryer' if kind=='laundry' else 'Appliance'
+              links=' · '.join(f'<a href="/{n}-{suffix}/">{dname(n)}</a>' for n in neighbors)
+              pslug,pname=parent(kind,region)
+              extra=(
+                  'For washers, report fill, wash, drain and spin; for dryers, report gas or electric type, tumble and heat.'
+                  if kind=='laundry'
+                  else
+                  'For refrigerators include cooling status; for washers and dryers include tested functions; for stoves and ranges include fuel type and operating condition.'
+              )
+              block=(
+                  f'<section class="local-ranking-depth-20260918 {slug}-{kind}-depth-20260920">'
+                  f'<h2>{name} {service} Pickup Access &amp; Local Route Details</h2>'
+                  f'<p>{name} pickup requests can involve homes, apartments, condos, rentals, garages and interior rooms. '
+                  f'Use the exact pickup address and include floor level, stairs or elevator, gates, parking or loading limits and carrying distance so the removal path can be reviewed before scheduling.</p>'
+                  f'<p>Send clear appliance photos and tested condition. {extra} Nearby route pages: {links} · '
+                  f'<a href="/{pslug}/">{pname}</a>.</p>'
+                  f'</section>'
+              )
+              req=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+              if not req:
+                  return None
+              return s[:req.start()]+block+s[req.start():]
+
+          for page in appliance+laundry:
+              p=Path(page)/'index.html'
+              if not p.exists():
+                  failures.append(f'{page}: missing page')
+                  continue
+
+              slug=page.replace('-washer-dryer-pickup','').replace('-appliance-pickup','')
+              name,neighbors,region=cities[slug]
+              kind='laundry' if page.endswith('-washer-dryer-pickup') else 'appliance'
+              s=p.read_text(encoding='utf-8',errors='replace')
+              old=s
+              low=s.lower()
+
+              if 'local-ranking-depth-20260918' not in low:
+                  m=re.search(r'<section\s+class="([^"]*(?:ranking-depth|local-depth)[^"]*)">',s,re.I)
+                  if m:
+                      classes=' '.join(dict.fromkeys((m.group(1)+' local-ranking-depth-20260918').split()))
+                      s=s[:m.start()]+f'<section class="{classes}">'+s[m.end():]
+                  else:
+                      s2=add_depth(s,slug,name,neighbors,region,kind)
+                      if s2 is None:
+                          failures.append(f'{page}: no request section for local depth')
+                          continue
+                      s=s2
+
+              low=s.lower()
+              proof=('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low)
+              if kind=='laundry' and not proof:
+                  heading=re.compile(r'<h2>\s*Real Washer\s*&amp;\s*Dryer Photos\s*</h2>',re.I)
+                  if heading.search(s) and '<img' in low:
+                      s=heading.sub(f'<h2>Real Appliance Examples: {name} Washer &amp; Dryer Pickup</h2>',s,count=1)
+                      proof=True
+
+              if not proof:
+                  req=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+                  if not req:
+                      failures.append(f'{page}: no request section for proof')
+                      continue
+                  if kind=='laundry':
+                      proofhtml=(
+                          f'<section class="real-appliance-proof"><h2>Real Appliance Examples: {name} Washer &amp; Dryer Pickup</h2>'
+                          '<p>Real washer and dryer photos from our appliance work and inventory.</p>'
+                          '<div class="photo-grid"><img src="/assets/laundry/real-laundry-pickup-4.jpg" alt="Real washer and dryer pickup example" loading="lazy">'
+                          '<img src="/assets/laundry/stacked-laundry-center.jpg" alt="Real stacked washer and dryer example" loading="lazy"></div></section>'
+                      )
+                  else:
+                      proofhtml=(
+                          f'<section class="real-appliance-proof"><h2>Real Appliance Example for {name}</h2>'
+                          f'<img src="/assets/major-appliance-pickup-photo-2.jpg" alt="Real major appliance pickup example for {name}" loading="lazy" decoding="async" style="max-width:720px;width:100%;height:auto;border-radius:10px"></section>'
+                      )
+                  s=s[:req.start()]+proofhtml+s[req.start():]
+
+              low=s.lower()
+              if 'breadcrumblist' not in low:
+                  pslug,pname=parent(kind,region)
+                  crumb=(
+                      '<script type="application/ld+json">'
+                      '{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":['
+                      '{"@type":"ListItem","position":1,"name":"Home","item":"https://freereliableappliancepickup.com/"},'
+                      f'{{"@type":"ListItem","position":2,"name":"{pname}","item":"https://freereliableappliancepickup.com/{pslug}/"}},'
+                      f'{{"@type":"ListItem","position":3,"name":"{name}","item":"https://freereliableappliancepickup.com/{page}/"}}'
+                      ']}</script>'
+                  )
+                  if re.search(r'</head>',s,re.I):
+                      s=re.sub(r'</head>',crumb+'</head>',s,count=1,flags=re.I)
+                  else:
+                      failures.append(f'{page}: missing head for breadcrumb')
+                      continue
+
+              low=s.lower()
+              checks={
+                  'index/follow':bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',s,re.I)),
+                  'canonical':f'https://freereliableappliancepickup.com/{page}/' in low,
+                  'title':bool(re.search(r'<title>[^<]{20,}</title>',s,re.I)),
+                  'h1':bool(re.search(r'<h1[^>]*>.+?</h1>',s,re.I|re.S)),
+                  'depth':'local-ranking-depth-20260918' in low,
+                  'proof':('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low),
+                  'branding':'/assets/site-brand.css' in low,
+                  'request':('id="request"' in low or "id='request'" in low),
+                  'formspree':'https://formspree.io/f/mvzeapzd' in low,
+                  'routing':'customer-routing.js' in low,
+                  'webpage':('"@type":"webpage"' in low or '"@type": "webpage"' in low),
+                  'breadcrumb':'breadcrumblist' in low,
+              }
+              missing=[k for k,v in checks.items() if not v]
+              links=len(re.findall(r'href=["\'](?:\.\./|/)[a-z0-9-]+/',s,re.I))
+              if links<3:
+                  missing.append('3+ internal links')
+              if missing:
+                  failures.append(f"{page}: {', '.join(missing)}")
+                  continue
+
+              if s!=old:
+                  p.write_text(s,encoding='utf-8')
+                  changed.append(page)
+
+          if failures:
+              print('FAILURES')
+              for f in failures:
+                  print('-',f)
+              raise SystemExit(1)
+
+          def append(path,slugs):
+              p=Path(path)
+              lines=[x.strip() for x in p.read_text(encoding='utf-8').splitlines() if x.strip()]
+              seen=set(lines)
+              added=[]
+              for slug in slugs:
+                  if slug not in seen:
+                      lines.append(slug)
+                      seen.add(slug)
+                      added.append(slug)
+              p.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+              return added
+
+          aa=append('data/california-seo-model-pages.txt',appliance)
+          ww=append('data/california-washer-dryer-seo-model-pages.txt',laundry)
+          print('PAGES_CHANGED',len(changed))
+          print('APPLIANCE_ADDED',len(aa))
+          print('LAUNDRY_ADDED',len(ww))
+
+      - name: Commit Bay Area Central Valley promotion
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' '*-washer-dryer-pickup/index.html' data/california-seo-model-pages.txt data/california-washer-dryer-seo-model-pages.txt
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Promote Bay Area Central Valley pages to California SEO gold standard"
+          git push
