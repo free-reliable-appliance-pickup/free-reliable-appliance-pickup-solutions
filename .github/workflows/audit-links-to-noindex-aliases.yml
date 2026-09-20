@@ -1,0 +1,68 @@
+name: Audit Links To Noindex Aliases
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/index.html'
+      - '.github/workflows/audit-links-to-noindex-aliases.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Find internal links from indexable pages to noindex pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys
+          base='https://freereliableappliancepickup.com/'
+
+          pages=[Path('index.html')]+sorted(
+              p for p in Path('.').rglob('index.html')
+              if '.git' not in p.parts and '.github' not in p.parts and p != Path('index.html')
+          )
+
+          noindex=set()
+          indexable=[]
+          for p in pages:
+              text=p.read_text(encoding='utf-8',errors='ignore')
+              head=text.lower().split('</head>',1)[0]
+              rel='' if p==Path('index.html') else p.parent.as_posix().strip('/')
+              if 'noindex' in head:
+                  if rel: noindex.add(rel)
+              else:
+                  indexable.append((p,text))
+
+          leaks=[]
+          for p,text in indexable:
+              hrefs=re.findall(r'href=["\']([^"\']+)["\']',text,re.I)
+              for href in hrefs:
+                  target=None
+                  if href.startswith(base):
+                      target=href[len(base):].split('#',1)[0].split('?',1)[0].strip('/')
+                  elif href.startswith('/'):
+                      target=href.split('#',1)[0].split('?',1)[0].strip('/')
+                  elif href.startswith('../'):
+                      # Resolve simple relative site links against page parent.
+                      try:
+                          target=(p.parent / href.split('#',1)[0].split('?',1)[0]).resolve().relative_to(Path('.').resolve()).as_posix().strip('/')
+                      except Exception:
+                          target=None
+                  if target and target in noindex:
+                      leaks.append((str(p),href,target))
+
+          print(f'NOINDEX_PATHS {len(noindex)}')
+          print(f'INDEXABLE_PAGES_SCANNED {len(indexable)}')
+          print(f'LINKS_TO_NOINDEX {len(leaks)}')
+          for src,href,target in leaks[:300]:
+              print(f'LEAK {src} -> {href} [{target}]')
+
+          if leaks:
+              sys.exit(1)
+          print('PASS: no indexable page links to an internal noindex alias.')
