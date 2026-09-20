@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '*-appliance-pickup/index.html'
+      - 'sitemap.xml'
       - 'data/market-routing.json'
       - 'scripts/validate-recruiting-coverage.py'
       - '.github/workflows/validate-recruiting-coverage.yml'
