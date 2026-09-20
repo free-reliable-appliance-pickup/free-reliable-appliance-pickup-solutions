@@ -116,3 +116,14 @@ loma-linda-appliance-pickup
 grand-terrace-appliance-pickup
 beaumont-appliance-pickup
 banning-appliance-pickup
+garden-grove-appliance-pickup
+orange-appliance-pickup
+buena-park-appliance-pickup
+cypress-appliance-pickup
+placentia-appliance-pickup
+la-palma-appliance-pickup
+seal-beach-appliance-pickup
+los-alamitos-appliance-pickup
+westminster-ca-appliance-pickup
+stanton-appliance-pickup
+villa-park-appliance-pickup
