@@ -3,7 +3,9 @@ name: Audit Internal Link Graph
 on:
   push:
     paths:
+      - 'sitemap.xml'
       - '.github/workflows/audit-internal-link-graph.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
