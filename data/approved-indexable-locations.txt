@@ -24,6 +24,7 @@ artesia-appliance-pickup
 artesia-washer-dryer-pickup
 arvada-appliance-pickup
 aurora-appliance-pickup
+aurora-washer-dryer-pickup
 avocado-heights-appliance-pickup
 avocado-heights-washer-dryer-pickup
 azusa-appliance-pickup
@@ -120,6 +121,7 @@ dana-point-washer-dryer-pickup
 del-mar-appliance-pickup
 del-mar-washer-dryer-pickup
 denver-appliance-pickup
+denver-washer-dryer-pickup
 desert-hot-springs-appliance-pickup
 desert-hot-springs-washer-dryer-pickup
 diamond-bar-appliance-pickup
@@ -346,6 +348,7 @@ placentia-washer-dryer-pickup
 pomona-appliance-pickup
 pomona-washer-dryer-pickup
 portland-appliance-pickup
+portland-washer-dryer-pickup
 poway-appliance-pickup
 poway-washer-dryer-pickup
 puget-sound-appliance-pickup
@@ -374,6 +377,7 @@ rowland-heights-washer-dryer-pickup
 sacramento-appliance-pickup
 sacramento-washer-dryer-pickup
 salem-appliance-pickup
+salem-washer-dryer-pickup
 san-bernardino-appliance-pickup
 san-bernardino-county-appliance-pickup
 san-bernardino-county-washer-dryer-pickup
