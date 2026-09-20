@@ -1,0 +1,187 @@
+name: Launch Readiness Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/launch-readiness-audit.yml'
+      - 'data/california-seo-model-pages.txt'
+      - 'data/california-washer-dryer-seo-model-pages.txt'
+      - 'assets/customer-routing.js'
+      - 'index.html'
+      - 'robots.txt'
+      - 'sitemap.xml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate launch-critical lead path
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys, xml.etree.ElementTree as ET
+          from urllib.parse import urlparse
+
+          failures=[]
+          warnings=[]
+
+          # Critical root files.
+          for f in ['index.html','robots.txt','sitemap.xml','assets/customer-routing.js']:
+              if not Path(f).exists():
+                  failures.append(f'missing root file: {f}')
+
+          if failures:
+              print('\n'.join(failures))
+              raise SystemExit(1)
+
+          home=Path('index.html').read_text(encoding='utf-8',errors='replace')
+          low=home.lower()
+          home_checks={
+              'homepage request form':'https://formspree.io/f/mvzeapzd' in low,
+              'homepage customer routing':('assets/customer-routing.js' in low),
+              'homepage request target':('id="request"' in low or "id='request'" in low),
+              '909 regional phone':'909-375-6685' in home,
+              '310 regional phone':'310-774-4304' in home,
+              '503 regional phone':'503-868-4455' in home,
+              '720 regional phone':'720-604-7498' in home,
+          }
+          for label,ok in home_checks.items():
+              if not ok: failures.append(label)
+
+          robots=Path('robots.txt').read_text(encoding='utf-8',errors='replace').lower()
+          if 'user-agent: *' not in robots or 'allow: /' not in robots:
+              failures.append('robots.txt does not broadly allow crawling')
+          if 'https://freereliableappliancepickup.com/sitemap.xml' not in robots:
+              failures.append('robots.txt missing main sitemap declaration')
+
+          # Parse sitemap and normalize URLs.
+          try:
+              root=ET.parse('sitemap.xml').getroot()
+          except Exception as e:
+              failures.append(f'sitemap.xml parse failure: {e}')
+              root=None
+          sitemap_urls=set()
+          if root is not None:
+              for el in root.iter():
+                  if el.tag.endswith('loc') and el.text:
+                      sitemap_urls.add(el.text.strip().rstrip('/')+'/')
+          if len(sitemap_urls) < 50:
+              failures.append(f'sitemap unexpectedly small: {len(sitemap_urls)} URLs')
+
+          model_files=[
+              'data/california-seo-model-pages.txt',
+              'data/california-washer-dryer-seo-model-pages.txt'
+          ]
+          slugs=[]
+          for mf in model_files:
+              p=Path(mf)
+              if not p.exists():
+                  failures.append(f'missing benchmark list: {mf}')
+                  continue
+              slugs += [x.strip() for x in p.read_text(encoding='utf-8').splitlines() if x.strip()]
+          slugs=list(dict.fromkeys(slugs))
+
+          def internal_target_exists(href, page_dir):
+              href=href.strip()
+              if not href or href.startswith(('#','tel:','mailto:','javascript:','data:')):
+                  return True
+              if href.startswith(('http://','https://','//')):
+                  return True
+              clean=href.split('#',1)[0].split('?',1)[0]
+              if not clean:
+                  return True
+              if clean.startswith('/'):
+                  rel=clean.lstrip('/')
+              else:
+                  rel=str((Path(page_dir)/clean))
+              # normalize simple ../ paths
+              parts=[]
+              for part in Path(rel).parts:
+                  if part in ('','.'): continue
+                  if part=='..':
+                      if parts: parts.pop()
+                  else:
+                      parts.append(part)
+              target=Path(*parts) if parts else Path('index.html')
+              if str(clean).endswith('/'):
+                  target=target/'index.html'
+              elif target.suffix=='':
+                  if (target/'index.html').exists(): target=target/'index.html'
+              return target.exists()
+
+          pages_checked=0
+          broken_links=[]
+          for slug in slugs:
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{slug}: missing benchmark page')
+                  continue
+              pages_checked += 1
+              t=p.read_text(encoding='utf-8',errors='replace')
+              l=t.lower()
+              checks={
+                  'index/follow': bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',t,re.I)),
+                  'self canonical': f'https://freereliableappliancepickup.com/{slug}/' in l,
+                  'title': bool(re.search(r'<title>[^<]{20,}</title>',t,re.I)),
+                  'H1': bool(re.search(r'<h1[^>]*>.+?</h1>',t,re.I|re.S)),
+                  'request target': ('id="request"' in l or "id='request'" in l),
+                  'Formspree action': 'https://formspree.io/f/mvzeapzd' in l,
+                  'customer routing': 'customer-routing.js' in l,
+                  'WebPage schema': ('"@type":"webpage"' in l or '"@type": "webpage"' in l),
+                  'BreadcrumbList': 'breadcrumblist' in l,
+              }
+              for label,ok in checks.items():
+                  if not ok: failures.append(f'{slug}: missing {label}')
+
+              url=f'https://freereliableappliancepickup.com/{slug}/'
+              if url not in sitemap_urls:
+                  failures.append(f'{slug}: missing from sitemap.xml')
+
+              internal_links=re.findall(r'href=["\']([^"\']+)["\']',t,re.I)
+              useful=0
+              for href in internal_links:
+                  if href.startswith(('http://','https://','tel:','mailto:','#','javascript:')):
+                      continue
+                  useful += 1
+                  if not internal_target_exists(href,slug):
+                      broken_links.append(f'{slug} -> {href}')
+              if useful < 2:
+                  failures.append(f'{slug}: fewer than 2 internal links')
+
+          if broken_links:
+              # Surface only unique broken paths and fail launch audit.
+              for item in list(dict.fromkeys(broken_links))[:100]:
+                  failures.append('broken internal link: '+item)
+
+          routing=Path('assets/customer-routing.js').read_text(encoding='utf-8',errors='replace').lower()
+          strategic={
+              'perris':'riverside county',
+              'lake elsinore':'riverside county',
+              'alhambra':'san gabriel valley',
+              'santa ana':'orange county',
+              'victorville':'victorville valley',
+              'palm desert':'coachella valley',
+              'cerritos':'los angeles county',
+              'palmdale':'antelope valley',
+              'san diego':'san diego county',
+              'san francisco':'san francisco bay area',
+              'fresno':'central valley',
+          }
+          for city,region in strategic.items():
+              if f"'{city}':'{region}'" not in routing:
+                  failures.append(f'customer routing missing strategic city: {city} -> {region}')
+
+          print('LAUNCH_PAGES_CHECKED',pages_checked)
+          print('SITEMAP_URLS',len(sitemap_urls))
+          print('BROKEN_LINKS',len(set(broken_links)))
+          if failures:
+              print('FAILURES',len(failures))
+              for f in failures[:250]: print('-',f)
+              raise SystemExit(1)
+          print('PASS: launch-critical lead path is structurally ready.')
