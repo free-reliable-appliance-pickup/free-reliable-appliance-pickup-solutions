@@ -79,3 +79,12 @@ stockton-appliance-pickup
 upland-appliance-pickup
 yucaipa-appliance-pickup
 tustin-appliance-pickup
+whittier-appliance-pickup
+la-habra-appliance-pickup
+la-puente-appliance-pickup
+diamond-bar-appliance-pickup
+walnut-appliance-pickup
+rowland-heights-appliance-pickup
+irwindale-appliance-pickup
+south-san-jose-hills-appliance-pickup
+avocado-heights-appliance-pickup

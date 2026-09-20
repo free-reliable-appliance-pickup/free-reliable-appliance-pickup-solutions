@@ -73,3 +73,13 @@ palmdale-washer-dryer-pickup
 lancaster-washer-dryer-pickup
 high-desert-washer-dryer-pickup
 antelope-valley-washer-dryer-pickup
+chino-washer-dryer-pickup
+whittier-washer-dryer-pickup
+la-habra-washer-dryer-pickup
+la-puente-washer-dryer-pickup
+diamond-bar-washer-dryer-pickup
+walnut-washer-dryer-pickup
+rowland-heights-washer-dryer-pickup
+irwindale-washer-dryer-pickup
+south-san-jose-hills-washer-dryer-pickup
+avocado-heights-washer-dryer-pickup
