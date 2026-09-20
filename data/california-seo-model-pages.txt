@@ -161,3 +161,13 @@ coronado-appliance-pickup
 del-mar-appliance-pickup
 solana-beach-appliance-pickup
 vista-appliance-pickup
+berkeley-appliance-pickup
+fremont-appliance-pickup
+hayward-appliance-pickup
+richmond-appliance-pickup
+concord-appliance-pickup
+palo-alto-appliance-pickup
+santa-clara-appliance-pickup
+sunnyvale-appliance-pickup
+walnut-creek-appliance-pickup
+visalia-appliance-pickup
