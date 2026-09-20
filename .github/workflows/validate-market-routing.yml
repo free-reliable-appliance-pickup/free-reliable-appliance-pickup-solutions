@@ -9,7 +9,6 @@ on:
       - 'assets/customer-routing.js'
       - 'assets/partner-routing.js'
       - 'partners/index.html'
-      - '**-appliance-pickup/index.html'
       - '.github/workflows/validate-market-routing.yml'
   pull_request:
     paths:
