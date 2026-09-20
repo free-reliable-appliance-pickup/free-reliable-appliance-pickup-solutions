@@ -32,7 +32,7 @@ jobs:
           warnings=[]
 
           # Critical root files.
-          for f in ['index.html','robots.txt','sitemap.xml','assets/customer-routing.js']:
+          for f in ['index.html','robots.txt','sitemap.xml','sitemap-images.xml','assets/customer-routing.js']:
               if not Path(f).exists():
                   failures.append(f'missing root file: {f}')
 
@@ -59,6 +59,8 @@ jobs:
               failures.append('robots.txt does not broadly allow crawling')
           if 'https://freereliableappliancepickup.com/sitemap.xml' not in robots:
               failures.append('robots.txt missing main sitemap declaration')
+          if 'https://freereliableappliancepickup.com/sitemap-images.xml' not in robots:
+              failures.append('robots.txt missing image sitemap declaration')
 
           # Parse sitemap and normalize URLs.
           try:
