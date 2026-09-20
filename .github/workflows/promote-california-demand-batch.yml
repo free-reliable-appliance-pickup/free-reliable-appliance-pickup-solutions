@@ -1,0 +1,153 @@
+name: Promote California Demand Batch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/promote-california-demand-batch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Promote next high-demand California pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          appliance=[
+            'artesia','bell','bell-gardens','beverly-hills','burbank','calabasas','carson',
+            'city-of-industry','commerce','compton','culver-city','el-segundo','gardena',
+            'glendale','hawthorne','huntington-park','inglewood','lakewood-ca','lawndale',
+            'lynwood','malibu','manhattan-beach','maywood','paramount'
+          ]
+          laundry=[
+            'artesia','bell','bell-gardens','beverly-hills','burbank','calabasas','carson',
+            'city-of-industry','commerce','compton','culver-city','el-segundo','gardena',
+            'glendale','hawthorne','huntington-park','inglewood','lakewood','lawndale',
+            'lynwood','malibu','manhattan-beach','maywood','paramount',
+            'long-beach','los-angeles'
+          ]
+          failures=[]; changed=[]
+
+          def display(slug):
+              special={'city-of-industry':'City of Industry','beverly-hills':'Beverly Hills','el-segundo':'El Segundo'}
+              return special.get(slug,slug.replace('-',' ').title())
+
+          def promote(slug,kind):
+              page=f'{slug}-'+('washer-dryer-pickup' if kind=='laundry' else 'appliance-pickup')
+              p=Path(page)/'index.html'
+              if not p.exists():
+                  failures.append(f'{page}: missing'); return
+              s=p.read_text(encoding='utf-8',errors='replace'); old=s; low=s.lower()
+              name=display(slug)
+
+              if 'local-ranking-depth-20260918' not in low:
+                  m=re.search(r'<section\s+class="([^"]*(?:ranking-depth|local-depth)[^"]*)">',s,re.I)
+                  if m:
+                      classes=' '.join(dict.fromkeys((m.group(1)+' local-ranking-depth-20260918').split()))
+                      s=s[:m.start()]+f'<section class="{classes}">'+s[m.end():]
+                  else:
+                      req=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+                      if not req:
+                          failures.append(f'{page}: no request insertion point'); return
+                      service='Washer &amp; Dryer' if kind=='laundry' else 'Appliance'
+                      extra=('For washers, report fill, wash, drain and spin; for dryers, report gas or electric type, tumble and heat.'
+                             if kind=='laundry' else
+                             'For refrigerators include cooling status; for washers and dryers include tested functions; for stoves and ranges include fuel type and operating condition.')
+                      block=(f'<section class="local-ranking-depth-20260918 {slug}-{kind}-depth-20260920">'
+                             f'<h2>{name} {service} Pickup Access &amp; Local Details</h2>'
+                             f'<p>{name} pickup requests may involve houses, apartments, rentals, garages or interior rooms. '
+                             f'Include the exact pickup address, floor level, stairs or elevator, gates, parking or loading limits, '
+                             f'and carrying distance so access can be reviewed before scheduling.</p>'
+                             f'<p>Send clear appliance photos and tested condition. {extra} '
+                             f'Nearby service connections are available through the Los Angeles County and Southern California pickup hubs.</p></section>')
+                      s=s[:req.start()]+block+s[req.start():]
+
+              low=s.lower()
+              proof=('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low)
+              if kind=='laundry' and not proof:
+                  h=re.compile(r'<h2>\s*Real Washer\s*&amp;\s*Dryer Photos\s*</h2>',re.I)
+                  if h.search(s) and '<img' in low:
+                      s=h.sub(f'<h2>Real Appliance Examples: {name} Washer &amp; Dryer Pickup</h2>',s,count=1)
+                      proof=True
+              if not proof:
+                  req=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+                  if not req:
+                      failures.append(f'{page}: no proof insertion point'); return
+                  if kind=='laundry':
+                      proofhtml=(f'<section class="real-appliance-proof"><h2>Real Appliance Examples: {name} Washer &amp; Dryer Pickup</h2>'
+                                 '<p>Real washer and dryer photos from our appliance work and inventory help customers see the type of machines reviewed for pickup.</p>'
+                                 '<div class="photo-grid"><img src="/assets/laundry/real-laundry-pickup-4.jpg" alt="Real washer and dryer pickup example" loading="lazy">'
+                                 '<img src="/assets/laundry/real-laundry-pickup-1.jpg" alt="Real laundry appliance pickup example" loading="lazy"></div></section>')
+                  else:
+                      proofhtml=(f'<section class="real-appliance-proof"><h2>Real Appliance Example for {name}</h2>'
+                                 f'<img src="/assets/major-appliance-pickup-photo-2.jpg" alt="Real major appliance pickup example for {name}" loading="lazy" decoding="async" style="max-width:720px;width:100%;height:auto;border-radius:10px"></section>')
+                  s=s[:req.start()]+proofhtml+s[req.start():]
+
+              low=s.lower()
+              if 'breadcrumblist' not in low:
+                  parent=('https://freereliableappliancepickup.com/los-angeles-county-washer-dryer-pickup/' if kind=='laundry'
+                          else 'https://freereliableappliancepickup.com/los-angeles-county-appliance-pickup/')
+                  parentname='Los Angeles County Washer & Dryer Pickup' if kind=='laundry' else 'Los Angeles County Appliance Pickup'
+                  crumb=('<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":['
+                         '{"@type":"ListItem","position":1,"name":"Home","item":"https://freereliableappliancepickup.com/"},'
+                         f'{{"@type":"ListItem","position":2,"name":"{parentname}","item":"{parent}"}},'
+                         f'{{"@type":"ListItem","position":3,"name":"{name}","item":"https://freereliableappliancepickup.com/{page}/"}}]}}</script>')
+                  s=re.sub(r'</head>',crumb+'</head>',s,count=1,flags=re.I)
+
+              low=s.lower()
+              checks={
+                'robots':bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',s,re.I)),
+                'canonical':f'https://freereliableappliancepickup.com/{page}/' in low,
+                'title':bool(re.search(r'<title>[^<]{20,}</title>',s,re.I)),
+                'h1':bool(re.search(r'<h1[^>]*>.+?</h1>',s,re.I|re.S)),
+                'depth':'local-ranking-depth-20260918' in low,
+                'proof':('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low),
+                'form':'https://formspree.io/f/mvzeapzd' in low,
+                'routing':'customer-routing.js' in low,
+                'webpage':('"@type":"webpage"' in low or '"@type": "webpage"' in low),
+                'breadcrumb':'breadcrumblist' in low
+              }
+              miss=[k for k,v in checks.items() if not v]
+              if miss:
+                  failures.append(f"{page}: {', '.join(miss)}"); return
+              if s!=old:
+                  p.write_text(s,encoding='utf-8'); changed.append(page)
+
+          for x in appliance: promote(x,'appliance')
+          for x in laundry: promote(x,'laundry')
+
+          if failures:
+              print('FAILURES')
+              for f in failures: print('-',f)
+              raise SystemExit(1)
+
+          def add(path,slugs,suffix):
+              p=Path(path); lines=[x.strip() for x in p.read_text().splitlines() if x.strip()]; seen=set(lines)
+              added=0
+              for x in slugs:
+                  v=f'{x}-{suffix}'
+                  if v not in seen: lines.append(v); seen.add(v); added+=1
+              p.write_text('\n'.join(lines)+'\n'); return added
+          aa=add('data/california-seo-model-pages.txt',appliance,'appliance-pickup')
+          aw=add('data/california-washer-dryer-seo-model-pages.txt',laundry,'washer-dryer-pickup')
+          print('PAGES_CHANGED',len(changed))
+          print('APPLIANCE_ADDED',aa)
+          print('LAUNDRY_ADDED',aw)
+
+      - name: Commit demand batch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' '*-washer-dryer-pickup/index.html' data/california-seo-model-pages.txt data/california-washer-dryer-seo-model-pages.txt
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Promote Los Angeles demand pages to California SEO gold standard"
+          git push
