@@ -5,7 +5,7 @@ on:
     paths:
       - '.github/workflows/audit-content-uniqueness.yml'
       - 'sitemap.xml'
-      - '**-appliance-pickup/index.html'
+  workflow_dispatch:
 
 permissions:
   contents: read
