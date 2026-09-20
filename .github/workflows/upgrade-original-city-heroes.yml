@@ -33,7 +33,7 @@ jobs:
           import json, re
 
           manifest = json.loads(Path('assets/premium-user-heroes.json').read_text(encoding='utf-8'))
-          stamp = '20260917b'
+          stamp = '20260920a'
           changed = []
           verified = []
 
@@ -41,11 +41,12 @@ jobs:
               return re.sub(pattern, replacement, text, count=1, flags=flags)
 
           for route, meta in manifest.items():
-              if meta.get('source_status') != 'original-full-resolution':
+              src = str(meta.get('src', '')).lstrip('/')
+              if not src.startswith('assets/laundry/original-user-heroes/'):
                   continue
-              src = meta.get('src')
-              if not src:
-                  continue
+              source_path = Path(src)
+              if not source_path.is_file() or source_path.stat().st_size == 0:
+                  raise SystemExit(f'Missing approved original hero source for {route}: {src}')
 
               route = route.strip('/')
               page = Path(route) / 'index.html'
@@ -53,8 +54,7 @@ jobs:
                   print('Missing page:', page)
                   continue
 
-              if not src.startswith('/'):
-                  src = '/' + src
+              src = '/' + src
               hero_url = src + '?original-fullres=' + stamp
               absolute_url = 'https://freereliableappliancepickup.com' + hero_url
 
@@ -119,6 +119,50 @@ jobs:
               json.dumps(report, indent=2) + '\n', encoding='utf-8'
           )
           print('Changed pages:', len(changed))
+          PY
+
+      - name: Verify every approved mapping before commit
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, re, sys
+
+          manifest = json.loads(Path('assets/premium-user-heroes.json').read_text(encoding='utf-8'))
+          failures=[]
+          checked=0
+
+          for route, info in manifest.items():
+              src = str(info.get('src','')).lstrip('/')
+              if not src.startswith('assets/laundry/original-user-heroes/'):
+                  failures.append(f'{route}: invalid approved source {src}')
+                  continue
+              page=Path(route.strip('/'))/'index.html'
+              if not page.is_file():
+                  failures.append(f'{route}: missing page')
+                  continue
+
+              text=page.read_text(encoding='utf-8')
+              rel='/'+src
+              absolute='https://freereliableappliancepickup.com/'+src
+              checked+=1
+              checks={
+                  'Open Graph image': re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']'+re.escape(absolute),text,re.I),
+                  'Twitter image': re.search(r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']'+re.escape(absolute),text,re.I),
+                  'primaryImageOfPage': ('primaryImageOfPage' in text and absolute in text),
+                  'visible hero': re.search(r'class=["\']site-hero-art["\'][\s\S]{0,1200}?<img[^>]+src=["\']'+re.escape(rel),text,re.I),
+                  'hero lock': re.search(r'data-premium-hero-lock=["\']1["\'][\s\S]{0,2500}?'+re.escape(rel),text,re.I),
+              }
+              for label,ok in checks.items():
+                  if not ok:
+                      failures.append(f'{route}: {label} not aligned to {src}')
+
+          print(f'Checked {checked} approved original hero pages.')
+          if failures:
+              print('FAILED:')
+              for item in failures:
+                  print(' -',item)
+              sys.exit(1)
+          print('PASS: all approved city hero references use exact original-user-heroes files.')
           PY
 
       - name: Commit verified original-resolution hero upgrades
