@@ -37,6 +37,16 @@ jobs:
             'avocado-heights-washer-dryer-pickup'
           ]
 
+          fallback_sections = {
+            'la-puente-washer-dryer-pickup': '<section class="local-ranking-depth-20260918 la-puente-wd-local-depth-20260919"><h2>La Puente Washer &amp; Dryer Pickup Access &amp; Route Details</h2><p>La Puente laundry requests can involve houses, apartments, rental turnovers, garages and shared parking. Include the exact pickup address, floor level, stairs, gates, parking or loading limits and carrying distance so the removal path can be reviewed before scheduling.</p><p>Nearby washer and dryer pages connect La Puente with <a href="/west-covina-washer-dryer-pickup/">West Covina</a>, <a href="/avocado-heights-washer-dryer-pickup/">Avocado Heights</a>, <a href="/south-san-jose-hills-washer-dryer-pickup/">South San Jose Hills</a> and the <a href="/san-gabriel-valley-washer-dryer-pickup/">San Gabriel Valley hub</a>.</p></section>',
+            'diamond-bar-washer-dryer-pickup': '<section class="local-ranking-depth-20260918 diamond-bar-wd-local-depth-20260919"><h2>Diamond Bar Washer &amp; Dryer Pickup Access Review</h2><p>Diamond Bar washer and dryer requests should include driveway slope, gate access, garage or interior location, stairs and carrying distance. These details matter when a laundry set must move from an interior room or elevated driveway to the loading point.</p><p>Use the nearby pages for <a href="/walnut-washer-dryer-pickup/">Walnut</a>, <a href="/rowland-heights-washer-dryer-pickup/">Rowland Heights</a> and the <a href="/san-gabriel-valley-washer-dryer-pickup/">San Gabriel Valley washer and dryer hub</a> when the pickup address falls outside Diamond Bar.</p></section>',
+            'walnut-washer-dryer-pickup': '<section class="local-ranking-depth-20260918 walnut-wd-local-depth-20260919"><h2>Walnut Washer &amp; Dryer Pickup Access Review</h2><p>For Walnut laundry requests, send the exact address and describe whether the machines are in a garage, interior laundry room or upstairs space. Driveway grade, gates, stairs, narrow paths and carrying distance can change the removal plan.</p><p>Nearby route pages include <a href="/diamond-bar-washer-dryer-pickup/">Diamond Bar</a>, <a href="/rowland-heights-washer-dryer-pickup/">Rowland Heights</a>, <a href="/west-covina-washer-dryer-pickup/">West Covina</a> and the <a href="/san-gabriel-valley-washer-dryer-pickup/">San Gabriel Valley hub</a>.</p></section>',
+            'rowland-heights-washer-dryer-pickup': '<section class="local-ranking-depth-20260918 rowland-heights-wd-local-depth-20260919"><h2>Rowland Heights Washer &amp; Dryer Pickup Access Review</h2><p>Rowland Heights laundry requests may come from homes, apartments, garages and rental properties. Include floor level, stairs, gate access, parking restrictions and the path from the machines to the truck so pickup can be reviewed accurately.</p><p>Nearby washer and dryer pages include <a href="/walnut-washer-dryer-pickup/">Walnut</a>, <a href="/diamond-bar-washer-dryer-pickup/">Diamond Bar</a>, <a href="/hacienda-heights-washer-dryer-pickup/">Hacienda Heights</a> and the <a href="/san-gabriel-valley-washer-dryer-pickup/">San Gabriel Valley hub</a>.</p></section>',
+            'irwindale-washer-dryer-pickup': '<section class="local-ranking-depth-20260918 irwindale-wd-local-depth-20260919"><h2>Irwindale Washer &amp; Dryer Pickup Address &amp; Access Review</h2><p>Irwindale requests are routed by the exact pickup address because access can differ between residential, rental and business properties. Include the machine location, stairs, gates, loading access, parking limits and carrying distance.</p><p>Nearby laundry routes connect with <a href="/azusa-washer-dryer-pickup/">Azusa</a>, <a href="/duarte-washer-dryer-pickup/">Duarte</a>, <a href="/west-covina-washer-dryer-pickup/">West Covina</a> and the <a href="/san-gabriel-valley-washer-dryer-pickup/">San Gabriel Valley hub</a>.</p></section>',
+            'south-san-jose-hills-washer-dryer-pickup': '<section class="local-ranking-depth-20260918 south-san-jose-hills-wd-local-depth-20260919"><h2>South San Jose Hills Washer &amp; Dryer Pickup Access Review</h2><p>For South San Jose Hills requests, provide the exact address plus garage or interior location, floor level, stairs, driveway or curb access and carrying distance. Shared parking or a long path from the laundry area should be included before the route is confirmed.</p><p>Nearby washer and dryer pages include <a href="/la-puente-washer-dryer-pickup/">La Puente</a>, <a href="/avocado-heights-washer-dryer-pickup/">Avocado Heights</a>, <a href="/west-covina-washer-dryer-pickup/">West Covina</a> and the <a href="/san-gabriel-valley-washer-dryer-pickup/">San Gabriel Valley hub</a>.</p></section>',
+            'avocado-heights-washer-dryer-pickup': '<section class="local-ranking-depth-20260918 avocado-heights-wd-local-depth-20260919"><h2>Avocado Heights Washer &amp; Dryer Pickup Access Review</h2><p>Avocado Heights laundry requests should include the exact address, machine location, gates, driveway access, stairs and carrying distance. For appliances inside a home or rear area, describe the full removal path to the loading point.</p><p>Nearby washer and dryer pages connect with <a href="/la-puente-washer-dryer-pickup/">La Puente</a>, <a href="/south-san-jose-hills-washer-dryer-pickup/">South San Jose Hills</a>, <a href="/rowland-heights-washer-dryer-pickup/">Rowland Heights</a> and the <a href="/san-gabriel-valley-washer-dryer-pickup/">San Gabriel Valley hub</a>.</p></section>'
+          }
+
           failures=[]
           changed=[]
           for slug in appliance + laundry:
@@ -52,11 +62,17 @@ jobs:
                   pattern=re.compile(r'<section\s+class="([^"]*(?:ranking-depth|local-depth)[^"]*)">',re.I)
                   m=pattern.search(s)
                   if not m:
-                      failures.append(f'{slug}: no local/ranking depth section to promote')
-                      continue
-                  classes=(m.group(1)+' local-ranking-depth-20260918').split()
-                  classes=' '.join(dict.fromkeys(classes))
-                  s=s[:m.start()] + f'<section class="{classes}">' + s[m.end():]
+                      fallback=fallback_sections.get(slug)
+                      request_marker=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+                      if fallback and request_marker:
+                          s=s[:request_marker.start()] + fallback + s[request_marker.start():]
+                      else:
+                          failures.append(f'{slug}: no local/ranking depth section and no safe fallback insertion')
+                          continue
+                  else:
+                      classes=(m.group(1)+' local-ranking-depth-20260918').split()
+                      classes=' '.join(dict.fromkeys(classes))
+                      s=s[:m.start()] + f'<section class="{classes}">' + s[m.end():]
 
               low=s.lower()
               if 'major-appliance-pickup-photo' not in low and 'real appliance example' not in low:
