@@ -1,0 +1,199 @@
+name: SEO Full Resolution City Photo Filenames
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/seo-full-resolution-city-photo-filenames.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create descriptive byte-identical city photo aliases
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib, re, shutil
+
+          model=Path('data/california-washer-dryer-seo-model-pages.txt')
+          slugs=[x.strip() for x in model.read_text(encoding='utf-8').splitlines() if x.strip()]
+          outdir=Path('assets/laundry/city-heroes')
+          outdir.mkdir(parents=True,exist_ok=True)
+
+          copied=[]
+          updated=[]
+          skipped=[]
+
+          def city_name(slug):
+              base=slug.removesuffix('-washer-dryer-pickup')
+              special={
+                'la-canada-flintridge':'La Cañada Flintridge',
+                'la-crescenta':'La Crescenta',
+                'la-habra':'La Habra',
+                'la-habra-heights':'La Habra Heights',
+                'la-mirada':'La Mirada',
+                'la-puente':'La Puente',
+                'la-quinta':'La Quinta',
+                'loma-linda':'Loma Linda',
+                'san-bernardino':'San Bernardino',
+                'san-dimas':'San Dimas',
+                'san-gabriel':'San Gabriel',
+                'san-marino':'San Marino',
+                'san-juan-capistrano':'San Juan Capistrano',
+                'san-clemente':'San Clemente',
+                'rancho-cucamonga':'Rancho Cucamonga',
+                'rancho-mirage':'Rancho Mirage',
+                'rancho-santa-margarita':'Rancho Santa Margarita',
+                'south-san-jose-hills':'South San Jose Hills',
+                'west-covina':'West Covina',
+                'rowland-heights':'Rowland Heights',
+                'hacienda-heights':'Hacienda Heights',
+                'palm-desert':'Palm Desert',
+                'palm-springs':'Palm Springs',
+                'apple-valley':'Apple Valley',
+                'high-desert':'High Desert',
+                'antelope-valley':'Antelope Valley',
+                'orange-county':'Orange County',
+                'south-orange-county':'South Orange County',
+                'los-angeles-county':'Los Angeles County',
+                'riverside-county':'Riverside County',
+                'san-bernardino-county':'San Bernardino County',
+                'southern-california':'Southern California',
+                'california':'California',
+                'san-gabriel-inland-empire':'San Gabriel Valley & Inland Empire',
+              }
+              return special.get(base,base.replace('-',' ').title())
+
+          for slug in slugs:
+              page=Path(slug)/'index.html'
+              if not page.exists():
+                  skipped.append((slug,'missing page'))
+                  continue
+              html=page.read_text(encoding='utf-8',errors='replace')
+
+              # Prefer the visible hero image when it uses one of the user's original full-resolution photos.
+              hero=re.search(
+                  r'(<div\s+class=["\'][^"\']*site-hero-art[^"\']*["\'][^>]*>\s*<img\b[^>]*?\bsrc=["\'])([^"\']*?/assets/laundry/original-user-heroes/[^"\'?]+)(?:\?[^"\']*)?(["\'][^>]*>)',
+                  html,re.I|re.S
+              )
+              if not hero:
+                  # Some templates use relative paths.
+                  hero=re.search(
+                      r'(<div\s+class=["\'][^"\']*site-hero-art[^"\']*["\'][^>]*>\s*<img\b[^>]*?\bsrc=["\'])([^"\']*assets/laundry/original-user-heroes/[^"\'?]+)(?:\?[^"\']*)?(["\'][^>]*>)',
+                      html,re.I|re.S
+                  )
+              if not hero:
+                  skipped.append((slug,'no original-user hero'))
+                  continue
+
+              old_ref=hero.group(2)
+              old_path_part=old_ref
+              if old_path_part.startswith('https://freereliableappliancepickup.com/'):
+                  old_path_part=old_path_part.split('freereliableappliancepickup.com/',1)[1]
+              old_path_part=old_path_part.lstrip('/').replace('../','')
+              src=Path(old_path_part)
+              if not src.exists():
+                  skipped.append((slug,f'source missing: {src}'))
+                  continue
+
+              ext=src.suffix.lower()
+              dest=outdir/f'{slug}-real-washer-dryer-set{ext}'
+              if not dest.exists() or hashlib.sha256(dest.read_bytes()).digest()!=hashlib.sha256(src.read_bytes()).digest():
+                  shutil.copyfile(src,dest)
+                  copied.append(str(dest))
+
+              if hashlib.sha256(dest.read_bytes()).hexdigest()!=hashlib.sha256(src.read_bytes()).hexdigest():
+                  raise SystemExit(f'Byte identity check failed: {src} -> {dest}')
+
+              new_rel='/'+dest.as_posix()
+              new_abs='https://freereliableappliancepickup.com/'+dest.as_posix()
+
+              # Replace every reference to the original hero asset on this page so og:image,
+              # twitter:image and primaryImageOfPage stay aligned with the visible hero.
+              old_variants=set([
+                  old_ref,
+                  '/'+src.as_posix(),
+                  '../'+src.as_posix(),
+                  src.as_posix(),
+                  'https://freereliableappliancepickup.com/'+src.as_posix(),
+              ])
+              before=html
+              for old in sorted(old_variants,key=len,reverse=True):
+                  html=re.sub(re.escape(old)+r'(?:\?[^"\'<> ]*)?',new_rel if not old.startswith('http') else new_abs,html)
+
+              # Make the actual hero alt text descriptive and human-readable, without keyword stuffing.
+              city=city_name(slug)
+              hero_block=re.search(r'<div\s+class=["\'][^"\']*site-hero-art[^"\']*["\'][^>]*>\s*(<img\b[^>]*>)',html,re.I|re.S)
+              if hero_block:
+                  tag=hero_block.group(1)
+                  alt=f'Real full-resolution washer and dryer set from our appliance work for {city} pickup'
+                  if re.search(r'\balt=["\'][^"\']*["\']',tag,re.I):
+                      newtag=re.sub(r'\balt=["\'][^"\']*["\']',f'alt="{alt}"',tag,count=1,flags=re.I)
+                  else:
+                      newtag=tag[:-1]+f' alt="{alt}">'
+                  html=html[:hero_block.start(1)]+newtag+html[hero_block.end(1):]
+
+              # Ensure preferred image metadata is present and references the same descriptive full-res hero.
+              if not re.search(r'<meta\s+property=["\']og:image["\']',html,re.I):
+                  html=re.sub(r'</head>',f'<meta property="og:image" content="{new_abs}"></head>',html,count=1,flags=re.I)
+              if not re.search(r'<meta\s+name=["\']twitter:image["\']',html,re.I):
+                  html=re.sub(r'</head>',f'<meta name="twitter:image" content="{new_abs}"></head>',html,count=1,flags=re.I)
+
+              if html!=before:
+                  page.write_text(html,encoding='utf-8')
+                  updated.append(slug)
+
+          print('PAGES_IN_MODEL',len(slugs))
+          print('CITY_PHOTOS_COPIED',len(copied))
+          print('PAGES_UPDATED',len(updated))
+          print('SKIPPED',len(skipped))
+          for item in skipped[:80]:
+              print('SKIP',item[0],'-',item[1])
+
+      - name: Verify descriptive full-resolution city photos
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib,re
+
+          failures=[]
+          updated=0
+          for page in Path('.').glob('*-washer-dryer-pickup/index.html'):
+              html=page.read_text(encoding='utf-8',errors='replace')
+              if '/assets/laundry/city-heroes/' not in html:
+                  continue
+              updated+=1
+              slug=page.parent.name
+              m=re.search(r'/assets/laundry/city-heroes/([^"\'?]+)',html,re.I)
+              if not m:
+                  failures.append(f'{slug}: descriptive hero reference missing')
+                  continue
+              f=Path('assets/laundry/city-heroes')/m.group(1)
+              if not f.exists():
+                  failures.append(f'{slug}: descriptive hero file missing: {f}')
+              if 'primaryImageOfPage' in html and f'https://freereliableappliancepickup.com/{f.as_posix()}' not in html:
+                  failures.append(f'{slug}: primary image metadata not aligned')
+          print('DESCRIPTIVE_CITY_HERO_PAGES',updated)
+          if failures:
+              print('\n'.join(failures))
+              raise SystemExit(1)
+
+      - name: Commit image SEO improvements
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/laundry/city-heroes '*-washer-dryer-pickup/index.html'
+          if git diff --cached --quiet; then
+            echo "No image SEO changes needed"
+            exit 0
+          fi
+          git commit -m "Add descriptive full-resolution city washer dryer photos"
+          git push
