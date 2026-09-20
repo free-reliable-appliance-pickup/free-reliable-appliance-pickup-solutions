@@ -1,4 +1,4 @@
-name: Upgrade Top California City Conversion
+name: Cleanup Duplicate California Conversion Blocks
 
 on:
   push:
@@ -11,78 +11,48 @@ permissions:
   contents: write
 
 jobs:
-  upgrade:
+  cleanup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Add fast request conversion blocks
+      - name: Remove duplicate city conversion blocks
         shell: python
         run: |
           from pathlib import Path
           import re
 
-          cities={
-              'anaheim':('Anaheim','909-375-6685'),
-              'rancho-cucamonga':('Rancho Cucamonga','909-375-6685'),
-              'fontana':('Fontana','909-375-6685'),
-              'ontario':('Ontario','909-375-6685'),
-              'pomona':('Pomona','909-375-6685'),
-              'west-covina':('West Covina','909-375-6685'),
-              'pasadena':('Pasadena','909-375-6685'),
-              'long-beach':('Long Beach','310-774-4304'),
-              'santa-ana':('Santa Ana','909-375-6685'),
-              'irvine':('Irvine','909-375-6685'),
-              'corona':('Corona','909-375-6685'),
-              'moreno-valley':('Moreno Valley','909-375-6685'),
-              'victorville':('Victorville','909-375-6685'),
-              'fullerton':('Fullerton','909-375-6685'),
-              'costa-mesa':('Costa Mesa','909-375-6685'),
-              'tustin':('Tustin','909-375-6685'),
-          }
-
-          failures=[]
+          slugs=[
+              'anaheim','rancho-cucamonga','fontana','ontario','pomona','west-covina',
+              'pasadena','long-beach','santa-ana','irvine','corona','moreno-valley',
+              'victorville','fullerton','costa-mesa','tustin'
+          ]
           changed=[]
-          for slug,(city,phone) in cities.items():
+          failures=[]
+
+          for slug in slugs:
               page=Path(f'{slug}-appliance-pickup')/'index.html'
               if not page.exists():
                   failures.append(f'{slug}: missing page')
                   continue
               s=page.read_text(encoding='utf-8',errors='replace')
               low=s.lower()
-              if 'direct-city-request-conversion-20260920' in low:
-                  continue
 
-              main=re.search(r'<main[^>]*>',s,re.I)
-              if not main:
-                  failures.append(f'{slug}: missing main')
-                  continue
-              first=re.search(r'<section[^>]*>.*?</section>',s[main.end():],re.I|re.S)
-              if not first:
-                  failures.append(f'{slug}: missing first section')
-                  continue
+              has_core='direct-request-conversion-20260920' in low
+              has_city='direct-city-request-conversion-20260920' in low
 
-              tel=''.join(c for c in phone if c.isdigit())
-              if len(tel)==10:
-                  tel='+1'+tel
-
-              block=(
-                  f'<section class="direct-city-request-conversion-20260920">'
-                  f'<h2>Start Your {city} Appliance Pickup Review</h2>'
-                  f'<p><strong>Fastest review:</strong> send clear appliance photos, the exact {city} pickup address, current working condition and access details. Working and reusable major appliances receive priority.</p>'
-                  f'<div class="grid">'
-                  f'<div class="card"><h3>Send Photos</h3><p>Show the full appliance, interior or operating area when useful, and the model label if available.</p></div>'
-                  f'<div class="card"><h3>Describe Access</h3><p>Include floor level, stairs or elevator, gates, parking or loading limits, narrow doors and carrying distance.</p></div>'
-                  f'<div class="card"><h3>Get a Decision</h3><p>Condition, access, local demand and current route availability are reviewed before free pickup is confirmed.</p></div>'
-                  f'</div>'
-                  f'<p><a class="button" href="#request">Request {city} Pickup</a> &nbsp; <a href="tel:{tel}">Call {phone}</a> &nbsp; <a href="sms:{tel}">Text Appliance Photos</a></p>'
-                  f'<p class="note"><strong>No account required.</strong> A request starts the review; it is not a confirmed appointment until accepted.</p>'
-                  f'</section>'
-              )
-
-              pos=main.end()+first.end()
-              s=s[:pos]+block+s[pos:]
-              page.write_text(s,encoding='utf-8')
-              changed.append(slug)
+              if has_core and has_city:
+                  new=re.sub(
+                      r'<section class="direct-city-request-conversion-20260920">.*?</section>',
+                      '',
+                      s,
+                      count=1,
+                      flags=re.I|re.S
+                  )
+                  if new==s:
+                      failures.append(f'{slug}: duplicate marker found but block removal failed')
+                      continue
+                  page.write_text(new,encoding='utf-8')
+                  changed.append(slug)
 
           if failures:
               print('FAILURES')
@@ -90,11 +60,11 @@ jobs:
                   print('-',f)
               raise SystemExit(1)
 
-          print('PAGES_CHANGED',len(changed))
+          print('PAGES_CLEANED',len(changed))
           for x in changed:
               print(x)
 
-      - name: Verify upgraded city pages
+      - name: Verify conversion blocks remain useful
         shell: python
         run: |
           from pathlib import Path
@@ -110,8 +80,10 @@ jobs:
               page=Path(f'{slug}-appliance-pickup')/'index.html'
               t=page.read_text(encoding='utf-8',errors='replace')
               low=t.lower()
+              conversion=('direct-request-conversion-20260920' in low or
+                          'direct-city-request-conversion-20260920' in low)
               checks={
-                  'conversion marker':'direct-city-request-conversion-20260920' in low,
+                  'one conversion block': conversion,
                   'request CTA':'href="#request"' in low,
                   'phone CTA':'href="tel:' in low,
                   'text CTA':'href="sms:' in low,
@@ -120,23 +92,27 @@ jobs:
                   'canonical':f'https://freereliableappliancepickup.com/{slug}-appliance-pickup/' in low,
                   'index/follow':bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',t,re.I)),
               }
-              missing=[k for k,v in checks.items() if not v]
-              if missing:
-                  failures.append(f"{slug}: {', '.join(missing)}")
+              miss=[k for k,v in checks.items() if not v]
+              if miss:
+                  failures.append(f"{slug}: {', '.join(miss)}")
+              if low.count('direct-request-conversion-20260920') + low.count('direct-city-request-conversion-20260920') > 1:
+                  failures.append(f'{slug}: duplicate conversion blocks remain')
 
           if failures:
               print('\n'.join(failures))
               raise SystemExit(1)
-          print('PASS: top California city conversion pages verified.')
+          print('PASS: top city conversion pages have one clear conversion block each.')
 
-      - name: Commit top city conversion upgrade
+      - name: Commit conversion cleanup
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- '*-appliance-pickup/index.html'
           if git diff --cached --quiet; then
+            echo "No duplicate conversion blocks found"
             exit 0
           fi
-          git commit -m "Strengthen top California city pickup conversion pages"
+          git commit -m "Remove duplicate top city conversion blocks"
+          git pull --rebase origin main
           git push
