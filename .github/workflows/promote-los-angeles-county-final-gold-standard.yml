@@ -1,0 +1,197 @@
+name: Promote Los Angeles County Final Gold Standard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/promote-los-angeles-county-final-gold-standard.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Promote remaining Los Angeles County customer pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          cities={
+            'long-beach':('Long Beach',['carson','lakewood-ca','signal-hill']),
+            'glendale':('Glendale',['burbank','pasadena','los-angeles']),
+            'burbank':('Burbank',['glendale','los-angeles','san-fernando']),
+            'santa-monica':('Santa Monica',['culver-city','west-hollywood','los-angeles']),
+            'inglewood':('Inglewood',['hawthorne','culver-city','los-angeles']),
+            'torrance':('Torrance',['gardena','carson','redondo-beach']),
+            'carson':('Carson',['torrance','compton','long-beach']),
+            'compton':('Compton',['carson','lynwood','south-gate']),
+            'culver-city':('Culver City',['santa-monica','inglewood','los-angeles']),
+            'gardena':('Gardena',['torrance','hawthorne','carson']),
+            'hawthorne':('Hawthorne',['gardena','inglewood','lawndale']),
+            'redondo-beach':('Redondo Beach',['torrance','manhattan-beach','hermosa-beach']),
+            'manhattan-beach':('Manhattan Beach',['redondo-beach','hermosa-beach','el-segundo']),
+            'beverly-hills':('Beverly Hills',['west-hollywood','los-angeles','santa-monica']),
+            'west-hollywood':('West Hollywood',['beverly-hills','los-angeles','santa-monica']),
+            'santa-clarita':('Santa Clarita',['san-fernando','burbank','los-angeles']),
+            'san-fernando':('San Fernando',['santa-clarita','burbank','los-angeles']),
+            'calabasas':('Calabasas',['malibu','los-angeles','santa-clarita']),
+          }
+
+          model_a=Path('data/california-seo-model-pages.txt')
+          model_w=Path('data/california-washer-dryer-seo-model-pages.txt')
+          a_lines=[x.strip() for x in model_a.read_text(encoding='utf-8').splitlines() if x.strip()]
+          w_lines=[x.strip() for x in model_w.read_text(encoding='utf-8').splitlines() if x.strip()]
+          a_seen=set(a_lines); w_seen=set(w_lines)
+          appliance=[f'{c}-appliance-pickup' for c in cities if f'{c}-appliance-pickup' not in a_seen]
+          laundry=[f'{c}-washer-dryer-pickup' for c in cities if f'{c}-washer-dryer-pickup' not in w_seen]
+
+          failures=[]
+          changed=[]
+
+          def display_for(slug):
+              return cities.get(slug,(slug.replace('-',' ').title(),[]))[0]
+
+          def local_block(city_slug,display,kind,neighbors):
+              suffix='washer-dryer-pickup' if kind=='laundry' else 'appliance-pickup'
+              service='Washer &amp; Dryer' if kind=='laundry' else 'Appliance'
+              links=' · '.join(f'<a href="/{n}-{suffix}/">{display_for(n)}</a>' for n in neighbors)
+              hub=('<a href="/los-angeles-county-washer-dryer-pickup/">Los Angeles County washer &amp; dryer hub</a>'
+                   if kind=='laundry' else
+                   '<a href="/los-angeles-county-appliance-pickup/">Los Angeles County appliance hub</a>')
+              if kind=='laundry':
+                  details='For washers report fill, wash, drain and spin. For dryers report gas or electric type, tumble and heat.'
+              else:
+                  details='For refrigerators include cooling status, for washers and dryers include tested functions, and for stoves or ranges include fuel type and operating condition.'
+              return (
+                f'<section class="local-ranking-depth-20260918 {city_slug}-{kind}-depth-20260919">'
+                f'<h2>{display} {service} Pickup Access &amp; Local Route Review</h2>'
+                f'<p>{display} pickup requests can come from houses, apartments, condos, rental properties, garages and interior rooms. '
+                f'Include the exact address, floor level, stairs or elevator, gates, parking or loading restrictions and carrying distance before scheduling.</p>'
+                f'<p>Send clear photos and tested condition. {details} Nearby Los Angeles County route pages: {links} · {hub}.</p>'
+                f'</section>'
+              )
+
+          for slug in appliance+laundry:
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{slug}: missing page')
+                  continue
+              city_slug=slug.replace('-washer-dryer-pickup','').replace('-appliance-pickup','')
+              display,neighbors=cities[city_slug]
+              kind='laundry' if slug.endswith('-washer-dryer-pickup') else 'appliance'
+              s=p.read_text(encoding='utf-8',errors='replace')
+              old=s
+
+              if 'local-ranking-depth-20260918' not in s.lower():
+                  m=re.search(r'<section\s+class="([^"]*(?:ranking-depth|local-depth)[^"]*)">',s,re.I)
+                  if m:
+                      classes=' '.join(dict.fromkeys((m.group(1)+' local-ranking-depth-20260918').split()))
+                      s=s[:m.start()]+f'<section class="{classes}">'+s[m.end():]
+                  else:
+                      req=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+                      if not req:
+                          failures.append(f'{slug}: missing request section')
+                          continue
+                      s=s[:req.start()]+local_block(city_slug,display,kind,neighbors)+s[req.start():]
+
+              low=s.lower()
+              has_proof=('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low)
+              if kind=='laundry' and not has_proof:
+                  heading=re.compile(r'<h2>\s*Real Washer\s*&amp;\s*Dryer Photos\s*</h2>',re.I)
+                  if heading.search(s) and '<img' in low:
+                      s=heading.sub(f'<h2>Real Appliance Examples: {display} Washer &amp; Dryer Pickup</h2>',s,count=1)
+                      has_proof=True
+
+              if not has_proof:
+                  req=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+                  if not req:
+                      failures.append(f'{slug}: no proof insertion point')
+                      continue
+                  if kind=='laundry':
+                      proof=(
+                        f'<section class="real-appliance-proof"><h2>Real Appliance Examples: {display} Washer &amp; Dryer Pickup</h2>'
+                        '<p>Real washer and dryer photos from our appliance work and inventory are shown for pickup review context.</p>'
+                        '<div class="photo-grid"><img src="/assets/laundry/real-laundry-pickup-4.jpg" alt="Real washer and dryer pickup example" loading="lazy">'
+                        '<img src="/assets/laundry/stacked-laundry-center.jpg" alt="Real stacked washer and dryer example" loading="lazy"></div></section>'
+                      )
+                  else:
+                      proof=(
+                        f'<section class="real-appliance-proof"><h2>Real Appliance Example for {display}</h2>'
+                        f'<figure><img src="/assets/major-appliance-pickup-photo-1.jpg" alt="Real major appliance example for {display} pickup review" loading="lazy" decoding="async">'
+                        f'<figcaption>Real appliance photo from our work and inventory. Each {display} request is reviewed individually.</figcaption></figure></section>'
+                      )
+                  s=s[:req.start()]+proof+s[req.start():]
+
+              if 'breadcrumblist' not in s.lower():
+                  page_url=f'https://freereliableappliancepickup.com/{slug}/'
+                  parent_url=('https://freereliableappliancepickup.com/los-angeles-county-washer-dryer-pickup/' if kind=='laundry'
+                              else 'https://freereliableappliancepickup.com/los-angeles-county-appliance-pickup/')
+                  parent_name='Los Angeles County Washer & Dryer Pickup' if kind=='laundry' else 'Los Angeles County Appliance Pickup'
+                  crumb=(
+                    '<script type="application/ld+json">'
+                    '{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":['
+                    '{"@type":"ListItem","position":1,"name":"Home","item":"https://freereliableappliancepickup.com/"},'
+                    '{"@type":"ListItem","position":2,"name":"'+parent_name+'","item":"'+parent_url+'"},'
+                    '{"@type":"ListItem","position":3,"name":"'+display+'","item":"'+page_url+'"}]}</script>'
+                  )
+                  s=re.sub(r'</head>',crumb+'</head>',s,count=1,flags=re.I)
+
+              low=s.lower()
+              checks={
+                'index/follow':bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',s,re.I)),
+                'canonical':f'https://freereliableappliancepickup.com/{slug}/' in low,
+                'title':bool(re.search(r'<title>[^<]{20,}</title>',s,re.I)),
+                'H1':bool(re.search(r'<h1[^>]*>.+?</h1>',s,re.I|re.S)),
+                'depth':'local-ranking-depth-20260918' in low,
+                'proof':('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low),
+                'brand':'/assets/site-brand.css' in low,
+                'request':('id="request"' in low or "id='request'" in low),
+                'formspree':'https://formspree.io/f/mvzeapzd' in low,
+                'routing':'customer-routing.js' in low,
+                'webpage':('"@type":"webpage"' in low or '"@type": "webpage"' in low),
+                'breadcrumb':'breadcrumblist' in low,
+              }
+              missing=[k for k,v in checks.items() if not v]
+              if len(re.findall(r'href=["\'](?:\.\./|/)[a-z0-9-]+/',s,re.I))<3:
+                  missing.append('3+ internal links')
+              if missing:
+                  failures.append(f"{slug}: missing {', '.join(missing)}")
+                  continue
+              if s!=old:
+                  p.write_text(s,encoding='utf-8')
+                  changed.append(slug)
+
+          if failures:
+              print('FAILURES')
+              for f in failures: print('-',f)
+              raise SystemExit(1)
+
+          for slug in appliance:
+              if slug not in a_seen: a_lines.append(slug); a_seen.add(slug)
+          for slug in laundry:
+              if slug not in w_seen: w_lines.append(slug); w_seen.add(slug)
+          model_a.write_text('\n'.join(a_lines)+'\n',encoding='utf-8')
+          model_w.write_text('\n'.join(w_lines)+'\n',encoding='utf-8')
+
+          print('APPLIANCE_PROMOTED',len(appliance))
+          print('LAUNDRY_PROMOTED',len(laundry))
+          print('PAGES_CHANGED',len(changed))
+          print('\n'.join(changed))
+
+      - name: Commit Los Angeles County promotion
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' '*-washer-dryer-pickup/index.html' data/california-seo-model-pages.txt data/california-washer-dryer-seo-model-pages.txt
+          if git diff --cached --quiet; then
+            echo "No Los Angeles County promotion changes needed"
+            exit 0
+          fi
+          git commit -m "Promote remaining Los Angeles County pickup pages to gold standard"
+          git push
