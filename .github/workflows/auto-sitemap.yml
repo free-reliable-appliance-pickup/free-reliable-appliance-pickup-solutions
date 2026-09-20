@@ -3,7 +3,17 @@ name: Validate Approved Sitemap
 on:
   push:
     branches: [main]
+    paths:
+      - 'sitemap.xml'
+      - 'sitemap-regular-washer-dryer.xml'
+      - 'data/approved-indexable-locations.txt'
+      - '.github/workflows/auto-sitemap.yml'
   pull_request:
+    paths:
+      - 'sitemap.xml'
+      - 'sitemap-regular-washer-dryer.xml'
+      - 'data/approved-indexable-locations.txt'
+      - '.github/workflows/auto-sitemap.yml'
   workflow_dispatch:
 permissions:
   contents: read
