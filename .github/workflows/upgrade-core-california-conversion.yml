@@ -1,0 +1,132 @@
+name: Upgrade Core California Conversion
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/upgrade-core-california-conversion.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add competitor-informed fast request blocks
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          pages={
+            'los-angeles-appliance-pickup':('Los Angeles','Appliance','310-774-4304'),
+            'los-angeles-county-appliance-pickup':('Los Angeles County','Appliance','310-774-4304'),
+            'san-bernardino-appliance-pickup':('San Bernardino','Appliance','909-375-6685'),
+            'riverside-appliance-pickup':('Riverside','Appliance','909-375-6685'),
+            'orange-county-appliance-pickup':('Orange County','Appliance','909-375-6685'),
+            'inland-empire-appliance-pickup':('Inland Empire','Appliance','909-375-6685'),
+            'los-angeles-washer-dryer-pickup':('Los Angeles','Washer &amp; Dryer','310-774-4304'),
+            'orange-county-washer-dryer-pickup':('Orange County','Washer &amp; Dryer','909-375-6685'),
+          }
+
+          changed=[]
+          failures=[]
+          for slug,(area,service,phone) in pages.items():
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{slug}: missing')
+                  continue
+              s=p.read_text(encoding='utf-8',errors='replace')
+              if 'direct-request-conversion-20260920' in s:
+                  continue
+
+              main=re.search(r'<main[^>]*>',s,re.I)
+              if not main:
+                  failures.append(f'{slug}: missing main')
+                  continue
+              first_section=re.search(r'<section[^>]*>.*?</section>',s[main.end():],re.I|re.S)
+              if not first_section:
+                  failures.append(f'{slug}: no first section')
+                  continue
+              insert_at=main.end()+first_section.end()
+              tel=''.join(c for c in phone if c.isdigit())
+              if len(tel)==10:
+                  tel='+1'+tel
+              laundry=('Washer' in service)
+              condition=(
+                  'Working washer and dryer sets receive strong priority. Single working machines can also be reviewed.'
+                  if laundry else
+                  'Working and reusable refrigerators, washers, dryers, freezers, stoves and ranges receive priority.'
+              )
+              proof=(
+                  'For washers, report fill, wash, drain and spin. For dryers, report gas or electric type, tumble and heat.'
+                  if laundry else
+                  'For cooling appliances, include current cooling status. For laundry machines and cooking appliances, include tested functions when known.'
+              )
+              block=f'''
+<section class="direct-request-conversion-20260920">
+  <h2>Start Your {area} {service} Pickup Review</h2>
+  <p><strong>Fastest way to get reviewed:</strong> send clear appliance photos, the exact pickup address, current working condition and access details. {condition}</p>
+  <div class="grid">
+    <div class="card"><h3>1. Send Photos &amp; Condition</h3><p>{proof}</p></div>
+    <div class="card"><h3>2. Send Exact Access Details</h3><p>Include floor level, stairs or elevator, gates, parking or loading limits, narrow doors and carrying distance.</p></div>
+    <div class="card"><h3>3. Get a Pickup Decision</h3><p>We review condition, access, local demand and current route availability. Free pickup is confirmed only after the request qualifies.</p></div>
+  </div>
+  <p><a class="button" href="#request">Request Pickup</a> &nbsp; <a href="tel:{tel}">Call {phone}</a> &nbsp; <a href="sms:{tel}">Text Appliance Photos</a></p>
+  <p class="note"><strong>No account required.</strong> Submitting a request starts the review; it is not a guaranteed appointment until pickup is confirmed.</p>
+</section>'''
+              s=s[:insert_at]+block+s[insert_at:]
+              p.write_text(s,encoding='utf-8')
+              changed.append(slug)
+
+          if failures:
+              print('FAILURES')
+              for x in failures: print('-',x)
+              raise SystemExit(1)
+
+          print('PAGES_CHANGED',len(changed))
+          for x in changed: print(x)
+
+      - name: Verify conversion blocks
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          targets=[
+            'los-angeles-appliance-pickup','los-angeles-county-appliance-pickup',
+            'san-bernardino-appliance-pickup','riverside-appliance-pickup',
+            'orange-county-appliance-pickup','inland-empire-appliance-pickup',
+            'los-angeles-washer-dryer-pickup','orange-county-washer-dryer-pickup'
+          ]
+          failures=[]
+          for slug in targets:
+              t=(Path(slug)/'index.html').read_text(encoding='utf-8',errors='replace')
+              low=t.lower()
+              checks={
+                'fast block':'direct-request-conversion-20260920' in low,
+                'request CTA':'href="#request"' in low,
+                'phone CTA':'href="tel:' in low,
+                'sms CTA':'href="sms:' in low,
+                'formspree':'https://formspree.io/f/mvzeapzd' in low,
+                'routing':'customer-routing.js' in low,
+                'canonical':f'https://freereliableappliancepickup.com/{slug}/' in low,
+                'index/follow':bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',t,re.I)),
+              }
+              miss=[k for k,v in checks.items() if not v]
+              if miss: failures.append(f"{slug}: {', '.join(miss)}")
+          if failures:
+              print('\n'.join(failures)); raise SystemExit(1)
+          print('PASS: core California conversion upgrade verified.')
+
+      - name: Commit core conversion upgrade
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- los-angeles-appliance-pickup/index.html los-angeles-county-appliance-pickup/index.html san-bernardino-appliance-pickup/index.html riverside-appliance-pickup/index.html orange-county-appliance-pickup/index.html inland-empire-appliance-pickup/index.html los-angeles-washer-dryer-pickup/index.html orange-county-washer-dryer-pickup/index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Strengthen core California pickup conversion pages"
+          git push
