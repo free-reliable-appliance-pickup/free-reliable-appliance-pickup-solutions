@@ -54,6 +54,9 @@ jobs:
                           target=(p.parent / href.split('#',1)[0].split('?',1)[0]).resolve().relative_to(Path('.').resolve()).as_posix().strip('/')
                       except Exception:
                           target=None
+                  # Utility/legal noindex pages are intentionally linked from the site.
+                  if target in {'privacy','terms'}:
+                      continue
                   if target and target in noindex:
                       leaks.append((str(p),href,target))
 
