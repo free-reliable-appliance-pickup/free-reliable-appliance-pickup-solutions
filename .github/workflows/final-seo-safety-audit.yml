@@ -3,7 +3,7 @@ name: Final SEO safety audit
 on:
   push:
     branches: [main]
-    paths: ['**/index.html','index.html','sitemap.xml','sitemap-regular-washer-dryer.xml','robots.txt','data/market-routing.json','data/approved-indexable-locations.txt','.github/workflows/final-seo-safety-audit.yml']
+    paths: ['sitemap.xml','sitemap-regular-washer-dryer.xml','robots.txt','data/market-routing.json','data/approved-indexable-locations.txt','.github/workflows/final-seo-safety-audit.yml']
   pull_request:
   workflow_dispatch:
 permissions:
