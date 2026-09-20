@@ -198,6 +198,7 @@ indio-washer-dryer-pickup
 inglewood-appliance-pickup
 inglewood-washer-dryer-pickup
 inland-empire-appliance-pickup
+inland-empire-washer-dryer-pickup
 irvine-appliance-pickup
 irvine-washer-dryer-pickup
 irwindale-appliance-pickup
@@ -498,4 +499,3 @@ yorba-linda-appliance-pickup
 yorba-linda-washer-dryer-pickup
 yucaipa-appliance-pickup
 yucaipa-washer-dryer-pickup
-
