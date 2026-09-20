@@ -66,18 +66,19 @@ jobs:
                   if laundry else
                   'For cooling appliances, include current cooling status. For laundry machines and cooking appliances, include tested functions when known.'
               )
-              block=f'''
-<section class="direct-request-conversion-20260920">
-  <h2>Start Your {area} {service} Pickup Review</h2>
-  <p><strong>Fastest way to get reviewed:</strong> send clear appliance photos, the exact pickup address, current working condition and access details. {condition}</p>
-  <div class="grid">
-    <div class="card"><h3>1. Send Photos &amp; Condition</h3><p>{proof}</p></div>
-    <div class="card"><h3>2. Send Exact Access Details</h3><p>Include floor level, stairs or elevator, gates, parking or loading limits, narrow doors and carrying distance.</p></div>
-    <div class="card"><h3>3. Get a Pickup Decision</h3><p>We review condition, access, local demand and current route availability. Free pickup is confirmed only after the request qualifies.</p></div>
-  </div>
-  <p><a class="button" href="#request">Request Pickup</a> &nbsp; <a href="tel:{tel}">Call {phone}</a> &nbsp; <a href="sms:{tel}">Text Appliance Photos</a></p>
-  <p class="note"><strong>No account required.</strong> Submitting a request starts the review; it is not a guaranteed appointment until pickup is confirmed.</p>
-</section>'''
+              block=(
+                  f'<section class="direct-request-conversion-20260920">'
+                  f'<h2>Start Your {area} {service} Pickup Review</h2>'
+                  f'<p><strong>Fastest way to get reviewed:</strong> send clear appliance photos, the exact pickup address, current working condition and access details. {condition}</p>'
+                  f'<div class="grid">'
+                  f'<div class="card"><h3>1. Send Photos &amp; Condition</h3><p>{proof}</p></div>'
+                  f'<div class="card"><h3>2. Send Exact Access Details</h3><p>Include floor level, stairs or elevator, gates, parking or loading limits, narrow doors and carrying distance.</p></div>'
+                  f'<div class="card"><h3>3. Get a Pickup Decision</h3><p>We review condition, access, local demand and current route availability. Free pickup is confirmed only after the request qualifies.</p></div>'
+                  f'</div>'
+                  f'<p><a class="button" href="#request">Request Pickup</a> &nbsp; <a href="tel:{tel}">Call {phone}</a> &nbsp; <a href="sms:{tel}">Text Appliance Photos</a></p>'
+                  f'<p class="note"><strong>No account required.</strong> Submitting a request starts the review; it is not a guaranteed appointment until pickup is confirmed.</p>'
+                  f'</section>'
+              )
               s=s[:insert_at]+block+s[insert_at:]
               p.write_text(s,encoding='utf-8')
               changed.append(slug)
