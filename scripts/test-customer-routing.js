@@ -6,7 +6,8 @@ const cities=JSON.parse(fs.readFileSync('data/cities.json','utf8'));
 global.location={hostname:'freereliableappliancepickup.com',pathname:'/'};
 global.document={
   addEventListener:()=>{},
-  querySelectorAll:()=>[]
+  querySelectorAll:()=>[],
+  querySelector:(selector)=>selector==='script[data-premium-sharp-hero]'?{}:null
 };
 global.window={};
 global.fetch=async function(url){
