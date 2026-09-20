@@ -4,7 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - '**/index.html'
+      - 'sitemap.xml'
+      - 'sitemap-regular-washer-dryer.xml'
       - 'data/california-washer-dryer-seo-model-pages.txt'
       - '.github/workflows/audit-california-washer-dryer-seo-model.yml'
   workflow_dispatch:
