@@ -171,3 +171,13 @@ santa-clara-appliance-pickup
 sunnyvale-appliance-pickup
 walnut-creek-appliance-pickup
 visalia-appliance-pickup
+coachella-appliance-pickup
+desert-hot-springs-appliance-pickup
+bermuda-dunes-appliance-pickup
+pga-west-appliance-pickup
+oxnard-appliance-pickup
+ventura-appliance-pickup
+santa-barbara-appliance-pickup
+san-luis-obispo-appliance-pickup
+santa-maria-appliance-pickup
+central-coast-appliance-pickup
