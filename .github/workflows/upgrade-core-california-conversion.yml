@@ -30,6 +30,32 @@ jobs:
             'inland-empire-appliance-pickup':('Inland Empire','Appliance','909-375-6685'),
             'los-angeles-washer-dryer-pickup':('Los Angeles','Washer &amp; Dryer','310-774-4304'),
             'orange-county-washer-dryer-pickup':('Orange County','Washer &amp; Dryer','909-375-6685'),
+            'rancho-cucamonga-appliance-pickup':('Rancho Cucamonga','Appliance','909-375-6685'),
+            'anaheim-appliance-pickup':('Anaheim','Appliance','909-375-6685'),
+            'fontana-appliance-pickup':('Fontana','Appliance','909-375-6685'),
+            'ontario-appliance-pickup':('Ontario','Appliance','909-375-6685'),
+            'pomona-appliance-pickup':('Pomona','Appliance','909-375-6685'),
+            'west-covina-appliance-pickup':('West Covina','Appliance','909-375-6685'),
+            'pasadena-appliance-pickup':('Pasadena','Appliance','909-375-6685'),
+            'long-beach-appliance-pickup':('Long Beach','Appliance','310-774-4304'),
+            'santa-ana-appliance-pickup':('Santa Ana','Appliance','909-375-6685'),
+            'irvine-appliance-pickup':('Irvine','Appliance','909-375-6685'),
+            'corona-appliance-pickup':('Corona','Appliance','909-375-6685'),
+            'moreno-valley-appliance-pickup':('Moreno Valley','Appliance','909-375-6685'),
+            'victorville-appliance-pickup':('Victorville','Appliance','909-375-6685'),
+            'rancho-cucamonga-washer-dryer-pickup':('Rancho Cucamonga','Washer &amp; Dryer','909-375-6685'),
+            'anaheim-washer-dryer-pickup':('Anaheim','Washer &amp; Dryer','909-375-6685'),
+            'fontana-washer-dryer-pickup':('Fontana','Washer &amp; Dryer','909-375-6685'),
+            'ontario-washer-dryer-pickup':('Ontario','Washer &amp; Dryer','909-375-6685'),
+            'pomona-washer-dryer-pickup':('Pomona','Washer &amp; Dryer','909-375-6685'),
+            'west-covina-washer-dryer-pickup':('West Covina','Washer &amp; Dryer','909-375-6685'),
+            'pasadena-washer-dryer-pickup':('Pasadena','Washer &amp; Dryer','909-375-6685'),
+            'long-beach-washer-dryer-pickup':('Long Beach','Washer &amp; Dryer','310-774-4304'),
+            'santa-ana-washer-dryer-pickup':('Santa Ana','Washer &amp; Dryer','909-375-6685'),
+            'irvine-washer-dryer-pickup':('Irvine','Washer &amp; Dryer','909-375-6685'),
+            'corona-washer-dryer-pickup':('Corona','Washer &amp; Dryer','909-375-6685'),
+            'moreno-valley-washer-dryer-pickup':('Moreno Valley','Washer &amp; Dryer','909-375-6685'),
+            'victorville-washer-dryer-pickup':('Victorville','Washer &amp; Dryer','909-375-6685'),
           }
 
           changed=[]
@@ -100,7 +126,16 @@ jobs:
             'los-angeles-appliance-pickup','los-angeles-county-appliance-pickup',
             'san-bernardino-appliance-pickup','riverside-appliance-pickup',
             'orange-county-appliance-pickup','inland-empire-appliance-pickup',
-            'los-angeles-washer-dryer-pickup','orange-county-washer-dryer-pickup'
+            'los-angeles-washer-dryer-pickup','orange-county-washer-dryer-pickup',
+            'rancho-cucamonga-appliance-pickup','anaheim-appliance-pickup','fontana-appliance-pickup',
+            'ontario-appliance-pickup','pomona-appliance-pickup','west-covina-appliance-pickup',
+            'pasadena-appliance-pickup','long-beach-appliance-pickup','santa-ana-appliance-pickup',
+            'irvine-appliance-pickup','corona-appliance-pickup','moreno-valley-appliance-pickup',
+            'victorville-appliance-pickup','rancho-cucamonga-washer-dryer-pickup',
+            'anaheim-washer-dryer-pickup','fontana-washer-dryer-pickup','ontario-washer-dryer-pickup',
+            'pomona-washer-dryer-pickup','west-covina-washer-dryer-pickup','pasadena-washer-dryer-pickup',
+            'long-beach-washer-dryer-pickup','santa-ana-washer-dryer-pickup','irvine-washer-dryer-pickup',
+            'corona-washer-dryer-pickup','moreno-valley-washer-dryer-pickup','victorville-washer-dryer-pickup'
           ]
           failures=[]
           for slug in targets:
@@ -127,7 +162,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- los-angeles-appliance-pickup/index.html los-angeles-county-appliance-pickup/index.html san-bernardino-appliance-pickup/index.html riverside-appliance-pickup/index.html orange-county-appliance-pickup/index.html inland-empire-appliance-pickup/index.html los-angeles-washer-dryer-pickup/index.html orange-county-washer-dryer-pickup/index.html
+          git add -- '*-appliance-pickup/index.html' '*-washer-dryer-pickup/index.html'
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Strengthen core California pickup conversion pages"
           git push
