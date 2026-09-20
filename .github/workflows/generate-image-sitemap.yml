@@ -5,8 +5,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '**/index.html'
-      - 'assets/**'
+      - 'sitemap.xml'
       - 'data/california-seo-model-pages.txt'
       - 'data/california-washer-dryer-seo-model-pages.txt'
       - 'scripts/generate-image-sitemap.py'
