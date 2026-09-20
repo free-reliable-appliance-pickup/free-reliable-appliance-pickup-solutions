@@ -103,3 +103,16 @@ cerritos-appliance-pickup
 bellflower-appliance-pickup
 downey-appliance-pickup
 temple-city-appliance-pickup
+corona-appliance-pickup
+moreno-valley-appliance-pickup
+jurupa-valley-appliance-pickup
+eastvale-appliance-pickup
+perris-appliance-pickup
+lake-elsinore-appliance-pickup
+colton-appliance-pickup
+bloomington-appliance-pickup
+highland-appliance-pickup
+loma-linda-appliance-pickup
+grand-terrace-appliance-pickup
+beaumont-appliance-pickup
+banning-appliance-pickup

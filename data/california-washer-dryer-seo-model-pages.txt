@@ -98,3 +98,14 @@ cerritos-washer-dryer-pickup
 bellflower-washer-dryer-pickup
 downey-washer-dryer-pickup
 temple-city-washer-dryer-pickup
+corona-washer-dryer-pickup
+moreno-valley-washer-dryer-pickup
+jurupa-valley-washer-dryer-pickup
+eastvale-washer-dryer-pickup
+perris-washer-dryer-pickup
+lake-elsinore-washer-dryer-pickup
+colton-washer-dryer-pickup
+bloomington-washer-dryer-pickup
+grand-terrace-washer-dryer-pickup
+redlands-washer-dryer-pickup
+rialto-washer-dryer-pickup
