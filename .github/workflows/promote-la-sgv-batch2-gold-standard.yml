@@ -1,0 +1,179 @@
+name: Promote LA SGV Batch 2 Gold Standard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/promote-la-sgv-batch2-gold-standard.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Promote Los Angeles and San Gabriel batch 2
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          cities = {
+            'alhambra': ('Alhambra', ['monterey-park','rosemead','south-pasadena']),
+            'baldwin-park': ('Baldwin Park', ['west-covina','irwindale','el-monte']),
+            'el-monte': ('El Monte', ['south-el-monte','rosemead','baldwin-park']),
+            'rosemead': ('Rosemead', ['alhambra','monterey-park','el-monte']),
+            'monterey-park': ('Monterey Park', ['alhambra','rosemead','montebello']),
+            'montebello': ('Montebello', ['monterey-park','pico-rivera','commerce']),
+            'south-el-monte': ('South El Monte', ['el-monte','rosemead','pico-rivera']),
+            'pico-rivera': ('Pico Rivera', ['montebello','downey','south-el-monte']),
+            'hacienda-heights': ('Hacienda Heights', ['rowland-heights','la-puente','whittier']),
+            'la-mirada': ('La Mirada', ['whittier','norwalk','cerritos']),
+            'norwalk': ('Norwalk', ['la-mirada','cerritos','downey']),
+            'cerritos': ('Cerritos', ['norwalk','artesia','la-mirada']),
+            'bellflower': ('Bellflower', ['downey','lakewood','cerritos']),
+            'downey': ('Downey', ['bellflower','pico-rivera','norwalk']),
+            'temple-city': ('Temple City', ['rosemead','san-gabriel','arcadia']),
+          }
+
+          appliance=[f'{c}-appliance-pickup' for c in cities]
+          laundry=[f'{c}-washer-dryer-pickup' for c in cities]
+          failures=[]
+          changed=[]
+
+          def city_section(city_slug, display, kind, neighbors):
+              suffix = 'washer-dryer-pickup' if kind == 'laundry' else 'appliance-pickup'
+              service = 'Washer &amp; Dryer' if kind == 'laundry' else 'Appliance'
+              links=' · '.join(
+                  f'<a href="/{n}-{suffix}/">{cities.get(n,(n.replace("-", " ").title(),[]))[0]}</a>'
+                  for n in neighbors
+              )
+              hub = '<a href="/san-gabriel-valley-washer-dryer-pickup/">San Gabriel Valley hub</a>' if kind == 'laundry' else '<a href="/san-gabriel-valley-appliance-pickup/">San Gabriel Valley hub</a>'
+              detail = (
+                  f'<section class="local-ranking-depth-20260918 {city_slug}-{kind}-depth-20260919">'
+                  f'<h2>{display} {service} Pickup Access &amp; Local Route Details</h2>'
+                  f'<p>{display} pickup requests can come from houses, apartments, rental properties, garages and interior rooms. '
+                  f'Use the exact pickup address and include floor level, stairs or elevator access, gates, parking or loading limits, '
+                  f'driveway conditions and carrying distance so the removal path can be reviewed before scheduling.</p>'
+                  f'<p>For faster qualification, include clear appliance photos and tested condition. '
+                  + ('For washers report fill, drain and spin; for dryers report fuel type, tumble and heat. ' if kind == 'laundry' else 'For refrigerators include cooling status; for washers and dryers include tested functions; for stoves and ranges include fuel type and operating condition. ')
+                  + f'Nearby local route pages: {links} · {hub}.</p></section>'
+              )
+              return detail
+
+          for slug in appliance + laundry:
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{slug}: missing page')
+                  continue
+              city_slug=slug.replace('-washer-dryer-pickup','').replace('-appliance-pickup','')
+              display,neighbors=cities[city_slug]
+              kind='laundry' if slug.endswith('-washer-dryer-pickup') else 'appliance'
+              s=p.read_text(encoding='utf-8',errors='replace')
+              old=s
+              low=s.lower()
+
+              if 'local-ranking-depth-20260918' not in low:
+                  pattern=re.compile(r'<section\s+class="([^"]*(?:ranking-depth|local-depth)[^"]*)">',re.I)
+                  m=pattern.search(s)
+                  if m:
+                      classes=(m.group(1)+' local-ranking-depth-20260918').split()
+                      classes=' '.join(dict.fromkeys(classes))
+                      s=s[:m.start()] + f'<section class="{classes}">' + s[m.end():]
+                  else:
+                      request=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+                      if not request:
+                          failures.append(f'{slug}: no request section for safe depth insertion')
+                          continue
+                      block=city_section(city_slug,display,kind,neighbors)
+                      s=s[:request.start()] + block + s[request.start():]
+
+              low=s.lower()
+              has_proof=('major-appliance-pickup-photo' in low or 'real appliance example' in low)
+              if kind == 'laundry':
+                  has_proof = has_proof or ('real washer' in low and '<img' in low) or 'real-laundry-pickup-' in low
+              if not has_proof:
+                  request=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+                  if not request:
+                      failures.append(f'{slug}: no request section for proof insertion')
+                      continue
+                  if kind == 'laundry':
+                      proof=(
+                        f'<section class="real-appliance-proof"><h2>Real Appliance Examples: {display} Washer &amp; Dryer Pickup</h2>'
+                        '<p>These are real laundry-appliance photos from our work and inventory, not stock advertising images.</p>'
+                        '<div class="photo-grid"><img src="/assets/laundry/real-laundry-pickup-4.jpg" alt="Real washer and dryer pickup example" loading="lazy">'
+                        '<img src="/assets/laundry/stacked-laundry-center.jpg" alt="Real stacked washer and dryer example" loading="lazy">'
+                        '<img src="/assets/laundry/real-laundry-pickup-1.jpg" alt="Real laundry appliance example" loading="lazy"></div></section>'
+                      )
+                  else:
+                      proof=(
+                        f'<section class="real-appliance-proof"><h2>Real Appliance Example for {display}</h2>'
+                        f'<figure style="margin:0;max-width:720px"><img src="/assets/major-appliance-pickup-photo-2.jpg" alt="Real major appliance example for {display} pickup review" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:10px">'
+                        f'<figcaption>Real appliance image from our work and inventory. Every {display} request is reviewed individually.</figcaption></figure></section>'
+                      )
+                  s=s[:request.start()] + proof + s[request.start():]
+
+              low=s.lower()
+              checks={
+                'indexable robots': bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',s,re.I)),
+                'self canonical': f'https://freereliableappliancepickup.com/{slug}/' in low,
+                'title': bool(re.search(r'<title>[^<]{20,}</title>',s,re.I)),
+                'H1': bool(re.search(r'<h1[^>]*>.+?</h1>',s,re.I|re.S)),
+                'local depth': 'local-ranking-depth-20260918' in low,
+                'real proof': ('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low),
+                'site branding': '/assets/site-brand.css' in low,
+                'request target': 'id="request"' in low or "id='request'" in low,
+                'Formspree': 'https://formspree.io/f/mvzeapzd' in low,
+                'customer routing': '/assets/customer-routing.js' in low,
+                'structured WebPage': '"@type":"webpage"' in low or '"@type": "webpage"' in low,
+                'breadcrumb': 'breadcrumblist' in low,
+              }
+              missing=[k for k,v in checks.items() if not v]
+              internal=len(re.findall(r'href=["\'](?:\.\./|/)[a-z0-9-]+/',s,re.I))
+              if internal < 3:
+                  missing.append('3+ internal links')
+              if missing:
+                  failures.append(f"{slug}: missing after promotion: {', '.join(missing)}")
+                  continue
+              if s != old:
+                  p.write_text(s,encoding='utf-8')
+                  changed.append(slug)
+
+          def append_model(path, slugs):
+              p=Path(path)
+              lines=[x.strip() for x in p.read_text(encoding='utf-8').splitlines() if x.strip()]
+              seen=set(lines)
+              added=[]
+              for slug in slugs:
+                  if slug not in seen:
+                      lines.append(slug); seen.add(slug); added.append(slug)
+              p.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+              return added
+
+          if failures:
+              print('FAILURES')
+              for f in failures: print('-',f)
+              raise SystemExit(1)
+
+          added_a=append_model('data/california-seo-model-pages.txt',appliance)
+          added_w=append_model('data/california-washer-dryer-seo-model-pages.txt',laundry)
+          print('PAGES_CHANGED',len(changed))
+          print('\n'.join(changed))
+          print('APPLIANCE_BENCHMARKS_ADDED',len(added_a))
+          print('LAUNDRY_BENCHMARKS_ADDED',len(added_w))
+
+      - name: Commit batch 2 promotion
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' '*-washer-dryer-pickup/index.html' data/california-seo-model-pages.txt data/california-washer-dryer-seo-model-pages.txt
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Promote LA San Gabriel batch 2 to California SEO gold standard"
+          git push
