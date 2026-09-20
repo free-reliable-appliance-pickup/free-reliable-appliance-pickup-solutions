@@ -89,8 +89,10 @@ jobs:
 
           def internal_target_exists(href, page_dir):
               href=href.strip()
-              if not href or href.startswith(('#','tel:','mailto:','javascript:','data:')):
+              if not href or href.startswith(('#','tel:','sms:','mailto:','javascript:','data:')):
                   return True
+              if href in ('/','../','./'):
+                  return Path('index.html').exists()
               if href.startswith(('http://','https://','//')):
                   return True
               clean=href.split('#',1)[0].split('?',1)[0]
@@ -146,7 +148,7 @@ jobs:
               internal_links=re.findall(r'href=["\']([^"\']+)["\']',t,re.I)
               useful=0
               for href in internal_links:
-                  if href.startswith(('http://','https://','tel:','mailto:','#','javascript:')):
+                  if href.startswith(('http://','https://','tel:','sms:','mailto:','#','javascript:')):
                       continue
                   useful += 1
                   if not internal_target_exists(href,slug):
