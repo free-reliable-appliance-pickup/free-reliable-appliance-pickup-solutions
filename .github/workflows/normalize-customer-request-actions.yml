@@ -2,10 +2,6 @@ name: Normalize Customer Request Actions
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '**/*.html'
-      - '.github/workflows/normalize-customer-request-actions.yml'
 
 permissions:
   contents: write
