@@ -1,0 +1,159 @@
+name: Upgrade Top California Laundry Conversion
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/upgrade-top-california-laundry-conversion.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add high-conversion washer dryer request blocks
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          pages={
+            'los-angeles-county':('Los Angeles County','310-774-4304'),
+            'riverside':('Riverside','909-375-6685'),
+            'san-bernardino':('San Bernardino','909-375-6685'),
+            'anaheim':('Anaheim','909-375-6685'),
+            'rancho-cucamonga':('Rancho Cucamonga','909-375-6685'),
+            'fontana':('Fontana','909-375-6685'),
+            'ontario':('Ontario','909-375-6685'),
+            'pomona':('Pomona','909-375-6685'),
+            'west-covina':('West Covina','909-375-6685'),
+            'pasadena':('Pasadena','909-375-6685'),
+            'long-beach':('Long Beach','310-774-4304'),
+            'santa-ana':('Santa Ana','909-375-6685'),
+            'irvine':('Irvine','909-375-6685'),
+            'corona':('Corona','909-375-6685'),
+            'moreno-valley':('Moreno Valley','909-375-6685'),
+            'victorville':('Victorville','909-375-6685'),
+            'fullerton':('Fullerton','909-375-6685'),
+            'costa-mesa':('Costa Mesa','909-375-6685'),
+            'tustin':('Tustin','909-375-6685'),
+            'huntington-beach':('Huntington Beach','909-375-6685'),
+            'newport-beach':('Newport Beach','909-375-6685'),
+            'riverside-county':('Riverside County','909-375-6685'),
+            'san-bernardino-county':('San Bernardino County','909-375-6685'),
+            'san-gabriel-inland-empire':('San Gabriel Valley & Inland Empire','909-375-6685'),
+          }
+
+          failures=[]
+          changed=[]
+
+          for slug,(area,phone) in pages.items():
+              page=Path(f'{slug}-washer-dryer-pickup')/'index.html'
+              if not page.exists():
+                  failures.append(f'{slug}: missing washer dryer page')
+                  continue
+
+              s=page.read_text(encoding='utf-8',errors='replace')
+              low=s.lower()
+              if 'direct-laundry-request-conversion-20260920' in low:
+                  continue
+
+              main=re.search(r'<main[^>]*>',s,re.I)
+              if not main:
+                  failures.append(f'{slug}: missing main')
+                  continue
+
+              first=re.search(r'<section[^>]*>.*?</section>',s[main.end():],re.I|re.S)
+              if not first:
+                  failures.append(f'{slug}: missing first section')
+                  continue
+
+              tel=''.join(c for c in phone if c.isdigit())
+              if len(tel)==10:
+                  tel='+1'+tel
+
+              block=(
+                  f'<section class="direct-laundry-request-conversion-20260920">'
+                  f'<h2>Start Your {area} Washer &amp; Dryer Pickup Review</h2>'
+                  f'<p><strong>Fastest review:</strong> send clear photos of both machines, the exact pickup address, current working condition and the removal path. Complete working washer and dryer sets receive especially strong consideration.</p>'
+                  f'<div class="grid">'
+                  f'<div class="card"><h3>1. Send Washer Test Results</h3><p>Report power, fill, wash or agitation, drain and final spin. Mention leaks, error codes or unusual noise.</p></div>'
+                  f'<div class="card"><h3>2. Send Dryer Test Results</h3><p>Identify gas or electric service and report power, drum tumble and heat. Include the model label when available.</p></div>'
+                  f'<div class="card"><h3>3. Show the Removal Path</h3><p>Include floor level, stairs or elevator, gates, narrow doors, stacked installation, parking or loading limits and carrying distance.</p></div>'
+                  f'</div>'
+                  f'<p><a class="button" href="#request">Request Washer &amp; Dryer Pickup</a> &nbsp; <a href="tel:{tel}">Call {phone}</a> &nbsp; <a href="sms:{tel}">Text Washer &amp; Dryer Photos</a></p>'
+                  f'<p class="note"><strong>Qualification is reviewed before scheduling.</strong> Single working washers or dryers can also be reviewed; nonworking machines are not automatically eligible for free pickup.</p>'
+                  f'</section>'
+              )
+
+              pos=main.end()+first.end()
+              s=s[:pos]+block+s[pos:]
+              page.write_text(s,encoding='utf-8')
+              changed.append(slug)
+
+          if failures:
+              print('FAILURES')
+              for f in failures:
+                  print('-',f)
+              raise SystemExit(1)
+
+          print('PAGES_CHANGED',len(changed))
+          for slug in changed:
+              print(slug)
+
+      - name: Verify laundry conversion upgrade
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          slugs=[
+            'los-angeles-county','riverside','san-bernardino','anaheim',
+            'rancho-cucamonga','fontana','ontario','pomona','west-covina',
+            'pasadena','long-beach','santa-ana','irvine','corona','moreno-valley',
+            'victorville','fullerton','costa-mesa','tustin','huntington-beach',
+            'newport-beach','riverside-county','san-bernardino-county',
+            'san-gabriel-inland-empire'
+          ]
+          failures=[]
+
+          for slug in slugs:
+              page=Path(f'{slug}-washer-dryer-pickup')/'index.html'
+              t=page.read_text(encoding='utf-8',errors='replace')
+              low=t.lower()
+              checks={
+                'conversion marker':'direct-laundry-request-conversion-20260920' in low,
+                'request CTA':'href="#request"' in low,
+                'phone CTA':'href="tel:' in low,
+                'text CTA':'href="sms:' in low,
+                'formspree':'https://formspree.io/f/mvzeapzd' in low,
+                'routing':'customer-routing.js' in low,
+                'canonical':f'https://freereliableappliancepickup.com/{slug}-washer-dryer-pickup/' in low,
+                'index/follow':bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',t,re.I)),
+                'real laundry photo':('real-laundry-pickup-' in low or 'washer-dryer-set' in low or 'laundry-set' in low or 'real washer' in low),
+              }
+              missing=[k for k,v in checks.items() if not v]
+              if missing:
+                  failures.append(f"{slug}: {', '.join(missing)}")
+
+          if failures:
+              print('\n'.join(failures))
+              raise SystemExit(1)
+
+          print('PASS: top California washer dryer conversion pages verified.')
+
+      - name: Commit laundry conversion upgrade
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-washer-dryer-pickup/index.html'
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Strengthen top California washer dryer conversion pages"
+          git push
