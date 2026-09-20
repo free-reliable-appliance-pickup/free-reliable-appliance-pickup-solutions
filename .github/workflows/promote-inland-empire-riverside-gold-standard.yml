@@ -100,9 +100,13 @@ jobs:
                       s=s[:request.start()] + block + s[request.start():]
 
               low=s.lower()
-              has_proof=('major-appliance-pickup-photo' in low or 'real appliance example' in low)
-              if kind=='laundry':
-                  has_proof = has_proof or ('real washer' in low and '<img' in low) or 'real-laundry-pickup-' in low
+              has_proof=('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low)
+              if kind=='laundry' and not has_proof:
+                  heading=re.compile(r'<h2>\s*Real Washer\s*&amp;\s*Dryer Photos\s*</h2>',re.I)
+                  if heading.search(s) and '<img' in s.lower():
+                      s=heading.sub(f'<h2>Real Appliance Examples: {display} Washer &amp; Dryer Pickup</h2>',s,count=1)
+                      low=s.lower()
+                      has_proof='real appliance example' in low
 
               if not has_proof:
                   request=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
