@@ -1,0 +1,68 @@
+name: Audit Self Canonical Consistency
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/index.html'
+      - '.github/workflows/audit-self-canonical-consistency.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check indexable pages use self canonicals
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys
+
+          base='https://freereliableappliancepickup.com/'
+          failures=[]
+          redirects=[]
+          checked=0
+
+          pages=[Path('index.html')]+sorted(
+              p for p in Path('.').rglob('index.html')
+              if '.git' not in p.parts and '.github' not in p.parts and p != Path('index.html')
+          )
+
+          for p in pages:
+              text=p.read_text(encoding='utf-8',errors='ignore')
+              low=text.lower()
+              rel='' if p==Path('index.html') else p.parent.as_posix().strip('/')+'/'
+              expected=base+rel
+
+              m=re.search(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',text,re.I)
+              if not m:
+                  continue
+              canonical=m.group(1).strip()
+              noindex='noindex' in low.split('</head>',1)[0]
+              refresh=bool(re.search(r'<meta[^>]+http-equiv=["\']refresh["\']',text,re.I))
+
+              if noindex:
+                  if canonical != expected:
+                      redirects.append((str(p),canonical,refresh))
+                  continue
+
+              checked += 1
+              if canonical != expected:
+                  failures.append(f'INDEXABLE NON-SELF CANONICAL {p}: {canonical} expected {expected}')
+
+          print(f'INDEXABLE_WITH_CANONICAL {checked}')
+          print(f'NOINDEX_CANONICAL_ALIASES {len(redirects)}')
+          for p,c,r in redirects:
+              print(f'ALIAS {p} -> {c} refresh={r}')
+
+          if failures:
+              print('FAILURES')
+              for f in failures:
+                  print(f)
+              sys.exit(1)
+
+          print('PASS: all indexable pages with canonicals point to themselves.')
