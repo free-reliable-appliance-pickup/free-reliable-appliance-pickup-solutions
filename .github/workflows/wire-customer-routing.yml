@@ -4,8 +4,6 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '*.html'
-      - '**/*.html'
       - 'assets/customer-routing.js'
       - '.github/workflows/wire-customer-routing.yml'
 
