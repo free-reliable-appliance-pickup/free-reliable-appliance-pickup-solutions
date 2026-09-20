@@ -7,7 +7,6 @@ on:
     paths:
       - '.github/workflows/verify-active-content-quality.yml'
       - 'sitemap.xml'
-      - '**-appliance-pickup/index.html'
 
 permissions:
   contents: read
