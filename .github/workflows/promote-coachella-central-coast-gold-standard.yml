@@ -44,7 +44,8 @@ jobs:
           }
 
           appliance=[f'{c}-appliance-pickup' for c in cities]
-          laundry=[f'{c}-washer-dryer-pickup' for c in cities]
+          laundry_slugs=[c for c in cities if c not in {'bermuda-dunes','pga-west','coachella-valley'}]
+          laundry=[f'{c}-washer-dryer-pickup' for c in laundry_slugs]
           failures=[]
           changed=[]
 
@@ -53,7 +54,7 @@ jobs:
 
           def parent(kind,region):
               if region=='Coachella Valley':
-                  return ('coachella-valley-washer-dryer-pickup','Coachella Valley Washer & Dryer Pickup') if kind=='laundry' else ('coachella-valley-appliance-pickup','Coachella Valley Appliance Pickup')
+                  return ('california-washer-dryer-pickup','California Washer & Dryer Pickup') if kind=='laundry' else ('coachella-valley-appliance-pickup','Coachella Valley Appliance Pickup')
               return ('central-coast-washer-dryer-pickup','Central Coast Washer & Dryer Pickup') if kind=='laundry' else ('central-coast-appliance-pickup','Central Coast Appliance Pickup')
 
           def add_depth(s,slug,name,neighbors,region,kind):
