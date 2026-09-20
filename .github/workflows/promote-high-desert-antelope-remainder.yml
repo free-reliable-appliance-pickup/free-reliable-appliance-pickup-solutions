@@ -1,0 +1,220 @@
+name: Promote High Desert Antelope Remainder
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/promote-high-desert-antelope-remainder.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Promote remaining High Desert and Antelope Valley pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          cities={
+            'oak-hills':('Oak Hills',['hesperia','victorville','phelan'],'High Desert'),
+            'helendale-silver-lakes':('Helendale / Silver Lakes',['victorville','adelanto','apple-valley'],'High Desert'),
+            'spring-valley-lake':('Spring Valley Lake',['victorville','apple-valley','hesperia'],'High Desert'),
+            'pinon-hills':('Piñon Hills',['phelan','wrightwood','hesperia'],'High Desert'),
+            'wrightwood':('Wrightwood',['phelan','pinon-hills','hesperia'],'High Desert'),
+            'acton':('Acton',['palmdale','lancaster','quartz-hill'],'Antelope Valley'),
+            'leona-valley':('Leona Valley',['palmdale','lancaster','quartz-hill'],'Antelope Valley'),
+            'littlerock':('Littlerock',['palmdale','pearblossom','lake-los-angeles'],'Antelope Valley'),
+            'lake-los-angeles':('Lake Los Angeles',['palmdale','littlerock','pearblossom'],'Antelope Valley'),
+            'quartz-hill':('Quartz Hill',['palmdale','lancaster','leona-valley'],'Antelope Valley'),
+            'pearblossom':('Pearblossom',['littlerock','llano','lake-los-angeles'],'Antelope Valley'),
+            'llano':('Llano',['pearblossom','littlerock','palmdale'],'Antelope Valley'),
+            'sun-village':('Sun Village',['palmdale','littlerock','lake-los-angeles'],'Antelope Valley'),
+            'antelope-acres':('Antelope Acres',['lancaster','quartz-hill','leona-valley'],'Antelope Valley'),
+            'juniper-hills':('Juniper Hills',['littlerock','pearblossom','palmdale'],'Antelope Valley'),
+            'crystalaire':('Crystalaire',['llano','pearblossom','littlerock'],'Antelope Valley'),
+            'desert-view-highlands':('Desert View Highlands',['palmdale','lake-los-angeles','littlerock'],'Antelope Valley'),
+            'largo-vista':('Largo Vista',['llano','pearblossom','littlerock'],'Antelope Valley'),
+            'lakeview':('Lakeview',['palmdale','lancaster','quartz-hill'],'Antelope Valley'),
+          }
+
+          appliance=[f'{c}-appliance-pickup' for c in cities]
+          laundry=[f'{c}-washer-dryer-pickup' for c in cities]
+          failures=[]
+          changed=[]
+
+          def display(slug):
+              return cities.get(slug,(slug.replace('-',' ').title(),[],''))[0]
+
+          def insert_local_depth(s, slug, name, neighbors, region, kind):
+              service='Washer &amp; Dryer' if kind=='laundry' else 'Appliance'
+              suffix='washer-dryer-pickup' if kind=='laundry' else 'appliance-pickup'
+              links=' · '.join(f'<a href="/{n}-{suffix}/">{display(n)}</a>' for n in neighbors)
+              hub=(
+                  '<a href="/palmdale-appliance-pickup/">Palmdale</a> · <a href="/lancaster-appliance-pickup/">Lancaster</a>'
+                  if region=='Antelope Valley' and kind=='appliance'
+                  else '<a href="/palmdale-washer-dryer-pickup/">Palmdale</a> · <a href="/lancaster-washer-dryer-pickup/">Lancaster</a>'
+                  if region=='Antelope Valley'
+                  else '<a href="/victorville-appliance-pickup/">Victorville</a> · <a href="/hesperia-appliance-pickup/">Hesperia</a>'
+                  if kind=='appliance'
+                  else '<a href="/victorville-washer-dryer-pickup/">Victorville</a> · <a href="/hesperia-washer-dryer-pickup/">Hesperia</a>'
+              )
+              extra=(
+                  'For washers, report fill, wash, drain and spin; for dryers, report gas or electric type, tumble and heat.'
+                  if kind=='laundry'
+                  else
+                  'For refrigerators include cooling status; for washers and dryers include tested functions; for stoves and ranges include fuel type and operating condition.'
+              )
+              block=(
+                  f'<section class="local-ranking-depth-20260918 {slug}-{kind}-depth-20260920">'
+                  f'<h2>{name} {service} Pickup Access &amp; Route Review</h2>'
+                  f'<p>{name} pickup requests may involve homes, rentals, garages, interior rooms, gated properties, longer driveways or limited loading access. '
+                  f'Use the exact pickup address and include floor level, stairs, gates, driveway or parking conditions and carrying distance so the removal path can be reviewed before scheduling.</p>'
+                  f'<p>Send clear appliance photos and tested condition. {extra} Nearby pages: {links}. Regional route connections: {hub}.</p>'
+                  f'</section>'
+              )
+              req=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+              if not req:
+                  return None
+              return s[:req.start()]+block+s[req.start():]
+
+          for page in appliance+laundry:
+              p=Path(page)/'index.html'
+              if not p.exists():
+                  failures.append(f'{page}: missing page')
+                  continue
+              slug=page.replace('-washer-dryer-pickup','').replace('-appliance-pickup','')
+              name,neighbors,region=cities[slug]
+              kind='laundry' if page.endswith('-washer-dryer-pickup') else 'appliance'
+              s=p.read_text(encoding='utf-8',errors='replace')
+              old=s
+              low=s.lower()
+
+              if 'local-ranking-depth-20260918' not in low:
+                  m=re.search(r'<section\s+class="([^"]*(?:ranking-depth|local-depth)[^"]*)">',s,re.I)
+                  if m:
+                      classes=' '.join(dict.fromkeys((m.group(1)+' local-ranking-depth-20260918').split()))
+                      s=s[:m.start()]+f'<section class="{classes}">'+s[m.end():]
+                  else:
+                      s2=insert_local_depth(s,slug,name,neighbors,region,kind)
+                      if s2 is None:
+                          failures.append(f'{page}: no request section for local depth')
+                          continue
+                      s=s2
+
+              low=s.lower()
+              proof=('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low)
+              if kind=='laundry' and not proof:
+                  heading=re.compile(r'<h2>\s*Real Washer\s*&amp;\s*Dryer Photos\s*</h2>',re.I)
+                  if heading.search(s) and '<img' in low:
+                      s=heading.sub(f'<h2>Real Appliance Examples: {name} Washer &amp; Dryer Pickup</h2>',s,count=1)
+                      proof=True
+
+              if not proof:
+                  req=re.search(r'<section\s+id=["\']request["\'][^>]*>',s,re.I)
+                  if not req:
+                      failures.append(f'{page}: no request section for proof')
+                      continue
+                  if kind=='laundry':
+                      proofhtml=(
+                          f'<section class="real-appliance-proof"><h2>Real Appliance Examples: {name} Washer &amp; Dryer Pickup</h2>'
+                          '<p>Real washer and dryer photos from our appliance work and inventory.</p>'
+                          '<div class="photo-grid"><img src="/assets/laundry/real-laundry-pickup-4.jpg" alt="Real washer and dryer pickup example" loading="lazy">'
+                          '<img src="/assets/laundry/real-laundry-pickup-1.jpg" alt="Real laundry appliance pickup example" loading="lazy"></div></section>'
+                      )
+                  else:
+                      proofhtml=(
+                          f'<section class="real-appliance-proof"><h2>Real Appliance Example for {name}</h2>'
+                          f'<img src="/assets/major-appliance-pickup-photo-2.jpg" alt="Real major appliance pickup example for {name}" loading="lazy" decoding="async" style="max-width:720px;width:100%;height:auto;border-radius:10px"></section>'
+                      )
+                  s=s[:req.start()]+proofhtml+s[req.start():]
+
+              low=s.lower()
+              if 'breadcrumblist' not in low:
+                  if region=='Antelope Valley':
+                      parent_slug='palmdale-appliance-pickup' if kind=='appliance' else 'palmdale-washer-dryer-pickup'
+                      parent_name='Palmdale Appliance Pickup' if kind=='appliance' else 'Palmdale Washer & Dryer Pickup'
+                  else:
+                      parent_slug='victorville-appliance-pickup' if kind=='appliance' else 'victorville-washer-dryer-pickup'
+                      parent_name='Victorville Appliance Pickup' if kind=='appliance' else 'Victorville Washer & Dryer Pickup'
+                  crumb=(
+                      '<script type="application/ld+json">'
+                      '{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":['
+                      '{"@type":"ListItem","position":1,"name":"Home","item":"https://freereliableappliancepickup.com/"},'
+                      f'{{"@type":"ListItem","position":2,"name":"{parent_name}","item":"https://freereliableappliancepickup.com/{parent_slug}/"}},'
+                      f'{{"@type":"ListItem","position":3,"name":"{name}","item":"https://freereliableappliancepickup.com/{page}/"}}'
+                      ']}</script>'
+                  )
+                  if re.search(r'</head>',s,re.I):
+                      s=re.sub(r'</head>',crumb+'</head>',s,count=1,flags=re.I)
+                  else:
+                      failures.append(f'{page}: missing head for breadcrumb')
+                      continue
+
+              low=s.lower()
+              checks={
+                  'index/follow':bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',s,re.I)),
+                  'canonical':f'https://freereliableappliancepickup.com/{page}/' in low,
+                  'title':bool(re.search(r'<title>[^<]{20,}</title>',s,re.I)),
+                  'h1':bool(re.search(r'<h1[^>]*>.+?</h1>',s,re.I|re.S)),
+                  'depth':'local-ranking-depth-20260918' in low,
+                  'proof':('major-appliance-pickup-photo' in low or 'real appliance example' in low or 'real-laundry-pickup-' in low),
+                  'formspree':'https://formspree.io/f/mvzeapzd' in low,
+                  'routing':'customer-routing.js' in low,
+                  'webpage':('"@type":"webpage"' in low or '"@type": "webpage"' in low),
+                  'breadcrumb':'breadcrumblist' in low,
+              }
+              missing=[k for k,v in checks.items() if not v]
+              links=len(re.findall(r'href=["\'](?:\.\./|/)[a-z0-9-]+/',s,re.I))
+              if links<3:
+                  missing.append('3+ internal links')
+              if missing:
+                  failures.append(f"{page}: {', '.join(missing)}")
+                  continue
+
+              if s!=old:
+                  p.write_text(s,encoding='utf-8')
+                  changed.append(page)
+
+          if failures:
+              print('FAILURES')
+              for f in failures:
+                  print('-',f)
+              raise SystemExit(1)
+
+          def append(path,slugs):
+              p=Path(path)
+              lines=[x.strip() for x in p.read_text(encoding='utf-8').splitlines() if x.strip()]
+              seen=set(lines)
+              added=[]
+              for slug in slugs:
+                  if slug not in seen:
+                      lines.append(slug)
+                      seen.add(slug)
+                      added.append(slug)
+              p.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+              return added
+
+          aa=append('data/california-seo-model-pages.txt',appliance)
+          ww=append('data/california-washer-dryer-seo-model-pages.txt',laundry)
+          print('PAGES_CHANGED',len(changed))
+          print('APPLIANCE_ADDED',len(aa))
+          print('LAUNDRY_ADDED',len(ww))
+
+      - name: Commit High Desert Antelope remainder
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' '*-washer-dryer-pickup/index.html' data/california-seo-model-pages.txt data/california-washer-dryer-seo-model-pages.txt
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Promote remaining High Desert Antelope Valley pages to gold standard"
+          git push
