@@ -490,7 +490,6 @@ west-hollywood-washer-dryer-pickup
 westminster-appliance-pickup
 westminster-ca-appliance-pickup
 westminster-ca-washer-dryer-pickup
-westminster-washer-dryer-pickup
 whittier-appliance-pickup
 whittier-washer-dryer-pickup
 wildomar-appliance-pickup
@@ -499,3 +498,4 @@ yorba-linda-appliance-pickup
 yorba-linda-washer-dryer-pickup
 yucaipa-appliance-pickup
 yucaipa-washer-dryer-pickup
+
