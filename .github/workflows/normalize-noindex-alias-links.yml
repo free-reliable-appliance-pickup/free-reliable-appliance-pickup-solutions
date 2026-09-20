@@ -1,0 +1,90 @@
+name: Normalize Noindex Alias Links
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/normalize-noindex-alias-links.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace links to retired geographic aliases
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          mapping={
+            'acton-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'vincent-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'lake-los-angeles-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'littlerock-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'juniper-hills-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'crystalaire-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'quartz-hill-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'antelope-acres-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'sun-village-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'pearblossom-washer-dryer-pickup':'antelope-valley-washer-dryer-pickup',
+            'spring-valley-lake-washer-dryer-pickup':'high-desert-washer-dryer-pickup',
+            'oak-hills-washer-dryer-pickup':'high-desert-washer-dryer-pickup',
+            'wrightwood-washer-dryer-pickup':'high-desert-washer-dryer-pickup',
+            'pinon-hills-washer-dryer-pickup':'high-desert-washer-dryer-pickup',
+            'helendale-silver-lakes-washer-dryer-pickup':'high-desert-washer-dryer-pickup',
+            'bay-area-washer-dryer-pickup':'sf-bay-area-washer-dryer-pickup',
+          }
+
+          changed=[]
+          replacements=0
+          pages=[Path('index.html')]+sorted(
+              p for p in Path('.').rglob('index.html')
+              if '.git' not in p.parts and '.github' not in p.parts and p != Path('index.html')
+          )
+          for p in pages:
+              s=p.read_text(encoding='utf-8',errors='ignore')
+              head=s.lower().split('</head>',1)[0]
+              if 'noindex' in head:
+                  continue
+              new=s
+              count=0
+              for old,newslug in mapping.items():
+                  patterns=[
+                      (f'href="/{old}/"',f'href="/{newslug}/"'),
+                      (f"href='/{old}/'",f"href='/{newslug}/'"),
+                      (f'href="../{old}/"',f'href="/{newslug}/"'),
+                      (f"href='../{old}/'",f"href='/{newslug}/'"),
+                      (f'href="https://freereliableappliancepickup.com/{old}/"',f'href="/{newslug}/"'),
+                      (f"href='https://freereliableappliancepickup.com/{old}/'",f"href='/{newslug}/'"),
+                  ]
+                  for a,b in patterns:
+                      n=new.count(a)
+                      if n:
+                          new=new.replace(a,b)
+                          count+=n
+              if new!=s:
+                  p.write_text(new,encoding='utf-8')
+                  changed.append(str(p))
+                  replacements+=count
+
+          print(f'UPDATED_FILES {len(changed)}')
+          print(f'REPLACEMENTS {replacements}')
+          for p in changed:
+              print('UPDATED',p)
+      - name: Commit normalized links
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No geographic alias links needed changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '**/index.html' index.html
+          git commit -m "Route internal links directly to indexable geographic hubs"
+          git push
