@@ -4,8 +4,6 @@ on:
   push:
     branches: [main]
     paths:
-      - '**/index.html'
-      - 'index.html'
       - 'sitemap.xml'
       - '.github/workflows/audit-live-indexability-and-link-leaks.yml'
   workflow_dispatch:
