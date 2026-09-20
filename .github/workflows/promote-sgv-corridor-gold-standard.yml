@@ -1,0 +1,125 @@
+name: Promote SGV Corridor SEO Gold Standard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/promote-sgv-corridor-gold-standard.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Promote remaining San Gabriel corridor pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          appliance = [
+            'whittier-appliance-pickup','la-habra-appliance-pickup',
+            'la-puente-appliance-pickup','diamond-bar-appliance-pickup',
+            'walnut-appliance-pickup','rowland-heights-appliance-pickup',
+            'irwindale-appliance-pickup','south-san-jose-hills-appliance-pickup',
+            'avocado-heights-appliance-pickup'
+          ]
+          laundry = [
+            'chino-washer-dryer-pickup','whittier-washer-dryer-pickup',
+            'la-habra-washer-dryer-pickup','la-puente-washer-dryer-pickup',
+            'diamond-bar-washer-dryer-pickup','walnut-washer-dryer-pickup',
+            'rowland-heights-washer-dryer-pickup','irwindale-washer-dryer-pickup',
+            'south-san-jose-hills-washer-dryer-pickup',
+            'avocado-heights-washer-dryer-pickup'
+          ]
+
+          failures=[]
+          changed=[]
+          for slug in appliance + laundry:
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{slug}: missing page')
+                  continue
+              s=p.read_text(encoding='utf-8',errors='replace')
+              old=s
+              low=s.lower()
+
+              if 'local-ranking-depth-20260918' not in low:
+                  pattern=re.compile(r'<section\s+class="([^"]*(?:ranking-depth|local-depth)[^"]*)">',re.I)
+                  m=pattern.search(s)
+                  if not m:
+                      failures.append(f'{slug}: no local/ranking depth section to promote')
+                      continue
+                  classes=(m.group(1)+' local-ranking-depth-20260918').split()
+                  classes=' '.join(dict.fromkeys(classes))
+                  s=s[:m.start()] + f'<section class="{classes}">' + s[m.end():]
+
+              low=s.lower()
+              if 'major-appliance-pickup-photo' not in low and 'real appliance example' not in low:
+                  photo=re.compile(r'<h2>\s*Real Washer\s*&amp;\s*Dryer Photos\s*</h2>',re.I)
+                  if not photo.search(s):
+                      failures.append(f'{slug}: no real-photo heading found')
+                      continue
+                  s=photo.sub('<h2>Real Appliance Examples: Washer &amp; Dryer Photos</h2>',s,count=1)
+
+              low=s.lower()
+              checks={
+                'local depth':'local-ranking-depth-20260918' in low,
+                'real proof':('major-appliance-pickup-photo' in low or 'real appliance example' in low),
+                'self canonical':f'https://freereliableappliancepickup.com/{slug}/' in low,
+                'site branding':'/assets/site-brand.css' in low,
+                'request form':'https://formspree.io/f/mvzeapzd' in low,
+                'customer routing':'/assets/customer-routing.js' in low,
+                'breadcrumb':'breadcrumblist' in low,
+              }
+              missing=[k for k,v in checks.items() if not v]
+              if missing:
+                  failures.append(f"{slug}: missing after promotion: {', '.join(missing)}")
+                  continue
+
+              if s != old:
+                  p.write_text(s,encoding='utf-8')
+                  changed.append(slug)
+
+          def append_model(path, slugs):
+              p=Path(path)
+              lines=[x.strip() for x in p.read_text(encoding='utf-8').splitlines() if x.strip()]
+              seen=set(lines)
+              added=[]
+              for slug in slugs:
+                  if slug not in seen:
+                      lines.append(slug); seen.add(slug); added.append(slug)
+              p.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+              return added
+
+          added_a=append_model('data/california-seo-model-pages.txt',appliance)
+          added_w=append_model('data/california-washer-dryer-seo-model-pages.txt',laundry)
+
+          print('PAGES_CHANGED',len(changed))
+          print('\n'.join(changed))
+          print('APPLIANCE_BENCHMARKS_ADDED',len(added_a))
+          print('\n'.join(added_a))
+          print('LAUNDRY_BENCHMARKS_ADDED',len(added_w))
+          print('\n'.join(added_w))
+
+          if failures:
+              print('FAILURES')
+              for f in failures: print('-',f)
+              raise SystemExit(1)
+
+      - name: Commit promoted corridor pages
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' '*-washer-dryer-pickup/index.html' data/california-seo-model-pages.txt data/california-washer-dryer-seo-model-pages.txt
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Promote remaining SGV corridor pages to California SEO gold standard"
+          git push
