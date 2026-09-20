@@ -63,7 +63,7 @@ jobs:
 
               # Visible hero image.
               new = repl_once(
-                  r'(<div class="site-hero-art"><img\b[^>]*\bsrc=")[^"]+(")',
+                  r'(<div class="site-hero-art"[^>]*><img\b[^>]*\bsrc=")[^"]+(")',
                   lambda m: m.group(1) + hero_url + m.group(2),
                   new,
                   re.S,
