@@ -67,6 +67,11 @@
       "page": "covina-washer-dryer-pickup/index.html"
     },
     {
+      "route": "west-covina-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+      "page": "west-covina-washer-dryer-pickup/index.html"
+    },
+    {
       "route": "san-dimas-washer-dryer-pickup",
       "src": "/assets/laundry/original-user-heroes/1000274641(3).jpg",
       "page": "san-dimas-washer-dryer-pickup/index.html"
@@ -97,11 +102,165 @@
       "page": "ontario-washer-dryer-pickup/index.html"
     },
     {
+      "route": "upland-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+      "page": "upland-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "rancho-cucamonga-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg",
+      "page": "rancho-cucamonga-washer-dryer-pickup/index.html"
+    },
+    {
       "route": "fontana-washer-dryer-pickup",
       "src": "/assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
       "page": "fontana-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "rancho-santa-margarita-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20231201-WA0016.jpg",
+      "page": "rancho-santa-margarita-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "huntington-beach-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/20240903_134418.jpg",
+      "page": "huntington-beach-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "irvine-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg",
+      "page": "irvine-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "lake-forest-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20241116-WA0027.jpg",
+      "page": "lake-forest-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "mission-viejo-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20241117-WA0023.jpg",
+      "page": "mission-viejo-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "newport-beach-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/Screenshot_20260814_233429_Gallery.jpg",
+      "page": "newport-beach-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "anaheim-hills-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg",
+      "page": "anaheim-hills-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "yorba-linda-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20230604-WA0031.jpg",
+      "page": "yorba-linda-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "brea-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000274887(2).jpg",
+      "page": "brea-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "san-bernardino-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240822-WA0011.jpg",
+      "page": "san-bernardino-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "south-pasadena-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/IMG-20240318-WA0047.jpg",
+      "page": "south-pasadena-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "laguna-hills-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000263318.jpg",
+      "page": "laguna-hills-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "aliso-viejo-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000232286.jpg",
+      "page": "aliso-viejo-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "laguna-niguel-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000273583(1).jpg",
+      "page": "laguna-niguel-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "san-juan-capistrano-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000263150.png",
+      "page": "san-juan-capistrano-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "san-clemente-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000273912(1).png",
+      "page": "san-clemente-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "laguna-beach-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000260608(2).jpg",
+      "page": "laguna-beach-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "dana-point-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000261196(3).jpg",
+      "page": "dana-point-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "costa-mesa-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000262564(1).png",
+      "page": "costa-mesa-washer-dryer-pickup/index.html"
+    },
+    {
+      "route": "trabuco-canyon-washer-dryer-pickup",
+      "src": "/assets/laundry/original-user-heroes/1000274627(1).jpg",
+      "page": "trabuco-canyon-washer-dryer-pickup/index.html"
     }
   ],
-  "changed_pages": [],
-  "changed_count": 0
+  "changed_pages": [
+    "la-crescenta-washer-dryer-pickup/index.html",
+    "la-canada-flintridge-washer-dryer-pickup/index.html",
+    "altadena-washer-dryer-pickup/index.html",
+    "pasadena-washer-dryer-pickup/index.html",
+    "san-marino-washer-dryer-pickup/index.html",
+    "san-gabriel-washer-dryer-pickup/index.html",
+    "sierra-madre-washer-dryer-pickup/index.html",
+    "arcadia-washer-dryer-pickup/index.html",
+    "monrovia-washer-dryer-pickup/index.html",
+    "duarte-washer-dryer-pickup/index.html",
+    "azusa-washer-dryer-pickup/index.html",
+    "glendora-washer-dryer-pickup/index.html",
+    "covina-washer-dryer-pickup/index.html",
+    "west-covina-washer-dryer-pickup/index.html",
+    "san-dimas-washer-dryer-pickup/index.html",
+    "la-verne-washer-dryer-pickup/index.html",
+    "claremont-washer-dryer-pickup/index.html",
+    "pomona-washer-dryer-pickup/index.html",
+    "montclair-washer-dryer-pickup/index.html",
+    "ontario-washer-dryer-pickup/index.html",
+    "upland-washer-dryer-pickup/index.html",
+    "rancho-cucamonga-washer-dryer-pickup/index.html",
+    "fontana-washer-dryer-pickup/index.html",
+    "rancho-santa-margarita-washer-dryer-pickup/index.html",
+    "huntington-beach-washer-dryer-pickup/index.html",
+    "irvine-washer-dryer-pickup/index.html",
+    "lake-forest-washer-dryer-pickup/index.html",
+    "mission-viejo-washer-dryer-pickup/index.html",
+    "newport-beach-washer-dryer-pickup/index.html",
+    "anaheim-hills-washer-dryer-pickup/index.html",
+    "yorba-linda-washer-dryer-pickup/index.html",
+    "brea-washer-dryer-pickup/index.html",
+    "san-bernardino-washer-dryer-pickup/index.html",
+    "south-pasadena-washer-dryer-pickup/index.html",
+    "laguna-hills-washer-dryer-pickup/index.html",
+    "aliso-viejo-washer-dryer-pickup/index.html",
+    "laguna-niguel-washer-dryer-pickup/index.html",
+    "san-juan-capistrano-washer-dryer-pickup/index.html",
+    "san-clemente-washer-dryer-pickup/index.html",
+    "laguna-beach-washer-dryer-pickup/index.html",
+    "dana-point-washer-dryer-pickup/index.html",
+    "costa-mesa-washer-dryer-pickup/index.html",
+    "trabuco-canyon-washer-dryer-pickup/index.html"
+  ],
+  "changed_count": 43
 }
