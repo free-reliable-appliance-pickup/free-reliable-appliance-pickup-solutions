@@ -7,6 +7,8 @@ on:
     paths:
       - '.github/workflows/verify-active-content-quality.yml'
       - 'sitemap.xml'
+      - 'data/approved-indexable-locations.txt'
+      - '**/index.html'
 
 permissions:
   contents: read
@@ -75,20 +77,29 @@ jobs:
           print('STILL_FUNNELING_HOME',sum(r['funnel'] for r in rows))
           print('NOINDEX_ACTIVE',sum(r['noindex'] for r in rows))
           print('UNDER_350_TOTAL_WORDS',sum(r['words']<350 for r in rows))
-          print('UNDER_300_CORE_WORDS',sum(r['core_words']<300 for r in rows))
+          thin=[r for r in rows if r['core_words']<300]
+          print('UNDER_300_CORE_WORDS',len(thin))
 
           if any(r['noindex'] for r in rows):
               bad=[r['slug'] for r in rows if r['noindex']]
               raise SystemExit(f'Indexable sitemap market pages must not be noindex: {bad}')
+          if thin:
+              bad=[f"{r['slug']} ({r['core_words']} core words)" for r in thin]
+              raise SystemExit('Indexable location pages must contain at least 300 core words of visible non-form content: '+', '.join(bad))
 
           pairs=[]
           for a,b in itertools.combinations(rows,2):
               union=a['sh']|b['sh']; inter=a['sh']&b['sh']
               score=len(inter)/len(union) if union else 0
               pairs.append((score,a['slug'],b['slug']))
+          ranked=sorted(pairs,reverse=True)
           print('\nMOST_SIMILAR_CORE_CONTENT_PAIRS')
-          for score,a,b in sorted(pairs,reverse=True)[:30]:
+          for score,a,b in ranked[:30]:
               print(f'{score:.3f} | {a} <-> {b}')
+          near_clones=[(score,a,b) for score,a,b in ranked if score>=0.65]
+          if near_clones:
+              examples='; '.join(f'{score:.3f} {a} <-> {b}' for score,a,b in near_clones[:10])
+              raise SystemExit('Near-duplicate indexable location pages exceed the 0.65 normalized 5-word-shingle similarity ceiling: '+examples)
 
           print('\nLOWEST_CORE_WORD_COUNTS')
           for r in sorted(rows,key=lambda x:x['core_words'])[:25]:
