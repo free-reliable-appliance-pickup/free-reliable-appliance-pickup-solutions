@@ -121,6 +121,27 @@ jobs:
           print('Changed pages:', len(changed))
           PY
 
+      - name: Force fresh shared CSS on every washer dryer city page
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          stamp = '20260921sharp'
+          changed = []
+          pattern = re.compile(r'(<link[^>]+href=["\']/assets/site-brand\.css)(?:\?[^"\']*)?(["\'])', re.I)
+
+          for page in Path('.').glob('*-washer-dryer-pickup/index.html'):
+              old = page.read_text(encoding='utf-8')
+              new = pattern.sub(lambda m: m.group(1) + '?v=' + stamp + m.group(2), old, count=1)
+              if new != old:
+                  page.write_text(new, encoding='utf-8')
+                  changed.append(page.as_posix())
+                  print('Refreshed CSS cache key:', page)
+
+          print('Washer/dryer pages refreshed:', len(changed))
+          PY
+
       - name: Verify every approved mapping before commit
         run: |
           python - <<'PY'
