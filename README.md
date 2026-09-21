@@ -22,15 +22,15 @@ Free Reliable Appliance Pickup reviews qualifying pickup requests for washers, d
 - San Francisco, California: https://freereliableappliancepickup.com/san-francisco-appliance-pickup/
 - San Jose, California: https://freereliableappliancepickup.com/san-jose-appliance-pickup/
 - Oakland, California: https://freereliableappliancepickup.com/oakland-appliance-pickup/
-- Santa Rosa, California: https://freereliableappliancepickup.com/santa-rosa-appliance-pickup/
+- San Francisco Bay Area, California: https://freereliableappliancepickup.com/sf-bay-area-appliance-pickup/
 - Portland, Oregon: https://freereliableappliancepickup.com/portland-appliance-pickup/
 - Salem, Oregon: https://freereliableappliancepickup.com/salem-appliance-pickup/
 - Keizer, Oregon: https://freereliableappliancepickup.com/keizer-appliance-pickup/
-- Seattle, Washington: https://freereliableappliancepickup.com/seattle-appliance-pickup/
+- Puget Sound, Washington: https://freereliableappliancepickup.com/puget-sound-appliance-pickup/
 - Phoenix, Arizona: https://freereliableappliancepickup.com/phoenix-appliance-pickup/
 - Denver, Colorado: https://freereliableappliancepickup.com/denver-appliance-pickup/
 - Aurora, Colorado: https://freereliableappliancepickup.com/aurora-appliance-pickup/
-- Las Vegas, Nevada: https://freereliableappliancepickup.com/las-vegas-appliance-pickup/
+- Las Vegas, Nevada: https://freereliableappliancepickup.com/las-vegas-valley-appliance-pickup/
 
 ## Main service and information pages
 
