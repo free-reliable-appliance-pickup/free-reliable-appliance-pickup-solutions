@@ -1,5 +1,4 @@
 adelanto-appliance-pickup
-adelanto-rv-appliance-pickup
 adelanto-washer-dryer-pickup
 alhambra-appliance-pickup
 alhambra-washer-dryer-pickup
@@ -15,7 +14,6 @@ antelope-valley-appliance-pickup
 antelope-valley-rv-appliance-pickup
 antelope-valley-washer-dryer-pickup
 apple-valley-appliance-pickup
-apple-valley-rv-appliance-pickup
 apple-valley-washer-dryer-pickup
 arcadia-appliance-pickup
 arcadia-washer-dryer-pickup
@@ -135,7 +133,6 @@ eastvale-washer-dryer-pickup
 el-cajon-appliance-pickup
 el-cajon-washer-dryer-pickup
 el-mirage-appliance-pickup
-el-mirage-rv-appliance-pickup
 el-mirage-washer-dryer-pickup
 el-monte-appliance-pickup
 el-monte-washer-dryer-pickup
@@ -180,7 +177,6 @@ hemet-appliance-pickup
 hermosa-beach-appliance-pickup
 hermosa-beach-washer-dryer-pickup
 hesperia-appliance-pickup
-hesperia-rv-appliance-pickup
 hesperia-washer-dryer-pickup
 high-desert-appliance-pickup
 high-desert-rv-appliance-pickup
@@ -248,7 +244,6 @@ lakewood-appliance-pickup
 lakewood-ca-appliance-pickup
 lakewood-washer-dryer-pickup
 lancaster-appliance-pickup
-lancaster-rv-appliance-pickup
 lancaster-washer-dryer-pickup
 las-vegas-valley-appliance-pickup
 lawndale-appliance-pickup
@@ -330,7 +325,6 @@ palm-desert-washer-dryer-pickup
 palm-springs-appliance-pickup
 palm-springs-washer-dryer-pickup
 palmdale-appliance-pickup
-palmdale-rv-appliance-pickup
 palmdale-washer-dryer-pickup
 palo-alto-appliance-pickup
 palo-alto-washer-dryer-pickup
@@ -343,7 +337,6 @@ perris-appliance-pickup
 perris-washer-dryer-pickup
 pga-west-appliance-pickup
 phelan-appliance-pickup
-phelan-rv-appliance-pickup
 phelan-washer-dryer-pickup
 phoenix-appliance-pickup
 pico-rivera-appliance-pickup
@@ -481,7 +474,6 @@ ventura-washer-dryer-pickup
 vernon-appliance-pickup
 vernon-washer-dryer-pickup
 victorville-appliance-pickup
-victorville-rv-appliance-pickup
 victorville-washer-dryer-pickup
 villa-park-appliance-pickup
 villa-park-washer-dryer-pickup
