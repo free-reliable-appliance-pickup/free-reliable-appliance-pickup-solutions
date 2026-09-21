@@ -21,7 +21,7 @@ jobs:
           base='https://freereliableappliancepickup.com/'
           approved_locations=set(Path('data/approved-indexable-locations.txt').read_text(encoding='utf-8').split())
           recruiting_noindex_locations={'phoenix-metro-appliance-pickup','treasure-valley-appliance-pickup','wasatch-front-appliance-pickup'}
-          approved_nonlocation={'','about','appliance-pickup-checklist','contact','free-pickup-qualification','freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup','old-appliance-disposal-options','partners','refrigerator-pickup','service-areas','stove-oven-pickup','washer-dryer-pickup'}
+          approved_nonlocation={'','about','appliance-pickup-checklist','commercial-appliance-pickup','contact','free-pickup-qualification','freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup','old-appliance-disposal-options','partners','refrigerator-pickup','service-areas','stove-oven-pickup','washer-dryer-pickup'}
           approved=approved_locations|approved_nonlocation
           errors=[]
           pages=[Path('index.html')]+sorted(p for p in Path('.').rglob('index.html') if '.git' not in p.parts and '.github' not in p.parts and p!=Path('index.html'))
