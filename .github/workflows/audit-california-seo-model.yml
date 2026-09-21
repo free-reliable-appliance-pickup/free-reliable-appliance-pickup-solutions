@@ -6,6 +6,7 @@ on:
     paths:
       - 'sitemap.xml'
       - 'data/california-seo-model-pages.txt'
+      - 'data/california-gold-standard-spec.md'
       - '*-appliance-pickup/index.html'
       - '*-washer-dryer-pickup/index.html'
       - '.github/workflows/audit-california-seo-model.yml'
@@ -120,7 +121,7 @@ jobs:
                   'title': len(title) >= 20,
                   'meta description': len(description) >= 80,
                   'H1': bool(h1),
-                  'local ranking depth': 'local-ranking-depth-20260918' in low,
+                  'local ranking depth': 'local-ranking-depth' in low,
                   'real appliance proof': (
                       'major-appliance-pickup-photo' in low
                       or 'real appliance example' in low
