@@ -64,6 +64,38 @@ jobs:
               value = re.sub(r'<[^>]+>', ' ', match.group(1))
               return html.unescape(re.sub(r'\s+', ' ', value).strip())
 
+          def has_real_appliance_image(page_path, text):
+              # Accept an actual local appliance photo rather than depending on the
+              # legacy major-appliance-pickup-photo-* filenames. This keeps the
+              # gold-standard audit aligned with the user's full-resolution photo policy.
+              for tag in re.findall(r'<img\b[^>]*>', text, re.I | re.S):
+                  parsed = attrs(tag)
+                  src = html.unescape(parsed.get('src', '')).strip()
+                  if not src or src.startswith(('http://', 'https://', 'data:')):
+                      continue
+                  clean = src.split('?', 1)[0].split('#', 1)[0]
+                  if any(x in clean.lower() for x in ('logo', 'favicon', 'screenshot', 'file_00000000b7c082308dccc73e5bd3acd2')):
+                      continue
+                  if clean.startswith('/'):
+                      candidate = Path(clean.lstrip('/'))
+                  else:
+                      candidate = page_path.parent / clean
+                  try:
+                      candidate = candidate.resolve()
+                      root = Path('.').resolve()
+                      if root not in candidate.parents and candidate != root:
+                          continue
+                      if (
+                          candidate.exists()
+                          and candidate.is_file()
+                          and candidate.suffix.lower() in {'.jpg', '.jpeg', '.png', '.webp'}
+                          and candidate.stat().st_size >= 90000
+                      ):
+                          return True
+                  except OSError:
+                      continue
+              return False
+
           # Parse the submitted sitemap once and use it as a consistency check.
           try:
               tree = ET.parse('sitemap.xml')
@@ -122,10 +154,7 @@ jobs:
                   'meta description': len(description) >= 80,
                   'H1': bool(h1),
                   'local ranking depth': 'local-ranking-depth' in low,
-                  'real appliance proof': (
-                      'major-appliance-pickup-photo' in low
-                      or 'real appliance example' in low
-                  ),
+                  'real appliance proof': has_real_appliance_image(p, t),
                   'site branding': '/assets/site-brand.css' in low,
                   'request target': 'id="request"' in low or "id='request'" in low,
                   'Formspree': 'https://formspree.io/f/mvzeapzd' in low,
