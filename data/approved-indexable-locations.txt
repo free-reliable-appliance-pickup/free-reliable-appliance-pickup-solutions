@@ -143,6 +143,7 @@ el-segundo-appliance-pickup
 el-segundo-washer-dryer-pickup
 encinitas-appliance-pickup
 encinitas-washer-dryer-pickup
+eugene-appliance-pickup
 escondido-appliance-pickup
 escondido-washer-dryer-pickup
 fontana-appliance-pickup
