@@ -5,7 +5,7 @@ canonical_fixes=0
 og_url_fixes=0
 robots_fixes=0
 duplicate_exact_titles=0
-duplicate_exact_descriptions=2
+duplicate_exact_descriptions=0
 
 CANONICAL FIXES
 
@@ -18,5 +18,3 @@ MISSING APPROVED PAGE FILES
 DUPLICATE EXACT TITLES
 
 DUPLICATE EXACT META DESCRIPTIONS
-Find qualifying free washer and dryer pickup pages across California :: central-coast-washer-dryer-pickup, central-valley-washer-dryer-pickup
-Request qualifying free washer and dryer pickup and removal across California :: antelope-valley-washer-dryer-pickup, high-desert-washer-dryer-pickup
