@@ -1,0 +1,202 @@
+name: Audit California Laundry Gold Standard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sitemap.xml'
+      - 'data/california-laundry-gold-standard-pages.txt'
+      - '*-washer-dryer-pickup/index.html'
+      - 'assets/site-brand.css'
+      - '.github/workflows/audit-california-laundry-gold-standard.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate California washer dryer benchmark pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import html
+          import re
+          import sys
+          import xml.etree.ElementTree as ET
+          from collections import defaultdict
+
+          ROOT = 'https://freereliableappliancepickup.com/'
+          slugs = [
+              x.strip()
+              for x in Path('data/california-laundry-gold-standard-pages.txt').read_text(encoding='utf-8').splitlines()
+              if x.strip()
+          ]
+
+          failures = []
+          warnings = []
+          seen_titles = defaultdict(list)
+          seen_descriptions = defaultdict(list)
+          seen_h1s = defaultdict(list)
+
+          def attrs(tag):
+              return {
+                  key.lower(): html.unescape(value)
+                  for key, quote, value in re.findall(
+                      r'([:\w-]+)\s*=\s*([\'"])(.*?)\2',
+                      tag,
+                      re.I | re.S,
+                  )
+              }
+
+          def first_tag_text(text, tag):
+              match = re.search(rf'<{tag}\b[^>]*>([\s\S]*?)</{tag}>', text, re.I)
+              if not match:
+                  return ''
+              value = re.sub(r'<[^>]+>', ' ', match.group(1))
+              return html.unescape(re.sub(r'\s+', ' ', value).strip())
+
+          def find_hero_src(text):
+              patterns = [
+                  r'<div[^>]+class=[\'"][^\'"]*site-hero-art[^\'"]*[\'"][\s\S]{0,3000}?<img[^>]+src=([\'"])(.*?)\1',
+                  r'<div[^>]+class=[\'"][^\'"]*hero-in[^\'"]*[\'"][\s\S]{0,3000}?<img[^>]+src=([\'"])(.*?)\1',
+              ]
+              for pattern in patterns:
+                  match = re.search(pattern, text, re.I)
+                  if match:
+                      return html.unescape(match.group(2))
+              return ''
+
+          try:
+              tree = ET.parse('sitemap.xml')
+              ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+              sitemap_urls = {}
+              for node in tree.findall('sm:url', ns):
+                  loc = node.findtext('sm:loc', default='', namespaces=ns).strip()
+                  lastmod = node.findtext('sm:lastmod', default='', namespaces=ns).strip()
+                  if loc:
+                      sitemap_urls[loc] = lastmod
+          except Exception as exc:
+              print(f'FAIL: sitemap.xml could not be parsed: {exc}')
+              sys.exit(1)
+
+          for slug in slugs:
+              p = Path(slug) / 'index.html'
+              if not p.exists():
+                  failures.append(f'{slug}: missing page')
+                  continue
+
+              t = p.read_text(encoding='utf-8', errors='replace')
+              low = t.lower()
+              expected = f'{ROOT}{slug}/'
+
+              title = first_tag_text(t, 'title')
+              h1 = first_tag_text(t, 'h1')
+              hero_src = find_hero_src(t)
+
+              meta_tags = [attrs(tag) for tag in re.findall(r'<meta\b[^>]*>', t, re.I | re.S)]
+              descriptions = [
+                  m.get('content', '').strip()
+                  for m in meta_tags
+                  if m.get('name', '').lower() == 'description'
+              ]
+              robots_values = [
+                  m.get('content', '').lower()
+                  for m in meta_tags
+                  if m.get('name', '').lower() == 'robots'
+              ]
+              og_images = [
+                  m.get('content', '').strip()
+                  for m in meta_tags
+                  if m.get('property', '').lower() == 'og:image'
+              ]
+
+              link_tags = [attrs(tag) for tag in re.findall(r'<link\b[^>]*>', t, re.I | re.S)]
+              canonicals = [
+                  link.get('href', '').strip()
+                  for link in link_tags
+                  if 'canonical' in link.get('rel', '').lower().split()
+              ]
+
+              description = descriptions[0] if descriptions else ''
+              is_original_hero = (
+                  '/assets/laundry/original-user-heroes/' in hero_src
+                  and 'original-fullres=' in hero_src
+              )
+
+              checks = {
+                  'indexable robots': (
+                      bool(robots_values)
+                      and any('index' in v and 'follow' in v and 'noindex' not in v for v in robots_values)
+                  ),
+                  'max image preview': any('max-image-preview:large' in v for v in robots_values),
+                  'exactly one self canonical': canonicals == [expected],
+                  'title': len(title) >= 20,
+                  'meta description': len(description) >= 80,
+                  'H1': bool(h1),
+                  'sharp shared CSS': 'site-brand.css?v=20260921sharp' in low,
+                  'original full-resolution hero': is_original_hero,
+                  'request target': 'id="request"' in low or "id='request'" in low,
+                  'Formspree': 'https://formspree.io/f/mvzeapzd' in low,
+                  'customer routing': '/assets/customer-routing.js' in low,
+                  'structured WebPage': (
+                      '"@type":"webpage"' in low
+                      or '"@type": "webpage"' in low
+                  ),
+                  'breadcrumb': 'breadcrumblist' in low,
+                  'sitemap inclusion': expected in sitemap_urls,
+              }
+
+              for label, ok in checks.items():
+                  if not ok:
+                      failures.append(f'{slug}: missing or invalid {label}')
+
+              if og_images and '/assets/laundry/original-user-heroes/' not in og_images[0]:
+                  warnings.append(f'{slug}: og:image is not using the original-user-heroes library')
+
+              if expected in sitemap_urls and not sitemap_urls[expected]:
+                  warnings.append(f'{slug}: sitemap entry has no lastmod')
+
+              internal = len(re.findall(r'href=[\'"](?:\.\./|/)[a-z0-9-]+/', t, re.I))
+              if internal < 3:
+                  failures.append(f'{slug}: fewer than 3 useful internal links')
+
+              visible = re.sub(r'<script[\s\S]*?</script>|<style[\s\S]*?</style>|<form[\s\S]*?</form>', ' ', t, flags=re.I)
+              visible = re.sub(r'<[^>]+>', ' ', visible)
+              visible = re.sub(r'\s+', ' ', html.unescape(visible)).strip()
+              word_count = len(visible.split())
+              if word_count < 500:
+                  warnings.append(f'{slug}: only {word_count} visible words; review local usefulness before copying this page')
+
+              if title:
+                  seen_titles[title.casefold()].append(slug)
+              if description:
+                  seen_descriptions[description.casefold()].append(slug)
+              if h1:
+                  seen_h1s[h1.casefold()].append(slug)
+
+          for label, bucket in (
+              ('duplicate title', seen_titles),
+              ('duplicate meta description', seen_descriptions),
+              ('duplicate H1', seen_h1s),
+          ):
+              for value, owners in bucket.items():
+                  if len(owners) > 1:
+                      failures.append(f"{label}: {', '.join(owners)}")
+
+          print(f'CALIFORNIA_LAUNDRY_GOLD_STANDARD_PAGES {len(slugs)}')
+          if warnings:
+              print('WARNINGS')
+              for warning in warnings:
+                  print('-', warning)
+
+          if failures:
+              print('FAILURES')
+              for failure in failures:
+                  print('-', failure)
+              sys.exit(1)
+
+          print('PASS: California laundry benchmark pages meet the gold-standard SEO, indexability, conversion, and full-resolution hero requirements.')
