@@ -1,0 +1,227 @@
+name: SEO Canonical Signal Cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/seo-canonical-signal-cleanup.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  canonical-cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Normalize indexable location signals
+        shell: python
+        run: |
+          from pathlib import Path
+          from collections import defaultdict
+          import html as html_lib
+          import re
+
+          BASE = "https://freereliableappliancepickup.com/"
+          approved_file = Path("data/approved-indexable-locations.txt")
+          approved = [
+              line.strip().strip("/")
+              for line in approved_file.read_text(encoding="utf-8").splitlines()
+              if line.strip()
+          ]
+
+          changed = []
+          missing = []
+          canonical_fixes = []
+          og_fixes = []
+          robots_fixes = []
+          canonical_targets = defaultdict(list)
+          titles = defaultdict(list)
+          descriptions = defaultdict(list)
+
+          def meta_content(text, name):
+              m = re.search(
+                  rf'<meta\b(?=[^>]*\bname=["\']{re.escape(name)}["\'])[^>]*\bcontent=["\']([^"\']*)["\'][^>]*>',
+                  text, re.I
+              )
+              return html_lib.unescape(m.group(1).strip()) if m else ""
+
+          for slug in approved:
+              page = Path(slug) / "index.html"
+              if not page.exists():
+                  missing.append(slug)
+                  continue
+
+              text = page.read_text(encoding="utf-8", errors="replace")
+              original = text
+              expected = BASE + slug + "/"
+
+              # Exactly one self-referencing canonical.
+              canon_pat = re.compile(
+                  r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>',
+                  re.I
+              )
+              canon_tags = list(canon_pat.finditer(text))
+              if canon_tags:
+                  first = canon_tags[0].group(0)
+                  href = re.search(r'\bhref=["\']([^"\']+)["\']', first, re.I)
+                  current = href.group(1).strip() if href else ""
+                  new_tag = f'<link rel="canonical" href="{expected}">'
+                  if current != expected or first != new_tag:
+                      text = text[:canon_tags[0].start()] + new_tag + text[canon_tags[0].end():]
+                      canonical_fixes.append(f"{slug}: {current or '[missing href]'} -> {expected}")
+                  # Remove any extra canonical tags after normalizing the first.
+                  text = canon_pat.sub(lambda m, seen=[0]: m.group(0) if (seen.__setitem__(0, seen[0]+1) or seen[0]) == 1 else "", text)
+              else:
+                  text = text.replace("</head>", f'<link rel="canonical" href="{expected}">\n</head>', 1)
+                  canonical_fixes.append(f"{slug}: [missing] -> {expected}")
+
+              # Keep og:url aligned with the canonical.
+              og_pat = re.compile(
+                  r'<meta\b(?=[^>]*\bproperty=["\']og:url["\'])[^>]*>',
+                  re.I
+              )
+              og_tags = list(og_pat.finditer(text))
+              if og_tags:
+                  first = og_tags[0].group(0)
+                  cm = re.search(r'\bcontent=["\']([^"\']+)["\']', first, re.I)
+                  current = cm.group(1).strip() if cm else ""
+                  new_tag = f'<meta property="og:url" content="{expected}">'
+                  if current != expected or first != new_tag:
+                      text = text[:og_tags[0].start()] + new_tag + text[og_tags[0].end():]
+                      og_fixes.append(f"{slug}: {current or '[missing content]'} -> {expected}")
+                  text = og_pat.sub(lambda m, seen=[0]: m.group(0) if (seen.__setitem__(0, seen[0]+1) or seen[0]) == 1 else "", text)
+              else:
+                  text = text.replace("</head>", f'<meta property="og:url" content="{expected}">\n</head>', 1)
+                  og_fixes.append(f"{slug}: [missing] -> {expected}")
+
+              # Every approved location is explicitly indexable and allows large image previews.
+              robots_pat = re.compile(
+                  r'<meta\b(?=[^>]*\bname=["\']robots["\'])[^>]*>',
+                  re.I
+              )
+              robots_tags = list(robots_pat.finditer(text))
+              robots_tag = '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'
+              if robots_tags:
+                  first = robots_tags[0].group(0)
+                  cm = re.search(r'\bcontent=["\']([^"\']*)["\']', first, re.I)
+                  current = (cm.group(1) if cm else "").lower()
+                  if "noindex" in current or "nofollow" in current or "max-image-preview:large" not in current:
+                      text = text[:robots_tags[0].start()] + robots_tag + text[robots_tags[0].end():]
+                      robots_fixes.append(f"{slug}: {current or '[missing content]'}")
+                  text = robots_pat.sub(lambda m, seen=[0]: m.group(0) if (seen.__setitem__(0, seen[0]+1) or seen[0]) == 1 else "", text)
+              else:
+                  text = text.replace("</head>", robots_tag + "\n</head>", 1)
+                  robots_fixes.append(f"{slug}: [missing]")
+
+              if text != original:
+                  page.write_text(text, encoding="utf-8")
+                  changed.append(page.as_posix())
+
+              # Re-read normalized signals for audit.
+              canonical_targets[expected].append(slug)
+              tm = re.search(r'<title>(.*?)</title>', text, re.I | re.S)
+              if tm:
+                  title = html_lib.unescape(re.sub(r'\s+', ' ', tm.group(1)).strip())
+                  titles[title].append(slug)
+              desc = meta_content(text, "description")
+              if desc:
+                  descriptions[desc].append(slug)
+
+          dup_titles = {k:v for k,v in titles.items() if len(v) > 1}
+          dup_desc = {k:v for k,v in descriptions.items() if len(v) > 1}
+
+          report = Path("data/seo-canonical-signal-audit.txt")
+          lines = [
+              f"approved_location_pages={len(approved)}",
+              f"missing_page_files={len(missing)}",
+              f"pages_changed={len(changed)}",
+              f"canonical_fixes={len(canonical_fixes)}",
+              f"og_url_fixes={len(og_fixes)}",
+              f"robots_fixes={len(robots_fixes)}",
+              f"duplicate_exact_titles={len(dup_titles)}",
+              f"duplicate_exact_descriptions={len(dup_desc)}",
+              "",
+              "CANONICAL FIXES",
+              *canonical_fixes,
+              "",
+              "OG:URL FIXES",
+              *og_fixes,
+              "",
+              "ROBOTS FIXES",
+              *robots_fixes,
+              "",
+              "MISSING APPROVED PAGE FILES",
+              *missing,
+              "",
+              "DUPLICATE EXACT TITLES",
+          ]
+          for title, slugs in sorted(dup_titles.items()):
+              lines.append(title + " :: " + ", ".join(slugs))
+          lines.append("")
+          lines.append("DUPLICATE EXACT META DESCRIPTIONS")
+          for desc, slugs in sorted(dup_desc.items()):
+              lines.append(desc + " :: " + ", ".join(slugs))
+
+          report.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+          print("APPROVED", len(approved))
+          print("PAGES_CHANGED", len(changed))
+          print("CANONICAL_FIXES", len(canonical_fixes))
+          print("OG_URL_FIXES", len(og_fixes))
+          print("ROBOTS_FIXES", len(robots_fixes))
+          print("DUPLICATE_TITLES", len(dup_titles))
+          print("DUPLICATE_DESCRIPTIONS", len(dup_desc))
+
+      - name: Verify self-canonicals after cleanup
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys
+
+          base = "https://freereliableappliancepickup.com/"
+          approved = [
+              x.strip().strip("/")
+              for x in Path("data/approved-indexable-locations.txt").read_text(encoding="utf-8").splitlines()
+              if x.strip()
+          ]
+          errors = []
+          for slug in approved:
+              page = Path(slug) / "index.html"
+              if not page.exists():
+                  errors.append(f"{slug}: missing index.html")
+                  continue
+              text = page.read_text(encoding="utf-8", errors="replace")
+              expected = base + slug + "/"
+              canon = re.findall(r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*\bhref=["\']([^"\']+)["\'][^>]*>', text, re.I)
+              og = re.findall(r'<meta\b(?=[^>]*\bproperty=["\']og:url["\'])[^>]*\bcontent=["\']([^"\']+)["\'][^>]*>', text, re.I)
+              robots = re.findall(r'<meta\b(?=[^>]*\bname=["\']robots["\'])[^>]*\bcontent=["\']([^"\']*)["\'][^>]*>', text, re.I)
+              if canon != [expected]:
+                  errors.append(f"{slug}: canonical={canon!r} expected={expected}")
+              if og != [expected]:
+                  errors.append(f"{slug}: og:url={og!r} expected={expected}")
+              if not robots or "noindex" in robots[0].lower():
+                  errors.append(f"{slug}: robots={robots!r}")
+
+          if errors:
+              print("\n".join(errors[:100]))
+              raise SystemExit(f"SEO signal verification failed: {len(errors)} issue(s)")
+          print(f"PASS: {len(approved)} approved location pages have clean self-canonical, og:url and index signals")
+
+      - name: Commit normalized SEO signals
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' '*-washer-dryer-pickup/index.html' data/seo-canonical-signal-audit.txt
+          if git diff --cached --quiet; then
+            echo "No SEO signal changes required."
+            exit 0
+          fi
+          git commit -m "Normalize canonical and index signals on approved location pages"
+          git pull --rebase origin main
+          git push
