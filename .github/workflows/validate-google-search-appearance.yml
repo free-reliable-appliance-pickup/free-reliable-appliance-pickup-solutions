@@ -5,6 +5,8 @@ on:
   push:
     branches: [main]
     paths:
+      - 'index.html'
+      - '**/index.html'
       - 'sitemap.xml'
       - '.github/workflows/validate-google-search-appearance.yml'
   workflow_dispatch:
