@@ -177,6 +177,7 @@ hayward-appliance-pickup
 hayward-washer-dryer-pickup
 hermosa-beach-appliance-pickup
 hermosa-beach-washer-dryer-pickup
+hemet-appliance-pickup
 hesperia-appliance-pickup
 hesperia-rv-appliance-pickup
 hesperia-washer-dryer-pickup
@@ -400,6 +401,7 @@ san-gabriel-inland-empire-washer-dryer-pickup
 san-gabriel-valley-appliance-pickup
 san-gabriel-valley-washer-dryer-pickup
 san-gabriel-washer-dryer-pickup
+san-jacinto-appliance-pickup
 san-jose-appliance-pickup
 san-jose-washer-dryer-pickup
 san-juan-capistrano-appliance-pickup
