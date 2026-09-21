@@ -6,6 +6,8 @@ on:
     paths:
       - 'sitemap.xml'
       - 'data/california-seo-model-pages.txt'
+      - '*-appliance-pickup/index.html'
+      - '*-washer-dryer-pickup/index.html'
       - '.github/workflows/audit-california-seo-model.yml'
   workflow_dispatch:
 
