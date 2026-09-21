@@ -1,0 +1,11 @@
+los-angeles-appliance-pickup
+denver-appliance-pickup
+portland-appliance-pickup
+salem-appliance-pickup
+inland-empire-appliance-pickup
+san-gabriel-valley-appliance-pickup
+riverside-county-appliance-pickup
+orange-county-appliance-pickup
+aurora-appliance-pickup
+oregon-appliance-pickup
+colorado-appliance-pickup
