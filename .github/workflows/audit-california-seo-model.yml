@@ -154,6 +154,15 @@ jobs:
                   seen_titles[title.casefold()].append(slug)
               if description:
                   seen_descriptions[description.casefold()].append(slug)
+              h2s = [
+                  html.unescape(re.sub(r'\\s+', ' ', re.sub(r'<[^>]+>', ' ', m)).strip())
+                  for m in re.findall(r'<h2\\b[^>]*>([\\s\\S]*?)</h2>', t, re.I)
+              ]
+              normalized_h2s = [h.casefold() for h in h2s if h]
+              repeated_h2s = sorted({h for h in normalized_h2s if normalized_h2s.count(h) > 1})
+              if repeated_h2s:
+                  failures.append(f"{slug}: repeated H2 heading(s): {', '.join(repeated_h2s)}")
+
               if h1:
                   seen_h1s[h1.casefold()].append(slug)
 
