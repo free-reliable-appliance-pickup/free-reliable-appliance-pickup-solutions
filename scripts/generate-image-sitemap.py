@@ -11,6 +11,9 @@ ROOT = Path(__file__).resolve().parents[1]
 lists = [
     ROOT / "data" / "california-seo-model-pages.txt",
     ROOT / "data" / "california-washer-dryer-seo-model-pages.txt",
+    # Include the full audited/indexable service-area set so real appliance
+    # photos on nationwide, state, regional and local pages are discoverable.
+    ROOT / "data" / "approved-indexable-locations.txt",
 ]
 extra = [
     "refrigerator-pickup",
