@@ -1,0 +1,108 @@
+name: Rank washer dryer hero candidates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/rank-washer-dryer-hero-candidates.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rank:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install visual ranking tools
+        run: python -m pip install --quiet pillow transformers torch torchvision
+
+      - name: Rank real uploaded photos for washer-dryer hero use
+        shell: python
+        run: |
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          import re, math, json
+          import torch
+          from transformers import CLIPProcessor, CLIPModel
+
+          photos = sorted([
+              p for p in Path('.').iterdir()
+              if p.is_file()
+              and p.suffix.lower() in {'.jpg','.jpeg','.png','.webp'}
+              and (p.name.startswith('IMG-') or re.match(r'^20\\d{6}[_-]',p.name))
+              and p.stat().st_size >= 90_000
+          ], key=lambda p:p.name.lower())
+
+          model_id='openai/clip-vit-base-patch32'
+          model=CLIPModel.from_pretrained(model_id)
+          processor=CLIPProcessor.from_pretrained(model_id)
+          model.eval()
+
+          prompts=[
+              'a clean matching washer and dryer set side by side, both full appliances visible, bright sharp professional appliance photo',
+              'a white washer and dryer pair side by side, clean front view, attractive appliance sales photo',
+              'two matching laundry machines washer dryer set, uncluttered and well lit',
+              'a stacked washer and dryer unit',
+              'a single washing machine',
+              'a refrigerator or stove or freezer',
+              'a cluttered dark low quality appliance photo'
+          ]
+          text_inputs=processor(text=prompts,return_tensors='pt',padding=True)
+          with torch.no_grad():
+              text_features=model.get_text_features(**text_inputs)
+              text_features=text_features/text_features.norm(dim=-1,keepdim=True)
+
+          ranked=[]
+          for p in photos:
+              try:
+                  with Image.open(p) as im:
+                      im=ImageOps.exif_transpose(im).convert('RGB')
+                      inputs=processor(images=im,return_tensors='pt')
+                      with torch.no_grad():
+                          feat=model.get_image_features(**inputs)
+                          feat=feat/feat.norm(dim=-1,keepdim=True)
+                          sims=(feat @ text_features.T)[0].tolist()
+                      w,h=im.size
+                  positive=max(sims[0],sims[1],sims[2])
+                  negative=max(sims[3],sims[4],sims[5],sims[6])
+                  score=positive-negative
+                  ranked.append({
+                      'file':p.name,'score':round(score,6),
+                      'positive':round(positive,6),'negative':round(negative,6),
+                      'side_by_side':round(sims[0],6),
+                      'white_pair':round(sims[1],6),
+                      'pair':round(sims[2],6),
+                      'stacked':round(sims[3],6),
+                      'single':round(sims[4],6),
+                      'other_appliance':round(sims[5],6),
+                      'low_quality':round(sims[6],6),
+                      'width':w,'height':h,'bytes':p.stat().st_size
+                  })
+              except Exception as e:
+                  print('SKIP',p,e)
+
+          ranked.sort(key=lambda x:x['score'],reverse=True)
+          out=Path('data/washer-dryer-hero-ranking.json')
+          out.write_text(json.dumps(ranked,indent=2)+'\n',encoding='utf-8')
+          txt=Path('data/washer-dryer-hero-ranking.txt')
+          txt.write_text('\n'.join(
+              f"{i+1:02d} {r['file']} score={r['score']} pair={r['pair']} stacked={r['stacked']} single={r['single']} {r['width']}x{r['height']} {r['bytes']}B"
+              for i,r in enumerate(ranked[:25])
+          )+'\n',encoding='utf-8')
+          print(txt.read_text())
+
+      - name: Commit ranking
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/washer-dryer-hero-ranking.json data/washer-dryer-hero-ranking.txt
+          git commit -m "Rank washer dryer hero candidates"
+          git push
