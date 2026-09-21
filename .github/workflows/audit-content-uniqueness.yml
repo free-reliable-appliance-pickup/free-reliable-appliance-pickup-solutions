@@ -13,6 +13,7 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -21,83 +22,110 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          import re, html, itertools, xml.etree.ElementTree as ET
+          import re, html, itertools, heapq, xml.etree.ElementTree as ET
           from difflib import SequenceMatcher
 
           BASE='https://freereliableappliancepickup.com/'
           INFORMATIONAL={'landlord-property-manager-appliance-pickup'}
 
-          def visible_text(raw):
+          def visible_words(raw):
               raw = re.sub(r'<script\b[^>]*>.*?</script>', ' ', raw, flags=re.I|re.S)
               raw = re.sub(r'<style\b[^>]*>.*?</style>', ' ', raw, flags=re.I|re.S)
               raw = re.sub(r'<!--.*?-->', ' ', raw, flags=re.S)
               raw = re.sub(r'<[^>]+>', ' ', raw)
-              raw = html.unescape(raw)
-              raw = re.sub(r'\b\d{3}[-.)\s]*\d{3}[-.\s]*\d{4}\b', ' PHONE ', raw)
-              raw = re.sub(r'\b\d{5}(?:-\d{4})?\b', ' ZIP ', raw)
-              raw = re.sub(r'\s+', ' ', raw).strip().lower()
-              return raw
+              raw = html.unescape(raw).lower()
+              raw = re.sub(r'\b\d{3}[-.)\s]*\d{3}[-.\s]*\d{4}\b', ' phone ', raw)
+              raw = re.sub(r'\b\d{5}(?:-\d{4})?\b', ' zip ', raw)
+              return re.findall(r"[a-z0-9']+", raw)
+
+          def shingles(words, n=5):
+              return {' '.join(words[i:i+n]) for i in range(max(0, len(words)-n+1))}
 
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           slugs=[]
           for el in root.findall('.//s:loc',ns):
-              if not el.text: continue
+              if not el.text:
+                  continue
               u=el.text.strip()
-              if not u.startswith(BASE): continue
+              if not u.startswith(BASE):
+                  continue
               slug=u[len(BASE):].strip('/')
-              if slug in INFORMATIONAL: continue
+              if slug in INFORMATIONAL:
+                  continue
               if slug.endswith('-appliance-pickup') and (Path(slug)/'index.html').exists():
                   slugs.append(slug)
 
-          pages = []
+          all_city_tokens=set()
+          for slug in slugs:
+              all_city_tokens.update(
+                  token for token in slug.replace('-appliance-pickup','').split('-')
+                  if len(token)>2
+              )
+
+          pages=[]
           for slug in slugs:
               p=Path(slug)/'index.html'
-              raw = p.read_text(encoding='utf-8', errors='ignore')
-              txt = visible_text(raw)
-              words = re.findall(r"[a-z0-9']+", txt)
-              has_form = 'formspree.io/f/mvzeapzd' in raw
-              funnels_home = ('../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw)
+              raw=p.read_text(encoding='utf-8', errors='ignore')
+              words=visible_words(raw)
+              norm=['city' if w in all_city_tokens else w for w in words]
               noindex=bool(re.search(r'<meta\s+name=["\']robots["\'][^>]*noindex',raw,re.I))
               pages.append({
-                  'slug': slug,
-                  'path': str(p),
-                  'raw': raw,
-                  'txt': txt,
-                  'words': len(words),
-                  'has_form': has_form,
-                  'funnels_home': funnels_home,
-                  'noindex': noindex,
+                  'slug':slug,
+                  'words':len(words),
+                  'norm_txt':' '.join(norm),
+                  'sh':shingles(norm),
+                  'form':'formspree.io/f/mvzeapzd' in raw,
+                  'funnel':'../#request' in raw or 'free-reliable-appliance-pickup-solutions/#request' in raw,
+                  'noindex':noindex,
               })
 
-          print('INDEXABLE_MARKET_PAGE_COUNT', len(pages))
-          print('WITH_LOCAL_FORM', sum(x['has_form'] for x in pages))
-          print('FUNNEL_TO_HOMEPAGE_FORM', sum(x['funnels_home'] for x in pages))
+          print('INDEXABLE_MARKET_PAGE_COUNT',len(pages))
+          print('WITH_LOCAL_FORM',sum(x['form'] for x in pages))
+          print('FUNNEL_TO_HOMEPAGE_FORM',sum(x['funnel'] for x in pages))
           print('NOINDEX_IN_SITEMAP_MARKETS',sum(x['noindex'] for x in pages))
-          print('UNDER_350_WORDS', sum(x['words'] < 350 for x in pages))
-          print('UNDER_500_WORDS', sum(x['words'] < 500 for x in pages))
+          print('UNDER_350_WORDS',sum(x['words']<350 for x in pages))
+          print('UNDER_500_WORDS',sum(x['words']<500 for x in pages))
 
           if any(x['noindex'] for x in pages):
               bad=[x['slug'] for x in pages if x['noindex']]
               raise SystemExit(f'Indexable market page in sitemap is noindex: {bad}')
 
           print('\nLOWEST_WORD_COUNT')
-          for x in sorted(pages, key=lambda x:x['words'])[:20]:
-              print(f"{x['words']:4d} | form={x['has_form']} funnel={x['funnels_home']} | {x['slug']}")
+          for x in sorted(pages,key=lambda x:x['words'])[:20]:
+              print(f"{x['words']:4d} | form={x['form']} funnel={x['funnel']} | {x['slug']}")
 
-          pairs=[]
+          # Exhaustive first pass across every page pair using 5-word shingles.
+          # Keep only the strongest candidates for the much more expensive
+          # SequenceMatcher pass, avoiding the old all-pairs performance bottleneck.
+          candidate_heap=[]
+          pair_count=0
           for a,b in itertools.combinations(pages,2):
-              ta=a['txt']
-              tb=b['txt']
-              for slug in (a['slug'], b['slug']):
-                  for token in slug.replace('-appliance-pickup','').split('-'):
-                      if len(token)>2:
-                          ta=re.sub(rf'\b{re.escape(token)}\b',' CITY ',ta)
-                          tb=re.sub(rf'\b{re.escape(token)}\b',' CITY ',tb)
-              ratio=SequenceMatcher(None,ta,tb,autojunk=True).ratio()
-              pairs.append((ratio,a['slug'],b['slug']))
+              pair_count += 1
+              union=a['sh'] | b['sh']
+              inter=a['sh'] & b['sh']
+              score=len(inter)/len(union) if union else 0
+              row=(score,a['slug'],b['slug'])
+              if len(candidate_heap) < 200:
+                  heapq.heappush(candidate_heap,row)
+              elif score > candidate_heap[0][0]:
+                  heapq.heapreplace(candidate_heap,row)
 
-          print('\nMOST_SIMILAR_PAIRS')
-          for ratio,a,b in sorted(pairs, reverse=True)[:30]:
+          candidates=sorted(candidate_heap, reverse=True)
+          print('PAIR_COUNT', pair_count)
+          print('\nMOST_SIMILAR_SHINGLE_PAIRS')
+          for score,a,b in candidates[:30]:
+              print(f"{score:.3f} | {a} <-> {b}")
+
+          page_by_slug={x['slug']:x for x in pages}
+          deep=[]
+          for _,a_slug,b_slug in candidates:
+              a=page_by_slug[a_slug]
+              b=page_by_slug[b_slug]
+              ratio=SequenceMatcher(None,a['norm_txt'],b['norm_txt'],autojunk=True).ratio()
+              deep.append((ratio,a_slug,b_slug))
+
+          print('\nMOST_SIMILAR_DEEP_PAIRS')
+          for ratio,a,b in sorted(deep, reverse=True)[:30]:
               print(f"{ratio:.3f} | {a} <-> {b}")
           PY
