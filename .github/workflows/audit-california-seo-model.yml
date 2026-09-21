@@ -23,43 +23,159 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import re, sys
+          import html
+          import re
+          import sys
+          import xml.etree.ElementTree as ET
+          from collections import defaultdict
 
-          slugs=[x.strip() for x in Path('data/california-seo-model-pages.txt').read_text().splitlines() if x.strip()]
-          failures=[]
+          ROOT = 'https://freereliableappliancepickup.com/'
+          slugs = [
+              x.strip()
+              for x in Path('data/california-seo-model-pages.txt').read_text(encoding='utf-8').splitlines()
+              if x.strip()
+          ]
+
+          failures = []
+          warnings = []
+          seen_titles = defaultdict(list)
+          seen_descriptions = defaultdict(list)
+          seen_h1s = defaultdict(list)
+
+          def attrs(tag):
+              return {
+                  key.lower(): html.unescape(value)
+                  for key, quote, value in re.findall(
+                      r'([:\w-]+)\s*=\s*([\'"])(.*?)\2',
+                      tag,
+                      re.I | re.S,
+                  )
+              }
+
+          def first_tag_text(text, tag):
+              match = re.search(
+                  rf'<{tag}\b[^>]*>([\s\S]*?)</{tag}>',
+                  text,
+                  re.I,
+              )
+              if not match:
+                  return ''
+              value = re.sub(r'<[^>]+>', ' ', match.group(1))
+              return html.unescape(re.sub(r'\s+', ' ', value).strip())
+
+          # Parse the submitted sitemap once and use it as a consistency check.
+          try:
+              tree = ET.parse('sitemap.xml')
+              ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+              sitemap_urls = {}
+              for node in tree.findall('sm:url', ns):
+                  loc = node.findtext('sm:loc', default='', namespaces=ns).strip()
+                  lastmod = node.findtext('sm:lastmod', default='', namespaces=ns).strip()
+                  if loc:
+                      sitemap_urls[loc] = lastmod
+          except Exception as exc:
+              print(f'FAIL: sitemap.xml could not be parsed: {exc}')
+              sys.exit(1)
+
           for slug in slugs:
-              p=Path(slug)/'index.html'
+              p = Path(slug) / 'index.html'
               if not p.exists():
                   failures.append(f'{slug}: missing page')
                   continue
-              t=p.read_text(encoding='utf-8',errors='replace')
-              low=t.lower()
-              checks={
-                  'indexable robots': bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',t,re.I)),
-                  'self canonical': f'https://freereliableappliancepickup.com/{slug}/' in low,
-                  'title': bool(re.search(r'<title>[^<]{20,}</title>',t,re.I)),
-                  'H1': bool(re.search(r'<h1[^>]*>.+?</h1>',t,re.I|re.S)),
+
+              t = p.read_text(encoding='utf-8', errors='replace')
+              low = t.lower()
+              expected = f'{ROOT}{slug}/'
+
+              title = first_tag_text(t, 'title')
+              h1 = first_tag_text(t, 'h1')
+
+              meta_tags = [attrs(tag) for tag in re.findall(r'<meta\b[^>]*>', t, re.I | re.S)]
+              descriptions = [
+                  m.get('content', '').strip()
+                  for m in meta_tags
+                  if m.get('name', '').lower() == 'description'
+              ]
+              robots_values = [
+                  m.get('content', '').lower()
+                  for m in meta_tags
+                  if m.get('name', '').lower() == 'robots'
+              ]
+
+              link_tags = [attrs(tag) for tag in re.findall(r'<link\b[^>]*>', t, re.I | re.S)]
+              canonicals = [
+                  link.get('href', '').strip()
+                  for link in link_tags
+                  if 'canonical' in link.get('rel', '').lower().split()
+              ]
+
+              description = descriptions[0] if descriptions else ''
+
+              checks = {
+                  'indexable robots': (
+                      bool(robots_values)
+                      and any('index' in v and 'follow' in v and 'noindex' not in v for v in robots_values)
+                  ),
+                  'exactly one self canonical': canonicals == [expected],
+                  'title': len(title) >= 20,
+                  'meta description': len(description) >= 80,
+                  'H1': bool(h1),
                   'local ranking depth': 'local-ranking-depth-20260918' in low,
-                  'real appliance proof': ('major-appliance-pickup-photo' in low or 'real appliance example' in low),
+                  'real appliance proof': (
+                      'major-appliance-pickup-photo' in low
+                      or 'real appliance example' in low
+                  ),
                   'site branding': '/assets/site-brand.css' in low,
                   'request target': 'id="request"' in low or "id='request'" in low,
                   'Formspree': 'https://formspree.io/f/mvzeapzd' in low,
                   'customer routing': '/assets/customer-routing.js' in low,
-                  'structured WebPage': '"@type":"webpage"' in low or '"@type": "webpage"' in low,
+                  'structured WebPage': (
+                      '"@type":"webpage"' in low
+                      or '"@type": "webpage"' in low
+                  ),
                   'breadcrumb': 'breadcrumblist' in low,
+                  'sitemap inclusion': expected in sitemap_urls,
               }
-              for label,ok in checks.items():
+
+              for label, ok in checks.items():
                   if not ok:
-                      failures.append(f'{slug}: missing {label}')
+                      failures.append(f'{slug}: missing or invalid {label}')
+
+              if expected in sitemap_urls and not sitemap_urls[expected]:
+                  warnings.append(f'{slug}: sitemap entry has no lastmod')
 
               # Benchmark pages should link to useful internal content, not stand alone.
-              internal=len(re.findall(r'href=["\'](?:\.\./|/)[a-z0-9-]+/',t,re.I))
+              internal = len(re.findall(r'href=[\'"](?:\.\./|/)[a-z0-9-]+/', t, re.I))
               if internal < 3:
                   failures.append(f'{slug}: fewer than 3 useful internal links')
 
+              # Prevent exact metadata/H1 clones from becoming the template for new states.
+              if title:
+                  seen_titles[title.casefold()].append(slug)
+              if description:
+                  seen_descriptions[description.casefold()].append(slug)
+              if h1:
+                  seen_h1s[h1.casefold()].append(slug)
+
+          for label, bucket in (
+              ('duplicate title', seen_titles),
+              ('duplicate meta description', seen_descriptions),
+              ('duplicate H1', seen_h1s),
+          ):
+              for value, owners in bucket.items():
+                  if len(owners) > 1:
+                      failures.append(f"{label}: {', '.join(owners)}")
+
           print(f'CALIFORNIA_BENCHMARK_PAGES {len(slugs)}')
+          if warnings:
+              print('WARNINGS')
+              for warning in warnings:
+                  print('-', warning)
+
           if failures:
               print('FAILURES')
-              for f in failures: print('-',f)
+              for failure in failures:
+                  print('-', failure)
               sys.exit(1)
-          print('PASS: California benchmark pages meet the gold-standard structure.')
+
+          print('PASS: California benchmark pages meet the gold-standard structure, canonical, sitemap, metadata, conversion, and uniqueness checks.')
