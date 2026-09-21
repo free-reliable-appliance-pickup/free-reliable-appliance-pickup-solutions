@@ -1,0 +1,75 @@
+name: Build appliance photo review sheet
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/build-photo-review-sheet.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet pillow
+      - name: Build contact sheet
+        shell: python
+        run: |
+          from pathlib import Path
+          from PIL import Image, ImageOps, ImageDraw
+          import math, re
+
+          photos = sorted([
+              p for p in Path('.').iterdir()
+              if p.is_file()
+              and p.suffix.lower() in {'.jpg','.jpeg','.png','.webp'}
+              and (p.name.startswith('IMG-') or re.match(r'^20\\d{6}[_-]',p.name))
+              and p.stat().st_size >= 90_000
+          ], key=lambda p:p.name.lower())
+
+          thumb_w, thumb_h = 180, 220
+          cell_w, cell_h = 200, 270
+          cols = 5
+          rows = math.ceil(len(photos)/cols)
+          sheet = Image.new('RGB',(cols*cell_w,rows*cell_h),'white')
+          draw = ImageDraw.Draw(sheet)
+
+          for i,p in enumerate(photos):
+              try:
+                  im=Image.open(p)
+                  im=ImageOps.exif_transpose(im).convert('RGB')
+                  im.thumbnail((thumb_w,thumb_h),Image.Resampling.LANCZOS)
+                  x=(i%cols)*cell_w+(cell_w-im.width)//2
+                  y=(i//cols)*cell_h+5+(thumb_h-im.height)//2
+                  sheet.paste(im,(x,y))
+                  label=p.name[:28]
+                  draw.text(((i%cols)*cell_w+5,(i//cols)*cell_h+230),label,fill='black')
+                  draw.text(((i%cols)*cell_w+5,(i//cols)*cell_h+246),f'{i+1:03d}',fill='black')
+              except Exception:
+                  pass
+
+          out=Path('assets/review')
+          out.mkdir(parents=True,exist_ok=True)
+          sheet.save(out/'root-photo-contact-sheet.jpg',quality=88,optimize=True)
+          (out/'photo-list.txt').write_text('\n'.join(f'{i+1:03d} {p.name}' for i,p in enumerate(photos))+'\n',encoding='utf-8')
+
+          page=Path('photo-review')
+          page.mkdir(exist_ok=True)
+          page.joinpath('index.html').write_text('''<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Photo Review</title></head><body><h1>Photo Review</h1><img src="/assets/review/root-photo-contact-sheet.jpg" style="max-width:100%;height:auto" alt="Appliance photo contact sheet"></body></html>''',encoding='utf-8')
+
+          print('PHOTOS',len(photos))
+      - name: Commit review sheet
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/review photo-review/index.html
+          git commit -m "Build appliance photo review sheet"
+          git push
