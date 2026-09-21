@@ -1,0 +1,186 @@
+name: Rotate real appliance photos across pickup pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/rotate-real-appliance-heroes.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rotate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Replace repeated placeholder appliance photos with real uploaded photos
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+          # Use the user's real uploaded photos only. Avoid logos, screenshots,
+          # generated artwork, tiny helper images and the washer/dryer protected pool.
+          photos = sorted(
+              [
+                  p for p in root.iterdir()
+                  if p.is_file()
+                  and p.suffix.lower() in {'.jpg', '.jpeg', '.png', '.webp'}
+                  and (p.name.startswith('IMG-') or re.match(r'^20\d{6}[_-]', p.name))
+                  and not p.name.lower().startswith('screenshot')
+                  and p.stat().st_size >= 90_000
+              ],
+              key=lambda p: (-p.stat().st_size, p.name.lower())
+          )
+
+          if len(photos) < 80:
+              raise SystemExit(f'Not enough real uploaded photos found: {len(photos)}')
+
+          pages = sorted(root.glob('*-appliance-pickup/index.html'))
+          # Keep RV-specialty pages untouched because they need RV-specific visuals.
+          pages = [p for p in pages if '-rv-appliance-pickup/' not in p.as_posix()]
+
+          old_markers = (
+              '/assets/major-appliance-pickup-photo-',
+              '../assets/major-appliance-pickup-photo-',
+              '/file_00000000b7c082308dccc73e5bd3acd2.png',
+              '../file_00000000b7c082308dccc73e5bd3acd2.png',
+          )
+
+          updated = []
+          hero_assignments = {}
+          secondary_assignments = {}
+          photo_i = 0
+
+          def next_photo(exclude=None):
+              global photo_i
+              for _ in range(len(photos) + 2):
+                  p = photos[photo_i % len(photos)]
+                  photo_i += 1
+                  if exclude is None or p.name != exclude:
+                      return p
+              raise RuntimeError('Could not select distinct photo')
+
+          def area_from_slug(slug):
+              base = slug.removesuffix('-appliance-pickup')
+              return base.replace('-', ' ').title()
+
+          def replace_meta(html, attr, key, value):
+              pat = re.compile(rf'<meta\s+{attr}=["\']{re.escape(key)}["\'][^>]*>', re.I)
+              tag = f'<meta {attr}="{key}" content="{value}">'
+              if pat.search(html):
+                  return pat.sub(tag, html, count=1)
+              return html.replace('</head>', tag + '\n</head>', 1)
+
+          for page in pages:
+              html = page.read_text(encoding='utf-8', errors='replace')
+              before = html
+              slug = page.parent.name
+              area = area_from_slug(slug)
+
+              # Find visible high-priority hero.
+              hero_match = re.search(r'<img\b(?=[^>]*\bfetchpriority=["\']high["\'])[^>]*>', html, re.I)
+              hero_name = None
+              if hero_match:
+                  tag = hero_match.group(0)
+                  src_match = re.search(r'\bsrc=["\']([^"\']+)["\']', tag, re.I)
+                  src = src_match.group(1) if src_match else ''
+
+                  # Preserve pages already using an uploaded root real photo.
+                  already_real = src.startswith('/') and Path(src.lstrip('/')).name in {p.name for p in photos}
+                  if not already_real and any(marker in src for marker in old_markers):
+                      photo = next_photo()
+                      hero_name = photo.name
+                      new_src = '/' + photo.name
+                      new_tag = re.sub(r'\bsrc=["\'][^"\']+["\']', f'src="{new_src}"', tag, count=1, flags=re.I)
+                      if re.search(r'\balt=["\'][^"\']*["\']', new_tag, re.I):
+                          new_tag = re.sub(r'\balt=["\'][^"\']*["\']', f'alt="Real appliance from our {area} pickup work"', new_tag, count=1, flags=re.I)
+                      else:
+                          new_tag = new_tag[:-1] + f' alt="Real appliance from our {area} pickup work">'
+                      # Remove hard-coded dimensions that can distort differently shaped real photos.
+                      new_tag = re.sub(r'\s(?:width|height)=["\'][^"\']*["\']', '', new_tag, flags=re.I)
+                      html = html[:hero_match.start()] + new_tag + html[hero_match.end():]
+
+                      abs_url = 'https://freereliableappliancepickup.com/' + photo.name
+                      html = replace_meta(html, 'property', 'og:image', abs_url)
+                      html = replace_meta(html, 'property', 'og:image:alt', f'Real appliance from our {area} pickup work')
+                      html = replace_meta(html, 'name', 'twitter:image', abs_url)
+                      html = re.sub(
+                          r'("primaryImageOfPage"\s*:\s*\{\s*"@type"\s*:\s*"ImageObject"\s*,\s*"url"\s*:\s*")[^"]+(")',
+                          lambda m: m.group(1) + abs_url + m.group(2),
+                          html, count=1, flags=re.I
+                      )
+                      hero_assignments[slug] = photo.name
+
+              # Replace old repeated inline/secondary appliance photos too.
+              # Use one different real photo per page so the hero and body image do not repeat.
+              if any(marker in html for marker in old_markers[:2]):
+                  second = next_photo(exclude=hero_name)
+                  second_src = '/' + second.name
+                  html = re.sub(
+                      r'(?P<prefix><img\b[^>]*\bsrc=["\'])(?:\.\./|/)?assets/major-appliance-pickup-photo-[^"\']+(?P<suffix>["\'][^>]*>)',
+                      lambda m: m.group('prefix') + second_src + m.group('suffix'),
+                      html,
+                      flags=re.I
+                  )
+                  secondary_assignments[slug] = second.name
+
+              if html != before:
+                  page.write_text(html, encoding='utf-8')
+                  updated.append(page.as_posix())
+
+          report = Path('data/real-appliance-photo-rotation.txt')
+          report.parent.mkdir(exist_ok=True)
+          lines = [
+              f'uploaded_real_photo_pool={len(photos)}',
+              f'general_appliance_pages_scanned={len(pages)}',
+              f'pages_updated={len(updated)}',
+              f'hero_assignments={len(hero_assignments)}',
+              f'secondary_assignments={len(secondary_assignments)}',
+              '',
+              'UPDATED PAGES'
+          ] + updated
+          report.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+
+          print('REAL_PHOTO_POOL', len(photos))
+          print('PAGES_SCANNED', len(pages))
+          print('PAGES_UPDATED', len(updated))
+          print('HERO_ASSIGNMENTS', len(hero_assignments))
+          print('SECONDARY_ASSIGNMENTS', len(secondary_assignments))
+
+      - name: Safety check
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys
+          failures=[]
+          for page in Path('.').glob('*-appliance-pickup/index.html'):
+              if '-rv-appliance-pickup/' in page.as_posix():
+                  continue
+              text=page.read_text(encoding='utf-8',errors='replace')
+              m=re.search(r'<img\b(?=[^>]*fetchpriority=["\']high["\'])[^>]*src=["\']([^"\']+)', text, re.I)
+              if m and ('major-appliance-pickup-photo-' in m.group(1)):
+                  failures.append(f'{page}: repeated placeholder hero still present')
+          print('FAILURES',len(failures))
+          if failures:
+              print('\n'.join(failures[:50]))
+              sys.exit(1)
+
+      - name: Commit real-photo rotation
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*-appliance-pickup/index.html' data/real-appliance-photo-rotation.txt
+          if git diff --cached --quiet; then
+            echo "No remaining repeated appliance photos needed replacement."
+            exit 0
+          fi
+          git commit -m "Rotate real uploaded photos across appliance pickup pages"
+          git push
