@@ -29,7 +29,19 @@ jobs:
           from pathlib import Path
           import re, sys, xml.etree.ElementTree as ET
           BASE='https://freereliableappliancepickup.com/'
-          approved_locations=set(Path('data/approved-indexable-locations.txt').read_text(encoding='utf-8').split())
+          approved_raw=[x.strip() for x in Path('data/approved-indexable-locations.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
+          approved_locations=set(approved_raw)
+          # Freeze location-page expansion at the current audited baseline.
+          # New indexable location URLs should replace/consolidate an existing entry rather than
+          # continuously increasing the footprint. This guards against doorway/scaled-content drift.
+          MAX_APPROVED_LOCATION_PAGES=503
+          if len(approved_raw) != len(approved_locations):
+              print('ERROR: duplicate entries in data/approved-indexable-locations.txt')
+              sys.exit(1)
+          if len(approved_locations) > MAX_APPROVED_LOCATION_PAGES:
+              print(f'ERROR: approved indexable location count {len(approved_locations)} exceeds the {MAX_APPROVED_LOCATION_PAGES}-page quality ceiling')
+              print('Consolidate or retire an existing location URL before approving another indexable location page.')
+              sys.exit(1)
           approved_nonlocation={'','about','appliance-pickup-checklist','commercial-appliance-pickup','contact','free-pickup-qualification','freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup','old-appliance-disposal-options','partners','refrigerator-pickup','service-areas','stove-oven-pickup','washer-dryer-pickup','california-washer-dryer-pickup','fresno-washer-dryer-pickup','los-angeles-county-washer-dryer-pickup','orange-county-washer-dryer-pickup','riverside-county-washer-dryer-pickup','san-bernardino-county-washer-dryer-pickup','san-gabriel-inland-empire-washer-dryer-pickup','southern-california-washer-dryer-pickup'}
           approved=approved_locations|approved_nonlocation
           pages=[Path('index.html')]+sorted(p for p in Path('.').rglob('index.html') if p!=Path('index.html') and '.github' not in p.parts and '.git' not in p.parts)
