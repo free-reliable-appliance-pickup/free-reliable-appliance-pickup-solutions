@@ -44,11 +44,14 @@ jobs:
           descriptions = defaultdict(list)
 
           def meta_content(text, name):
-              m = re.search(
-                  rf'<meta\b(?=[^>]*\bname=["\']{re.escape(name)}["\'])[^>]*\bcontent=["\']([^"\']*)["\'][^>]*>',
+              tag = re.search(
+                  rf'<meta\b(?=[^>]*\bname=["\']{re.escape(name)}["\'])[^>]*>',
                   text, re.I
               )
-              return html_lib.unescape(m.group(1).strip()) if m else ""
+              if not tag:
+                  return ""
+              m = re.search(r'\bcontent=(["\'])(.*?)\1', tag.group(0), re.I | re.S)
+              return html_lib.unescape(m.group(2).strip()) if m else ""
 
           for slug in approved:
               page = Path(slug) / "index.html"
