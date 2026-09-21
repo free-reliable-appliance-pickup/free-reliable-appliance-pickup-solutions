@@ -7,10 +7,26 @@ on:
       - '.github/workflows/launch-readiness-audit.yml'
       - 'data/california-seo-model-pages.txt'
       - 'data/california-washer-dryer-seo-model-pages.txt'
+      - 'data/priority-seo-pages.txt'
+      - 'los-angeles-appliance-pickup/index.html'
+      - 'denver-appliance-pickup/index.html'
+      - 'portland-appliance-pickup/index.html'
+      - 'salem-appliance-pickup/index.html'
+      - 'inland-empire-appliance-pickup/index.html'
+      - 'san-gabriel-valley-appliance-pickup/index.html'
+      - 'riverside-county-appliance-pickup/index.html'
+      - 'orange-county-appliance-pickup/index.html'
+      - 'aurora-appliance-pickup/index.html'
+      - 'oregon-appliance-pickup/index.html'
+      - 'colorado-appliance-pickup/index.html'
+      - 'about/index.html'
+      - 'contact/index.html'
+      - 'service-areas/index.html'
       - 'assets/customer-routing.js'
       - 'index.html'
       - 'robots.txt'
       - 'sitemap.xml'
+      - 'sitemap-images.xml'
   workflow_dispatch:
 
 permissions:
@@ -78,7 +94,8 @@ jobs:
 
           model_files=[
               'data/california-seo-model-pages.txt',
-              'data/california-washer-dryer-seo-model-pages.txt'
+              'data/california-washer-dryer-seo-model-pages.txt',
+              'data/priority-seo-pages.txt'
           ]
           slugs=[]
           for mf in model_files:
