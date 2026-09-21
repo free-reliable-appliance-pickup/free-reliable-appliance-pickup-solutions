@@ -107,6 +107,26 @@ jobs:
           for count,depth,u in sorted(rows)[:30]:
               print(f'inlinks={count:2d} depth={depth if depth<999 else "NA"} | {u}')
 
+          print('\nPRIORITY_CORRIDOR_INLINKS')
+          priority_slugs=[
+              'covina-appliance-pickup',
+              'west-covina-appliance-pickup',
+              'whittier-appliance-pickup',
+              'la-puente-appliance-pickup',
+              'san-dimas-appliance-pickup',
+              'la-verne-appliance-pickup',
+              'pomona-appliance-pickup',
+              'rancho-cucamonga-appliance-pickup',
+              'glendora-appliance-pickup',
+              'upland-appliance-pickup',
+              'ontario-appliance-pickup',
+          ]
+          for slug in priority_slugs:
+              u=BASE+slug+'/'
+              count=len(inlinks.get(u,set()) & active)
+              depth=depths.get(u,999)
+              print(f'inlinks={count:2d} depth={depth if depth<999 else "NA"} | {u}')
+
           print('\nBROKEN_INTERNAL_LINKS')
           for src,dest,target in sorted(set(broken))[:100]:
               print(src,'->',dest,'| missing',target)
