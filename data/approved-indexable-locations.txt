@@ -266,6 +266,7 @@ los-alamitos-washer-dryer-pickup
 los-angeles-appliance-pickup
 los-angeles-county-appliance-pickup
 los-angeles-county-washer-dryer-pickup
+los-angeles-freezer-pickup
 los-angeles-refrigerator-pickup
 los-angeles-washer-dryer-pickup
 lynwood-appliance-pickup
