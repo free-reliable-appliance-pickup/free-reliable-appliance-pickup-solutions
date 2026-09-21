@@ -1,0 +1,81 @@
+name: Match new washer dryer reference
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/match-new-washer-dryer-reference.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  match:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet pillow
+      - name: Compare verified originals to new reference fingerprint
+        shell: python
+        run: |
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          import json
+
+          target=int('ac4d32379531219d',16)
+          target_size=(1152,1536)
+          roots=[
+              Path('assets/laundry/original-user-heroes'),
+              Path('assets/laundry/user-heroes'),
+          ]
+          files=[]
+          for root in roots:
+              if root.exists():
+                  files += [p for p in root.iterdir() if p.is_file() and p.suffix.lower() in {'.jpg','.jpeg','.png','.webp'}]
+
+          def dhash(im):
+              small=im.convert('L').resize((9,8),Image.Resampling.LANCZOS)
+              pix=list(small.getdata())
+              v=0
+              for y in range(8):
+                  for x in range(8):
+                      v=(v<<1) | (1 if pix[y*9+x] > pix[y*9+x+1] else 0)
+              return v
+
+          ranked=[]
+          seen=set()
+          for p in files:
+              try:
+                  raw=p.read_bytes()
+                  if raw in seen: continue
+                  seen.add(raw)
+                  im=ImageOps.exif_transpose(Image.open(p)).convert('RGB')
+                  h=dhash(im)
+                  dist=(h^target).bit_count()
+                  dim_penalty=0 if im.size==target_size else 1
+                  ranked.append({
+                    'file':p.as_posix(),'distance':dist,'width':im.width,'height':im.height,
+                    'bytes':p.stat().st_size,'dimension_match':im.size==target_size
+                  })
+              except Exception:
+                  pass
+          ranked.sort(key=lambda x:(x['distance'],0 if x['dimension_match'] else 1,abs(x['bytes']-511430)))
+          out=Path('data/new-reference-match.txt')
+          out.parent.mkdir(exist_ok=True)
+          out.write_text('\n'.join(
+              f"{i+1:02d} dist={r['distance']:02d} {r['width']}x{r['height']} {r['bytes']}B {r['file']}"
+              for i,r in enumerate(ranked[:20])
+          )+'\n',encoding='utf-8')
+          print(out.read_text())
+      - name: Commit match report
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/new-reference-match.txt
+          git commit -m "Match new washer dryer reference photo"
+          git push
