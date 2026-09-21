@@ -143,9 +143,9 @@ el-segundo-appliance-pickup
 el-segundo-washer-dryer-pickup
 encinitas-appliance-pickup
 encinitas-washer-dryer-pickup
-eugene-appliance-pickup
 escondido-appliance-pickup
 escondido-washer-dryer-pickup
+eugene-appliance-pickup
 fontana-appliance-pickup
 fontana-washer-dryer-pickup
 fountain-valley-appliance-pickup
@@ -176,9 +176,9 @@ hawthorne-appliance-pickup
 hawthorne-washer-dryer-pickup
 hayward-appliance-pickup
 hayward-washer-dryer-pickup
+hemet-appliance-pickup
 hermosa-beach-appliance-pickup
 hermosa-beach-washer-dryer-pickup
-hemet-appliance-pickup
 hesperia-appliance-pickup
 hesperia-rv-appliance-pickup
 hesperia-washer-dryer-pickup
@@ -266,6 +266,7 @@ los-alamitos-washer-dryer-pickup
 los-angeles-appliance-pickup
 los-angeles-county-appliance-pickup
 los-angeles-county-washer-dryer-pickup
+los-angeles-refrigerator-pickup
 los-angeles-washer-dryer-pickup
 lynwood-appliance-pickup
 lynwood-washer-dryer-pickup
