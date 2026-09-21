@@ -6,6 +6,7 @@ on:
     paths:
       - 'sitemap.xml'
       - 'data/california-laundry-gold-standard-pages.txt'
+      - 'data/california-gold-standard-spec.md'
       - '*-washer-dryer-pickup/index.html'
       - 'assets/site-brand.css'
       - '.github/workflows/audit-california-laundry-gold-standard.yml'
