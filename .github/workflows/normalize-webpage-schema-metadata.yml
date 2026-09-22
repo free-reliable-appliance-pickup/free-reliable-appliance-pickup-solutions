@@ -1,0 +1,149 @@
+name: Normalize WebPage Schema Metadata
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/normalize-webpage-schema-metadata.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Synchronize WebPage JSON-LD with HTML metadata
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import html
+          import json
+          import re
+          import xml.etree.ElementTree as ET
+
+          BASE = 'https://freereliableappliancepickup.com/'
+          NS = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+
+          def file_for(url):
+              if url == BASE:
+                  return Path('index.html')
+              slug = url[len(BASE):].strip('/')
+              return Path(slug) / 'index.html'
+
+          def extract_title(raw):
+              m = re.search(r'<title>(.*?)</title>', raw, re.I | re.S)
+              return html.unescape(re.sub(r'\s+', ' ', m.group(1))).strip() if m else ''
+
+          def extract_meta_description(raw):
+              tags = re.findall(r'<meta\b[^>]*>', raw, re.I | re.S)
+              for tag in tags:
+                  if not re.search(r'\bname\s*=\s*["\']description["\']', tag, re.I):
+                      continue
+                  m = re.search(r'\bcontent\s*=\s*["\']([^"\']*)["\']', tag, re.I | re.S)
+                  if m:
+                      return html.unescape(re.sub(r'\s+', ' ', m.group(1))).strip()
+              return ''
+
+          def update_webpages(node, title, desc):
+              changed = 0
+              if isinstance(node, dict):
+                  t = node.get('@type')
+                  types = t if isinstance(t, list) else [t]
+                  if any(str(x).lower() == 'webpage' for x in types if x is not None):
+                      if title and node.get('name') != title:
+                          node['name'] = title
+                          changed += 1
+                      if 'description' in node and desc and node.get('description') != desc:
+                          node['description'] = desc
+                          changed += 1
+                  for value in node.values():
+                      changed += update_webpages(value, title, desc)
+              elif isinstance(node, list):
+                  for value in node:
+                      changed += update_webpages(value, title, desc)
+              return changed
+
+          root = ET.parse('sitemap.xml').getroot()
+          urls = [x.text.strip() for x in root.findall('.//s:loc', NS) if x.text]
+
+          script_re = re.compile(
+              r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)',
+              re.I | re.S
+          )
+
+          changed_files = []
+          changed_fields = 0
+          parse_skips = []
+
+          for url in urls:
+              if not url.startswith(BASE):
+                  continue
+              path = file_for(url)
+              if not path.exists():
+                  continue
+
+              raw = path.read_text(encoding='utf-8', errors='ignore')
+              title = extract_title(raw)
+              desc = extract_meta_description(raw)
+              file_fields = 0
+
+              def replace_script(match):
+                  nonlocal_file = {'fields': 0}
+                  payload = match.group(2)
+                  try:
+                      data = json.loads(payload)
+                  except Exception:
+                      parse_skips.append(str(path))
+                      return match.group(0)
+
+                  count = update_webpages(data, title, desc)
+                  if not count:
+                      return match.group(0)
+
+                  nonlocal_file['fields'] = count
+                  # Transfer count to outer mutable holder via function attribute.
+                  replace_script.changed += count
+                  encoded = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
+                  return match.group(1) + encoded + match.group(3)
+
+              replace_script.changed = 0
+              updated = script_re.sub(replace_script, raw)
+              file_fields = replace_script.changed
+
+              if updated != raw:
+                  path.write_text(updated, encoding='utf-8')
+                  changed_files.append(str(path))
+                  changed_fields += file_fields
+
+          print('ACTIVE_URLS_SCANNED', len(urls))
+          print('FILES_CHANGED', len(changed_files))
+          print('WEBPAGE_FIELDS_UPDATED', changed_fields)
+          if changed_files:
+              print('CHANGED_FILES')
+              for p in changed_files:
+                  print('-', p)
+          if parse_skips:
+              print('JSON_LD_PARSE_SKIPS', len(set(parse_skips)))
+              for p in sorted(set(parse_skips)):
+                  print('-', p)
+          PY
+
+      - name: Commit normalized metadata
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No WebPage schema metadata changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          git commit -m "Normalize WebPage schema metadata"
+          git push
