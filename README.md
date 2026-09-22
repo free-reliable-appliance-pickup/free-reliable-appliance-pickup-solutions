@@ -6,6 +6,17 @@ Free Reliable Appliance Pickup reviews qualifying pickup requests for washers, d
 
 ## Priority local service pages
 
+## High-priority Southern California city pages
+
+- Pasadena appliance pickup: https://freereliableappliancepickup.com/pasadena-appliance-pickup/
+- Pomona appliance pickup: https://freereliableappliancepickup.com/pomona-appliance-pickup/
+- Chino appliance pickup: https://freereliableappliancepickup.com/chino-appliance-pickup/
+- Rancho Cucamonga appliance pickup: https://freereliableappliancepickup.com/rancho-cucamonga-appliance-pickup/
+- Fontana appliance pickup: https://freereliableappliancepickup.com/fontana-appliance-pickup/
+- Irvine appliance pickup: https://freereliableappliancepickup.com/irvine-appliance-pickup/
+- Huntington Beach appliance pickup: https://freereliableappliancepickup.com/huntington-beach-appliance-pickup/
+- Riverside appliance pickup: https://freereliableappliancepickup.com/riverside-appliance-pickup/
+
 - Los Angeles, California: https://freereliableappliancepickup.com/los-angeles-appliance-pickup/
 - Inland Empire, California: https://freereliableappliancepickup.com/inland-empire-appliance-pickup/
 - San Bernardino County, California: https://freereliableappliancepickup.com/san-bernardino-county-appliance-pickup/
