@@ -118,4 +118,5 @@ jobs:
             exit 0
           fi
           git commit -m "Rank washer dryer hero candidates"
-          git push
+          git pull --rebase origin main
+          git push origin HEAD:main
