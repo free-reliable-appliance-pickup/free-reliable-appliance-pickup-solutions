@@ -1,4 +1,4 @@
-# Revalidated after active-page normalization and Hemet/San Jacinto WebPage schema fix.
+# Revalidated after whole-site WebPage title and description metadata normalization.
 name: Validate Google Search Appearance
 
 on:
