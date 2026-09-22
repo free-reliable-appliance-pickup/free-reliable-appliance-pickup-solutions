@@ -54,9 +54,18 @@ jobs:
               'a refrigerator or stove or freezer',
               'a cluttered dark low quality appliance photo'
           ]
+          def feature_tensor(value):
+              if torch.is_tensor(value):
+                  return value
+              if hasattr(value,'pooler_output') and value.pooler_output is not None:
+                  return value.pooler_output
+              if hasattr(value,'last_hidden_state') and value.last_hidden_state is not None:
+                  return value.last_hidden_state[:,0,:]
+              raise TypeError(f'Unsupported CLIP feature output: {type(value)!r}')
+
           text_inputs=processor(text=prompts,return_tensors='pt',padding=True)
           with torch.no_grad():
-              text_features=model.get_text_features(**text_inputs)
+              text_features=feature_tensor(model.get_text_features(**text_inputs))
               text_features=text_features/text_features.norm(dim=-1,keepdim=True)
 
           ranked=[]
@@ -66,7 +75,7 @@ jobs:
                       im=ImageOps.exif_transpose(im).convert('RGB')
                       inputs=processor(images=im,return_tensors='pt')
                       with torch.no_grad():
-                          feat=model.get_image_features(**inputs)
+                          feat=feature_tensor(model.get_image_features(**inputs))
                           feat=feat/feat.norm(dim=-1,keepdim=True)
                           sims=(feat @ text_features.T)[0].tolist()
                       w,h=im.size
@@ -104,5 +113,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/washer-dryer-hero-ranking.json data/washer-dryer-hero-ranking.txt
+          if git diff --cached --quiet; then
+            echo "No ranking changes"
+            exit 0
+          fi
           git commit -m "Rank washer dryer hero candidates"
           git push
