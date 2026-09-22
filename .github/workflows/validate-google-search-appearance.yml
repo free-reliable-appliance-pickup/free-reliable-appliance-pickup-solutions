@@ -24,7 +24,7 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re, sys, xml.etree.ElementTree as ET
+          import re, sys, json, html, xml.etree.ElementTree as ET
 
           BASE='https://freereliableappliancepickup.com/'
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
@@ -43,6 +43,30 @@ jobs:
 
           def has(raw, pattern):
               return bool(re.search(pattern, raw, re.I|re.S))
+
+          def norm(value):
+              return re.sub(r'\s+', ' ', html.unescape(value or '')).strip()
+
+          def webpage_objects(raw):
+              found=[]
+              for match in re.finditer(r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', raw, re.I|re.S):
+                  try:
+                      data=json.loads(match.group(1))
+                  except Exception:
+                      continue
+                  def walk(node):
+                      if isinstance(node, dict):
+                          t=node.get('@type')
+                          types=t if isinstance(t, list) else [t]
+                          if any(str(x).lower()=='webpage' for x in types if x is not None):
+                              found.append(node)
+                          for value in node.values():
+                              walk(value)
+                      elif isinstance(node, list):
+                          for value in node:
+                              walk(value)
+                  walk(data)
+              return found
 
           for url in urls:
               if not url.startswith(BASE):
@@ -74,6 +98,24 @@ jobs:
               for label,ok in checks.items():
                   if not ok:
                       failures.append(f'{p}: missing {label}')
+
+              # Keep visible search metadata synchronized with WebPage structured data.
+              # A stale schema name/description can survive page-title edits and send mixed signals.
+              title_match=re.search(r'<title>(.*?)</title>', raw, re.I|re.S)
+              desc_match=re.search(r'<meta\b[^>]*name=["\']description["\'][^>]*content=["\']([^"\']+)["\']', raw, re.I|re.S)
+              html_title=norm(title_match.group(1)) if title_match else ''
+              meta_desc=norm(desc_match.group(1)) if desc_match else ''
+              webpages=webpage_objects(raw)
+              for wp in webpages:
+                  schema_name=norm(wp.get('name',''))
+                  if not schema_name:
+                      failures.append(f'{p}: WebPage structured data missing name')
+                  elif html_title and schema_name != html_title:
+                      failures.append(f'{p}: WebPage name does not match HTML title: {schema_name!r} != {html_title!r}')
+                  if 'description' in wp:
+                      schema_desc=norm(wp.get('description',''))
+                      if meta_desc and schema_desc != meta_desc:
+                          failures.append(f'{p}: WebPage description does not match meta description')
 
               # All active appliance-pickup market pages should also carry the shared brand,
               # a page image, and breadcrumb/service context so Google can understand both
