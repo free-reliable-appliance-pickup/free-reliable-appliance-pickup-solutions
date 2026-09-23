@@ -10,11 +10,16 @@ Do not mass-copy a thin city template. New state rollouts must inherit the stron
 
 - Indexable pages use `index, follow, max-image-preview:large`.
 - Exactly one self-referencing canonical URL.
+- Exactly one H1 on priority gold-standard city pages.
 - Page must be present in `sitemap.xml` with a current `lastmod` after meaningful edits.
 - Unique title, meta description, H1, and useful H2 structure.
+- Keep priority-city meta descriptions concise enough to avoid unnecessary truncation; the audit warns above 165 characters.
 - No repeated exact H2 headings on the same page.
-- WebPage, Service, and BreadcrumbList structured data where appropriate.
+- WebPage, Service, FAQPage, and BreadcrumbList structured data on priority gold-standard city pages.
 - Internal links connect city -> regional/county -> state and appliance-specific guides.
+- Every priority gold-standard city page links to the refrigerator, washer/dryer, freezer, and stove/oven authority guides.
+- Priority gold-standard city pages maintain at least 20 useful internal links so they are integrated into the site rather than isolated doorway pages.
+- Priority gold-standard city pages include at least one legitimate external local/official reference.
 - The request form and customer routing must remain functional.
 - Do not create separate indexable pages that only swap a city name while leaving the useful body substantially the same.
 
@@ -47,6 +52,10 @@ Washer/dryer benchmark pages use the original full-resolution real photo library
 
 Hero URLs should keep the `original-fullres=` cache marker and the current sharp shared CSS. Do not substitute tiny compressed hero files or sprite crops for these benchmark pages.
 
+Priority city heroes use a real local appliance photo, `fetchpriority="high"`, meaningful alt text, and the real intrinsic `width` and `height` of the source image to protect layout stability. Preserve the original full-resolution file rather than creating a blurry replacement.
+
+Use the best-looking image that matches the page intent: nicest stove/range for stove pages, nicest refrigerator for refrigerator pages, nicest matching washer/dryer set for laundry pages, and strongest mixed-appliance group photos for general appliance-pickup pages. Avoid repeatedly using the same weak photo across priority pages when better approved originals are available.
+
 Use real appliance photos where appropriate and keep the previously approved city/region photo assignment unless there is a documented reason to change it.
 
 ## Conversion standard
@@ -58,6 +67,7 @@ Use real appliance photos where appropriate and keep the previously approved cit
 - Request asks for condition, exact address/ZIP, floor/stairs/access, and appliance details.
 - Photos/testing guidance is visible before submission.
 - Do not promise service outside actual qualification and route rules.
+- Do not copy competitor claims such as "same day," "any condition," "all appliances," or "100% free" unless they are actually true under the site's published qualification and route rules.
 
 ## Quality gate before copying to another state
 
@@ -65,6 +75,11 @@ A California page can be used as a rollout model only after it passes the reposi
 
 General appliance benchmark:
 `data/california-seo-model-pages.txt`
+
+Priority California city model:
+`data/california-priority-gold-city-pages.txt`
+
+The priority list is the stricter source model for future nationwide city rollouts. These pages must pass the extra category-authority, official-reference, internal-link-depth, schema, H1, and hero-image checks in the California audit.
 
 Laundry benchmark:
 `data/california-laundry-gold-standard-pages.txt`
