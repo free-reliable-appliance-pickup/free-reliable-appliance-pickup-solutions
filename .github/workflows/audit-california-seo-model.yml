@@ -128,7 +128,7 @@ jobs:
 
               title = first_tag_text(t, 'title')
               h1 = first_tag_text(t, 'h1')
-              h1_count = len(re.findall(r'<h1\\b[^>]*>', t, re.I))
+              h1_count = len(re.findall(r'<h1\b[^>]*>', t, re.I))
 
               meta_tags = [attrs(tag) for tag in re.findall(r'<meta\b[^>]*>', t, re.I | re.S)]
               descriptions = [
@@ -186,14 +186,84 @@ jobs:
               if internal < 3:
                   failures.append(f'{slug}: fewer than 3 useful internal links')
 
+              # Priority California city pages are the nationwide gold-standard model.
+              # These checks are intentionally stricter than the broad benchmark set.
+              if slug in priority_slugs:
+                  if h1_count != 1:
+                      failures.append(
+                          f'{slug}: priority page must have exactly one H1 (found {h1_count})'
+                      )
+
+                  priority_needles = {
+                      'refrigerator authority link': 'refrigerator-pickup/',
+                      'washer/dryer authority link': 'washer-dryer-pickup/',
+                      'freezer authority link': 'freezer-pickup/',
+                      'stove/oven authority link': 'stove-oven-pickup/',
+                  }
+                  for label, needle in priority_needles.items():
+                      if needle not in low:
+                          failures.append(f'{slug}: missing priority {label}')
+
+                  if internal < 20:
+                      failures.append(
+                          f'{slug}: priority page has fewer than 20 useful internal links'
+                      )
+
+                  anchor_tags = [
+                      attrs(tag)
+                      for tag in re.findall(r'<a\b[^>]*>', t, re.I | re.S)
+                  ]
+                  external_links = [
+                      a.get('href', '').strip()
+                      for a in anchor_tags
+                      if a.get('href', '').lower().startswith(('http://', 'https://'))
+                      and 'freereliableappliancepickup.com' not in a.get('href', '').lower()
+                  ]
+                  if not external_links:
+                      failures.append(
+                          f'{slug}: priority page needs at least one external local/official reference'
+                      )
+
+                  if not (
+                      '"@type":"service"' in low
+                      or '"@type": "service"' in low
+                  ):
+                      failures.append(f'{slug}: priority page missing Service structured data')
+
+                  if not (
+                      '"@type":"faqpage"' in low
+                      or '"@type": "faqpage"' in low
+                  ):
+                      failures.append(f'{slug}: priority page missing FAQPage structured data')
+
+                  hero_tags = []
+                  for tag in re.findall(r'<img\b[^>]*>', t, re.I | re.S):
+                      parsed = attrs(tag)
+                      if parsed.get('fetchpriority', '').lower() == 'high':
+                          hero_tags.append(parsed)
+
+                  if not hero_tags:
+                      failures.append(f'{slug}: priority page missing high-priority hero image')
+                  else:
+                      hero = hero_tags[0]
+                      if not hero.get('alt', '').strip():
+                          failures.append(f'{slug}: priority hero image missing alt text')
+                      if not hero.get('width', '').strip() or not hero.get('height', '').strip():
+                          failures.append(f'{slug}: priority hero image missing width/height')
+
+                  if len(description) > 165:
+                      warnings.append(
+                          f'{slug}: meta description is long ({len(description)} chars)'
+                      )
+
               # Prevent exact metadata/H1 clones from becoming the template for new states.
               if title:
                   seen_titles[title.casefold()].append(slug)
               if description:
                   seen_descriptions[description.casefold()].append(slug)
               h2s = [
-                  html.unescape(re.sub(r'\\s+', ' ', re.sub(r'<[^>]+>', ' ', m)).strip())
-                  for m in re.findall(r'<h2\\b[^>]*>([\\s\\S]*?)</h2>', t, re.I)
+                  html.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', m)).strip())
+                  for m in re.findall(r'<h2\b[^>]*>([\s\S]*?)</h2>', t, re.I)
               ]
               normalized_h2s = [h.casefold() for h in h2s if h]
               repeated_h2s = sorted({h for h in normalized_h2s if normalized_h2s.count(h) > 1})
