@@ -2,8 +2,18 @@ name: Audit Internal Link Graph
 
 on:
   push:
+    branches: [main]
     paths:
       - 'sitemap.xml'
+      - 'index.html'
+      - 'service-areas/index.html'
+      - 'california-appliance-pickup/index.html'
+      - '*-appliance-pickup/index.html'
+      - 'refrigerator-pickup/index.html'
+      - 'freezer-pickup/index.html'
+      - 'stove-oven-pickup/index.html'
+      - 'washer-dryer-pickup/index.html'
+      - 'data/california-priority-gold-city-pages.txt'
       - '.github/workflows/audit-internal-link-graph.yml'
   workflow_dispatch:
 
@@ -107,19 +117,11 @@ jobs:
           for count,depth,u in sorted(rows)[:30]:
               print(f'inlinks={count:2d} depth={depth if depth<999 else "NA"} | {u}')
 
-          print('\nPRIORITY_CORRIDOR_INLINKS')
+          print('\nPRIORITY_CALIFORNIA_INLINKS')
           priority_slugs=[
-              'covina-appliance-pickup',
-              'west-covina-appliance-pickup',
-              'whittier-appliance-pickup',
-              'la-puente-appliance-pickup',
-              'san-dimas-appliance-pickup',
-              'la-verne-appliance-pickup',
-              'pomona-appliance-pickup',
-              'rancho-cucamonga-appliance-pickup',
-              'glendora-appliance-pickup',
-              'upland-appliance-pickup',
-              'ontario-appliance-pickup',
+              x.strip()
+              for x in Path('data/california-priority-gold-city-pages.txt').read_text(encoding='utf-8').splitlines()
+              if x.strip()
           ]
           for slug in priority_slugs:
               u=BASE+slug+'/'
