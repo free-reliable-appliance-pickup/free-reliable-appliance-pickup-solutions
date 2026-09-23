@@ -6,6 +6,7 @@ on:
     paths:
       - 'sitemap.xml'
       - 'data/california-seo-model-pages.txt'
+      - 'data/california-priority-gold-city-pages.txt'
       - 'data/california-gold-standard-spec.md'
       - '*-appliance-pickup/index.html'
       - '*-washer-dryer-pickup/index.html'
@@ -36,6 +37,11 @@ jobs:
               for x in Path('data/california-seo-model-pages.txt').read_text(encoding='utf-8').splitlines()
               if x.strip()
           ]
+          priority_slugs = {
+              x.strip()
+              for x in Path('data/california-priority-gold-city-pages.txt').read_text(encoding='utf-8').splitlines()
+              if x.strip()
+          }
 
           failures = []
           warnings = []
@@ -122,6 +128,7 @@ jobs:
 
               title = first_tag_text(t, 'title')
               h1 = first_tag_text(t, 'h1')
+              h1_count = len(re.findall(r'<h1\\b[^>]*>', t, re.I))
 
               meta_tags = [attrs(tag) for tag in re.findall(r'<meta\b[^>]*>', t, re.I | re.S)]
               descriptions = [
@@ -206,6 +213,7 @@ jobs:
                       failures.append(f"{label}: {', '.join(owners)}")
 
           print(f'CALIFORNIA_BENCHMARK_PAGES {len(slugs)}')
+          print(f'CALIFORNIA_PRIORITY_GOLD_CITY_PAGES {len(priority_slugs)}')
           if warnings:
               print('WARNINGS')
               for warning in warnings:
