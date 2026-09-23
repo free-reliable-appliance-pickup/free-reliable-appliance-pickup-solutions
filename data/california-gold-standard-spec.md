@@ -23,6 +23,16 @@ Do not mass-copy a thin city template. New state rollouts must inherit the stron
 - The request form and customer routing must remain functional.
 - Do not create separate indexable pages that only swap a city name while leaving the useful body substantially the same.
 
+## Full major-appliance breadth
+
+General appliance-pickup pages in the California gold-standard model must visibly support the five core appliance groups: **washers, dryers, refrigerators, freezers, and stoves/ranges/ovens**. Do not let a general city or regional page drift into washer/dryer-only content.
+
+- Keep the full appliance breadth visible near the top of priority general pickup pages.
+- Link general pages to the washer/dryer, refrigerator, freezer, and stove/range authority guides.
+- Link those appliance authority guides back to the strongest regional California hubs so authority flows both directions.
+- Use appliance-specific city pages only when they add genuinely distinct testing, access, routing, or demand information; do not mass-create thin city × appliance doorway pages.
+- Protect a general city page as the primary destination for broad appliance-pickup/removal intent while specialized laundry pages serve washer/dryer-specific intent.
+
 ## Local usefulness requirements
 
 Each primary location page should explain real differences that can change a pickup decision, such as:
