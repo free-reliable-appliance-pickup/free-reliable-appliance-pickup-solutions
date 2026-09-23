@@ -1,0 +1,51 @@
+name: Optimize Site Logo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/optimize-site-logo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preserve master and optimize public logo
+        run: |
+          python -m pip install --quiet Pillow
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+
+          src = Path('file_00000000b7c082308dccc73e5bd3acd2.png')
+          master = Path('assets/brand/free-reliable-appliance-pickup-logo-master.png')
+          master.parent.mkdir(parents=True, exist_ok=True)
+
+          if not master.exists():
+              master.write_bytes(src.read_bytes())
+
+          with Image.open(master) as im:
+              im = ImageOps.exif_transpose(im)
+              mode = 'RGBA' if 'A' in im.getbands() else 'RGB'
+              im = im.convert(mode)
+              im.thumbnail((512, 512), Image.Resampling.LANCZOS)
+              im.save(src, 'PNG', optimize=True, compress_level=9)
+              print('Optimized public logo:', src.stat().st_size, 'bytes', im.size)
+              print('Master preserved:', master.stat().st_size, 'bytes')
+          PY
+      - name: Commit optimized logo and master backup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add file_00000000b7c082308dccc73e5bd3acd2.png assets/brand/free-reliable-appliance-pickup-logo-master.png
+          if git diff --cached --quiet; then
+            echo "No logo changes to commit."
+            exit 0
+          fi
+          git commit -m "Optimize site-wide logo payload"
+          git push
