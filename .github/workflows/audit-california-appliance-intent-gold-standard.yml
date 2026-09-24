@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'data/california-appliance-intent-gold-standard-pages.txt'
+      - 'data/california-appliance-intent-priority-city-pages.txt'
       - 'southern-california-washer-dryer-pickup/**'
       - 'southern-california-refrigerator-pickup/**'
       - 'southern-california-freezer-pickup/**'
@@ -14,6 +15,18 @@ on:
       - 'freezer-pickup/**'
       - 'stove-oven-pickup/**'
       - 'california-appliance-pickup/**'
+      - 'pomona-appliance-pickup/**'
+      - 'huntington-beach-appliance-pickup/**'
+      - 'irvine-appliance-pickup/**'
+      - 'pasadena-appliance-pickup/**'
+      - 'rancho-cucamonga-appliance-pickup/**'
+      - 'chino-appliance-pickup/**'
+      - 'riverside-appliance-pickup/**'
+      - 'ontario-appliance-pickup/**'
+      - 'west-covina-appliance-pickup/**'
+      - 'mission-viejo-appliance-pickup/**'
+      - 'costa-mesa-appliance-pickup/**'
+      - 'rowland-heights-appliance-pickup/**'
       - 'sitemap.xml'
       - '.github/workflows/audit-california-appliance-intent-gold-standard.yml'
   pull_request:
@@ -36,6 +49,8 @@ jobs:
           BASE='https://freereliableappliancepickup.com/'
           list_file=Path('data/california-appliance-intent-gold-standard-pages.txt')
           slugs=[x.strip() for x in list_file.read_text(encoding='utf-8').splitlines() if x.strip()]
+          priority_city_file=Path('data/california-appliance-intent-priority-city-pages.txt')
+          priority_city_slugs=[x.strip() for x in priority_city_file.read_text(encoding='utf-8').splitlines() if x.strip()]
           failures=[]
           seen_titles={}
           seen_desc={}
@@ -90,6 +105,13 @@ jobs:
                   failures.append(f'{slug}: missing customer request form endpoint')
               if 'free-pickup-qualification/' not in low:
                   failures.append(f'{slug}: missing qualification link')
+              if 'socal-trust-strip-20260923' not in low:
+                  failures.append(f'{slug}: missing trust strip')
+              for trust_phrase in ['free to submit','no account required','photo-first review','local route review']:
+                  if trust_phrase not in low:
+                      failures.append(f'{slug}: missing trust signal {trust_phrase}')
+              if 'how fast can' not in low:
+                  failures.append(f'{slug}: missing pickup-timing FAQ')
 
               imgs=re.findall(r'<img\b[^>]*>',s,re.I)
               if not imgs:
@@ -126,6 +148,19 @@ jobs:
               if child+'/' not in s:
                   failures.append(f'{parent}: missing link to {child}')
 
+          for city_slug in priority_city_slugs:
+              p=Path(city_slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{city_slug}: missing priority city page')
+                  continue
+              low=p.read_text(encoding='utf-8',errors='replace').lower()
+              if 'socal-appliance-intent-20260923' not in low:
+                  failures.append(f'{city_slug}: missing Southern California appliance-intent block')
+              for hub_slug in slugs:
+                  if hub_slug+'/' not in low:
+                      failures.append(f'{city_slug}: missing backlink to {hub_slug}')
+
+          print('PRIORITY_CITY_CLUSTER_PAGES',len(priority_city_slugs))
           print('CALIFORNIA_APPLIANCE_INTENT_GOLD_STANDARD_PAGES',len(slugs))
           if failures:
               print('FAILURES')
