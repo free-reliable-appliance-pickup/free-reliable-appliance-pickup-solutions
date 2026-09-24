@@ -102,6 +102,9 @@ jobs:
               for required in ['"@type":"Service"','"@type":"FAQPage"','"@type":"BreadcrumbList"','"@type":"WebPage"']:
                   if required.lower() not in low.replace(' ',''):
                       failures.append(f'{slug}: missing schema {required}')
+              for breadcrumb_parent in ['https://freereliableappliancepickup.com/california-appliance-pickup/','https://freereliableappliancepickup.com/southern-california-appliance-pickup/']:
+                  if breadcrumb_parent not in s:
+                      failures.append(f'{slug}: missing California breadcrumb parent {breadcrumb_parent}')
 
               if 'https://formspree.io/f/mvzeapzd' not in s:
                   failures.append(f'{slug}: missing customer request form endpoint')
