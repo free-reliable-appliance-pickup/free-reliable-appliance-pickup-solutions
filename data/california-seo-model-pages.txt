@@ -181,3 +181,5 @@ santa-barbara-appliance-pickup
 san-luis-obispo-appliance-pickup
 santa-maria-appliance-pickup
 central-coast-appliance-pickup
+san-gabriel-appliance-pickup
+city-of-industry-appliance-pickup
