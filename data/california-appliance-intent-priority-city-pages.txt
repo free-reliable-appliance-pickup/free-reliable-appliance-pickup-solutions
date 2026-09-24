@@ -1,0 +1,12 @@
+pomona-appliance-pickup
+huntington-beach-appliance-pickup
+irvine-appliance-pickup
+pasadena-appliance-pickup
+rancho-cucamonga-appliance-pickup
+chino-appliance-pickup
+riverside-appliance-pickup
+ontario-appliance-pickup
+west-covina-appliance-pickup
+mission-viejo-appliance-pickup
+costa-mesa-appliance-pickup
+rowland-heights-appliance-pickup
