@@ -39,8 +39,11 @@
     <div class="site-hero-copy">
       <h1>Commercial Appliance <span>Pickup &amp; Removal</span> Review</h1>
       <p>For landlords, property managers, multifamily properties, businesses, installers and recurring appliance replacement projects. Send the site, appliance count, condition and access details for review before service is confirmed.</p>
-      <a class="btn" href="/#request">Submit a Pickup Request</a>
+      <a class="btn" href="#request">Start Commercial Review</a>
+      <a class="btn" href="tel:+19093756685">Call 909-375-6685</a>
+      <a class="btn" href="sms:+19093756685">Text Appliance Photos</a>
       <a class="btn" href="/landlord-property-manager-appliance-pickup/">Landlord &amp; Property Manager Guide</a>
+      <p class="commercial-trust-20260923"><strong>Free to submit · No account required.</strong> Commercial pickup is confirmed only after appliance condition, site access and local provider availability are reviewed.</p>
     </div>
     <div class="site-hero-art"><img src="/IMG-20240912-WA0033.jpg" alt="Real appliance from our Commercial pickup work" fetchpriority="high"></div>
   </div>
@@ -56,6 +59,12 @@
 <div class="card"><h3>Businesses &amp; Installers</h3><p>Retailers, installers, offices, hospitality sites, warehouses and service businesses can submit one-time or recurring appliance-removal requests. Include site contacts, loading constraints and expected volume.</p></div>
 </div>
 </section>
+
+<section class="commercial-network-model-20260923"><h2>Independent Local Pickup Network</h2><p>Commercial requests are routed through independent local pickup professionals where coverage is available. This page does not represent a company-owned local branch in every market. Each site, appliance load, access plan and current provider availability are reviewed before service is confirmed.</p></section>
+
+<section class="commercial-multisite-workflow-20260923"><h2>One Site, Multiple Sites &amp; Recurring Projects</h2><div class="grid"><div class="card"><h3>One Site</h3><p>List every appliance, condition, floor or unit, loading access and onsite contact for the single address.</p></div><div class="card"><h3>Multiple Sites</h3><p>Use a separate request for each physical address. This keeps appliance counts, access rules and route review accurate for every property.</p></div><div class="card"><h3>Recurring Work</h3><p>For ongoing turnovers or replacement programs, include expected frequency, markets, appliance categories and approximate monthly volume. Each actual pickup still requires current load and access details.</p></div></div></section>
+
+<section class="commercial-photo-first-20260923"><h2>Photos That Speed Up Commercial Review</h2><p>Send clear photos of each appliance or staged group, plus loading areas, stairs, elevators, docks, gates or narrow pathways when they affect removal. For refrigerators and freezers include cooling status; for laundry equipment include basic test results; for ranges identify gas or electric service.</p><p><a href="sms:+19093756685"><strong>Text California commercial appliance photos to 909-375-6685</strong></a>.</p></section>
 
 <section>
 <h2>Equipment We Review</h2>
@@ -110,10 +119,27 @@
 <p>Submit the details if the appliance may have repair or reuse value. If it does not qualify, a municipal, recycler or paid removal provider may be a better fit.</p>
 </section>
 
-<section class="note">
+<section id="request" class="site-request-panel">
 <h2>Start a Commercial Appliance Pickup Review</h2>
-<p>Use the main request form and include the property/business name, appliance count, condition, access details and whether this is a one-time or recurring project.</p>
-<p><a href="/#request">Submit Appliance Pickup Request</a> · <a href="/contact/">Regional Contact Numbers</a></p>
+<p>Submit one physical pickup address per request. For multiple sites, send a separate request for each address so the route, appliance count and access can be reviewed accurately.</p>
+<form action="https://formspree.io/f/mvzeapzd" method="POST">
+<input type="hidden" name="_subject" value="Commercial Appliance Pickup Request">
+<input type="hidden" name="source_page" value="commercial-appliance-pickup">
+<div class="site-request-grid">
+<div class="site-request-field"><label>Name<input type="text" name="name" required autocomplete="name"></label></div>
+<div class="site-request-field"><label>Business / Property<input type="text" name="company" required></label></div>
+<div class="site-request-field"><label>Phone<input type="tel" name="phone" required autocomplete="tel"></label></div>
+<div class="site-request-field"><label>Email<input type="email" name="email" autocomplete="email"></label></div>
+<div class="site-request-field full"><label>Pickup Address<input type="text" name="address" required autocomplete="street-address"></label></div>
+<div class="site-request-field"><label>City<input type="text" name="city" required autocomplete="address-level2"></label></div>
+<div class="site-request-field"><label>State<input type="text" name="state" required autocomplete="address-level1"></label></div>
+<div class="site-request-field"><label>ZIP<input type="text" name="zip" required autocomplete="postal-code"></label></div>
+<div class="site-request-field"><label>Project Type<select name="project_type" required><option value="">Select</option><option>One-time pickup</option><option>Recurring property turnover</option><option>Business replacement project</option><option>Installer / retailer removal</option><option>Other</option></select></label></div>
+<div class="site-request-field full"><label>Appliances / Count / Condition / Access<textarea name="message" rows="7" required placeholder="Example: 4 working refrigerators, 2 washers needing repair; loading dock behind Building B; all units staged on first floor."></textarea></label></div>
+<div class="site-request-field full"><button class="site-request-submit" type="submit">Submit Commercial Pickup Review</button></div>
+</div></form>
+<p>Submitting a request does not guarantee free pickup. Condition, load mix, exact location, access, local demand and independent-provider availability are reviewed before service is confirmed.</p>
+<p><a href="/contact/">Regional Contact Numbers</a> · <a href="/free-pickup-qualification/">Free Pickup Qualification</a></p>
 </section>
 </main>
 <footer><a href="/">Home</a> · <a href="/service-areas/">Service Areas</a> · <a href="/landlord-property-manager-appliance-pickup/">Property Manager Pickup</a> · <a href="/contact/">Contact</a></footer>
