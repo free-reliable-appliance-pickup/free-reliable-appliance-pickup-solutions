@@ -204,6 +204,11 @@ jobs:
                   failures.append(f'{city_slug}: missing Southern California appliance-intent block')
               if 'city-network-model-20260923' not in low:
                   failures.append(f'{city_slug}: missing city network-model note')
+              if 'how soon can appliance pickup be arranged in' not in low:
+                  failures.append(f'{city_slug}: missing city timing FAQ')
+              for audience_phrase in ['landlord','property manager']:
+                  if audience_phrase not in low:
+                      failures.append(f'{city_slug}: missing city audience coverage {audience_phrase}')
               if 'how soon can appliance pickup be arranged' not in low:
                   failures.append(f'{city_slug}: missing city pickup-timing FAQ')
               for audience_phrase in ['landlord','property manager']:
