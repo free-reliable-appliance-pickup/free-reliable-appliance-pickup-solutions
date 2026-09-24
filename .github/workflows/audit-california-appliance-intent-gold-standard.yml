@@ -15,6 +15,12 @@ on:
       - 'freezer-pickup/**'
       - 'stove-oven-pickup/**'
       - 'california-appliance-pickup/**'
+      - 'san-gabriel-valley-appliance-pickup/**'
+      - 'inland-empire-appliance-pickup/**'
+      - 'orange-county-appliance-pickup/**'
+      - 'riverside-county-appliance-pickup/**'
+      - 'san-bernardino-county-appliance-pickup/**'
+      - 'los-angeles-county-appliance-pickup/**'
       - 'southern-california-appliance-pickup/**'
       - 'pomona-appliance-pickup/**'
       - 'huntington-beach-appliance-pickup/**'
@@ -62,6 +68,14 @@ jobs:
           sitemap_urls={x.text.strip() for x in root.findall('.//sm:loc',ns) if x.text}
 
           all_socal=set(slugs)
+          regional_hubs=[
+            'san-gabriel-valley-appliance-pickup',
+            'inland-empire-appliance-pickup',
+            'orange-county-appliance-pickup',
+            'riverside-county-appliance-pickup',
+            'san-bernardino-county-appliance-pickup',
+            'los-angeles-county-appliance-pickup',
+          ]
           socal_parent_slug='southern-california-appliance-pickup'
 
           def text_value(pattern, s):
@@ -202,6 +216,21 @@ jobs:
               if child+'/' not in s:
                   failures.append(f'{parent}: missing link to {child}')
 
+          for regional_slug in regional_hubs:
+              p=Path(regional_slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{regional_slug}: missing regional hub')
+                  continue
+              low=p.read_text(encoding='utf-8',errors='replace').lower()
+              if 'regional-appliance-intent-links-20260923' not in low:
+                  failures.append(f'{regional_slug}: missing appliance-intent navigation block')
+              if socal_parent_slug+'/' not in low:
+                  failures.append(f'{regional_slug}: missing Southern California parent link')
+              for hub_slug in slugs:
+                  if hub_slug+'/' not in low:
+                      failures.append(f'{regional_slug}: missing appliance hub link {hub_slug}')
+
+          print('REGIONAL_APPLIANCE_INTENT_HUBS',len(regional_hubs))
           for city_slug in priority_city_slugs:
               p=Path(city_slug)/'index.html'
               if not p.exists():
