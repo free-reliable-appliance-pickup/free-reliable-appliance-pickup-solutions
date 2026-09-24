@@ -182,6 +182,11 @@ jobs:
               low=p.read_text(encoding='utf-8',errors='replace').lower()
               if 'socal-appliance-intent-20260923' not in low:
                   failures.append(f'{city_slug}: missing Southern California appliance-intent block')
+              if 'city-network-model-20260923' not in low:
+                  failures.append(f'{city_slug}: missing city network-model note')
+              for network_phrase in ['independent local pickup professionals','company-owned storefront or local branch']:
+                  if network_phrase not in low:
+                      failures.append(f'{city_slug}: missing city network transparency {network_phrase}')
               for hub_slug in slugs:
                   if hub_slug+'/' not in low:
                       failures.append(f'{city_slug}: missing backlink to {hub_slug}')
