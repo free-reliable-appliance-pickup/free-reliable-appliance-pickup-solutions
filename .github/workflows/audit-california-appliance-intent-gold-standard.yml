@@ -62,6 +62,7 @@ jobs:
           sitemap_urls={x.text.strip() for x in root.findall('.//sm:loc',ns) if x.text}
 
           all_socal=set(slugs)
+          socal_parent_slug='southern-california-appliance-pickup'
 
           def text_value(pattern, s):
               m=re.search(pattern,s,re.I|re.S)
@@ -135,7 +136,6 @@ jobs:
               if expected not in sitemap_urls:
                   failures.append(f'{slug}: missing from sitemap')
 
-          socal_parent_slug='southern-california-appliance-pickup'
           ca=Path('california-appliance-pickup/index.html').read_text(encoding='utf-8',errors='replace').lower()
           if socal_parent_slug+'/' not in ca:
               failures.append('california-appliance-pickup: missing link to Southern California parent')
