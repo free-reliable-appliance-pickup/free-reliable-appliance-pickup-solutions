@@ -225,6 +225,11 @@ jobs:
               for network_phrase in ['independent local pickup professionals','company-owned storefront or local branch']:
                   if network_phrase not in low:
                       failures.append(f'{city_slug}: missing city network transparency {network_phrase}')
+              if 'city-audience-guides-20260923' not in low:
+                  failures.append(f'{city_slug}: missing city audience-guide links')
+              for audience_link in ['landlord-property-manager-appliance-pickup/','commercial-appliance-pickup/']:
+                  if audience_link not in low:
+                      failures.append(f'{city_slug}: missing audience guide {audience_link}')
               for hub_slug in slugs:
                   if hub_slug+'/' not in low:
                       failures.append(f'{city_slug}: missing backlink to {hub_slug}')
