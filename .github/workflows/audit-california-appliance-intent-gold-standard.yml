@@ -121,6 +121,11 @@ jobs:
                   failures.append(f'{slug}: missing network-model section')
               if 'socal-pickup-prep-20260923' not in low:
                   failures.append(f'{slug}: missing appliance-specific pickup preparation')
+              if 'socal-request-flow-20260923' not in low:
+                  failures.append(f'{slug}: missing request flow')
+              for field_name in ['name="brand_model"','name="preferred_window"']:
+                  if field_name not in low:
+                      failures.append(f'{slug}: missing intake field {field_name}')
               for network_phrase in ['independent local pickup professionals','company-owned storefront or local branch']:
                   if network_phrase not in low:
                       failures.append(f'{slug}: missing network transparency {network_phrase}')
@@ -166,6 +171,11 @@ jobs:
               failures.append(f'{socal_parent_slug}: missing network-model section')
           if 'socal-commercial-property-20260923' not in socal_parent:
               failures.append(f'{socal_parent_slug}: missing landlord/commercial layer')
+          if 'socal-parent-request-flow-20260923' not in socal_parent:
+              failures.append(f'{socal_parent_slug}: missing parent request flow')
+          for field_name in ['name="brand_model"','name="preferred_window"']:
+              if field_name not in socal_parent:
+                  failures.append(f'{socal_parent_slug}: missing intake field {field_name}')
           for commercial_link in ['landlord-property-manager-appliance-pickup/','commercial-appliance-pickup/']:
               if commercial_link not in socal_parent:
                   failures.append(f'{socal_parent_slug}: missing commercial link {commercial_link}')
