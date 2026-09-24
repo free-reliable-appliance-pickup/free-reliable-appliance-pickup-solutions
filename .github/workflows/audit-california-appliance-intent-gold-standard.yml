@@ -161,6 +161,11 @@ jobs:
               failures.append(f'{socal_parent_slug}: missing pickup-timing FAQ')
           if 'socal-network-model-20260923' not in socal_parent:
               failures.append(f'{socal_parent_slug}: missing network-model section')
+          if 'socal-commercial-property-20260923' not in socal_parent:
+              failures.append(f'{socal_parent_slug}: missing landlord/commercial layer')
+          for commercial_link in ['landlord-property-manager-appliance-pickup/','commercial-appliance-pickup/']:
+              if commercial_link not in socal_parent:
+                  failures.append(f'{socal_parent_slug}: missing commercial link {commercial_link}')
           for network_phrase in ['independent local pickup professionals','company-owned storefront or local branch']:
               if network_phrase not in socal_parent:
                   failures.append(f'{socal_parent_slug}: missing network transparency {network_phrase}')
