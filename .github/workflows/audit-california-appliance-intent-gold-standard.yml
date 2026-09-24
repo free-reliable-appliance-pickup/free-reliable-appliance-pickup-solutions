@@ -116,6 +116,8 @@ jobs:
                   failures.append(f'{slug}: missing pickup-timing FAQ')
               if 'socal-network-model-20260923' not in low:
                   failures.append(f'{slug}: missing network-model section')
+              if 'socal-pickup-prep-20260923' not in low:
+                  failures.append(f'{slug}: missing appliance-specific pickup preparation')
               for network_phrase in ['independent local pickup professionals','company-owned storefront or local branch']:
                   if network_phrase not in low:
                       failures.append(f'{slug}: missing network transparency {network_phrase}')
