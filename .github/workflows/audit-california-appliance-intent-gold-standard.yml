@@ -1,0 +1,135 @@
+name: Audit California Appliance Intent Gold Standard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/california-appliance-intent-gold-standard-pages.txt'
+      - 'southern-california-washer-dryer-pickup/**'
+      - 'southern-california-refrigerator-pickup/**'
+      - 'southern-california-freezer-pickup/**'
+      - 'southern-california-stove-oven-pickup/**'
+      - 'washer-dryer-pickup/**'
+      - 'refrigerator-pickup/**'
+      - 'freezer-pickup/**'
+      - 'stove-oven-pickup/**'
+      - 'california-appliance-pickup/**'
+      - 'sitemap.xml'
+      - '.github/workflows/audit-california-appliance-intent-gold-standard.yml'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit California appliance-intent layer
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, sys, xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          list_file=Path('data/california-appliance-intent-gold-standard-pages.txt')
+          slugs=[x.strip() for x in list_file.read_text(encoding='utf-8').splitlines() if x.strip()]
+          failures=[]
+          seen_titles={}
+          seen_desc={}
+          seen_h1={}
+
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'sm':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          sitemap_urls={x.text.strip() for x in root.findall('.//sm:loc',ns) if x.text}
+
+          all_socal=set(slugs)
+
+          def text_value(pattern, s):
+              m=re.search(pattern,s,re.I|re.S)
+              return re.sub(r'<[^>]+>',' ',m.group(1)).strip() if m else ''
+
+          for slug in slugs:
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'{slug}: missing page')
+                  continue
+              s=p.read_text(encoding='utf-8',errors='replace')
+              low=s.lower()
+              expected=BASE+slug+'/'
+
+              robots=re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>',s,re.I)
+              if robots and 'noindex' in robots.group(0).lower():
+                  failures.append(f'{slug}: noindex')
+
+              canonicals=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',s,re.I)
+              if canonicals != [expected]:
+                  failures.append(f'{slug}: canonical mismatch {canonicals}')
+
+              title=text_value(r'<title>(.*?)</title>',s)
+              desc=(re.search(r'<meta\s+name=["\']description["\']\s+content=["\']([^"\']*)',s,re.I) or [None,''])[1].strip()
+              h1s=re.findall(r'<h1\b[^>]*>(.*?)</h1>',s,re.I|re.S)
+              h1=' '.join(re.sub(r'<[^>]+>',' ',h1s[0]).split()) if len(h1s)==1 else ''
+
+              if not title: failures.append(f'{slug}: missing title')
+              if not desc: failures.append(f'{slug}: missing meta description')
+              if len(h1s)!=1: failures.append(f'{slug}: expected one H1, found {len(h1s)}')
+
+              for label,val,seen in [('title',title,seen_titles),('meta description',desc,seen_desc),('H1',h1,seen_h1)]:
+                  if val:
+                      if val in seen: failures.append(f'{slug}: duplicate {label} with {seen[val]}')
+                      seen[val]=slug
+
+              for required in ['"@type":"Service"','"@type":"FAQPage"','"@type":"BreadcrumbList"','"@type":"WebPage"']:
+                  if required.lower() not in low.replace(' ',''):
+                      failures.append(f'{slug}: missing schema {required}')
+
+              if 'https://formspree.io/f/mvzeapzd' not in s:
+                  failures.append(f'{slug}: missing customer request form endpoint')
+              if 'free-pickup-qualification/' not in low:
+                  failures.append(f'{slug}: missing qualification link')
+
+              imgs=re.findall(r'<img\b[^>]*>',s,re.I)
+              if not imgs:
+                  failures.append(f'{slug}: missing image')
+              else:
+                  hero=imgs[0].lower()
+                  if 'alt=' not in hero or 'width=' not in hero or 'height=' not in hero:
+                      failures.append(f'{slug}: hero missing alt/width/height')
+
+              internal=set(re.findall(r'href=["\'](?:https://freereliableappliancepickup\.com)?/([^"\'#?]+)/?',s,re.I))
+              if len(internal)<10:
+                  failures.append(f'{slug}: fewer than 10 useful internal destinations')
+
+              for other in sorted(all_socal-{slug}):
+                  if other+'/' not in low:
+                      failures.append(f'{slug}: missing cross-link to {other}')
+
+              if expected not in sitemap_urls:
+                  failures.append(f'{slug}: missing from sitemap')
+
+          ca=Path('california-appliance-pickup/index.html').read_text(encoding='utf-8',errors='replace').lower()
+          for slug in slugs:
+              if slug+'/' not in ca:
+                  failures.append(f'california-appliance-pickup: missing link to {slug}')
+
+          authority={
+            'washer-dryer-pickup':'southern-california-washer-dryer-pickup',
+            'refrigerator-pickup':'southern-california-refrigerator-pickup',
+            'freezer-pickup':'southern-california-freezer-pickup',
+            'stove-oven-pickup':'southern-california-stove-oven-pickup',
+          }
+          for parent,child in authority.items():
+              s=(Path(parent)/'index.html').read_text(encoding='utf-8',errors='replace').lower()
+              if child+'/' not in s:
+                  failures.append(f'{parent}: missing link to {child}')
+
+          print('CALIFORNIA_APPLIANCE_INTENT_GOLD_STANDARD_PAGES',len(slugs))
+          if failures:
+              print('FAILURES')
+              for f in failures: print('-',f)
+              sys.exit(1)
+          print('PASS: California appliance-intent layer meets the gold-standard architecture, schema, conversion, sitemap and internal-link requirements.')
+          PY
