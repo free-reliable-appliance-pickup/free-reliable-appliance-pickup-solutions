@@ -15,6 +15,7 @@ on:
       - 'freezer-pickup/**'
       - 'stove-oven-pickup/**'
       - 'california-appliance-pickup/**'
+      - 'southern-california-appliance-pickup/**'
       - 'pomona-appliance-pickup/**'
       - 'huntington-beach-appliance-pickup/**'
       - 'irvine-appliance-pickup/**'
@@ -125,6 +126,8 @@ jobs:
               if len(internal)<10:
                   failures.append(f'{slug}: fewer than 10 useful internal destinations')
 
+              if socal_parent_slug+'/' not in low:
+                  failures.append(f'{slug}: missing link to Southern California parent')
               for other in sorted(all_socal-{slug}):
                   if other+'/' not in low:
                       failures.append(f'{slug}: missing cross-link to {other}')
@@ -132,10 +135,23 @@ jobs:
               if expected not in sitemap_urls:
                   failures.append(f'{slug}: missing from sitemap')
 
+          socal_parent_slug='southern-california-appliance-pickup'
           ca=Path('california-appliance-pickup/index.html').read_text(encoding='utf-8',errors='replace').lower()
+          if socal_parent_slug+'/' not in ca:
+              failures.append('california-appliance-pickup: missing link to Southern California parent')
           for slug in slugs:
               if slug+'/' not in ca:
                   failures.append(f'california-appliance-pickup: missing link to {slug}')
+
+          socal_parent=(Path(socal_parent_slug)/'index.html').read_text(encoding='utf-8',errors='replace').lower()
+          for slug in slugs:
+              if slug+'/' not in socal_parent:
+                  failures.append(f'{socal_parent_slug}: missing child link to {slug}')
+          for trust_phrase in ['free to submit','no account required','photo-first review']:
+              if trust_phrase not in socal_parent:
+                  failures.append(f'{socal_parent_slug}: missing trust signal {trust_phrase}')
+          if 'how fast can' not in socal_parent:
+              failures.append(f'{socal_parent_slug}: missing pickup-timing FAQ')
 
           authority={
             'washer-dryer-pickup':'southern-california-washer-dryer-pickup',
