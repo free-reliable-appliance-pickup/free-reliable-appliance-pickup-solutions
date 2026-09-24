@@ -121,6 +121,10 @@ jobs:
                   failures.append(f'{slug}: missing network-model section')
               if 'socal-pickup-prep-20260923' not in low:
                   failures.append(f'{slug}: missing appliance-specific pickup preparation')
+              if 'seo-breadcrumb' not in low and 'aria-label="breadcrumb"' not in low:
+                  failures.append(f'{slug}: missing visible breadcrumb')
+              if 'socal-three-step-process-20260923' not in low and slug != 'southern-california-washer-dryer-pickup':
+                  failures.append(f'{slug}: missing 3-step request process')
               if 'socal-request-flow-20260923' not in low:
                   failures.append(f'{slug}: missing request flow')
               for field_name in ['name="brand_model"','name="preferred_window"']:
@@ -171,6 +175,10 @@ jobs:
               failures.append(f'{socal_parent_slug}: missing network-model section')
           if 'socal-commercial-property-20260923' not in socal_parent:
               failures.append(f'{socal_parent_slug}: missing landlord/commercial layer')
+          if 'seo-breadcrumb' not in socal_parent and 'aria-label="breadcrumb"' not in socal_parent:
+              failures.append(f'{socal_parent_slug}: missing parent visible breadcrumb')
+          if 'socal-three-step-process-20260923' not in socal_parent:
+              failures.append(f'{socal_parent_slug}: missing parent 3-step request process')
           if 'socal-parent-request-flow-20260923' not in socal_parent:
               failures.append(f'{socal_parent_slug}: missing parent request flow')
           for field_name in ['name="brand_model"','name="preferred_window"']:
