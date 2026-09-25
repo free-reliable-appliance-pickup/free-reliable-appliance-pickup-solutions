@@ -57,6 +57,14 @@ def self_url(slug: str) -> str:
 def page_exists(slug: str) -> bool:
     return page_path(slug).is_file()
 
+def page_is_indexable(slug: str) -> bool:
+    path = page_path(slug)
+    if not path.is_file():
+        return False
+    html = path.read_text(encoding="utf-8", errors="replace")
+    robots = re.search(r"<meta\b[^>]*name=[\"']robots[\"'][^>]*>", html, re.I)
+    return not (robots and "noindex" in robots.group(0).lower())
+
 def to_laundry(slug: str) -> str:
     if slug.endswith("-appliance-pickup"):
         return slug[:-len("-appliance-pickup")] + "-washer-dryer-pickup"
@@ -78,9 +86,9 @@ def critical_checks(slug: str, html: str) -> list[str]:
 
 def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: str) -> str:
     city = display_name(slug)
-    usable = [n for n in neighbors if page_exists(n) and n != slug][:7]
+    usable = [n for n in neighbors if page_is_indexable(n) and n != slug][:7]
     links = [f'<a href="/{n}/">{display_name(n)}</a>' for n in usable]
-    if page_exists(hub) and hub != slug:
+    if page_is_indexable(hub) and hub != slug:
         links.append(f'<a href="/{hub}/">{region} hub</a>')
     link_html = " · ".join(links)
 
@@ -179,6 +187,9 @@ def process_target(
     if not path.exists():
         skipped.append(slug)
         return
+    if not page_is_indexable(slug):
+        skipped.append(slug)
+        return
     html = path.read_text(encoding="utf-8", errors="replace")
     problems = critical_checks(slug, html)
     if problems:
@@ -235,6 +246,9 @@ def main() -> int:
     for slug, info in cfg.get("specialty_pages", {}).items():
         path = page_path(slug)
         if not path.exists():
+            skipped.append(slug)
+            continue
+        if not page_is_indexable(slug):
             skipped.append(slug)
             continue
         html = path.read_text(encoding="utf-8", errors="replace")
