@@ -255,6 +255,8 @@ jobs:
                       failures.append(f'{city_slug}: missing city network transparency {network_phrase}')
               if 'city-audience-guides-20260923' not in low:
                   failures.append(f'{city_slug}: missing city audience-guide links')
+              if 'priority-mobile-cta' not in low or 'has-priority-mobile-cta' not in low:
+                  failures.append(f'{city_slug}: missing priority mobile CTA')
               legacy_section_patterns=[
                   'gsc-striking-distance',
                   'ca-final-v6',
