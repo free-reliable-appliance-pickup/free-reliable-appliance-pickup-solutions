@@ -2,29 +2,33 @@
 """
 Turbo SEO batch updater.
 
-Purpose:
-- Maintain contextual neighbor links on EXISTING approved California appliance pages.
-- Never create new location pages.
-- Update sitemap lastmod only for pages actually changed.
-- Replace older priority-local-network blocks with one stable managed block.
-- Validate critical indexability/canonical signals before writing.
+One run maintains BOTH:
+- existing approved California appliance-pickup pages
+- matching existing washer-dryer-pickup pages
+
+It never creates new location pages. It updates managed regional-link blocks,
+refreshes sitemap lastmod values for changed URLs, and validates basic SEO signals.
 
 Usage:
-  python3 scripts/turbo-seo-batch.py          # dry run
-  python3 scripts/turbo-seo-batch.py --write  # write changes
+  python3 scripts/turbo-seo-batch.py
+  python3 scripts/turbo-seo-batch.py --write
 """
 from __future__ import annotations
 
 import argparse
 import json
 import re
-from datetime import date
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "data" / "turbo-seo-network.json"
-SITEMAP = ROOT / "sitemap.xml"
 BASE = "https://freereliableappliancepickup.com/"
+SITEMAPS = [
+    ROOT / "sitemap.xml",
+    ROOT / "sitemap-regular-washer-dryer.xml",
+]
 
 MANAGED_RE = re.compile(
     r"<!--\s*(?:turbo-seo-network-v1|priority-local-network-v3|priority-local-network-v4)\s*-->"
@@ -33,8 +37,16 @@ MANAGED_RE = re.compile(
 )
 
 def display_name(slug: str) -> str:
-    base = slug.removesuffix("-appliance-pickup")
-    return " ".join(part.capitalize() for part in base.split("-"))
+    base = slug
+    for suffix in ("-washer-dryer-pickup", "-appliance-pickup"):
+        if base.endswith(suffix):
+            base = base[:-len(suffix)]
+            break
+    special = {"la": "LA", "san": "San"}
+    words = []
+    for part in base.split("-"):
+        words.append(special.get(part, part.capitalize()))
+    return " ".join(words)
 
 def page_path(slug: str) -> Path:
     return ROOT / slug / "index.html"
@@ -44,6 +56,11 @@ def self_url(slug: str) -> str:
 
 def page_exists(slug: str) -> bool:
     return page_path(slug).is_file()
+
+def to_laundry(slug: str) -> str:
+    if slug.endswith("-appliance-pickup"):
+        return slug[:-len("-appliance-pickup")] + "-washer-dryer-pickup"
+    return slug
 
 def critical_checks(slug: str, html: str) -> list[str]:
     problems = []
@@ -59,30 +76,46 @@ def critical_checks(slug: str, html: str) -> list[str]:
         problems.append("missing title")
     return problems
 
-def build_block(slug: str, region: str, hub: str, neighbors: list[str]) -> str:
+def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: str) -> str:
     city = display_name(slug)
-    usable = [n for n in neighbors if page_exists(n) and n != slug]
-    links = [
-        f'<a href="/{n}/">{display_name(n)}</a>'
-        for n in usable[:7]
-    ]
+    usable = [n for n in neighbors if page_exists(n) and n != slug][:7]
+    links = [f'<a href="/{n}/">{display_name(n)}</a>' for n in usable]
     if page_exists(hub) and hub != slug:
         links.append(f'<a href="/{hub}/">{region} hub</a>')
+    link_html = " · ".join(links)
 
-    if links:
-        link_html = " · ".join(links)
+    if kind == "laundry":
+        heading = f"{city} washer and dryer pickup within the {region} service network"
+        body = (
+            f"{city} is connected to nearby washer and dryer pickup routes within {region}. "
+            "Use the closest city page when the pickup address is near a city boundary so access, "
+            "floor level, stairs, parking and route availability can be reviewed against the correct local area."
+        )
+        service = (
+            "We prioritize qualifying washer and dryer sets and individual laundry appliances when the pickup "
+            "meets current service requirements. Free pickup depends on condition, safe access and route availability; "
+            "an available local pickup professional may complete the request."
+        )
     else:
-        link_html = f'<a href="/{hub}/">{region} hub</a>' if page_exists(hub) else ""
+        heading = f"{city} appliance pickup within the {region} service network"
+        body = (
+            f"{city} is connected to nearby pickup routes within {region}. "
+            "Use the closest city page when the pickup address falls near a city boundary so the request can be "
+            "reviewed against the most relevant local route and access conditions."
+        )
+        service = (
+            "Priority appliance categories include qualifying washers, dryers, refrigerators, freezers and stoves/ranges. "
+            "Free pickup depends on appliance condition, safe access and current route availability; "
+            "an available local pickup professional may complete the request."
+        )
 
     return (
         '<!-- turbo-seo-network-v1 -->\n'
         f'<section class="turbo-seo-network-v1" aria-labelledby="turbo-network-{slug}">\n'
-        f'  <h2 id="turbo-network-{slug}">{city} appliance pickup within the {region} service network</h2>\n'
-        f'  <p>{city} is connected to nearby pickup routes within {region}. '
-        'Use the closest city page when the pickup address falls near a city boundary so the request can be reviewed against the most relevant local route and access conditions.</p>\n'
-        '  <p>Priority appliance categories include qualifying washers, dryers, refrigerators, freezers and stoves/ranges. '
-        'Free pickup depends on appliance condition, safe access and current route availability; an available local pickup professional may complete the request.</p>\n'
-        + (f'  <p><strong>Nearby service pages:</strong> {link_html}</p>\n' if link_html else '')
+        f'  <h2 id="turbo-network-{slug}">{heading}</h2>\n'
+        f'  <p>{body}</p>\n'
+        f'  <p>{service}</p>\n'
+        + (f'  <p><strong>Nearby service pages:</strong> {link_html}</p>\n' if link_html else "")
         + '</section>'
     )
 
@@ -103,17 +136,44 @@ def insert_or_replace(html: str, block: str) -> str:
         return html[:body_close.start()] + block + "\n" + html[body_close.start():]
     return html + "\n" + block + "\n"
 
-def update_sitemap(sitemap: str, slugs: list[str], stamp: str) -> str:
-    out = sitemap
+def update_sitemap_text(text: str, slugs: list[str], stamp: str) -> tuple[str, int]:
+    out = text
+    hits = 0
     for slug in slugs:
         pattern = re.compile(
             rf"(<loc>{re.escape(self_url(slug))}</loc>\s*<lastmod>)[^<]+(</lastmod>)",
             re.I,
         )
         out, count = pattern.subn(rf"\g<1>{stamp}\g<2>", out, count=1)
-        if count == 0:
-            print(f"WARN sitemap entry not found for {slug}")
-    return out
+        hits += count
+    return out, hits
+
+def process_target(
+    slug: str,
+    region: str,
+    hub: str,
+    neighbors: list[str],
+    kind: str,
+    write: bool,
+    changed: list[str],
+    skipped: list[str],
+    failures: list[str],
+) -> None:
+    path = page_path(slug)
+    if not path.exists():
+        skipped.append(slug)
+        return
+    html = path.read_text(encoding="utf-8", errors="replace")
+    problems = critical_checks(slug, html)
+    if problems:
+        failures.append(f"{slug}: " + ", ".join(problems))
+        return
+    block = build_block(slug, region, hub, neighbors, kind)
+    new_html = insert_or_replace(html, block)
+    if new_html != html:
+        changed.append(slug)
+        if write:
+            path.write_text(new_html, encoding="utf-8")
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -126,26 +186,35 @@ def main() -> int:
     failures: list[str] = []
 
     for region, region_cfg in cfg["regions"].items():
-        hub = region_cfg["hub"]
-        for slug, neighbors in region_cfg["members"].items():
-            path = page_path(slug)
-            if not path.exists():
-                skipped.append(slug)
-                continue
+        appliance_hub = region_cfg["hub"]
+        laundry_hub = to_laundry(appliance_hub)
 
-            html = path.read_text(encoding="utf-8", errors="replace")
-            problems = critical_checks(slug, html)
-            if problems:
-                failures.append(f"{slug}: " + ", ".join(problems))
-                continue
+        for appliance_slug, appliance_neighbors in region_cfg["members"].items():
+            process_target(
+                appliance_slug,
+                region,
+                appliance_hub,
+                appliance_neighbors,
+                "appliance",
+                args.write,
+                changed,
+                skipped,
+                failures,
+            )
 
-            block = build_block(slug, region, hub, neighbors)
-            new_html = insert_or_replace(html, block)
-
-            if new_html != html:
-                changed.append(slug)
-                if args.write:
-                    path.write_text(new_html, encoding="utf-8")
+            laundry_slug = to_laundry(appliance_slug)
+            laundry_neighbors = [to_laundry(n) for n in appliance_neighbors]
+            process_target(
+                laundry_slug,
+                region,
+                laundry_hub,
+                laundry_neighbors,
+                "laundry",
+                args.write,
+                changed,
+                skipped,
+                failures,
+            )
 
     if failures:
         print("CRITICAL FAILURES")
@@ -154,13 +223,26 @@ def main() -> int:
         return 1
 
     if args.write and changed:
-        sitemap = SITEMAP.read_text(encoding="utf-8", errors="replace")
-        new_sitemap = update_sitemap(sitemap, changed, date.today().isoformat())
-        if new_sitemap != sitemap:
-            SITEMAP.write_text(new_sitemap, encoding="utf-8")
+        stamp = datetime.now(ZoneInfo("America/Los_Angeles")).date().isoformat()
+        found = set()
+        for sitemap_path in SITEMAPS:
+            if not sitemap_path.exists():
+                continue
+            original = sitemap_path.read_text(encoding="utf-8", errors="replace")
+            updated, _ = update_sitemap_text(original, changed, stamp)
+            if updated != original:
+                sitemap_path.write_text(updated, encoding="utf-8")
+            for slug in changed:
+                if self_url(slug) in original:
+                    found.add(slug)
+        for slug in changed:
+            if slug not in found:
+                print(f"WARN sitemap entry not found for {slug}")
 
     print(f"MODE={'WRITE' if args.write else 'DRY_RUN'}")
     print(f"TARGETS_CHANGED={len(changed)}")
+    print(f"APPLIANCE_CHANGED={sum(s.endswith('-appliance-pickup') for s in changed)}")
+    print(f"LAUNDRY_CHANGED={sum(s.endswith('-washer-dryer-pickup') for s in changed)}")
     for slug in changed:
         print("CHANGED", slug)
     print(f"TARGETS_SKIPPED_MISSING={len(skipped)}")
