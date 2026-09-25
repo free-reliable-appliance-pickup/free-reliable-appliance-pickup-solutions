@@ -17,3 +17,13 @@ glendale-appliance-pickup
 burbank-appliance-pickup
 la-crescenta-appliance-pickup
 montrose-appliance-pickup
+la-puente-appliance-pickup
+covina-appliance-pickup
+eastvale-appliance-pickup
+corona-appliance-pickup
+claremont-appliance-pickup
+la-verne-appliance-pickup
+san-dimas-appliance-pickup
+upland-appliance-pickup
+montclair-appliance-pickup
+chino-hills-appliance-pickup
