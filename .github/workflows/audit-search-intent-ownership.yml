@@ -29,6 +29,11 @@ jobs:
           priorities=[x.strip() for x in Path('data/california-appliance-intent-priority-city-pages.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
           failures=[]
 
+          def normalize_text(x):
+              x=html.unescape(x).lower().replace('&',' and ')
+              x=re.sub(r'[^a-z0-9]+',' ',x)
+              return ' '.join(x.split())
+
           def core_visible(raw):
               # Remove script/style/comments and links entirely: exact generic phrases are allowed
               # as descriptive anchor text that points users to the canonical intent owner.
@@ -37,16 +42,15 @@ jobs:
               x=re.sub(r'<!--.*?-->',' ',x,flags=re.S)
               x=re.sub(r'<a\b[^>]*>.*?</a>',' ',x,flags=re.I|re.S)
               x=re.sub(r'<[^>]+>',' ',x)
-              x=html.unescape(x).lower()
-              return ' '.join(x.split())
+              return normalize_text(x)
 
           for phrase,owner in owners.items():
               owner_file=Path('index.html') if owner=='/' else Path(owner.strip('/'))/'index.html'
               if not owner_file.exists():
                   failures.append(f'owner missing for {phrase}: {owner}')
                   continue
-              owner_text=html.unescape(owner_file.read_text(encoding='utf-8',errors='replace')).lower()
-              if phrase not in owner_text:
+              owner_text=normalize_text(owner_file.read_text(encoding='utf-8',errors='replace'))
+              if normalize_text(phrase) not in owner_text:
                   failures.append(f'canonical owner {owner} does not visibly target phrase: {phrase}')
 
           for slug in priorities:
@@ -57,7 +61,7 @@ jobs:
               raw=p.read_text(encoding='utf-8',errors='replace')
               core=core_visible(raw)
               for phrase,owner in owners.items():
-                  if phrase in core:
+                  if normalize_text(phrase) in core:
                       failures.append(f'{slug}: generic phrase "{phrase}" appears outside a link; owner is {owner}')
 
           print('GENERIC_INTENT_OWNERS',len(owners))
