@@ -7,6 +7,7 @@ on:
     paths:
       - 'data/turbo-seo-network.json'
       - 'scripts/turbo-seo-batch.py'
+      - 'scripts/turbo-final-audit.py'
       - '.github/workflows/turbo-california-seo-batch.yml'
 
 permissions:
@@ -32,6 +33,14 @@ jobs:
           python3 scripts/turbo-seo-batch.py > /tmp/turbo-dry-run.txt
           cat /tmp/turbo-dry-run.txt
           grep -q 'TARGETS_CHANGED=0' /tmp/turbo-dry-run.txt
+
+      - name: Run Turbo final SEO audit
+        run: python3 scripts/turbo-final-audit.py
+
+      - name: Audit active page images
+        run: |
+          python3 -m pip install --quiet pillow
+          python3 scripts/audit-active-page-images.py
 
       - name: Commit once
         shell: bash
