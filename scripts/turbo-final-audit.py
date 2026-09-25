@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fast final audit for the configured Turbo California SEO network."""
+"""Fast final audit for the configured Turbo priority SEO network."""
 from __future__ import annotations
 
 import json
@@ -103,4 +103,4 @@ if fail:
     print("TURBO_FINAL_AUDIT_FAILURES",len(fail))
     for x in fail: print("FAIL",x)
     sys.exit(1)
-print("PASS: Turbo California network has valid canonicals, metadata, H1s, managed links, sitemap coverage and images.")
+print("PASS: Turbo priority network has valid canonicals, metadata, H1s, managed links, sitemap coverage and images.")

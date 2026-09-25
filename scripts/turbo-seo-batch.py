@@ -3,7 +3,7 @@
 Turbo SEO batch updater.
 
 One run maintains BOTH:
-- existing approved California appliance-pickup pages
+- existing approved priority appliance-pickup pages
 - matching existing washer-dryer-pickup pages
 
 It never creates new location pages. It updates managed regional-link blocks,
@@ -84,7 +84,7 @@ def critical_checks(slug: str, html: str) -> list[str]:
         problems.append("missing title")
     return problems
 
-def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: str) -> str:
+def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: str, scope: str = "local") -> str:
     city = display_name(slug)
     usable = [n for n in neighbors if page_is_indexable(n) and n != slug][:7]
     links = [f'<a href="/{n}/">{display_name(n)}</a>' for n in usable]
@@ -94,11 +94,18 @@ def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: st
 
     if kind == "laundry":
         heading = f"{city} washer and dryer pickup within the {region} service network"
-        body = (
-            f"{city} is connected to nearby washer and dryer pickup routes within {region}. "
-            "Use the closest city page when the pickup address is near a city boundary so access, "
-            "floor level, stairs, parking and route availability can be reviewed against the correct local area."
-        )
+        if scope == "statewide":
+            body = (
+                f"{city} is connected to other approved washer and dryer pickup pages within {region}. "
+                "Use the page matching the actual pickup location so access, floor level, stairs, parking "
+                "and route availability can be reviewed against the correct service area."
+            )
+        else:
+            body = (
+                f"{city} is connected to nearby washer and dryer pickup routes within {region}. "
+                "Use the closest city page when the pickup address is near a city boundary so access, "
+                "floor level, stairs, parking and route availability can be reviewed against the correct local area."
+            )
         service = (
             "We prioritize qualifying washer and dryer sets and individual laundry appliances when the pickup "
             "meets current service requirements. Free pickup depends on condition, safe access and route availability; "
@@ -106,11 +113,18 @@ def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: st
         )
     else:
         heading = f"{city} appliance pickup within the {region} service network"
-        body = (
-            f"{city} is connected to nearby pickup routes within {region}. "
-            "Use the closest city page when the pickup address falls near a city boundary so the request can be "
-            "reviewed against the most relevant local route and access conditions."
-        )
+        if scope == "statewide":
+            body = (
+                f"{city} is connected to other approved appliance pickup pages within {region}. "
+                "Use the page matching the actual pickup location so the request can be reviewed against "
+                "the most relevant service area, access conditions and current route availability."
+            )
+        else:
+            body = (
+                f"{city} is connected to nearby pickup routes within {region}. "
+                "Use the closest city page when the pickup address falls near a city boundary so the request can be "
+                "reviewed against the most relevant local route and access conditions."
+            )
         service = (
             "Priority appliance categories include qualifying washers, dryers, refrigerators, freezers and stoves/ranges. "
             "Free pickup depends on appliance condition, safe access and current route availability; "
@@ -178,6 +192,7 @@ def process_target(
     hub: str,
     neighbors: list[str],
     kind: str,
+    scope: str,
     write: bool,
     changed: list[str],
     skipped: list[str],
@@ -195,7 +210,7 @@ def process_target(
     if problems:
         failures.append(f"{slug}: " + ", ".join(problems))
         return
-    block = build_block(slug, region, hub, neighbors, kind)
+    block = build_block(slug, region, hub, neighbors, kind, scope)
     new_html = insert_or_replace(html, block)
     if new_html != html:
         changed.append(slug)
@@ -215,6 +230,7 @@ def main() -> int:
     for region, region_cfg in cfg["regions"].items():
         appliance_hub = region_cfg["hub"]
         laundry_hub = to_laundry(appliance_hub)
+        scope = region_cfg.get("scope", "local")
 
         for appliance_slug, appliance_neighbors in region_cfg["members"].items():
             process_target(
@@ -223,6 +239,7 @@ def main() -> int:
                 appliance_hub,
                 appliance_neighbors,
                 "appliance",
+                scope,
                 args.write,
                 changed,
                 skipped,
@@ -237,6 +254,7 @@ def main() -> int:
                 laundry_hub,
                 laundry_neighbors,
                 "laundry",
+                scope,
                 args.write,
                 changed,
                 skipped,

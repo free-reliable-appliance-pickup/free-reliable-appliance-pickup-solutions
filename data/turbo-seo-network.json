@@ -1,6 +1,6 @@
 {
-  "version": "2026-09-24.2",
-  "purpose": "Batch-maintain internal-link clusters on existing approved California priority pages. This file does not create new location pages.",
+  "version": "2026-09-24.3",
+  "purpose": "Batch-maintain internal-link clusters on existing approved priority pages. This file never creates new location pages.",
   "regions": {
     "San Gabriel Valley": {
       "hub": "san-gabriel-valley-appliance-pickup",
@@ -562,6 +562,138 @@
           "lancaster-appliance-pickup",
           "littlerock-appliance-pickup",
           "sun-village-appliance-pickup"
+        ]
+      }
+    },
+    "Oregon": {
+      "hub": "oregon-appliance-pickup",
+      "scope": "statewide",
+      "members": {
+        "oregon-appliance-pickup": [
+          "portland-appliance-pickup",
+          "salem-appliance-pickup",
+          "eugene-appliance-pickup"
+        ],
+        "portland-appliance-pickup": [
+          "beaverton-appliance-pickup",
+          "hillsboro-appliance-pickup",
+          "gresham-appliance-pickup",
+          "tigard-appliance-pickup",
+          "happy-valley-appliance-pickup",
+          "oregon-city-appliance-pickup"
+        ],
+        "beaverton-appliance-pickup": [
+          "portland-appliance-pickup",
+          "hillsboro-appliance-pickup",
+          "tigard-appliance-pickup"
+        ],
+        "hillsboro-appliance-pickup": [
+          "beaverton-appliance-pickup",
+          "portland-appliance-pickup",
+          "tigard-appliance-pickup"
+        ],
+        "gresham-appliance-pickup": [
+          "portland-appliance-pickup",
+          "happy-valley-appliance-pickup",
+          "oregon-city-appliance-pickup"
+        ],
+        "tigard-appliance-pickup": [
+          "portland-appliance-pickup",
+          "beaverton-appliance-pickup",
+          "hillsboro-appliance-pickup"
+        ],
+        "happy-valley-appliance-pickup": [
+          "portland-appliance-pickup",
+          "gresham-appliance-pickup",
+          "oregon-city-appliance-pickup"
+        ],
+        "oregon-city-appliance-pickup": [
+          "happy-valley-appliance-pickup",
+          "gresham-appliance-pickup",
+          "portland-appliance-pickup"
+        ],
+        "salem-appliance-pickup": [
+          "keizer-appliance-pickup",
+          "eugene-appliance-pickup"
+        ],
+        "keizer-appliance-pickup": [
+          "salem-appliance-pickup"
+        ],
+        "eugene-appliance-pickup": [
+          "salem-appliance-pickup"
+        ]
+      }
+    },
+    "Washington": {
+      "hub": "washington-appliance-pickup",
+      "scope": "statewide",
+      "members": {
+        "washington-appliance-pickup": [
+          "seattle-appliance-pickup",
+          "vancouver-appliance-pickup",
+          "spokane-appliance-pickup"
+        ],
+        "seattle-appliance-pickup": [],
+        "vancouver-appliance-pickup": [],
+        "spokane-appliance-pickup": []
+      }
+    },
+    "Colorado Front Range": {
+      "hub": "colorado-appliance-pickup",
+      "scope": "local",
+      "members": {
+        "colorado-appliance-pickup": [
+          "denver-appliance-pickup",
+          "aurora-appliance-pickup",
+          "lakewood-appliance-pickup",
+          "arvada-appliance-pickup"
+        ],
+        "denver-appliance-pickup": [
+          "aurora-appliance-pickup",
+          "lakewood-appliance-pickup",
+          "arvada-appliance-pickup",
+          "thornton-appliance-pickup",
+          "westminster-appliance-pickup",
+          "centennial-appliance-pickup"
+        ],
+        "aurora-appliance-pickup": [
+          "denver-appliance-pickup",
+          "centennial-appliance-pickup",
+          "parker-appliance-pickup",
+          "thornton-appliance-pickup"
+        ],
+        "lakewood-appliance-pickup": [
+          "denver-appliance-pickup",
+          "arvada-appliance-pickup",
+          "westminster-appliance-pickup"
+        ],
+        "arvada-appliance-pickup": [
+          "denver-appliance-pickup",
+          "lakewood-appliance-pickup",
+          "westminster-appliance-pickup",
+          "thornton-appliance-pickup"
+        ],
+        "centennial-appliance-pickup": [
+          "denver-appliance-pickup",
+          "aurora-appliance-pickup",
+          "parker-appliance-pickup"
+        ],
+        "parker-appliance-pickup": [
+          "aurora-appliance-pickup",
+          "centennial-appliance-pickup",
+          "denver-appliance-pickup"
+        ],
+        "thornton-appliance-pickup": [
+          "denver-appliance-pickup",
+          "aurora-appliance-pickup",
+          "westminster-appliance-pickup",
+          "arvada-appliance-pickup"
+        ],
+        "westminster-appliance-pickup": [
+          "denver-appliance-pickup",
+          "thornton-appliance-pickup",
+          "arvada-appliance-pickup",
+          "lakewood-appliance-pickup"
         ]
       }
     }

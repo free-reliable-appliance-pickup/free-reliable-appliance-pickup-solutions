@@ -1,4 +1,4 @@
-name: Turbo California SEO Batch
+name: Turbo Priority SEO Batch
 
 on:
   workflow_dispatch:
@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: turbo-california-seo-batch
+  group: turbo-priority-seo-batch
   cancel-in-progress: true
 
 jobs:
@@ -52,5 +52,5 @@ jobs:
             echo "No page changes needed"
             exit 0
           fi
-          git commit -m "Apply turbo California appliance and washer dryer SEO batch"
+          git commit -m "Apply turbo priority appliance and washer dryer SEO batch"
           git push
