@@ -3,7 +3,7 @@ name: Final SEO safety audit
 on:
   push:
     branches: [main]
-    paths: ['sitemap.xml','sitemap-regular-washer-dryer.xml','robots.txt','data/market-routing.json','data/approved-indexable-locations.txt','.github/workflows/final-seo-safety-audit.yml']
+    paths: ['sitemap.xml','sitemap-regular-washer-dryer.xml','robots.txt','data/market-routing.json','data/approved-indexable-locations.txt','data/approved-indexable-service-pages.txt','.github/workflows/final-seo-safety-audit.yml']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -19,10 +19,10 @@ jobs:
           from pathlib import Path
           import re, sys
           base='https://freereliableappliancepickup.com/'
-          approved_locations=set(Path('data/approved-indexable-locations.txt').read_text(encoding='utf-8').split())
+          approved_locations=set(Path('data/approved-indexable-locations.txt','data/approved-indexable-service-pages.txt').read_text(encoding='utf-8').split())
           recruiting_noindex_locations={'phoenix-metro-appliance-pickup','treasure-valley-appliance-pickup','wasatch-front-appliance-pickup'}
           approved_nonlocation={'','about','appliance-pickup-checklist','commercial-appliance-pickup','contact','free-pickup-qualification','freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup','old-appliance-disposal-options','partners','refrigerator-pickup','service-areas','stove-oven-pickup','washer-dryer-pickup','southern-california-stove-oven-pickup','southern-california-freezer-pickup','southern-california-refrigerator-pickup'}
-          approved=approved_locations|approved_nonlocation
+          approved=approved_locations|approved_services|approved_nonlocation
           errors=[]
           pages=[Path('index.html')]+sorted(p for p in Path('.').rglob('index.html') if '.git' not in p.parts and '.github' not in p.parts and p!=Path('index.html'))
           indexable=[]
