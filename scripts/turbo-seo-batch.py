@@ -119,6 +119,22 @@ def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: st
         + '</section>'
     )
 
+def build_specialty_block(slug: str, label: str, regions: list[str]) -> str:
+    usable = [r for r in regions if page_exists(r)]
+    links = " · ".join(
+        f'<a href="/{r}/">{display_name(r)}</a>'
+        for r in usable
+    )
+    return (
+        '<!-- turbo-seo-network-v1 -->\n'
+        f'<section class="turbo-seo-specialty-v1" aria-labelledby="turbo-specialty-{slug}">\n'
+        f'  <h2 id="turbo-specialty-{slug}">{label}: regional service connections</h2>\n'
+        '  <p>This appliance-specific page is connected to the broader regional pickup network so customers can move between appliance-type information and the most relevant local service area without creating duplicate city pages.</p>\n'
+        '  <p>Pickup qualification depends on appliance condition, safe access and current route availability. Submit the exact pickup address, photos and condition details for review.</p>\n'
+        + (f'  <p><strong>Regional appliance pickup pages:</strong> {links}</p>\n' if links else "")
+        + '</section>'
+    )
+
 def insert_or_replace(html: str, block: str) -> str:
     if MANAGED_RE.search(html):
         return MANAGED_RE.sub(block, html, count=1)
@@ -215,6 +231,23 @@ def main() -> int:
                 skipped,
                 failures,
             )
+
+    for slug, info in cfg.get("specialty_pages", {}).items():
+        path = page_path(slug)
+        if not path.exists():
+            skipped.append(slug)
+            continue
+        html = path.read_text(encoding="utf-8", errors="replace")
+        problems = critical_checks(slug, html)
+        if problems:
+            failures.append(f"{slug}: " + ", ".join(problems))
+            continue
+        block = build_specialty_block(slug, info.get("label", display_name(slug)), info.get("regions", []))
+        new_html = insert_or_replace(html, block)
+        if new_html != html:
+            changed.append(slug)
+            if args.write:
+                path.write_text(new_html, encoding="utf-8")
 
     if failures:
         print("CRITICAL FAILURES")
