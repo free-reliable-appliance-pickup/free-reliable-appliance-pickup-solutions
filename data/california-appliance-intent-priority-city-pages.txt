@@ -10,3 +10,5 @@ west-covina-appliance-pickup
 mission-viejo-appliance-pickup
 costa-mesa-appliance-pickup
 rowland-heights-appliance-pickup
+fontana-appliance-pickup
+san-bernardino-appliance-pickup
