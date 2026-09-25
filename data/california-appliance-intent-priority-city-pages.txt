@@ -27,3 +27,4 @@ san-dimas-appliance-pickup
 upland-appliance-pickup
 montclair-appliance-pickup
 chino-hills-appliance-pickup
+highland-appliance-pickup
