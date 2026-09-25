@@ -61,3 +61,14 @@ Number-one rankings are not guaranteed by page edits. Continue building legitima
 - Search Console monitoring of clicks, impressions, CTR, average position and image-search performance.
 
 The goal is not maximum page count or keyword repetition. The goal is the strongest helpful page for each real search market, supported by authentic proof, clear regional architecture and legitimate external reputation. Reuse this architecture in Oregon, Washington, Colorado and later states.
+
+
+## Search-intent ownership
+
+The gold model should assign one clear primary purpose to each page:
+- General city appliance pages own city-level appliance pickup, appliance removal, recycling and mixed-major-appliance intent.
+- Dedicated washer/dryer city pages own washer, dryer, laundry-set and laundry-removal intent and should link customers with other appliance types back to the general city page.
+- `/refrigerator-pickup/` owns generic nationwide refrigerator/fridge pickup intent; city appliance pages may still address local refrigerator pickup.
+- `/old-appliance-disposal-options/` owns generic appliance recycling/disposal comparison intent.
+- Do not canonicalize useful laundry pages to general city pages. Keep self-canonicals and differentiate purpose through titles, H1s, visible copy and internal links.
+- Prefer intent clarification and consolidation over creating another near-duplicate page.
