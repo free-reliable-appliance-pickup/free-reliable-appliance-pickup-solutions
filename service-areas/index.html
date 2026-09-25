@@ -26,7 +26,7 @@
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{border:1px solid #d9e5de;border-radius:10px;padding:16px;background:#fafcfb}
     .card a,a{color:#075c34;font-weight:700}.btn{display:inline-block;background:#fff;color:#075c34;padding:11px 16px;border-radius:8px;text-decoration:none;margin:5px}
     .note{background:#eef9f3;border-left:5px solid #087443;padding:14px;border-radius:7px}.warning{background:#fff8e6;border-left:5px solid #d99b00;padding:14px;border-radius:7px}
-    h2,h3{color:#087443}footer{background:#111;color:#fff;text-align:center;padding:24px}footer a{color:#fff}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+    h2,h3{color:#087443}.area-finder{border:2px solid #cfe6d7}.area-finder label{display:block;font-weight:800;color:#087443;margin-bottom:8px}.area-finder input{width:100%;padding:14px 16px;border:1px solid #b9d4c3;border-radius:10px;font:inherit}.area-results{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.area-results a{display:block;padding:10px 12px;background:#eef8f2;border-radius:8px;text-decoration:none}.area-search-note{color:#5f7469;font-size:14px}footer{background:#111;color:#fff;text-align:center;padding:24px}footer a{color:#fff}@media(max-width:800px){.grid,.area-results{grid-template-columns:1fr}}
   </style>
   <script src="/assets/customer-routing.js" defer></script>
 </head>
@@ -47,7 +47,16 @@
     </div>
   </section>
 
-  <main><section class="service-areas-la-priority-20260920"><h2>Los Angeles Direct Pickup Page</h2><p>Los Angeles is a priority California market. Customers inside the City of Los Angeles should use the dedicated <a href="../los-angeles-appliance-pickup/">Los Angeles appliance pickup &amp; removal page</a> for city-specific removal guidance, the 310 contact number and the direct request form.</p></section>
+  <main><!-- service-area-finder-v1 -->
+<section class="area-finder" aria-labelledby="area-finder-title">
+  <h2 id="area-finder-title">Find Your City or Regional Pickup Page</h2>
+  <p>Start typing a city, county or region. This finder searches the approved service links already listed on this page.</p>
+  <label for="service-area-search">City or region</label>
+  <input id="service-area-search" type="search" autocomplete="off" placeholder="Try Chino, Los Angeles, Orange County, Riverside...">
+  <div id="service-area-results" class="area-results" aria-live="polite"></div>
+  <p class="area-search-note">No match? Use the closest regional hub or submit your exact address through the main request form. Pickup still depends on appliance qualification and route availability.</p>
+</section>
+<section class="service-areas-la-priority-20260920"><h2>Los Angeles Direct Pickup Page</h2><p>Los Angeles is a priority California market. Customers inside the City of Los Angeles should use the dedicated <a href="../los-angeles-appliance-pickup/">Los Angeles appliance pickup &amp; removal page</a> for city-specific removal guidance, the 310 contact number and the direct request form.</p></section>
 <section class="service-areas-major-appliance-paths-20260922"><h2>Find Pickup by Appliance Type</h2><p>Choose the appliance first when that is the clearest way to describe the request, then use the local city or regional page for the actual pickup address.</p><div class="links"><a href="../washer-dryer-pickup/">Washer &amp; Dryer Pickup</a><a href="../refrigerator-pickup/">Refrigerator &amp; Fridge Pickup</a><a href="../freezer-pickup/">Freezer Pickup</a><a href="../stove-oven-pickup/">Stove, Range &amp; Oven Pickup</a><a href="../old-appliance-disposal-options/"><strong>Free Appliance Recycling Near Me</strong></a><a href="../free-pickup-qualification/">Free Pickup Qualification</a></div><p><strong>Priority California routes:</strong> <a href="../san-gabriel-valley-appliance-pickup/"><strong>Free Appliance Pickup San Gabriel Valley</strong></a> · <a href="../inland-empire-appliance-pickup/"><strong>Free Appliance Pickup Inland Empire</strong></a> · <a href="../orange-county-appliance-pickup/"><strong>Free Appliance Pickup Orange County</strong></a> · <a href="../riverside-county-appliance-pickup/"><strong>Free Appliance Pickup &amp; Removal Riverside County CA</strong></a> · <a href="../san-bernardino-county-appliance-pickup/"><strong>Free Appliance Pickup San Bernardino County</strong></a>.</p><p><strong>Priority city shortcuts:</strong> <a href="../west-covina-appliance-pickup/">West Covina</a> · <a href="../covina-appliance-pickup/">Covina</a> · <a href="../baldwin-park-appliance-pickup/">Baldwin Park</a> · <a href="../la-puente-appliance-pickup/">La Puente</a> · <a href="../azusa-appliance-pickup/">Azusa</a> · <a href="../irwindale-appliance-pickup/">Irwindale</a> · <a href="../rowland-heights-appliance-pickup/">Rowland Heights</a> · <a href="../walnut-appliance-pickup/">Walnut</a> · <a href="../diamond-bar-appliance-pickup/">Diamond Bar</a> · <a href="../pomona-appliance-pickup/">Pomona</a> · <a href="../claremont-appliance-pickup/">Claremont</a> · <a href="../la-verne-appliance-pickup/">La Verne</a> · <a href="../san-dimas-appliance-pickup/">San Dimas</a> · <a href="../chino-appliance-pickup/">Chino</a> · <a href="../chino-hills-appliance-pickup/">Chino Hills</a> · <a href="../ontario-appliance-pickup/">Ontario</a> · <a href="../montclair-appliance-pickup/">Montclair</a> · <a href="../upland-appliance-pickup/">Upland</a> · <a href="../rancho-cucamonga-appliance-pickup/">Rancho Cucamonga</a> · <a href="../fontana-appliance-pickup/">Fontana</a> · <a href="../san-bernardino-appliance-pickup/">San Bernardino</a> · <a href="../riverside-appliance-pickup/">Riverside</a> · <a href="../jurupa-valley-appliance-pickup/">Jurupa Valley</a> · <a href="../eastvale-appliance-pickup/">Eastvale</a> · <a href="../corona-appliance-pickup/">Corona</a>.</p></section>
 
     <section>
@@ -137,5 +146,43 @@
 <section class="service-la-foothill-priority-20260924"><h2>Los Angeles Foothill Appliance Pickup Connector</h2><p>For northeast Los Angeles County and western foothill requests, use the most specific local page: <a href="/glendale-appliance-pickup/"><strong>Glendale</strong></a>, <a href="/burbank-appliance-pickup/"><strong>Burbank</strong></a>, <a href="/la-crescenta-appliance-pickup/"><strong>La Crescenta</strong></a>, <a href="/montrose-appliance-pickup/"><strong>Montrose</strong></a> or <a href="/pasadena-appliance-pickup/"><strong>Pasadena</strong></a>. These pages connect the Los Angeles County hub with the San Gabriel Valley network without treating the entire area as one generic market.</p></section><section class="service-california-authority-20260918"><h2>California Priority Service Hubs & Major Cities</h2><p>These pages connect the strongest California search markets to the broader service-area structure.</p><div class="grid"><div class="card"><h3>Los Angeles County</h3><p><a href="/los-angeles-county-appliance-pickup/">Los Angeles County hub</a><br><a href="/glendale-appliance-pickup/">Glendale</a> · <a href="/torrance-appliance-pickup/">Torrance</a> · <a href="/santa-clarita-appliance-pickup/">Santa Clarita</a></p><p><a href="/los-angeles-county-washer-dryer-pickup/">LA County washer &amp; dryer hub</a> · <a href="/torrance-washer-dryer-pickup/">Torrance laundry</a> · <a href="/santa-clarita-washer-dryer-pickup/">Santa Clarita laundry</a> · <a href="/glendale-washer-dryer-pickup/">Glendale laundry</a></p></div><div class="card"><h3>Central Coast</h3><p><a href="/central-coast-appliance-pickup/">Central Coast appliance hub</a><br><a href="/central-coast-washer-dryer-pickup/">Central Coast washer &amp; dryer hub</a></p></div><div class="card"><h3>San Francisco Bay Area</h3><p><a href="/sf-bay-area-appliance-pickup/">Bay Area appliance hub</a><br><a href="/sf-bay-area-washer-dryer-pickup/">Bay Area washer &amp; dryer hub</a></p></div></div></section><section class="service-socal-wd-hubs-20260918"><h2>Southern California Washer &amp; Dryer Pickup Hubs</h2><p>Regional laundry hubs connect the strongest Southern California pickup markets to their dedicated city pages.</p><div class="grid"><div class="card"><h3><a href="/san-gabriel-valley-washer-dryer-pickup/">San Gabriel Valley</a></h3><p>Pomona, Claremont, La Verne, San Dimas, Covina, West Covina, La Puente, Diamond Bar, Rowland Heights, Walnut and nearby communities.</p></div><div class="card"><h3><a href="/san-gabriel-inland-empire-washer-dryer-pickup/">Inland Empire</a></h3><p>Chino, Chino Hills, Montclair, Ontario, Upland, Rancho Cucamonga, Fontana and San Bernardino.</p></div><div class="card"><h3><a href="/orange-county-washer-dryer-pickup/">Orange County</a></h3><p>Anaheim, Santa Ana, Irvine, Costa Mesa, Huntington Beach, Newport Beach, Fullerton, La Habra and South Orange County.</p></div><div class="card"><h3><a href="/san-bernardino-county-washer-dryer-pickup/">San Bernardino County</a></h3><p>Western county cities plus Rialto, Colton, Highland, Redlands, Loma Linda, Grand Terrace and nearby communities.</p></div><div class="card"><h3><a href="/riverside-county-washer-dryer-pickup/">Riverside County</a></h3><p>Riverside, Corona, Eastvale, Moreno Valley, Perris, Menifee, Murrieta, Temecula and Coachella Valley routes.</p></div></div></section><section class="service-priority-california-laundry-cities-20260922"><h2>Priority California Washer &amp; Dryer City Pages</h2><p>For laundry equipment, use the city page matching the actual pickup address so washer/dryer testing, access and route details stay local.</p><div class="grid"><div class="card"><h3>San Gabriel Valley &amp; Inland Empire</h3><p><a href="/san-gabriel-washer-dryer-pickup/">San Gabriel</a> · <a href="/arcadia-washer-dryer-pickup/">Arcadia</a> · <a href="/duarte-washer-dryer-pickup/">Duarte</a> · <a href="/el-monte-washer-dryer-pickup/">El Monte</a> · <a href="/la-puente-washer-dryer-pickup/">La Puente</a> · <a href="/city-of-industry-washer-dryer-pickup/">City of Industry</a> · <a href="/hacienda-heights-washer-dryer-pickup/">Hacienda Heights</a> · <a href="/rowland-heights-washer-dryer-pickup/">Rowland Heights</a> · <a href="/west-covina-washer-dryer-pickup/">West Covina</a> · <a href="/covina-washer-dryer-pickup/">Covina</a> · <a href="/san-dimas-washer-dryer-pickup/">San Dimas</a> · <a href="/claremont-washer-dryer-pickup/">Claremont</a> · <a href="/pomona-washer-dryer-pickup/">Pomona</a> · <a href="/ontario-washer-dryer-pickup/">Ontario</a> · <a href="/fontana-washer-dryer-pickup/">Fontana</a> · <a href="/rialto-washer-dryer-pickup/">Rialto</a> · <a href="/san-bernardino-washer-dryer-pickup/">San Bernardino</a></p></div><div class="card"><h3>Orange County</h3><p><a href="/orange-washer-dryer-pickup/">Orange</a> · <a href="/anaheim-washer-dryer-pickup/">Anaheim</a> · <a href="/irvine-washer-dryer-pickup/">Irvine</a> · <a href="/huntington-beach-washer-dryer-pickup/">Huntington Beach</a> · <a href="/westminster-ca-washer-dryer-pickup/">Westminster</a> · <a href="/costa-mesa-washer-dryer-pickup/">Costa Mesa</a> · <a href="/mission-viejo-washer-dryer-pickup/">Mission Viejo</a></p></div><div class="card"><h3>Riverside County</h3><p><a href="/eastvale-washer-dryer-pickup/">Eastvale</a> · <a href="/corona-washer-dryer-pickup/">Corona</a> · <a href="/moreno-valley-washer-dryer-pickup/">Moreno Valley</a> · <a href="/riverside-washer-dryer-pickup/">Riverside</a> · <a href="/hemet-washer-dryer-pickup/">Hemet</a> · <a href="/temecula-washer-dryer-pickup/">Temecula</a> · <a href="/murrieta-washer-dryer-pickup/">Murrieta</a></p></div></div><p><a href="/washer-dryer-pickup/"><strong>Nationwide washer &amp; dryer pickup guide</strong></a> · <a href="/california-washer-dryer-pickup/"><strong>California washer &amp; dryer hub</strong></a></p></section></main>
 
   <footer><p><a href="../">Free Reliable Appliance Pickup</a> · Service hours: 8:00 AM–8:00 PM daily.</p><p><a href="../contact/">Contact</a> · <a href="../how-appliance-pickup-works/">How Pickup Works</a></p></footer>
+<script>
+(function(){
+  var input=document.getElementById('service-area-search');
+  var output=document.getElementById('service-area-results');
+  if(!input || !output) return;
+  var seen={};
+  var serviceAreaFinderLinks=Array.prototype.slice.call(document.querySelectorAll('main a[href]')).map(function(a){
+    var href=a.getAttribute('href')||'';
+    var text=(a.textContent||'').replace(/\s+/g,' ').trim();
+    return {href:href,text:text};
+  }).filter(function(item){
+    if(!item.text || !item.href || item.href.charAt(0)==='#') return false;
+    var key=item.href+'|'+item.text.toLowerCase();
+    if(seen[key]) return false;
+    seen[key]=true;
+    return /appliance-pickup|washer-dryer-pickup|service-areas/.test(item.href);
+  });
+  function render(){
+    var q=input.value.trim().toLowerCase();
+    output.innerHTML='';
+    if(q.length<2) return;
+    var matches=serviceAreaFinderLinks.filter(function(item){
+      return item.text.toLowerCase().indexOf(q)!==-1 || item.href.toLowerCase().indexOf(q.replace(/\s+/g,'-'))!==-1;
+    }).slice(0,18);
+    if(!matches.length){
+      output.innerHTML='<p>No approved page matched that search. Try a nearby city or regional hub.</p>';
+      return;
+    }
+    matches.forEach(function(item){
+      var a=document.createElement('a');
+      a.href=item.href;
+      a.textContent=item.text;
+      output.appendChild(a);
+    });
+  }
+  input.addEventListener('input',render);
+})();
+</script>
 </body>
 </html>

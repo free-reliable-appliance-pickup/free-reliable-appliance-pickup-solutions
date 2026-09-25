@@ -85,3 +85,13 @@ For pages already earning impressions:
 - For the nationwide homepage, support ZIP-first routing into the full request form without pretending ZIP alone confirms pickup.
 - Preload only the true high-priority hero image; preserve sharp source images and avoid unnecessary duplicate preloads.
 - Use Search Console CTR and position together before changing snippets; prioritize pages already visible on page one or within striking distance.
+
+
+## Service-area finder standard
+
+Large service directories should:
+- Keep approved city and regional links as normal crawlable HTML links.
+- Add a fast client-side city/region finder when the directory becomes long enough that scrolling is inefficient.
+- Build search results from the existing approved links rather than generating unapproved location URLs.
+- Never hide the underlying service directory from search engines just to provide filtering.
+- Direct unmatched locations to the closest legitimate regional hub or the main request form instead of manufacturing a new thin city page.
