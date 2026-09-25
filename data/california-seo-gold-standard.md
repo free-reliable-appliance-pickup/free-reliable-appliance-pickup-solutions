@@ -95,3 +95,17 @@ Large service directories should:
 - Build search results from the existing approved links rather than generating unapproved location URLs.
 - Never hide the underlying service directory from search engines just to provide filtering.
 - Direct unmatched locations to the closest legitimate regional hub or the main request form instead of manufacturing a new thin city page.
+
+
+## Request-intake quality standard
+
+The gold-model request form should capture enough information for a useful first review without making the customer repeat basic details:
+- Exact pickup address, city and ZIP.
+- Appliance type and working condition.
+- Brand/model when known.
+- Floor level, stairs and access constraints.
+- Preferred pickup window.
+- Whether the appliance is currently plugged in when relevant.
+- Whether the appliance can be tested.
+- Clear photo instructions even when the active form backend does not support native file uploads.
+- Do not add a file-upload control unless the live form backend and account plan actually support file storage and delivery.
