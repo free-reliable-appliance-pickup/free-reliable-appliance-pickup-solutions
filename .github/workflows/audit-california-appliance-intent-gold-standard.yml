@@ -34,6 +34,8 @@ on:
       - 'mission-viejo-appliance-pickup/**'
       - 'costa-mesa-appliance-pickup/**'
       - 'rowland-heights-appliance-pickup/**'
+      - 'fontana-appliance-pickup/**'
+      - 'san-bernardino-appliance-pickup/**'
       - 'sitemap.xml'
       - '.github/workflows/audit-california-appliance-intent-gold-standard.yml'
   pull_request:
@@ -253,6 +255,20 @@ jobs:
                       failures.append(f'{city_slug}: missing city network transparency {network_phrase}')
               if 'city-audience-guides-20260923' not in low:
                   failures.append(f'{city_slug}: missing city audience-guide links')
+              legacy_section_patterns=[
+                  'gsc-striking-distance',
+                  'ca-final-v6',
+                  'city-removal-intent-v7',
+                  'fast-request-v11',
+                  'fast-request-v12',
+                  'turbo-seo-network-v1',
+                  'major-guides-20260924',
+                  'major-appliance-focus-20260922',
+                  'corridor-authority-20260923',
+              ]
+              for legacy in legacy_section_patterns:
+                  if re.search(r'<section\\b[^>]*class=["\\\'][^"\\\']*'+re.escape(legacy)+r'[^"\\\']*["\\\']',s,re.I):
+                      failures.append(f'{city_slug}: legacy SEO section still present {legacy}')
               for audience_link in ['landlord-property-manager-appliance-pickup/','commercial-appliance-pickup/']:
                   if audience_link not in low:
                       failures.append(f'{city_slug}: missing audience guide {audience_link}')
