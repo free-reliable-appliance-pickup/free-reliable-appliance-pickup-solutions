@@ -1,0 +1,70 @@
+name: Audit Search Intent Ownership
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/search-intent-owners.json'
+      - 'data/california-appliance-intent-priority-city-pages.txt'
+      - '**/index.html'
+      - '.github/workflows/audit-search-intent-ownership.yml'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Keep generic near-me intent on canonical hub pages
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,re,html,sys
+
+          owners=json.loads(Path('data/search-intent-owners.json').read_text(encoding='utf-8'))
+          priorities=[x.strip() for x in Path('data/california-appliance-intent-priority-city-pages.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
+          failures=[]
+
+          def core_visible(raw):
+              # Remove script/style/comments and links entirely: exact generic phrases are allowed
+              # as descriptive anchor text that points users to the canonical intent owner.
+              x=re.sub(r'<script\b[^>]*>.*?</script>',' ',raw,flags=re.I|re.S)
+              x=re.sub(r'<style\b[^>]*>.*?</style>',' ',x,flags=re.I|re.S)
+              x=re.sub(r'<!--.*?-->',' ',x,flags=re.S)
+              x=re.sub(r'<a\b[^>]*>.*?</a>',' ',x,flags=re.I|re.S)
+              x=re.sub(r'<[^>]+>',' ',x)
+              x=html.unescape(x).lower()
+              return ' '.join(x.split())
+
+          for phrase,owner in owners.items():
+              owner_file=Path('index.html') if owner=='/' else Path(owner.strip('/'))/'index.html'
+              if not owner_file.exists():
+                  failures.append(f'owner missing for {phrase}: {owner}')
+                  continue
+              owner_text=html.unescape(owner_file.read_text(encoding='utf-8',errors='replace')).lower()
+              if phrase not in owner_text:
+                  failures.append(f'canonical owner {owner} does not visibly target phrase: {phrase}')
+
+          for slug in priorities:
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'priority page missing: {slug}')
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='replace')
+              core=core_visible(raw)
+              for phrase,owner in owners.items():
+                  if phrase in core:
+                      failures.append(f'{slug}: generic phrase "{phrase}" appears outside a link; owner is {owner}')
+
+          print('GENERIC_INTENT_OWNERS',len(owners))
+          print('PRIORITY_CITY_PAGES_CHECKED',len(priorities))
+          if failures:
+              print('FAILURES')
+              for f in failures: print('-',f)
+              sys.exit(1)
+          print('PASS: generic near-me intent remains concentrated on the designated hub pages.')
+          PY
