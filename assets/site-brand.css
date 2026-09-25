@@ -27,3 +27,12 @@ body.site-branded:has(form input[name="city"]) .site-hero-art.site-hero-art img{
  .priority-mobile-cta a:nth-child(2){background:#087443}
  .priority-mobile-cta a:nth-child(3){background:#17352a}
 }
+
+/* photo-first-intake-v1 */
+.site-branded .site-photo-first-intake{margin:0 0 18px;padding:16px 18px;background:#eef8f2;border:1px solid #c9e8ce;border-left:5px solid #087443;border-radius:12px}
+.site-branded .site-photo-first-intake strong{display:block;color:#063f70;font-size:18px}
+.site-branded .site-photo-first-intake p{margin:6px 0 10px;color:#31566f}
+.site-branded .site-photo-text-button{display:inline-block;padding:10px 15px;border-radius:999px;background:#087443;color:#fff!important;text-decoration:none;font-weight:800}
+.site-branded .site-photo-link-field{display:block;margin:14px 0;font-weight:800;color:#063f70}
+.site-branded .site-photo-link-field input{display:block;width:100%;margin-top:6px;padding:12px 13px;border:1px solid #bcd3c3;border-radius:10px;background:#fff;font:inherit}
+@media(max-width:520px){.site-branded .site-photo-first-intake{padding:14px}.site-branded .site-photo-text-button{display:block;text-align:center}}
