@@ -9,6 +9,7 @@ from PIL import Image
 
 BASE = 'https://freereliableappliancepickup.com/'
 MIN_HERO_WIDTH = 500  # Catch thumbnail-sized hero derivatives, not portrait originals.
+MAX_HERO_BYTES = 1_500_000  # Protect LCP/mobile delivery while preserving sharp originals elsewhere.
 
 
 class ImageRefs(HTMLParser):
@@ -65,6 +66,8 @@ def main():
                     problems.append(f'{url}: unreadable image {src}')
                 elif attrs.get('fetchpriority') == 'high' and size[0] < MIN_HERO_WIDTH:
                     problems.append(f'{url}: hero {src} only {size[0]}px wide')
+                elif attrs.get('fetchpriority') == 'high' and asset.stat().st_size > MAX_HERO_BYTES:
+                    problems.append(f'{url}: hero {src} is {asset.stat().st_size / 1_000_000:.2f} MB; use an optimized derivative under {MAX_HERO_BYTES / 1_000_000:.1f} MB')
     print(f'ACTIVE_PAGES={checked_pages} LOCAL_IMAGE_REFERENCES={checked_images} PROBLEMS={len(problems)}')
     for problem in problems:
         print(problem)
