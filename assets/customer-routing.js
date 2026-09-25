@@ -82,8 +82,69 @@ function buildLaundryGallery(path){if(document.querySelector('.site-laundry-phot
 function enhanceWasherDryerPhotos(){const path=pagePath(),config=WASHER_DRYER_PHOTOS[path];if(!config)return;const src=siteUrl('assets/laundry/'+config.hero),hero=document.querySelector('.site-hero-art img');if(hero){hero.src=src+(src.includes('?')?'&':'?')+'premium-set=20260916';hero.alt=config.alt;hero.removeAttribute('width');hero.removeAttribute('height');hero.decoding='async';hero.style.width='100%';hero.style.height='auto';hero.style.maxHeight='520px';hero.style.objectFit='contain';hero.style.background='#f5f7f6';hero.style.borderRadius='16px';hero.style.boxShadow='0 12px 28px rgba(0,0,0,.18)';}buildLaundryGallery(path);}
 function enhanceCityLaundrySearchTerms(){if(document.querySelector('.site-city-laundry-search'))return;const path=pagePath(),config=WASHER_DRYER_PHOTOS[path];if(!config)return;const slug=path.replace(/^\//,'').replace(/-washer-dryer-pickup\/$/,'');if(['california','southern-california','san-gabriel-inland-empire','los-angeles-county','orange-county','south-orange-county','riverside-county','san-bernardino-county'].includes(slug))return;const city=slugLabel(slug),main=document.querySelector('main');if(!main)return;const section=document.createElement('section');section.className='site-city-laundry-search';const h2=document.createElement('h2');h2.textContent='Free Washer, Dryer & Laundry Set Pickup in '+city;const lead=document.createElement('p');lead.textContent='Customers in '+city+' can submit washers, dryers and complete laundry sets for pickup review. Qualification depends on appliance condition, safe access and current route availability.';const grid=document.createElement('div');grid.className='grid';[['Free Washer Pickup in '+city,'Send clear photos and describe whether the washer fills, washes, drains and spins.'],['Free Dryer Pickup in '+city,'Identify gas or electric service and whether the drum turns and produces heat.'],['Free Washer & Dryer Pickup in '+city,'Complete working washer and dryer sets receive especially strong consideration because both machines can often be routed together for reuse.']].forEach(([title,text])=>{const card=document.createElement('div'),h3=document.createElement('h3'),p=document.createElement('p');card.className='card';h3.textContent=title;p.textContent=text;card.append(h3,p);grid.appendChild(card);});const note=document.createElement('div');note.className='note';note.innerHTML='<strong>Best chance for free pickup:</strong> fully working machines and complete working sets receive the strongest consideration. Send clear appliance and access photos for review.';section.append(h2,lead,grid,note);const first=main.querySelector('section');if(first&&first.nextSibling)main.insertBefore(section,first.nextSibling);else main.appendChild(section);}
 
+
+function pagePhone(){
+  const tel=document.querySelector('a[href^="tel:"]');
+  if(tel){
+    const digits=String(tel.getAttribute('href')||'').replace(/\D/g,'');
+    if(digits.length>=10)return {digits:digits.slice(-10),display:digits.slice(-10,-7)+'-'+digits.slice(-7,-4)+'-'+digits.slice(-4)};
+  }
+  return null;
+}
+function ensurePriorityMobileCta(){
+  if(document.querySelector('.priority-mobile-cta'))return;
+  const request=document.querySelector('#request, form[action*="formspree.io"]');
+  const phone=pagePhone();
+  if(!request||!phone)return;
+  document.body.classList.add('has-priority-mobile-cta');
+  const bar=document.createElement('nav');
+  bar.className='priority-mobile-cta';
+  bar.setAttribute('aria-label','Quick pickup actions');
+  const call=document.createElement('a');call.href='tel:+1'+phone.digits;call.textContent='Call';
+  const textLink=document.createElement('a');textLink.href='sms:+1'+phone.digits;textLink.textContent='Text Photos';
+  const requestLink=document.createElement('a');requestLink.href='#request';requestLink.textContent='Request Pickup';
+  bar.append(call,textLink,requestLink);
+  document.body.appendChild(bar);
+}
+function enhancePhotoFirstIntake(){
+  const phone=pagePhone();
+  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
+    if(form.dataset.photoFirstEnhanced==='1')return;
+    form.dataset.photoFirstEnhanced='1';
+    const box=document.createElement('div');
+    box.className='site-photo-first-intake';
+    const title=document.createElement('strong');
+    title.textContent='Photos help us review your pickup faster.';
+    const copy=document.createElement('p');
+    copy.textContent='Send clear appliance and access photos by text, or paste a share link below. Include inside photos for refrigerators/freezers and tested condition when known.';
+    box.append(title,copy);
+    if(phone){
+      const sms=document.createElement('a');
+      sms.href='sms:+1'+phone.digits;
+      sms.textContent='Text photos to '+phone.display;
+      sms.className='site-photo-text-button';
+      box.appendChild(sms);
+    }
+    form.insertBefore(box,form.firstChild);
+    if(!form.querySelector('[name="Photo Link"]')){
+      const wrap=document.createElement('label');
+      wrap.className='site-photo-link-field';
+      wrap.textContent='Optional photo share link (Google Photos, iCloud, Dropbox, etc.)';
+      const input=document.createElement('input');
+      input.type='url';
+      input.name='Photo Link';
+      input.inputMode='url';
+      input.placeholder='https://';
+      input.autocomplete='url';
+      wrap.appendChild(input);
+      const submit=form.querySelector('button[type="submit"],input[type="submit"]');
+      if(submit)form.insertBefore(wrap,submit);else form.appendChild(wrap);
+    }
+  });
+}
+
 load();
-document.addEventListener('DOMContentLoaded',()=>{replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();enhanceCityLaundrySearchTerms();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
+document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();enhanceCityLaundrySearchTerms();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
 /* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 /* Load the final sharp individual-photo override on every premium washer/dryer page. */
