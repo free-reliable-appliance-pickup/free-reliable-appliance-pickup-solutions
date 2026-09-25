@@ -12,3 +12,8 @@ costa-mesa-appliance-pickup
 rowland-heights-appliance-pickup
 fontana-appliance-pickup
 san-bernardino-appliance-pickup
+los-angeles-appliance-pickup
+glendale-appliance-pickup
+burbank-appliance-pickup
+la-crescenta-appliance-pickup
+montrose-appliance-pickup
