@@ -1,0 +1,90 @@
+name: Audit Homepage Concentration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - '.github/workflows/audit-homepage-concentration.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - '.github/workflows/audit-homepage-concentration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check homepage link concentration and first-step conversion
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, sys
+
+          s=Path('index.html').read_text(encoding='utf-8',errors='replace')
+          failures=[]
+
+          hrefs=re.findall(r'href=["\']/([^"\'#?]+)',s,re.I)
+          unique=set(x.rstrip('/') for x in hrefs)
+          print('HOMEPAGE_UNIQUE_INTERNAL_DESTINATIONS',len(unique))
+          if len(unique)>85:
+              failures.append(f'homepage has {len(unique)} unique internal destinations; keep at or below 85')
+
+          required=[]
+          m=re.search(r'<form[^>]+action=["\']https://formspree\.io/f/mvzeapzd["\'][\s\S]*?</form>',s,re.I)
+          if not m:
+              failures.append('main customer request form missing')
+          else:
+              form=m.group(0)
+              for tag in re.findall(r'<(?:input|select|textarea)\b[^>]*\brequired\b[^>]*>',form,re.I):
+                  n=re.search(r'name=["\']([^"\']+)',tag,re.I)
+                  required.append(n.group(1) if n else '?')
+              print('HOMEPAGE_REQUIRED_FIELDS',required)
+              allowed={'name','phone','city','state','zip','appliance','condition'}
+              unexpected=sorted(set(required)-allowed)
+              if unexpected:
+                  failures.append('unexpected required first-step fields: '+', '.join(unexpected))
+              for optional in ['address','floor','stairs','access','message','brand_model','preferred_window']:
+                  if re.search(r'<(?:input|select|textarea)\b[^>]*name=["\']'+re.escape(optional)+r'["\'][^>]*\brequired\b',form,re.I):
+                      failures.append(f'{optional} must remain optional on homepage first step')
+
+          required_links=[
+            'service-areas',
+            'washer-dryer-pickup',
+            'refrigerator-pickup',
+            'freezer-pickup',
+            'stove-oven-pickup',
+            'old-appliance-disposal-options',
+            'san-gabriel-valley-appliance-pickup',
+            'inland-empire-appliance-pickup',
+            'orange-county-appliance-pickup',
+            'riverside-county-appliance-pickup',
+            'fontana-appliance-pickup',
+            'san-bernardino-appliance-pickup',
+            'ontario-appliance-pickup',
+            'pomona-appliance-pickup',
+            'riverside-appliance-pickup',
+            'rancho-cucamonga-appliance-pickup',
+            'chino-appliance-pickup',
+            'west-covina-appliance-pickup',
+            'la-puente-appliance-pickup',
+            'eastvale-appliance-pickup',
+            'corona-appliance-pickup',
+            'irvine-appliance-pickup',
+            'huntington-beach-appliance-pickup',
+          ]
+          for slug in required_links:
+              if f'/{slug}/' not in s:
+                  failures.append(f'missing priority homepage link: {slug}')
+
+          if failures:
+              print('FAILURES')
+              for f in failures: print('-',f)
+              sys.exit(1)
+          print('PASS: homepage link authority stays concentrated and first-step conversion remains low-friction.')
+          PY
