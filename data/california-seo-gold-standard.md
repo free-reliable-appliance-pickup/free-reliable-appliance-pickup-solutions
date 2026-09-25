@@ -109,3 +109,14 @@ The gold-model request form should capture enough information for a useful first
 - Whether the appliance can be tested.
 - Clear photo instructions even when the active form backend does not support native file uploads.
 - Do not add a file-upload control unless the live form backend and account plan actually support file storage and delivery.
+
+
+## Interactive qualification standard
+
+The gold model should turn complicated pickup rules into a useful decision tool when possible:
+- A qualification checker may explain fully working, minor-repair, nonworking and unknown conditions.
+- Mixed-load logic may show whether the working share meets the approximately 80% guideline.
+- Dishwasher and microwave exceptions must be handled explicitly.
+- Results must say preliminary review, not guaranteed pickup.
+- Every result should point either to the request form or to realistic disposal alternatives.
+- Keep the written qualification rules visible and crawlable; the interactive tool supplements them rather than replacing them.
