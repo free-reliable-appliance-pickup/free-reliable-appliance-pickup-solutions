@@ -6,13 +6,13 @@ on:
     paths:
       - 'sitemap.xml'
       - 'sitemap-regular-washer-dryer.xml'
-      - 'data/approved-indexable-locations.txt'
+      - 'data/approved-indexable-locations.txt','data/approved-indexable-service-pages.txt'
       - '.github/workflows/auto-sitemap.yml'
   pull_request:
     paths:
       - 'sitemap.xml'
       - 'sitemap-regular-washer-dryer.xml'
-      - 'data/approved-indexable-locations.txt'
+      - 'data/approved-indexable-locations.txt','data/approved-indexable-service-pages.txt'
       - '.github/workflows/auto-sitemap.yml'
   workflow_dispatch:
 permissions:
@@ -29,7 +29,7 @@ jobs:
           from pathlib import Path
           import re, sys, xml.etree.ElementTree as ET
           BASE='https://freereliableappliancepickup.com/'
-          approved_raw=[x.strip() for x in Path('data/approved-indexable-locations.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
+          approved_raw=[x.strip() for x in Path('data/approved-indexable-locations.txt','data/approved-indexable-service-pages.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
           approved_locations=set(approved_raw)
           # Freeze location-page expansion at the current audited baseline.
           # New indexable location URLs should replace/consolidate an existing entry rather than
@@ -43,7 +43,7 @@ jobs:
               print('Consolidate or retire an existing location URL before approving another indexable location page.')
               sys.exit(1)
           approved_nonlocation={'','about','appliance-pickup-checklist','commercial-appliance-pickup','contact','free-pickup-qualification','freezer-pickup','how-appliance-pickup-works','landlord-property-manager-appliance-pickup','old-appliance-disposal-options','partners','refrigerator-pickup','service-areas','stove-oven-pickup','washer-dryer-pickup','california-washer-dryer-pickup','fresno-washer-dryer-pickup','los-angeles-county-washer-dryer-pickup','orange-county-washer-dryer-pickup','riverside-county-washer-dryer-pickup','san-bernardino-county-washer-dryer-pickup','san-gabriel-inland-empire-washer-dryer-pickup','southern-california-washer-dryer-pickup','southern-california-stove-oven-pickup','southern-california-freezer-pickup','southern-california-refrigerator-pickup'}
-          approved=approved_locations|approved_nonlocation
+          approved=approved_locations|approved_services|approved_nonlocation
           pages=[Path('index.html')]+sorted(p for p in Path('.').rglob('index.html') if p!=Path('index.html') and '.github' not in p.parts and '.git' not in p.parts)
           def relpath(p): return '' if p==Path('index.html') else p.parent.as_posix().strip('/')
           def indexable(p):
