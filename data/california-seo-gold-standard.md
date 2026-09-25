@@ -120,3 +120,15 @@ The gold model should turn complicated pickup rules into a useful decision tool 
 - Results must say preliminary review, not guaranteed pickup.
 - Every result should point either to the request form or to realistic disposal alternatives.
 - Keep the written qualification rules visible and crawlable; the interactive tool supplements them rather than replacing them.
+
+
+## Competitor-gap trust and outcome standard
+
+Priority gold-model pages should make these points obvious near the top:
+- The request is free to submit and no account is required.
+- Customers can use the form, call, or text when a regional phone route is active.
+- Commercial, landlord and property-manager requests have a clear dedicated path.
+- Explain what may happen after a qualifying pickup: reuse, resale, testing, repair/parts recovery when practical, or responsible recycling/disposal when reuse is not practical.
+- Never promise the same final destination for every appliance.
+- Never copy competitor claims that every broken appliance or every appliance type receives free pickup when that is not our policy.
+- Keep qualification language visible so conversion improvements do not create misleading expectations.
