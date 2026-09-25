@@ -143,8 +143,21 @@ function enhancePhotoFirstIntake(){
   });
 }
 
+function enhanceRequestNextSteps(){
+  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
+    const host=form.closest('section')||form.parentElement;
+    if(!host||host.querySelector('.site-request-next-steps'))return;
+    const text=(host.textContent||'').toLowerCase();
+    if(text.includes('what happens after you submit'))return;
+    const box=document.createElement('div');
+    box.className='site-request-next-steps';
+    box.innerHTML='<h3>What happens after you submit?</h3><div class="site-request-next-grid"><div><strong>1. We review the appliance</strong><span>Condition, photos and appliance type are checked.</span></div><div><strong>2. We review the address & access</strong><span>Stairs, gates, parking and route availability are considered.</span></div><div><strong>3. We confirm the pickup</strong><span>If the request qualifies, pickup details are confirmed by call or text.</span></div></div>';
+    host.insertBefore(box,form);
+  });
+}
+
 load();
-document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();enhanceCityLaundrySearchTerms();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
+document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();enhanceCityLaundrySearchTerms();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
 /* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 /* Load the final sharp individual-photo override on every premium washer/dryer page. */
