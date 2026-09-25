@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - 'sitemap.xml'
+      - '*-appliance-pickup/index.html'
+      - '*-washer-dryer-pickup/index.html'
       - 'data/california-seo-model-pages.txt'
       - 'data/california-washer-dryer-seo-model-pages.txt'
       - 'scripts/generate-image-sitemap.py'
