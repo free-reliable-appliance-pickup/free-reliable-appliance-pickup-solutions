@@ -1,0 +1,122 @@
+name: Audit California Gold Standard SEO
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*-appliance-pickup/index.html'
+      - 'data/california-appliance-intent-priority-city-pages.txt'
+      - '.github/workflows/audit-california-gold-standard-seo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify priority California SEO pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from collections import defaultdict
+          import html, re, sys
+
+          BASE='https://freereliableappliancepickup.com/'
+          slugs=[
+              x.strip()
+              for x in Path('data/california-appliance-intent-priority-city-pages.txt').read_text(encoding='utf-8').splitlines()
+              if x.strip()
+          ]
+
+          failures=[]
+          rows=[]
+          titles=defaultdict(list)
+          descriptions=defaultdict(list)
+
+          def visible_text(raw):
+              raw=re.sub(r'<script\b[^>]*>.*?</script>',' ',raw,flags=re.I|re.S)
+              raw=re.sub(r'<style\b[^>]*>.*?</style>',' ',raw,flags=re.I|re.S)
+              raw=re.sub(r'<[^>]+>',' ',raw)
+              return ' '.join(html.unescape(raw).split())
+
+          for slug in slugs:
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'MISSING FILE: {slug}/index.html')
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              low=raw.lower()
+
+              title_m=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
+              desc_m=re.search(r'<meta\s+name=["\']description["\'][^>]*content=["\']([^"\']+)["\']',raw,re.I)
+              if not desc_m:
+                  desc_m=re.search(r'<meta\s+content=["\']([^"\']+)["\'][^>]*name=["\']description["\']',raw,re.I)
+              canon_m=re.search(r'<link\s+rel=["\']canonical["\'][^>]*href=["\']([^"\']+)["\']',raw,re.I)
+              if not canon_m:
+                  canon_m=re.search(r'<link\s+href=["\']([^"\']+)["\'][^>]*rel=["\']canonical["\']',raw,re.I)
+
+              title=' '.join(html.unescape(title_m.group(1)).split()) if title_m else ''
+              desc=' '.join(html.unescape(desc_m.group(1)).split()) if desc_m else ''
+              canonical=canon_m.group(1).strip() if canon_m else ''
+              expected=BASE+slug+'/'
+              h1_count=len(re.findall(r'<h1\b',raw,re.I))
+              robot_ok=bool(re.search(r'<meta\s+name=["\']robots["\'][^>]*content=["\'][^"\']*index[^"\']*follow',raw,re.I))
+              request_target=bool(re.search(r'id=["\']request["\']',raw,re.I))
+              request_link=bool(re.search(r'href=["\'][^"\']*#request["\']',raw,re.I))
+              form='formspree.io/f/mvzeapzd' in low
+              routing='customer-routing.js' in low
+              brand='site-brand.css' in low
+              service='"@type":"Service"' in raw or '"@type": "Service"' in raw
+              breadcrumb='BreadcrumbList' in raw
+              faq='FAQPage' in raw
+              imgs=re.findall(r'<img\b[^>]*src=["\']([^"\']+)["\']',raw,re.I)
+              non_logo=[x for x in imgs if 'file_00000000b7c082308dccc73e5bd3acd2' not in x.lower() and 'logo' not in x.lower()]
+              text=visible_text(raw).lower()
+
+              if not title: failures.append(f'NO TITLE: {slug}')
+              if not desc: failures.append(f'NO META DESCRIPTION: {slug}')
+              if canonical!=expected: failures.append(f'BAD CANONICAL: {slug} -> {canonical!r}, expected {expected!r}')
+              if h1_count!=1: failures.append(f'H1 COUNT {h1_count}: {slug}')
+              if not robot_ok or 'noindex' in low: failures.append(f'ROBOTS NOT INDEX/FOLLOW: {slug}')
+              if not request_target or not request_link: failures.append(f'WEAK REQUEST PATH: {slug}')
+              if not form: failures.append(f'NO FORMSPREE FORM: {slug}')
+              if not routing: failures.append(f'NO CUSTOMER ROUTING JS: {slug}')
+              if not brand: failures.append(f'NO SHARED BRAND CSS: {slug}')
+              if not service: failures.append(f'NO SERVICE SCHEMA: {slug}')
+              if not breadcrumb: failures.append(f'NO BREADCRUMB SCHEMA: {slug}')
+              if not faq: failures.append(f'NO FAQ SCHEMA: {slug}')
+              if len(non_logo)<2: failures.append(f'FEWER THAN 2 REAL/PAGE IMAGES: {slug}')
+              for term in ('washer','dryer','refrigerator','freezer','stove'):
+                  if term not in text:
+                      failures.append(f'MISSING APPLIANCE BREADTH {term}: {slug}')
+
+              if title: titles[title.lower()].append(slug)
+              if desc: descriptions[desc.lower()].append(slug)
+              rows.append((slug,title,desc,canonical,len(non_logo)))
+
+          for title,owners in titles.items():
+              if len(owners)>1:
+                  failures.append('DUPLICATE TITLE: '+', '.join(owners)+' | '+title)
+          for desc,owners in descriptions.items():
+              if len(owners)>1:
+                  failures.append('DUPLICATE META DESCRIPTION: '+', '.join(owners)+' | '+desc)
+
+          print('PRIORITY_PAGES',len(slugs))
+          print('CHECKED_ROWS',len(rows))
+          print('UNIQUE_TITLES',len(titles))
+          print('UNIQUE_DESCRIPTIONS',len(descriptions))
+          for slug,title,desc,canonical,nimg in rows:
+              print(f'{slug} | images={nimg} | {title}')
+
+          if failures:
+              print('\nFAILURES')
+              for f in failures:
+                  print('-',f)
+              sys.exit(1)
+
+          print('\nPASS: California priority pages have unique metadata, exact canonicals, one H1, index/follow, structured data, request paths, shared routing/branding, appliance breadth, and at least two non-logo images.')
+          PY
