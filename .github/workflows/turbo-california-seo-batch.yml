@@ -1,0 +1,47 @@
+name: Turbo California SEO Batch
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'data/turbo-seo-network.json'
+      - 'scripts/turbo-seo-batch.py'
+      - '.github/workflows/turbo-california-seo-batch.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: turbo-california-seo-batch
+  cancel-in-progress: true
+
+jobs:
+  turbo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Apply all priority-page SEO changes in one run
+        run: python3 scripts/turbo-seo-batch.py --write
+
+      - name: Verify the batch is stable
+        run: |
+          python3 scripts/turbo-seo-batch.py > /tmp/turbo-dry-run.txt
+          cat /tmp/turbo-dry-run.txt
+          grep -q 'TARGETS_CHANGED=0' /tmp/turbo-dry-run.txt
+
+      - name: Commit once
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-appliance-pickup/index.html' sitemap.xml
+          if git diff --cached --quiet; then
+            echo "No page changes needed"
+            exit 0
+          fi
+          git commit -m "Apply turbo California SEO batch"
+          git push
