@@ -18,7 +18,7 @@
 .top{background:#fff;border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:18px;padding:18px 0;flex-wrap:wrap}.brand img{width:118px;height:118px;object-fit:contain}.brand-copy{flex:1;min-width:220px}.brand-copy .brand-title{margin:0;color:var(--blue);font-size:34px;line-height:1.05}.brand-copy .brand-title span{color:var(--green)}.tag{margin:7px 0 0;color:#31566f;font-style:italic}.hours{font-weight:700;color:var(--green);white-space:nowrap}
 nav{background:var(--blue);color:#fff}.nav{display:flex;gap:24px;flex-wrap:wrap;padding:13px 0}.nav a{text-decoration:none;font-weight:700}
-.hero{background:linear-gradient(135deg,#eef9f1 0%,#ffffff 50%,#eef8ff 100%);padding:54px 0}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}.hero h1{font-size:58px;line-height:.95;margin:0;color:var(--blue);letter-spacing:-1px}.hero h1 span{display:block;color:var(--green)}.hero .lead{font-size:22px;margin:18px 0}.cta{display:inline-block;background:var(--green);color:#fff;text-decoration:none;font-weight:800;padding:16px 26px;border-radius:999px;font-size:20px;box-shadow:0 6px 18px #0b8f2e33;margin:4px 8px 4px 0}.hero-check{max-width:560px;margin:18px 0 14px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 8px 22px #11354f10}.hero-check label{display:block;color:var(--blue);margin-bottom:8px}.hero-check-row{display:flex;gap:8px}.hero-check input{flex:1;min-width:0;padding:13px 14px;border:1px solid #bfd2c7;border-radius:10px;font:inherit}.hero-check button{border:0;background:var(--green);color:#fff;font-weight:900;padding:13px 18px;border-radius:10px;cursor:pointer}.hero-check small{display:block;margin-top:8px;color:#5f7482}.hero-logo{display:flex;justify-content:center}.hero-logo img{width:min(420px,100%);filter:drop-shadow(0 10px 20px #003d6022)}
+.hero{background:linear-gradient(135deg,#eef9f1 0%,#ffffff 50%,#eef8ff 100%);padding:54px 0}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}.hero h1{font-size:58px;line-height:.95;margin:0;color:var(--blue);letter-spacing:-1px}.hero h1 span{display:block;color:var(--green)}.hero .lead{font-size:22px;margin:18px 0}.cta{display:inline-block;background:var(--green);color:#fff;text-decoration:none;font-weight:800;padding:16px 26px;border-radius:999px;font-size:20px;box-shadow:0 6px 18px #0b8f2e33;margin:4px 8px 4px 0}.hero-check{max-width:560px;margin:18px 0 14px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 8px 22px #11354f10}.hero-check label{display:block;color:var(--blue);margin-bottom:8px}.hero-check-row{display:flex;gap:8px}.hero-check input{flex:1;min-width:0;padding:13px 14px;border:1px solid #bfd2c7;border-radius:10px;font:inherit}.hero-check button{border:0;background:var(--green);color:#fff;font-weight:900;padding:13px 18px;border-radius:10px;cursor:pointer}.hero-check small{display:block;margin-top:8px;color:#5f7482}.hero-route-result{display:none;margin-top:12px;padding:12px 14px;border:1px solid #c9e8ce;border-radius:12px;background:#edf8ef;color:#17324a}.hero-route-result.active{display:block}.hero-route-result strong{color:var(--green)}.hero-route-result a{font-weight:800;color:var(--blue)}.hero-logo{display:flex;justify-content:center}.hero-logo img{width:min(420px,100%);filter:drop-shadow(0 10px 20px #003d6022)}
 .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}.quick div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center;font-weight:700}.quick strong{display:block;color:var(--green);font-size:24px}
 section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-size:36px;margin:0 0 12px}.section-intro{text-align:center;max-width:760px;margin:0 auto 30px;color:#4c6576}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 24px #11354f0d}.card h3{margin:0 0 8px;color:var(--blue)}
 .soft{background:var(--light)}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step{background:#fff;border-radius:18px;padding:22px;border:1px solid var(--line)}.num{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;font-weight:900;font-size:20px;margin-bottom:10px}
@@ -63,6 +63,7 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
         <label for="hero-zip"><strong>Check local availability by ZIP</strong></label>
         <div class="hero-check-row"><input id="hero-zip" name="hero_zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="10" pattern="[0-9]{5}(-[0-9]{4})?" placeholder="Enter ZIP code" required><button type="submit">Check Availability</button></div>
         <small>Free to submit. Pickup is confirmed only after appliance condition, access and local route availability are reviewed.</small>
+        <div id="hero-route-result" class="hero-route-result" aria-live="polite"></div>
       </form>
       <a class="cta" href="#request">Request Free Pickup →</a><a class="cta" href="/los-angeles-appliance-pickup/">Free Appliance Pickup Los Angeles →</a><a class="cta" href="/washer-dryer-pickup/">Free Washer & Dryer Pickup →</a>
       <div class="quick"><div><strong>7 Days</strong>Mon–Sun service hours</div><div><strong>Local</strong>Regional pickup coverage</div><div><strong>No Account</strong>Free to submit</div></div>
@@ -235,19 +236,53 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
   </div>
 </section>
 </main>
-<footer class="footer"><div class="wrap footer-grid"><div style="display:flex;gap:14px;align-items:center"><img src="/file_00000000b7c082308dccc73e5bd3acd2.png" alt="Free Reliable Appliance Pickup logo" width="82" height="82" loading="lazy" decoding="async"><strong>Free Reliable Appliance Pickup</strong></div><div><a href="/washer-dryer-pickup/">Washer & Dryer Pickup</a> · <a href="/service-areas/">Service Areas</a> · <a href="/how-appliance-pickup-works/">How It Works</a> · <a href="#request">Request Pickup</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Service Terms</a></div></div></footer>
+<footer class="footer"><div class="wrap footer-grid"><div style="display:flex;gap:14px;align-items:center"><img src="/file_00000000b7c082308dccc73e5bd3acd2.png" alt="Free Reliable Appliance Pickup logo" width="82" height="82" loading="lazy" decoding="async"><strong>Free Reliable Appliance Pickup</strong></div><div><a href="/washer-dryer-pickup/">Washer & Dryer Pickup</a> · <a href="/service-areas/">Service Areas</a> · <a href="/how-appliance-pickup-works/">How It Works</a> · <a href="#request">Request Pickup</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Service Terms</a> · <a href="/partners/">Partner Program</a></div></div></footer>
 <script>
 (function(){
   var homepageZipForm=document.getElementById('hero-zip-form');
   if(!homepageZipForm) return;
+
+  function routeForZip(zip){
+    var z=String(zip||'').replace(/\D/g,'').slice(0,5);
+    if(z.length!==5) return null;
+    var p3=parseInt(z.slice(0,3),10);
+
+    if(p3===917 || p3===918) return {region:'San Gabriel Valley / Inland Empire',phone:'909-375-6685',tel:'+19093756685',href:'/san-gabriel-inland-empire-appliance-pickup/'};
+    if(p3===922) return {region:'Coachella Valley',phone:'909-375-6685',tel:'+19093756685',href:'/coachella-valley-appliance-pickup/'};
+    if(p3===923 || p3===924) return {region:'Inland Empire / San Bernardino County / High Desert',phone:'909-375-6685',tel:'+19093756685',href:'/inland-empire-appliance-pickup/'};
+    if(p3===925) return {region:'Riverside County',phone:'909-375-6685',tel:'+19093756685',href:'/riverside-county-appliance-pickup/'};
+    if(p3===926 || p3===927 || p3===928) return {region:'Orange County',phone:'909-375-6685',tel:'+19093756685',href:'/orange-county-appliance-pickup/'};
+    if(p3===935) return {region:'Antelope Valley',phone:'310-774-4304',tel:'+13107744304',href:'/antelope-valley-appliance-pickup/'};
+    if(p3>=900 && p3<=916) return {region:'Los Angeles County',phone:'310-774-4304',tel:'+13107744304',href:'/los-angeles-county-appliance-pickup/'};
+    if(p3>=919 && p3<=921) return {region:'San Diego County',phone:'310-774-4304',tel:'+13107744304',href:'/san-diego-county-appliance-pickup/'};
+    if(p3>=930 && p3<=934) return {region:'Central Coast California',phone:'310-774-4304',tel:'+13107744304',href:'/central-coast-appliance-pickup/'};
+    if(p3>=936 && p3<=961) return {region:'California',phone:'310-774-4304',tel:'+13107744304',href:'/california-appliance-pickup/'};
+    if(p3>=970 && p3<=979) return {region:'Oregon',phone:'503-868-4455',tel:'+15038684455',href:'/oregon-appliance-pickup/'};
+    if(p3>=980 && p3<=994) return {region:'Washington',phone:'503-868-4455',tel:'+15038684455',href:'/washington-appliance-pickup/'};
+    if(p3>=800 && p3<=816) return {region:'Colorado',phone:'720-604-7498',tel:'+17206047498',href:'/colorado-appliance-pickup/'};
+    return null;
+  }
+
   homepageZipForm.addEventListener('submit',function(e){
     e.preventDefault();
     var source=document.getElementById('hero-zip');
     var target=document.getElementById('zip');
     var request=document.getElementById('request');
-    if(target && source) target.value=source.value.trim();
-    if(request) request.scrollIntoView({behavior:'smooth',block:'start'});
-    if(target) setTimeout(function(){target.focus();},350);
+    var result=document.getElementById('hero-route-result');
+    var zip=source ? source.value.trim() : '';
+    if(target) target.value=zip;
+
+    var route=routeForZip(zip);
+    if(result){
+      if(route){
+        result.innerHTML='<strong>'+route.region+' pickup route</strong><br><a href="tel:'+route.tel+'">Call '+route.phone+'</a> · <a href="sms:'+route.tel+'">Text appliance photos</a> · <a href="'+route.href+'">Open local service hub</a><br><small>Pickup still depends on appliance condition, access and current route availability.</small>';
+      }else{
+        result.innerHTML='<strong>Request review available</strong><br>We could not match this ZIP to a dedicated regional line yet. Continue with the request form below and we will review local coverage.';
+      }
+      result.classList.add('active');
+    }
+
+    if(request) setTimeout(function(){request.scrollIntoView({behavior:'smooth',block:'start'});},900);
   });
 })();
 </script>
