@@ -36,3 +36,12 @@ body.site-branded:has(form input[name="city"]) .site-hero-art.site-hero-art img{
 .site-branded .site-photo-link-field{display:block;margin:14px 0;font-weight:800;color:#063f70}
 .site-branded .site-photo-link-field input{display:block;width:100%;margin-top:6px;padding:12px 13px;border:1px solid #bcd3c3;border-radius:10px;background:#fff;font:inherit}
 @media(max-width:520px){.site-branded .site-photo-first-intake{padding:14px}.site-branded .site-photo-text-button{display:block;text-align:center}}
+
+/* request-next-steps-v1 */
+.site-branded .site-request-next-steps{margin:0 0 18px;padding:18px;background:#fff;border:1px solid #d7e5dc;border-radius:14px}
+.site-branded .site-request-next-steps h3{margin:0 0 12px}
+.site-branded .site-request-next-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.site-branded .site-request-next-grid>div{padding:12px;background:#f7fbf8;border:1px solid #d8e8df;border-radius:10px}
+.site-branded .site-request-next-grid strong,.site-branded .site-request-next-grid span{display:block}
+.site-branded .site-request-next-grid span{margin-top:4px;color:#49677a;font-size:14px}
+@media(max-width:650px){.site-branded .site-request-next-grid{grid-template-columns:1fr}}
