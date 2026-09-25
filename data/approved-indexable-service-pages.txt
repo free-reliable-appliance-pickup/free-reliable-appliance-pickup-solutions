@@ -1,0 +1,17 @@
+# Explicitly approved indexable appliance-specific service pages.
+# These are separate from the frozen location-page inventory and must add material user value.
+fontana-freezer-pickup
+fontana-refrigerator-pickup
+fontana-stove-oven-pickup
+ontario-freezer-pickup
+ontario-refrigerator-pickup
+ontario-stove-oven-pickup
+pomona-freezer-pickup
+pomona-refrigerator-pickup
+pomona-stove-oven-pickup
+riverside-freezer-pickup
+riverside-refrigerator-pickup
+riverside-stove-oven-pickup
+san-bernardino-freezer-pickup
+san-bernardino-refrigerator-pickup
+san-bernardino-stove-oven-pickup
