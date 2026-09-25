@@ -17,3 +17,13 @@ body.site-branded:has(form input[name="city"]) .site-hero-art.site-hero-art{back
 body.site-branded:has(form input[name="city"]) .site-hero-art.site-hero-art img{opacity:1!important;display:block!important;position:static!important;inset:auto!important;width:min(420px,100%)!important;height:auto!important;max-width:100%!important;max-height:560px!important;object-fit:contain!important;border-radius:16px!important;background:#fff!important;box-shadow:0 12px 28px rgba(0,61,96,.12)!important;pointer-events:auto!important}
 @media(max-width:850px){body.site-branded:has(form input[name="city"]) .site-hero-art.site-hero-art img{max-width:330px!important;max-height:480px!important}}
 @media(max-width:520px){body.site-branded:has(form input[name="city"]) .site-hero-art.site-hero-art img{max-width:260px!important;max-height:390px!important}}
+
+/* priority-mobile-cta-v1 */
+.priority-mobile-cta{display:none}
+@media(max-width:760px){
+ body.has-priority-mobile-cta{padding-bottom:72px}
+ .priority-mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:9999;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:#17352a;box-shadow:0 -4px 18px rgba(0,0,0,.18)}
+ .priority-mobile-cta a{display:flex;align-items:center;justify-content:center;min-height:58px;padding:9px 6px;text-align:center;text-decoration:none;font:800 13px/1.2 Arial,Helvetica,sans-serif;background:#075c34;color:#fff!important}
+ .priority-mobile-cta a:nth-child(2){background:#087443}
+ .priority-mobile-cta a:nth-child(3){background:#17352a}
+}
