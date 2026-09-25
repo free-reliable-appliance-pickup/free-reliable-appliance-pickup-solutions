@@ -16,6 +16,16 @@ Every benchmark page should:
 - Include useful official disposal/bulky-item alternatives when a reliable government source materially helps the customer.
 - Keep small communities consolidated into useful regional hubs when a standalone page would be substantially similar.
 
+## Search-intent decision layer
+
+Priority pages with meaningful search demand should:
+- Explain when the qualification-based reuse-focused pickup route is the best fit and when another disposal route is more appropriate.
+- Link to a current official city, county or contracted-waste-provider bulky-item/appliance program when a reliable source materially helps the customer.
+- Keep municipal alternatives clearly separate from our service; never imply that a city program is operated by or affiliated with Free Reliable Appliance Pickup.
+- Connect high-intent phrases such as free appliance pickup, free appliance recycling, refrigerator pickup, appliance removal and near-me intent through useful explanatory copy rather than repetitive keyword blocks.
+- Give non-qualifying customers a useful next step instead of a dead end.
+- Prefer improving an existing strong city or regional page over creating another thin location page.
+
 ## Authentic image ranking standard
 
 Every priority page should:
