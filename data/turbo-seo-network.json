@@ -1,0 +1,56 @@
+{
+  "version": "2026-09-24.1",
+  "purpose": "Batch-maintain internal-link clusters on existing approved California priority pages. This file does not create new location pages.",
+  "regions": {
+    "San Gabriel Valley": {
+      "hub": "san-gabriel-valley-appliance-pickup",
+      "members": {
+        "pasadena-appliance-pickup": ["arcadia-appliance-pickup","san-gabriel-appliance-pickup","alhambra-appliance-pickup","duarte-appliance-pickup"],
+        "arcadia-appliance-pickup": ["pasadena-appliance-pickup","san-gabriel-appliance-pickup","duarte-appliance-pickup","el-monte-appliance-pickup"],
+        "san-gabriel-appliance-pickup": ["pasadena-appliance-pickup","arcadia-appliance-pickup","el-monte-appliance-pickup","alhambra-appliance-pickup"],
+        "el-monte-appliance-pickup": ["san-gabriel-appliance-pickup","la-puente-appliance-pickup","baldwin-park-appliance-pickup","west-covina-appliance-pickup"],
+        "la-puente-appliance-pickup": ["west-covina-appliance-pickup","baldwin-park-appliance-pickup","walnut-appliance-pickup","rowland-heights-appliance-pickup"],
+        "west-covina-appliance-pickup": ["covina-appliance-pickup","baldwin-park-appliance-pickup","la-puente-appliance-pickup","walnut-appliance-pickup"],
+        "covina-appliance-pickup": ["west-covina-appliance-pickup","azusa-appliance-pickup","glendora-appliance-pickup","san-dimas-appliance-pickup"],
+        "san-dimas-appliance-pickup": ["glendora-appliance-pickup","la-verne-appliance-pickup","claremont-appliance-pickup","pomona-appliance-pickup"],
+        "la-verne-appliance-pickup": ["san-dimas-appliance-pickup","claremont-appliance-pickup","pomona-appliance-pickup","upland-appliance-pickup"],
+        "claremont-appliance-pickup": ["la-verne-appliance-pickup","pomona-appliance-pickup","montclair-appliance-pickup","upland-appliance-pickup"],
+        "pomona-appliance-pickup": ["claremont-appliance-pickup","montclair-appliance-pickup","chino-appliance-pickup","chino-hills-appliance-pickup"],
+        "city-of-industry-appliance-pickup": ["la-puente-appliance-pickup","hacienda-heights-appliance-pickup","rowland-heights-appliance-pickup","walnut-appliance-pickup"],
+        "hacienda-heights-appliance-pickup": ["city-of-industry-appliance-pickup","rowland-heights-appliance-pickup","la-puente-appliance-pickup","whittier-appliance-pickup"],
+        "rowland-heights-appliance-pickup": ["walnut-appliance-pickup","diamond-bar-appliance-pickup","hacienda-heights-appliance-pickup","la-puente-appliance-pickup"]
+      }
+    },
+    "Inland Empire": {
+      "hub": "inland-empire-appliance-pickup",
+      "members": {
+        "ontario-appliance-pickup": ["montclair-appliance-pickup","upland-appliance-pickup","rancho-cucamonga-appliance-pickup","chino-appliance-pickup"],
+        "rancho-cucamonga-appliance-pickup": ["upland-appliance-pickup","ontario-appliance-pickup","fontana-appliance-pickup","rialto-appliance-pickup"],
+        "fontana-appliance-pickup": ["rancho-cucamonga-appliance-pickup","rialto-appliance-pickup","san-bernardino-appliance-pickup","bloomington-appliance-pickup"],
+        "rialto-appliance-pickup": ["fontana-appliance-pickup","san-bernardino-appliance-pickup","bloomington-appliance-pickup","colton-appliance-pickup"],
+        "san-bernardino-appliance-pickup": ["rialto-appliance-pickup","fontana-appliance-pickup","colton-appliance-pickup","highland-appliance-pickup"]
+      }
+    },
+    "Riverside County": {
+      "hub": "riverside-county-appliance-pickup",
+      "members": {
+        "riverside-appliance-pickup": ["jurupa-valley-appliance-pickup","eastvale-appliance-pickup","corona-appliance-pickup","moreno-valley-appliance-pickup"],
+        "eastvale-appliance-pickup": ["jurupa-valley-appliance-pickup","corona-appliance-pickup","norco-appliance-pickup","ontario-appliance-pickup"],
+        "corona-appliance-pickup": ["eastvale-appliance-pickup","norco-appliance-pickup","riverside-appliance-pickup","chino-hills-appliance-pickup"],
+        "moreno-valley-appliance-pickup": ["riverside-appliance-pickup","perris-appliance-pickup","redlands-appliance-pickup","beaumont-appliance-pickup"]
+      }
+    },
+    "Orange County": {
+      "hub": "orange-county-appliance-pickup",
+      "members": {
+        "anaheim-appliance-pickup": ["orange-appliance-pickup","fullerton-appliance-pickup","yorba-linda-appliance-pickup","garden-grove-appliance-pickup"],
+        "irvine-appliance-pickup": ["tustin-appliance-pickup","costa-mesa-appliance-pickup","lake-forest-appliance-pickup","newport-beach-appliance-pickup"],
+        "huntington-beach-appliance-pickup": ["fountain-valley-appliance-pickup","costa-mesa-appliance-pickup","westminster-appliance-pickup","garden-grove-appliance-pickup"],
+        "costa-mesa-appliance-pickup": ["irvine-appliance-pickup","newport-beach-appliance-pickup","huntington-beach-appliance-pickup","fountain-valley-appliance-pickup"],
+        "tustin-appliance-pickup": ["irvine-appliance-pickup","orange-appliance-pickup","santa-ana-appliance-pickup","lake-forest-appliance-pickup"],
+        "mission-viejo-appliance-pickup": ["lake-forest-appliance-pickup","laguna-niguel-appliance-pickup","rancho-santa-margarita-appliance-pickup","irvine-appliance-pickup"],
+        "newport-beach-appliance-pickup": ["costa-mesa-appliance-pickup","irvine-appliance-pickup","huntington-beach-appliance-pickup","fountain-valley-appliance-pickup"]
+      }
+    }
+  }
+}
