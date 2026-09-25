@@ -72,3 +72,16 @@ The gold model should assign one clear primary purpose to each page:
 - `/old-appliance-disposal-options/` owns generic appliance recycling/disposal comparison intent.
 - Do not canonicalize useful laundry pages to general city pages. Keep self-canonicals and differentiate purpose through titles, H1s, visible copy and internal links.
 - Prefer intent clarification and consolidation over creating another near-duplicate page.
+
+
+## Search snippet and first-screen standard
+
+For pages already earning impressions:
+- Keep the primary search phrase at the beginning of the title and make the second half a useful action or differentiator rather than a long keyword list.
+- Keep the title concise enough to reduce avoidable truncation; do not sacrifice clarity just to reach a character target.
+- Write a unique meta description that states the qualification rule or next action truthfully.
+- Keep HTML title, Open Graph title and WebPage structured-data name synchronized; do the same for descriptions when WebPage description is present.
+- Put the main decision or action in the first screen: check local availability, understand qualification, or start the request.
+- For the nationwide homepage, support ZIP-first routing into the full request form without pretending ZIP alone confirms pickup.
+- Preload only the true high-priority hero image; preserve sharp source images and avoid unnecessary duplicate preloads.
+- Use Search Console CTR and position together before changing snippets; prioritize pages already visible on page one or within striking distance.
