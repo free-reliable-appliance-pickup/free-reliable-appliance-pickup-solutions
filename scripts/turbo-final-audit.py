@@ -40,12 +40,28 @@ def hrefs(raw):
     return re.findall(r'href\s*=\s*["\']([^"\']+)["\']',raw,re.I)
 
 targets=set()
-for region in CFG["regions"].values():
-    targets.add(region["hub"])
-    targets.add(laundry(region["hub"]))
-    for slug in region["members"]:
+program_requirements={}
+program_cfg=CFG.get("program_links",{})
+program_regions=set(program_cfg.get("regions",[]))
+appliance_programs=[
+    str(x.get("slug","")).strip()
+    for x in program_cfg.get("appliance",[])
+    if str(x.get("slug","")).strip()
+]
+laundry_programs=[
+    str(x.get("slug","")).strip()
+    for x in program_cfg.get("laundry",[])
+    if str(x.get("slug","")).strip()
+]
+
+for region_name, region in CFG["regions"].items():
+    appliance_targets={region["hub"], *region["members"].keys()}
+    for slug in appliance_targets:
         targets.add(slug)
         targets.add(laundry(slug))
+        if region_name in program_regions:
+            program_requirements[slug]=appliance_programs
+            program_requirements[laundry(slug)]=laundry_programs
 for slug in CFG.get("specialty_pages",{}):
     targets.add(slug)
 
@@ -81,6 +97,12 @@ for slug in sorted(targets):
         fail.append(f"{slug}: missing from published sitemaps")
     if "<img" not in raw.lower():
         fail.append(f"{slug}: no image")
+    for required in program_requirements.get(slug, []):
+        double=f'href="/{required}/"'
+        single=f"href='/{required}/'"
+        if double not in raw and single not in raw:
+            fail.append(f"{slug}: missing required program link {required}")
+
     internal=0
     for href in hrefs(raw):
         if href.startswith("/"):
@@ -103,4 +125,4 @@ if fail:
     print("TURBO_FINAL_AUDIT_FAILURES",len(fail))
     for x in fail: print("FAIL",x)
     sys.exit(1)
-print("PASS: Turbo priority network has valid canonicals, metadata, H1s, managed links, sitemap coverage and images.")
+print("PASS: Turbo priority network has valid canonicals, metadata, H1s, managed regional/program links, sitemap coverage and images.")
