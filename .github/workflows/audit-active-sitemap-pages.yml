@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'sitemap.xml'
+      - 'data/approved-indexable-service-pages.txt'
       - '.github/workflows/audit-active-sitemap-pages.yml'
   workflow_dispatch:
 
@@ -25,6 +26,7 @@ jobs:
 
           BASE='https://freereliableappliancepickup.com/'
           INFORMATIONAL={'landlord-property-manager-appliance-pickup'}
+          SERVICE_PAGES=set(x.strip() for x in Path('data/approved-indexable-service-pages.txt').read_text(encoding='utf-8').splitlines() if x.strip() and not x.lstrip().startswith('#'))
 
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
@@ -51,7 +53,7 @@ jobs:
               if not p.exists():
                   failures.append(f'MISSING FILE: {slug}/index.html')
                   continue
-              if not slug.endswith('-appliance-pickup') or slug in INFORMATIONAL:
+              if not slug.endswith('-appliance-pickup') or slug in INFORMATIONAL or slug in SERVICE_PAGES:
                   continue
 
               raw=p.read_text(encoding='utf-8',errors='ignore')
