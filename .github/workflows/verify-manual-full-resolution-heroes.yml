@@ -69,7 +69,7 @@ jobs:
                   'Twitter image': re.search(r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']' + re.escape(absolute), text, re.I),
                   'primaryImageOfPage': ('primaryImageOfPage' in text and absolute in text),
                   'visible hero': re.search(r'class=["\']site-hero-art["\'][\s\S]{0,1200}?<img[^>]+src=["\']' + re.escape(display_rel), text, re.I),
-                  'hero lock': re.search(r'data-premium-hero-lock=["\']1["\'][\s\S]{0,2500}?' + re.escape(rel), text, re.I),
+                  'hero lock': re.search(r'data-premium-hero-lock=["\']1["\'][\s\S]{0,2500}?' + re.escape(display_rel), text, re.I),
               }
 
               for label, ok in checks.items():
