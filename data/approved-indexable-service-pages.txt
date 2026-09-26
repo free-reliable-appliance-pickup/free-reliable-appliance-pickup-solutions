@@ -15,3 +15,23 @@ riverside-stove-oven-pickup
 san-bernardino-freezer-pickup
 san-bernardino-refrigerator-pickup
 san-bernardino-stove-oven-pickup
+
+# Approved non-location service, commercial, recycling and program pages.
+appliance-installer-remodeler-pickup
+appliance-removal
+california-appliance-recycling-resources
+coachella-valley-pickup-partner-interest
+coachella-valley-senior-living-appliance-pickup
+commercial-appliance-pickup-locations
+commercial-laundry-appliance-pickup
+commercial-refrigeration-appliance-pickup
+distribution-warehouse-appliance-pickup
+home-improvement-store-appliance-pickup
+hotel-hospitality-appliance-pickup
+multifamily-appliance-pickup
+recurring-appliance-pickup-program
+restaurant-commercial-kitchen-appliance-pickup
+retail-appliance-pickup
+reverse-logistics-appliance-pickup
+senior-living-appliance-pickup
+service-standards
