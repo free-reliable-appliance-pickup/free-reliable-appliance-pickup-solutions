@@ -239,6 +239,11 @@ jobs:
                       failures.append(f'{main_slug}: missing lead-quality field {field_name}')
               if f'href="sms:+1{expected_phone}"' not in main['low'] and f'href="sms:{expected_phone}"' not in main['low']:
                   failures.append(f'{main_slug}: missing direct Text Photos SMS path')
+              for policy_path in ['/privacy/','/terms/']:
+                  if f'href="{policy_path}"' not in main['low']:
+                      failures.append(f'{main_slug}: request form area missing policy link {policy_path}')
+              if 'request contact:' not in main['low']:
+                  failures.append(f'{main_slug}: missing request-contact disclosure near form')
               if len(re.findall(r'<img\b',main['raw'],re.I))<3:
                   failures.append(f'{main_slug}: expected logo plus at least two page images')
 
