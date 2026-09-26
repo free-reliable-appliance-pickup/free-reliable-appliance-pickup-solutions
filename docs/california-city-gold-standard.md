@@ -50,7 +50,8 @@ Use real appliance photos. The preferred hero image must:
 - declare width and height;
 - use `fetchpriority="high"` for the hero;
 - have a descriptive, city/category-specific file URL where practical;
-- match `og:image`, Twitter image metadata and `WebPage.primaryImageOfPage`.
+- match `og:image`, Twitter image metadata and `WebPage.primaryImageOfPage`;
+- be discoverable through `sitemap-images.xml`.
 
 Do not repeat the exact same non-logo image twice on the same specialty page merely to increase image count.
 
@@ -61,6 +62,8 @@ Use accurate Service, WebPage, BreadcrumbList and FAQPage JSON-LD that matches v
 City service-area pages must not invent a storefront, office, staff location or per-city LocalBusiness entity. The network model should stay explicit: requests are reviewed through independent local pickup professionals where coverage is available.
 
 Do not add AggregateRating or review markup without verified, page-visible review data that meets Google's policies.
+
+Do not publish claims such as “serving since YYYY,” “X years in business,” founding dates, certifications, review counts or ratings unless the claim is documented and can be kept current.
 
 ## Internal linking
 
