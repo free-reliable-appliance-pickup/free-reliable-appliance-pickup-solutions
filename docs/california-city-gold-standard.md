@@ -68,11 +68,15 @@ The main city hub must link to each city appliance-intent child page. Each child
 
 Regional hubs should link into the city hub, and category/regional pages should link to important city specialty pages when contextually useful. Anchor text should describe the destination rather than use generic "click here" wording.
 
+As a minimum crawl-safety baseline, a configured gold city hub should have at least 8 active internal inlinks and remain within 2 clicks of the homepage. Each configured appliance-intent child should have at least 3 active internal inlinks and remain within 3 clicks of the homepage. These are site architecture safeguards, not claims that a specific link count causes rankings.
+
 ## Conversion
 
 The city hub should provide a direct local request form plus call/text actions. Specialty pages may route to the city hub request form when that keeps one clean conversion endpoint.
 
-The request path should ask for appliance type, true working condition, photos, exact address/ZIP, floor/stairs and access details. Never guarantee same-day pickup or free acceptance before qualification and route review.
+The request path should ask for appliance type, brand/model when known, true working condition, whether the appliance is testable, photos/photo availability, exact address/ZIP, property type, floor/stairs, access details and a preferred pickup window. Never guarantee same-day pickup or free acceptance before qualification and route review.
+
+Keep a direct Text Photos action visible when the form backend does not support native file uploads. Only enable native photo-upload fields after confirming the live form backend/account supports them; do not publish a file input that silently fails.
 
 ## Anti-duplication rule
 
