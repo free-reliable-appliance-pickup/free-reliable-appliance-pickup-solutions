@@ -148,7 +148,8 @@
     "original_size_bytes": 5314617,
     "original_sha256": "805692c0566a15bdab5e88148b3bfd3d175b011ce1bf6c0997d6a1d43977c5b2",
     "recovered_from_set": 37,
-    "recovered_phone_filename": "1000274627.jpg"
+    "recovered_phone_filename": "1000274627.jpg",
+    "display_src": "assets/laundry/optimized/huntington-beach-20240903_134418-1600.jpg"
   },
   "/irvine-washer-dryer-pickup/": {
     "src": "assets/laundry/original-user-heroes/IMG-20241127-WA0053.jpg",

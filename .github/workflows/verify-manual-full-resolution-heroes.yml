@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Verify every approved city page uses its original full-resolution hero
+      - name: Verify every approved city page keeps its original full-resolution source and approved display hero
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -56,13 +56,19 @@ jobs:
               text = page.read_text(encoding='utf-8')
               rel = '/' + src
               absolute = 'https://freereliableappliancepickup.com/' + src
+              display_src = str(info.get('display_src', src)).lstrip('/')
+              display_rel = '/' + display_src
+              if display_src != src and not display_src.startswith('assets/laundry/optimized/'):
+                  failures.append(f'{route}: display_src must use the optimized laundry directory: {display_src}')
+              if not Path(display_src).is_file():
+                  failures.append(f'{route}: display hero file is missing: {display_src}')
               checked += 1
 
               checks = {
                   'Open Graph image': re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']' + re.escape(absolute), text, re.I),
                   'Twitter image': re.search(r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']' + re.escape(absolute), text, re.I),
                   'primaryImageOfPage': ('primaryImageOfPage' in text and absolute in text),
-                  'visible hero': re.search(r'class=["\']site-hero-art["\'][\s\S]{0,1200}?<img[^>]+src=["\']' + re.escape(rel), text, re.I),
+                  'visible hero': re.search(r'class=["\']site-hero-art["\'][\s\S]{0,1200}?<img[^>]+src=["\']' + re.escape(display_rel), text, re.I),
                   'hero lock': re.search(r'data-premium-hero-lock=["\']1["\'][\s\S]{0,2500}?' + re.escape(rel), text, re.I),
               }
 
@@ -82,5 +88,5 @@ jobs:
                   print(' -', failure)
               sys.exit(1)
 
-          print('PASS: every manually approved city page uses its exact original full-resolution hero in static HTML and metadata, with no overlap between approved and pending routes.')
+          print('PASS: every manually approved city page keeps its exact original full-resolution source in metadata/lock and uses the approved visible display hero, with no overlap between approved and pending routes.')
           PY
