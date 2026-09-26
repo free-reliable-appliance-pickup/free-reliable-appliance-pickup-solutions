@@ -84,13 +84,30 @@ def critical_checks(slug: str, html: str) -> list[str]:
         problems.append("missing title")
     return problems
 
-def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: str, scope: str = "local") -> str:
+def build_block(
+    slug: str,
+    region: str,
+    hub: str,
+    neighbors: list[str],
+    kind: str,
+    scope: str = "local",
+    program_links: list[dict[str, str]] | None = None,
+) -> str:
     city = display_name(slug)
     usable = [n for n in neighbors if page_is_indexable(n) and n != slug][:7]
     links = [f'<a href="/{n}/">{display_name(n)}</a>' for n in usable]
     if page_is_indexable(hub) and hub != slug:
         links.append(f'<a href="/{hub}/">{region} hub</a>')
     link_html = " · ".join(links)
+
+    program_parts = []
+    for item in program_links or []:
+        program_slug = str(item.get("slug", "")).strip()
+        if not program_slug or not page_is_indexable(program_slug):
+            continue
+        program_label = str(item.get("label") or display_name(program_slug))
+        program_parts.append(f'<a href="/{program_slug}/">{program_label}</a>')
+    program_html = " · ".join(program_parts)
 
     if kind == "laundry":
         heading = f"{city} washer and dryer pickup within the {region} service network"
@@ -131,6 +148,17 @@ def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: st
             "an available local pickup professional may complete the request."
         )
 
+    if kind == "laundry":
+        program_note = (
+            f"For larger or recurring laundry replacements around {city}, these program guides help senior-living "
+            "communities, apartment operators, property managers and other facilities describe multi-unit work."
+        )
+    else:
+        program_note = (
+            f"For larger or recurring appliance replacements around {city}, these program guides help senior-living "
+            "communities, apartment operators, property managers and businesses describe multi-unit work."
+        )
+
     return (
         '<!-- turbo-seo-network-v1 -->\n'
         f'<section class="turbo-seo-network-v1" aria-labelledby="turbo-network-{slug}">\n'
@@ -138,6 +166,7 @@ def build_block(slug: str, region: str, hub: str, neighbors: list[str], kind: st
         f'  <p>{body}</p>\n'
         f'  <p>{service}</p>\n'
         + (f'  <p><strong>Nearby service pages:</strong> {link_html}</p>\n' if link_html else "")
+        + (f'  <p>{program_note} <strong>Property and recurring pickup programs:</strong> {program_html}</p>\n' if program_html else "")
         + '</section>'
     )
 
@@ -193,6 +222,7 @@ def process_target(
     neighbors: list[str],
     kind: str,
     scope: str,
+    program_links: list[dict[str, str]],
     write: bool,
     changed: list[str],
     skipped: list[str],
@@ -210,7 +240,7 @@ def process_target(
     if problems:
         failures.append(f"{slug}: " + ", ".join(problems))
         return
-    block = build_block(slug, region, hub, neighbors, kind, scope)
+    block = build_block(slug, region, hub, neighbors, kind, scope, program_links)
     new_html = insert_or_replace(html, block)
     if new_html != html:
         changed.append(slug)
@@ -223,6 +253,8 @@ def main() -> int:
     args = parser.parse_args()
 
     cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
+    program_cfg = cfg.get("program_links", {})
+    program_regions = set(program_cfg.get("regions", []))
     changed: list[str] = []
     skipped: list[str] = []
     failures: list[str] = []
@@ -231,6 +263,8 @@ def main() -> int:
         appliance_hub = region_cfg["hub"]
         laundry_hub = to_laundry(appliance_hub)
         scope = region_cfg.get("scope", "local")
+        appliance_programs = program_cfg.get("appliance", []) if region in program_regions else []
+        laundry_programs = program_cfg.get("laundry", []) if region in program_regions else []
 
         for appliance_slug, appliance_neighbors in region_cfg["members"].items():
             process_target(
@@ -240,6 +274,7 @@ def main() -> int:
                 appliance_neighbors,
                 "appliance",
                 scope,
+                appliance_programs,
                 args.write,
                 changed,
                 skipped,
@@ -255,6 +290,7 @@ def main() -> int:
                 laundry_neighbors,
                 "laundry",
                 scope,
+                laundry_programs,
                 args.write,
                 changed,
                 skipped,
