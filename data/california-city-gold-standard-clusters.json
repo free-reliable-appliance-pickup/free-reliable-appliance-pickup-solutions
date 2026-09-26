@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "reference_city": "Rancho Cucamonga",
+  "clusters": [
+    {
+      "city": "Rancho Cucamonga",
+      "state": "CA",
+      "city_key": "rancho-cucamonga",
+      "phone": "909-375-6685",
+      "main": "rancho-cucamonga-appliance-pickup",
+      "children": {
+        "washer_dryer": "rancho-cucamonga-washer-dryer-pickup",
+        "refrigerator": "rancho-cucamonga-refrigerator-pickup",
+        "freezer": "rancho-cucamonga-freezer-pickup",
+        "stove_oven": "rancho-cucamonga-stove-oven-pickup"
+      },
+      "official_local_reference": "https://www.cityofrc.us/healthy-rc/environmental-programs/residential-trash-recycling-organics",
+      "required_local_terms": [
+        "Alta Loma",
+        "Etiwanda",
+        "91701",
+        "91730",
+        "91737",
+        "91739"
+      ]
+    }
+  ]
+}
