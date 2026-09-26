@@ -230,6 +230,12 @@ jobs:
                   if phrase not in main['text'].lower(): failures.append(f'{main_slug}: missing gold-model concept {phrase}')
               if cluster['official_local_reference'] not in main['raw']:
                   failures.append(f'{main_slug}: missing official local disposal/reference link')
+              neighborhood_ref=cluster.get('official_neighborhood_reference')
+              if neighborhood_ref and neighborhood_ref not in main['raw']:
+                  failures.append(f'{main_slug}: missing official neighborhood/planning reference link')
+              for phrase in ['how much does appliance removal cost','$0']:
+                  if phrase not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing cost-transparency signal {phrase}')
               for term in cluster.get('required_local_terms',[]):
                   if term.lower() not in main['text'].lower(): failures.append(f'{main_slug}: missing local proof term {term}')
               if 'formspree.io/f/mvzeapzd' not in main['low'] or 'id="request"' not in main['low']:
