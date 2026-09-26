@@ -136,7 +136,7 @@ jobs:
                   if '"@type":"LocalBusiness"'.lower() in low or '"@type": "LocalBusiness"'.lower() in low:
                       failures.append(f'{slug}: misleading per-city LocalBusiness schema is not allowed in this network model')
                   if 'aggregaterating' in low: failures.append(f'{slug}: AggregateRating is not allowed without verified page-visible review data')
-                  phone_pattern=r'\\D*'.join(re.escape(ch) for ch in expected_phone)
+                  phone_pattern=r'\D*'.join(re.escape(ch) for ch in expected_phone)
                   if not re.search(phone_pattern,raw): failures.append(f'{slug}: expected direct phone missing')
                   if 'free-pickup-qualification/' not in low: failures.append(f'{slug}: missing qualification link')
                   if not imgs: failures.append(f'{slug}: missing non-logo page image')
