@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-26.1",
+  "version": "2026-09-26.2",
   "purpose": "Batch-maintain internal-link clusters and high-value customer-program connections on existing approved priority pages. This file never creates new location pages.",
   "regions": {
     "San Gabriel Valley": {
@@ -841,5 +841,14 @@
         "label": "Commercial laundry appliance pickup"
       }
     ]
-  }
+  },
+  "mobile_cta_regions": [
+    "San Gabriel Valley",
+    "Inland Empire",
+    "Riverside County",
+    "Orange County",
+    "Los Angeles County",
+    "High Desert",
+    "Antelope Valley"
+  ]
 }
