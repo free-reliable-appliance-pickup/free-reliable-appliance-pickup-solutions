@@ -25,6 +25,22 @@ The page should explain the difference between:
 - paid junk/appliance removal when guaranteed paid hauling is the better fit; and
 - the city's own bulky-item, waste or recycling option when applicable.
 
+## Customer decision path
+
+Every gold-standard city hub should make the removal choice understandable in one scan. Use a compact three-path module:
+
+- **Working or reusable appliance:** send it through the qualification-based free-pickup review. State the pickup charge clearly when the request qualifies, but never promise acceptance before review.
+- **End-of-life appliance with an official local option:** link the verified city/hauler program, state only the eligibility and limits confirmed by the official source, and keep that public-program contact clearly separate from our own number.
+- **Broken appliance or guaranteed timing needed:** explain that a paid removal company may be a better fit when the customer needs guaranteed hauling or the appliance does not qualify for reuse-focused pickup. Do not invent third-party prices or timing.
+
+Add practical preparation guidance to protect reuse value and safety. Do not tell customers to move a good appliance to the curb before pickup is confirmed. For refrigerators/freezers, do not advise cutting refrigerant lines or removing compressors. For gas appliances, do not imply that an untrained customer should disconnect a gas line.
+
+This module should answer the customer's real decision rather than simply repeat keyword variants. It is part of the reusable structure, while the official program, eligibility rules, local access issues and wording must be verified separately for each city.
+
+## Search Console feedback loop
+
+Use finalized Search Console query/page evidence to refine titles, descriptions, internal links and child-page emphasis. Treat very small impression samples as directional evidence, not a stable ranking. Do not claim a fixed Google position from one or two impressions, and do not stuff a city page with every query variant. When Google is already testing a page for a relevant intent, strengthen the most useful existing page before creating another URL.
+
 ## Search-intent ownership
 
 The city hub should prominently and naturally cover the phrases customers actually use, without keyword stuffing:
