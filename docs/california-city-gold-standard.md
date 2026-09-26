@@ -1,0 +1,81 @@
+# California City Gold Standard
+
+Rancho Cucamonga is the reference implementation for the city-level California SEO model.
+
+## Required city architecture
+
+Each gold-standard city should have one primary city hub plus distinct appliance-intent pages where demand justifies them:
+
+- `{city}-appliance-pickup/` — primary city hub for free appliance pickup, removal, haul-away, recycling/disposal choices, qualification, local access, property/commercial requests and conversion.
+- `{city}-washer-dryer-pickup/` — laundry-specific testing, gas/electric details, sets, stacked installations and access.
+- `{city}-refrigerator-pickup/` — cooling condition, refrigerator/fridge terminology, dimensions, interior/model photos and door/access issues.
+- `{city}-freezer-pickup/` — chest/upright terminology, freezing condition, dimensions and garage/shed/basement access.
+- `{city}-stove-oven-pickup/` — stove/range/oven terminology, fuel type, tested functions, disconnection and heavy-unit access.
+
+Do not create a separate page for every synonym. The main city hub should naturally cover related intent such as appliance removal, old appliance removal, haul-away, recycling, disposal, junk-appliance alternatives and near-me wording. Appliance-specific child pages own the deeper category details.
+
+## Local proof and usefulness
+
+Every city hub must contain facts that are genuinely local to that city rather than swapped city names. Use the actual neighborhoods, physical ZIP codes, access conditions, local property patterns and an official municipal or waste-resource link when relevant. Do not copy a competitor's factual claim without checking the official source.
+
+Where a ZIP is mailing-only or otherwise unsuitable for physical routing, say so rather than copying it into a service list.
+
+The page should explain the difference between:
+- qualification-based free pickup for working/reusable major appliances;
+- paid junk/appliance removal when guaranteed paid hauling is the better fit; and
+- the city's own bulky-item, waste or recycling option when applicable.
+
+## Search-intent ownership
+
+The city hub should prominently and naturally cover the phrases customers actually use, without keyword stuffing:
+- free appliance pickup;
+- appliance pickup;
+- appliance removal;
+- old appliance removal;
+- appliance haul-away;
+- appliance recycling and disposal;
+- working/reusable appliance pickup;
+- washer, dryer, refrigerator/fridge, freezer, stove/range/oven pickup;
+- garage, driveway, inside-home, apartment and condo access;
+- landlords, property managers, senior/55+ communities and recurring/commercial replacement work.
+
+When discussing donation or give-away intent, be explicit that Free Reliable Appliance Pickup is not a charity and does not issue tax-deductible donation receipts.
+
+## Images
+
+Use real appliance photos. The preferred hero image must:
+- be high quality and relevant to the page;
+- use an HTML `<img>` element;
+- have useful alt text;
+- declare width and height;
+- use `fetchpriority="high"` for the hero;
+- have a descriptive, city/category-specific file URL where practical;
+- match `og:image`, Twitter image metadata and `WebPage.primaryImageOfPage`.
+
+Do not repeat the exact same non-logo image twice on the same specialty page merely to increase image count.
+
+## Structured data and locality
+
+Use accurate Service, WebPage, BreadcrumbList and FAQPage JSON-LD that matches visible page content. Keep title, meta description and WebPage name/description synchronized.
+
+City service-area pages must not invent a storefront, office, staff location or per-city LocalBusiness entity. The network model should stay explicit: requests are reviewed through independent local pickup professionals where coverage is available.
+
+Do not add AggregateRating or review markup without verified, page-visible review data that meets Google's policies.
+
+## Internal linking
+
+The main city hub must link to each city appliance-intent child page. Each child must link back to the city hub and use the city hub in its breadcrumb hierarchy.
+
+Regional hubs should link into the city hub, and category/regional pages should link to important city specialty pages when contextually useful. Anchor text should describe the destination rather than use generic "click here" wording.
+
+## Conversion
+
+The city hub should provide a direct local request form plus call/text actions. Specialty pages may route to the city hub request form when that keeps one clean conversion endpoint.
+
+The request path should ask for appliance type, true working condition, photos, exact address/ZIP, floor/stairs and access details. Never guarantee same-day pickup or free acceptance before qualification and route review.
+
+## Anti-duplication rule
+
+A gold-standard city page must not become a clone of another city page. The reusable structure is the model; the local facts, access conditions, official resources, examples and wording must be specific to the market.
+
+The automated workflow `Audit California City Gold Model` enforces the structural baseline for cities listed in `data/california-city-gold-standard-clusters.json`.

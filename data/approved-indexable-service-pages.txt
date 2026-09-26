@@ -35,3 +35,6 @@ retail-appliance-pickup
 reverse-logistics-appliance-pickup
 senior-living-appliance-pickup
 service-standards
+rancho-cucamonga-refrigerator-pickup
+rancho-cucamonga-freezer-pickup
+rancho-cucamonga-stove-oven-pickup
