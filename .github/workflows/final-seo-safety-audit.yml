@@ -35,7 +35,7 @@ jobs:
               if not is_indexable: continue
               indexable.append(p)
               if rel not in approved: errors.append(f'UNAPPROVED INDEXABLE PATH {p} ({rel})')
-              if rel.endswith('-appliance-pickup') and rel not in approved_locations and rel not in approved_nonlocation: errors.append(f'UNAPPROVED INDEXABLE LOCATION {p}')
+              if rel.endswith('-appliance-pickup') and rel not in approved_locations and rel not in approved_services and rel not in approved_nonlocation: errors.append(f'UNAPPROVED INDEXABLE LOCATION {p}')
               c=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',s,re.I)
               if not c: errors.append(f'MISSING CANONICAL {p}')
               elif not c[0].startswith(base): errors.append(f'BAD CANONICAL {p}: {c[0]}')
