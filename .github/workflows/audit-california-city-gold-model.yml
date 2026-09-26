@@ -234,6 +234,18 @@ jobs:
                   if term.lower() not in main['text'].lower(): failures.append(f'{main_slug}: missing local proof term {term}')
               if 'formspree.io/f/mvzeapzd' not in main['low'] or 'id="request"' not in main['low']:
                   failures.append(f'{main_slug}: missing local request form')
+              if 'gold-city-start-strip' not in main['low']:
+                  failures.append(f'{main_slug}: missing above-fold request trust strip')
+              if 'gold-city-jump-nav' not in main['low']:
+                  failures.append(f'{main_slug}: missing in-page jump navigation')
+              for anchor_id in ['qualification','appliances','local-areas','access','real-photos','property-managers','faq','request']:
+                  if f'id="{anchor_id}"' not in main['low']:
+                      failures.append(f'{main_slug}: missing stable section anchor #{anchor_id}')
+                  if anchor_id!='request' and f'href="#{anchor_id}"' not in main['low']:
+                      failures.append(f'{main_slug}: jump navigation missing #{anchor_id}')
+              for trust_phrase in ['free to submit','no account','credit card']:
+                  if trust_phrase not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing above-fold trust phrase {trust_phrase}')
               for field_name in ['name="brand_model"','name="preferred_window"','name="photos_available"','name="testable"','name="property_type"']:
                   if field_name not in main['low']:
                       failures.append(f'{main_slug}: missing lead-quality field {field_name}')

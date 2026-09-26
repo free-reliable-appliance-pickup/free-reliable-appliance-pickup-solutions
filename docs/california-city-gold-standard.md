@@ -73,9 +73,15 @@ Regional hubs should link into the city hub, and category/regional pages should 
 
 As a minimum crawl-safety baseline, a configured gold city hub should have at least 8 active internal inlinks and remain within 2 clicks of the homepage. Each configured appliance-intent child should have at least 3 active internal inlinks and remain within 3 clicks of the homepage. These are site architecture safeguards, not claims that a specific link count causes rankings.
 
+## Long-page navigation
+
+Gold city hubs are intentionally comprehensive, but they should not force mobile users to scroll blindly. Place a compact, crawlable in-page navigation near the top using normal `<a href="#section">` links and stable section IDs. At minimum, expose shortcuts to qualification, appliance types, local areas, access, real photos, property/commercial information, FAQ and the request form.
+
+Use descriptive anchor text rather than generic “click here” wording. This is primarily a usability standard; it also keeps important sections easy for crawlers and users to understand.
+
 ## Conversion
 
-The city hub should provide a direct local request form plus call/text actions. Specialty pages may route to the city hub request form when that keeps one clean conversion endpoint.
+The city hub should provide a direct local request form plus call/text actions. Near the top of the page, clearly state that a request is free to submit and does not require an account or credit card when that is true for the live request flow. Specialty pages may route to the city hub request form when that keeps one clean conversion endpoint.
 
 The request path should ask for appliance type, brand/model when known, true working condition, whether the appliance is testable, photos/photo availability, exact address/ZIP, property type, floor/stairs, access details and a preferred pickup window. Never guarantee same-day pickup or free acceptance before qualification and route review.
 
