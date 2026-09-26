@@ -45,7 +45,17 @@
         "dryers",
         "freezers",
         "stoves"
-      ]
+      ],
+      "decision_model": {
+        "anchor": "removal-options",
+        "required_phrases": [
+          "$0 pickup charge",
+          "four times per calendar year at no charge",
+          "guaranteed paid haul-away window",
+          "do not move a good appliance to the curb before pickup is confirmed",
+          "do not cut refrigerant lines"
+        ]
+      }
     }
   ]
 }
