@@ -233,6 +233,14 @@ jobs:
               neighborhood_ref=cluster.get('official_neighborhood_reference')
               if neighborhood_ref and neighborhood_ref not in main['raw']:
                   failures.append(f'{main_slug}: missing official neighborhood/planning reference link')
+              county=cluster.get('county')
+              if county and county.lower() not in main['text'].lower():
+                  failures.append(f'{main_slug}: missing county context {county}')
+              fallback_phone=norm_phone(cluster.get('official_local_contact_phone',''))
+              if fallback_phone:
+                  fallback_pattern=r'\D*'.join(re.escape(ch) for ch in fallback_phone)
+                  if not re.search(fallback_pattern,main['raw']):
+                      failures.append(f'{main_slug}: missing official local fallback phone')
               for phrase in ['how much does appliance removal cost','$0']:
                   if phrase not in main['text'].lower():
                       failures.append(f'{main_slug}: missing cost-transparency signal {phrase}')
