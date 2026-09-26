@@ -1,0 +1,225 @@
+name: Audit California City Gold Model
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/california-city-gold-standard-clusters.json'
+      - 'sitemap.xml'
+      - '**/index.html'
+      - '.github/workflows/audit-california-city-gold-model.yml'
+  pull_request:
+    paths:
+      - 'data/california-city-gold-standard-clusters.json'
+      - 'sitemap.xml'
+      - '**/index.html'
+      - '.github/workflows/audit-california-city-gold-model.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate complete city hub and appliance-intent cluster
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from urllib.parse import urlparse
+          import datetime, html, json, re, sys, xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          cfg=json.loads(Path('data/california-city-gold-standard-clusters.json').read_text(encoding='utf-8'))
+          failures=[]
+
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          sitemap={}
+          for node in root.findall('.//s:url',ns):
+              loc=node.find('s:loc',ns)
+              mod=node.find('s:lastmod',ns)
+              if loc is not None and loc.text:
+                  sitemap[loc.text.strip()]=(mod.text.strip() if mod is not None and mod.text else '')
+
+          def visible_text(raw):
+              x=re.sub(r'<script\b[^>]*>.*?</script>',' ',raw,flags=re.I|re.S)
+              x=re.sub(r'<style\b[^>]*>.*?</style>',' ',x,flags=re.I|re.S)
+              x=re.sub(r'<!--.*?-->',' ',x,flags=re.S)
+              x=re.sub(r'<[^>]+>',' ',x)
+              return ' '.join(html.unescape(x).split())
+
+          def extract(pattern,raw):
+              m=re.search(pattern,raw,re.I|re.S)
+              return html.unescape(m.group(1)).strip() if m else ''
+
+          def jsonld(raw):
+              out=[]
+              for m in re.finditer(r'<script\s+type=["\']application/ld\+json["\']>(.*?)</script>',raw,re.I|re.S):
+                  try: out.append(json.loads(m.group(1)))
+                  except Exception as e: failures.append(f'INVALID JSON-LD: {e}')
+              flat=[]
+              def walk(x):
+                  if isinstance(x,dict):
+                      flat.append(x)
+                      for v in x.values(): walk(v)
+                  elif isinstance(x,list):
+                      for v in x: walk(v)
+              for item in out: walk(item)
+              return flat
+
+          def norm_phone(s):
+              return ''.join(re.findall(r'\d',s or ''))[-10:]
+
+          def internal_asset_exists(url):
+              if not url: return False
+              p=urlparse(url)
+              path=p.path if p.scheme else url.split('?',1)[0]
+              if path.startswith('/'): path=path[1:]
+              return bool(path) and Path(path).exists()
+
+          for cluster in cfg['clusters']:
+              city=cluster['city']
+              city_key=cluster['city_key']
+              expected_phone=norm_phone(cluster['phone'])
+              main_slug=cluster['main']
+              child_map=cluster['children']
+              slugs=[main_slug]+list(child_map.values())
+              pages={}
+
+              for slug in slugs:
+                  p=Path(slug)/'index.html'
+                  if not p.exists():
+                      failures.append(f'{city}: MISSING PAGE {slug}')
+                      continue
+                  raw=p.read_text(encoding='utf-8',errors='replace')
+                  low=raw.lower()
+                  text=visible_text(raw)
+                  url=BASE+slug+'/'
+                  title=extract(r'<title>(.*?)</title>',raw)
+                  desc=extract(r'<meta\b[^>]*name=["\']description["\'][^>]*content=["\']([^"\']+)',raw)
+                  canonical=extract(r'<link\b[^>]*rel=["\']canonical["\'][^>]*href=["\']([^"\']+)',raw)
+                  h1s=re.findall(r'<h1\b[^>]*>(.*?)</h1>',raw,re.I|re.S)
+                  h1=' '.join(html.unescape(re.sub(r'<[^>]+>',' ',h1s[0])).split()) if len(h1s)==1 else ''
+                  objs=jsonld(raw)
+                  service=next((x for x in objs if x.get('@type')=='Service'),None)
+                  webpage=next((x for x in objs if x.get('@type')=='WebPage'),None)
+                  breadcrumb=next((x for x in objs if x.get('@type')=='BreadcrumbList'),None)
+                  faq=next((x for x in objs if x.get('@type')=='FAQPage'),None)
+                  imgs=[]
+                  for tag in re.findall(r'<img\b[^>]*>',raw,re.I):
+                      src=extract(r'\bsrc=["\']([^"\']+)',tag)
+                      alt=extract(r'\balt=["\']([^"\']*)',tag)
+                      if src and 'file_00000000b7c082308dccc73e5bd3acd2' not in src.lower() and 'logo' not in src.lower():
+                          imgs.append((src,alt,tag))
+                  hero=imgs[0] if imgs else ('','','')
+
+                  if url not in sitemap: failures.append(f'{slug}: missing from sitemap')
+                  elif not sitemap[url]: failures.append(f'{slug}: sitemap entry missing lastmod')
+                  if canonical!=url: failures.append(f'{slug}: canonical {canonical!r} != {url!r}')
+                  if len(h1s)!=1: failures.append(f'{slug}: expected 1 H1, found {len(h1s)}')
+                  if not title or city.lower() not in title.lower(): failures.append(f'{slug}: title missing city')
+                  if not desc or city.lower() not in desc.lower(): failures.append(f'{slug}: description missing city')
+                  if city.lower() not in h1.lower(): failures.append(f'{slug}: H1 missing city')
+                  if not re.search(r'<meta\b[^>]*name=["\']robots["\'][^>]*content=["\'][^"\']*index[^"\']*follow',raw,re.I):
+                      failures.append(f'{slug}: missing index/follow robots')
+                  if 'max-image-preview:large' not in low: failures.append(f'{slug}: missing max-image-preview:large')
+                  if 'site-brand.css' not in low: failures.append(f'{slug}: missing shared brand CSS')
+                  if 'og:image' not in low or 'twitter:image' not in low: failures.append(f'{slug}: missing social image metadata')
+                  if not service: failures.append(f'{slug}: missing Service schema')
+                  if not webpage: failures.append(f'{slug}: missing WebPage schema')
+                  if not breadcrumb: failures.append(f'{slug}: missing BreadcrumbList schema')
+                  if not faq: failures.append(f'{slug}: missing FAQPage schema')
+                  if '"@type":"LocalBusiness"'.lower() in low or '"@type": "LocalBusiness"'.lower() in low:
+                      failures.append(f'{slug}: misleading per-city LocalBusiness schema is not allowed in this network model')
+                  if 'aggregaterating' in low: failures.append(f'{slug}: AggregateRating is not allowed without verified page-visible review data')
+                  if expected_phone not in norm_phone(raw): failures.append(f'{slug}: expected direct phone missing')
+                  if 'free-pickup-qualification/' not in low: failures.append(f'{slug}: missing qualification link')
+                  if not imgs: failures.append(f'{slug}: missing non-logo page image')
+                  else:
+                      src,alt,tag=hero
+                      if city_key not in src.lower(): failures.append(f'{slug}: hero image URL is not city-descriptive: {src}')
+                      if not alt or city.lower() not in alt.lower(): failures.append(f'{slug}: hero alt text missing city')
+                      if 'width=' not in tag.lower() or 'height=' not in tag.lower(): failures.append(f'{slug}: hero missing width/height')
+                      if 'fetchpriority="high"' not in tag.lower(): failures.append(f'{slug}: hero missing fetchpriority=high')
+                      if not internal_asset_exists(src): failures.append(f'{slug}: hero asset missing in repo: {src}')
+                      srcs=[x[0].split('?',1)[0] for x in imgs]
+                      if len(srcs)!=len(set(srcs)): failures.append(f'{slug}: duplicate non-logo image source on page')
+                  if webpage:
+                      if html.unescape(str(webpage.get('name',''))).strip()!=title:
+                          failures.append(f'{slug}: WebPage name does not match title')
+                      if str(webpage.get('description','')).strip()!=desc:
+                          failures.append(f'{slug}: WebPage description does not match meta description')
+                      if not webpage.get('dateModified'): failures.append(f'{slug}: WebPage missing dateModified')
+                      pi=webpage.get('primaryImageOfPage',{})
+                      pi_url=pi.get('url','') if isinstance(pi,dict) else str(pi or '')
+                      if imgs:
+                          hero_abs=BASE.rstrip('/')+imgs[0][0] if imgs[0][0].startswith('/') else imgs[0][0]
+                          if pi_url!=hero_abs: failures.append(f'{slug}: primaryImageOfPage does not match visible hero')
+                  if service:
+                      area=service.get('areaServed',{})
+                      if not isinstance(area,dict) or str(area.get('name','')).lower()!=city.lower():
+                          failures.append(f'{slug}: Service areaServed is not {city}')
+                      if norm_phone(service.get('telephone',''))!=expected_phone:
+                          failures.append(f'{slug}: Service telephone mismatch')
+                  if 'seo-breadcrumb' not in low and 'aria-label="breadcrumb"' not in low:
+                      failures.append(f'{slug}: missing visible breadcrumb')
+                  pages[slug]={'raw':raw,'low':low,'text':text,'title':title,'desc':desc,'h1':h1,'breadcrumb':breadcrumb}
+
+              if any(s not in pages for s in slugs):
+                  continue
+
+              main=pages[main_slug]
+              for child_slug in child_map.values():
+                  if f'/{child_slug}/' not in main['raw']:
+                      failures.append(f'{main_slug}: missing child link to {child_slug}')
+              for term in ['washer','dryer','refrigerator','freezer','stove','range']:
+                  if term not in main['text'].lower(): failures.append(f'{main_slug}: missing appliance breadth term {term}')
+              for phrase in ['paid junk removal','senior','property manager','high-end','independent local pickup professionals','company-owned storefront or local branch']:
+                  if phrase not in main['text'].lower(): failures.append(f'{main_slug}: missing gold-model concept {phrase}')
+              if cluster['official_local_reference'] not in main['raw']:
+                  failures.append(f'{main_slug}: missing official local disposal/reference link')
+              for term in cluster.get('required_local_terms',[]):
+                  if term.lower() not in main['text'].lower(): failures.append(f'{main_slug}: missing local proof term {term}')
+              if 'formspree.io/f/mvzeapzd' not in main['low'] or 'id="request"' not in main['low']:
+                  failures.append(f'{main_slug}: missing local request form')
+              if len(re.findall(r'<img\b',main['raw'],re.I))<3:
+                  failures.append(f'{main_slug}: expected logo plus at least two page images')
+
+              category_terms={
+                'washer_dryer':['washer','dryer'],
+                'refrigerator':['refrigerator','fridge'],
+                'freezer':['freezer'],
+                'stove_oven':['stove','range','oven'],
+              }
+              main_url=BASE+main_slug+'/'
+              for kind,child_slug in child_map.items():
+                  page=pages[child_slug]
+                  if f'/{main_slug}/' not in page['raw']:
+                      failures.append(f'{child_slug}: missing link to city parent {main_slug}')
+                  if main_url not in json.dumps(page['breadcrumb'] or {}):
+                      failures.append(f'{child_slug}: breadcrumb schema missing city parent')
+                  if main_url+'#request' not in page['raw'] and f'/{main_slug}/#request' not in page['raw']:
+                      failures.append(f'{child_slug}: missing city-parent request path')
+                  for term in category_terms[kind]:
+                      if term not in page['text'].lower():
+                          failures.append(f'{child_slug}: missing category term {term}')
+
+              titles=[pages[s]['title'].lower() for s in slugs]
+              descs=[pages[s]['desc'].lower() for s in slugs]
+              h1s=[pages[s]['h1'].lower() for s in slugs]
+              if len(titles)!=len(set(titles)): failures.append(f'{city}: duplicate titles inside gold cluster')
+              if len(descs)!=len(set(descs)): failures.append(f'{city}: duplicate descriptions inside gold cluster')
+              if len(h1s)!=len(set(h1s)): failures.append(f'{city}: duplicate H1s inside gold cluster')
+
+              print(f'GOLD_CITY {city}: checked {len(slugs)} pages')
+
+          if failures:
+              print('\nCITY_GOLD_MODEL_FAILURES')
+              for f in failures: print('-',f)
+              sys.exit(1)
+          print('\nPASS: every configured California city gold cluster has a complete, internally linked, locally grounded, image-consistent and non-misleading city + appliance-intent architecture.')
+          PY
