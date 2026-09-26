@@ -252,6 +252,16 @@ jobs:
               for term in cluster.get('required_description_terms',[]):
                   if term.lower() not in main['desc'].lower():
                       failures.append(f'{main_slug}: description missing required search-intent term {term}')
+              decision=cluster.get('decision_model',{})
+              decision_anchor=decision.get('anchor')
+              if decision_anchor:
+                  if f'id="{decision_anchor}"' not in main['low']:
+                      failures.append(f'{main_slug}: missing decision-model anchor #{decision_anchor}')
+                  if f'href="#{decision_anchor}"' not in main['low']:
+                      failures.append(f'{main_slug}: jump navigation missing decision-model #{decision_anchor}')
+              for phrase in decision.get('required_phrases',[]):
+                  if phrase.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing decision-model phrase {phrase}')
               if 'formspree.io/f/mvzeapzd' not in main['low'] or 'id="request"' not in main['low']:
                   failures.append(f'{main_slug}: missing local request form')
               if 'gold-city-start-strip' not in main['low']:
