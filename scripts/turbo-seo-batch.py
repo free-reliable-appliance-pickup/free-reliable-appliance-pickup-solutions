@@ -170,6 +170,67 @@ def build_block(
         + '</section>'
     )
 
+def format_phone_label(tel_value: str) -> str:
+    digits = re.sub(r"\D", "", tel_value)
+    if len(digits) == 11 and digits.startswith("1"):
+        digits = digits[1:]
+    if len(digits) == 10:
+        return f"{digits[:3]}-{digits[3:6]}-{digits[6:]}"
+    return tel_value.replace("+1", "")
+
+def ensure_priority_mobile_cta(html: str) -> str:
+    if "<!-- priority-mobile-cta-v1 -->" in html:
+        body = re.search(r"<body\b[^>]*>", html, re.I)
+        if body and "has-priority-mobile-cta" not in body.group(0):
+            tag = body.group(0)
+            if re.search(r'class=["\'][^"\']*["\']', tag, re.I):
+                new_tag = re.sub(
+                    r'class=(["\'])([^"\']*)\1',
+                    lambda m: f'class={m.group(1)}{m.group(2)} has-priority-mobile-cta{m.group(1)}',
+                    tag,
+                    count=1,
+                    flags=re.I,
+                )
+            else:
+                new_tag = tag[:-1] + ' class="has-priority-mobile-cta">'
+            html = html[:body.start()] + new_tag + html[body.end():]
+        return html
+
+    request = re.search(r'id=["\']request["\']', html, re.I)
+    phone = re.search(r'href=["\']tel:(\+?\d{10,15})["\']', html, re.I)
+    body_close = re.search(r"</body>", html, re.I)
+    body = re.search(r"<body\b[^>]*>", html, re.I)
+    if not (request and phone and body_close and body):
+        return html
+
+    tel_value = phone.group(1)
+    label = format_phone_label(tel_value)
+    nav = (
+        '<!-- priority-mobile-cta-v1 -->'
+        '<nav class="priority-mobile-cta" aria-label="Quick pickup contact">'
+        f'<a href="tel:{tel_value}">Call {label}</a>'
+        f'<a href="sms:{tel_value}">Text Photos</a>'
+        '<a href="#request">Request Pickup</a>'
+        '</nav>'
+    )
+
+    tag = body.group(0)
+    if "has-priority-mobile-cta" not in tag:
+        if re.search(r'class=["\'][^"\']*["\']', tag, re.I):
+            new_tag = re.sub(
+                r'class=(["\'])([^"\']*)\1',
+                lambda m: f'class={m.group(1)}{m.group(2)} has-priority-mobile-cta{m.group(1)}',
+                tag,
+                count=1,
+                flags=re.I,
+            )
+        else:
+            new_tag = tag[:-1] + ' class="has-priority-mobile-cta">'
+        html = html[:body.start()] + new_tag + html[body.end():]
+        body_close = re.search(r"</body>", html, re.I)
+
+    return html[:body_close.start()] + nav + html[body_close.start():]
+
 def build_specialty_block(slug: str, label: str, regions: list[str]) -> str:
     usable = [r for r in regions if page_exists(r)]
     links = " · ".join(
@@ -223,6 +284,7 @@ def process_target(
     kind: str,
     scope: str,
     program_links: list[dict[str, str]],
+    ensure_mobile_cta: bool,
     write: bool,
     changed: list[str],
     skipped: list[str],
@@ -242,6 +304,8 @@ def process_target(
         return
     block = build_block(slug, region, hub, neighbors, kind, scope, program_links)
     new_html = insert_or_replace(html, block)
+    if ensure_mobile_cta:
+        new_html = ensure_priority_mobile_cta(new_html)
     if new_html != html:
         changed.append(slug)
         if write:
@@ -255,6 +319,7 @@ def main() -> int:
     cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
     program_cfg = cfg.get("program_links", {})
     program_regions = set(program_cfg.get("regions", []))
+    mobile_cta_regions = set(cfg.get("mobile_cta_regions", []))
     changed: list[str] = []
     skipped: list[str] = []
     failures: list[str] = []
@@ -265,6 +330,7 @@ def main() -> int:
         scope = region_cfg.get("scope", "local")
         appliance_programs = program_cfg.get("appliance", []) if region in program_regions else []
         laundry_programs = program_cfg.get("laundry", []) if region in program_regions else []
+        ensure_mobile_cta = region in mobile_cta_regions
 
         for appliance_slug, appliance_neighbors in region_cfg["members"].items():
             process_target(
@@ -275,6 +341,7 @@ def main() -> int:
                 "appliance",
                 scope,
                 appliance_programs,
+                ensure_mobile_cta,
                 args.write,
                 changed,
                 skipped,
@@ -291,6 +358,7 @@ def main() -> int:
                 "laundry",
                 scope,
                 laundry_programs,
+                ensure_mobile_cta,
                 args.write,
                 changed,
                 skipped,
