@@ -81,6 +81,8 @@ The request path should ask for appliance type, brand/model when known, true wor
 
 Keep a direct Text Photos action visible when the form backend does not support native file uploads. Only enable native photo-upload fields after confirming the live form backend/account supports them; do not publish a file input that silently fails.
 
+Place a concise request-contact disclosure beside the submission action and link the site's Privacy Information and Service Terms so customers can understand how their request information and local-provider routing are handled.
+
 ## Anti-duplication rule
 
 A gold-standard city page must not become a clone of another city page. The reusable structure is the model; the local facts, access conditions, official resources, examples and wording must be specific to the market.
