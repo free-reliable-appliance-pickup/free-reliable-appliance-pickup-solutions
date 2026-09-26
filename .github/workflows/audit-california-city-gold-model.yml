@@ -142,7 +142,8 @@ jobs:
                   if not imgs: failures.append(f'{slug}: missing non-logo page image')
                   else:
                       src,alt,tag=hero
-                      if city_key not in src.lower(): failures.append(f'{slug}: hero image URL is not city-descriptive: {src}')
+                      verified_laundry_original = slug.endswith('-washer-dryer-pickup') and '/assets/laundry/original-user-heroes/' in src.lower()
+                      if city_key not in src.lower() and not verified_laundry_original: failures.append(f'{slug}: hero image URL is not city-descriptive or a protected original laundry hero: {src}')
                       if not alt or city.lower() not in alt.lower(): failures.append(f'{slug}: hero alt text missing city')
                       if 'width=' not in tag.lower() or 'height=' not in tag.lower(): failures.append(f'{slug}: hero missing width/height')
                       if 'fetchpriority="high"' not in tag.lower(): failures.append(f'{slug}: hero missing fetchpriority=high')
