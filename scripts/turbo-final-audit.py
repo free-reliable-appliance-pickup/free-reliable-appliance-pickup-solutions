@@ -41,8 +41,10 @@ def hrefs(raw):
 
 targets=set()
 program_requirements={}
+mobile_cta_requirements=set()
 program_cfg=CFG.get("program_links",{})
 program_regions=set(program_cfg.get("regions",[]))
+mobile_cta_regions=set(CFG.get("mobile_cta_regions",[]))
 appliance_programs=[
     str(x.get("slug","")).strip()
     for x in program_cfg.get("appliance",[])
@@ -62,6 +64,9 @@ for region_name, region in CFG["regions"].items():
         if region_name in program_regions:
             program_requirements[slug]=appliance_programs
             program_requirements[laundry(slug)]=laundry_programs
+        if region_name in mobile_cta_regions:
+            mobile_cta_requirements.add(slug)
+            mobile_cta_requirements.add(laundry(slug))
 for slug in CFG.get("specialty_pages",{}):
     targets.add(slug)
 
@@ -97,6 +102,17 @@ for slug in sorted(targets):
         fail.append(f"{slug}: missing from published sitemaps")
     if "<img" not in raw.lower():
         fail.append(f"{slug}: no image")
+    if slug in mobile_cta_requirements:
+        if "<!-- priority-mobile-cta-v1 -->" not in raw:
+            fail.append(f"{slug}: missing priority mobile CTA")
+        body_match=re.search(r"<body\b[^>]*>",raw,re.I)
+        if not body_match or "has-priority-mobile-cta" not in body_match.group(0):
+            fail.append(f"{slug}: missing mobile CTA body class")
+        if not re.search(r'href=["\']sms:\+?\d+',raw,re.I):
+            fail.append(f"{slug}: mobile CTA missing SMS action")
+        if not re.search(r'href=["\']#request["\']',raw,re.I):
+            fail.append(f"{slug}: mobile CTA missing request action")
+
     for required in program_requirements.get(slug, []):
         double=f'href="/{required}/"'
         single=f"href='/{required}/'"
@@ -125,4 +141,4 @@ if fail:
     print("TURBO_FINAL_AUDIT_FAILURES",len(fail))
     for x in fail: print("FAIL",x)
     sys.exit(1)
-print("PASS: Turbo priority network has valid canonicals, metadata, H1s, managed regional/program links, sitemap coverage and images.")
+print("PASS: Turbo priority network has valid canonicals, metadata, H1s, managed regional/program links, California mobile CTAs, sitemap coverage and images.")
