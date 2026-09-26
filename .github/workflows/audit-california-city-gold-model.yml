@@ -46,6 +46,7 @@ jobs:
               if loc is not None and loc.text:
                   sitemap[loc.text.strip()]=(mod.text.strip() if mod is not None and mod.text else '')
 
+          image_sitemap_text=Path('sitemap-images.xml').read_text(encoding='utf-8',errors='replace') if Path('sitemap-images.xml').exists() else ''
           active_urls=set(sitemap)
           inlinks=defaultdict(set)
           graph=defaultdict(set)
@@ -190,6 +191,9 @@ jobs:
                       if 'width=' not in tag.lower() or 'height=' not in tag.lower(): failures.append(f'{slug}: hero missing width/height')
                       if 'fetchpriority="high"' not in tag.lower(): failures.append(f'{slug}: hero missing fetchpriority=high')
                       if not internal_asset_exists(src): failures.append(f'{slug}: hero asset missing in repo: {src}')
+                      hero_abs=BASE.rstrip('/')+src if src.startswith('/') else src
+                      if hero_abs.split('?',1)[0] not in image_sitemap_text:
+                          failures.append(f'{slug}: hero image missing from sitemap-images.xml')
                       srcs=[x[0].split('?',1)[0] for x in imgs]
                       if len(srcs)!=len(set(srcs)): failures.append(f'{slug}: duplicate non-logo image source on page')
                   if webpage:
