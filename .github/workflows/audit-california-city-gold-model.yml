@@ -233,11 +233,25 @@ jobs:
               neighborhood_ref=cluster.get('official_neighborhood_reference')
               if neighborhood_ref and neighborhood_ref not in main['raw']:
                   failures.append(f'{main_slug}: missing official neighborhood/planning reference link')
+              county=cluster.get('county')
+              if county and county.lower() not in main['text'].lower():
+                  failures.append(f'{main_slug}: missing county context {county}')
+              fallback_phone=norm_phone(cluster.get('official_local_contact_phone',''))
+              if fallback_phone:
+                  fallback_pattern=r'\D*'.join(re.escape(ch) for ch in fallback_phone)
+                  if not re.search(fallback_pattern,main['raw']):
+                      failures.append(f'{main_slug}: missing official local fallback phone')
               for phrase in ['how much does appliance removal cost','$0']:
                   if phrase not in main['text'].lower():
                       failures.append(f'{main_slug}: missing cost-transparency signal {phrase}')
               for term in cluster.get('required_local_terms',[]):
                   if term.lower() not in main['text'].lower(): failures.append(f'{main_slug}: missing local proof term {term}')
+              for term in cluster.get('required_title_terms',[]):
+                  if term.lower() not in main['title'].lower():
+                      failures.append(f'{main_slug}: title missing required search-intent term {term}')
+              for term in cluster.get('required_description_terms',[]):
+                  if term.lower() not in main['desc'].lower():
+                      failures.append(f'{main_slug}: description missing required search-intent term {term}')
               if 'formspree.io/f/mvzeapzd' not in main['low'] or 'id="request"' not in main['low']:
                   failures.append(f'{main_slug}: missing local request form')
               if 'gold-city-start-strip' not in main['low']:

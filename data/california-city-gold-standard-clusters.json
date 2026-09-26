@@ -24,9 +24,28 @@
         "91739",
         "Cucamonga–Red Hill",
         "Terra Vista",
-        "Victoria"
+        "Victoria",
+        "San Bernardino County"
       ],
-      "official_neighborhood_reference": "https://www.cityofrc.us/ConnectRC"
+      "official_neighborhood_reference": "https://www.cityofrc.us/ConnectRC",
+      "official_local_contact_phone": "909-987-3717",
+      "county": "San Bernardino County",
+      "required_title_terms": [
+        "Free Appliance Pickup",
+        "Rancho Cucamonga",
+        "Removal",
+        "Recycling"
+      ],
+      "required_description_terms": [
+        "appliance pickup",
+        "removal",
+        "recycling",
+        "refrigerators",
+        "washers",
+        "dryers",
+        "freezers",
+        "stoves"
+      ]
     }
   ]
 }
