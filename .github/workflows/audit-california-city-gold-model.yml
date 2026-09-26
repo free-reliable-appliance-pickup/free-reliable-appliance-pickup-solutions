@@ -29,7 +29,8 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          from urllib.parse import urlparse
+          from urllib.parse import urlparse, urljoin
+          from collections import defaultdict, deque
           import datetime, html, json, re, sys, xml.etree.ElementTree as ET
 
           BASE='https://freereliableappliancepickup.com/'
@@ -44,6 +45,47 @@ jobs:
               mod=node.find('s:lastmod',ns)
               if loc is not None and loc.text:
                   sitemap[loc.text.strip()]=(mod.text.strip() if mod is not None and mod.text else '')
+
+          active_urls=set(sitemap)
+          inlinks=defaultdict(set)
+          graph=defaultdict(set)
+
+          def file_for_url(url):
+              if url.rstrip('/')==BASE.rstrip('/'):
+                  return Path('index.html')
+              if not url.startswith(BASE):
+                  return None
+              rel=url[len(BASE):].split('#',1)[0].split('?',1)[0].strip('/')
+              return Path(rel)/'index.html' if rel else Path('index.html')
+
+          for src in active_urls:
+              fp=file_for_url(src)
+              if not fp or not fp.exists():
+                  continue
+              raw=fp.read_text(encoding='utf-8',errors='replace')
+              for href in re.findall(r'href=["\']([^"\']+)["\']',raw,re.I):
+                  href=href.strip()
+                  if not href or href.startswith(('#','mailto:','tel:','sms:','javascript:','data:')):
+                      continue
+                  dest=urljoin(src,href)
+                  parsed=urlparse(dest)
+                  if parsed.netloc and parsed.netloc!='freereliableappliancepickup.com':
+                      continue
+                  clean=parsed._replace(fragment='',query='').geturl()
+                  if clean.endswith('/index.html'):
+                      clean=clean[:-10]
+                  if clean in active_urls:
+                      graph[src].add(clean)
+                      inlinks[clean].add(src)
+
+          depths={BASE:0}
+          q=deque([BASE])
+          while q:
+              src=q.popleft()
+              for dest in graph.get(src,()):
+                  if dest not in depths:
+                      depths[dest]=depths[src]+1
+                      q.append(dest)
 
           def visible_text(raw):
               x=re.sub(r'<script\b[^>]*>.*?</script>',' ',raw,flags=re.I|re.S)
@@ -188,8 +230,21 @@ jobs:
                   if term.lower() not in main['text'].lower(): failures.append(f'{main_slug}: missing local proof term {term}')
               if 'formspree.io/f/mvzeapzd' not in main['low'] or 'id="request"' not in main['low']:
                   failures.append(f'{main_slug}: missing local request form')
+              for field_name in ['name="brand_model"','name="preferred_window"','name="photos_available"','name="testable"','name="property_type"']:
+                  if field_name not in main['low']:
+                      failures.append(f'{main_slug}: missing lead-quality field {field_name}')
+              if f'href="sms:+1{expected_phone}"' not in main['low'] and f'href="sms:{expected_phone}"' not in main['low']:
+                  failures.append(f'{main_slug}: missing direct Text Photos SMS path')
               if len(re.findall(r'<img\b',main['raw'],re.I))<3:
                   failures.append(f'{main_slug}: expected logo plus at least two page images')
+
+              main_url=BASE+main_slug+'/'
+              main_inlinks=len(inlinks.get(main_url,set()))
+              main_depth=depths.get(main_url,999)
+              if main_inlinks < 8:
+                  failures.append(f'{main_slug}: only {main_inlinks} active internal inlinks; gold city hubs require at least 8')
+              if main_depth > 2:
+                  failures.append(f'{main_slug}: crawl depth is {main_depth}; gold city hubs must be within 2 clicks of home')
 
               category_terms={
                 'washer_dryer':['washer','dryer'],
@@ -197,9 +252,15 @@ jobs:
                 'freezer':['freezer'],
                 'stove_oven':['stove','range','oven'],
               }
-              main_url=BASE+main_slug+'/'
               for kind,child_slug in child_map.items():
                   page=pages[child_slug]
+                  child_url=BASE+child_slug+'/'
+                  child_inlinks=len(inlinks.get(child_url,set()))
+                  child_depth=depths.get(child_url,999)
+                  if child_inlinks < 3:
+                      failures.append(f'{child_slug}: only {child_inlinks} active internal inlinks; gold specialty pages require at least 3')
+                  if child_depth > 3:
+                      failures.append(f'{child_slug}: crawl depth is {child_depth}; gold specialty pages must be within 3 clicks of home')
                   if f'/{main_slug}/' not in page['raw']:
                       failures.append(f'{child_slug}: missing link to city parent {main_slug}')
                   if main_url not in json.dumps(page['breadcrumb'] or {}):
@@ -217,7 +278,7 @@ jobs:
               if len(descs)!=len(set(descs)): failures.append(f'{city}: duplicate descriptions inside gold cluster')
               if len(h1s)!=len(set(h1s)): failures.append(f'{city}: duplicate H1s inside gold cluster')
 
-              print(f'GOLD_CITY {city}: checked {len(slugs)} pages')
+              print(f'GOLD_CITY {city}: checked {len(slugs)} pages | hub_inlinks={main_inlinks} hub_depth={main_depth}')
 
           if failures:
               print('\nCITY_GOLD_MODEL_FAILURES')
