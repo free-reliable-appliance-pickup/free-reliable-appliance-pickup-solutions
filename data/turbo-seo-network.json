@@ -1,6 +1,6 @@
 {
-  "version": "2026-09-24.3",
-  "purpose": "Batch-maintain internal-link clusters on existing approved priority pages. This file never creates new location pages.",
+  "version": "2026-09-26.1",
+  "purpose": "Batch-maintain internal-link clusters and high-value customer-program connections on existing approved priority pages. This file never creates new location pages.",
   "regions": {
     "San Gabriel Valley": {
       "hub": "san-gabriel-valley-appliance-pickup",
@@ -773,6 +773,73 @@
         "los-angeles-county-appliance-pickup",
         "san-gabriel-valley-appliance-pickup"
       ]
+    },
+    "senior-living-appliance-pickup": {
+      "label": "Senior living, 55+ and retirement community appliance pickup",
+      "regions": [
+        "los-angeles-county-appliance-pickup",
+        "san-gabriel-valley-appliance-pickup",
+        "inland-empire-appliance-pickup",
+        "riverside-county-appliance-pickup",
+        "orange-county-appliance-pickup",
+        "high-desert-appliance-pickup",
+        "antelope-valley-appliance-pickup"
+      ]
+    },
+    "commercial-appliance-pickup": {
+      "label": "Commercial and property appliance pickup",
+      "regions": [
+        "los-angeles-county-appliance-pickup",
+        "san-gabriel-valley-appliance-pickup",
+        "inland-empire-appliance-pickup",
+        "riverside-county-appliance-pickup",
+        "orange-county-appliance-pickup",
+        "high-desert-appliance-pickup",
+        "antelope-valley-appliance-pickup"
+      ]
+    },
+    "commercial-laundry-appliance-pickup": {
+      "label": "Commercial washer and dryer pickup",
+      "regions": [
+        "los-angeles-county-appliance-pickup",
+        "san-gabriel-valley-appliance-pickup",
+        "inland-empire-appliance-pickup",
+        "riverside-county-appliance-pickup",
+        "orange-county-appliance-pickup",
+        "high-desert-appliance-pickup",
+        "antelope-valley-appliance-pickup"
+      ]
     }
+  },
+  "program_links": {
+    "regions": [
+      "San Gabriel Valley",
+      "Inland Empire",
+      "Riverside County",
+      "Orange County",
+      "Los Angeles County",
+      "High Desert",
+      "Antelope Valley"
+    ],
+    "appliance": [
+      {
+        "slug": "senior-living-appliance-pickup",
+        "label": "Senior living & 55+ appliance pickup"
+      },
+      {
+        "slug": "commercial-appliance-pickup",
+        "label": "Commercial & property appliance pickup"
+      }
+    ],
+    "laundry": [
+      {
+        "slug": "senior-living-appliance-pickup",
+        "label": "Senior living & 55+ appliance pickup"
+      },
+      {
+        "slug": "commercial-laundry-appliance-pickup",
+        "label": "Commercial laundry appliance pickup"
+      }
+    ]
   }
 }
