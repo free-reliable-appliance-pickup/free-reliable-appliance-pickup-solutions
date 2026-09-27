@@ -22,6 +22,11 @@ Free Reliable Appliance Pickup reviews qualifying pickup requests for washers, d
 - Pomona appliance pickup: https://freereliableappliancepickup.com/pomona-appliance-pickup/
 - Ontario appliance pickup: https://freereliableappliancepickup.com/ontario-appliance-pickup/
 - Rancho Cucamonga appliance pickup: https://freereliableappliancepickup.com/rancho-cucamonga-appliance-pickup/
+
+  - Rancho Cucamonga washer & dryer pickup: https://freereliableappliancepickup.com/rancho-cucamonga-washer-dryer-pickup/
+  - Rancho Cucamonga refrigerator pickup: https://freereliableappliancepickup.com/rancho-cucamonga-refrigerator-pickup/
+  - Rancho Cucamonga freezer pickup: https://freereliableappliancepickup.com/rancho-cucamonga-freezer-pickup/
+  - Rancho Cucamonga stove, range & oven pickup: https://freereliableappliancepickup.com/rancho-cucamonga-stove-oven-pickup/
 - Fontana appliance pickup: https://freereliableappliancepickup.com/fontana-appliance-pickup/
 - San Bernardino appliance pickup: https://freereliableappliancepickup.com/san-bernardino-appliance-pickup/
 - Riverside appliance pickup: https://freereliableappliancepickup.com/riverside-appliance-pickup/
@@ -79,5 +84,6 @@ Free Reliable Appliance Pickup reviews qualifying pickup requests for washers, d
 - Washer and dryer pickup: https://freereliableappliancepickup.com/washer-dryer-pickup/
 - Refrigerator pickup: https://freereliableappliancepickup.com/refrigerator-pickup/
 - XML sitemap: https://freereliableappliancepickup.com/sitemap.xml
+- Rancho Cucamonga cluster sitemap: https://freereliableappliancepickup.com/sitemap-rancho-cucamonga.xml
 
 The XML sitemap contains the focused set of pages intended for Google indexing. Secondary location templates remain available but are excluded from indexing until individually strengthened.
