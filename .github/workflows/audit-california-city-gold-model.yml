@@ -376,6 +376,8 @@ jobs:
                 'stove_oven':['stove','range','oven'],
               }
               child_requirements=cluster.get('child_requirements',{})
+              child_title_terms=cluster.get('child_title_terms',{})
+              category_authority_links=cluster.get('category_authority_links',{})
               for kind,child_slug in child_map.items():
                   page=pages[child_slug]
                   child_url=BASE+child_slug+'/'
@@ -407,6 +409,18 @@ jobs:
                   for term in child_requirements.get(kind,[]):
                       if term.lower() not in page['text'].lower() and term.lower() not in page['raw'].lower():
                           failures.append(f'{child_slug}: missing specialty parity term {term}')
+                  for term in child_title_terms.get(kind,[]):
+                      if term.lower() not in page['title'].lower():
+                          failures.append(f'{child_slug}: title missing specialty intent term {term}')
+                  authority_slug=category_authority_links.get(kind)
+                  if authority_slug:
+                      authority_path=Path(authority_slug)/'index.html'
+                      if not authority_path.exists():
+                          failures.append(f'{child_slug}: missing category authority page {authority_slug}')
+                      else:
+                          authority_raw=authority_path.read_text(encoding='utf-8',errors='replace')
+                          if f'/{child_slug}/' not in authority_raw:
+                              failures.append(f'{authority_slug}: missing direct authority link to {child_slug}')
                   self_link_pattern=rf'<a\b[^>]*href=["\'](?:{re.escape(BASE)})?/?{re.escape(child_slug)}/?["\'][^>]*>'
                   if re.search(self_link_pattern,page['raw'],re.I):
                       failures.append(f'{child_slug}: contains a useless self-link')
