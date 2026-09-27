@@ -322,6 +322,9 @@ jobs:
               for term in cluster.get('recurring_brief_terms',[]):
                   if term.lower() not in main['text'].lower():
                       failures.append(f'{main_slug}: missing recurring-lead brief term {term}')
+              for term in cluster.get('business_intent_terms',[]):
+                  if term.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing business-intent term {term}')
               for field_name in ['name="brand_model"','name="preferred_window"','name="photos_available"','name="testable"','name="property_type"']:
                   if field_name not in main['low']:
                       failures.append(f'{main_slug}: missing lead-quality field {field_name}')

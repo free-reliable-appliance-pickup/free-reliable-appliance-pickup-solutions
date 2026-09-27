@@ -123,6 +123,10 @@ Use descriptive anchor text rather than generic “click here” wording. This i
 
 For apartments, senior/55+ communities, property managers, installers, retailers and recurring replacement programs, the city hub should ask for enough information to judge the batch before anyone plans a route. At minimum, request appliance count by category, working/testable status, sample photos or model labels when practical, replacement cadence, staging/loading details, appointment rules and an onsite contact.
 
+Make the business intent explicit on the city hub rather than hiding it behind a generic commercial page. A gold city should naturally cover one-time and recurring appliance replacement loads, apartment/rental unit turns, senior/55+ community upgrades, retailer/installer swaps and facility replacement work when those are real service opportunities.
+
+Where the city has a franchised or otherwise regulated solid-waste system, distinguish appliance-reuse pickup from general commercial trash hauling. Link the verified municipal source and do not imply that the appliance network is a substitute for regulated trash, hazardous-waste or non-qualifying disposal service.
+
 Do not treat recurring work as a generic household pickup with a larger appliance count. The brief should make it possible to distinguish a high-quality reusable batch from a mixed cleanout or end-of-life load.
 
 ## Network transparency placement

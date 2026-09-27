@@ -58,7 +58,8 @@
       },
       "required_faq_questions": [
         "Do I need to put the appliance at the curb before pickup?",
-        "Do I need to disconnect the appliance before pickup?"
+        "Do I need to disconnect the appliance before pickup?",
+        "Do you offer business appliance pickup in Rancho Cucamonga?"
       ],
       "network_disclosure": {
         "marker": "gold-network-disclosure",
@@ -139,6 +140,14 @@
         "Free to submit. No account required.",
         "not a guaranteed appointment until pickup is confirmed",
         "Free pickup is confirmed only after the request qualifies"
+      ],
+      "business_intent_terms": [
+        "Business Appliance Pickup in Rancho Cucamonga",
+        "Apartment & rental unit turns",
+        "Senior & 55+ communities",
+        "Retailers, installers & remodelers",
+        "one-time or recurring appliance replacement loads",
+        "not general commercial trash hauling"
       ]
     }
   ]
