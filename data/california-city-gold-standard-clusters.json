@@ -55,7 +55,11 @@
           "do not move a good appliance to the curb before pickup is confirmed",
           "do not cut refrigerant lines"
         ]
-      }
+      },
+      "required_faq_questions": [
+        "Do I need to put the appliance at the curb before pickup?",
+        "Do I need to disconnect the appliance before pickup?"
+      ]
     }
   ]
 }
