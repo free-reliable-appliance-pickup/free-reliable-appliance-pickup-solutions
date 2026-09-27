@@ -275,6 +275,10 @@ jobs:
                       expected_child_id=expected_child_url+'#webpage'
                       if expected_child_id not in part_ids or expected_child_url not in part_urls:
                           failures.append(f'{main_slug}: WebPage hasPart missing {child_slug}')
+                  if schema_graph.get('hub_has_part_reference_only'):
+                      for p in parts:
+                          if isinstance(p,dict) and p.get('@type'):
+                              failures.append(f'{main_slug}: hasPart child references must not embed @type WebPage objects')
               for child_slug in child_map.values():
                   if f'/{child_slug}/' not in main['raw']:
                       failures.append(f'{main_slug}: missing child link to {child_slug}')
