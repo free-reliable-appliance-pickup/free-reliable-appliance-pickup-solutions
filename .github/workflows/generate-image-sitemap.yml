@@ -42,6 +42,21 @@ jobs:
           print("pages",len(urls),"images",len(images))
           if len(urls) < 50 or len(images) < 50:
               raise SystemExit("image sitemap unexpectedly small")
+          page_locs={
+              (u.find("s:loc",ns).text or "").strip()
+              for u in urls
+              if u.find("s:loc",ns) is not None
+          }
+          required_rancho={
+              "https://freereliableappliancepickup.com/rancho-cucamonga-appliance-pickup/",
+              "https://freereliableappliancepickup.com/rancho-cucamonga-washer-dryer-pickup/",
+              "https://freereliableappliancepickup.com/rancho-cucamonga-refrigerator-pickup/",
+              "https://freereliableappliancepickup.com/rancho-cucamonga-freezer-pickup/",
+              "https://freereliableappliancepickup.com/rancho-cucamonga-stove-oven-pickup/",
+          }
+          missing=sorted(required_rancho-page_locs)
+          if missing:
+              raise SystemExit("Rancho gold-model image pages missing: "+", ".join(missing))
           PY
       - name: Commit generated image sitemap
         run: |
