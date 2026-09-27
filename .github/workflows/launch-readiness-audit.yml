@@ -146,13 +146,27 @@ jobs:
               pages_checked += 1
               t=p.read_text(encoding='utf-8',errors='replace')
               l=t.lower()
+              intake_target=None
+              intake_match=re.search(r'data-single-city-intake=["\']([^"\']+)["\']',t,re.I)
+              if intake_match:
+                  intake_target=intake_match.group(1).strip('/')
+              direct_form='https://formspree.io/f/mvzeapzd' in l
+              linked_city_intake=False
+              if intake_target:
+                  expected=f'/{intake_target}/#request'
+                  target_file=Path(intake_target)/'index.html'
+                  linked_city_intake=(
+                      expected in t and
+                      target_file.exists() and
+                      'https://formspree.io/f/mvzeapzd' in target_file.read_text(encoding='utf-8',errors='replace').lower()
+                  )
               checks={
                   'index/follow': bool(re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*index[^"\']*follow',t,re.I)),
                   'self canonical': f'https://freereliableappliancepickup.com/{slug}/' in l,
                   'title': bool(re.search(r'<title>[^<]{20,}</title>',t,re.I)),
                   'H1': bool(re.search(r'<h1[^>]*>.+?</h1>',t,re.I|re.S)),
                   'request target': ('id="request"' in l or "id='request'" in l),
-                  'Formspree action': 'https://formspree.io/f/mvzeapzd' in l,
+                  'lead intake': (direct_form or linked_city_intake),
                   'customer routing': 'customer-routing.js' in l,
                   'WebPage schema': ('"@type":"webpage"' in l or '"@type": "webpage"' in l),
                   'BreadcrumbList': 'breadcrumblist' in l,
