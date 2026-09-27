@@ -1,0 +1,113 @@
+name: Audit Rancho Performance Budget
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'rancho-cucamonga-appliance-pickup/index.html'
+      - 'assets/rancho-cucamonga/**'
+      - 'assets/site-brand.css'
+      - 'assets/customer-routing.js'
+      - 'file_00000000b7c082308dccc73e5bd3acd2.png'
+      - '.github/workflows/audit-rancho-performance-budget.yml'
+  pull_request:
+    paths:
+      - 'rancho-cucamonga-appliance-pickup/index.html'
+      - 'assets/rancho-cucamonga/**'
+      - 'assets/site-brand.css'
+      - 'assets/customer-routing.js'
+      - 'file_00000000b7c082308dccc73e5bd3acd2.png'
+      - '.github/workflows/audit-rancho-performance-budget.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Rancho static performance budget
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, sys
+
+          page=Path('rancho-cucamonga-appliance-pickup/index.html')
+          css=Path('assets/site-brand.css')
+          routing=Path('assets/customer-routing.js')
+          failures=[]
+
+          budgets={
+              'page HTML': (page, 65000),
+              'shared brand CSS': (css, 20000),
+              'customer routing JS': (routing, 40000),
+          }
+          for label,(p,limit) in budgets.items():
+              size=p.stat().st_size
+              print(label, size, 'bytes')
+              if size > limit:
+                  failures.append(f'{label} is {size} bytes; budget is {limit}')
+
+          raw=page.read_text(encoding='utf-8',errors='replace')
+          img_tags=re.findall(r'<img\b[^>]*>',raw,re.I)
+          rows=[]
+          for tag in img_tags:
+              m=re.search(r'\bsrc=["\']([^"\']+)["\']',tag,re.I)
+              if not m:
+                  continue
+              src=m.group(1)
+              if not src.startswith('/'):
+                  continue
+              p=Path(src.lstrip('/'))
+              if not p.exists():
+                  continue
+              size=p.stat().st_size
+              rows.append((src,size,tag))
+
+          hero='/assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg'
+          logo='/file_00000000b7c082308dccc73e5bd3acd2.png'
+          seen={src for src,_,_ in rows}
+          if hero not in seen:
+              failures.append('Rancho hero image missing')
+          if logo not in seen:
+              failures.append('site logo missing from Rancho page')
+
+          for src,size,tag in rows:
+              print('IMAGE',size,src)
+              low=tag.lower()
+              if src==hero:
+                  if size > 600000:
+                      failures.append(f'hero image is {size} bytes; budget is 600000')
+                  if 'fetchpriority="high"' not in low:
+                      failures.append('hero image missing fetchpriority=high')
+                  if 'loading="lazy"' in low:
+                      failures.append('hero image must not be lazy-loaded')
+              elif src==logo:
+                  if size > 450000:
+                      failures.append(f'logo is {size} bytes; temporary budget is 450000')
+              else:
+                  if size > 350000:
+                      failures.append(f'below-fold image is {size} bytes: {src}')
+                  if 'loading="lazy"' not in low:
+                      failures.append(f'below-fold image must be lazy-loaded: {src}')
+              if 'width=' not in low or 'height=' not in low:
+                  failures.append(f'image missing width/height: {src}')
+
+          if '/assets/customer-routing.js' not in raw or not re.search(r'<script[^>]+src=["\']/assets/customer-routing\.js["\'][^>]*\bdefer\b',raw,re.I):
+              failures.append('customer-routing.js must remain deferred')
+
+          stylesheet_count=len(re.findall(r'<link\b[^>]*rel=["\']stylesheet["\']',raw,re.I))
+          print('STYLESHEETS',stylesheet_count)
+          if stylesheet_count > 1:
+              failures.append(f'Rancho page has {stylesheet_count} blocking stylesheet links; budget is 1')
+
+          if failures:
+              print('PERFORMANCE_BUDGET_FAILURES',len(failures))
+              for f in failures:
+                  print('-',f)
+              sys.exit(1)
+          print('PASS: Rancho static performance budget stays within the gold-model limits.')
+          PY
