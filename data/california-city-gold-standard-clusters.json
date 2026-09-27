@@ -51,6 +51,12 @@
         "appliance-removal",
         "old-appliance-disposal-options"
       ],
+      "breadcrumb_hierarchy": [
+        "service-areas",
+        "california-appliance-pickup",
+        "southern-california-appliance-pickup",
+        "inland-empire-appliance-pickup"
+      ],
       "decision_model": {
         "anchor": "removal-options",
         "required_phrases": [
