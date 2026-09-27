@@ -7,6 +7,18 @@ on:
       - 'sitemap.xml'
       - 'data/california-laundry-gold-standard-pages.txt'
       - 'data/california-gold-standard-spec.md'
+      - 'data/california-city-gold-standard-clusters.json'
+      - 'assets/premium-user-heroes.json'
+      - '*-washer-dryer-pickup/index.html'
+      - 'assets/site-brand.css'
+      - '.github/workflows/audit-california-laundry-gold-standard.yml'
+  pull_request:
+    paths:
+      - 'sitemap.xml'
+      - 'data/california-laundry-gold-standard-pages.txt'
+      - 'data/california-gold-standard-spec.md'
+      - 'data/california-city-gold-standard-clusters.json'
+      - 'assets/premium-user-heroes.json'
       - '*-washer-dryer-pickup/index.html'
       - 'assets/site-brand.css'
       - '.github/workflows/audit-california-laundry-gold-standard.yml'
@@ -25,6 +37,7 @@ jobs:
         run: |
           from pathlib import Path
           import html
+          import json
           import re
           import sys
           import xml.etree.ElementTree as ET
@@ -40,6 +53,19 @@ jobs:
           failures = []
           warnings = []
           seen_titles = defaultdict(list)
+
+          hero_manifest_path = Path('assets/premium-user-heroes.json')
+          hero_manifest = json.loads(hero_manifest_path.read_text(encoding='utf-8')) if hero_manifest_path.exists() else {}
+
+          city_gold_path = Path('data/california-city-gold-standard-clusters.json')
+          city_gold = json.loads(city_gold_path.read_text(encoding='utf-8')) if city_gold_path.exists() else {'clusters': []}
+          single_intake_children = {}
+          for cluster in city_gold.get('clusters', []):
+              if cluster.get('single_city_intake'):
+                  main_slug = cluster.get('main', '')
+                  for child_slug in (cluster.get('children') or {}).values():
+                      if child_slug and main_slug:
+                          single_intake_children[child_slug] = main_slug
           seen_descriptions = defaultdict(list)
           seen_h1s = defaultdict(list)
 
@@ -123,10 +149,37 @@ jobs:
               ]
 
               description = descriptions[0] if descriptions else ''
-              is_original_hero = (
-                  '/assets/laundry/original-user-heroes/' in hero_src
-                  and 'original-fullres=' in hero_src
-              )
+              route = f'/{slug}/'
+              hero_info = hero_manifest.get(route, {})
+              original_src = str(hero_info.get('src', '')).lstrip('/')
+              display_src = str(hero_info.get('display_src', original_src)).lstrip('/')
+              hero_base = hero_src.split('?', 1)[0].lstrip('/')
+              if hero_info:
+                  is_original_hero = (
+                      original_src.startswith('assets/laundry/original-user-heroes/')
+                      and bool(original_src)
+                      and Path(original_src).is_file()
+                      and bool(display_src)
+                      and Path(display_src).is_file()
+                      and hero_base == display_src
+                  )
+              else:
+                  is_original_hero = (
+                      hero_base.startswith('assets/laundry/original-user-heroes/')
+                      and bool(hero_base)
+                      and Path(hero_base).is_file()
+                  )
+
+              shared_main_slug = single_intake_children.get(slug)
+              if shared_main_slug:
+                  request_target_ok = (
+                      f'/{shared_main_slug}/#request' in low
+                      or f'/{shared_main_slug}#request' in low
+                  )
+                  formspree_ok = 'https://formspree.io/f/mvzeapzd' not in low
+              else:
+                  request_target_ok = 'id="request"' in low or "id='request'" in low
+                  formspree_ok = 'https://formspree.io/f/mvzeapzd' in low
 
               checks = {
                   'indexable robots': (
@@ -140,8 +193,8 @@ jobs:
                   'H1': bool(h1),
                   'sharp shared CSS': 'site-brand.css?v=20260921sharp' in low,
                   'original full-resolution hero': is_original_hero,
-                  'request target': 'id="request"' in low or "id='request'" in low,
-                  'Formspree': 'https://formspree.io/f/mvzeapzd' in low,
+                  'request target': request_target_ok,
+                  'form architecture': formspree_ok,
                   'customer routing': '/assets/customer-routing.js' in low,
                   'structured WebPage': (
                       '"@type":"webpage"' in low
@@ -155,8 +208,15 @@ jobs:
                   if not ok:
                       failures.append(f'{slug}: missing or invalid {label}')
 
-              if og_images and '/assets/laundry/original-user-heroes/' not in og_images[0]:
-                  warnings.append(f'{slug}: og:image is not using the original-user-heroes library')
+              if hero_info:
+                  expected_og = ROOT + original_src
+                  actual_og = og_images[0].split('?', 1)[0] if og_images else ''
+                  if actual_og != expected_og:
+                      warnings.append(f'{slug}: og:image does not match approved original hero metadata')
+              elif og_images:
+                  actual_og = og_images[0].split('?', 1)[0]
+                  if '/assets/laundry/original-user-heroes/' not in actual_og:
+                      warnings.append(f'{slug}: og:image is not using the original-user-heroes library')
 
               if expected in sitemap_urls and not sitemap_urls[expected]:
                   warnings.append(f'{slug}: sitemap entry has no lastmod')
