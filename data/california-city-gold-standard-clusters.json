@@ -63,6 +63,27 @@
       "network_disclosure": {
         "marker": "gold-network-disclosure",
         "required_before": "removal-options"
+      },
+      "form_model": {
+        "required_fields": [
+          "name",
+          "phone",
+          "city",
+          "zip",
+          "appliance",
+          "condition"
+        ],
+        "optional_fields": [
+          "address",
+          "brand_model",
+          "location",
+          "stairs",
+          "property_type",
+          "testable",
+          "photos_available",
+          "preferred_window",
+          "message"
+        ]
       }
     }
   ]
