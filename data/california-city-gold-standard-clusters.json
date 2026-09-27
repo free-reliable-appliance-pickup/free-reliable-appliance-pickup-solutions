@@ -134,7 +134,12 @@
           "microwave ovens",
           "not the destination for a full-size refrigerator"
         ]
-      }
+      },
+      "free_claim_guardrails": [
+        "Free to submit. No account required.",
+        "not a guaranteed appointment until pickup is confirmed",
+        "Free pickup is confirmed only after the request qualifies"
+      ]
     }
   ]
 }
