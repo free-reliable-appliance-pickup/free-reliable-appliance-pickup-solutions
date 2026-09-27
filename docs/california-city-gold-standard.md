@@ -143,6 +143,8 @@ The request path should collect appliance type, brand/model when known, true wor
 
 Keep the first submission low-friction. For a city-specific household form, require only the essentials needed to identify and respond to the request: name, phone, city, ZIP, appliance type and condition. Street address, brand/model, floor/location, stairs, property type, testability, photo status, preferred window and access notes can remain optional and be confirmed by call/text after the first review. The visible “quick request” promise must match the actual HTML required fields.
 
+The city hub should also provide a short, actionable contact checklist near the pickup-process explanation. A useful pattern is: appliance and working condition, clear photos, physical ZIP, appliance location/access, and timing need. State the real service/review hours when they are stable, and keep timing claims conservative: explain that the request can be reviewed during those hours while same-day pickup is not guaranteed. Finish the checklist with a clear “what happens next” explanation so the customer understands qualification and local-provider confirmation before the visit.
+
 Keep a direct Text Photos action visible when the form backend does not support native file uploads. Only enable native photo-upload fields after confirming the live form backend/account supports them; do not publish a file input that silently fails.
 
 Place a concise request-contact disclosure beside the submission action and link the site's Privacy Information and Service Terms so customers can understand how their request information and local-provider routing are handled.

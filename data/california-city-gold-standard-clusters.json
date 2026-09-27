@@ -155,7 +155,21 @@
         "does not accept large appliances such as washers and dryers",
         "Reuse pickup is not a charitable donation",
         "does not issue tax-deductible donation receipts"
-      ]
+      ],
+      "fast_request_flow": {
+        "anchor": "how-review-works",
+        "required_phrases": [
+          "Fastest request path",
+          "Appliance & condition",
+          "Clear appliance photos",
+          "Rancho Cucamonga ZIP",
+          "Where the appliance is",
+          "Timing need",
+          "What happens next",
+          "Mon–Sun 8AM–8PM",
+          "same-day pickup is not guaranteed"
+        ]
+      }
     }
   ]
 }

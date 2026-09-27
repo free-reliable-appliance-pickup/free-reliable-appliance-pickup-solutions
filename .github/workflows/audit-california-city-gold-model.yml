@@ -255,6 +255,13 @@ jobs:
               for phrase in cluster.get('free_claim_guardrails',[]):
                   if phrase.lower() not in main['text'].lower():
                       failures.append(f'{main_slug}: missing free-claim guardrail {phrase}')
+              fast_flow=cluster.get('fast_request_flow',{})
+              fast_anchor=fast_flow.get('anchor')
+              if fast_anchor and f'id="{fast_anchor}"' not in main['low']:
+                  failures.append(f'{main_slug}: missing fast-request anchor #{fast_anchor}')
+              for phrase in fast_flow.get('required_phrases',[]):
+                  if phrase.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing fast-request signal {phrase}')
               for phrase in ['how much does appliance removal cost','$0']:
                   if phrase not in main['text'].lower():
                       failures.append(f'{main_slug}: missing cost-transparency signal {phrase}')
