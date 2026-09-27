@@ -382,6 +382,16 @@ jobs:
                       failures.append(f'{main_slug}: request form area missing policy link {policy_path}')
               if 'request contact:' not in main['low']:
                   failures.append(f'{main_slug}: missing request-contact disclosure near form')
+              cta_style=cluster.get('cta_style',{})
+              forbidden_cta=cta_style.get('forbidden_legacy_class')
+              required_cta=cta_style.get('required_class')
+              if forbidden_cta:
+                  legacy_pattern=rf'class=["\'][^"\']*\b{re.escape(forbidden_cta)}\b[^"\']*["\']'
+                  for cta_slug in slugs:
+                      if re.search(legacy_pattern,pages[cta_slug]['raw'],re.I):
+                          failures.append(f'{cta_slug}: legacy CTA class {forbidden_cta} is not allowed in gold cluster')
+              if required_cta and f'class="{required_cta}"' not in main['raw']:
+                  failures.append(f'{main_slug}: missing required styled CTA class {required_cta}')
               if len(re.findall(r'<img\b',main['raw'],re.I))<3:
                   failures.append(f'{main_slug}: expected logo plus at least two page images')
 
