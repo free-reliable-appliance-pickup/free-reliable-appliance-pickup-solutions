@@ -301,6 +301,19 @@ jobs:
               for field_name in ['name="brand_model"','name="preferred_window"','name="photos_available"','name="testable"','name="property_type"']:
                   if field_name not in main['low']:
                       failures.append(f'{main_slug}: missing lead-quality field {field_name}')
+              form_model=cluster.get('form_model',{})
+              for field in form_model.get('required_fields',[]):
+                  m=re.search(r'<(?:input|select|textarea)\b[^>]*\bname=["\']'+re.escape(field)+r'["\'][^>]*>',main['raw'],re.I)
+                  if not m:
+                      failures.append(f'{main_slug}: missing required-form field {field}')
+                  elif not re.search(r'\brequired\b',m.group(0),re.I):
+                      failures.append(f'{main_slug}: required-form field is not required: {field}')
+              for field in form_model.get('optional_fields',[]):
+                  m=re.search(r'<(?:input|select|textarea)\b[^>]*\bname=["\']'+re.escape(field)+r'["\'][^>]*>',main['raw'],re.I)
+                  if not m:
+                      failures.append(f'{main_slug}: missing optional-form field {field}')
+                  elif re.search(r'\brequired\b',m.group(0),re.I):
+                      failures.append(f'{main_slug}: optional-form field incorrectly requires completion: {field}')
               if f'href="sms:+1{expected_phone}"' not in main['low'] and f'href="sms:{expected_phone}"' not in main['low']:
                   failures.append(f'{main_slug}: missing direct Text Photos SMS path')
               for policy_path in ['/privacy/','/terms/']:
