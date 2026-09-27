@@ -60,7 +60,8 @@
         "Do I need to put the appliance at the curb before pickup?",
         "Do I need to disconnect the appliance before pickup?",
         "Do you offer business appliance pickup in Rancho Cucamonga?",
-        "Can I donate a working washer, dryer or refrigerator instead of throwing it away?"
+        "Can I donate a working washer, dryer or refrigerator instead of throwing it away?",
+        "Will the delivery crew take my old appliance when they deliver the new one?"
       ],
       "network_disclosure": {
         "marker": "gold-network-disclosure",
