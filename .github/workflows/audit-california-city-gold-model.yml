@@ -358,6 +358,8 @@ jobs:
                       failures.append(f'{child_slug}: breadcrumb schema missing city parent')
                   if main_url+'#request' not in page['raw'] and f'/{main_slug}/#request' not in page['raw']:
                       failures.append(f'{child_slug}: missing city-parent request path')
+                  if cluster.get('single_city_intake') and re.search(r'<form\b',page['raw'],re.I):
+                      failures.append(f'{child_slug}: contains a duplicate local form instead of the single city intake')
                   for term in category_terms[kind]:
                       if term not in page['text'].lower():
                           failures.append(f'{child_slug}: missing category term {term}')
