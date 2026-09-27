@@ -207,7 +207,14 @@
         "required_class": "btn",
         "forbidden_legacy_class": "button"
       },
-      "faq_schema_visible_sync": true
+      "faq_schema_visible_sync": true,
+      "overview_trust_terms": [
+        "Why Use Our Rancho Cucamonga Appliance Pickup Review?",
+        "Free to request",
+        "Photos first",
+        "Reuse-focused qualification",
+        "Clear alternatives when it does not qualify"
+      ]
     }
   ]
 }

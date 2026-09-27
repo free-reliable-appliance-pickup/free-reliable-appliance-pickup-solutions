@@ -40,6 +40,10 @@ The page should explain the difference between:
 - paid junk/appliance removal when guaranteed paid hauling is the better fit; and
 - the city's own bulky-item, waste or recycling option when applicable.
 
+## Above-the-fold trust summary
+
+Near the beginning of the city hub, summarize the real reasons a customer should use the review without unsupported superlatives. A useful four-part pattern is: free to request, easy photo-first review, reuse-focused qualification, and verified alternatives when the free route does not qualify. Keep this concise and scannable; it should replace repetitive overview prose rather than add another long section.
+
 ## Customer decision path
 
 Every gold-standard city hub should make the removal choice understandable in one scan. Use a compact three-path module:
