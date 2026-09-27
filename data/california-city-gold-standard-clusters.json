@@ -205,7 +205,8 @@
       "cta_style": {
         "required_class": "btn",
         "forbidden_legacy_class": "button"
-      }
+      },
+      "faq_schema_visible_sync": true
     }
   ]
 }
