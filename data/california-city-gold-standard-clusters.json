@@ -172,6 +172,10 @@
         "Reuse pickup is not a charitable donation",
         "does not issue tax-deductible donation receipts"
       ],
+      "request_placement": {
+        "after": "qualification",
+        "before": "replacement-day"
+      },
       "fast_request_flow": {
         "anchor": "how-review-works",
         "required_phrases": [
