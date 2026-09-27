@@ -266,6 +266,13 @@ jobs:
               for phrase in decision.get('required_phrases',[]):
                   if phrase.lower() not in main['text'].lower():
                       failures.append(f'{main_slug}: missing decision-model phrase {phrase}')
+              boundaries=cluster.get('acceptance_boundaries',{})
+              for term in boundaries.get('required_terms',[]):
+                  if term.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing acceptance-boundary term {term}')
+              exclusion_phrase=boundaries.get('required_exclusion_phrase')
+              if exclusion_phrase and exclusion_phrase.lower() not in main['text'].lower():
+                  failures.append(f'{main_slug}: missing acceptance-boundary exclusion phrase')
               disclosure=cluster.get('network_disclosure',{})
               disclosure_marker=disclosure.get('marker')
               disclosure_before=disclosure.get('required_before')

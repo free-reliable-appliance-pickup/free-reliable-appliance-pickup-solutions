@@ -57,6 +57,12 @@ This module should answer the customer's real decision rather than simply repeat
 
 Use finalized Search Console query/page evidence to refine titles, descriptions, internal links and child-page emphasis. Treat very small impression samples as directional evidence, not a stable ranking. Do not claim a fixed Google position from one or two impressions, and do not stuff a city page with every query variant. When Google is already testing a page for a relevant intent, strengthen the most useful existing page before creating another URL.
 
+## Acceptance boundaries
+
+The gold model should be explicit about what the free program does **not** cover. Do not add an appliance category merely because a competitor ranks for it. If dishwashers, microwaves, water heaters or other items have stricter rules or are outside the free program, say so clearly in visible content and keep the request form wording consistent.
+
+Use negative/qualification language to reduce bad leads, not to manufacture extra keyword pages. A truthful “not accepted alone” or “not part of this free program” answer is more useful than implying broad acceptance and disappointing the customer later.
+
 ## Search-intent ownership
 
 The city hub should prominently and naturally cover the phrases customers actually use, without keyword stuffing:
