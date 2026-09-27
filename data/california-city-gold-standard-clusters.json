@@ -111,7 +111,15 @@
         ]
       },
       "require_official_contact_on_children": true,
-      "single_city_intake": true
+      "single_city_intake": true,
+      "acceptance_boundaries": {
+        "required_terms": [
+          "dishwasher",
+          "microwave",
+          "water heater"
+        ],
+        "required_exclusion_phrase": "not part of our free major-appliance pickup program"
+      }
     }
   ]
 }
