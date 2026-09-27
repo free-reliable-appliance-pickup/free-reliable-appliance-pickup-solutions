@@ -1,0 +1,73 @@
+name: Generate Rancho Responsive Hero
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg'
+      - '.github/workflows/generate-rancho-responsive-hero.yml'
+  pull_request:
+    paths:
+      - 'assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg'
+      - '.github/workflows/generate-rancho-responsive-hero.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Pillow
+        run: python -m pip install --disable-pip-version-check pillow
+
+      - name: Generate responsive WebP hero assets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          src=Path('assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg')
+          outputs=[
+              (768, Path('assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance-768.webp'), 190000),
+          ]
+
+          with Image.open(src) as base:
+              base=base.convert('RGB')
+              ow,oh=base.size
+              if (ow,oh)!=(1536,2048):
+                  raise SystemExit(f'unexpected source dimensions: {(ow,oh)}')
+              for width,out,limit in outputs:
+                  height=round(oh*width/ow)
+                  im=base if width==ow else base.resize((width,height),Image.Resampling.LANCZOS)
+                  out.parent.mkdir(parents=True,exist_ok=True)
+                  im.save(out,'WEBP',quality=88,method=6)
+                  with Image.open(out) as check:
+                      if check.size!=(width,height):
+                          raise SystemExit(f'wrong dimensions for {out}: {check.size}')
+                  size=out.stat().st_size
+                  print('RANCHO_HERO_BYTES',width,size,out)
+                  if size>limit:
+                      raise SystemExit(f'{out} too large: {size} bytes > {limit}')
+          PY
+
+      - name: Commit responsive hero assets
+        if: github.event_name != 'pull_request'
+        run: |
+          if [ -z "$(git status --porcelain -- assets/rancho-cucamonga/*-768.webp)" ]; then
+            echo "No responsive hero changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/rancho-cucamonga/*-768.webp
+          git commit -m "Generate Rancho responsive hero assets"
+          git pull --rebase origin main
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git pull --rebase origin main
+          done
+          exit 1
