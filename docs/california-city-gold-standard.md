@@ -64,6 +64,8 @@ This module should answer the customer's real decision rather than simply repeat
 
 When an official city or county source identifies a separate destination for special items—such as microwaves, e-waste or household hazardous waste—add that guidance only when it prevents a realistic customer mistake. State clearly which items the facility accepts and which major appliances it does not handle. Do not turn a city page into a generic disposal directory, and do not copy competitor disposal facts without checking the primary local source.
 
+For refrigerated appliances that reach end of life, use current EPA guidance to explain refrigerant-safe disposal without overclaiming the network's downstream process. State that exact handling can vary by the independent pickup professional, that refrigerant must be recovered before final disposal, and that customers should not cut refrigerant lines or remove compressors themselves. This supports recycling intent while avoiding vague “eco-friendly” promises.
+
 ## Search Console feedback loop
 
 Use finalized Search Console query/page evidence to refine titles, descriptions, internal links and child-page emphasis. Treat very small impression samples as directional evidence, not a stable ranking. Do not claim a fixed Google position from one or two impressions, and do not stuff a city page with every query variant. When Google is already testing a page for a relevant intent, strengthen the most useful existing page before creating another URL.
