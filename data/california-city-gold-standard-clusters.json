@@ -169,6 +169,34 @@
           "Mon–Sun 8AM–8PM",
           "same-day pickup is not guaranteed"
         ]
+      },
+      "child_title_terms": {
+        "washer_dryer": [
+          "Washer & Dryer Pickup",
+          "Rancho Cucamonga",
+          "Laundry Removal"
+        ],
+        "refrigerator": [
+          "Refrigerator Pickup",
+          "Rancho Cucamonga",
+          "Fridge Removal"
+        ],
+        "freezer": [
+          "Freezer Pickup",
+          "Rancho Cucamonga",
+          "Freezer Removal"
+        ],
+        "stove_oven": [
+          "Stove & Range Pickup",
+          "Rancho Cucamonga",
+          "Oven Removal"
+        ]
+      },
+      "category_authority_links": {
+        "washer_dryer": "washer-dryer-pickup",
+        "refrigerator": "refrigerator-pickup",
+        "freezer": "freezer-pickup",
+        "stove_oven": "stove-oven-pickup"
       }
     }
   ]
