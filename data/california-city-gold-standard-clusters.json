@@ -84,6 +84,35 @@
           "preferred_window",
           "message"
         ]
+      },
+      "child_requirements": {
+        "washer_dryer": [
+          "San Bernardino County",
+          "near me",
+          "disconnect",
+          "909-987-3717"
+        ],
+        "refrigerator": [
+          "San Bernardino County",
+          "near me",
+          "curb",
+          "refrigerant",
+          "909-987-3717"
+        ],
+        "freezer": [
+          "San Bernardino County",
+          "near me",
+          "outside",
+          "refrigerant",
+          "909-987-3717"
+        ],
+        "stove_oven": [
+          "San Bernardino County",
+          "near me",
+          "outside",
+          "gas",
+          "909-987-3717"
+        ]
       }
     }
   ]
