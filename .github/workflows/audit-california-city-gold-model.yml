@@ -293,6 +293,28 @@ jobs:
                       main_entity=webpage_obj.get('mainEntity',{})
                       if not isinstance(main_entity,dict) or main_entity.get('@id')!=expected_service_id:
                           failures.append(f'{schema_slug}: WebPage mainEntity must reference its Service @id')
+              service_channel=cluster.get('service_channel')
+              if service_channel:
+                  service_obj=main.get('service') or {}
+                  channel=service_obj.get('availableChannel',{})
+                  if not isinstance(channel,dict) or channel.get('@type')!='ServiceChannel':
+                      failures.append(f'{main_slug}: missing ServiceChannel on Service schema')
+                  else:
+                      expected_url=service_channel.get('request_url')
+                      if expected_url and channel.get('serviceUrl')!=expected_url:
+                          failures.append(f'{main_slug}: ServiceChannel serviceUrl mismatch')
+                      expected_langs=set(service_channel.get('languages',[]))
+                      actual_langs=channel.get('availableLanguage',[])
+                      if isinstance(actual_langs,str):
+                          actual_langs=[actual_langs]
+                      if not expected_langs.issubset(set(actual_langs)):
+                          failures.append(f'{main_slug}: ServiceChannel missing required languages {sorted(expected_langs)}')
+                      def cp_phone(value):
+                          return value.get('telephone') if isinstance(value,dict) else None
+                      if cp_phone(channel.get('servicePhone'))!=service_channel.get('phone'):
+                          failures.append(f'{main_slug}: ServiceChannel servicePhone mismatch')
+                      if cp_phone(channel.get('serviceSmsNumber'))!=service_channel.get('sms'):
+                          failures.append(f'{main_slug}: ServiceChannel serviceSmsNumber mismatch')
               if schema_graph.get('hub_has_part_children'):
                   main_webpage=main.get('webpage') or {}
                   parts=main_webpage.get('hasPart',[])
