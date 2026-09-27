@@ -19,6 +19,7 @@ Do not create a separate page for every synonym. The main city hub should natura
 A gold-standard city cluster is only as strong as its appliance-specific child pages. Washer/dryer, refrigerator, freezer and stove/range/oven pages should all inherit the same local trust layer as the city hub while keeping category-specific preparation details.
 
 Each specialty page should include:
+- a title that combines the appliance category, city, and a useful removal/recycling intent term rather than a vague suffix such as “Check Availability”;
 - the city and county context when useful for local disambiguation;
 - the verified official local disposal/bulky-item reference when one exists;
 - a direct near-me style answer written naturally for that appliance category;
@@ -109,7 +110,7 @@ Do not publish claims such as “serving since YYYY,” “X years in business,�
 
 The main city hub must link to each city appliance-intent child page. Each child must link back to the city hub and use the city hub in its breadcrumb hierarchy.
 
-Regional hubs should link into the city hub, and category/regional pages should link to important city specialty pages when contextually useful. Anchor text should describe the destination rather than use generic "click here" wording.
+Regional hubs should link into the city hub, and category/regional pages should link directly to important city specialty pages when contextually useful. For a benchmark or especially valuable market, give the city specialty page a short featured block on the matching category authority page instead of burying it only inside a long city directory. Anchor text should describe the destination rather than use generic "click here" wording.
 
 As a minimum crawl-safety baseline, a configured gold city hub should have at least 8 active internal inlinks and remain within 2 clicks of the homepage. Each configured appliance-intent child should have at least 3 active internal inlinks and remain within 3 clicks of the homepage. These are site architecture safeguards, not claims that a specific link count causes rankings.
 
