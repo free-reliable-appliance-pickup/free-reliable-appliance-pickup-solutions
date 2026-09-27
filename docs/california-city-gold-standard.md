@@ -98,7 +98,7 @@ Do not repeat the exact same non-logo image twice on the same specialty page mer
 
 ## Structured data and locality
 
-Use accurate Service, WebPage, BreadcrumbList and FAQPage JSON-LD that matches visible page content. Keep title, meta description and WebPage name/description synchronized.
+Use accurate Service, WebPage, BreadcrumbList and FAQPage JSON-LD that matches visible page content. Keep title, meta description and WebPage name/description synchronized. FAQPage question names should match the visible FAQ headings exactly; do not leave older schema-only wording behind after visible copy is revised.
 
 Connect the structured-data objects instead of leaving them as unrelated blocks. Give each Service a stable page-specific `@id` ending in `#service`, and make the matching WebPage use that Service as its `mainEntity`. For a configured city cluster, the main city WebPage should also list the appliance-specific child WebPages in `hasPart` so the JSON-LD mirrors the visible parent/child architecture.
 
