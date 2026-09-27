@@ -215,7 +215,7 @@ jobs:
                           failures.append(f'{slug}: Service telephone mismatch')
                   if 'seo-breadcrumb' not in low and 'aria-label="breadcrumb"' not in low:
                       failures.append(f'{slug}: missing visible breadcrumb')
-                  pages[slug]={'raw':raw,'low':low,'text':text,'title':title,'desc':desc,'h1':h1,'breadcrumb':breadcrumb}
+                  pages[slug]={'raw':raw,'low':low,'text':text,'title':title,'desc':desc,'h1':h1,'breadcrumb':breadcrumb,'faq':faq}
 
               if any(s not in pages for s in slugs):
                   continue
@@ -262,6 +262,17 @@ jobs:
               for phrase in decision.get('required_phrases',[]):
                   if phrase.lower() not in main['text'].lower():
                       failures.append(f'{main_slug}: missing decision-model phrase {phrase}')
+              required_faq_questions=cluster.get('required_faq_questions',[])
+              faq_names=[]
+              if isinstance(main.get('faq'),dict):
+                  for item in main['faq'].get('mainEntity',[]) or []:
+                      if isinstance(item,dict):
+                          faq_names.append(str(item.get('name','')).strip().lower())
+              for question in required_faq_questions:
+                  if question.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing visible prep FAQ {question}')
+                  if question.lower() not in faq_names:
+                      failures.append(f'{main_slug}: FAQ schema missing prep question {question}')
               if 'formspree.io/f/mvzeapzd' not in main['low'] or 'id="request"' not in main['low']:
                   failures.append(f'{main_slug}: missing local request form')
               if 'gold-city-start-strip' not in main['low']:
