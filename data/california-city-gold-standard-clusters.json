@@ -197,6 +197,10 @@
         "refrigerator": "refrigerator-pickup",
         "freezer": "freezer-pickup",
         "stove_oven": "stove-oven-pickup"
+      },
+      "structured_data_graph": {
+        "connect_webpage_to_service": true,
+        "hub_has_part_children": true
       }
     }
   ]
