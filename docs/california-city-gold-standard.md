@@ -35,6 +35,8 @@ Every gold-standard city hub should make the removal choice understandable in on
 
 Add practical preparation guidance to protect reuse value and safety. Do not tell customers to move a good appliance to the curb before pickup is confirmed. For refrigerators/freezers, do not advise cutting refrigerant lines or removing compressors. For gas appliances, do not imply that an untrained customer should disconnect a gas line.
 
+The city FAQ should answer two preparation questions directly: whether the appliance must be placed at the curb, and whether it must be disconnected before pickup. Keep the visible answers and FAQPage schema synchronized. The answer should reflect the actual service model: inside/garage/driveway requests may be reviewed when safe, and final disconnection/preparation depends on appliance type and access.
+
 This module should answer the customer's real decision rather than simply repeat keyword variants. It is part of the reusable structure, while the official program, eligibility rules, local access issues and wording must be verified separately for each city.
 
 ## Search Console feedback loop
