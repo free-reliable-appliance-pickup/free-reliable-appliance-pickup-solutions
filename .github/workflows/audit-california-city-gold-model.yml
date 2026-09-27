@@ -342,6 +342,7 @@ jobs:
                 'freezer':['freezer'],
                 'stove_oven':['stove','range','oven'],
               }
+              child_requirements=cluster.get('child_requirements',{})
               for kind,child_slug in child_map.items():
                   page=pages[child_slug]
                   child_url=BASE+child_slug+'/'
@@ -360,6 +361,20 @@ jobs:
                   for term in category_terms[kind]:
                       if term not in page['text'].lower():
                           failures.append(f'{child_slug}: missing category term {term}')
+                  if cluster['official_local_reference'] not in page['raw']:
+                      failures.append(f'{child_slug}: missing official local reference')
+                  if cluster.get('require_official_contact_on_children'):
+                      child_contact=norm_phone(cluster.get('official_local_contact_phone',''))
+                      if child_contact:
+                          child_contact_pattern=r'\D*'.join(re.escape(ch) for ch in child_contact)
+                          if not re.search(child_contact_pattern,page['raw']):
+                              failures.append(f'{child_slug}: missing official local contact phone')
+                  for term in child_requirements.get(kind,[]):
+                      if term.lower() not in page['text'].lower() and term.lower() not in page['raw'].lower():
+                          failures.append(f'{child_slug}: missing specialty parity term {term}')
+                  self_link_pattern=rf'<a\b[^>]*href=["\'](?:{re.escape(BASE)})?/?{re.escape(child_slug)}/?["\'][^>]*>'
+                  if re.search(self_link_pattern,page['raw'],re.I):
+                      failures.append(f'{child_slug}: contains a useless self-link')
 
               titles=[pages[s]['title'].lower() for s in slugs]
               descs=[pages[s]['desc'].lower() for s in slugs]

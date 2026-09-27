@@ -84,7 +84,33 @@
           "preferred_window",
           "message"
         ]
-      }
+      },
+      "child_requirements": {
+        "washer_dryer": [
+          "San Bernardino County",
+          "near me",
+          "disconnect"
+        ],
+        "refrigerator": [
+          "San Bernardino County",
+          "near me",
+          "curb",
+          "refrigerant"
+        ],
+        "freezer": [
+          "San Bernardino County",
+          "near me",
+          "outside",
+          "refrigerant"
+        ],
+        "stove_oven": [
+          "San Bernardino County",
+          "near me",
+          "outside",
+          "gas"
+        ]
+      },
+      "require_official_contact_on_children": true
     }
   ]
 }
