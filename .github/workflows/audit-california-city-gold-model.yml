@@ -219,12 +219,36 @@ jobs:
                   duplicate_ids=sorted({x for x in ids if ids.count(x)>1})
                   if duplicate_ids:
                       failures.append(f'{slug}: duplicate HTML ids {duplicate_ids}')
-                  pages[slug]={'raw':raw,'low':low,'text':text,'title':title,'desc':desc,'h1':h1,'breadcrumb':breadcrumb,'faq':faq}
+                  pages[slug]={'raw':raw,'low':low,'text':text,'title':title,'desc':desc,'h1':h1,'breadcrumb':breadcrumb,'faq':faq,'service':service,'webpage':webpage,'url':url}
 
               if any(s not in pages for s in slugs):
                   continue
 
               main=pages[main_slug]
+              schema_graph=cluster.get('structured_data_graph',{})
+              if schema_graph.get('connect_webpage_to_service'):
+                  for schema_slug in slugs:
+                      schema_page=pages[schema_slug]
+                      expected_service_id=schema_page['url']+'#service'
+                      service_obj=schema_page.get('service') or {}
+                      webpage_obj=schema_page.get('webpage') or {}
+                      if service_obj.get('@id')!=expected_service_id:
+                          failures.append(f'{schema_slug}: Service @id must be {expected_service_id}')
+                      main_entity=webpage_obj.get('mainEntity',{})
+                      if not isinstance(main_entity,dict) or main_entity.get('@id')!=expected_service_id:
+                          failures.append(f'{schema_slug}: WebPage mainEntity must reference its Service @id')
+              if schema_graph.get('hub_has_part_children'):
+                  main_webpage=main.get('webpage') or {}
+                  parts=main_webpage.get('hasPart',[])
+                  if isinstance(parts,dict):
+                      parts=[parts]
+                  part_ids={p.get('@id') for p in parts if isinstance(p,dict)}
+                  part_urls={p.get('url') for p in parts if isinstance(p,dict)}
+                  for child_slug in child_map.values():
+                      expected_child_url=BASE+child_slug+'/'
+                      expected_child_id=expected_child_url+'#webpage'
+                      if expected_child_id not in part_ids or expected_child_url not in part_urls:
+                          failures.append(f'{main_slug}: WebPage hasPart missing {child_slug}')
               for child_slug in child_map.values():
                   if f'/{child_slug}/' not in main['raw']:
                       failures.append(f'{main_slug}: missing child link to {child_slug}')
