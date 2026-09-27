@@ -91,13 +91,15 @@
         "washer_dryer": [
           "San Bernardino County",
           "near me",
-          "disconnect"
+          "disconnect",
+          "replacement"
         ],
         "refrigerator": [
           "San Bernardino County",
           "near me",
           "curb",
-          "refrigerant"
+          "refrigerant",
+          "replacement"
         ],
         "freezer": [
           "San Bernardino County",
