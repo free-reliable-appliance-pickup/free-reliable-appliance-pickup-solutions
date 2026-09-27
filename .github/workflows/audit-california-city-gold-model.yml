@@ -152,6 +152,32 @@ jobs:
                   webpage=next((x for x in objs if x.get('@type')=='WebPage'),None)
                   breadcrumb=next((x for x in objs if x.get('@type')=='BreadcrumbList'),None)
                   faq=next((x for x in objs if x.get('@type')=='FAQPage'),None)
+                  if cluster.get('faq_schema_visible_sync') and faq:
+                      schema_qs=[
+                          ' '.join(str(item.get('name','')).split())
+                          for item in (faq.get('mainEntity',[]) or [])
+                          if isinstance(item,dict) and item.get('name')
+                      ]
+                      visible_faq_qs=[]
+                      for sec in re.findall(r'<section\b[^>]*>(.*?)</section>',raw,re.I|re.S):
+                          h2m=re.search(r'<h2\b[^>]*>(.*?)</h2>',sec,re.I|re.S)
+                          if not h2m:
+                              continue
+                          h2text=' '.join(html.unescape(re.sub(r'<[^>]+>',' ',h2m.group(1))).split())
+                          if 'faq' not in h2text.lower():
+                              continue
+                          for h3m in re.finditer(r'<h3\b[^>]*>(.*?)</h3>',sec,re.I|re.S):
+                              q=' '.join(html.unescape(re.sub(r'<[^>]+>',' ',h3m.group(1))).split())
+                              if q:
+                                  visible_faq_qs.append(q)
+                      schema_set={q.casefold() for q in schema_qs}
+                      visible_set={q.casefold() for q in visible_faq_qs}
+                      for q in schema_qs:
+                          if q.casefold() not in visible_set:
+                              failures.append(f'{slug}: FAQ schema question is not visible: {q}')
+                      for q in visible_faq_qs:
+                          if q.casefold() not in schema_set:
+                              failures.append(f'{slug}: visible FAQ question is missing from schema: {q}')
                   imgs=[]
                   for tag in re.findall(r'<img\b[^>]*>',raw,re.I):
                       src=extract(r'\bsrc=["\']([^"\']+)',tag)
