@@ -9,6 +9,8 @@ on:
       - 'assets/site-brand.css'
       - 'assets/customer-routing.js'
       - 'file_00000000b7c082308dccc73e5bd3acd2.png'
+      - 'assets/brand/free-reliable-appliance-pickup-logo-236.webp'
+      - 'favicon-refrigerator.png'
       - '.github/workflows/audit-rancho-performance-budget.yml'
   pull_request:
     paths:
@@ -17,6 +19,8 @@ on:
       - 'assets/site-brand.css'
       - 'assets/customer-routing.js'
       - 'file_00000000b7c082308dccc73e5bd3acd2.png'
+      - 'assets/brand/free-reliable-appliance-pickup-logo-236.webp'
+      - 'favicon-refrigerator.png'
       - '.github/workflows/audit-rancho-performance-budget.yml'
   workflow_dispatch:
 
@@ -68,12 +72,23 @@ jobs:
               rows.append((src,size,tag))
 
           hero='/assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg'
-          logo='/file_00000000b7c082308dccc73e5bd3acd2.png'
+          logo='/assets/brand/free-reliable-appliance-pickup-logo-236.webp'
+          legacy_logo='/file_00000000b7c082308dccc73e5bd3acd2.png'
+          favicon='/favicon-refrigerator.png'
           seen={src for src,_,_ in rows}
           if hero not in seen:
               failures.append('Rancho hero image missing')
           if logo not in seen:
-              failures.append('site logo missing from Rancho page')
+              failures.append('optimized site logo missing from Rancho page')
+          if legacy_logo in raw:
+              failures.append('Rancho page still references the 394 KB legacy master logo')
+          if f'href="{favicon}"' not in raw:
+              failures.append('Rancho page missing lightweight refrigerator favicon')
+          favicon_path=Path(favicon.lstrip('/'))
+          if not favicon_path.exists():
+              failures.append('lightweight refrigerator favicon asset missing')
+          elif favicon_path.stat().st_size > 5000:
+              failures.append(f'favicon is {favicon_path.stat().st_size} bytes; budget is 5000')
 
           for src,size,tag in rows:
               print('IMAGE',size,src)
@@ -86,8 +101,8 @@ jobs:
                   if 'loading="lazy"' in low:
                       failures.append('hero image must not be lazy-loaded')
               elif src==logo:
-                  if size > 450000:
-                      failures.append(f'logo is {size} bytes; temporary budget is 450000')
+                  if size > 100000:
+                      failures.append(f'optimized header logo is {size} bytes; budget is 100000')
               else:
                   if size > 350000:
                       failures.append(f'below-fold image is {size} bytes: {src}')
