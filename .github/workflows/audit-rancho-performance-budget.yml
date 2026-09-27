@@ -96,6 +96,10 @@ jobs:
               if 'width=' not in low or 'height=' not in low:
                   failures.append(f'image missing width/height: {src}')
 
+          hero_preload='<link rel="preload" as="image" href="/assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg" fetchpriority="high">'
+          if hero_preload not in raw:
+              failures.append('Rancho hero image must be preloaded with fetchpriority=high')
+
           if '/assets/customer-routing.js' not in raw or not re.search(r'<script[^>]+src=["\']/assets/customer-routing\.js["\'][^>]*\bdefer\b',raw,re.I):
               failures.append('customer-routing.js must remain deferred')
 
