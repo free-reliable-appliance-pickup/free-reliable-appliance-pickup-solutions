@@ -53,6 +53,8 @@ The city FAQ should answer two preparation questions directly: whether the appli
 
 This module should answer the customer's real decision rather than simply repeat keyword variants. It is part of the reusable structure, while the official program, eligibility rules, local access issues and wording must be verified separately for each city.
 
+When an official city or county source identifies a separate destination for special items—such as microwaves, e-waste or household hazardous waste—add that guidance only when it prevents a realistic customer mistake. State clearly which items the facility accepts and which major appliances it does not handle. Do not turn a city page into a generic disposal directory, and do not copy competitor disposal facts without checking the primary local source.
+
 ## Search Console feedback loop
 
 Use finalized Search Console query/page evidence to refine titles, descriptions, internal links and child-page emphasis. Treat very small impression samples as directional evidence, not a stable ranking. Do not claim a fixed Google position from one or two impressions, and do not stuff a city page with every query variant. When Google is already testing a page for a relevant intent, strengthen the most useful existing page before creating another URL.
@@ -133,7 +135,7 @@ Keep this disclosure concise and avoid repeating the same network paragraph agai
 
 The city hub should provide a direct local request form plus call/text actions. Near the top of the page, clearly state that a request is free to submit and does not require an account or credit card when that is true for the live request flow. Specialty pages may route to the city hub request form when that keeps one clean conversion endpoint. For a configured single-intake city cluster, every appliance-specific child page should use the city hub as the one customer submission endpoint rather than maintaining separate duplicate forms. This prevents qualification fields, privacy text, contact disclosures and routing rules from drifting apart across the local cluster.
 
-The request path should collect appliance type, brand/model when known, true working condition, whether the appliance is testable, photos/photo availability, exact address/ZIP, property type, floor/stairs, access details and a preferred pickup window. Never guarantee same-day pickup or free acceptance before qualification and route review.
+The request path should collect appliance type, brand/model when known, true working condition, whether the appliance is testable, photos/photo availability, exact address/ZIP, property type, floor/stairs, access details and a preferred pickup window. Never guarantee same-day pickup or free acceptance before qualification and route review. Keep “free to submit” separate from “free pickup”: the request can be free to submit while the $0 pickup applies only after the appliance/load qualifies and pickup is confirmed.
 
 Keep the first submission low-friction. For a city-specific household form, require only the essentials needed to identify and respond to the request: name, phone, city, ZIP, appliance type and condition. Street address, brand/model, floor/location, stairs, property type, testability, photo status, preferred window and access notes can remain optional and be confirmed by call/text after the first review. The visible “quick request” promise must match the actual HTML required fields.
 

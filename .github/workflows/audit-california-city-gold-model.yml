@@ -245,6 +245,16 @@ jobs:
                   fallback_pattern=r'\D*'.join(re.escape(ch) for ch in fallback_phone)
                   if not re.search(fallback_pattern,main['raw']):
                       failures.append(f'{main_slug}: missing official local fallback phone')
+              special=cluster.get('official_special_disposal',{})
+              special_url=special.get('url')
+              if special_url and special_url not in main['raw']:
+                  failures.append(f'{main_slug}: missing verified special-disposal source')
+              for phrase in special.get('required_phrases',[]):
+                  if phrase.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing special-disposal guidance {phrase}')
+              for phrase in cluster.get('free_claim_guardrails',[]):
+                  if phrase.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing free-claim guardrail {phrase}')
               for phrase in ['how much does appliance removal cost','$0']:
                   if phrase not in main['text'].lower():
                       failures.append(f'{main_slug}: missing cost-transparency signal {phrase}')
