@@ -115,8 +115,12 @@ Keep a direct Text Photos action visible when the form backend does not support 
 
 Place a concise request-contact disclosure beside the submission action and link the site's Privacy Information and Service Terms so customers can understand how their request information and local-provider routing are handled.
 
-## Anti-duplication rule
+## Content discipline and anti-duplication
 
 A gold-standard city page must not become a clone of another city page. The reusable structure is the model; the local facts, access conditions, official resources, examples and wording must be specific to the market.
+
+Comprehensive does not mean repetitive. Consolidate overlapping sections when they answer the same customer question. For example, do not keep separate “what we accept” and “appliance types” sections if one well-structured section can cover qualification plus category breadth. Keep one stable section ID per topic, one jump link per destination, and no duplicate HTML IDs.
+
+Do not add city history, demographics, neighborhood names or local facts merely to increase word count. A local fact should help with service qualification, routing, access, disposal alternatives, audience fit or customer decision-making.
 
 The automated workflow `Audit California City Gold Model` enforces the structural baseline for cities listed in `data/california-city-gold-standard-clusters.json`.
