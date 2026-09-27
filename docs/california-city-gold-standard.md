@@ -79,7 +79,7 @@ The city hub should prominently and naturally cover the phrases customers actual
 - garage, driveway, inside-home, apartment and condo access;
 - landlords, property managers, senior/55+ communities and recurring/commercial replacement work.
 
-When discussing donation or give-away intent, be explicit that Free Reliable Appliance Pickup is not a charity and does not issue tax-deductible donation receipts.
+When discussing donation or give-away intent, be explicit that Free Reliable Appliance Pickup is not a charity and does not issue tax-deductible donation receipts. Where useful, verify a local charity or thrift-store acceptance policy and explain that large-appliance donation rules vary. Use this intent to help owners of good working appliances find a reuse path—not to imply a charitable relationship that does not exist.
 
 ## Images
 
