@@ -32,8 +32,7 @@ jobs:
 
           src=Path('assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg')
           outputs=[
-              (768, Path('assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance-768.webp'), 180000),
-              (1536, Path('assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance-1536.webp'), 350000),
+              (768, Path('assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance-768.webp'), 190000),
           ]
 
           with Image.open(src) as base:
@@ -58,13 +57,13 @@ jobs:
       - name: Commit responsive hero assets
         if: github.event_name != 'pull_request'
         run: |
-          if [ -z "$(git status --porcelain -- assets/rancho-cucamonga/*-768.webp assets/rancho-cucamonga/*-1536.webp)" ]; then
+          if [ -z "$(git status --porcelain -- assets/rancho-cucamonga/*-768.webp)" ]; then
             echo "No responsive hero changes"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/rancho-cucamonga/*-768.webp assets/rancho-cucamonga/*-1536.webp
+          git add assets/rancho-cucamonga/*-768.webp
           git commit -m "Generate Rancho responsive hero assets"
           git pull --rebase origin main
           for attempt in 1 2 3; do
