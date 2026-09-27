@@ -9,6 +9,12 @@ on:
       - '**/index.html'
       - 'sitemap.xml'
       - '.github/workflows/validate-google-search-appearance.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - '**/index.html'
+      - 'sitemap.xml'
+      - '.github/workflows/validate-google-search-appearance.yml'
   workflow_dispatch:
 
 permissions:
