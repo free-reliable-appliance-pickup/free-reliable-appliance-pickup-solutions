@@ -117,6 +117,12 @@ Gold city hubs are intentionally comprehensive, but they should not force mobile
 
 Use descriptive anchor text rather than generic “click here” wording. This is primarily a usability standard; it also keeps important sections easy for crawlers and users to understand.
 
+## Recurring and property-program lead quality
+
+For apartments, senior/55+ communities, property managers, installers, retailers and recurring replacement programs, the city hub should ask for enough information to judge the batch before anyone plans a route. At minimum, request appliance count by category, working/testable status, sample photos or model labels when practical, replacement cadence, staging/loading details, appointment rules and an onsite contact.
+
+Do not treat recurring work as a generic household pickup with a larger appliance count. The brief should make it possible to distinguish a high-quality reusable batch from a mixed cleanout or end-of-life load.
+
 ## Network transparency placement
 
 If the city is served through independent local pickup professionals, explain that next to the pickup process—not only in a footer or deep-page disclaimer. The customer should understand before submitting that the page represents a service-area network rather than a company-owned local branch, and that pickup is confirmed only after an available local provider accepts the qualified request.

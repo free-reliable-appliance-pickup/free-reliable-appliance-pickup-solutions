@@ -119,7 +119,14 @@
           "water heater"
         ],
         "required_exclusion_phrase": "not part of our free major-appliance pickup program"
-      }
+      },
+      "recurring_brief_terms": [
+        "appliance count by category",
+        "working/testable status",
+        "replacement cadence",
+        "staging/loading",
+        "onsite contact"
+      ]
     }
   ]
 }
