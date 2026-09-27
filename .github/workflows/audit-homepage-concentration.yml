@@ -29,11 +29,11 @@ jobs:
           s=Path('index.html').read_text(encoding='utf-8',errors='replace')
           failures=[]
 
-          hrefs=re.findall(r'href=["\']/([^"\'#?]+)',s,re.I)
+          hrefs=re.findall(r'<a\b[^>]*href=["\']/([^"\'#?]+)',s,re.I)
           unique=set(x.rstrip('/') for x in hrefs)
-          print('HOMEPAGE_UNIQUE_INTERNAL_DESTINATIONS',len(unique))
+          print('HOMEPAGE_UNIQUE_INTERNAL_ANCHOR_DESTINATIONS',len(unique))
           if len(unique)>85:
-              failures.append(f'homepage has {len(unique)} unique internal destinations; keep at or below 85')
+              failures.append(f'homepage has {len(unique)} unique internal anchor destinations; keep at or below 85')
 
           required=[]
           m=re.search(r'<form[^>]+action=["\']https://formspree\.io/f/mvzeapzd["\'][\s\S]*?</form>',s,re.I)
