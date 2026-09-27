@@ -47,6 +47,10 @@
         "freezers",
         "stoves"
       ],
+      "hub_authority_links": [
+        "appliance-removal",
+        "old-appliance-disposal-options"
+      ],
       "decision_model": {
         "anchor": "removal-options",
         "required_phrases": [
