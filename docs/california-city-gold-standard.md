@@ -97,6 +97,12 @@ Gold city hubs are intentionally comprehensive, but they should not force mobile
 
 Use descriptive anchor text rather than generic “click here” wording. This is primarily a usability standard; it also keeps important sections easy for crawlers and users to understand.
 
+## Network transparency placement
+
+If the city is served through independent local pickup professionals, explain that next to the pickup process—not only in a footer or deep-page disclaimer. The customer should understand before submitting that the page represents a service-area network rather than a company-owned local branch, and that pickup is confirmed only after an available local provider accepts the qualified request.
+
+Keep this disclosure concise and avoid repeating the same network paragraph again near the bottom of the page. Transparency belongs close to the decision flow; duplicated boilerplate does not add local value.
+
 ## Conversion
 
 The city hub should provide a direct local request form plus call/text actions. Near the top of the page, clearly state that a request is free to submit and does not require an account or credit card when that is true for the live request flow. Specialty pages may route to the city hub request form when that keeps one clean conversion endpoint.

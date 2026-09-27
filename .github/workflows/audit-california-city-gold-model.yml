@@ -262,6 +262,17 @@ jobs:
               for phrase in decision.get('required_phrases',[]):
                   if phrase.lower() not in main['text'].lower():
                       failures.append(f'{main_slug}: missing decision-model phrase {phrase}')
+              disclosure=cluster.get('network_disclosure',{})
+              disclosure_marker=disclosure.get('marker')
+              disclosure_before=disclosure.get('required_before')
+              if disclosure_marker:
+                  marker_pos=main['low'].find(disclosure_marker.lower())
+                  if marker_pos < 0:
+                      failures.append(f'{main_slug}: missing network disclosure marker {disclosure_marker}')
+                  elif disclosure_before:
+                      before_pos=main['low'].find(f'id="{disclosure_before.lower()}"')
+                      if before_pos >= 0 and marker_pos > before_pos:
+                          failures.append(f'{main_slug}: network disclosure must appear before #{disclosure_before}')
               required_faq_questions=cluster.get('required_faq_questions',[])
               faq_names=[]
               if isinstance(main.get('faq'),dict):
