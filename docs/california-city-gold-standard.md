@@ -100,6 +100,8 @@ Do not repeat the exact same non-logo image twice on the same specialty page mer
 
 Use accurate Service, WebPage, BreadcrumbList and FAQPage JSON-LD that matches visible page content. Keep title, meta description and WebPage name/description synchronized.
 
+Connect the structured-data objects instead of leaving them as unrelated blocks. Give each Service a stable page-specific `@id` ending in `#service`, and make the matching WebPage use that Service as its `mainEntity`. For a configured city cluster, the main city WebPage should also list the appliance-specific child WebPages in `hasPart` so the JSON-LD mirrors the visible parent/child architecture.
+
 City service-area pages must not invent a storefront, office, staff location or per-city LocalBusiness entity. The network model should stay explicit: requests are reviewed through independent local pickup professionals where coverage is available.
 
 Do not add AggregateRating or review markup without verified, page-visible review data that meets Google's policies.
