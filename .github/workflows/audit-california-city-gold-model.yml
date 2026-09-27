@@ -360,6 +360,13 @@ jobs:
               for authority_slug in cluster.get('hub_authority_links',[]):
                   if f'/{authority_slug}/' not in main['raw']:
                       failures.append(f'{main_slug}: missing hub authority link to {authority_slug}')
+              breadcrumb_json=json.dumps(main['breadcrumb'] or {})
+              for breadcrumb_slug in cluster.get('breadcrumb_hierarchy',[]):
+                  expected=f'https://freereliableappliancepickup.com/{breadcrumb_slug}/'
+                  if expected not in breadcrumb_json:
+                      failures.append(f'{main_slug}: breadcrumb schema missing hierarchy page {breadcrumb_slug}')
+                  if f'/{breadcrumb_slug}/' not in main['raw']:
+                      failures.append(f'{main_slug}: visible breadcrumb missing hierarchy page {breadcrumb_slug}')
               decision=cluster.get('decision_model',{})
               decision_anchor=decision.get('anchor')
               if decision_anchor:
