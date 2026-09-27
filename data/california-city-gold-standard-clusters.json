@@ -110,7 +110,8 @@
           "gas"
         ]
       },
-      "require_official_contact_on_children": true
+      "require_official_contact_on_children": true,
+      "single_city_intake": true
     }
   ]
 }

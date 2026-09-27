@@ -119,7 +119,7 @@ Keep this disclosure concise and avoid repeating the same network paragraph agai
 
 ## Conversion
 
-The city hub should provide a direct local request form plus call/text actions. Near the top of the page, clearly state that a request is free to submit and does not require an account or credit card when that is true for the live request flow. Specialty pages may route to the city hub request form when that keeps one clean conversion endpoint.
+The city hub should provide a direct local request form plus call/text actions. Near the top of the page, clearly state that a request is free to submit and does not require an account or credit card when that is true for the live request flow. Specialty pages may route to the city hub request form when that keeps one clean conversion endpoint. For a configured single-intake city cluster, every appliance-specific child page should use the city hub as the one customer submission endpoint rather than maintaining separate duplicate forms. This prevents qualification fields, privacy text, contact disclosures and routing rules from drifting apart across the local cluster.
 
 The request path should collect appliance type, brand/model when known, true working condition, whether the appliance is testable, photos/photo availability, exact address/ZIP, property type, floor/stairs, access details and a preferred pickup window. Never guarantee same-day pickup or free acceptance before qualification and route review.
 
