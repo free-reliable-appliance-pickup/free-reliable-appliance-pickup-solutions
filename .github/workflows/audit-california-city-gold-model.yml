@@ -251,6 +251,27 @@ jobs:
                   continue
 
               main=pages[main_slug]
+              size_guardrails=cluster.get('content_size_guardrails',{})
+              if size_guardrails:
+                  visible_word_count=len(main['text'].split())
+                  heading_count=len(re.findall(r'<h[123]\b',main['raw'],re.I))
+                  faq_question_count=0
+                  for sec in re.findall(r'<section\b[^>]*>(.*?)</section>',main['raw'],re.I|re.S):
+                      h2m=re.search(r'<h2\b[^>]*>(.*?)</h2>',sec,re.I|re.S)
+                      if not h2m:
+                          continue
+                      h2text=' '.join(html.unescape(re.sub(r'<[^>]+>',' ',h2m.group(1))).split())
+                      if 'faq' in h2text.lower():
+                          faq_question_count+=len(re.findall(r'<h3\b',sec,re.I))
+                  max_words=size_guardrails.get('max_visible_words')
+                  max_headings=size_guardrails.get('max_h1_h2_h3')
+                  max_faq=size_guardrails.get('max_visible_faq_questions')
+                  if max_words and visible_word_count>max_words:
+                      failures.append(f'{main_slug}: visible word count {visible_word_count} exceeds guardrail {max_words}')
+                  if max_headings and heading_count>max_headings:
+                      failures.append(f'{main_slug}: heading count {heading_count} exceeds guardrail {max_headings}')
+                  if max_faq and faq_question_count>max_faq:
+                      failures.append(f'{main_slug}: visible FAQ count {faq_question_count} exceeds guardrail {max_faq}')
               benchmark_home_children=cluster.get('benchmark_homepage_child_links',[])
               if benchmark_home_children:
                   home_raw=Path('index.html').read_text(encoding='utf-8',errors='replace')

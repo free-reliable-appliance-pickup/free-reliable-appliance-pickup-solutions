@@ -170,4 +170,6 @@ Comprehensive does not mean repetitive. Consolidate overlapping sections when th
 
 Do not add city history, demographics, neighborhood names or local facts merely to increase word count. A local fact should help with service qualification, routing, access, disposal alternatives, audience fit or customer decision-making.
 
+Use page-size guardrails on benchmark cities. Keep only FAQ questions that add unique customer value; if an answer is already clear in the qualification, access, business, disposal or request-flow sections, do not repeat it just to create another heading. The benchmark can remain comprehensive while capping visible word count, H1/H2/H3 count and visible FAQ count.
+
 The automated workflow `Audit California City Gold Model` enforces the structural baseline for cities listed in `data/california-city-gold-standard-clusters.json`.

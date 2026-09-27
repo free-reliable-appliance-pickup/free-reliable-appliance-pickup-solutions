@@ -235,7 +235,12 @@
         "EPA appliance-disposal guidance",
         "refrigerant must be recovered before final disposal",
         "Do not cut refrigerant lines or remove the compressor yourself"
-      ]
+      ],
+      "content_size_guardrails": {
+        "max_visible_words": 4400,
+        "max_h1_h2_h3": 80,
+        "max_visible_faq_questions": 14
+      }
     }
   ]
 }
