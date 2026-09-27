@@ -14,6 +14,20 @@ Each gold-standard city should have one primary city hub plus distinct appliance
 
 Do not create a separate page for every synonym. The main city hub should naturally cover related intent such as appliance removal, old appliance removal, haul-away, recycling, disposal, junk-appliance alternatives and near-me wording. Appliance-specific child pages own the deeper category details.
 
+## Specialty-page parity
+
+A gold-standard city cluster is only as strong as its appliance-specific child pages. Washer/dryer, refrigerator, freezer and stove/range/oven pages should all inherit the same local trust layer as the city hub while keeping category-specific preparation details.
+
+Each specialty page should include:
+- the city and county context when useful for local disambiguation;
+- the verified official local disposal/bulky-item reference when one exists;
+- a direct near-me style answer written naturally for that appliance category;
+- preparation guidance specific to that appliance, such as gas/electric or water connections for laundry, refrigerant-system safety for refrigerators/freezers, and safe gas/hardwired disconnection for cooking appliances;
+- a link back to the city hub and the appropriate regional/category authority pages;
+- no self-link to the page the customer is already viewing.
+
+Do not duplicate the same generic paragraph across all four child pages. The structure should match; the appliance details should differ.
+
 ## Local proof and usefulness
 
 Every city hub must contain facts that are genuinely local to that city rather than swapped city names. Use the actual neighborhoods, physical ZIP codes, access conditions, local property patterns and an official municipal or waste-resource link when relevant. Do not copy a competitor's factual claim without checking the official source.
