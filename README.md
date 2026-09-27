@@ -1,6 +1,8 @@
 # Free Reliable Appliance Pickup
 
-Live website: https://freereliableappliancepickup.com/
+Official website and canonical public domain: https://freereliableappliancepickup.com/
+
+The custom domain above is the public website. The legacy `github.io` project URL is not the canonical customer-facing address.
 
 Free Reliable Appliance Pickup reviews qualifying pickup requests for washers, dryers, refrigerators, freezers, stoves and ovens. Working and reusable appliances receive priority.
 
