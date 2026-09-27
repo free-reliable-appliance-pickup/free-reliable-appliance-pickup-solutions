@@ -223,6 +223,12 @@
         "hub_has_part_children": true,
         "hub_has_part_reference_only": true
       },
+      "service_channel": {
+        "phone": "+19093756685",
+        "sms": "+19093756685",
+        "languages": ["en", "es"],
+        "request_url": "https://freereliableappliancepickup.com/rancho-cucamonga-appliance-pickup/#request"
+      },
       "cta_style": {
         "required_class": "btn",
         "forbidden_legacy_class": "button"
