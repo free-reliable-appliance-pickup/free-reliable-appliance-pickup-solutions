@@ -200,7 +200,8 @@
       },
       "structured_data_graph": {
         "connect_webpage_to_service": true,
-        "hub_has_part_children": true
+        "hub_has_part_children": true,
+        "hub_has_part_reference_only": true
       },
       "cta_style": {
         "required_class": "btn",
