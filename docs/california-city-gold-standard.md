@@ -107,7 +107,9 @@ Keep this disclosure concise and avoid repeating the same network paragraph agai
 
 The city hub should provide a direct local request form plus call/text actions. Near the top of the page, clearly state that a request is free to submit and does not require an account or credit card when that is true for the live request flow. Specialty pages may route to the city hub request form when that keeps one clean conversion endpoint.
 
-The request path should ask for appliance type, brand/model when known, true working condition, whether the appliance is testable, photos/photo availability, exact address/ZIP, property type, floor/stairs, access details and a preferred pickup window. Never guarantee same-day pickup or free acceptance before qualification and route review.
+The request path should collect appliance type, brand/model when known, true working condition, whether the appliance is testable, photos/photo availability, exact address/ZIP, property type, floor/stairs, access details and a preferred pickup window. Never guarantee same-day pickup or free acceptance before qualification and route review.
+
+Keep the first submission low-friction. For a city-specific household form, require only the essentials needed to identify and respond to the request: name, phone, city, ZIP, appliance type and condition. Street address, brand/model, floor/location, stairs, property type, testability, photo status, preferred window and access notes can remain optional and be confirmed by call/text after the first review. The visible “quick request” promise must match the actual HTML required fields.
 
 Keep a direct Text Photos action visible when the form backend does not support native file uploads. Only enable native photo-upload fields after confirming the live form backend/account supports them; do not publish a file input that silently fails.
 
