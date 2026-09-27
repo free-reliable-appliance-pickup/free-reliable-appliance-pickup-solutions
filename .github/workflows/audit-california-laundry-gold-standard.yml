@@ -7,6 +7,18 @@ on:
       - 'sitemap.xml'
       - 'data/california-laundry-gold-standard-pages.txt'
       - 'data/california-gold-standard-spec.md'
+      - 'data/california-city-gold-standard-clusters.json'
+      - 'assets/premium-user-heroes.json'
+      - '*-washer-dryer-pickup/index.html'
+      - 'assets/site-brand.css'
+      - '.github/workflows/audit-california-laundry-gold-standard.yml'
+  pull_request:
+    paths:
+      - 'sitemap.xml'
+      - 'data/california-laundry-gold-standard-pages.txt'
+      - 'data/california-gold-standard-spec.md'
+      - 'data/california-city-gold-standard-clusters.json'
+      - 'assets/premium-user-heroes.json'
       - '*-washer-dryer-pickup/index.html'
       - 'assets/site-brand.css'
       - '.github/workflows/audit-california-laundry-gold-standard.yml'
