@@ -404,6 +404,9 @@ jobs:
               for term in cluster.get('replacement_day_terms',[]):
                   if term.lower() not in main['text'].lower():
                       failures.append(f'{main_slug}: missing replacement-day signal {term}')
+              for term in cluster.get('recycling_trust_terms',[]):
+                  if term.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing recycling-trust signal {term}')
               if cluster.get('replacement_day_terms'):
                   if 'id="replacement-day"' not in main['low'] or 'href="#replacement-day"' not in main['low']:
                       failures.append(f'{main_slug}: replacement-day section must have a jump-nav path')
