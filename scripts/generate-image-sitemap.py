@@ -34,6 +34,10 @@ extra = [
     "landlord-property-manager-appliance-pickup",
     "high-desert-rv-appliance-pickup",
     "antelope-valley-rv-appliance-pickup",
+    # Rancho Cucamonga gold-model specialty pages use real local appliance images.
+    "rancho-cucamonga-refrigerator-pickup",
+    "rancho-cucamonga-freezer-pickup",
+    "rancho-cucamonga-stove-oven-pickup",
 ]
 
 slugs = []
