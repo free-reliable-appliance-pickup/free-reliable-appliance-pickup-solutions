@@ -72,12 +72,21 @@ jobs:
               rows.append((src,size,tag))
 
           hero='/assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg'
+          mobile_hero='/assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance-768.webp'
           logo='/assets/brand/free-reliable-appliance-pickup-logo-236.webp'
           legacy_logo='/file_00000000b7c082308dccc73e5bd3acd2.png'
           favicon='/favicon-refrigerator.png'
           seen={src for src,_,_ in rows}
           if hero not in seen:
               failures.append('Rancho hero image missing')
+          mobile_hero_path=Path(mobile_hero.lstrip('/'))
+          if not mobile_hero_path.exists():
+              failures.append('Rancho mobile responsive hero missing')
+          elif mobile_hero_path.stat().st_size > 190000:
+              failures.append(f'mobile responsive hero is {mobile_hero_path.stat().st_size} bytes; budget is 190000')
+          mobile_source=f'<source media="(max-width: 720px)" srcset="{mobile_hero}" type="image/webp">'
+          if mobile_source not in raw:
+              failures.append('Rancho mobile WebP source is missing from hero picture')
           if logo not in seen:
               failures.append('optimized site logo missing from Rancho page')
           if legacy_logo in raw:
@@ -111,9 +120,12 @@ jobs:
               if 'width=' not in low or 'height=' not in low:
                   failures.append(f'image missing width/height: {src}')
 
-          hero_preload='<link rel="preload" as="image" href="/assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg" fetchpriority="high">'
-          if hero_preload not in raw:
-              failures.append('Rancho hero image must be preloaded with fetchpriority=high')
+          mobile_preload='<link rel="preload" as="image" href="/assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance-768.webp" type="image/webp" media="(max-width: 720px)" fetchpriority="high">'
+          desktop_preload='<link rel="preload" as="image" href="/assets/rancho-cucamonga/rancho-cucamonga-free-appliance-pickup-real-appliance.jpg" type="image/jpeg" media="(min-width: 721px)" fetchpriority="high">'
+          if mobile_preload not in raw:
+              failures.append('Rancho mobile hero preload is missing')
+          if desktop_preload not in raw:
+              failures.append('Rancho desktop hero preload is missing')
 
           if '/assets/customer-routing.js' not in raw or not re.search(r'<script[^>]+src=["\']/assets/customer-routing\.js["\'][^>]*\bdefer\b',raw,re.I):
               failures.append('customer-routing.js must remain deferred')
