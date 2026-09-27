@@ -215,6 +215,10 @@ jobs:
                           failures.append(f'{slug}: Service telephone mismatch')
                   if 'seo-breadcrumb' not in low and 'aria-label="breadcrumb"' not in low:
                       failures.append(f'{slug}: missing visible breadcrumb')
+                  ids=re.findall(r'\bid=["\']([^"\']+)["\']',raw,re.I)
+                  duplicate_ids=sorted({x for x in ids if ids.count(x)>1})
+                  if duplicate_ids:
+                      failures.append(f'{slug}: duplicate HTML ids {duplicate_ids}')
                   pages[slug]={'raw':raw,'low':low,'text':text,'title':title,'desc':desc,'h1':h1,'breadcrumb':breadcrumb,'faq':faq}
 
               if any(s not in pages for s in slugs):
