@@ -53,6 +53,8 @@ The city FAQ should answer two preparation questions directly: whether the appli
 
 This module should answer the customer's real decision rather than simply repeat keyword variants. It is part of the reusable structure, while the official program, eligibility rules, local access issues and wording must be verified separately for each city.
 
+When an official city or county source identifies a separate destination for special items—such as microwaves, e-waste or household hazardous waste—add that guidance only when it prevents a realistic customer mistake. State clearly which items the facility accepts and which major appliances it does not handle. Do not turn a city page into a generic disposal directory, and do not copy competitor disposal facts without checking the primary local source.
+
 ## Search Console feedback loop
 
 Use finalized Search Console query/page evidence to refine titles, descriptions, internal links and child-page emphasis. Treat very small impression samples as directional evidence, not a stable ranking. Do not claim a fixed Google position from one or two impressions, and do not stuff a city page with every query variant. When Google is already testing a page for a relevant intent, strengthen the most useful existing page before creating another URL.
