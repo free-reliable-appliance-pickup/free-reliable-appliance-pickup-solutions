@@ -6,6 +6,7 @@ on:
     paths:
       - 'sitemap.xml'
       - 'sitemap-regular-washer-dryer.xml'
+      - 'sitemap-rancho-cucamonga.xml'
       - 'data/approved-indexable-locations.txt'
       - 'data/approved-indexable-service-pages.txt'
       - '.github/workflows/auto-sitemap.yml'
@@ -13,6 +14,7 @@ on:
     paths:
       - 'sitemap.xml'
       - 'sitemap-regular-washer-dryer.xml'
+      - 'sitemap-rancho-cucamonga.xml'
       - 'data/approved-indexable-locations.txt'
       - 'data/approved-indexable-service-pages.txt'
       - '.github/workflows/auto-sitemap.yml'
@@ -67,6 +69,7 @@ jobs:
               return urls
           published_files=['sitemap.xml']
           if Path('sitemap-regular-washer-dryer.xml').exists(): published_files.append('sitemap-regular-washer-dryer.xml')
+          if Path('sitemap-rancho-cucamonga.xml').exists(): published_files.append('sitemap-rancho-cucamonga.xml')
           actual=set()
           for filename in published_files: actual |= sitemap_urls(filename)
           missing=sorted(expected-actual)
