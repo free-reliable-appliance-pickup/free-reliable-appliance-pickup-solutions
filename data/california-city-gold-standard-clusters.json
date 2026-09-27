@@ -214,6 +214,10 @@
         "Photos first",
         "Reuse-focused qualification",
         "Clear alternatives when it does not qualify"
+      ],
+      "benchmark_homepage_child_links": [
+        "washer_dryer",
+        "refrigerator"
       ]
     }
   ]
