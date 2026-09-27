@@ -126,7 +126,15 @@
         "replacement cadence",
         "staging/loading",
         "onsite contact"
-      ]
+      ],
+      "official_special_disposal": {
+        "url": "https://www.cityofrc.us/HHW",
+        "required_phrases": [
+          "8794 Lion Street",
+          "microwave ovens",
+          "not the destination for a full-size refrigerator"
+        ]
+      }
     }
   ]
 }
