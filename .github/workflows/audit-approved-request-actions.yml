@@ -9,12 +9,16 @@ on:
       - 'sitemap.xml'
       - 'assets/customer-routing.js'
       - 'data/approved-indexable-locations.txt'
+      - 'data/california-city-gold-standard-clusters.json'
+      - '**/index.html'
       - '.github/workflows/audit-approved-request-actions.yml'
   pull_request:
     paths:
       - 'sitemap.xml'
       - 'assets/customer-routing.js'
       - 'data/approved-indexable-locations.txt'
+      - 'data/california-city-gold-standard-clusters.json'
+      - '**/index.html'
       - '.github/workflows/audit-approved-request-actions.yml'
   workflow_dispatch:
 
@@ -30,11 +34,23 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
+          import json
           import sys
 
           root = Path('.')
           approved_file = root / 'data' / 'approved-indexable-locations.txt'
           pages = [line.strip() for line in approved_file.read_text(encoding='utf-8').splitlines() if line.strip()]
+
+          city_cfg_path = root / 'data' / 'california-city-gold-standard-clusters.json'
+          city_cfg = json.loads(city_cfg_path.read_text(encoding='utf-8')) if city_cfg_path.exists() else {'clusters': []}
+          shared_intake_children = {}
+          for cluster in city_cfg.get('clusters', []):
+              if not cluster.get('single_city_intake'):
+                  continue
+              main_slug = cluster.get('main')
+              for child_slug in (cluster.get('children') or {}).values():
+                  if main_slug and child_slug:
+                      shared_intake_children[child_slug] = main_slug
 
           required = {
               'brand stylesheet': '/assets/site-brand.css',
@@ -55,9 +71,23 @@ jobs:
                   failures.append(f'{slug}: missing index.html')
                   continue
               text = page.read_text(encoding='utf-8', errors='replace')
-              for label, needle in required.items():
-                  if needle not in text:
-                      failures.append(f'{slug}: missing {label}')
+              shared_main = shared_intake_children.get(slug)
+              if shared_main:
+                  for label, needle in {
+                      'brand stylesheet': '/assets/site-brand.css',
+                      'customer routing script': '/assets/customer-routing.js',
+                  }.items():
+                      if needle not in text:
+                          failures.append(f'{slug}: missing {label}')
+                  request_target = f'href="/{shared_main}/#request"'
+                  if request_target not in text:
+                      failures.append(f'{slug}: missing shared city request target {request_target}')
+                  if 'https://formspree.io/f/mvzeapzd' in text:
+                      failures.append(f'{slug}: contains duplicate Formspree endpoint instead of shared city intake')
+              else:
+                  for label, needle in required.items():
+                      if needle not in text:
+                          failures.append(f'{slug}: missing {label}')
               for label, needle in forbidden.items():
                   if needle in text:
                       failures.append(f'{slug}: contains {label}')
@@ -69,4 +99,4 @@ jobs:
                   print(f' - {item}')
               sys.exit(1)
 
-          print('All approved pages use the branded UI, routing script, same-page request links, request anchors, and Formspree endpoint.')
+          print('All approved pages use the correct request architecture: local forms where required and configured single-city intake redirects for benchmark specialty pages.')

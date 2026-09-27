@@ -36,6 +36,13 @@ jobs:
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           root=ET.parse('sitemap.xml').getroot()
           urls=[x.text.strip() for x in root.findall('.//s:loc',ns) if x.text]
+          home_lastmod=''
+          for node in root.findall('.//s:url',ns):
+              loc=node.find('s:loc',ns)
+              mod=node.find('s:lastmod',ns)
+              if loc is not None and loc.text and loc.text.strip()==BASE:
+                  home_lastmod=mod.text.strip() if mod is not None and mod.text else ''
+                  break
 
           failures=[]
           checked=0
@@ -138,11 +145,24 @@ jobs:
                   if 'noindex' in low:
                       failures.append(f'{p}: active market page contains noindex')
 
-          home=Path('index.html').read_text(encoding='utf-8',errors='ignore').lower()
+          home_raw=Path('index.html').read_text(encoding='utf-8',errors='ignore')
+          home=home_raw.lower()
           if '"@type":"website"' not in home and '"@type": "website"' not in home:
               failures.append('index.html: missing WebSite structured data for Google site-name eligibility')
           if '"@type":"organization"' not in home and '"@type": "organization"' not in home:
               failures.append('index.html: missing Organization structured data')
+          if 'foundingdate' in home:
+              failures.append('index.html: Organization foundingDate is not allowed without verified supporting evidence')
+          home_pages=webpage_objects(home_raw)
+          home_page=next((wp for wp in home_pages if wp.get('url')==BASE or wp.get('@id')==BASE+'#webpage'),None)
+          if not home_page:
+              failures.append('index.html: missing primary homepage WebPage object')
+          else:
+              home_modified=norm(home_page.get('dateModified',''))
+              if not home_modified:
+                  failures.append('index.html: homepage WebPage missing dateModified')
+              elif home_lastmod and home_modified!=home_lastmod:
+                  failures.append(f'index.html: WebPage dateModified {home_modified!r} != sitemap lastmod {home_lastmod!r}')
 
           print('ACTIVE_SITEMAP_PAGES_CHECKED',checked)
           print('ACTIVE_MARKET_PAGES_CHECKED',market_checked)
