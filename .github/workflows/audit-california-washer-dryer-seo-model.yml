@@ -47,13 +47,17 @@ jobs:
                   and 'file_00000000b7c082308dccc73e5bd3acd2.png' not in tag.lower()
                   for tag in image_tags
               )
+              single_city_intake=(
+                  'data-single-city-intake=' in low
+                  and bool(re.search(r'href=["\'][^"\']*appliance-pickup/#request["\']',t,re.I))
+              )
               checks={
                   'indexable robots': ('name="robots"' in low and 'index' in low and 'follow' in low and 'noindex' not in low.split('</head>',1)[0]),
                   'self canonical': f'https://freereliableappliancepickup.com/{slug}/' in low,
                   'washer dryer title': ('washer' in title and 'dryer' in title),
                   'washer dryer H1': ('washer' in h1 and 'dryer' in h1),
                   'request target': ('id="request"' in low or "id='request'" in low),
-                  'Formspree': 'https://formspree.io/f/mvzeapzd' in low,
+                  'request submission path': ('https://formspree.io/f/mvzeapzd' in low or single_city_intake),
                   'customer routing': '/assets/customer-routing.js' in low,
                   'structured WebPage': ('"@type":"webpage"' in low or '"@type": "webpage"' in low),
                   'breadcrumb': 'breadcrumblist' in low,
