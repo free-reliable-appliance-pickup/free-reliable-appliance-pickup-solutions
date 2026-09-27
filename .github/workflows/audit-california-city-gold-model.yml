@@ -252,6 +252,9 @@ jobs:
               for phrase in special.get('required_phrases',[]):
                   if phrase.lower() not in main['text'].lower():
                       failures.append(f'{main_slug}: missing special-disposal guidance {phrase}')
+              for phrase in cluster.get('free_claim_guardrails',[]):
+                  if phrase.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing free-claim guardrail {phrase}')
               for phrase in ['how much does appliance removal cost','$0']:
                   if phrase not in main['text'].lower():
                       failures.append(f'{main_slug}: missing cost-transparency signal {phrase}')
