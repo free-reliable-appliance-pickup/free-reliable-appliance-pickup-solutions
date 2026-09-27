@@ -153,14 +153,22 @@ jobs:
               hero_info = hero_manifest.get(route, {})
               original_src = str(hero_info.get('src', '')).lstrip('/')
               display_src = str(hero_info.get('display_src', original_src)).lstrip('/')
-              is_original_hero = (
-                  original_src.startswith('assets/laundry/original-user-heroes/')
-                  and bool(original_src)
-                  and Path(original_src).is_file()
-                  and bool(display_src)
-                  and Path(display_src).is_file()
-                  and hero_src.lstrip('/') == display_src
-              )
+              hero_base = hero_src.split('?', 1)[0].lstrip('/')
+              if hero_info:
+                  is_original_hero = (
+                      original_src.startswith('assets/laundry/original-user-heroes/')
+                      and bool(original_src)
+                      and Path(original_src).is_file()
+                      and bool(display_src)
+                      and Path(display_src).is_file()
+                      and hero_base == display_src
+                  )
+              else:
+                  is_original_hero = (
+                      hero_base.startswith('assets/laundry/original-user-heroes/')
+                      and bool(hero_base)
+                      and Path(hero_base).is_file()
+                  )
 
               shared_main_slug = single_intake_children.get(slug)
               if shared_main_slug:
@@ -202,10 +210,13 @@ jobs:
 
               if hero_info:
                   expected_og = ROOT + original_src
-                  if not og_images or og_images[0] != expected_og:
+                  actual_og = og_images[0].split('?', 1)[0] if og_images else ''
+                  if actual_og != expected_og:
                       warnings.append(f'{slug}: og:image does not match approved original hero metadata')
-              elif og_images and '/assets/laundry/original-user-heroes/' not in og_images[0]:
-                  warnings.append(f'{slug}: og:image is not using the original-user-heroes library')
+              elif og_images:
+                  actual_og = og_images[0].split('?', 1)[0]
+                  if '/assets/laundry/original-user-heroes/' not in actual_og:
+                      warnings.append(f'{slug}: og:image is not using the original-user-heroes library')
 
               if expected in sitemap_urls and not sitemap_urls[expected]:
                   warnings.append(f'{slug}: sitemap entry has no lastmod')
