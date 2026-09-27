@@ -6,6 +6,10 @@ on:
     paths:
       - 'file_00000000b7c082308dccc73e5bd3acd2.png'
       - '.github/workflows/generate-rancho-header-logo.yml'
+  pull_request:
+    paths:
+      - 'file_00000000b7c082308dccc73e5bd3acd2.png'
+      - '.github/workflows/generate-rancho-header-logo.yml'
   workflow_dispatch:
 
 permissions:
@@ -46,6 +50,7 @@ jobs:
           PY
 
       - name: Commit optimized header logo
+        if: github.event_name != 'pull_request'
         run: |
           if [ -z "$(git status --porcelain -- assets/brand/free-reliable-appliance-pickup-logo-236.webp)" ]; then
             echo "No logo derivative changes"
