@@ -218,6 +218,14 @@
       "benchmark_homepage_child_links": [
         "washer_dryer",
         "refrigerator"
+      ],
+      "replacement_day_terms": [
+        "Replacing an Appliance?",
+        "Before delivery day",
+        "If the store offers haul-away",
+        "Keep it testable when practical",
+        "Coordinate access",
+        "Text Old Appliance Photos"
       ]
     }
   ]
