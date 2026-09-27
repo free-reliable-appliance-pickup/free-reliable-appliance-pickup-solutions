@@ -401,6 +401,12 @@ jobs:
               for term in cluster.get('overview_trust_terms',[]):
                   if term.lower() not in main['text'].lower():
                       failures.append(f'{main_slug}: missing overview trust signal {term}')
+              for term in cluster.get('replacement_day_terms',[]):
+                  if term.lower() not in main['text'].lower():
+                      failures.append(f'{main_slug}: missing replacement-day signal {term}')
+              if cluster.get('replacement_day_terms'):
+                  if 'id="replacement-day"' not in main['low'] or 'href="#replacement-day"' not in main['low']:
+                      failures.append(f'{main_slug}: replacement-day section must have a jump-nav path')
               for field_name in ['name="brand_model"','name="preferred_window"','name="photos_available"','name="testable"','name="property_type"']:
                   if field_name not in main['low']:
                       failures.append(f'{main_slug}: missing lead-quality field {field_name}')
