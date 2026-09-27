@@ -44,6 +44,10 @@ The page should explain the difference between:
 
 Near the beginning of the city hub, summarize the real reasons a customer should use the review without unsupported superlatives. A useful four-part pattern is: free to request, easy photo-first review, reuse-focused qualification, and verified alternatives when the free route does not qualify. Keep this concise and scannable; it should replace repetitive overview prose rather than add another long section.
 
+## Replacement-day intent
+
+Where appliance replacement is a meaningful lead source, add a concise section for customers receiving a new appliance and deciding what to do with the old one. Encourage them to send photos and working-condition details before a retailer, installer or delivery crew removes a reusable appliance. Explain that retailer haul-away may be convenient but should be compared with the qualification-based free reuse route when the outgoing appliance still works. Do not promise pickup before qualification, and do not interfere with safe installation or disconnection.
+
 ## Customer decision path
 
 Every gold-standard city hub should make the removal choice understandable in one scan. Use a compact three-path module:
