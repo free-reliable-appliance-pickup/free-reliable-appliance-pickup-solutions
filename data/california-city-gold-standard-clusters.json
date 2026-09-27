@@ -61,7 +61,8 @@
         "Do I need to disconnect the appliance before pickup?",
         "Do you offer business appliance pickup in Rancho Cucamonga?",
         "Can I donate a working washer, dryer or refrigerator instead of throwing it away?",
-        "Will the delivery crew take my old appliance when they deliver the new one?"
+        "Will the delivery crew take my old appliance when they deliver the new one?",
+        "What happens to a refrigerator or freezer that cannot be reused?"
       ],
       "network_disclosure": {
         "marker": "gold-network-disclosure",
@@ -229,6 +230,11 @@
         "Keep it testable when practical",
         "Coordinate access",
         "Text Old Appliance Photos"
+      ],
+      "recycling_trust_terms": [
+        "EPA appliance-disposal guidance",
+        "refrigerant must be recovered before final disposal",
+        "Do not cut refrigerant lines or remove the compressor yourself"
       ]
     }
   ]
