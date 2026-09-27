@@ -251,6 +251,11 @@ jobs:
                   continue
 
               main=pages[main_slug]
+              if cluster.get('benchmark_homepage_child_links'):
+                  home_raw=Path('index.html').read_text(encoding='utf-8',errors='replace')
+                  for child_slug in child_map.values():
+                      if f'/{child_slug}/' not in home_raw:
+                          failures.append(f'index.html: missing benchmark homepage link to {child_slug}')
               schema_graph=cluster.get('structured_data_graph',{})
               if schema_graph.get('connect_webpage_to_service'):
                   for schema_slug in slugs:
