@@ -59,7 +59,11 @@
       "required_faq_questions": [
         "Do I need to put the appliance at the curb before pickup?",
         "Do I need to disconnect the appliance before pickup?"
-      ]
+      ],
+      "network_disclosure": {
+        "marker": "gold-network-disclosure",
+        "required_before": "removal-options"
+      }
     }
   ]
 }
