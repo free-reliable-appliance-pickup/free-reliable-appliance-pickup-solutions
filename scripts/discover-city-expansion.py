@@ -16,6 +16,7 @@ import math
 import re
 import urllib.request
 import zipfile
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -24,10 +25,17 @@ CENSUS_URL = (
     "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/"
     "2025_Gazetteer/2025_Gaz_place_national.zip"
 )
-USER_AGENT = "FreeReliableAppliancePickup-CityDiscovery/1.0"
+USER_AGENT = "FreeReliableAppliancePickup-CityDiscovery/1.1"
+
+# Census legal/statistical names do not always match established site slugs.
+SITE_SLUG_ALIASES = {
+    "industry": "city-of-industry",
+}
 
 
 def slugify(value: str) -> str:
+    value = unicodedata.normalize("NFKD", value)
+    value = value.encode("ascii", "ignore").decode("ascii")
     value = value.lower().replace("’", "").replace("'", "")
     value = re.sub(r"[^a-z0-9]+", "-", value).strip("-")
     return value
@@ -129,6 +137,7 @@ def build_candidates(
         city_slug = slugify(name)
         if not city_slug or city_slug in seen:
             continue
+        site_city_slug = SITE_SLUG_ALIASES.get(city_slug, city_slug)
         try:
             lat = to_float(row, "INTPTLAT")
             lon = to_float(row, "INTPTLONG")
@@ -147,9 +156,9 @@ def build_candidates(
                 "distance_miles": round(miles, 1),
                 "latitude": lat,
                 "longitude": lon,
-                "suggested_slug": f"{city_slug}-appliance-pickup",
-                "page_exists": city_slug in existing,
-                "status": "existing" if city_slug in existing else "candidate",
+                "suggested_slug": f"{site_city_slug}-appliance-pickup",
+                "page_exists": site_city_slug in existing,
+                "status": "existing" if site_city_slug in existing else "candidate",
             }
         )
 
