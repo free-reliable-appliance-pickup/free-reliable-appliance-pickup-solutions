@@ -52,6 +52,16 @@ jobs:
                   if main_slug and child_slug:
                       shared_intake_children[child_slug] = main_slug
 
+          # Regional hubs may intentionally share a primary city intake instead of duplicating a form.
+          shared_intake_children['phoenix-metro-appliance-pickup'] = 'phoenix-appliance-pickup'
+
+          # Approved indexable pages whose purpose is informational or partner-facing rather than residential intake.
+          request_exempt = {
+              'california-appliance-recycling-resources',
+              'coachella-valley-pickup-partner-interest',
+              'service-standards',
+          }
+
           required = {
               'brand stylesheet': '/assets/site-brand.css',
               'customer routing script': '/assets/customer-routing.js',
@@ -71,6 +81,10 @@ jobs:
                   failures.append(f'{slug}: missing index.html')
                   continue
               text = page.read_text(encoding='utf-8', errors='replace')
+              if slug in request_exempt:
+                  if '/assets/site-brand.css' not in text:
+                      failures.append(f'{slug}: missing brand stylesheet')
+                  continue
               shared_main = shared_intake_children.get(slug)
               if shared_main:
                   for label, needle in {
