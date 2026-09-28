@@ -1,0 +1,80 @@
+name: Discover Nearby City Expansion
+
+on:
+  workflow_dispatch:
+    inputs:
+      state:
+        description: "Two-letter USPS state code"
+        required: true
+        default: "CA"
+      seed:
+        description: "Seed city/place"
+        required: true
+        default: "Rancho Cucamonga"
+      radius_miles:
+        description: "Discovery radius in miles"
+        required: true
+        default: "60"
+      limit:
+        description: "Maximum Census Places in report"
+        required: true
+        default: "80"
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/discover-city-expansion.py'
+      - '.github/workflows/discover-city-expansion.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: discover-city-expansion-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve discovery inputs
+        id: inputs
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "state=${{ inputs.state }}" >> "$GITHUB_OUTPUT"
+            echo "seed=${{ inputs.seed }}" >> "$GITHUB_OUTPUT"
+            echo "radius=${{ inputs.radius_miles }}" >> "$GITHUB_OUTPUT"
+            echo "limit=${{ inputs.limit }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "state=CA" >> "$GITHUB_OUTPUT"
+            echo "seed=Rancho Cucamonga" >> "$GITHUB_OUTPUT"
+            echo "radius=60" >> "$GITHUB_OUTPUT"
+            echo "limit=80" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Discover nearby Census Places
+        run: |
+          python3 scripts/discover-city-expansion.py \
+            --state "${{ steps.inputs.outputs.state }}" \
+            --seed "${{ steps.inputs.outputs.seed }}" \
+            --radius "${{ steps.inputs.outputs.radius }}" \
+            --limit "${{ steps.inputs.outputs.limit }}"
+
+      - name: Show report
+        shell: bash
+        run: |
+          echo "Generated city-discovery reports:"
+          ls -lh reports/city-expansion-*
+          echo
+          cat reports/city-expansion-*.md
+
+      - name: Upload city-discovery report
+        uses: actions/upload-artifact@v4
+        with:
+          name: city-expansion-${{ steps.inputs.outputs.state }}
+          path: |
+            reports/city-expansion-*.json
+            reports/city-expansion-*.md
+          retention-days: 30
