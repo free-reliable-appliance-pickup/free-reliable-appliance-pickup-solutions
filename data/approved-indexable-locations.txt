@@ -54,6 +54,7 @@ beverly-hills-appliance-pickup
 beverly-hills-washer-dryer-pickup
 bloomington-appliance-pickup
 bloomington-washer-dryer-pickup
+bradbury-appliance-pickup
 brea-appliance-pickup
 brea-washer-dryer-pickup
 buckeye-appliance-pickup
