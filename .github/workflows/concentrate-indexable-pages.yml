@@ -1,9 +1,6 @@
 name: Concentrate Indexable Location Pages
 
 on:
-  push:
-    paths:
-      - '.github/workflows/concentrate-indexable-pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -21,30 +18,26 @@ jobs:
           from pathlib import Path
           import re
 
-          # Keep broad state hubs plus only the few city markets with established
-          # direct operating coverage. Recruiting/request-only regions stay useful
-          # for customer routing but remain noindex until coverage is established.
-          KEEP={
-            'california-appliance-pickup','oregon-appliance-pickup','washington-appliance-pickup',
-            'arizona-appliance-pickup','colorado-appliance-pickup','nevada-appliance-pickup',
-            'utah-appliance-pickup','idaho-appliance-pickup',
-            'portland-appliance-pickup','salem-appliance-pickup',
-            'denver-appliance-pickup','aurora-appliance-pickup'
-          }
+          # Use the repository's approved indexable-page registry as the source of truth.
+          # This avoids accidentally noindexing priority pages from an outdated hard-coded list.
+          approved_file=Path('data/approved-indexable-locations.txt')
+          KEEP=set()
+          if approved_file.exists():
+              KEEP={
+                  line.strip()
+                  for line in approved_file.read_text(encoding='utf-8',errors='ignore').splitlines()
+                  if line.strip() and not line.lstrip().startswith('#')
+              }
+
           # Informational guides can legitimately end in -appliance-pickup without
-          # being geographic doorway pages. Never classify these as location pages.
+          # being geographic doorway pages.
           INFORMATIONAL={
             'landlord-property-manager-appliance-pickup'
           }
-          RECRUITING={
-            'inland-empire-appliance-pickup','orange-county-appliance-pickup',
-            'riverside-county-appliance-pickup','los-angeles-county-appliance-pickup',
-            'central-coast-appliance-pickup','central-valley-appliance-pickup',
-            'san-diego-county-appliance-pickup','sf-bay-area-appliance-pickup',
-            'phoenix-metro-appliance-pickup','las-vegas-valley-appliance-pickup',
-            'puget-sound-appliance-pickup','treasure-valley-appliance-pickup',
-            'wasatch-front-appliance-pickup'
-          }
+
+          # Do not maintain a separate stale recruiting blacklist here. Link/index
+          # eligibility is governed by the approved-page registry above.
+          RECRUITING=set()
 
           noindexed=[]
           for p in Path('.').glob('*/index.html'):
