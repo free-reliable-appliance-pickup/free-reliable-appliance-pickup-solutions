@@ -12,6 +12,8 @@ export function getStaticPaths() {
 }
 
 const { page } = Astro.props;
+const isLaundry = page.slug.endsWith("-washer-dryer-pickup");
+const serviceLabel = isLaundry ? "Washer & Dryer Pickup" : "Appliance Pickup & Removal";
 const liveSite = "https://freereliableappliancepickup.com";
 const heroImageUrl = `${liveSite}${page.heroImage}`;
 const marketHubUrl = `${liveSite}${page.marketHubHref}`;
@@ -20,19 +22,21 @@ const absoluteHref = (href: string) => href.startsWith("/") ? `${liveSite}${href
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: `Free Appliance Pickup & Removal in ${page.city}, ${page.state}`,
-  serviceType: [
-    "Appliance Pickup",
-    "Appliance Removal",
-    "Appliance Recycling Review",
-    "Washer Pickup",
-    "Dryer Pickup",
-    "Refrigerator Pickup",
-    "Freezer Pickup",
-    "Stove Pickup",
-    "Range Pickup",
-    "Oven Pickup"
-  ],
+  name: `${serviceLabel} in ${page.city}, ${page.state}`,
+  serviceType: isLaundry
+    ? ["Washer Pickup", "Dryer Pickup", "Laundry Appliance Removal", "Appliance Recycling Review"]
+    : [
+        "Appliance Pickup",
+        "Appliance Removal",
+        "Appliance Recycling Review",
+        "Washer Pickup",
+        "Dryer Pickup",
+        "Refrigerator Pickup",
+        "Freezer Pickup",
+        "Stove Pickup",
+        "Range Pickup",
+        "Oven Pickup"
+      ],
   provider: {
     "@type": "Organization",
     name: "Free Reliable Appliance Pickup",
@@ -76,7 +80,12 @@ const breadcrumbSchema = {
     { "@type": "ListItem", position: 2, name: "Service Areas", item: `${liveSite}/service-areas/` },
     { "@type": "ListItem", position: 3, name: "California", item: `${liveSite}/california-appliance-pickup/` },
     { "@type": "ListItem", position: 4, name: page.market, item: marketHubUrl },
-    { "@type": "ListItem", position: 5, name: page.city, item: page.canonical }
+    {
+      "@type": "ListItem",
+      position: 5,
+      name: `${page.city} ${isLaundry ? "Washer & Dryer Pickup" : "Appliance Pickup"}`,
+      item: page.canonical
+    }
   ]
 };
 ---
@@ -145,7 +154,7 @@ const breadcrumbSchema = {
       <section class="hero">
         <div>
           <p><strong>{page.market}</strong> · {page.county}</p>
-          <h1>Free Appliance Pickup & Removal in {page.city}, {page.stateCode}</h1>
+          <h1>{isLaundry ? "Free Washer & Dryer Pickup" : "Free Appliance Pickup & Removal"} in {page.city}, {page.stateCode}</h1>
           <p>{page.serviceSummary}</p>
           <p><strong>{page.hours}</strong> · English / Español</p>
           <div class="cta">
@@ -169,7 +178,7 @@ const breadcrumbSchema = {
       </section>
 
       <section>
-        <h2>Appliance Pickup Options in {page.city}</h2>
+        <h2>{isLaundry ? "Washer & Dryer Pickup Options" : "Appliance Pickup Options"} in {page.city}</h2>
         <ul class="link-list">
           {page.applianceLinks.map((item) => (
             <li><a href={absoluteHref(item.href)}>{item.label}</a></li>
@@ -177,26 +186,32 @@ const breadcrumbSchema = {
         </ul>
       </section>
 
-      <section>
-        <h2>{page.city} Neighborhoods & ZIP Codes</h2>
-        <div class="grid">
-          <div class="card"><h3>Neighborhood examples</h3><p>{page.neighborhoods.join(", ")}.</p></div>
-          <div class="card"><h3>Common ZIP codes</h3><p>{page.zipCodes.join(", ")}.</p></div>
-        </div>
-        <p>Use the actual pickup address rather than a nearby city name. Exact access, appliance condition and route direction are reviewed before pickup is confirmed.</p>
-      </section>
+      {(page.neighborhoods.length > 0 || page.zipCodes.length > 0) && (
+        <section>
+          <h2>{page.city} Local Coverage Details</h2>
+          <div class="grid">
+            {page.neighborhoods.length > 0 && (
+              <div class="card"><h3>Local areas</h3><p>{page.neighborhoods.join(", ")}.</p></div>
+            )}
+            {page.zipCodes.length > 0 && (
+              <div class="card"><h3>Common ZIP codes</h3><p>{page.zipCodes.join(", ")}.</p></div>
+            )}
+          </div>
+          <p>Use the actual pickup address rather than a nearby city name. Exact access, appliance condition and route direction are reviewed before pickup is confirmed.</p>
+        </section>
+      )}
 
       <section>
-        <h2>Nearby Appliance Pickup Areas</h2>
+        <h2>Nearby {isLaundry ? "Washer & Dryer" : "Appliance"} Pickup Areas</h2>
         <ul class="link-list">
           {page.nearbyLinks.map((item) => (
-            <li><a href={item.href}>{item.label} appliance pickup</a></li>
+            <li><a href={item.href}>{item.label} {isLaundry ? "washer & dryer pickup" : "appliance pickup"}</a></li>
           ))}
         </ul>
       </section>
 
       <section>
-        <h2>{page.city} Appliance Pickup FAQ</h2>
+        <h2>{page.city} {isLaundry ? "Washer & Dryer Pickup" : "Appliance Pickup"} FAQ</h2>
         {page.faqs.map((faq) => (
           <article>
             <h3>{faq.question}</h3>
