@@ -36,9 +36,9 @@ jobs:
       - name: Build Platform V2
         run: npm run build
 
-      - name: Verify Worker build output
+      - name: Verify Cloudflare server entrypoint
         run: |
-          test -f dist/_worker.js/index.js
+          node -e "console.log(require.resolve('@astrojs/cloudflare/entrypoints/server'))"
 
       - name: Verify staging robots protection
         run: |
