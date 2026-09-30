@@ -63,7 +63,7 @@
           "$0 pickup charge",
           "four times per calendar year at no charge",
           "guaranteed paid haul-away window",
-        "junk appliance removal",
+          "junk appliance removal",
           "do not move a good appliance to the curb before pickup is confirmed",
           "do not cut refrigerant lines"
         ]
@@ -159,18 +159,16 @@
         "Free pickup is confirmed only after the request qualifies"
       ],
       "business_intent_terms": [
-        "Business Appliance Pickup in Rancho Cucamonga",
+        "Business & Recurring Appliance Pickup in Rancho Cucamonga",
         "Apartment & rental unit turns",
         "Senior & 55+ communities",
         "Retailers, installers & remodelers",
-        "one-time or recurring appliance replacement loads",
-        "not general commercial trash hauling"
+        "one-time or recurring replacement loads"
       ],
       "reuse_donation_terms": [
-        "Trying to donate or give away a working appliance in Rancho Cucamonga?",
-        "does not accept large appliances such as washers and dryers",
+        "trying to donate or give away a working appliance in Rancho Cucamonga",
         "Reuse pickup is not a charitable donation",
-        "does not issue tax-deductible donation receipts"
+        "do not issue tax-deductible donation receipts"
       ],
       "request_placement": {
         "after": "qualification",
@@ -226,7 +224,10 @@
       "service_channel": {
         "phone": "+19093756685",
         "sms": "+19093756685",
-        "languages": ["en", "es"],
+        "languages": [
+          "en",
+          "es"
+        ],
         "request_url": "https://freereliableappliancepickup.com/rancho-cucamonga-appliance-pickup/#request"
       },
       "cta_style": {
@@ -260,7 +261,8 @@
       "content_size_guardrails": {
         "max_visible_words": 4400,
         "max_h1_h2_h3": 80,
-        "max_visible_faq_questions": 14
+        "max_visible_faq_questions": 14,
+        "max_unique_internal_links": 85
       }
     }
   ]
