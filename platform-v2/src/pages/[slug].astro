@@ -38,9 +38,7 @@ const serviceSchema = {
         "Oven Pickup"
       ],
   provider: {
-    "@type": "Organization",
-    name: "Free Reliable Appliance Pickup",
-    url: `${liveSite}/`
+    "@id": `${liveSite}/#organization`
   },
   telephone: page.phoneE164,
   areaServed: {
@@ -57,6 +55,38 @@ const serviceSchema = {
   },
   url: page.canonical,
   image: heroImageUrl
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${liveSite}/#organization`,
+  name: "Free Reliable Appliance Pickup",
+  alternateName: ["Free Appliance Pickup Across USA", "Reliable Appliance Pickup"],
+  url: `${liveSite}/`
+};
+
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${page.canonical}#webpage`,
+  url: page.canonical,
+  name: page.title,
+  description: page.description,
+  isPartOf: { "@id": `${liveSite}/#website` },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    "@id": `${page.canonical}#primaryimage`,
+    url: heroImageUrl,
+    contentUrl: heroImageUrl,
+    caption: page.heroImageAlt,
+    representativeOfPage: true
+  },
+  mainEntity: {
+    "@type": "Service",
+    name: `${serviceLabel} in ${page.city}, ${page.state}`,
+    url: page.canonical
+  }
 };
 
 const faqSchema = {
@@ -106,6 +136,13 @@ const breadcrumbSchema = {
     <meta property="og:description" content={page.description} />
     <meta property="og:image" content={heroImageUrl} />
     <meta property="og:image:alt" content={page.heroImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={page.title} />
+    <meta name="twitter:description" content={page.description} />
+    <meta name="twitter:image" content={heroImageUrl} />
+    <link rel="icon" href={`${liveSite}/favicon-refrigerator.png`} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
@@ -188,6 +225,33 @@ const breadcrumbSchema = {
       <section>
         <h2>Free-Pickup Qualification</h2>
         <p>{page.qualificationSummary}</p>
+      </section>
+
+      <section>
+        <h2>{isLaundry ? "Washer & Dryer Testing Before Pickup" : "Appliance Testing Before Pickup"}</h2>
+        {isLaundry ? (
+          <div class="grid">
+            <div class="card"><h3>Washer</h3><p>Report whether it powers on, fills, agitates or washes, drains and spins. Mention leaks, error codes or unusual noise.</p></div>
+            <div class="card"><h3>Dryer</h3><p>Report whether it powers on, tumbles and heats. Include whether it is gas or electric and any known error or noise.</p></div>
+            <div class="card"><h3>Matching set</h3><p>Tell us whether both machines work and whether they can be tested before pickup. Complete working sets receive priority review.</p></div>
+          </div>
+        ) : (
+          <div class="grid">
+            <div class="card"><h3>Refrigerator / freezer</h3><p>Report whether it is currently cooling or freezing and whether it can be tested. Interior and model-label photos are especially useful.</p></div>
+            <div class="card"><h3>Washer / dryer</h3><p>For washers, report fill, wash, drain and spin. For dryers, report tumble and heat. A matching working set can be especially useful for reuse.</p></div>
+            <div class="card"><h3>Stove / range / oven</h3><p>Report gas or electric type, approximate width and which burners or oven functions work. Do not disconnect gas service unless it can be done safely by an appropriate person.</p></div>
+          </div>
+        )}
+        <p class="note">Testing information helps qualification, but it does not guarantee free pickup. Condition, access, exact address and current route capacity are reviewed together.</p>
+      </section>
+
+      <section>
+        <h2>Access Details That Prevent a Failed Pickup</h2>
+        <div class="grid">
+          <div class="card"><h3>Exact location</h3><p>Use the real pickup address and ZIP. Tell us whether the appliance is in a garage, driveway, inside the property, upstairs, behind a gate or in a loading area.</p></div>
+          <div class="card"><h3>Removal path</h3><p>Include stairs, elevator rules, narrow doors, long carries, sloped driveways and gate or HOA access that could affect safe removal.</p></div>
+          <div class="card"><h3>Parking & timing</h3><p>Note loading restrictions, building hours, delivery deadlines or preferred pickup windows. A requested time is reviewed, not automatically guaranteed.</p></div>
+        </div>
       </section>
 
       <section>
