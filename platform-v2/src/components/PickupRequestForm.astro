@@ -14,7 +14,10 @@ const isLaundry = serviceIntent === "washer-dryer";
 <section id="request" aria-labelledby="request-heading">
   <h2 id="request-heading">Request {isLaundry ? "Washer & Dryer" : "Appliance"} Pickup in {city}</h2>
   <p>
-    Send the appliance condition, exact pickup area and access details. Pickup is confirmed only after qualification and route review.
+    Send the appliance condition, exact pickup address and access details. Pickup is confirmed only after qualification and route review.
+  </p>
+  <p class="photo-note">
+    <strong>Photos help us review faster.</strong> After submitting, use the call/text option on this page to send clear appliance and access photos.
   </p>
 
   <form method="post" action="/api/leads" data-track-lead>
@@ -46,88 +49,175 @@ const isLaundry = serviceIntent === "washer-dryer";
       </label>
     </div>
 
-    <label>
-      Full name
-      <input type="text" name="customer_name" autocomplete="name" maxlength="120" required />
-    </label>
+    <div class="form-grid">
+      <label>
+        Full name
+        <input type="text" name="customer_name" autocomplete="name" maxlength="120" required />
+      </label>
 
-    <label>
-      Phone
-      <input type="tel" name="customer_phone" autocomplete="tel" maxlength="40" required />
-    </label>
+      <label>
+        Phone
+        <input type="tel" name="customer_phone" autocomplete="tel" maxlength="40" required />
+      </label>
 
-    <label>
-      Email
-      <input type="email" name="customer_email" autocomplete="email" maxlength="180" />
-    </label>
+      <label>
+        Email
+        <input type="email" name="customer_email" autocomplete="email" maxlength="180" />
+      </label>
 
-    <label>
-      ZIP code
-      <input type="text" name="zip_code" inputmode="numeric" autocomplete="postal-code" maxlength="12" />
-    </label>
+      <label>
+        ZIP code
+        <input type="text" name="zip_code" inputmode="numeric" autocomplete="postal-code" maxlength="12" required />
+      </label>
 
-    <label>
-      Appliance
-      <select name="appliance_type" required>
-        <option value="">Select appliance</option>
-        {isLaundry ? (
-          <>
-            <option>Washer and Dryer Set</option>
-            <option>Washer</option>
-            <option>Dryer</option>
-            <option>Multiple Appliances</option>
-            <option>Refrigerator</option>
-          </>
-        ) : (
-          <>
-            <option>Refrigerator</option>
-            <option>Washer</option>
-            <option>Dryer</option>
-            <option>Washer and Dryer Set</option>
-          </>
-        )}
-        <option>Freezer</option>
-        <option>Stove / Range</option>
-        <option>Oven</option>
-        <option>Dishwasher</option>
-        {!isLaundry && <option>Multiple Appliances</option>}
-      </select>
-    </label>
+      <label class="full">
+        Pickup street address
+        <input type="text" name="pickup_address" autocomplete="street-address" maxlength="240" required />
+      </label>
 
-    <label>
-      Condition
-      <select name="appliance_condition" required>
-        <option value="">Select condition</option>
-        <option>Fully Working</option>
-        <option>Needs Repair</option>
-        <option>Not Working</option>
-        <option>Unknown</option>
-      </select>
-    </label>
+      <label>
+        Appliance
+        <select name="appliance_type" required>
+          <option value="">Select appliance</option>
+          {isLaundry ? (
+            <>
+              <option>Washer and Dryer Set</option>
+              <option>Washer</option>
+              <option>Dryer</option>
+              <option>Multiple Appliances</option>
+              <option>Refrigerator</option>
+            </>
+          ) : (
+            <>
+              <option>Refrigerator</option>
+              <option>Washer</option>
+              <option>Dryer</option>
+              <option>Washer and Dryer Set</option>
+            </>
+          )}
+          <option>Freezer</option>
+          <option>Stove / Range</option>
+          <option>Oven</option>
+          <option>Dishwasher</option>
+          {!isLaundry && <option>Multiple Appliances</option>}
+        </select>
+      </label>
 
-    <label>
-      Number of appliances
-      <input type="number" name="appliance_count" min="1" max="20" value="1" />
-    </label>
+      <label>
+        Condition
+        <select name="appliance_condition" required>
+          <option value="">Select condition</option>
+          <option>Fully Working</option>
+          <option>Needs Repair</option>
+          <option>Not Working</option>
+          <option>Unknown</option>
+        </select>
+      </label>
 
-    <label>
-      Access details
-      <textarea
-        name="access_summary"
-        rows="3"
-        maxlength="1000"
-        placeholder="Garage, driveway, inside, stairs, elevator, gate, narrow doorway..."
-      ></textarea>
-    </label>
+      <label>
+        Brand / model
+        <input type="text" name="brand_model" maxlength="180" placeholder="Example: LG WM4000" />
+      </label>
 
-    <label>
-      Anything else we should know?
-      <textarea name="message" rows="4" maxlength="2000"></textarea>
-    </label>
+      <label>
+        Number of appliances
+        <input type="number" name="appliance_count" min="1" max="20" value="1" />
+      </label>
 
-    <button type="submit">Submit Pickup Request</button>
+      <label>
+        Property type
+        <select name="property_type">
+          <option value="">Select property type</option>
+          <option>Single-family home</option>
+          <option>Apartment / condo</option>
+          <option>Senior / 55+ community</option>
+          <option>Rental / property management</option>
+          <option>Business / commercial</option>
+          <option>Storage / warehouse</option>
+          <option>Other</option>
+        </select>
+      </label>
+
+      <label>
+        Appliance location
+        <select name="appliance_location">
+          <option value="">Select location</option>
+          <option>Garage</option>
+          <option>Driveway / curbside</option>
+          <option>Inside - first floor</option>
+          <option>Inside - upper floor</option>
+          <option>Patio / side yard</option>
+          <option>Commercial loading area</option>
+          <option>Other</option>
+        </select>
+      </label>
+
+      <label>
+        Stairs / elevator
+        <select name="stairs">
+          <option value="">Select access</option>
+          <option>No stairs</option>
+          <option>1-5 steps</option>
+          <option>One flight</option>
+          <option>Two or more flights</option>
+          <option>Elevator available</option>
+        </select>
+      </label>
+
+      <label>
+        Can it be tested?
+        <select name="testable_status">
+          <option value="">Select testability</option>
+          <option>Plugged in and testable now</option>
+          <option>Can be tested before pickup</option>
+          <option>Not currently testable</option>
+          <option>Not applicable</option>
+        </select>
+      </label>
+
+      <label>
+        Preferred pickup window
+        <select name="preferred_window">
+          <option value="">Select preference</option>
+          <option>Flexible</option>
+          <option>Morning</option>
+          <option>Afternoon</option>
+          <option>Evening</option>
+          <option>Specific date / time - explain below</option>
+        </select>
+      </label>
+
+      <label class="full">
+        Access details
+        <textarea
+          name="access_summary"
+          rows="3"
+          maxlength="1000"
+          placeholder="Gate code process, narrow doorway, long carry, elevator rules, parking/loading limits..."
+        ></textarea>
+      </label>
+
+      <label class="full">
+        Anything else we should know?
+        <textarea name="message" rows="4" maxlength="2000" placeholder="Testing results, delivery date, multiple appliance details, preferred date, special instructions..."></textarea>
+      </label>
+
+      <button class="full" type="submit">Submit Pickup Request</button>
+    </div>
   </form>
 </section>
+
+<style>
+  form{margin-top:18px}
+  .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  label{display:block;font-weight:700;color:#17352a}
+  input,select,textarea{width:100%;margin-top:6px;padding:12px 13px;border:1px solid #b9cfc0;border-radius:9px;background:#fff;color:#24332d;font:inherit}
+  textarea{resize:vertical}
+  button{border:0;border-radius:10px;background:#087443;color:#fff;padding:13px 18px;font:inherit;font-weight:800;cursor:pointer}
+  .full{grid-column:1/-1}
+  .photo-note{background:#eef8f2;border-left:5px solid #087443;padding:12px 14px;border-radius:8px}
+  @media(max-width:700px){.form-grid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
 
 <script>
   import "../scripts/attribution";
