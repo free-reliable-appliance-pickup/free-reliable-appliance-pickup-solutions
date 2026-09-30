@@ -36,10 +36,10 @@ jobs:
       - name: Build Platform V2
         run: npm run build
 
-      - name: Verify Cloudflare server entrypoint
+      - name: Verify Astro Cloudflare output
         run: |
-          node -e "console.log(require.resolve('@astrojs/cloudflare/entrypoints/server'))"
-          test -d dist/server
+          test -f dist/server/entry.mjs
+          test -f dist/server/wrangler.json
           test -d dist/client
 
       - name: Verify staging robots protection
@@ -48,4 +48,4 @@ jobs:
           grep -q "Disallow: /" dist/client/robots.txt
 
       - name: Validate staging deploy bundle
-        run: npx wrangler deploy --dry-run --config wrangler.staging.jsonc
+        run: npx wrangler deploy --dry-run --config dist/server/wrangler.json
