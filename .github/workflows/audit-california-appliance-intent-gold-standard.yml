@@ -254,11 +254,21 @@ jobs:
               if not p.exists():
                   failures.append(f'{city_slug}: missing priority city page')
                   continue
-              low=p.read_text(encoding='utf-8',errors='replace').lower()
-              if 'socal-appliance-intent-20260923' not in low:
-                  failures.append(f'{city_slug}: missing Southern California appliance-intent block')
-              if 'city-network-model-20260923' not in low:
-                  failures.append(f'{city_slug}: missing city network-model note')
+              raw=p.read_text(encoding='utf-8',errors='replace')
+              low=raw.lower()
+
+              # Gold-model city pages should be locally specific but not become link farms.
+              internal_targets=set()
+              for href in re.findall(r'href=["\']([^"\']+)["\']',raw,re.I):
+                  if href.startswith('/'):
+                      internal_targets.add(href.split('#',1)[0].split('?',1)[0].rstrip('/') or '/')
+              if len(internal_targets)>85:
+                  failures.append(f'{city_slug}: {len(internal_targets)} unique internal targets exceeds city link budget 85')
+
+              # A city needs a regional parent, not backlinks to every appliance-intent hub.
+              if not any(f'/{regional_slug}/' in low for regional_slug in regional_hubs):
+                  failures.append(f'{city_slug}: missing a regional parent-hub link')
+
               if 'how soon can appliance pickup be arranged in' not in low:
                   failures.append(f'{city_slug}: missing city pickup-timing FAQ')
               for audience_phrase in ['landlord','property manager']:
@@ -269,10 +279,9 @@ jobs:
               for network_phrase in ['independent local pickup professionals','company-owned storefront or local branch']:
                   if network_phrase not in low:
                       failures.append(f'{city_slug}: missing city network transparency {network_phrase}')
-              if 'city-audience-guides-20260923' not in low:
-                  failures.append(f'{city_slug}: missing city audience-guide links')
               if 'priority-mobile-cta' not in low or 'has-priority-mobile-cta' not in low:
                   failures.append(f'{city_slug}: missing priority mobile CTA')
+
               legacy_section_patterns=[
                   'gsc-striking-distance',
                   'ca-final-v6',
@@ -285,14 +294,12 @@ jobs:
                   'corridor-authority-20260923',
               ]
               for legacy in legacy_section_patterns:
-                  if re.search(r'<section\\b[^>]*class=["\\\'][^"\\\']*'+re.escape(legacy)+r'[^"\\\']*["\\\']',s,re.I):
+                  if re.search(r'<section\\b[^>]*class=["\\\'][^"\\\']*'+re.escape(legacy)+r'[^"\\\']*["\\\']',raw,re.I):
                       failures.append(f'{city_slug}: legacy SEO section still present {legacy}')
+
               for audience_link in ['landlord-property-manager-appliance-pickup/','commercial-appliance-pickup/']:
                   if audience_link not in low:
                       failures.append(f'{city_slug}: missing audience guide {audience_link}')
-              for hub_slug in slugs:
-                  if hub_slug+'/' not in low:
-                      failures.append(f'{city_slug}: missing backlink to {hub_slug}')
 
           print('PRIORITY_CITY_CLUSTER_PAGES',len(priority_city_slugs))
           print('CALIFORNIA_APPLIANCE_INTENT_GOLD_STANDARD_PAGES',len(slugs))
