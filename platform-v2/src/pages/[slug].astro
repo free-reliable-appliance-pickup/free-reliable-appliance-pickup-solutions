@@ -1,5 +1,8 @@
 ---
 import { locationPages } from "../data/locations";
+import PickupRequestForm from "../components/PickupRequestForm.astro";
+
+export const prerender = true;
 
 export function getStaticPaths() {
   return locationPages.map((page) => ({
@@ -91,6 +94,7 @@ const faqSchema = {
         <a href="/how-appliance-pickup-works/">How It Works</a>
         <a href="/service-areas/">Service Areas</a>
         <a href="/free-pickup-qualification/">Qualifications</a>
+        <a href="#request">Request Pickup</a>
       </nav>
     </header>
 
@@ -112,6 +116,8 @@ const faqSchema = {
             <a href={`tel:${page.phoneE164}`}>Call {page.phoneDisplay}</a>
             {" · "}
             <a href={`sms:${page.phoneE164}`}>Text Appliance Photos</a>
+            {" · "}
+            <a href="#request">Request Pickup</a>
           </p>
         </div>
         <img
@@ -139,9 +145,7 @@ const faqSchema = {
 
       <section>
         <h2>{page.city} Neighborhoods & ZIP Codes</h2>
-        <p>
-          Neighborhood examples: {page.neighborhoods.join(", ")}.
-        </p>
+        <p>Neighborhood examples: {page.neighborhoods.join(", ")}.</p>
         <p>
           ZIP codes commonly associated with {page.city}: {page.zipCodes.join(", ")}.
           Exact address and route availability are still reviewed before pickup is confirmed.
@@ -166,6 +170,12 @@ const faqSchema = {
           </article>
         ))}
       </section>
+
+      <PickupRequestForm
+        city={page.city}
+        state={page.stateCode}
+        sourcePage={page.canonical}
+      />
     </main>
 
     <footer>
