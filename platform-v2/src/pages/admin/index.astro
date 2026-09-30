@@ -36,7 +36,7 @@ const [
     .limit(50),
   supabase
     .from("appliance_leads")
-    .select("id,created_at,customer_name,city,state,zip_code,appliance_type,appliance_condition,status,source_channel,source_page", { count: "exact" })
+    .select("id,created_at,customer_name,city,state,zip_code,appliance_type,appliance_condition,status,source_channel,source_page,tracking_data", { count: "exact" })
     .order("created_at", { ascending: false })
     .limit(25),
   supabase
@@ -113,6 +113,19 @@ function positionBand(value: unknown) {
   if (n <= 10) return "Positions 4–10";
   if (n <= 20) return "Positions 11–20";
   return "Position 21+";
+}
+
+function trackingValue(lead: any, key: string) {
+  const tracking = lead?.tracking_data;
+  if (!tracking || typeof tracking !== "object") return "";
+  const value = tracking[key];
+  return typeof value === "string" ? value : "";
+}
+
+function intentLabel(lead: any) {
+  return trackingValue(lead, "service_intent") === "washer-dryer"
+    ? "Washer / Dryer"
+    : "General Appliance";
 }
 ---
 <!doctype html>
@@ -250,8 +263,10 @@ function positionBand(value: unknown) {
                 <th>Received</th>
                 <th>Customer</th>
                 <th>Location</th>
+                <th>Lead type</th>
                 <th>Appliance</th>
                 <th>Condition</th>
+                <th>Market</th>
                 <th>Source</th>
                 <th>Status</th>
               </tr>
@@ -262,8 +277,10 @@ function positionBand(value: unknown) {
                   <td>{new Date(lead.created_at).toLocaleString("en-US")}</td>
                   <td>{lead.customer_name || "—"}</td>
                   <td>{[lead.city, lead.state, lead.zip_code].filter(Boolean).join(", ")}</td>
+                  <td><span class="good">{intentLabel(lead)}</span></td>
                   <td>{lead.appliance_type || "—"}</td>
                   <td>{lead.appliance_condition || "—"}</td>
+                  <td>{trackingValue(lead, "market") || "—"}</td>
                   <td>
                     <div>{lead.source_channel || "—"}</div>
                     <div class="muted">{shortPage(lead.source_page)}</div>
