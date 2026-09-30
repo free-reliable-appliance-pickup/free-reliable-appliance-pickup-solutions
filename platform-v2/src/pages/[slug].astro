@@ -1,0 +1,176 @@
+---
+import { locationPages } from "../data/locations";
+
+export function getStaticPaths() {
+  return locationPages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page }
+  }));
+}
+
+const { page } = Astro.props;
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: `Free Appliance Pickup & Removal in ${page.city}, ${page.state}`,
+  serviceType: [
+    "Appliance Pickup",
+    "Appliance Removal",
+    "Appliance Recycling Review",
+    "Washer Pickup",
+    "Dryer Pickup",
+    "Refrigerator Pickup",
+    "Freezer Pickup",
+    "Stove Pickup",
+    "Range Pickup",
+    "Oven Pickup"
+  ],
+  provider: {
+    "@type": "Organization",
+    name: "Free Reliable Appliance Pickup",
+    url: "https://freereliableappliancepickup.com/"
+  },
+  telephone: page.phoneE164,
+  areaServed: {
+    "@type": "City",
+    name: page.city,
+    containedInPlace: {
+      "@type": "AdministrativeArea",
+      name: page.county,
+      containedInPlace: {
+        "@type": "AdministrativeArea",
+        name: page.state
+      }
+    }
+  },
+  url: page.canonical
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: page.faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer
+    }
+  }))
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{page.title}</title>
+    <meta name="description" content={page.description} />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <link rel="canonical" href={page.canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Free Reliable Appliance Pickup" />
+    <meta property="og:url" content={page.canonical} />
+    <meta property="og:title" content={page.title} />
+    <meta property="og:description" content={page.description} />
+    <meta
+      property="og:image"
+      content={`https://freereliableappliancepickup.com${page.heroImage}`}
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+  <body>
+    <header>
+      <a href="/">Free Reliable Appliance Pickup</a>
+      <nav aria-label="Main navigation">
+        <a href="/how-appliance-pickup-works/">How It Works</a>
+        <a href="/service-areas/">Service Areas</a>
+        <a href="/free-pickup-qualification/">Qualifications</a>
+      </nav>
+    </header>
+
+    <main>
+      <nav aria-label="Breadcrumb">
+        <a href="/">Home</a> ›
+        <a href="/service-areas/">Service Areas</a> ›
+        <a href="/california-appliance-pickup/">{page.state}</a> ›
+        <a href="/inland-empire-appliance-pickup/">{page.market}</a> ›
+        <span>{page.city}</span>
+      </nav>
+
+      <section>
+        <div>
+          <h1>Free Appliance Pickup & Removal in {page.city}, {page.stateCode}</h1>
+          <p>{page.serviceSummary}</p>
+          <p><strong>{page.hours}</strong> · English / Español</p>
+          <p>
+            <a href={`tel:${page.phoneE164}`}>Call {page.phoneDisplay}</a>
+            {" · "}
+            <a href={`sms:${page.phoneE164}`}>Text Appliance Photos</a>
+          </p>
+        </div>
+        <img
+          src={page.heroImage}
+          alt={page.heroImageAlt}
+          width="768"
+          height="1024"
+          loading="eager"
+        />
+      </section>
+
+      <section>
+        <h2>Free-Pickup Qualification</h2>
+        <p>{page.qualificationSummary}</p>
+      </section>
+
+      <section>
+        <h2>Appliance Pickup Options in {page.city}</h2>
+        <ul>
+          {page.applianceLinks.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>{page.city} Neighborhoods & ZIP Codes</h2>
+        <p>
+          Neighborhood examples: {page.neighborhoods.join(", ")}.
+        </p>
+        <p>
+          ZIP codes commonly associated with {page.city}: {page.zipCodes.join(", ")}.
+          Exact address and route availability are still reviewed before pickup is confirmed.
+        </p>
+      </section>
+
+      <section>
+        <h2>Nearby Appliance Pickup Areas</h2>
+        <ul>
+          {page.nearbyLinks.map((item) => (
+            <li><a href={item.href}>{item.label} appliance pickup</a></li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>{page.city} Appliance Pickup FAQ</h2>
+        {page.faqs.map((faq) => (
+          <article>
+            <h3>{faq.question}</h3>
+            <p>{faq.answer}</p>
+          </article>
+        ))}
+      </section>
+    </main>
+
+    <footer>
+      <a href="/">Free Reliable Appliance Pickup</a> ·
+      <a href={`tel:${page.phoneE164}`}>{page.phoneDisplay}</a>
+    </footer>
+  </body>
+</html>
