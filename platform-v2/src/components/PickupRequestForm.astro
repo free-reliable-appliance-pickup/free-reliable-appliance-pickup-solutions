@@ -2,14 +2,17 @@
 type Props = {
   city: string;
   state: string;
+  market: string;
   sourcePage: string;
+  serviceIntent: "appliance" | "washer-dryer";
 };
 
-const { city, state, sourcePage } = Astro.props;
+const { city, state, market, sourcePage, serviceIntent } = Astro.props;
+const isLaundry = serviceIntent === "washer-dryer";
 ---
 
 <section id="request" aria-labelledby="request-heading">
-  <h2 id="request-heading">Request Appliance Pickup in {city}</h2>
+  <h2 id="request-heading">Request {isLaundry ? "Washer & Dryer" : "Appliance"} Pickup in {city}</h2>
   <p>
     Send the appliance condition, exact pickup area and access details. Pickup is confirmed only after qualification and route review.
   </p>
@@ -18,6 +21,8 @@ const { city, state, sourcePage } = Astro.props;
     <input type="hidden" name="source_page" value={sourcePage} />
     <input type="hidden" name="city" value={city} />
     <input type="hidden" name="state" value={state} />
+    <input type="hidden" name="market" value={market} />
+    <input type="hidden" name="service_intent" value={serviceIntent} />
 
     <input type="hidden" name="source_channel" value="" />
     <input type="hidden" name="landing_page" value="" />
@@ -65,15 +70,27 @@ const { city, state, sourcePage } = Astro.props;
       Appliance
       <select name="appliance_type" required>
         <option value="">Select appliance</option>
-        <option>Refrigerator</option>
-        <option>Washer</option>
-        <option>Dryer</option>
-        <option>Washer and Dryer Set</option>
+        {isLaundry ? (
+          <>
+            <option>Washer and Dryer Set</option>
+            <option>Washer</option>
+            <option>Dryer</option>
+            <option>Multiple Appliances</option>
+            <option>Refrigerator</option>
+          </>
+        ) : (
+          <>
+            <option>Refrigerator</option>
+            <option>Washer</option>
+            <option>Dryer</option>
+            <option>Washer and Dryer Set</option>
+          </>
+        )}
         <option>Freezer</option>
         <option>Stove / Range</option>
         <option>Oven</option>
         <option>Dishwasher</option>
-        <option>Multiple Appliances</option>
+        {!isLaundry && <option>Multiple Appliances</option>}
       </select>
     </label>
 
