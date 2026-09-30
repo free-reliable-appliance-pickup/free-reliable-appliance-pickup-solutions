@@ -265,7 +265,27 @@ export async function routeLeadToMarketplace(supabase: any, lead: MarketplaceLea
       .select("id")
       .single();
 
-    if (opportunityError || !opportunity) throw opportunityError || new Error("Opportunity insert returned no row.");
+    if (opportunityError) {
+      if (opportunityError.code === "23505") {
+        const { data: racedOpportunity, error: racedError } = await supabase
+          .from("marketplace_opportunities")
+          .select("id")
+          .eq("source_request_id", String(lead.id))
+          .single();
+
+        if (racedError || !racedOpportunity) throw racedError || opportunityError;
+
+        return {
+          routed: true,
+          reason: "already_routed",
+          opportunityId: Number(racedOpportunity.id)
+        };
+      }
+
+      throw opportunityError;
+    }
+
+    if (!opportunity) throw new Error("Opportunity insert returned no row.");
 
     const offers = matchedBuyers.map((buyer) => ({
       opportunity_id: opportunity.id,
@@ -276,7 +296,22 @@ export async function routeLeadToMarketplace(supabase: any, lead: MarketplaceLea
     }));
 
     const { error: offerError } = await supabase.from("marketplace_offers").insert(offers);
-    if (offerError) throw offerError;
+    if (offerError) {
+      // Offer creation is a single Postgres statement. If it fails, remove the
+      // unoffered opportunity so a later retry can route the lead cleanly.
+      const { error: cleanupError } = await supabase
+        .from("marketplace_opportunities")
+        .delete()
+        .eq("id", opportunity.id)
+        .eq("source_request_id", String(lead.id))
+        .is("purchased_by", null);
+
+      if (cleanupError) {
+        console.error("Marketplace opportunity cleanup failed after offer error", cleanupError);
+      }
+
+      throw offerError;
+    }
 
     const events = [
       {
