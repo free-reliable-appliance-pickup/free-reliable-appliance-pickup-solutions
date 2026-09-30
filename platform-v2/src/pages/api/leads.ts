@@ -41,10 +41,27 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const state = textValue(form, "state", 80);
   const applianceType = textValue(form, "appliance_type", 120);
   const applianceCondition = textValue(form, "appliance_condition", 120);
+  const zipCode = textValue(form, "zip_code", 20);
+  const pickupAddress = textValue(form, "pickup_address", 240);
+  const brandModel = textValue(form, "brand_model", 180);
+  const propertyType = textValue(form, "property_type", 120);
+  const applianceLocation = textValue(form, "appliance_location", 120);
+  const stairs = textValue(form, "stairs", 120);
+  const testableStatus = textValue(form, "testable_status", 120);
+  const preferredWindow = textValue(form, "preferred_window", 160);
+  const freeformAccess = textValue(form, "access_summary", 1000);
 
-  if (!customerName || !customerPhone || !city || !state || !applianceType || !applianceCondition) {
+  if (!customerName || !customerPhone || !city || !state || !zipCode || !pickupAddress || !applianceType || !applianceCondition) {
     return new Response("Please complete the required fields.", { status: 400 });
   }
+
+  const accessSummary = [
+    propertyType && `Property: ${propertyType}`,
+    applianceLocation && `Location: ${applianceLocation}`,
+    stairs && `Stairs/elevator: ${stairs}`,
+    testableStatus && `Testability: ${testableStatus}`,
+    freeformAccess && `Access notes: ${freeformAccess}`
+  ].filter(Boolean).join("; ").slice(0, 1000);
 
   const supabaseUrl = getSecret("SUPABASE_URL");
   const serviceRoleKey = getSecret("SUPABASE_SERVICE_ROLE_KEY");
@@ -76,7 +93,16 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     first_touch: parseJson(textValue(form, "first_touch_json", 6000)),
     current_touch: parseJson(textValue(form, "current_touch_json", 6000)),
     service_intent: serviceIntent,
-    market: market || null
+    market: market || null,
+    intake: {
+      pickup_address: pickupAddress,
+      brand_model: brandModel || null,
+      property_type: propertyType || null,
+      appliance_location: applianceLocation || null,
+      stairs: stairs || null,
+      testable_status: testableStatus || null,
+      preferred_window: preferredWindow || null
+    }
   };
 
   const leadRecord = {
@@ -85,11 +111,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     customer_email: textValue(form, "customer_email", 180) || null,
     city,
     state,
-    zip_code: textValue(form, "zip_code", 20) || null,
+    zip_code: zipCode || null,
     appliance_type: applianceType,
     appliance_condition: applianceCondition,
     message: textValue(form, "message", 2000) || null,
-    access_summary: textValue(form, "access_summary", 1000) || null,
+    access_summary: accessSummary || null,
     appliance_count: boundedCount(textValue(form, "appliance_count", 3)),
     market_priority: marketPriority,
     source_page: sourcePage || null,
@@ -132,7 +158,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       market: market || null,
       market_priority: marketPriority,
       appliance_type: applianceType,
-      appliance_condition: applianceCondition
+      appliance_condition: applianceCondition,
+      property_type: propertyType || null,
+      testable_status: testableStatus || null,
+      preferred_window: preferredWindow || null
     }
   });
 
@@ -145,11 +174,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     id: data.id,
     city,
     state,
-    zipCode: textValue(form, "zip_code", 20) || null,
+    zipCode: zipCode || null,
     applianceType,
     applianceCondition,
     applianceCount: boundedCount(textValue(form, "appliance_count", 3)),
-    accessSummary: textValue(form, "access_summary", 1000) || null,
+    accessSummary: accessSummary || null,
     serviceIntent
   });
 
