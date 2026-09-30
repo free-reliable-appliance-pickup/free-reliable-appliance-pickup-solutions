@@ -64,6 +64,12 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const requestedIntent = textValue(form, "service_intent", 40);
   const serviceIntent =
     requestedIntent === "washer-dryer" ? "washer-dryer" : "appliance";
+  const priorityMarkets = new Set([
+    "Inland Empire",
+    "San Gabriel Valley",
+    "SGV–Inland Empire Corridor"
+  ]);
+  const marketPriority = priorityMarkets.has(market) ? "PRIORITY" : "NEW_MARKET";
 
   const trackingData = {
     first_touch: parseJson(textValue(form, "first_touch_json", 6000)),
@@ -84,6 +90,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     message: textValue(form, "message", 2000) || null,
     access_summary: textValue(form, "access_summary", 1000) || null,
     appliance_count: boundedCount(textValue(form, "appliance_count", 3)),
+    market_priority: marketPriority,
     source_page: sourcePage || null,
     source_channel: sourceChannel || "unknown",
     landing_page: textValue(form, "landing_page", 1000) || null,
@@ -122,6 +129,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       source_channel: sourceChannel || "unknown",
       service_intent: serviceIntent,
       market: market || null,
+      market_priority: marketPriority,
       appliance_type: applianceType,
       appliance_condition: applianceCondition
     }
