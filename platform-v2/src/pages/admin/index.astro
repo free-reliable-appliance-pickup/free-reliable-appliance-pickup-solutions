@@ -1,0 +1,209 @@
+---
+import { getSecret } from "astro:env/server";
+import { createClient } from "@supabase/supabase-js";
+import { ADMIN_COOKIE, expectedAdminSession } from "../../lib/adminAuth";
+
+export const prerender = false;
+
+const expected = await expectedAdminSession();
+const current = Astro.cookies.get(ADMIN_COOKIE)?.value || "";
+
+if (!expected || current !== expected) {
+  return Astro.redirect("/admin/login/");
+}
+
+const supabaseUrl = getSecret("SUPABASE_URL");
+const serviceRoleKey = getSecret("SUPABASE_SERVICE_ROLE_KEY");
+
+if (!supabaseUrl || !serviceRoleKey) {
+  throw new Error("Supabase server environment is not configured.");
+}
+
+const supabase = createClient(supabaseUrl, serviceRoleKey, {
+  auth: { persistSession: false, autoRefreshToken: false }
+});
+
+const [
+  { data: funnelRows, error: funnelError },
+  { data: recentLeads, error: leadsError },
+  { count: leadCount, error: leadCountError }
+] = await Promise.all([
+  supabase
+    .from("reporting_page_funnel")
+    .select("*")
+    .order("organic_impressions", { ascending: false })
+    .limit(30),
+  supabase
+    .from("appliance_leads")
+    .select("id,created_at,customer_name,city,state,zip_code,appliance_type,appliance_condition,status,source_channel,source_page", { count: "exact" })
+    .order("created_at", { ascending: false })
+    .limit(25),
+  supabase
+    .from("appliance_leads")
+    .select("*", { count: "exact", head: true })
+]);
+
+if (funnelError) console.error("Dashboard funnel query failed", funnelError);
+if (leadsError) console.error("Dashboard leads query failed", leadsError);
+if (leadCountError) console.error("Dashboard lead count failed", leadCountError);
+
+const rows = funnelRows || [];
+const leads = recentLeads || [];
+const totals = rows.reduce(
+  (acc, row) => {
+    acc.impressions += Number(row.organic_impressions || 0);
+    acc.clicks += Number(row.organic_clicks || 0);
+    acc.leads += Number(row.leads || 0);
+    return acc;
+  },
+  { impressions: 0, clicks: 0, leads: 0 }
+);
+
+const periodStart = rows[0]?.period_start || "—";
+const periodEnd = rows[0]?.period_end || "—";
+
+function pct(value: unknown) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return "—";
+  return `${(n * 100).toFixed(1)}%`;
+}
+
+function pos(value: unknown) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n.toFixed(1) : "—";
+}
+
+function shortPage(value: unknown) {
+  const text = String(value || "");
+  try {
+    return new URL(text).pathname;
+  } catch {
+    return text || "—";
+  }
+}
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Owner Dashboard | Free Reliable Appliance Pickup</title>
+    <style>
+      *{box-sizing:border-box}
+      body{margin:0;background:#f4f7f5;color:#17352a;font-family:Arial,sans-serif}
+      header{background:#17352a;color:white;padding:18px}
+      header .inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+      header h1{font-size:22px;margin:0}
+      button{border:0;border-radius:8px;padding:9px 13px;font-weight:700;cursor:pointer}
+      main{max-width:1200px;margin:auto;padding:22px}
+      .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}
+      .card{background:white;border:1px solid #d7e5dc;border-radius:12px;padding:18px}
+      .card strong{display:block;font-size:28px;margin-top:6px}
+      section{background:white;border:1px solid #d7e5dc;border-radius:12px;padding:18px;margin:18px 0;overflow:auto}
+      table{width:100%;border-collapse:collapse;min-width:850px}
+      th,td{text-align:left;padding:10px;border-bottom:1px solid #e6ece8;vertical-align:top}
+      th{background:#eef6f1;position:sticky;top:0}
+      .muted{color:#5e6f65;font-size:14px}
+      .good{font-weight:700}
+      .empty{padding:18px;background:#fafcfa;border-radius:8px}
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="inner">
+        <div>
+          <h1>Free Reliable Appliance Pickup — Owner Dashboard</h1>
+          <div>Rankings → Traffic → Leads</div>
+        </div>
+        <form method="post" action="/api/admin/logout">
+          <button type="submit">Log out</button>
+        </form>
+      </div>
+    </header>
+
+    <main>
+      <p class="muted">Google reporting period: {periodStart} through {periodEnd}. Search Console data is finalized with a delay.</p>
+
+      <div class="cards">
+        <div class="card">Google impressions<strong>{totals.impressions.toLocaleString()}</strong></div>
+        <div class="card">Google clicks<strong>{totals.clicks.toLocaleString()}</strong></div>
+        <div class="card">Tracked leads in period<strong>{totals.leads.toLocaleString()}</strong></div>
+        <div class="card">All stored leads<strong>{Number(leadCount || 0).toLocaleString()}</strong></div>
+      </div>
+
+      <section>
+        <h2>SEO page performance vs leads</h2>
+        {rows.length === 0 ? (
+          <div class="empty">No SEO reporting snapshot has been imported yet.</div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Page</th>
+                <th>Impressions</th>
+                <th>Clicks</th>
+                <th>CTR</th>
+                <th>Avg position</th>
+                <th>Leads</th>
+                <th>Progressed</th>
+                <th>Lead / click</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr>
+                  <td><span class="good">{shortPage(row.page_url)}</span></td>
+                  <td>{Number(row.organic_impressions || 0).toLocaleString()}</td>
+                  <td>{Number(row.organic_clicks || 0).toLocaleString()}</td>
+                  <td>{pct(row.organic_ctr)}</td>
+                  <td>{pos(row.avg_position)}</td>
+                  <td>{Number(row.leads || 0)}</td>
+                  <td>{Number(row.progressed_leads || 0)}</td>
+                  <td>{row.lead_per_click == null ? "—" : pct(row.lead_per_click)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </section>
+
+      <section>
+        <h2>Latest pickup requests</h2>
+        {leads.length === 0 ? (
+          <div class="empty">No tracked pickup requests are stored yet.</div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Received</th>
+                <th>Customer</th>
+                <th>Location</th>
+                <th>Appliance</th>
+                <th>Condition</th>
+                <th>Source</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {leads.map((lead) => (
+                <tr>
+                  <td>{new Date(lead.created_at).toLocaleString("en-US")}</td>
+                  <td>{lead.customer_name || "—"}</td>
+                  <td>{[lead.city, lead.state, lead.zip_code].filter(Boolean).join(", ")}</td>
+                  <td>{lead.appliance_type || "—"}</td>
+                  <td>{lead.appliance_condition || "—"}</td>
+                  <td>
+                    <div>{lead.source_channel || "—"}</div>
+                    <div class="muted">{shortPage(lead.source_page)}</div>
+                  </td>
+                  <td>{lead.status || "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </section>
+    </main>
+  </body>
+</html>
