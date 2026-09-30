@@ -36,16 +36,24 @@ jobs:
       - name: Build Platform V2
         run: npm run build
 
-      - name: Verify Astro Cloudflare output
+      - name: Inspect Astro Cloudflare output
         run: |
-          test -f dist/_worker.js/index.js
-          test -d dist
-          test -d dist/_astro
+          find dist -maxdepth 3 -type f -print | sort
+          test -d dist/server
+          test -d dist/client
 
       - name: Verify staging robots protection
         run: |
-          test -f dist/robots.txt
-          grep -q "Disallow: /" dist/robots.txt
+          test -f dist/client/robots.txt
+          grep -q "Disallow: /" dist/client/robots.txt
 
-      - name: Validate staging deploy bundle
-        run: npx wrangler deploy --dry-run --config wrangler.jsonc
+      - name: Validate generated deployment config
+        run: |
+          if [ -f dist/server/wrangler.json ]; then
+            npx wrangler deploy --dry-run --config dist/server/wrangler.json
+          elif [ -f dist/server/wrangler.jsonc ]; then
+            npx wrangler deploy --dry-run --config dist/server/wrangler.jsonc
+          else
+            echo "Generated Wrangler config not found."
+            exit 1
+          fi
