@@ -266,12 +266,23 @@ jobs:
                   max_words=size_guardrails.get('max_visible_words')
                   max_headings=size_guardrails.get('max_h1_h2_h3')
                   max_faq=size_guardrails.get('max_visible_faq_questions')
+                  max_internal_links=size_guardrails.get('max_unique_internal_links')
                   if max_words and visible_word_count>max_words:
                       failures.append(f'{main_slug}: visible word count {visible_word_count} exceeds guardrail {max_words}')
                   if max_headings and heading_count>max_headings:
                       failures.append(f'{main_slug}: heading count {heading_count} exceeds guardrail {max_headings}')
                   if max_faq and faq_question_count>max_faq:
                       failures.append(f'{main_slug}: visible FAQ count {faq_question_count} exceeds guardrail {max_faq}')
+                  if max_internal_links:
+                      internal_targets=set()
+                      for href in re.findall(r'href=["\']([^"\']+)["\']',main['raw'],re.I):
+                          if href.startswith('/'):
+                              internal_targets.add(href.split('#',1)[0].split('?',1)[0].rstrip('/') or '/')
+                          elif href.startswith(BASE):
+                              rel=href[len(BASE):].split('#',1)[0].split('?',1)[0].strip('/')
+                              internal_targets.add('/'+rel if rel else '/')
+                      if len(internal_targets)>max_internal_links:
+                          failures.append(f'{main_slug}: unique internal link targets {len(internal_targets)} exceeds guardrail {max_internal_links}')
               benchmark_home_children=cluster.get('benchmark_homepage_child_links',[])
               if benchmark_home_children:
                   home_raw=Path('index.html').read_text(encoding='utf-8',errors='replace')
