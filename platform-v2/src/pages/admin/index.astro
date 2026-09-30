@@ -2,6 +2,7 @@
 import { getSecret } from "astro:env/server";
 import { createClient } from "@supabase/supabase-js";
 import { ADMIN_COOKIE, expectedAdminSession } from "../../lib/adminAuth";
+import { locationPages } from "../../data/locations";
 
 export const prerender = false;
 
@@ -27,7 +28,9 @@ const [
   { data: funnelRows, error: funnelError },
   { data: recentLeads, error: leadsError },
   { count: leadCount, error: leadCountError },
-  { data: siteMetrics, error: siteMetricError }
+  { data: siteMetrics, error: siteMetricError },
+  { data: partnerApplications, error: partnerApplicationsError },
+  { count: activeTerritoryCount, error: activeTerritoryError }
 ] = await Promise.all([
   supabase
     .from("reporting_page_funnel")
@@ -48,17 +51,60 @@ const [
     .eq("search_engine", "google")
     .eq("metric_scope", "site")
     .order("period_end", { ascending: false })
-    .limit(1)
+    .limit(1),
+  supabase
+    .from("partner_applications")
+    .select("id,status,city,state,selected_cities,number_of_cities")
+    .order("created_at", { ascending: false }),
+  supabase
+    .from("partner_territories")
+    .select("*", { count: "exact", head: true })
+    .eq("status", "active")
 ]);
 
 if (funnelError) console.error("Dashboard funnel query failed", funnelError);
 if (leadsError) console.error("Dashboard leads query failed", leadsError);
 if (leadCountError) console.error("Dashboard lead count failed", leadCountError);
 if (siteMetricError) console.error("Dashboard site metric query failed", siteMetricError);
+if (partnerApplicationsError) console.error("Dashboard partner application query failed", partnerApplicationsError);
+if (activeTerritoryError) console.error("Dashboard active territory count failed", activeTerritoryError);
 
 const rows = funnelRows || [];
 const leads = recentLeads || [];
 const siteMetric = siteMetrics?.[0] || null;
+const partnerApps = partnerApplications || [];
+
+const priorityCities = new Set(
+  locationPages
+    .filter((page) => page.slug.endsWith("-appliance-pickup"))
+    .map((page) => page.city)
+);
+
+const partnerCoverage = new Map<string, { applications: number; statuses: Set<string> }>();
+for (const application of partnerApps) {
+  const selected = Array.isArray(application.selected_cities) ? application.selected_cities : [];
+  for (const selectedCity of selected) {
+    const cityName = String(selectedCity || "").replace(/,\s*CA$/i, "").trim();
+    if (!priorityCities.has(cityName)) continue;
+    const current = partnerCoverage.get(cityName) || { applications: 0, statuses: new Set<string>() };
+    current.applications += 1;
+    current.statuses.add(String(application.status || "unknown"));
+    partnerCoverage.set(cityName, current);
+  }
+}
+
+const partnerCoverageRows = Array.from(priorityCities)
+  .map((city) => {
+    const coverage = partnerCoverage.get(city);
+    return {
+      city,
+      applications: coverage?.applications || 0,
+      statuses: coverage ? Array.from(coverage.statuses).join(", ") : "none"
+    };
+  })
+  .sort((a, b) => b.applications - a.applications || a.city.localeCompare(b.city));
+
+const pendingPartnerCount = partnerApps.filter((application) => application.status === "pending").length;
 
 let keywordRows: any[] = [];
 if (siteMetric) {
@@ -181,6 +227,8 @@ function intentLabel(lead: any) {
         <div class="card">Average position<strong>{pos(googlePosition)}</strong></div>
         <div class="card">Tracked leads in period<strong>{periodLeads.toLocaleString()}</strong></div>
         <div class="card">All stored leads<strong>{Number(leadCount || 0).toLocaleString()}</strong></div>
+        <div class="card">Pending partner applications<strong>{pendingPartnerCount.toLocaleString()}</strong></div>
+        <div class="card">Active partner territories<strong>{Number(activeTerritoryCount || 0).toLocaleString()}</strong></div>
       </div>
 
       <section>
@@ -250,6 +298,29 @@ function intentLabel(lead: any) {
             </tbody>
           </table>
         )}
+      </section>
+
+      <section>
+        <h2>Priority corridor partner coverage</h2>
+        <p class="muted">Application interest is not the same as active service. This table shows which V2 corridor cities appear in submitted partner applications and whether an active territory has been created separately.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>City</th>
+              <th>Partner applications selecting city</th>
+              <th>Application status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partnerCoverageRows.map((row) => (
+              <tr>
+                <td><span class="good">{row.city}</span></td>
+                <td>{row.applications}</td>
+                <td>{row.statuses}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
       <section>
