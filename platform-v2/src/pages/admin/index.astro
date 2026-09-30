@@ -26,13 +26,14 @@ const supabase = createClient(supabaseUrl, serviceRoleKey, {
 const [
   { data: funnelRows, error: funnelError },
   { data: recentLeads, error: leadsError },
-  { count: leadCount, error: leadCountError }
+  { count: leadCount, error: leadCountError },
+  { data: siteMetrics, error: siteMetricError }
 ] = await Promise.all([
   supabase
     .from("reporting_page_funnel")
     .select("*")
     .order("organic_impressions", { ascending: false })
-    .limit(30),
+    .limit(50),
   supabase
     .from("appliance_leads")
     .select("id,created_at,customer_name,city,state,zip_code,appliance_type,appliance_condition,status,source_channel,source_page", { count: "exact" })
@@ -40,27 +41,50 @@ const [
     .limit(25),
   supabase
     .from("appliance_leads")
-    .select("*", { count: "exact", head: true })
+    .select("*", { count: "exact", head: true }),
+  supabase
+    .from("seo_period_metrics")
+    .select("period_start,period_end,clicks,impressions,ctr,avg_position")
+    .eq("search_engine", "google")
+    .eq("metric_scope", "site")
+    .order("period_end", { ascending: false })
+    .limit(1)
 ]);
 
 if (funnelError) console.error("Dashboard funnel query failed", funnelError);
 if (leadsError) console.error("Dashboard leads query failed", leadsError);
 if (leadCountError) console.error("Dashboard lead count failed", leadCountError);
+if (siteMetricError) console.error("Dashboard site metric query failed", siteMetricError);
 
 const rows = funnelRows || [];
 const leads = recentLeads || [];
-const totals = rows.reduce(
-  (acc, row) => {
-    acc.impressions += Number(row.organic_impressions || 0);
-    acc.clicks += Number(row.organic_clicks || 0);
-    acc.leads += Number(row.leads || 0);
-    return acc;
-  },
-  { impressions: 0, clicks: 0, leads: 0 }
-);
+const siteMetric = siteMetrics?.[0] || null;
 
-const periodStart = rows[0]?.period_start || "—";
-const periodEnd = rows[0]?.period_end || "—";
+let keywordRows: any[] = [];
+if (siteMetric) {
+  const { data, error } = await supabase
+    .from("seo_period_metrics")
+    .select("query,clicks,impressions,ctr,avg_position")
+    .eq("search_engine", "google")
+    .eq("metric_scope", "query")
+    .eq("period_start", siteMetric.period_start)
+    .eq("period_end", siteMetric.period_end)
+    .order("impressions", { ascending: false })
+    .limit(40);
+
+  if (error) console.error("Dashboard keyword query failed", error);
+  keywordRows = data || [];
+}
+
+const periodStart = siteMetric?.period_start || rows[0]?.period_start || "—";
+const periodEnd = siteMetric?.period_end || rows[0]?.period_end || "—";
+
+const googleImpressions = Number(siteMetric?.impressions || 0);
+const googleClicks = Number(siteMetric?.clicks || 0);
+const googleCtr = Number(siteMetric?.ctr || 0);
+const googlePosition = siteMetric?.avg_position;
+
+const periodLeads = rows.reduce((sum, row) => sum + Number(row.leads || 0), 0);
 
 function pct(value: unknown) {
   const n = Number(value);
@@ -80,6 +104,15 @@ function shortPage(value: unknown) {
   } catch {
     return text || "—";
   }
+}
+
+function positionBand(value: unknown) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return "—";
+  if (n <= 3) return "Top 3";
+  if (n <= 10) return "Positions 4–10";
+  if (n <= 20) return "Positions 11–20";
+  return "Position 21+";
 }
 ---
 <!doctype html>
@@ -107,6 +140,7 @@ function shortPage(value: unknown) {
       .muted{color:#5e6f65;font-size:14px}
       .good{font-weight:700}
       .empty{padding:18px;background:#fafcfa;border-radius:8px}
+      .band{white-space:nowrap;font-size:13px;font-weight:700}
     </style>
   </head>
   <body>
@@ -123,14 +157,51 @@ function shortPage(value: unknown) {
     </header>
 
     <main>
-      <p class="muted">Google reporting period: {periodStart} through {periodEnd}. Search Console data is finalized with a delay.</p>
+      <p class="muted">
+        Google reporting period: {periodStart} through {periodEnd}. Search Console data is finalized with a delay.
+      </p>
 
       <div class="cards">
-        <div class="card">Google impressions<strong>{totals.impressions.toLocaleString()}</strong></div>
-        <div class="card">Google clicks<strong>{totals.clicks.toLocaleString()}</strong></div>
-        <div class="card">Tracked leads in period<strong>{totals.leads.toLocaleString()}</strong></div>
+        <div class="card">Google impressions<strong>{googleImpressions.toLocaleString()}</strong></div>
+        <div class="card">Google clicks<strong>{googleClicks.toLocaleString()}</strong></div>
+        <div class="card">Google CTR<strong>{pct(googleCtr)}</strong></div>
+        <div class="card">Average position<strong>{pos(googlePosition)}</strong></div>
+        <div class="card">Tracked leads in period<strong>{periodLeads.toLocaleString()}</strong></div>
         <div class="card">All stored leads<strong>{Number(leadCount || 0).toLocaleString()}</strong></div>
       </div>
+
+      <section>
+        <h2>Search queries</h2>
+        <p class="muted">These are finalized Google Search Console query measurements for the same reporting period.</p>
+        {keywordRows.length === 0 ? (
+          <div class="empty">No query snapshot is available yet.</div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Query</th>
+                <th>Impressions</th>
+                <th>Clicks</th>
+                <th>CTR</th>
+                <th>Avg position</th>
+                <th>Position band</th>
+              </tr>
+            </thead>
+            <tbody>
+              {keywordRows.map((row) => (
+                <tr>
+                  <td><span class="good">{row.query}</span></td>
+                  <td>{Number(row.impressions || 0).toLocaleString()}</td>
+                  <td>{Number(row.clicks || 0).toLocaleString()}</td>
+                  <td>{pct(row.ctr)}</td>
+                  <td>{pos(row.avg_position)}</td>
+                  <td class="band">{positionBand(row.avg_position)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </section>
 
       <section>
         <h2>SEO page performance vs leads</h2>
