@@ -168,6 +168,24 @@ const breadcrumbSchema = {
       </section>
 
       <section>
+        <h2>How Pickup Works in {page.city}</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>1. Send the request</h3>
+            <p>Tell us the appliance type, working condition, exact city or ZIP code and removal access. Photos help when available.</p>
+          </div>
+          <div class="card">
+            <h3>2. Qualification & local match</h3>
+            <p>We review condition, access and current local coverage. Eligible requests can be matched to an approved local pickup partner or active route.</p>
+          </div>
+          <div class="card">
+            <h3>3. Confirm before pickup</h3>
+            <p>Pickup details are confirmed before anyone is dispatched. Submitting the request does not automatically guarantee free pickup.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
         <h2>Free-Pickup Qualification</h2>
         <p>{page.qualificationSummary}</p>
       </section>
@@ -208,6 +226,32 @@ const breadcrumbSchema = {
             <li><a href={item.href}>{item.label} {isLaundry ? "washer & dryer pickup" : "appliance pickup"}</a></li>
           ))}
         </ul>
+      </section>
+
+      <section>
+        <h2>{page.city} Business, Property & Recurring Appliance Pickup</h2>
+        <p>
+          Property managers, senior and 55+ communities, appliance dealers, installers, multifamily operators,
+          hotels and other repeat-volume organizations can submit one-time or recurring appliance replacement work for review.
+          Working and reusable equipment receives priority; exact service still depends on appliance condition, access and current coverage.
+        </p>
+        <ul class="link-list">
+          <li><a href={`${liveSite}/recurring-appliance-pickup-program/`}>Recurring pickup programs</a></li>
+          <li><a href={`${liveSite}/senior-living-appliance-pickup/`}>Senior living & 55+ pickup</a></li>
+          <li><a href={`${liveSite}/landlord-property-manager-appliance-pickup/`}>Property managers & multifamily</a></li>
+          <li><a href={`${liveSite}/commercial-laundry-appliance-pickup/`}>Commercial washer & dryer programs</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Local Appliance Pickup Partners</h2>
+        <p>
+          We are building the network with independent appliance buyers, repair/refurbishment businesses and pickup professionals.
+          Partner applications are reviewed before territory access is approved, and customer contact information is not publicly displayed.
+        </p>
+        <div class="cta">
+          <a class="btn alt" href={`${liveSite}/partners/`}>Apply to Join the Pickup Network</a>
+        </div>
       </section>
 
       <section>
