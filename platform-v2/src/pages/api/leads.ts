@@ -60,10 +60,16 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   const sourcePage = textValue(form, "source_page", 500);
   const sourceChannel = textValue(form, "source_channel", 100);
+  const market = textValue(form, "market", 160);
+  const requestedIntent = textValue(form, "service_intent", 40);
+  const serviceIntent =
+    requestedIntent === "washer-dryer" ? "washer-dryer" : "appliance";
 
   const trackingData = {
     first_touch: parseJson(textValue(form, "first_touch_json", 6000)),
-    current_touch: parseJson(textValue(form, "current_touch_json", 6000))
+    current_touch: parseJson(textValue(form, "current_touch_json", 6000)),
+    service_intent: serviceIntent,
+    market: market || null
   };
 
   const leadRecord = {
@@ -113,7 +119,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     event_type: "submitted",
     event_data: {
       source_page: sourcePage || null,
-      source_channel: sourceChannel || "unknown"
+      source_channel: sourceChannel || "unknown",
+      service_intent: serviceIntent,
+      market: market || null,
+      appliance_type: applianceType,
+      appliance_condition: applianceCondition
     }
   });
 
