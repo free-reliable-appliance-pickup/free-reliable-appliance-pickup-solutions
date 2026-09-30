@@ -32,8 +32,8 @@ jobs:
           hrefs=re.findall(r'<a\b[^>]*href=["\']/([^"\'#?]+)',s,re.I)
           unique=set(x.rstrip('/') for x in hrefs)
           print('HOMEPAGE_UNIQUE_INTERNAL_ANCHOR_DESTINATIONS',len(unique))
-          if len(unique)>85:
-              failures.append(f'homepage has {len(unique)} unique internal anchor destinations; keep at or below 85')
+          if len(unique)>60:
+              failures.append(f'homepage has {len(unique)} unique internal anchor destinations; keep at or below 60')
 
           required=[]
           m=re.search(r'<form[^>]+action=["\']https://formspree\.io/f/mvzeapzd["\'][\s\S]*?</form>',s,re.I)
@@ -55,28 +55,28 @@ jobs:
 
           required_links=[
             'service-areas',
+            'appliance-removal',
+            'old-appliance-disposal-options',
             'washer-dryer-pickup',
             'refrigerator-pickup',
             'freezer-pickup',
             'stove-oven-pickup',
-            'old-appliance-disposal-options',
+            'california-appliance-pickup',
+            'arizona-appliance-pickup',
+            'oregon-appliance-pickup',
+            'colorado-appliance-pickup',
+            'los-angeles-county-appliance-pickup',
             'san-gabriel-valley-appliance-pickup',
             'inland-empire-appliance-pickup',
             'orange-county-appliance-pickup',
             'riverside-county-appliance-pickup',
-            'fontana-appliance-pickup',
-            'san-bernardino-appliance-pickup',
-            'ontario-appliance-pickup',
-            'pomona-appliance-pickup',
-            'riverside-appliance-pickup',
+            'san-bernardino-county-appliance-pickup',
+            'los-angeles-appliance-pickup',
             'rancho-cucamonga-appliance-pickup',
-            'chino-appliance-pickup',
-            'west-covina-appliance-pickup',
-            'la-puente-appliance-pickup',
-            'eastvale-appliance-pickup',
-            'corona-appliance-pickup',
-            'irvine-appliance-pickup',
-            'huntington-beach-appliance-pickup',
+            'phoenix-appliance-pickup',
+            'portland-appliance-pickup',
+            'denver-appliance-pickup',
+            'salem-appliance-pickup',
           ]
           for slug in required_links:
               if f'/{slug}/' not in s:
