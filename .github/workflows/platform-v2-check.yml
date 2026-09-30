@@ -37,7 +37,9 @@ jobs:
         run: npm run build
 
       - name: Verify Worker build output
-        run: test -f dist/_worker.js/index.js
+        run: |
+          test -f dist/_worker.js/index.js
 
       - name: Verify staging robots protection
-        run: grep -q "Disallow: /" dist/robots.txt
+        run: |
+          grep -q "Disallow: /" dist/robots.txt
