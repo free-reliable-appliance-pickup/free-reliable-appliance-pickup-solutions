@@ -1,0 +1,117 @@
+---
+type Props = {
+  city: string;
+  state: string;
+  sourcePage: string;
+};
+
+const { city, state, sourcePage } = Astro.props;
+---
+
+<section id="request" aria-labelledby="request-heading">
+  <h2 id="request-heading">Request Appliance Pickup in {city}</h2>
+  <p>
+    Send the appliance condition, exact pickup area and access details. Pickup is confirmed only after qualification and route review.
+  </p>
+
+  <form method="post" action="/api/leads" data-track-lead>
+    <input type="hidden" name="source_page" value={sourcePage} />
+    <input type="hidden" name="city" value={city} />
+    <input type="hidden" name="state" value={state} />
+
+    <input type="hidden" name="source_channel" value="" />
+    <input type="hidden" name="landing_page" value="" />
+    <input type="hidden" name="referrer_url" value="" />
+    <input type="hidden" name="utm_source" value="" />
+    <input type="hidden" name="utm_medium" value="" />
+    <input type="hidden" name="utm_campaign" value="" />
+    <input type="hidden" name="utm_term" value="" />
+    <input type="hidden" name="utm_content" value="" />
+    <input type="hidden" name="gclid" value="" />
+    <input type="hidden" name="msclkid" value="" />
+    <input type="hidden" name="fbclid" value="" />
+    <input type="hidden" name="session_id" value="" />
+    <input type="hidden" name="first_touch_json" value="" />
+    <input type="hidden" name="current_touch_json" value="" />
+
+    <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden">
+      <label>
+        Leave this field blank
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </label>
+    </div>
+
+    <label>
+      Full name
+      <input type="text" name="customer_name" autocomplete="name" maxlength="120" required />
+    </label>
+
+    <label>
+      Phone
+      <input type="tel" name="customer_phone" autocomplete="tel" maxlength="40" required />
+    </label>
+
+    <label>
+      Email
+      <input type="email" name="customer_email" autocomplete="email" maxlength="180" />
+    </label>
+
+    <label>
+      ZIP code
+      <input type="text" name="zip_code" inputmode="numeric" autocomplete="postal-code" maxlength="12" />
+    </label>
+
+    <label>
+      Appliance
+      <select name="appliance_type" required>
+        <option value="">Select appliance</option>
+        <option>Refrigerator</option>
+        <option>Washer</option>
+        <option>Dryer</option>
+        <option>Washer and Dryer Set</option>
+        <option>Freezer</option>
+        <option>Stove / Range</option>
+        <option>Oven</option>
+        <option>Dishwasher</option>
+        <option>Multiple Appliances</option>
+      </select>
+    </label>
+
+    <label>
+      Condition
+      <select name="appliance_condition" required>
+        <option value="">Select condition</option>
+        <option>Fully Working</option>
+        <option>Needs Repair</option>
+        <option>Not Working</option>
+        <option>Unknown</option>
+      </select>
+    </label>
+
+    <label>
+      Number of appliances
+      <input type="number" name="appliance_count" min="1" max="20" value="1" />
+    </label>
+
+    <label>
+      Access details
+      <textarea
+        name="access_summary"
+        rows="3"
+        maxlength="1000"
+        placeholder="Garage, driveway, inside, stairs, elevator, gate, narrow doorway..."
+      ></textarea>
+    </label>
+
+    <label>
+      Anything else we should know?
+      <textarea name="message" rows="4" maxlength="2000"></textarea>
+    </label>
+
+    <button type="submit">Submit Pickup Request</button>
+  </form>
+</section>
+
+<script>
+  import "../scripts/attribution";
+</script>
