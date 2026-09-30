@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { getSecret } from "astro:env/server";
 import { createClient } from "@supabase/supabase-js";
+import { routeLeadToMarketplace } from "../../lib/marketplaceMatching";
 
 export const prerender = false;
 
@@ -138,6 +139,33 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   if (eventError) {
     // The lead itself is already safely stored, so do not make the customer resubmit.
     console.error("Lead event insert failed", eventError);
+  }
+
+  const routing = await routeLeadToMarketplace(supabase, {
+    id: data.id,
+    city,
+    state,
+    zipCode: textValue(form, "zip_code", 20) || null,
+    applianceType,
+    applianceCondition,
+    applianceCount: boundedCount(textValue(form, "appliance_count", 3)),
+    accessSummary: textValue(form, "access_summary", 1000) || null,
+    serviceIntent
+  });
+
+  const { error: routingEventError } = await supabase.from("lead_events").insert({
+    lead_id: data.id,
+    event_type: routing.routed ? "marketplace_routed" : "marketplace_held",
+    event_data: {
+      reason: routing.reason,
+      opportunity_id: routing.opportunityId || null,
+      offer_count: routing.offerCount || 0,
+      customer_private_locked: true
+    }
+  });
+
+  if (routingEventError) {
+    console.error("Marketplace routing lead event insert failed", routingEventError);
   }
 
   return redirect("/thank-you/", 303);
