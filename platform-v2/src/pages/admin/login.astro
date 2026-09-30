@@ -1,0 +1,35 @@
+---
+export const prerender = false;
+const hasError = Astro.url.searchParams.get("error") === "1";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Owner Dashboard Login | Free Reliable Appliance Pickup</title>
+    <style>
+      body{font-family:Arial,sans-serif;background:#f4f7f5;color:#17352a;margin:0}
+      main{max-width:420px;margin:10vh auto;background:white;border:1px solid #d7e5dc;border-radius:14px;padding:28px}
+      label{display:block;font-weight:700}
+      input{width:100%;box-sizing:border-box;margin:8px 0 16px;padding:13px;border:1px solid #aaa;border-radius:8px}
+      button{width:100%;padding:13px;border:0;border-radius:8px;background:#075c34;color:white;font-weight:700;font-size:16px}
+      .error{background:#fff1f1;border:1px solid #efb4b4;padding:10px;border-radius:8px}
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Owner Dashboard</h1>
+      <p>Private reporting for leads and search performance.</p>
+      {hasError && <p class="error">The dashboard password was not accepted.</p>}
+      <form method="post" action="/api/admin/login">
+        <label>
+          Dashboard password
+          <input type="password" name="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit">Open Dashboard</button>
+      </form>
+    </main>
+  </body>
+</html>
