@@ -112,3 +112,8 @@ Before launch, compare a priority sample of current vs V2:
 
 ### 7. Cutover only after pass
 No DNS change until the parity checklist passes and rollback is ready.
+
+
+## Competitor benchmark gate
+
+Before a city or market batch is considered release-ready, review `COMPETITOR-BENCHMARK.md` and re-check the current leading competitor pages for the primary appliance-pickup and washer/dryer queries. Preserve what V2 already does better and close meaningful content, conversion, internal-linking, commercial or partner-system gaps without creating thin duplicate pages.
