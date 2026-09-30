@@ -39,7 +39,13 @@ jobs:
       - name: Verify Cloudflare server entrypoint
         run: |
           node -e "console.log(require.resolve('@astrojs/cloudflare/entrypoints/server'))"
+          test -d dist/server
+          test -d dist/client
 
       - name: Verify staging robots protection
         run: |
-          grep -q "Disallow: /" dist/robots.txt
+          test -f dist/client/robots.txt
+          grep -q "Disallow: /" dist/client/robots.txt
+
+      - name: Validate staging deploy bundle
+        run: npx wrangler deploy --dry-run --config wrangler.staging.jsonc
