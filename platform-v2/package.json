@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy:staging": "npm run build && wrangler deploy",
+    "deploy:staging": "npm run build && wrangler deploy --config wrangler.staging.jsonc",
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
