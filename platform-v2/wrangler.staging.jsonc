@@ -7,7 +7,7 @@
   "workers_dev": true,
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist"
+    "directory": "./dist/client"
   },
   "observability": {
     "enabled": true
