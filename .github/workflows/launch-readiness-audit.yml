@@ -13,6 +13,7 @@ on:
       - 'portland-appliance-pickup/index.html'
       - 'salem-appliance-pickup/index.html'
       - 'inland-empire-appliance-pickup/index.html'
+      - 'rancho-cucamonga-washer-dryer-pickup/index.html'
       - 'san-gabriel-valley-appliance-pickup/index.html'
       - 'riverside-county-appliance-pickup/index.html'
       - 'orange-county-appliance-pickup/index.html'
