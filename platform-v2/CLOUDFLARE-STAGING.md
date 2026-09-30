@@ -11,10 +11,15 @@ All public V2 pages are intentionally marked:
 
 Do not remove this protection until the production cutover checklist is complete.
 
-## Permanent Cloudflare setup
-Cloudflare Workers can deploy this existing Astro project directly. The project already includes:
+## Build-safe Cloudflare setup
+Astro builds first without a root Wrangler configuration. After `dist/` exists, deployment uses:
+`wrangler.staging.jsonc`
+
+This avoids having Wrangler's generated Worker entry point referenced before Astro creates it.
+
+The project includes:
 - Astro Cloudflare adapter
-- Wrangler configuration
+- staging-only Wrangler configuration
 - Node.js compatibility flag
 - static asset binding
 - observability
