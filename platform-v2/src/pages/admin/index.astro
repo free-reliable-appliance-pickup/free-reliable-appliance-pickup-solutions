@@ -168,6 +168,15 @@ function trackingValue(lead: any, key: string) {
   return typeof value === "string" ? value : "";
 }
 
+function intakeValue(lead: any, key: string) {
+  const tracking = lead?.tracking_data;
+  if (!tracking || typeof tracking !== "object") return "";
+  const intake = tracking.intake;
+  if (!intake || typeof intake !== "object") return "";
+  const value = intake[key];
+  return typeof value === "string" ? value : "";
+}
+
 function intentLabel(lead: any) {
   return trackingValue(lead, "service_intent") === "washer-dryer"
     ? "Washer / Dryer"
@@ -193,7 +202,7 @@ function intentLabel(lead: any) {
       .card{background:white;border:1px solid #d7e5dc;border-radius:12px;padding:18px}
       .card strong{display:block;font-size:28px;margin-top:6px}
       section{background:white;border:1px solid #d7e5dc;border-radius:12px;padding:18px;margin:18px 0;overflow:auto}
-      table{width:100%;border-collapse:collapse;min-width:850px}
+      table{width:100%;border-collapse:collapse;min-width:980px}
       th,td{text-align:left;padding:10px;border-bottom:1px solid #e6ece8;vertical-align:top}
       th{background:#eef6f1;position:sticky;top:0}
       .muted{color:#5e6f65;font-size:14px}
@@ -334,10 +343,14 @@ function intentLabel(lead: any) {
                 <th>Received</th>
                 <th>Customer</th>
                 <th>Location</th>
+                <th>Pickup address</th>
                 <th>Priority</th>
                 <th>Lead type</th>
                 <th>Appliance</th>
                 <th>Condition</th>
+                <th>Brand / model</th>
+                <th>Property / access</th>
+                <th>Testability / window</th>
                 <th>Market</th>
                 <th>Source</th>
                 <th>Status</th>
@@ -349,10 +362,20 @@ function intentLabel(lead: any) {
                   <td>{new Date(lead.created_at).toLocaleString("en-US")}</td>
                   <td>{lead.customer_name || "—"}</td>
                   <td>{[lead.city, lead.state, lead.zip_code].filter(Boolean).join(", ")}</td>
+                  <td>{intakeValue(lead, "pickup_address") || "—"}</td>
                   <td><span class="good">{lead.market_priority || "—"}</span></td>
                   <td><span class="good">{intentLabel(lead)}</span></td>
                   <td>{lead.appliance_type || "—"}</td>
                   <td>{lead.appliance_condition || "—"}</td>
+                  <td>{intakeValue(lead, "brand_model") || "—"}</td>
+                  <td>
+                    <div>{intakeValue(lead, "property_type") || "—"}</div>
+                    <div class="muted">{[intakeValue(lead, "appliance_location"), intakeValue(lead, "stairs")].filter(Boolean).join(" · ")}</div>
+                  </td>
+                  <td>
+                    <div>{intakeValue(lead, "testable_status") || "—"}</div>
+                    <div class="muted">{intakeValue(lead, "preferred_window") || ""}</div>
+                  </td>
                   <td>{trackingValue(lead, "market") || "—"}</td>
                   <td>
                     <div>{lead.source_channel || "—"}</div>
