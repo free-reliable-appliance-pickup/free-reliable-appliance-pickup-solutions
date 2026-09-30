@@ -38,14 +38,14 @@ jobs:
 
       - name: Verify Astro Cloudflare output
         run: |
-          test -f dist/server/entry.mjs
-          test -f dist/server/wrangler.json
-          test -d dist/client
+          test -f dist/_worker.js/index.js
+          test -d dist
+          test -d dist/_astro
 
       - name: Verify staging robots protection
         run: |
-          test -f dist/client/robots.txt
-          grep -q "Disallow: /" dist/client/robots.txt
+          test -f dist/robots.txt
+          grep -q "Disallow: /" dist/robots.txt
 
       - name: Validate staging deploy bundle
-        run: npx wrangler deploy --dry-run --config dist/server/wrangler.json
+        run: npx wrangler deploy --dry-run --config wrangler.jsonc
