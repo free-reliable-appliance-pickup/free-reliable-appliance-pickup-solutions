@@ -220,7 +220,13 @@ const breadcrumbSchema = {
         ))}
       </section>
 
-      <PickupRequestForm city={page.city} state={page.stateCode} sourcePage={page.canonical} />
+      <PickupRequestForm
+        city={page.city}
+        state={page.stateCode}
+        market={page.market}
+        sourcePage={page.canonical}
+        serviceIntent={isLaundry ? "washer-dryer" : "appliance"}
+      />
     </main>
 
     <footer>
