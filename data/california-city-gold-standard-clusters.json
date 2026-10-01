@@ -211,7 +211,6 @@
         ]
       },
       "category_authority_links": {
-        "washer_dryer": "washer-dryer-pickup",
         "refrigerator": "refrigerator-pickup",
         "freezer": "freezer-pickup",
         "stove_oven": "stove-oven-pickup"
@@ -242,9 +241,7 @@
         "Reuse-focused qualification",
         "Clear alternatives when it does not qualify"
       ],
-      "benchmark_homepage_child_links": [
-        "washer_dryer"
-      ],
+      "benchmark_homepage_child_links": [],
       "replacement_day_terms": [
         "Replacing an Appliance?",
         "Before delivery day",
