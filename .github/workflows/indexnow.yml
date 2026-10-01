@@ -1,0 +1,134 @@
+name: Submit changed pages to IndexNow
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow-main
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out site
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build changed URL list
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import os
+          import subprocess
+          from pathlib import Path
+
+          base = "https://freereliableappliancepickup.com"
+          before = os.environ.get("BEFORE", "")
+          after = os.environ["AFTER"]
+
+          seed = {
+              "appliance-buyers-resellers/index.html",
+              "inland-empire-appliance-pickup/index.html",
+              "san-gabriel-valley-appliance-pickup/index.html",
+              "rancho-cucamonga-appliance-pickup/index.html",
+              "san-bernardino-appliance-pickup/index.html",
+              "grand-terrace-washer-dryer-pickup/index.html",
+          }
+
+          paths = set()
+          valid_before = bool(before and set(before) != {"0"})
+          if valid_before:
+              result = subprocess.run(
+                  ["git", "diff", "--name-only", before, after, "--", "*.html"],
+                  check=True,
+                  capture_output=True,
+                  text=True,
+              )
+              paths.update(line.strip() for line in result.stdout.splitlines() if line.strip())
+          else:
+              paths.update(seed)
+
+          workflow_path = ".github/workflows/indexnow.yml"
+          if valid_before:
+              changed = subprocess.run(
+                  ["git", "diff", "--name-only", before, after],
+                  check=True,
+                  capture_output=True,
+                  text=True,
+              ).stdout.splitlines()
+              if workflow_path in changed:
+                  paths.update(seed)
+
+          urls = []
+          for path in sorted(paths):
+              if path == "404.html":
+                  continue
+              if path == "index.html":
+                  url = base + "/"
+              elif path.endswith("/index.html"):
+                  url = base + "/" + path[:-10]
+              elif path.endswith(".html"):
+                  url = base + "/" + path
+              else:
+                  continue
+              urls.append(url)
+
+          Path("indexnow-urls.txt").write_text("\n".join(urls) + ("\n" if urls else ""), encoding="utf-8")
+          print(f"Prepared {len(urls)} URL(s) for IndexNow")
+          for url in urls:
+              print(url)
+          PY
+
+      - name: Submit to IndexNow
+        env:
+          INDEXNOW_HOST: freereliableappliancepickup.com
+          INDEXNOW_KEY_FILE: f18ce4a588a6dd4ba0abe65c3e100df80fbf4526481790df.txt
+        run: |
+          if [ ! -s indexnow-urls.txt ]; then
+            echo "No changed HTML URLs to submit."
+            exit 0
+          fi
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          host = os.environ["INDEXNOW_HOST"]
+          key_file = os.environ["INDEXNOW_KEY_FILE"]
+          key = Path(key_file).read_text(encoding="utf-8").strip()
+          urls = [line.strip() for line in Path("indexnow-urls.txt").read_text(encoding="utf-8").splitlines() if line.strip()]
+
+          if not (8 <= len(key) <= 128):
+              raise SystemExit("IndexNow key length is invalid")
+
+          payload = {
+              "host": host,
+              "key": key,
+              "keyLocation": f"https://{host}/{key_file}",
+              "urlList": urls[:10000],
+          }
+          Path("indexnow-payload.json").write_text(json.dumps(payload), encoding="utf-8")
+          print(f"Submitting {len(payload['urlList'])} URL(s)")
+          PY
+
+          HTTP_CODE=$(curl --silent --show-error             --output indexnow-response.txt             --write-out "%{http_code}"             --request POST             --header "Content-Type: application/json; charset=utf-8"             --data-binary @indexnow-payload.json             https://api.indexnow.org/IndexNow)
+
+          echo "IndexNow HTTP status: $HTTP_CODE"
+          cat indexnow-response.txt || true
+
+          if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "202" ]; then
+            echo "IndexNow submission failed."
+            exit 1
+          fi
+
+          echo "IndexNow accepted the changed URLs."
