@@ -325,3 +325,14 @@ nationwide-appliance-pickup
 puget-sound-washer-dryer-pickup
 sacramento-metro-appliance-pickup
 sacramento-metro-washer-dryer-pickup
+
+nationwide-washer-dryer-pickup
+texas-appliance-pickup
+florida-appliance-pickup
+georgia-appliance-pickup
+north-carolina-appliance-pickup
+new-york-appliance-pickup
+kansas-appliance-pickup
+oklahoma-appliance-pickup
+new-mexico-appliance-pickup
+alabama-appliance-pickup
