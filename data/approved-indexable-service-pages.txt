@@ -316,3 +316,12 @@ wildomar-washer-dryer-pickup
 yorba-linda-washer-dryer-pickup
 youngtown-washer-dryer-pickup
 yucaipa-washer-dryer-pickup
+
+# V2 indexable hubs and approved priority pages — 2026-09-30
+acton-appliance-pickup
+appliance-buyers-resellers
+las-vegas-valley-washer-dryer-pickup
+nationwide-appliance-pickup
+puget-sound-washer-dryer-pickup
+sacramento-metro-appliance-pickup
+sacramento-metro-washer-dryer-pickup
