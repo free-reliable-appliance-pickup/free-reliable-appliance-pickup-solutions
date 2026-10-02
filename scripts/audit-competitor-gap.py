@@ -8,7 +8,7 @@ PRIORITY = {
 "chino","chino-hills","diamond-bar","rowland-heights","la-puente","covina","west-covina","san-dimas","duarte",
 "azusa","arcadia","pasadena","san-marino","el-monte","whittier","pico-rivera","montebello","riverside",
 "palm-springs","palm-desert","la-quinta","rancho-mirage","indian-wells","cathedral-city","indio",
-"fresno","clovis","sanger","sacramento","stockton","phoenix","mesa","chandler","scottsdale","glendale",
+"fresno","clovis","sanger","fowler","selma","sacramento","stockton","phoenix","mesa","chandler","scottsdale","glendale",
 "denver","aurora","wheat-ridge","portland","salem","keizer"
 }
 BASE="https://freereliableappliancepickup.com/"
