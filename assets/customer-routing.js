@@ -156,6 +156,63 @@ function enhanceRequestNextSteps(){
   });
 }
 
+/* GA4 lead-action tracking 20261002 */
+const GA4_MEASUREMENT_ID='G-X9VMB6GQMF';
+
+function analyticsPageLabel(){
+  const p=(location.pathname||'/').replace(/^\/+|\/+$/g,'');
+  return p || 'home';
+}
+function gaEvent(name,params){
+  if(typeof window.gtag!=='function')return;
+  window.gtag('event',name,Object.assign({
+    page_path:location.pathname||'/',
+    page_title:document.title||'',
+    page_label:analyticsPageLabel()
+  },params||{}));
+}
+function initLeadAnalytics(){
+  if(typeof window==='undefined'||typeof document==='undefined'||window.__freeReliableGa4Loaded)return;
+  window.__freeReliableGa4Loaded=true;
+  window.dataLayer=window.dataLayer||[];
+  window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+  window.gtag('js',new Date());
+  window.gtag('config',GA4_MEASUREMENT_ID,{send_page_view:true});
+
+  if(!document.querySelector('script[data-free-reliable-ga4]')){
+    const tag=document.createElement('script');
+    tag.async=true;
+    tag.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(GA4_MEASUREMENT_ID);
+    tag.dataset.freeReliableGa4='1';
+    document.head.appendChild(tag);
+  }
+
+  document.addEventListener('click',function(event){
+    const link=event.target&&event.target.closest?event.target.closest('a[href]'):null;
+    if(!link)return;
+    const href=String(link.getAttribute('href')||'').trim().toLowerCase();
+    let eventName=null;
+    if(href.startsWith('tel:'))eventName='click_call';
+    else if(href.startsWith('sms:'))eventName='click_text';
+    if(!eventName)return;
+    gaEvent(eventName,{
+      link_text:String(link.textContent||'').trim().slice(0,100),
+      button_location:link.closest('.priority-mobile-cta')?'mobile_sticky':'page',
+      transport_type:'beacon'
+    });
+  },true);
+
+  document.addEventListener('submit',function(event){
+    const form=event.target;
+    if(!form||!form.matches||!form.matches('form[action*="formspree.io"]'))return;
+    gaEvent('pickup_form_submit',{
+      form_id:form.id||'pickup_form',
+      transport_type:'beacon'
+    });
+  },true);
+}
+
+initLeadAnalytics();
 load();
 document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();enhanceCityLaundrySearchTerms();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
 /* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
