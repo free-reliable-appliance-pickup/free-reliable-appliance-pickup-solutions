@@ -32,3 +32,4 @@ clovis-washer-dryer-pickup
 sanger-washer-dryer-pickup
 fowler-washer-dryer-pickup
 selma-washer-dryer-pickup
+stockton-washer-dryer-pickup
