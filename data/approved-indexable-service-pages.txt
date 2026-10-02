@@ -337,3 +337,6 @@ kansas-appliance-pickup
 oklahoma-appliance-pickup
 new-mexico-appliance-pickup
 alabama-appliance-pickup
+fresno-freezer-pickup
+fresno-refrigerator-pickup
+fresno-stove-oven-pickup
