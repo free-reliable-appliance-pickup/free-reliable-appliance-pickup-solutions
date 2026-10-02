@@ -86,6 +86,64 @@ for score,city,signals in sorted(rows,key=lambda x:(x[0],x[1])):
     else:
         print(f"PROTECT {city}: 9/9. Do not rewrite just to make a change; verify live SERP/GSC evidence before the next edit.")
 
+
+# Laundry-specific competitor-gap scan for the same priority markets.
+# This keeps washer/dryer pages protected without forcing separate washer and dryer URLs.
+LAUNDRY_COUNTERMOVES = {
+    "photo_first": "Add clear washer/dryer photos and tested-condition guidance.",
+    "access_detail": "Add stairs, elevator, laundry-closet, hallway, gate, parking/loading and carrying-distance guidance.",
+    "trust_flow": "Clarify that submission starts a review and does not automatically guarantee free pickup.",
+    "general_bridge": "Link back to the matching city general appliance page so laundry and broad appliance intent stay separated.",
+    "washer_intent": "Add a dedicated washer-pickup section with fill, wash/agitation, drain and spin testing.",
+    "dryer_intent": "Add a dedicated dryer-pickup section with gas/electric, tumble and heat testing.",
+    "faq": "Add useful washer/dryer FAQs plus matching FAQPage structured data.",
+    "local_fallback": "Add the official city, hauler, donation or recycling fallback for machines that do not qualify.",
+    "commercial_recurring": "Add apartment, property-manager or recurring laundry guidance where relevant.",
+    "local_specificity": "Add truthful city-specific neighborhood, ZIP, access, county or route detail.",
+}
+
+laundry_rows=[]
+for city in sorted(PRIORITY):
+    slug=f"{city}-washer-dryer-pickup"
+    p=Path(slug)/"index.html"
+    if slug not in active or not p.exists():
+        continue
+    raw=p.read_text(encoding="utf-8",errors="ignore")
+    low=raw.lower()
+    signals={}
+    signals["photo_first"]=has_any(low,["photo","text appliance photos","send photos","laundry photos"])
+    signals["access_detail"]=has_any(low,["stairs","elevator","laundry closet","laundry-closet","hallway","gate","loading","parking","carrying distance","narrow door"])
+    signals["trust_flow"]=has_any(low,["free to submit","no account required","submitting a request","request starts","pickup is qualification-based","does not automatically guarantee","does not guarantee free"])
+    signals["general_bridge"]=(f"/{city}-appliance-pickup/" in low)
+    signals["washer_intent"]=has_any(low,["free washer pickup","washer pickup in","washing machine pickup","washer test"])
+    signals["dryer_intent"]=has_any(low,["free dryer pickup","dryer pickup in","dryer test","dryer haul"])
+    signals["faq"]=("<h2" in low and "faq" in low and ('"@type":"faqpage"' in low or '"@type": "faqpage"' in low))
+    signals["local_fallback"]=has_any(low,["official ","city of ","public works","solid waste","republic services","waste management","restore","transfer station","bulky","recycling option","disposal backup"])
+    signals["commercial_recurring"]=has_any(low,["property manager","commercial","recurring","senior","55+","apartment","multifamily","rental"])
+    signals["local_specificity"]=has_any(low,["zip","neighborhood","downtown","county","corridor","route","metro"])
+    score=sum(signals.values())
+    laundry_rows.append((score,city,signals))
+
+print("\nLAUNDRY_GAP_PRIORITY_PAGES",len(laundry_rows))
+laundry_strong=laundry_good=laundry_needs=0
+laundry_battle_lines=[]
+for score,city,signals in sorted(laundry_rows,key=lambda x:(x[0],x[1])):
+    missing=[k for k,v in signals.items() if not v]
+    if score>=9:
+        status="STRONG"; laundry_strong+=1
+    elif score>=7:
+        status="GOOD"; laundry_good+=1
+    else:
+        status="NEEDS_WORK"; laundry_needs+=1
+    print(f"{score}/10 {status:10} {city:20} missing={','.join(missing) if missing else '-'}")
+    if missing:
+        actions=" | ".join(LAUNDRY_COUNTERMOVES[k] for k in missing)
+        print(f"LAUNDRY_COUNTERMOVE {city}: {actions}")
+        print(f"::warning file={city}-washer-dryer-pickup/index.html::Laundry competitor-gap audit {score}/10; missing: {', '.join(missing)}. Countermove: {actions}")
+        laundry_battle_lines.append((score,city,missing,actions))
+    else:
+        print(f"PROTECT_LAUNDRY {city}: 10/10. Do not rewrite without live SERP/GSC evidence.")
+
 print("\nCOMPETITOR_BENCHMARKS")
 for name,strength,counter in BENCHMARKS:
     print(f"- {name}: strength={strength}; {counter}")
@@ -97,14 +155,18 @@ if summary_path:
     lines=[
         "## Competitor Gap Battle Report",
         "",
-        f"Priority city pages scanned: **{len(rows)}** · Strong: **{strong}** · Good: **{good}** · Needs work: **{needs}**",
+        f"Priority general pages scanned: **{len(rows)}** · Strong: **{strong}** · Good: **{good}** · Needs work: **{needs}**",
+        f"Priority laundry pages scanned: **{len(laundry_rows)}** · Strong: **{laundry_strong}** · Good: **{laundry_good}** · Needs work: **{laundry_needs}**",
         "",
         "### Exact countermoves",
     ]
     if battle_lines:
         for score,city,missing,actions in battle_lines[:25]:
-            lines.append(f"- **{city.replace('-', ' ').title()} — {score}/9:** {actions}")
-    else:
+            lines.append(f"- **{city.replace('-', ' ').title()} general — {score}/9:** {actions}")
+    if laundry_battle_lines:
+        for score,city,missing,actions in laundry_battle_lines[:25]:
+            lines.append(f"- **{city.replace('-', ' ').title()} laundry — {score}/10:** {actions}")
+    if not battle_lines and not laundry_battle_lines:
         lines.append("- No on-page benchmark gaps detected. Protect current pages and use live search/ranking evidence before rewriting.")
     lines += ["", "### Competitor pattern → our response"]
     for name,strength,counter in BENCHMARKS:
