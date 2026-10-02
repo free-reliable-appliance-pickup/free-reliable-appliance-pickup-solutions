@@ -1,5 +1,5 @@
-# Competitor Watch Baseline
+# Competitor Watch
 
-Baseline seeded for **13** priority competitor pages. No change alert is issued on the first snapshot.
+No meaningful competitor changes detected across **18** successfully fetched priority pages.
 
-Future runs compare title/H1/meta, canonical/robots, schema types, important internal links, conversion/local signals and aggressive guarantee language.
+Decision: **PROTECT** current owner pages. Do not rewrite solely because the watcher ran.
