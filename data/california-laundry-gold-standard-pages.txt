@@ -34,3 +34,5 @@ fowler-washer-dryer-pickup
 selma-washer-dryer-pickup
 stockton-washer-dryer-pickup
 modesto-washer-dryer-pickup
+sacramento-washer-dryer-pickup
+sacramento-metro-washer-dryer-pickup
