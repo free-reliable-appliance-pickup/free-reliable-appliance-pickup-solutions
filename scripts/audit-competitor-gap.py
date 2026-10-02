@@ -53,7 +53,7 @@ for city in sorted(PRIORITY):
     signals={}
     signals["photo_first"]=has_any(low,["photo","text appliance photos","send photos"])
     signals["access_detail"]=has_any(low,["stairs","elevator","gate","loading","garage","carrying distance","narrow door"])
-    signals["trust_flow"]=has_any(low,["free to submit","no account required","submitting a request","request starts","does not create an appointment"])
+    signals["trust_flow"]=has_any(low,["free to submit","no account required","submitting a request","request starts","does not create an appointment","pickup is confirmed only after","before pickup is confirmed","before service is confirmed","before confirming service"])
     laundry=Path(f"{city}-washer-dryer-pickup")/"index.html"
     signals["laundry_bridge"]=(not laundry.exists()) or (f"/{city}-washer-dryer-pickup/" in low)
     signals["appliance_depth"]=has_any(low,["refrigerator-pickup","washer-dryer-pickup","stove-oven-pickup","freezer pickup","refrigerator pickup guide"])
