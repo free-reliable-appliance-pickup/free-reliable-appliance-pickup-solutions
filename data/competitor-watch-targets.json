@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "targets": [
     {
       "id": "tma-rancho-cucamonga",
@@ -104,6 +104,46 @@
       "url": "https://appliancepickupnow.com/hesperia/",
       "our_path": "hesperia-appliance-pickup/index.html",
       "priority": "high"
+    },
+    {
+      "id": "tma-upland",
+      "competitor": "TakeMyAppliance",
+      "market": "Upland, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/upland",
+      "our_path": "upland-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-claremont",
+      "competitor": "TakeMyAppliance",
+      "market": "Claremont, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/claremont",
+      "our_path": "claremont-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-la-verne",
+      "competitor": "TakeMyAppliance",
+      "market": "La Verne, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/la-verne",
+      "our_path": "la-verne-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-san-dimas",
+      "competitor": "TakeMyAppliance",
+      "market": "San Dimas, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/san-dimas",
+      "our_path": "san-dimas-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-pomona",
+      "competitor": "TakeMyAppliance",
+      "market": "Pomona, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/pomona",
+      "our_path": "pomona-appliance-pickup/index.html",
+      "priority": "critical"
     }
   ]
 }
