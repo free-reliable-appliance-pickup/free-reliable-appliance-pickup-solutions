@@ -562,3 +562,9 @@ yorba-linda-washer-dryer-pickup
 youngtown-appliance-pickup
 yucaipa-appliance-pickup
 yucaipa-washer-dryer-pickup
+fowler-appliance-pickup
+fowler-washer-dryer-pickup
+sanger-appliance-pickup
+sanger-washer-dryer-pickup
+selma-appliance-pickup
+selma-washer-dryer-pickup
