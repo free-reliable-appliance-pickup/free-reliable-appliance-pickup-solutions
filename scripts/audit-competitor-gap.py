@@ -8,7 +8,7 @@ PRIORITY = {
 "chino","chino-hills","diamond-bar","rowland-heights","la-puente","covina","west-covina","san-dimas","duarte",
 "azusa","arcadia","pasadena","san-marino","el-monte","whittier","pico-rivera","montebello","riverside",
 "palm-springs","palm-desert","la-quinta","rancho-mirage","indian-wells","cathedral-city","indio",
-"fresno","clovis","sanger","fowler","selma","sacramento","stockton","phoenix","mesa","chandler","scottsdale","glendale",
+"fresno","clovis","sanger","fowler","selma","sacramento","stockton","phoenix","mesa","chandler","scottsdale","glendale","glendale-az",
 "denver","aurora","wheat-ridge","portland","salem","keizer"
 }
 BASE="https://freereliableappliancepickup.com/"
@@ -113,10 +113,10 @@ for city in sorted(PRIORITY):
     signals={}
     signals["photo_first"]=has_any(low,["photo","text appliance photos","send photos","laundry photos"])
     signals["access_detail"]=has_any(low,["stairs","elevator","laundry closet","laundry-closet","hallway","gate","loading","parking","carrying distance","narrow door"])
-    signals["trust_flow"]=has_any(low,["free to submit","no account required","submitting a request","request starts","pickup is qualification-based","does not automatically guarantee","does not guarantee free"])
+    signals["trust_flow"]=has_any(low,["free to submit","no account required","submitting a request","request starts","pickup is qualification-based","does not automatically guarantee","does not guarantee free","before confirming service","before pickup is confirmed","pickup is confirmed only after","before service is confirmed"])
     signals["general_bridge"]=(f"/{city}-appliance-pickup/" in low)
-    signals["washer_intent"]=has_any(low,["free washer pickup","washer pickup in","washing machine pickup","washer test"])
-    signals["dryer_intent"]=has_any(low,["free dryer pickup","dryer pickup in","dryer test","dryer haul"])
+    signals["washer_intent"]=has_any(low,["free washer pickup","washer pickup in","washing machine pickup","washer test","washer pickup,","washer pickup &","washer pickup and"])
+    signals["dryer_intent"]=has_any(low,["free dryer pickup","dryer pickup in","dryer test","dryer haul","dryer pickup,","dryer pickup &","dryer pickup and"])
     signals["faq"]=("<h2" in low and "faq" in low and ('"@type":"faqpage"' in low or '"@type": "faqpage"' in low))
     signals["local_fallback"]=has_any(low,["official ","city of ","public works","solid waste","republic services","waste management","restore","transfer station","bulky","recycling option","disposal backup"])
     signals["commercial_recurring"]=has_any(low,["property manager","commercial","recurring","senior","55+","apartment","multifamily","rental"])
