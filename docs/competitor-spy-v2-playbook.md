@@ -25,11 +25,12 @@ Every competitor/ranking alert must be actionable, not just descriptive. Report 
 1. **Target query + market** — the exact search intent being checked.
 2. **Observed competitor move** — what changed or what the current winner is doing.
 3. **Competitor strength** — the concrete page/flow advantage, not a vague label.
-4. **Our current strength** — what our intended owner page already does better or differently.
-5. **Our gap** — the missing signal supported by evidence. If no material gap exists, say **protect** instead of inventing work.
-6. **Exact countermove** — the smallest specific page, internal-link, trust, local-detail, conversion or authority change that addresses the gap.
-7. **Risk check** — confirm the move will not create cannibalization, a doorway page, false local-presence language, broken canonical/indexing, or a duplicate city page.
-8. **Recheck plan** — deploy, run audits, submit changed URLs through the existing free IndexNow workflow, then wait for live-search/Search Console evidence before another rewrite.
+4. **Competitor weakness / our advantage** — benchmark signals our intended owner page has that the competitor page does not; use this to protect and emphasize real differentiation.
+5. **Our current strength** — what our intended owner page already does better or differently.
+6. **Our gap** — the missing signal supported by evidence. If no material gap exists, say **protect** instead of inventing work.
+7. **Exact countermove** — the smallest specific page, internal-link, trust, local-detail, conversion or authority change that addresses the gap.
+8. **Risk check** — confirm the move will not create cannibalization, a doorway page, false local-presence language, broken canonical/indexing, or a duplicate city page.
+9. **Recheck plan** — deploy, run audits, submit changed URLs through the existing free IndexNow workflow, then wait for live-search/Search Console evidence before another rewrite.
 
 The repository audit now mirrors this contract: missing competitor-gap signals emit a `COUNTERMOVE`; 9/9 pages emit `PROTECT`.
 
