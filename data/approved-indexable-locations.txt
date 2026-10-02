@@ -97,6 +97,7 @@ city-of-industry-appliance-pickup
 city-of-industry-washer-dryer-pickup
 claremont-appliance-pickup
 claremont-washer-dryer-pickup
+clovis-appliance-pickup
 coachella-appliance-pickup
 coachella-valley-appliance-pickup
 coachella-valley-pickup-partner-interest
@@ -513,7 +514,6 @@ temecula-washer-dryer-pickup
 tempe-appliance-pickup
 temple-city-appliance-pickup
 temple-city-washer-dryer-pickup
-thermal-appliance-pickup
 thornton-appliance-pickup
 thousand-palms-appliance-pickup
 tigard-appliance-pickup
