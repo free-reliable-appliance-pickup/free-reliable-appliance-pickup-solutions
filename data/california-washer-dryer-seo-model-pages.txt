@@ -23,7 +23,6 @@ burbank-washer-dryer-pickup
 calabasas-washer-dryer-pickup
 california-washer-dryer-pickup
 calimesa-washer-dryer-pickup
-carlsbad-washer-dryer-pickup
 carson-washer-dryer-pickup
 cathedral-city-washer-dryer-pickup
 central-coast-washer-dryer-pickup
@@ -32,7 +31,6 @@ cerritos-washer-dryer-pickup
 cherry-valley-washer-dryer-pickup
 chino-hills-washer-dryer-pickup
 chino-washer-dryer-pickup
-chula-vista-washer-dryer-pickup
 claremont-washer-dryer-pickup
 coachella-washer-dryer-pickup
 colton-washer-dryer-pickup
@@ -55,7 +53,6 @@ eastvale-washer-dryer-pickup
 el-cajon-washer-dryer-pickup
 el-mirage-washer-dryer-pickup
 el-monte-washer-dryer-pickup
-encinitas-washer-dryer-pickup
 escondido-washer-dryer-pickup
 fontana-washer-dryer-pickup
 fountain-valley-washer-dryer-pickup
@@ -118,7 +115,6 @@ national-city-washer-dryer-pickup
 newport-beach-washer-dryer-pickup
 norwalk-washer-dryer-pickup
 oakland-washer-dryer-pickup
-oceanside-washer-dryer-pickup
 ontario-washer-dryer-pickup
 orange-county-washer-dryer-pickup
 orange-washer-dryer-pickup
@@ -133,7 +129,6 @@ phelan-washer-dryer-pickup
 pico-rivera-washer-dryer-pickup
 placentia-washer-dryer-pickup
 pomona-washer-dryer-pickup
-poway-washer-dryer-pickup
 rancho-cucamonga-washer-dryer-pickup
 rancho-mirage-washer-dryer-pickup
 rancho-santa-margarita-washer-dryer-pickup
@@ -166,7 +161,6 @@ santa-clara-washer-dryer-pickup
 santa-clarita-washer-dryer-pickup
 santa-maria-washer-dryer-pickup
 santa-monica-washer-dryer-pickup
-santee-washer-dryer-pickup
 seal-beach-washer-dryer-pickup
 sf-bay-area-washer-dryer-pickup
 sierra-madre-washer-dryer-pickup
