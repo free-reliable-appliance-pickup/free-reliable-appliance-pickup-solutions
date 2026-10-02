@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "id": "tma-rancho-cucamonga",
+      "competitor": "TakeMyAppliance",
+      "market": "Rancho Cucamonga, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/rancho-cucamonga",
+      "our_path": "rancho-cucamonga-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-fontana",
+      "competitor": "TakeMyAppliance",
+      "market": "Fontana, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/fontana",
+      "our_path": "fontana-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-fresno",
+      "competitor": "TakeMyAppliance",
+      "market": "Fresno, CA",
+      "url": "https://www.takemyappliance.com/locations/northern-california/fresno",
+      "our_path": "fresno-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-clovis",
+      "competitor": "TakeMyAppliance",
+      "market": "Clovis, CA",
+      "url": "https://www.takemyappliance.com/locations/northern-california/clovis",
+      "our_path": "clovis-appliance-pickup/index.html",
+      "priority": "high"
+    },
+    {
+      "id": "tma-phoenix",
+      "competitor": "TakeMyAppliance",
+      "market": "Phoenix, AZ",
+      "url": "https://www.takemyappliance.com/locations/arizona/phoenix",
+      "our_path": "phoenix-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-denver",
+      "competitor": "TakeMyAppliance",
+      "market": "Denver, CO",
+      "url": "https://www.takemyappliance.com/locations/colorado/denver",
+      "our_path": "denver-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-portland",
+      "competitor": "TakeMyAppliance",
+      "market": "Portland, OR",
+      "url": "https://www.takemyappliance.com/locations/oregon/portland",
+      "our_path": "portland-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-socal-hub",
+      "competitor": "TakeMyAppliance",
+      "market": "Southern California hub",
+      "url": "https://www.takemyappliance.com/locations/southern-california",
+      "our_path": "southern-california-appliance-pickup/index.html",
+      "priority": "high"
+    },
+    {
+      "id": "apn-fresno",
+      "competitor": "AppliancePickupNow",
+      "market": "Fresno, CA",
+      "url": "https://appliancepickupnow.com/fresno/",
+      "our_path": "fresno-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "apn-california",
+      "competitor": "AppliancePickupNow",
+      "market": "California hub",
+      "url": "https://appliancepickupnow.com/california/",
+      "our_path": "california-appliance-pickup/index.html",
+      "priority": "high"
+    },
+    {
+      "id": "apn-chino-hills",
+      "competitor": "AppliancePickupNow",
+      "market": "Chino Hills, CA",
+      "url": "https://appliancepickupnow.com/chino-hills/",
+      "our_path": "chino-hills-appliance-pickup/index.html",
+      "priority": "high"
+    },
+    {
+      "id": "apn-chino",
+      "competitor": "AppliancePickupNow",
+      "market": "Chino, CA",
+      "url": "https://appliancepickupnow.com/chino/",
+      "our_path": "chino-appliance-pickup/index.html",
+      "priority": "high"
+    },
+    {
+      "id": "apn-hesperia",
+      "competitor": "AppliancePickupNow",
+      "market": "Hesperia, CA",
+      "url": "https://appliancepickupnow.com/hesperia/",
+      "our_path": "hesperia-appliance-pickup/index.html",
+      "priority": "high"
+    }
+  ]
+}
