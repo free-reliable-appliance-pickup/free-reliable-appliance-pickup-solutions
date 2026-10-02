@@ -171,6 +171,37 @@
         "More consistent internal-link discovery between priority cities and commercial program pages"
       ],
       "status": "running"
+    },
+    {
+      "id": "2026-10-01-laundry-hub-priority-links",
+      "market": "Nationwide washer/dryer hub → priority cities",
+      "hypothesis": "Direct links from the main washer/dryer hub to priority local laundry pages will strengthen topical concentration and improve discovery of those city laundry pages without creating new thin pages.",
+      "pagesChanged": [
+        "/washer-dryer-pickup/"
+      ],
+      "baselinePeriod": {
+        "start": "2026-09-02",
+        "end": "2026-09-29"
+      },
+      "baseline": {
+        "globalHubSignal": "The global /washer-dryer-pickup/ page did not appear in the returned GSC top-page/query relationship rows for the finalized period.",
+        "priorityLaundrySignal": [
+          {
+            "page": "/salem-washer-dryer-pickup/",
+            "query": "\"salem-keizer recycling & transfer station\" \"3250 deer park dr se\"",
+            "impressions": 1,
+            "position": 6
+          }
+        ],
+        "architectureGap": "Before the change, the main washer/dryer hub had no direct links detected to the priority local laundry pages in Rancho Cucamonga, Fontana, Fresno, Phoenix, Denver, Portland, Salem, Sacramento or Coachella Valley."
+      },
+      "change": "Added a priority-market bridge from the nationwide washer/dryer hub to nine strategically important local/regional laundry pages.",
+      "successSignals": [
+        "The global washer/dryer hub begins receiving impressions for generic laundry-pickup queries",
+        "Priority city laundry pages gain new impressions or improve average position for washer/dryer-specific queries",
+        "No increase in general-vs-laundry cannibalization on the corresponding city appliance pages"
+      ],
+      "status": "running"
     }
   ]
 }
