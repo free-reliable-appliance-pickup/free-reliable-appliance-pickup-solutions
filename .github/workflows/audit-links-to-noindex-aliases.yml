@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'sitemap.xml'
+      - '**/index.html'
       - '.github/workflows/audit-links-to-noindex-aliases.yml'
   workflow_dispatch:
 
