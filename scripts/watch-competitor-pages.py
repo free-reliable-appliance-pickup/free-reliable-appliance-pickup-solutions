@@ -292,6 +292,51 @@ def choose_counter(new, ours, changes):
         notes.append("PROTECT: our owner page already covers the main benchmark signals. Inspect the exact live query before changing title, copy or architecture.")
     return gaps, notes
 
+def build_battle_board(config, snapshots):
+    lines = [
+        "# Competitor SEO Battle Board",
+        "",
+        "This is a defensive comparison board, not a ranking claim. **PROTECT** means our intended owner page already covers the monitored competitor signals; **COUNTERMOVE** means a concrete signal is missing.",
+        "",
+        "| Competitor | Market | Competitor strengths | Our strengths | Gap / action |",
+        "|---|---|---|---|---|",
+    ]
+    targets = sorted(config.get("targets", []), key=lambda t: (t.get("competitor", ""), t.get("market", "")))
+    for target in targets:
+        snap = snapshots.get(target["id"])
+        if not snap:
+            lines.append(f"| {target['competitor']} | {target['market']} | Snapshot unavailable | — | Recheck fetch before making any SEO change. |")
+            continue
+        ours = local_snapshot(target.get("our_path", ""))
+        competitor_strengths = strengths(snap.get("signals", {}))
+        our_signals = (ours or {}).get("signals", {})
+        our_strengths = strengths(our_signals)
+        gaps = [k for k in COUNTERMOVES if k != "aggressive_guarantee" and snap.get("signals", {}).get(k) and not our_signals.get(k)]
+        if gaps:
+            action = "COUNTERMOVE: " + " ".join(COUNTERMOVES[g] for g in gaps)
+        else:
+            action = "PROTECT: no monitored benchmark gap; require live-query evidence before rewriting."
+        if snap.get("signals", {}).get("aggressive_guarantee") and not our_signals.get("aggressive_guarantee"):
+            action += " Competitor uses blanket/fast/free language; do not copy it without verified operational support."
+        esc = lambda value: str(value).replace("|", "\\|").replace("\n", " ")
+        lines.append("| " + " | ".join([
+            esc(target["competitor"]),
+            esc(target["market"]),
+            esc(", ".join(competitor_strengths) or "none detected"),
+            esc(", ".join(our_strengths) or "none detected"),
+            esc(action),
+        ]) + " |")
+    lines += [
+        "",
+        "## Rules",
+        "",
+        "- Preserve one broad city owner page per market and a separate laundry page only for distinct washer/dryer intent.",
+        "- Never create a thin city×appliance page merely because a competitor added one.",
+        "- Never copy blanket claims such as ‘any condition,’ ‘same-day,’ or ‘100% free’ unless our real route can support them.",
+        "- When a monitored competitor changes, use the change report plus an exact live-search check before editing a protected page.",
+    ]
+    return "\n".join(lines).rstrip() + "\n"
+
 def set_output(name, value):
     out = os.environ.get("GITHUB_OUTPUT")
     if out:
