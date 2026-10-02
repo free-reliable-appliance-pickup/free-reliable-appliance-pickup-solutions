@@ -29,3 +29,8 @@ costa-mesa-appliance-pickup
 tustin-appliance-pickup
 mission-viejo-appliance-pickup
 newport-beach-appliance-pickup
+fresno-appliance-pickup
+clovis-appliance-pickup
+sanger-appliance-pickup
+fowler-appliance-pickup
+selma-appliance-pickup
