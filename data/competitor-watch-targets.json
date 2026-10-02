@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "targets": [
     {
       "id": "tma-rancho-cucamonga",
@@ -143,6 +143,150 @@
       "market": "Pomona, CA",
       "url": "https://www.takemyappliance.com/locations/southern-california/pomona",
       "our_path": "pomona-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-ontario",
+      "competitor": "TakeMyAppliance",
+      "market": "Ontario, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/ontario",
+      "our_path": "ontario-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-montclair",
+      "competitor": "TakeMyAppliance",
+      "market": "Montclair, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/montclair",
+      "our_path": "montclair-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-rialto",
+      "competitor": "TakeMyAppliance",
+      "market": "Rialto, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/rialto",
+      "our_path": "rialto-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-san-bernardino",
+      "competitor": "TakeMyAppliance",
+      "market": "San Bernardino, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/san-bernardino",
+      "our_path": "san-bernardino-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-covina",
+      "competitor": "TakeMyAppliance",
+      "market": "Covina, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/covina",
+      "our_path": "covina-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-west-covina",
+      "competitor": "TakeMyAppliance",
+      "market": "West Covina, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/west-covina",
+      "our_path": "west-covina-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-azusa",
+      "competitor": "TakeMyAppliance",
+      "market": "Azusa, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/azusa",
+      "our_path": "azusa-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-arcadia",
+      "competitor": "TakeMyAppliance",
+      "market": "Arcadia, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/arcadia",
+      "our_path": "arcadia-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-pasadena",
+      "competitor": "TakeMyAppliance",
+      "market": "Pasadena, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/pasadena",
+      "our_path": "pasadena-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-chino",
+      "competitor": "TakeMyAppliance",
+      "market": "Chino, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/chino",
+      "our_path": "chino-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-chino-hills",
+      "competitor": "TakeMyAppliance",
+      "market": "Chino Hills, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/chino-hills",
+      "our_path": "chino-hills-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-duarte",
+      "competitor": "TakeMyAppliance",
+      "market": "Duarte, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/duarte",
+      "our_path": "duarte-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-el-monte",
+      "competitor": "TakeMyAppliance",
+      "market": "El Monte, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/el-monte",
+      "our_path": "el-monte-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-diamond-bar",
+      "competitor": "TakeMyAppliance",
+      "market": "Diamond Bar, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/diamond-bar",
+      "our_path": "diamond-bar-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-la-puente",
+      "competitor": "TakeMyAppliance",
+      "market": "La Puente, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/la-puente",
+      "our_path": "la-puente-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-whittier",
+      "competitor": "TakeMyAppliance",
+      "market": "Whittier, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/whittier",
+      "our_path": "whittier-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-montebello",
+      "competitor": "TakeMyAppliance",
+      "market": "Montebello, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/montebello",
+      "our_path": "montebello-appliance-pickup/index.html",
+      "priority": "critical"
+    },
+    {
+      "id": "tma-san-marino",
+      "competitor": "TakeMyAppliance",
+      "market": "San Marino, CA",
+      "url": "https://www.takemyappliance.com/locations/southern-california/san-marino",
+      "our_path": "san-marino-appliance-pickup/index.html",
       "priority": "critical"
     }
   ]
