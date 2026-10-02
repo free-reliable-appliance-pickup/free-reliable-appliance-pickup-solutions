@@ -1,0 +1,27 @@
+name: SEO Experiment Guard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/seo-experiments.json'
+      - '**/index.html'
+      - 'scripts/seo-experiment-guard.py'
+      - '.github/workflows/seo-experiment-guard.yml'
+  pull_request:
+    paths:
+      - 'data/seo-experiments.json'
+      - '**/index.html'
+      - 'scripts/seo-experiment-guard.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  experiment-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show protected SEO experiments and due reviews
+        run: python3 scripts/seo-experiment-guard.py
