@@ -310,19 +310,20 @@ def build_battle_board(config, snapshots):
         "",
         "This is a defensive comparison board, not a ranking claim. **PROTECT** means our intended owner page already covers the monitored competitor signals; **COUNTERMOVE** means a concrete signal is missing.",
         "",
-        "| Competitor | Market | Competitor strengths | Our strengths | Gap / action |",
-        "|---|---|---|---|---|",
+        "| Competitor | Market | Competitor strengths | Competitor weakness / our advantage | Our strengths | Gap / action |",
+        "|---|---|---|---|---|---|",
     ]
     targets = sorted(config.get("targets", []), key=lambda t: (t.get("competitor", ""), t.get("market", "")))
     for target in targets:
         snap = snapshots.get(target["id"])
         if not snap:
-            lines.append(f"| {target['competitor']} | {target['market']} | Snapshot unavailable | — | Recheck fetch before making any SEO change. |")
+            lines.append(f"| {target['competitor']} | {target['market']} | Snapshot unavailable | — | — | Recheck fetch before making any SEO change. |")
             continue
         ours = local_snapshot(target.get("our_path", ""))
         competitor_strengths = strengths(snap.get("signals", {}))
         our_signals = (ours or {}).get("signals", {})
         our_strengths = strengths(our_signals)
+        advantages = our_advantages(snap.get("signals", {}), our_signals)
         gaps = [k for k in COUNTERMOVES if k != "aggressive_guarantee" and snap.get("signals", {}).get(k) and not our_signals.get(k)]
         if gaps:
             action = "COUNTERMOVE: " + " ".join(COUNTERMOVES[g] for g in gaps)
@@ -335,6 +336,7 @@ def build_battle_board(config, snapshots):
             esc(target["competitor"]),
             esc(target["market"]),
             esc(", ".join(competitor_strengths) or "none detected"),
+            esc(", ".join(advantages) or "no clear monitored advantage"),
             esc(", ".join(our_strengths) or "none detected"),
             esc(action),
         ]) + " |")
