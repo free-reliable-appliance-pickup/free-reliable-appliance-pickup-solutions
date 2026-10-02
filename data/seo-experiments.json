@@ -1,100 +1,95 @@
 {
-  "schemaVersion": 1,
-  "createdDate": "2026-10-01",
-  "gscBaselineRange": {
-    "startDate": "2026-09-02",
-    "endDate": "2026-09-29",
-    "note": "Finalized Search Console planning range. New changes must be evaluated only after enough post-change finalized data exists."
-  },
-  "decisionRules": {
-    "minimumObservationDays": 14,
-    "protectTop10Pages": true,
-    "noBlindScaling": true,
-    "scaleOnlyAfterMeasuredLift": true,
-    "primaryMetrics": ["clicks","impressions","ctr","averagePosition","queryConcentration"],
-    "successRule": "Scale a tactic only when post-change GSC evidence shows meaningful improvement in the intended query/page relationship without creating cannibalization or quality/audit failures.",
-    "failureRule": "If a tactic has enough impressions to evaluate and does not improve the intended signal, do not roll it out broadly. Reassess or revert where appropriate."
+  "version": 1,
+  "updated": "2026-10-01",
+  "policy": {
+    "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
+    "avoid": [
+      "blind bulk rewrites",
+      "multiple major variables on the same page at once",
+      "copying competitor text",
+      "doorway-page expansion",
+      "changing pages already performing well without evidence"
+    ],
+    "evidenceOrder": [
+      "Google Search Console finalized data",
+      "repeat competitor patterns across winning pages",
+      "current live-search visibility",
+      "technical/site architecture audits"
+    ]
   },
   "experiments": [
     {
-      "id": "rancho-intent-authority-001",
-      "market": "Rancho Cucamonga",
-      "primaryUrl": "https://freereliableappliancepickup.com/rancho-cucamonga-appliance-pickup/",
-      "baseline": {"clicks":2,"impressions":51,"ctr":0.0392156863,"averagePosition":18.6470588235},
-      "evidence": [
-        "General Rancho page and refrigerator/freezer specialty pages are appearing for generic appliance-pickup queries.",
-        "Our Rancho cluster already has more dedicated specialty pages than the competitor's discoverable Rancho cluster, so more pages are not the first intervention.",
-        "TakeMyAppliance repeatedly ranks with one strong city page plus broader site-level topical and external authority."
+      "id": "2026-10-01-rancho-intent-concentration",
+      "market": "Rancho Cucamonga, CA",
+      "hypothesis": "Reducing broad generic appliance-pickup language on refrigerator/freezer specialty pages will concentrate broad city intent on the general Rancho Cucamonga page while preserving specialty-page relevance.",
+      "pagesChanged": [
+        "/rancho-cucamonga-refrigerator-pickup/",
+        "/rancho-cucamonga-freezer-pickup/"
       ],
-      "hypothesis": "Concentrating broad Rancho intent on the main city page, avoiding further specialty-page expansion, strengthening contextual internal support, and building real external brand mentions will improve the main page's generic appliance-pickup visibility.",
-      "actions": [
-        "Do not create additional Rancho specialty pages during the test window.",
-        "Keep refrigerator/freezer/laundry/stove pages narrowly appliance-specific.",
-        "Increase contextual links to the main Rancho page from relevant regional, qualification, commercial and appliance-guide pages using descriptive broad-intent anchors.",
-        "Pursue legitimate third-party brand mentions/citations relevant to appliance pickup, reuse, property management and local service; do not buy or spam links.",
-        "Track generic Rancho query-to-page concentration in GSC."
+      "protectedOwner": "/rancho-cucamonga-appliance-pickup/",
+      "baselinePeriod": {
+        "start": "2026-09-02",
+        "end": "2026-09-29"
+      },
+      "baseline": {
+        "generalPage": {
+          "clicks": 2,
+          "impressions": 51,
+          "ctr": 0.0392156863,
+          "avgPosition": 18.6470588235
+        },
+        "queryRelationships": [
+          {
+            "query": "free appliance pickup",
+            "page": "/rancho-cucamonga-appliance-pickup/",
+            "impressions": 2,
+            "position": 11
+          },
+          {
+            "query": "free appliance pickup",
+            "page": "/rancho-cucamonga-refrigerator-pickup/",
+            "impressions": 1,
+            "position": 17
+          },
+          {
+            "query": "appliance pickup near me",
+            "page": "/rancho-cucamonga-appliance-pickup/",
+            "impressions": 1,
+            "position": 48
+          },
+          {
+            "query": "appliance pickup near me",
+            "page": "/rancho-cucamonga-refrigerator-pickup/",
+            "impressions": 1,
+            "position": 36
+          },
+          {
+            "query": "appliance pickup near me",
+            "page": "/rancho-cucamonga-freezer-pickup/",
+            "impressions": 1,
+            "position": 66
+          },
+          {
+            "query": "appliance removal",
+            "page": "/rancho-cucamonga-appliance-pickup/",
+            "impressions": 2,
+            "position": 45
+          },
+          {
+            "query": "appliance removal",
+            "page": "/rancho-cucamonga-refrigerator-pickup/",
+            "impressions": 1,
+            "position": 26
+          }
+        ]
+      },
+      "change": "Narrowed specialty-page body language and parent anchors so refrigerator/freezer pages describe only their appliance-specific intent and direct mixed/multi-appliance requests to the city owner page.",
+      "successSignals": [
+        "Broad Rancho queries increasingly consolidate on /rancho-cucamonga-appliance-pickup/",
+        "General page broad-query average position improves without specialty-query loss",
+        "Specialty pages retain or improve refrigerator/freezer-specific impressions"
       ],
-      "status": "active"
-    },
-    {
-      "id": "fresno-striking-distance-001",
-      "market": "Fresno",
-      "primaryUrl": "https://freereliableappliancepickup.com/fresno-appliance-pickup/",
-      "baseline": {"clicks":0,"impressions":10,"ctr":0,"averagePosition":12.2},
-      "queryEvidence": [{"query":"appliance recycling fresno","impressions":1,"averagePosition":4}],
-      "hypothesis": "A conversion/snippet and intent-focus improvement on the existing Fresno general page can convert page-one/near-page-one visibility without adding more city pages.",
-      "actions": [
-        "Keep the general page as owner of broad appliance pickup/removal/recycling intent.",
-        "Keep washer/dryer-only intent on the dedicated laundry page.",
-        "Test stronger search-result promise and trust wording only when metadata remains accurate.",
-        "Build local third-party mentions and partner references where legitimate."
-      ],
-      "status": "active"
-    },
-    {
-      "id": "denver-city-relevance-001",
-      "market": "Denver",
-      "primaryUrl": "https://freereliableappliancepickup.com/denver-appliance-pickup/",
-      "baseline": {"clicks":0,"impressions":18,"ctr":0,"averagePosition":39.8333333333},
-      "queryEvidence": [
-        {"query":"denver appliance pickup","impressions":4,"averagePosition":10.75},
-        {"query":"appliance pick up free near me","impressions":2,"averagePosition":8}
-      ],
-      "hypothesis": "Denver has some near-page-one query signals but weak page-level average performance; strengthening city-specific intent concentration and real Colorado authority/mentions should outperform adding generic text.",
-      "actions": [
-        "Protect existing near-me signal.",
-        "Avoid expanding into unsupported city-by-appliance pages until a specific query proves demand.",
-        "Strengthen legitimate Denver/Colorado citations, partner mentions and relevant external references.",
-        "Measure query-to-page concentration and city-query movement."
-      ],
-      "status": "active"
-    },
-    {
-      "id": "indio-control-001",
-      "market": "Indio",
-      "primaryUrl": "https://freereliableappliancepickup.com/indio-appliance-pickup/",
-      "baseline": {"clicks":1,"impressions":3,"ctr":0.3333333333,"averagePosition":7},
-      "hypothesis": "Protect a page-one signal and use it as a control; avoid major rewrites while testing broader site changes.",
-      "actions": ["No major content rewrite unless GSC shows deterioration or a clear query gap."],
-      "status": "control"
-    },
-    {
-      "id": "salem-control-001",
-      "market": "Salem",
-      "primaryUrl": "https://freereliableappliancepickup.com/salem-appliance-pickup/",
-      "baseline": {"clicks":2,"impressions":34,"ctr":0.0588235294,"averagePosition":9.2941176471},
-      "hypothesis": "Protect current page-one performance while other market experiments run.",
-      "actions": ["No major rewrite; make only technical corrections or strongly supported CTR fixes."],
-      "status": "control"
-    },
-    {
-      "id": "inland-empire-control-001",
-      "market": "Inland Empire",
-      "primaryUrl": "https://freereliableappliancepickup.com/inland-empire-appliance-pickup/",
-      "baseline": {"clicks":2,"impressions":16,"ctr":0.125,"averagePosition":5.25},
-      "hypothesis": "Protect a strong regional-hub signal and use it as evidence that the hub architecture can work.",
-      "actions": ["Preserve intent ownership and strengthen only with proven internal/supporting signals."],
-      "status": "control"
+      "status": "running"
     }
   ]
 }
