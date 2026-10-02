@@ -478,6 +478,7 @@ def main():
 
     report_text = "\n".join(lines).rstrip() + "\n"
     report_path.write_text(report_text, encoding="utf-8")
+    board_path.write_text(build_battle_board(config, next_baseline), encoding="utf-8")
 
     print(f"TARGETS={len(config.get('targets', []))}")
     print(f"FETCHED={successes}")
