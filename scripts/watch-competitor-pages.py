@@ -20,6 +20,7 @@ from urllib.request import Request, urlopen
 
 USER_AGENT = "Mozilla/5.0 (compatible; FreeReliableAppliancePickup-CompetitorWatch/1.0; +https://freereliableappliancepickup.com/)"
 TIMEOUT = 25
+DETECTOR_VERSION = 2
 
 SIGNAL_TERMS = {
     "photo_first": ("photo", "photos", "picture"),
@@ -372,13 +373,18 @@ def main():
     report_path.parent.mkdir(parents=True, exist_ok=True)
     board_path.parent.mkdir(parents=True, exist_ok=True)
     baseline = {}
+    baseline_version = 0
     if baseline_path.exists():
         try:
-            baseline = json.loads(baseline_path.read_text(encoding="utf-8")).get("snapshots", {})
+            payload = json.loads(baseline_path.read_text(encoding="utf-8"))
+            baseline = payload.get("snapshots", {})
+            baseline_version = int(payload.get("detector_version", payload.get("version", 0)) or 0)
         except Exception:
             baseline = {}
+            baseline_version = 0
 
-    seeded = not bool(baseline)
+    detector_changed = baseline_version != DETECTOR_VERSION
+    seeded = (not bool(baseline)) or detector_changed
     next_baseline = dict(baseline)
     alerts = []
     errors = []
@@ -401,7 +407,7 @@ def main():
         changes = compare(old, current)
         next_baseline[tid] = current
 
-        if old and changes:
+        if old and not detector_changed and changes:
             ours = local_snapshot(target.get("our_path", ""))
             gaps, countermoves = choose_counter(current, ours, changes)
             alerts.append({
@@ -422,7 +428,7 @@ def main():
         return 2
 
     baseline_path.parent.mkdir(parents=True, exist_ok=True)
-    baseline_payload = {"version": 1, "snapshots": next_baseline}
+    baseline_payload = {"version": 1, "detector_version": DETECTOR_VERSION, "snapshots": next_baseline}
     baseline_path.write_text(json.dumps(baseline_payload, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
 
     lines = []
