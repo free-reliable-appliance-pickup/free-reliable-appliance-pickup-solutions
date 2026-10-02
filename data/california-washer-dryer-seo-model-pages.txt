@@ -197,3 +197,7 @@ westminster-ca-washer-dryer-pickup
 whittier-washer-dryer-pickup
 yorba-linda-washer-dryer-pickup
 yucaipa-washer-dryer-pickup
+clovis-washer-dryer-pickup
+sanger-washer-dryer-pickup
+fowler-washer-dryer-pickup
+selma-washer-dryer-pickup
