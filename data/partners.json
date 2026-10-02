@@ -10,7 +10,21 @@
     "publicPartnerIdentity": false,
     "applicationDoesNotEstablishCoverage": true,
     "applicationDoesNotCreateSeoPage": true,
-    "paidAccessRequiresSeparateDisclosureAndAgreement": true
+    "paidAccessRequiresSeparateDisclosureAndAgreement": true,
+    "publicPartnerVerificationRequiresExplicitOptIn": true,
+    "publicPartnerVerificationRequiresApproval": true,
+    "publicPartnerVerificationMayInclude": [
+      "business_name",
+      "public_website_or_profile",
+      "approved_service_area",
+      "approved_capabilities"
+    ],
+    "publicPartnerVerificationMustNotInclude": [
+      "personal_phone",
+      "personal_email",
+      "customer_contact",
+      "customer_address"
+    ]
   },
   "partnerStatuses": {
     "applicant": "Application received; not approved for routing.",
@@ -19,7 +33,12 @@
     "paused": "Temporarily not receiving new opportunities.",
     "inactive": "Not eligible for routing."
   },
-  "accessModes": ["shared", "primary", "backup", "waitlist"],
+  "accessModes": [
+    "shared",
+    "primary",
+    "backup",
+    "waitlist"
+  ],
   "partnerTemplate": {
     "partner_id": null,
     "status": "applicant",
@@ -39,7 +58,11 @@
     "approved_access_modes": [],
     "approved_on": null,
     "paused_on": null,
-    "notes": null
+    "notes": null,
+    "public_website_or_profile": null,
+    "public_verification_opt_in": false,
+    "partner_announcement_kit_requested": false,
+    "public_listing_approved": false
   },
   "partners": []
 }
