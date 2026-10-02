@@ -35,3 +35,4 @@ sanger-appliance-pickup
 fowler-appliance-pickup
 selma-appliance-pickup
 stockton-appliance-pickup
+modesto-appliance-pickup
