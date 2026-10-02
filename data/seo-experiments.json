@@ -90,6 +90,87 @@
         "Specialty pages retain or improve refrigerator/freezer-specific impressions"
       ],
       "status": "running"
+    },
+    {
+      "id": "2026-10-01-commercial-authority-links",
+      "markets": [
+        "Phoenix, AZ",
+        "Fresno, CA",
+        "Sacramento, CA",
+        "Commercial program hub"
+      ],
+      "hypothesis": "Reciprocal internal links between the commercial authority hub and priority city pages will improve discovery and relevance for commercial/recurring intent while strengthening city pages with a real topical support layer.",
+      "pagesChanged": [
+        "/commercial-appliance-pickup/",
+        "/phoenix-appliance-pickup/",
+        "/fresno-appliance-pickup/",
+        "/sacramento-appliance-pickup/"
+      ],
+      "baselinePeriod": {
+        "start": "2026-09-02",
+        "end": "2026-09-29"
+      },
+      "baseline": {
+        "architectureSnapshot": {
+          "ourDiscoverableUrls": 667,
+          "ourGeneralCityPagesApprox": 297,
+          "ourCityLaundryPagesApprox": 251,
+          "ourCommercialLikePagesApprox": 15,
+          "ourGuideLikePagesApprox": 36,
+          "takeMyApplianceDiscoverableUrlsApprox": 4993,
+          "takeMyApplianceCommercialPagesApprox": 73,
+          "takeMyApplianceDeepAppliancePagesApprox": 209,
+          "appliancePickupNowDiscoverableUrlsApprox": 274,
+          "appliancePickupNowGuideLikePagesApprox": 42
+        },
+        "citySignals": [
+          {
+            "page": "/sacramento-appliance-pickup/",
+            "clicks": 1,
+            "impressions": 21,
+            "ctr": 0.0476190476,
+            "avgPosition": 16.9047619048
+          },
+          {
+            "query": "free appliance pick up sacramento",
+            "page": "/sacramento-appliance-pickup/",
+            "impressions": 7,
+            "position": 18.2857142857
+          },
+          {
+            "query": "appliance recycling fresno",
+            "page": "/fresno-appliance-pickup/",
+            "impressions": 1,
+            "position": 4
+          },
+          {
+            "query": "appliance removal fresno",
+            "page": "/fresno-appliance-pickup/",
+            "impressions": 1,
+            "position": 19
+          },
+          {
+            "query": "appliance pick up phoenix",
+            "page": "/phoenix-appliance-pickup/",
+            "impressions": 1,
+            "position": 64
+          },
+          {
+            "query": "appliance removal phoenix",
+            "page": "/phoenix-appliance-pickup/",
+            "impressions": 5,
+            "position": 82.4
+          }
+        ],
+        "commercialProgramSignal": "No selected commercial-program page appeared in the returned top-page/query relationship rows for this finalized period."
+      },
+      "change": "Added reciprocal commercial/recurring internal-link pathways between the main commercial hub and Phoenix, Fresno and Sacramento; expanded commercial hub market links while keeping partner-recruiting markets clearly qualified.",
+      "successSignals": [
+        "New impressions/queries for commercial, recurring, property-manager or senior-living program pages",
+        "Improved city-page impressions/position for commercially relevant queries without harming core residential queries",
+        "More consistent internal-link discovery between priority cities and commercial program pages"
+      ],
+      "status": "running"
     }
   ]
 }
