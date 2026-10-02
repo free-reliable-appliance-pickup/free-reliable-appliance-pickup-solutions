@@ -188,6 +188,7 @@ function initLeadAnalytics(){
     document.head.appendChild(tag);
   }
   function scheduleGa4Library(){
+    if(typeof window.addEventListener!=='function')return;
     const afterLoad=function(){
       if('requestIdleCallback' in window)window.requestIdleCallback(loadGa4Library,{timeout:2000});
       else window.setTimeout(loadGa4Library,0);
