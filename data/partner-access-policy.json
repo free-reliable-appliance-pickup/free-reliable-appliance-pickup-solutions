@@ -12,7 +12,10 @@
     "marketSeoStatusManagedSeparately": true,
     "publicPartnerIdentity": false,
     "paidAccessRequiresSeparateDisclosureAndAgreement": true,
-    "automaticCityPageCreation": false
+    "automaticCityPageCreation": false,
+    "publicPartnerVerificationRequiresExplicitOptIn": true,
+    "publicPartnerVerificationRequiresApproval": true,
+    "publicPartnerVerificationIsNeverAutomatic": true
   },
   "accessModes": {
     "shared": {
@@ -49,15 +52,57 @@
     }
   },
   "preferenceTierMapping": {
-    "PRIMARY_TERRITORY_CANDIDATE": ["primary", "shared"],
-    "FAST_SHARED_LEAD_CANDIDATE": ["shared", "backup"],
-    "TERRITORY_INTEREST": ["primary", "waitlist"],
-    "SHARED_LEAD_INTEREST": ["shared"],
-    "STANDARD_REVIEW": ["waitlist"]
+    "PRIMARY_TERRITORY_CANDIDATE": [
+      "primary",
+      "shared"
+    ],
+    "FAST_SHARED_LEAD_CANDIDATE": [
+      "shared",
+      "backup"
+    ],
+    "TERRITORY_INTEREST": [
+      "primary",
+      "waitlist"
+    ],
+    "SHARED_LEAD_INTEREST": [
+      "shared"
+    ],
+    "STANDARD_REVIEW": [
+      "waitlist"
+    ]
   },
   "leadDisclosure": {
-    "preAssignmentFields": ["city", "state", "appliance_type", "condition", "photos_when_provided", "floor", "stairs", "access_notes", "pickup_notes"],
+    "preAssignmentFields": [
+      "city",
+      "state",
+      "appliance_type",
+      "condition",
+      "photos_when_provided",
+      "floor",
+      "stairs",
+      "access_notes",
+      "pickup_notes"
+    ],
     "customerContactRequiresAssignmentOrAuthorizedSharedAccess": true,
     "publicCustomerContact": false
+  },
+  "publicVerification": {
+    "purpose": "Allow an approved partner to opt in to a factual public relationship-verification listing without exposing private applicant or customer data.",
+    "allowedFields": [
+      "business_name",
+      "public_website_or_profile",
+      "approved_service_area",
+      "approved_capabilities"
+    ],
+    "prohibitedFields": [
+      "personal_phone",
+      "personal_email",
+      "customer_name",
+      "customer_phone",
+      "customer_email",
+      "customer_address"
+    ],
+    "announcementLinksOptional": true,
+    "announcementOrLinkNotRequiredForApprovalOrLeadAccess": true
   }
 }
