@@ -9,7 +9,7 @@ PRIORITY = {
 "azusa","arcadia","pasadena","san-marino","el-monte","whittier","pico-rivera","montebello","riverside",
 "palm-springs","palm-desert","la-quinta","rancho-mirage","indian-wells","cathedral-city","indio",
 "fresno","clovis","sanger","fowler","selma","sacramento","stockton","phoenix","mesa","chandler","scottsdale","glendale","glendale-az",
-"denver","aurora","wheat-ridge","portland","salem","keizer"
+"denver","aurora","wheat-ridge","portland","salem","keizer","seattle","tacoma","puget-sound"
 }
 BASE="https://freereliableappliancepickup.com/"
 ns={"s":"http://www.sitemaps.org/schemas/sitemap/0.9"}
