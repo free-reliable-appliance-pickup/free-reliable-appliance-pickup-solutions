@@ -379,6 +379,79 @@
       "evaluateNotBefore": "2026-10-09",
       "preferredReview": "2026-10-16",
       "status": "running"
+    },
+    {
+      "id": "2026-10-01-sgv-ctr-test",
+      "market": "San Gabriel Valley / eastern corridor CTR test",
+      "hypothesis": "For city pages already ranking roughly positions 7-10 with impressions but zero clicks, a clearer 'free to submit + no account + text photos/call' meta description will improve CTR without materially hurting average position.",
+      "testPages": [
+        "/azusa-appliance-pickup/",
+        "/diamond-bar-appliance-pickup/",
+        "/claremont-appliance-pickup/"
+      ],
+      "controlPages": [
+        "/arcadia-appliance-pickup/",
+        "/brea-appliance-pickup/"
+      ],
+      "pagesChanged": [
+        "/azusa-appliance-pickup/",
+        "/diamond-bar-appliance-pickup/",
+        "/claremont-appliance-pickup/"
+      ],
+      "baselinePeriod": {
+        "start": "2026-09-02",
+        "end": "2026-09-29"
+      },
+      "baseline": {
+        "test": [
+          {
+            "page": "/azusa-appliance-pickup/",
+            "clicks": 0,
+            "impressions": 14,
+            "ctr": 0,
+            "avgPosition": 7.2857142857
+          },
+          {
+            "page": "/diamond-bar-appliance-pickup/",
+            "clicks": 0,
+            "impressions": 14,
+            "ctr": 0,
+            "avgPosition": 7.2142857143
+          },
+          {
+            "page": "/claremont-appliance-pickup/",
+            "clicks": 0,
+            "impressions": 10,
+            "ctr": 0,
+            "avgPosition": 8.3
+          }
+        ],
+        "control": [
+          {
+            "page": "/arcadia-appliance-pickup/",
+            "clicks": 0,
+            "impressions": 11,
+            "ctr": 0,
+            "avgPosition": 8
+          },
+          {
+            "page": "/brea-appliance-pickup/",
+            "clicks": 0,
+            "impressions": 13,
+            "ctr": 0,
+            "avgPosition": 9.8461538462
+          }
+        ]
+      },
+      "change": "Changed only the meta/OG/WebPage description on the three test pages; titles and on-page content were left unchanged to isolate search-snippet conversion effects.",
+      "successSignals": [
+        "Test-group CTR becomes positive or materially exceeds control-group CTR",
+        "Test-group impressions remain stable or increase",
+        "Average position does not materially deteriorate relative to controls"
+      ],
+      "evaluateNotBefore": "2026-10-09",
+      "preferredReview": "2026-10-16",
+      "status": "running"
     }
   ]
 }
