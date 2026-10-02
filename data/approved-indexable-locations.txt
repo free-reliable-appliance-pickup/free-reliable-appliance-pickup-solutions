@@ -71,7 +71,6 @@ calimesa-appliance-pickup
 calimesa-washer-dryer-pickup
 carefree-appliance-pickup
 carlsbad-appliance-pickup
-carlsbad-washer-dryer-pickup
 carson-appliance-pickup
 carson-washer-dryer-pickup
 cathedral-city-appliance-pickup
@@ -92,7 +91,6 @@ chino-hills-appliance-pickup
 chino-hills-washer-dryer-pickup
 chino-washer-dryer-pickup
 chula-vista-appliance-pickup
-chula-vista-washer-dryer-pickup
 city-of-industry-appliance-pickup
 city-of-industry-washer-dryer-pickup
 claremont-appliance-pickup
@@ -157,7 +155,6 @@ el-monte-washer-dryer-pickup
 el-segundo-appliance-pickup
 el-segundo-washer-dryer-pickup
 encinitas-appliance-pickup
-encinitas-washer-dryer-pickup
 escondido-appliance-pickup
 escondido-washer-dryer-pickup
 eugene-appliance-pickup
@@ -344,7 +341,6 @@ oak-glen-appliance-pickup
 oakland-appliance-pickup
 oakland-washer-dryer-pickup
 oceanside-appliance-pickup
-oceanside-washer-dryer-pickup
 ontario-appliance-pickup
 ontario-washer-dryer-pickup
 orange-appliance-pickup
@@ -387,7 +383,6 @@ pomona-washer-dryer-pickup
 portland-appliance-pickup
 portland-washer-dryer-pickup
 poway-appliance-pickup
-poway-washer-dryer-pickup
 puget-sound-appliance-pickup
 queen-creek-appliance-pickup
 rancho-cucamonga-appliance-pickup
@@ -471,7 +466,6 @@ santa-maria-washer-dryer-pickup
 santa-monica-appliance-pickup
 santa-monica-washer-dryer-pickup
 santee-appliance-pickup
-santee-washer-dryer-pickup
 scottsdale-appliance-pickup
 seal-beach-appliance-pickup
 seal-beach-washer-dryer-pickup
