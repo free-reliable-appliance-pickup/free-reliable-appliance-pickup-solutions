@@ -303,12 +303,15 @@ def main():
     ap.add_argument("--config", default="data/competitor-watch-targets.json")
     ap.add_argument("--baseline", default="data/competitor-watch-snapshots.json")
     ap.add_argument("--report", default="reports/competitor-watch-latest.md")
+    ap.add_argument("--board", default="reports/competitor-battle-board.md")
     args = ap.parse_args()
 
     config = json.loads(Path(args.config).read_text(encoding="utf-8"))
     baseline_path = Path(args.baseline)
     report_path = Path(args.report)
+    board_path = Path(args.board)
     report_path.parent.mkdir(parents=True, exist_ok=True)
+    board_path.parent.mkdir(parents=True, exist_ok=True)
     baseline = {}
     if baseline_path.exists():
         try:
