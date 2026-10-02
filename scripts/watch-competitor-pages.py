@@ -24,7 +24,7 @@ TIMEOUT = 25
 SIGNAL_TERMS = {
     "photo_first": ("photo", "photos", "picture"),
     "access_detail": ("stairs", "elevator", "gate", "garage", "driveway", "tight", "basement", "access"),
-    "trust_flow": ("free to submit", "no account", "request is", "not a confirmed", "confirm pickup", "confirms the pickup"),
+    "trust_flow": ("free to submit", "no account", "request is", "request starts", "submitting a request", "does not create an appointment", "does not guarantee", "not a confirmed", "confirm pickup", "confirms the pickup", "pickup is confirmed"),
     "commercial_recurring": ("commercial", "business appliance", "property manager", "recurring", "apartment", "senior", "55+"),
     "local_specificity": ("zip code", "zip codes", "neighborhood", "county", "local details", "service areas"),
     "local_fallback": ("city of ", "public works", "solid waste", "burrtec", "waste management", "republic services", "landfill", "bulky"),
@@ -180,17 +180,20 @@ def parse_html(html: str, base_url: str):
     parser.feed(html)
     text = norm(" ".join(parser.visible_parts))
     links = important_internal_links(base_url, parser.links)
+    types = schema_types(parser.jsonld_chunks)
+    sig = signals_for(text, links)
+    sig["faq"] = sig.get("faq", False) or "FAQPage" in types
     snap = {
         "title": norm(" ".join(parser.title_parts)),
         "meta_description": norm(parser.meta_description),
         "h1": norm(" ".join(parser.h1_parts)),
         "canonical": norm(parser.canonical),
         "robots": norm(parser.robots),
-        "schema_types": schema_types(parser.jsonld_chunks),
+        "schema_types": types,
         "important_internal_links": links,
         "important_internal_link_count": len(links),
         "word_count": len(text.split()),
-        "signals": signals_for(text, links),
+        "signals": sig,
     }
     fingerprint_basis = {k: snap[k] for k in (
         "title", "meta_description", "h1", "canonical", "robots",
