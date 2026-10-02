@@ -179,13 +179,25 @@ function initLeadAnalytics(){
   window.gtag('js',new Date());
   window.gtag('config',GA4_MEASUREMENT_ID,{send_page_view:true});
 
-  if(!document.querySelector('script[data-free-reliable-ga4]')){
+  function loadGa4Library(){
+    if(document.querySelector('script[data-free-reliable-ga4]'))return;
     const tag=document.createElement('script');
     tag.async=true;
     tag.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(GA4_MEASUREMENT_ID);
     tag.dataset.freeReliableGa4='1';
     document.head.appendChild(tag);
   }
+  function scheduleGa4Library(){
+    const afterLoad=function(){
+      if('requestIdleCallback' in window)window.requestIdleCallback(loadGa4Library,{timeout:2000});
+      else window.setTimeout(loadGa4Library,0);
+    };
+    if(document.readyState==='complete')afterLoad();
+    else window.addEventListener('load',afterLoad,{once:true});
+    window.addEventListener('pointerdown',loadGa4Library,{once:true,passive:true});
+    window.addEventListener('keydown',loadGa4Library,{once:true});
+  }
+  scheduleGa4Library();
 
   document.addEventListener('click',function(event){
     const link=event.target&&event.target.closest?event.target.closest('a[href]'):null;
