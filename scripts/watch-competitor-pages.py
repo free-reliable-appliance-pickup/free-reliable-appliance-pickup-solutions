@@ -277,6 +277,15 @@ def strengths(sig):
     }
     return [friendly[k] for k in friendly if sig.get(k)]
 
+def our_advantages(competitor_sig, our_sig):
+    friendly = {
+        "photo_first":"photo-first intake", "access_detail":"access detail",
+        "trust_flow":"confirmation/trust flow", "commercial_recurring":"commercial/recurring coverage",
+        "local_specificity":"local ZIP/neighborhood detail", "local_fallback":"official local fallback",
+        "faq":"FAQ coverage", "appliance_depth":"appliance-specific guide depth",
+    }
+    return [friendly[k] for k in friendly if our_sig.get(k) and not competitor_sig.get(k)]
+
 def choose_counter(new, ours, changes):
     ns = new.get("signals", {})
     osig = (ours or {}).get("signals", {})
@@ -447,6 +456,8 @@ def main():
                 f"**Observed competitor move:** {describe_changes(item['changes'])}",
                 "",
                 "**Competitor strength:** " + (", ".join(strengths(cur.get("signals", {}))) or "no benchmark signal detected") + ".",
+                "",
+                "**Competitor weakness / our advantage:** " + (", ".join(our_advantages(cur.get("signals", {}), ours.get("signals", {}))) or "No clear benchmark advantage detected from the current page snapshot.") + ".",
                 "",
                 "**Our current strength:** " + (", ".join(strengths(ours.get("signals", {}))) or "owner page unavailable or no benchmark signals detected") + ".",
                 "",
