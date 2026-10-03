@@ -1013,6 +1013,60 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Covina page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-03-monrovia-city-focus",
+      "market": "Monrovia, CA",
+      "hypothesis": "A tighter exact-city architecture that keeps Monrovia foothill access, official bulky-item reference, qualification, commercial paths and appliance details will help the dedicated Monrovia page improve from its weak mobile baseline and enter desktop visibility.",
+      "pagesChanged": [
+        "/monrovia-appliance-pickup/"
+      ],
+      "protectedOwner": "/monrovia-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "keywordCom": {
+          "mobile": {
+            "keyword": "free appliance pickup monrovia",
+            "latestOrganicPosition": 44,
+            "bestRank": 44,
+            "rankingUrl": "/monrovia-appliance-pickup/"
+          },
+          "desktop": {
+            "keyword": "free appliance pickup monrovia",
+            "latestTop25DomainPosition": null,
+            "bestRank": 0,
+            "rankingUrl": null
+          }
+        },
+        "competitorSnapshot": {
+          "topOrganic": [
+            "TakeMyAppliance",
+            "LoadUp",
+            "Yelp",
+            "City of Monrovia",
+            "Athens Services"
+          ]
+        },
+        "preChangeArchitecture": {
+          "htmlBytes": 24918,
+          "h2Count": 18,
+          "h3Count": 14
+        }
+      },
+      "change": "Simplified only the Monrovia main-content architecture while preserving title/meta, canonical, H1, structured data, direct 909 call/text paths, existing Formspree intake, qualification rules and local routing. Added the current City of Monrovia trash-services reference, explicit network transparency, post-pickup guidance, exact timing guidance and a second real appliance proof image. New architecture: 19172 HTML bytes, 12 H2s, 11 H3s.",
+      "successSignals": [
+        "The intended /monrovia-appliance-pickup/ page improves materially above the mobile #44 baseline.",
+        "The Monrovia city page enters the tracked desktop organic results.",
+        "Finalized GSC impressions and average position improve or remain stable without harming Monrovia washer/dryer-specific intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Monrovia page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
