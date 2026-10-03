@@ -176,7 +176,13 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Pasadena city page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Pasadena city page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-03",
+          "reason": "Restored the protected Pasadena title/meta/WebPage snippet baseline after an unintended post-experiment snippet edit triggered the SEO Experiment Guard. This restoration preserves the original 2026-10-03 experiment variables for clean measurement through the October 13 review gate."
+        }
+      ]
     },
     {
       "id": "2026-10-03-orange-county-hub-parity",
