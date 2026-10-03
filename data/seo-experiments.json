@@ -802,6 +802,53 @@
           "reason": "Post-change California audits required a second non-logo real/page image, the established local-ranking-depth marker, the exact city pickup-timing FAQ pattern, post-pickup outcome guidance, and explicit network transparency. Added only these technical/structural requirements; title, meta, canonical, H1 and experiment hypothesis were unchanged."
         }
       ]
+    },
+    {
+      "id": "2026-10-03-la-verne-city-parity",
+      "market": "La Verne, CA",
+      "hypothesis": "A simpler exact-city page architecture will help Google surface the dedicated La Verne city page for broad free appliance pickup searches instead of the San Gabriel Valley hub.",
+      "pagesChanged": [
+        "/la-verne-appliance-pickup/"
+      ],
+      "protectedOwner": "/la-verne-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "keywordCom": {
+          "mobile": {
+            "keyword": "free appliance pickup la verne",
+            "rank": 0,
+            "bestRank": 2,
+            "rankingUrl": "/san-gabriel-valley-appliance-pickup/",
+            "liveSerpDomainPosition": 1
+          },
+          "desktop": {
+            "keyword": "free appliance pickup la verne",
+            "rank": 0,
+            "bestRank": 2,
+            "rankingUrl": "/san-gabriel-valley-appliance-pickup/"
+          }
+        },
+        "preChangeArchitecture": {
+          "htmlBytes": 33843,
+          "h2Count": 25,
+          "h3Count": 20
+        },
+        "wrongPageSignal": "On the 2026-10-03 mobile SERP, the domain ranked #1 via /san-gabriel-valley-appliance-pickup/ while the intended La Verne page was absent."
+      },
+      "change": "Simplified the La Verne main content while preserving title/meta, canonical/schema, direct 909 call/text CTA, Formspree intake, qualification rules, local access detail, audience paths, regional parent links, two real/page image placements and appliance-specific handoff.",
+      "successSignals": [
+        "The intended /la-verne-appliance-pickup/ page becomes the ranking URL for free appliance pickup La Verne.",
+        "The San Gabriel Valley hub stops owning the exact La Verne query while retaining broader regional visibility.",
+        "Finalized GSC impressions and average position improve or remain stable without harming laundry-specific intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the La Verne page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
