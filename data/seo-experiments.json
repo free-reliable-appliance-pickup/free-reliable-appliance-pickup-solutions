@@ -900,6 +900,65 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Temple City general page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-03-pomona-city-focus",
+      "market": "Pomona, CA",
+      "hypothesis": "A tighter exact-city architecture that keeps Pomona-specific access, qualification, municipal-reference, commercial and appliance details will help Google surface the dedicated Pomona city page more consistently for broad free appliance pickup searches instead of burying it behind competitors or broader site pages.",
+      "pagesChanged": [
+        "/pomona-appliance-pickup/"
+      ],
+      "protectedOwner": "/pomona-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "keywordCom": {
+          "mobile": {
+            "keyword": "free appliance pickup pomona",
+            "rank": 0,
+            "bestRank": 1,
+            "rankingUrl": "/",
+            "latestTop20DomainPosition": null
+          },
+          "desktop": {
+            "keyword": "free appliance pickup pomona",
+            "rank": 18,
+            "bestRank": 1,
+            "rankingUrl": "/pomona-appliance-pickup/",
+            "latestOrganicListingPosition": 18
+          }
+        },
+        "competitorSnapshot": {
+          "mobileTop": [
+            "LoadUp",
+            "TakeMyAppliance",
+            "City of Pomona"
+          ],
+          "desktopTop": [
+            "LoadUp",
+            "TakeMyAppliance",
+            "City of Pomona"
+          ]
+        },
+        "preChangeArchitecture": {
+          "htmlBytes": 36237,
+          "h2Count": 24,
+          "h3Count": 18
+        }
+      },
+      "change": "Simplified the Pomona main-content architecture while preserving title, meta description, canonical, H1, schema, direct 909 call/text paths, Formspree intake, qualification rules, official City of Pomona references, local neighborhood/access detail, commercial paths and appliance-specific handoff. Removed redundant legacy SEO-network sections and reduced heading sprawl. New architecture: 24110 HTML bytes, 12 H2s, 14 H3s.",
+      "successSignals": [
+        "The intended /pomona-appliance-pickup/ page becomes the ranking URL for free appliance pickup Pomona on both mobile and desktop.",
+        "The Pomona city page enters or improves within the top 10 organic results while maintaining indexability and conversion paths.",
+        "Finalized GSC impressions and average position improve or remain stable without harming Pomona washer/dryer-specific intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Pomona page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
