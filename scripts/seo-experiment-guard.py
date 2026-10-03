@@ -31,6 +31,22 @@ def page_file(path):
 changed=changed_files()
 message=sh("git","log","-1","--pretty=%B")
 technical_override=message.lstrip().startswith("[technical-fix]")
+
+# Allow the one-time introduction of a brand-new experiment and its initial page change.
+# After merge, that experiment exists in the base data and its freeze is enforced.
+base_ref=os.environ.get("GITHUB_BASE_REF","").strip()
+base_spec=f"origin/{base_ref}:data/seo-experiments.json" if base_ref else "HEAD^:data/seo-experiments.json"
+base_raw=sh("git","show",base_spec)
+try:
+    base_data=json.loads(base_raw) if base_raw else {"experiments":[]}
+except Exception:
+    base_data={"experiments":[]}
+base_ids={e.get("id") for e in base_data.get("experiments",[]) if e.get("id")}
+current_ids={e.get("id") for e in data.get("experiments",[]) if e.get("id")}
+new_experiment_ids=current_ids-base_ids
+if new_experiment_ids:
+    print("NEW_EXPERIMENTS", ", ".join(sorted(new_experiment_ids)))
+
 if changed:
     print("CHANGED_FILES", len(changed))
     for p in sorted(changed):
@@ -58,7 +74,10 @@ for e in data.get("experiments",[]):
         if today < gate_date:
             print(f"::notice title=SEO experiment protected::{e['id']} — freeze before {gate}. Pages: {', '.join(sorted(pages))}")
             if touched and not technical_override:
-                blocked.append((e["id"],gate,touched))
+                if e["id"] in new_experiment_ids:
+                    print(f"::notice title=SEO experiment initial setup::{e['id']} — initial protected-page change is allowed in the same change set that creates the experiment. Future edits are frozen until {gate}.")
+                else:
+                    blocked.append((e["id"],gate,touched))
         else:
             print(f"::notice title=SEO experiment review due::{e['id']} — compare finalized GSC against baseline before more edits. Pages: {', '.join(sorted(pages))}")
     else:
