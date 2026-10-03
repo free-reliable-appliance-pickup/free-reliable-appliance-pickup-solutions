@@ -23,6 +23,76 @@
   },
   "experiments": [
     {
+      "id": "2026-10-03-pasadena-city-parity",
+      "market": "Pasadena, CA",
+      "hypothesis": "A simpler exact-city page architecture, modeled on the consistently ranking competitor pattern while preserving our stronger direct-contact and qualification signals, will help Google prefer the Pasadena city page instead of South Pasadena or broader pages for the exact Pasadena pickup query.",
+      "pagesChanged": [
+        "/pasadena-appliance-pickup/"
+      ],
+      "protectedOwner": "/pasadena-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "keywordCom": {
+          "mobile": {
+            "keyword": "free appliance pickup pasadena",
+            "rank": 32,
+            "bestRank": 11,
+            "rankingUrl": "/south-pasadena-appliance-pickup/"
+          },
+          "desktop": {
+            "keyword": "free appliance pickup pasadena",
+            "rank": 0,
+            "rankingUrl": null
+          }
+        },
+        "liveGoogle20261003": "TakeMyAppliance appeared around #1 for the exact Pasadena query; our domain appeared much lower and Google mixed Pasadena/South Pasadena.",
+        "finalizedGscMobile": [
+          {
+            "query": "appliance pick up free",
+            "page": "/pasadena-appliance-pickup/",
+            "impressions": 3,
+            "position": 8.3333333333
+          },
+          {
+            "query": "appliance pick up free near me",
+            "page": "/pasadena-appliance-pickup/",
+            "impressions": 1,
+            "position": 9
+          },
+          {
+            "query": "refrigerator pick up free",
+            "page": "/pasadena-appliance-pickup/",
+            "impressions": 1,
+            "position": 6
+          }
+        ],
+        "preChangeArchitecture": {
+          "approxWords": 2597,
+          "h2Count": 24
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/pasadena",
+          "approxWords": 1010,
+          "h2Count": 7,
+          "pattern": "Commercial section -> 3-step process -> why choose us -> request -> local details -> FAQ -> nearby locations."
+        }
+      },
+      "change": "Simplified only the Pasadena city page main content to a concise exact-city architecture while preserving title/meta, canonical, Service/FAQ/WebPage schema, phone/text CTA, Formspree intake, local Pasadena official sources, qualification rules, real appliance proof, commercial/property paths, regional parent links and appliance-authority links.",
+      "successSignals": [
+        "The intended /pasadena-appliance-pickup/ page becomes the ranking URL for free appliance pickup Pasadena.",
+        "South Pasadena or other sibling-page ownership for the Pasadena query declines.",
+        "Exact-query position improves without reducing Pasadena page impressions or damaging washer/dryer-specific ownership."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Pasadena city page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
       "id": "2026-10-03-orange-county-hub-parity",
       "market": "Orange County, CA",
       "hypothesis": "A simpler county-hub architecture modeled on the consistently ranking competitor pattern will help /orange-county-appliance-pickup/ own county-level appliance pickup/removal queries instead of scattering county intent across Irvine, Huntington Beach, Orange, Anaheim and South Orange County pages.",
