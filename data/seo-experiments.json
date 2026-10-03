@@ -848,7 +848,13 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the La Verne page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the La Verne page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-03",
+          "reason": "Post-change California SEO audit required at least one external local/official reference. Restored the original City of La Verne Bulky Item Pick Up reference only; title, meta, canonical, H1, page architecture and experiment hypothesis were unchanged."
+        }
+      ]
     }
   ]
 }
