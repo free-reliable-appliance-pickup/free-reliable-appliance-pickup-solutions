@@ -57,7 +57,13 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the El Monte page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the El Monte page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-03",
+          "reason": "Post-merge California priority-page audit requires at least two non-logo real/page images. Simplification retained the hero but removed the second real appliance proof image. Restored one existing real refrigerator image only; no ranking copy, title/meta, links, schema intent, or experiment hypothesis changed."
+        }
+      ]
     },
     {
       "id": "2026-10-03-west-covina-city-parity",
@@ -94,7 +100,13 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the West Covina page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the West Covina page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-03",
+          "reason": "Post-merge California priority-page audit requires at least two non-logo real/page images. Simplification retained the hero but removed the second real appliance proof image. Restored one existing real refrigerator image only; no ranking copy, title/meta, links, schema intent, or experiment hypothesis changed."
+        }
+      ]
     },
     {
       "id": "2026-10-03-pasadena-city-parity",
