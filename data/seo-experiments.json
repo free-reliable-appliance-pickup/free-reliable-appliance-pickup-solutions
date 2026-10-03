@@ -1121,6 +1121,60 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Chino page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-03-la-puente-city-focus",
+      "market": "La Puente, CA",
+      "hypothesis": "A tighter exact-city architecture that preserves La Puente address/access guidance, qualification, official local reference, commercial paths and appliance detail will help the dedicated La Puente page improve from its current high-teens/low-page-two visibility and gain more consistent desktop ownership.",
+      "pagesChanged": [
+        "/la-puente-appliance-pickup/"
+      ],
+      "protectedOwner": "/la-puente-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "keywordCom": {
+          "mobile": {
+            "keyword": "free appliance pickup la puente",
+            "latestOrganicPosition": 19,
+            "bestRank": 19,
+            "rankingUrl": "/la-puente-appliance-pickup/"
+          },
+          "desktop": {
+            "keyword": "free appliance pickup la puente",
+            "latestOrganicPosition": 19,
+            "searchSnapshotRank": 0,
+            "rankingUrl": "/la-puente-appliance-pickup/"
+          }
+        },
+        "competitorSnapshot": {
+          "topOrganic": [
+            "TakeMyAppliance",
+            "Yelp",
+            "City of La Puente",
+            "LoadUp",
+            "Mattress Disposal Plus"
+          ]
+        },
+        "preChangeArchitecture": {
+          "htmlBytes": 34156,
+          "h2Count": 27,
+          "h3Count": 17
+        }
+      },
+      "change": "Simplified only the La Puente main-content architecture while preserving title/meta, canonical, H1, structured data, direct 909 call/text paths, existing Formspree intake, qualification rules, official City of La Puente reference, local access guidance, commercial/property paths, regional parent links and appliance-authority links. Removed redundant legacy SEO-network sections. New architecture: 18871 HTML bytes, 12 H2s, 11 H3s.",
+      "successSignals": [
+        "The intended /la-puente-appliance-pickup/ page remains the ranking URL and improves above its current high-teens baseline.",
+        "The La Puente city page enters the top 10 organic results on at least one tracked device.",
+        "Finalized GSC impressions and average position improve or remain stable without harming La Puente washer/dryer-specific intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the La Puente page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
