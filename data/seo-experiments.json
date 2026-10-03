@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-01",
+  "updated": "2026-10-03",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,49 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-10-03-ie-primary-owner-stabilization",
+      "market": "Rancho Cucamonga / Fontana / Ontario / Upland, CA",
+      "hypothesis": "After clarifying broad city intent ownership and regional-hub handoffs, Google should increasingly surface each dedicated city appliance page for broad 'free appliance pickup + city' searches instead of sibling specialty or regional pages.",
+      "pagesChanged": [
+        "/rancho-cucamonga-appliance-pickup/",
+        "/fontana-appliance-pickup/",
+        "/ontario-appliance-pickup/",
+        "/upland-appliance-pickup/",
+        "/inland-empire-appliance-pickup/",
+        "/san-bernardino-county-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/rancho-cucamonga-appliance-pickup/",
+        "/fontana-appliance-pickup/",
+        "/ontario-appliance-pickup/",
+        "/upland-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "gscNote": "Latest finalized Search Console planning data available during diagnosis ended 2026-09-30, before the 2026-10-03 changes. Rancho had broad-query impressions on the city page but also overlap with refrigerator/freezer pages; Ontario had a small generic appliance-pickup signal; Fontana/Upland were not present in the returned top relationship rows.",
+        "keywordComSnapshot": {
+          "ranchoCucamonga": "2026-10-02 rank 2 using San Bernardino page; 2026-10-03 mobile also observed rank 38 using Rancho refrigerator page, with other checks unranked.",
+          "fontana": "2026-10-03 desktop rank 3 using Southern California hub; mobile unranked after rank 7 on 2026-10-02 using Fontana city page.",
+          "ontario": "Unranked on tracked mobile and desktop snapshots for 2026-10-02 and 2026-10-03.",
+          "upland": "2026-10-03 rank 1 using Upland washer/dryer page rather than the broad city appliance page."
+        }
+      },
+      "change": "Clarified dedicated city pages as broad-intent owners, strengthened regional hub handoffs, aligned city Service/WebPage schema relationships, and repaired Rancho metadata to satisfy existing intent and health rules.",
+      "successSignals": [
+        "The dedicated city appliance page becomes the ranking URL for its broad city query.",
+        "Wrong-page ranking from regional or specialty pages declines.",
+        "Finalized GSC impressions/position for the intended city pages improve or remain stable without harming specialty-query ownership."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical, or intent-ownership edits to these pages before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged."
+    },
     {
       "id": "2026-10-01-rancho-intent-concentration",
       "market": "Rancho Cucamonga, CA",
@@ -93,7 +136,9 @@
         "General page broad-query average position improves without specialty-query loss",
         "Specialty pages retain or improve refrigerator/freezer-specific impressions"
       ],
-      "status": "running"
+      "status": "superseded",
+      "supersededBy": "2026-10-03-ie-primary-owner-stabilization",
+      "outcome": "Inconclusive: further Rancho and regional ownership changes were made on 2026-10-03 before the minimum observation window, so this experiment can no longer isolate its original variable."
     },
     {
       "id": "2026-10-01-commercial-authority-links",
