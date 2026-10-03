@@ -1237,6 +1237,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, hero, body, internal-link, schema, canonical, or intent-ownership edits to the Stockton washer/dryer page before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged."
+    },
+    {
+      "id": "2026-10-03-fresno-sibling-intent-boundaries",
+      "market": "Fresno / Clovis / Sanger / Fowler / Selma, CA",
+      "hypothesis": "Explicit city-boundary handoffs on nearby Central Valley pages should reduce wrong-page rankings for Fresno queries and concentrate Fresno-specific relevance on the dedicated Fresno general and laundry pages without rewriting the protected Fresno pages.",
+      "pagesChanged": [
+        "/clovis-appliance-pickup/",
+        "/clovis-washer-dryer-pickup/",
+        "/sanger-appliance-pickup/",
+        "/fowler-appliance-pickup/",
+        "/selma-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "keywordComSnapshot": "On 2026-10-03, multiple Fresno-tracked terms were surfacing neighboring URLs: Clovis appliance/laundry pages for free appliance removal Fresno and washer/dryer Fresno terms; Sanger appliance page for free freezer pickup Fresno; Fowler appliance page for appliance recycling/removal Fresno; Selma laundry page for free washer pickup Fresno. Several companion tracked variants were unranked.",
+        "liveSearchNote": "Live sampled Fresno searches continued to surface established competitors such as TakeMyAppliance and AppliancePickupNow while Free Reliable was not consistently visible for the broad Fresno query."
+      },
+      "change": "Added explicit, user-facing city-boundary handoffs from the neighboring Clovis, Sanger, Fowler and Selma pages to the dedicated Fresno general or Fresno washer/dryer owner URLs. No protected Fresno page content, title, canonical or schema was changed.",
+      "successSignals": [
+        "Fresno-specific tracked queries stop surfacing Clovis/Sanger/Fowler/Selma URLs.",
+        "The Fresno general page becomes the ranking URL for broad Fresno appliance/removal/recycling intent.",
+        "The Fresno washer/dryer page becomes the ranking URL for Fresno laundry-only intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative intent-boundary edits to these five supporting pages before evaluateNotBefore. Protected Fresno pages remain under their existing experiment freeze."
     }
   ]
 }
