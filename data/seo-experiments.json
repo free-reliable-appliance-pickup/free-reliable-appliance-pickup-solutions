@@ -23,6 +23,43 @@
   },
   "experiments": [
     {
+      "id": "2026-10-03-el-monte-city-parity",
+      "market": "El Monte, CA",
+      "hypothesis": "A simpler exact-city page architecture modeled on the consistently ranking competitor pattern will help the El Monte page move closer to the top organic results for the exact free appliance pickup query.",
+      "pagesChanged": [
+        "/el-monte-appliance-pickup/"
+      ],
+      "protectedOwner": "/el-monte-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "liveGoogle20261003": "Our El Monte result appeared around #6 for free appliance pickup El Monte while TakeMyAppliance appeared around #1 and again around #9 with its county page.",
+        "preChangeArchitecture": {
+          "approxWords": 1837,
+          "h2Count": 22
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/el-monte",
+          "approxWords": 880,
+          "h2Count": 6,
+          "pattern": "Commercial -> process -> why choose -> request -> local details -> FAQ."
+        }
+      },
+      "change": "Simplified only the El Monte main content while preserving title/meta, canonical, schema, phone/text CTA, Formspree form, official local references, qualification rules, property/commercial paths, regional parent links and appliance-authority links.",
+      "successSignals": [
+        "The intended /el-monte-appliance-pickup/ page improves from the current live ~#6 position toward the top 3 for the exact El Monte query.",
+        "The El Monte city page remains the ranking URL for the exact query.",
+        "Finalized GSC impressions and average position improve without harming specialty intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the El Monte page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
       "id": "2026-10-03-west-covina-city-parity",
       "market": "West Covina, CA",
       "hypothesis": "A simpler exact-city page architecture modeled on the consistently ranking competitor pattern will help Google surface the West Covina city page for the exact free appliance pickup query.",
