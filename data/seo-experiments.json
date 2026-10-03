@@ -959,6 +959,60 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Pomona page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-03-covina-city-focus",
+      "market": "Covina, CA",
+      "hypothesis": "A tighter exact-city architecture that preserves Covina address/jurisdiction guidance, official local references, qualification, commercial paths and appliance details will help the dedicated Covina city page improve from the low-20s for broad free appliance pickup searches.",
+      "pagesChanged": [
+        "/covina-appliance-pickup/"
+      ],
+      "protectedOwner": "/covina-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "keywordCom": {
+          "mobile": {
+            "keyword": "free appliance pickup covina",
+            "searchSnapshotRank": 22,
+            "bestRank": 22,
+            "rankingUrl": "/covina-appliance-pickup/",
+            "latestOrganicListingPosition": 22
+          },
+          "desktop": {
+            "keyword": "free appliance pickup covina",
+            "searchSnapshotRank": 0,
+            "bestRank": 23,
+            "rankingUrl": null,
+            "latestTop25DomainPosition": null
+          }
+        },
+        "competitorSnapshot": {
+          "topOrganic": [
+            "TakeMyAppliance",
+            "City of Covina",
+            "LoadUp / West Covina"
+          ]
+        },
+        "preChangeArchitecture": {
+          "htmlBytes": 37546,
+          "h2Count": 30,
+          "h3Count": 21
+        }
+      },
+      "change": "Simplified only the Covina main-content architecture while preserving title/meta, canonical, H1, Service/FAQ/WebPage schema, direct 909 call/text paths, Formspree intake, qualification rules, official City of Covina reference, exact-address/jurisdiction guidance, commercial paths and appliance-specific handoff. Removed redundant legacy SEO-network sections. New architecture: 21717 HTML bytes, 12 H2s, 12 H3s.",
+      "successSignals": [
+        "The intended /covina-appliance-pickup/ page remains the ranking URL and moves materially above its low-20s baseline.",
+        "The Covina city page enters the top 10 organic results on at least one tracked device without losing the other device.",
+        "Finalized GSC impressions and average position improve or remain stable without harming Covina washer/dryer-specific intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Covina page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
