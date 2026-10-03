@@ -219,7 +219,10 @@
         "Improved city-page impressions/position for commercially relevant queries without harming core residential queries",
         "More consistent internal-link discovery between priority cities and commercial program pages"
       ],
-      "status": "running"
+      "status": "running",
+      "lastChanged": "2026-10-01",
+      "evaluateNotBefore": "2026-10-11",
+      "preferredReview": "2026-10-18"
     },
     {
       "id": "2026-10-01-laundry-hub-priority-links",
@@ -250,7 +253,10 @@
         "Priority city laundry pages gain new impressions or improve average position for washer/dryer-specific queries",
         "No increase in general-vs-laundry cannibalization on the corresponding city appliance pages"
       ],
-      "status": "running"
+      "status": "running",
+      "lastChanged": "2026-10-01",
+      "evaluateNotBefore": "2026-10-11",
+      "preferredReview": "2026-10-18"
     },
     {
       "id": "2026-10-01-coachella-v2-cluster",
