@@ -23,6 +23,80 @@
   },
   "experiments": [
     {
+      "id": "2026-10-03-orange-county-hub-parity",
+      "market": "Orange County, CA",
+      "hypothesis": "A simpler county-hub architecture modeled on the consistently ranking competitor pattern will help /orange-county-appliance-pickup/ own county-level appliance pickup/removal queries instead of scattering county intent across Irvine, Huntington Beach, Orange, Anaheim and South Orange County pages.",
+      "pagesChanged": [
+        "/orange-county-appliance-pickup/"
+      ],
+      "protectedOwner": "/orange-county-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "gscDesktop": [
+          {
+            "query": "appliance removal orange county",
+            "page": "/south-orange-county-appliance-pickup/",
+            "impressions": 3,
+            "position": 63.3333333333
+          },
+          {
+            "query": "appliance removal orange county",
+            "page": "/anaheim-appliance-pickup/",
+            "impressions": 2,
+            "position": 61.5
+          },
+          {
+            "query": "appliance removal orange county",
+            "page": "/orange-appliance-pickup/",
+            "impressions": 1,
+            "position": 69
+          },
+          {
+            "query": "free appliance pick up orange county",
+            "page": "/huntington-beach-appliance-pickup/",
+            "impressions": 1,
+            "position": 26
+          },
+          {
+            "query": "free appliance pick up orange county",
+            "page": "/irvine-appliance-pickup/",
+            "impressions": 2,
+            "position": 38.5
+          },
+          {
+            "query": "free appliance pick up orange county",
+            "page": "/orange-appliance-pickup/",
+            "impressions": 1,
+            "position": 31
+          }
+        ],
+        "ownerSignal": "The intended /orange-county-appliance-pickup/ page did not appear in the returned finalized query-page rows for the core county queries above.",
+        "preChangeArchitecture": {
+          "approxWords": 4139,
+          "h2Count": 42,
+          "linkCount": 258
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/county/orange-county",
+          "pattern": "County intent statement -> city directory -> simple 3-step process -> FAQ -> CTA, with individual city pages carrying local detail."
+        }
+      },
+      "change": "Rebuilt only the Orange County county hub body into a concise county-intent page with one city directory, one process section, one qualification section, one appliance-type section, access/commercial/photo/official-alternative sections, FAQ and the existing request form. Kept existing title/meta, city pages, phone, form endpoint and qualification rules unchanged.",
+      "successSignals": [
+        "The intended /orange-county-appliance-pickup/ page begins receiving impressions for county-level queries such as free appliance pickup Orange County and appliance removal Orange County.",
+        "County-query average position improves from the current 26-69 range observed on unintended city/regional URLs.",
+        "Orange County city pages keep their existing city-specific visibility while county-level cannibalization declines."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Orange County county hub before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
       "id": "2026-10-03-ie-primary-owner-stabilization",
       "market": "Rancho Cucamonga / Fontana / Ontario / Upland, CA",
       "hypothesis": "After clarifying broad city intent ownership and regional-hub handoffs, Google should increasingly surface each dedicated city appliance page for broad 'free appliance pickup + city' searches instead of sibling specialty or regional pages.",
