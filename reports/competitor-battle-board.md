@@ -47,3 +47,14 @@ This is a defensive comparison board, not a ranking claim. **PROTECT** means our
 - Never create a thin city×appliance page merely because a competitor added one.
 - Never copy blanket claims such as ‘any condition,’ ‘same-day,’ or ‘100% free’ unless our real route can support them.
 - When a monitored competitor changes, use the change report plus an exact live-search check before editing a protected page.
+
+
+## Authority gap — 2026-10-03
+
+Detailed evidence: `reports/authority-competitor-gap-2026-10-03.md`.
+
+Current backlink/referring-domain comparison shows the site has 19 backlinks from 17 referring domains, versus TakeMyAppliance 48/26, AppliancePickupNow 390/96, and Fast Free Appliance Removal 1,482/355. On-page benchmark coverage is already largely at PROTECT status, so the current countermove is **earned authority, not another bulk rewrite**.
+
+Observed competitor tactic: TakeMyAppliance has a contextual partnership announcement from a real appliance business (Cobarruvias Appliance). Replicate the pattern only through genuine Free Reliable Appliance Pickup partners, property/commercial relationships, and eligible local directories. No paid spam links, fake addresses, fake reviews, or invented storefronts.
+
+Experiment guard: keep Fresno protected through 2026-10-11 and the Inland Empire primary-owner test protected through 2026-10-13 unless a verified technical/factual/indexability issue requires a minimal correction.
