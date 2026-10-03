@@ -855,6 +855,51 @@
           "reason": "Post-change California SEO audit required at least one external local/official reference. Restored the original City of La Verne Bulky Item Pick Up reference only; title, meta, canonical, H1, page architecture and experiment hypothesis were unchanged."
         }
       ]
+    },
+    {
+      "id": "2026-10-03-temple-city-city-parity",
+      "market": "Temple City, CA",
+      "hypothesis": "A simpler exact-city page architecture will help Google surface the dedicated Temple City appliance page for broad free appliance pickup searches instead of the washer/dryer specialty page.",
+      "pagesChanged": [
+        "/temple-city-appliance-pickup/"
+      ],
+      "protectedOwner": "/temple-city-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "keywordCom": {
+          "mobile": {
+            "keyword": "free appliance pickup temple city",
+            "rank": 16,
+            "bestRank": 16,
+            "rankingUrl": null
+          },
+          "desktop": {
+            "keyword": "free appliance pickup temple city",
+            "rank": 1,
+            "bestRank": 1,
+            "rankingUrl": "/temple-city-washer-dryer-pickup/"
+          }
+        },
+        "preChangeArchitecture": {
+          "htmlBytes": 25991,
+          "h2Count": 19
+        },
+        "wrongPageSignal": "On 2026-10-03 desktop the domain ranked #1, but Google chose /temple-city-washer-dryer-pickup/ for the broad appliance query instead of the general Temple City page."
+      },
+      "change": "Simplified the Temple City general page while preserving title/meta, canonical/schema, direct 909 call/text CTA, Formspree intake, qualification rules, local California disambiguation, official City reference, audience paths, regional parent links and two real/page image placements.",
+      "successSignals": [
+        "The intended /temple-city-appliance-pickup/ page becomes the ranking URL for free appliance pickup Temple City.",
+        "The washer/dryer page retains laundry intent while no longer owning the broad appliance query.",
+        "Desktop visibility remains strong and mobile exact-page visibility improves."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Temple City general page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
