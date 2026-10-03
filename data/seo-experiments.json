@@ -1181,6 +1181,34 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the La Puente page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-03-stockton-search-intent-hero",
+      "market": "Stockton, CA",
+      "hypothesis": "Replacing route-structure jargon in the Stockton hero with an immediate local service answer should strengthen relevance and click/conversion clarity for broad 'free appliance pickup Stockton' and related removal searches without changing the page title, H1, canonical, schema, or intent ownership.",
+      "pagesChanged": [
+        "/stockton-appliance-pickup/"
+      ],
+      "protectedOwner": "/stockton-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "gscNote": "Stockton was not present in the returned top page/query relationship rows from the finalized Search Console planning dataset ending 2026-09-30.",
+        "liveSearchSnapshot": "On 2026-10-03, sampled broad Stockton searches surfaced TakeMyAppliance and a local Stockton recycler; the Free Reliable Stockton page did not surface in those sampled broad results. Direct fetch of the Stockton URL succeeded and the page was crawlable."
+      },
+      "change": "Rewrote only the above-the-fold hero paragraph to answer the Stockton pickup query immediately, name the qualifying appliance categories, clarify qualification factors, and surface the direct 310 call/text route. Removed one literal escaped newline between adjacent sections as a formatting cleanup.",
+      "successSignals": [
+        "The Stockton city page begins receiving or increasing impressions for broad Stockton appliance-pickup/removal queries.",
+        "The Stockton city page becomes the ranking URL for broad Stockton appliance pickup intent.",
+        "Clicks or CTR improve without shifting laundry-only intent away from the dedicated Stockton washer/dryer page."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, hero, body, internal-link, schema, canonical, or intent-ownership edits to the Stockton page before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged."
     }
   ]
 }
