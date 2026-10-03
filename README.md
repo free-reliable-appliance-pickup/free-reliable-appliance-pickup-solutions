@@ -89,3 +89,8 @@ Free Reliable Appliance Pickup reviews qualifying pickup requests for washers, d
 - Rancho Cucamonga cluster sitemap: https://freereliableappliancepickup.com/sitemap-rancho-cucamonga.xml
 
 The XML sitemap contains the focused set of pages intended for Google indexing. Secondary location templates remain available but are excluded from indexing until individually strengthened.
+
+
+## SEO experiment protection
+
+Protected SEO experiments are enforced by the repository workflow. Do not edit a protected page path until its scheduled review date; make supporting changes outside the protected page or wait for the measurement window to close.
