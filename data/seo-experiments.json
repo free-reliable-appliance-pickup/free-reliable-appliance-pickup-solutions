@@ -1209,6 +1209,34 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, hero, body, internal-link, schema, canonical, or intent-ownership edits to the Stockton page before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged."
+    },
+    {
+      "id": "2026-10-03-stockton-laundry-owner",
+      "market": "Stockton, CA — washer & dryer",
+      "hypothesis": "A stronger local first answer on the dedicated Stockton washer/dryer page should help it own Stockton laundry-only intent instead of the broad national washer/dryer hub.",
+      "pagesChanged": [
+        "/stockton-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/stockton-washer-dryer-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "gscNote": "The finalized planning dataset did not return Stockton laundry rows among the top query-page relationships.",
+        "liveSearchSnapshot": "On 2026-10-03, sampled 'free washer dryer pickup Stockton CA' results surfaced the broad /washer-dryer-pickup/ hub while the dedicated Stockton washer/dryer page did not surface in the sampled result set. Direct fetch of the Stockton laundry URL succeeded and showed it was crawlable."
+      },
+      "change": "Rewrote only the hero paragraph to answer Stockton laundry intent immediately, name washer/dryer/set categories, state qualification factors, and surface the direct 310 call/form route. Title, H1, canonical, schema, page body and hub page were left unchanged.",
+      "successSignals": [
+        "The dedicated Stockton washer/dryer page becomes the ranking URL for Stockton laundry-only queries.",
+        "Broad washer/dryer hub impressions for Stockton-specific queries decline relative to the local page.",
+        "Stockton laundry impressions/clicks increase without harming the general Stockton appliance page."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, hero, body, internal-link, schema, canonical, or intent-ownership edits to the Stockton washer/dryer page before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged."
     }
   ]
 }
