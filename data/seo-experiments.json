@@ -23,6 +23,43 @@
   },
   "experiments": [
     {
+      "id": "2026-10-03-west-covina-city-parity",
+      "market": "West Covina, CA",
+      "hypothesis": "A simpler exact-city page architecture modeled on the consistently ranking competitor pattern will help Google surface the West Covina city page for the exact free appliance pickup query.",
+      "pagesChanged": [
+        "/west-covina-appliance-pickup/"
+      ],
+      "protectedOwner": "/west-covina-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "liveGoogle20261003": "Our domain was not found in the first 10 organic results for free appliance pickup West Covina; TakeMyAppliance appeared around #1 and its Covina page around #3.",
+        "preChangeArchitecture": {
+          "approxWords": 2968,
+          "h2Count": 29
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/west-covina",
+          "approxWords": 935,
+          "h2Count": 6,
+          "pattern": "Commercial -> process -> why choose -> request -> local details -> FAQ."
+        }
+      },
+      "change": "Simplified only the West Covina main content while preserving title/meta, canonical, schema, direct phone/text CTA, Formspree form, local official references, qualification rules, property/commercial paths, regional parent links and appliance-authority links.",
+      "successSignals": [
+        "The intended /west-covina-appliance-pickup/ page enters the first page for free appliance pickup West Covina.",
+        "The West Covina page becomes the ranking URL instead of unrelated nearby pages.",
+        "Finalized GSC impressions and average position improve without harming specialty intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the West Covina page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
       "id": "2026-10-03-pasadena-city-parity",
       "market": "Pasadena, CA",
       "hypothesis": "A simpler exact-city page architecture, modeled on the consistently ranking competitor pattern while preserving our stronger direct-contact and qualification signals, will help Google prefer the Pasadena city page instead of South Pasadena or broader pages for the exact Pasadena pickup query.",
