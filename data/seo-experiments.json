@@ -1067,6 +1067,60 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Monrovia page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-03-chino-city-focus",
+      "market": "Chino, CA",
+      "hypothesis": "A tighter exact-city architecture that preserves Chino address/access guidance, qualification, official local reference, commercial paths and appliance detail will help the dedicated Chino page move above its current page-3 mobile position and gain desktop visibility.",
+      "pagesChanged": [
+        "/chino-appliance-pickup/"
+      ],
+      "protectedOwner": "/chino-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "keywordCom": {
+          "mobile": {
+            "keyword": "free appliance pickup chino",
+            "latestOrganicPosition": 21,
+            "bestRank": 19,
+            "rankingUrl": "/chino-appliance-pickup/"
+          },
+          "desktop": {
+            "keyword": "free appliance pickup chino",
+            "latestTop25DomainPosition": null,
+            "bestRank": 0,
+            "rankingUrl": null
+          }
+        },
+        "competitorSnapshot": {
+          "topOrganic": [
+            "TakeMyAppliance",
+            "City/Chino Hills public result",
+            "Yelp",
+            "LoadUp",
+            "Fast Free Appliance Removal"
+          ]
+        },
+        "preChangeArchitecture": {
+          "htmlBytes": 38363,
+          "h2Count": 30,
+          "h3Count": 26
+        }
+      },
+      "change": "Simplified only the Chino main-content architecture while preserving title/meta, canonical, H1, structured data, direct 909 call/text paths, existing Formspree intake, qualification rules, official City of Chino reference, local access guidance, commercial/property paths, regional parent links and appliance-authority links. Removed redundant legacy SEO-network sections. New architecture: 22185 HTML bytes, 12 H2s, 13 H3s.",
+      "successSignals": [
+        "The intended /chino-appliance-pickup/ page remains the ranking URL and improves materially above its current mobile page-3 baseline.",
+        "The Chino city page enters the tracked desktop organic results.",
+        "Finalized GSC impressions and average position improve or remain stable without harming Chino washer/dryer-specific intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Chino page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
