@@ -7,3 +7,5 @@ Sitemap: https://freereliableappliancepickup.com/sitemap-images.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-rancho-cucamonga.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-fresno.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-stockton.xml
+Sitemap: https://freereliableappliancepickup.com/sitemap-denver.xml
+Sitemap: https://freereliableappliancepickup.com/sitemap-phoenix.xml
