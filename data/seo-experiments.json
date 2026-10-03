@@ -94,7 +94,13 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Orange County county hub before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Orange County county hub before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-03",
+          "reason": "Post-merge California SEO Gold Standard audit requires the local-ranking-depth class marker. The city directory and local depth content were already present; this fix restored the audit marker only and did not change the experiment hypothesis, title/meta, copy, links, or intent ownership."
+        }
+      ]
     },
     {
       "id": "2026-10-03-ie-primary-owner-stabilization",
