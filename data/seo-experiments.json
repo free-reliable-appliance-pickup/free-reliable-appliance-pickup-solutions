@@ -739,6 +739,63 @@
       "evaluateNotBefore": "2026-10-09",
       "preferredReview": "2026-10-16",
       "status": "running"
+    },
+    {
+      "id": "2026-10-03-san-dimas-city-parity",
+      "market": "San Dimas, CA",
+      "hypothesis": "A simpler exact-city page architecture will help Google surface the dedicated San Dimas city page for broad free appliance pickup searches instead of the San Gabriel Valley hub or other nearby pages.",
+      "pagesChanged": [
+        "/san-dimas-appliance-pickup/"
+      ],
+      "protectedOwner": "/san-dimas-appliance-pickup/",
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "keywordCom": {
+          "mobile": {
+            "keyword": "free appliance pickup san dimas",
+            "rank": 0,
+            "bestRank": 0,
+            "rankingUrl": null
+          },
+          "desktop": {
+            "keyword": "free appliance pickup san dimas",
+            "rank": 0,
+            "bestRank": 2,
+            "rankingUrl": "/san-gabriel-valley-appliance-pickup/"
+          }
+        },
+        "finalizedGsc": [
+          {
+            "query": "appliance pick up near me",
+            "page": "/san-dimas-appliance-pickup/",
+            "impressions": 1,
+            "position": 8
+          }
+        ],
+        "preChangeArchitecture": {
+          "htmlBytes": 33315,
+          "h2Count": 25,
+          "h3Count": 22
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/san-dimas",
+          "pattern": "Commercial -> process -> why choose -> request -> appliance categories -> FAQ."
+        }
+      },
+      "change": "Simplified the San Dimas main content while preserving title/meta, canonical and schema, direct 909 call/text CTA, Formspree intake, qualification rules, City bulky-item reference, property/commercial paths, nearby-city links and laundry-specific handoff.",
+      "successSignals": [
+        "The intended /san-dimas-appliance-pickup/ page becomes the ranking URL for free appliance pickup San Dimas.",
+        "San Gabriel Valley hub ownership for the exact San Dimas query declines.",
+        "Finalized GSC impressions and average position improve without harming washer/dryer-specific intent."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the San Dimas page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
