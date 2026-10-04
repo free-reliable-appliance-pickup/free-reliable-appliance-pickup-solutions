@@ -2075,6 +2075,45 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change the Free Pickup Qualification title/meta/body/internal-link intent again before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-anaheim-hills-anti-template-cleanup",
+      "market": "Anaheim Hills, California",
+      "hypothesis": "Removing the two generic template blocks while preserving the focused Anaheim Hills appliance, hillside/gate access, qualification, FAQ and request content should improve topical clarity without discarding the existing Anaheim Hills search signal.",
+      "pagesChanged": [
+        "/anaheim-hills-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/anaheim-hills-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0,
+          "averagePosition": 11.75
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 918,
+          "h2Count": 10
+        },
+        "competitorEvidence": "TakeMyAppliance currently treats Anaheim Hills as a local Anaheim neighborhood/detail rather than a separate heavy SEO page; its Anaheim content emphasizes real local access and appliance details."
+      },
+      "change": "Removed only the generic Orange County premium-expansion section and Facebook bridge. Title/meta/H1/canonical, appliance-type routing, hillside/gate/driveway access, qualification rules, FAQ and request form were preserved.",
+      "successSignals": [
+        "Average position improves from ~11.75 toward page one.",
+        "Impressions remain stable or increase.",
+        "The Anaheim Hills page keeps its existing query ownership without needing more template content."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /anaheim-hills-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
