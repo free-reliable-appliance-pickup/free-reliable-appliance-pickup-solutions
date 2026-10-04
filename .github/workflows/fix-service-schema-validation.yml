@@ -1,0 +1,161 @@
+name: Fix Service Schema Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-service-schema-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fix-service-schema-validation
+  cancel-in-progress: true
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Remove invalid direct telephone property from Service JSON-LD
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          import re
+
+          SCRIPT_RE = re.compile(
+              r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)',
+              re.I | re.S
+          )
+
+          changed_files = []
+          changed_services = 0
+          preserved_phone_channels = 0
+          parse_skips = []
+
+          def is_type(node, wanted):
+              t = node.get('@type')
+              types = t if isinstance(t, list) else [t]
+              return any(str(x).lower() == wanted.lower() for x in types if x is not None)
+
+          def ensure_phone_channel(service, telephone):
+              # Preserve the same phone as a valid ServiceChannel/ContactPoint
+              # only when the Service did not already expose one.
+              channel = service.get('availableChannel')
+              channels = channel if isinstance(channel, list) else ([channel] if isinstance(channel, dict) else [])
+              for ch in channels:
+                  if isinstance(ch, dict) and ch.get('@type') == 'ServiceChannel':
+                      phone = ch.get('servicePhone')
+                      if isinstance(phone, dict) and phone.get('telephone'):
+                          return False
+              cp = {
+                  '@type': 'ContactPoint',
+                  'telephone': telephone,
+                  'contactType': 'customer service'
+              }
+              if isinstance(channel, dict) and channel.get('@type') == 'ServiceChannel':
+                  channel['servicePhone'] = cp
+              elif isinstance(channel, list):
+                  channel.append({'@type': 'ServiceChannel', 'servicePhone': cp})
+              else:
+                  service['availableChannel'] = {'@type': 'ServiceChannel', 'servicePhone': cp}
+              return True
+
+          def normalize(node):
+              global changed_services, preserved_phone_channels
+              if isinstance(node, dict):
+                  if is_type(node, 'Service') and 'telephone' in node:
+                      telephone = node.pop('telephone')
+                      changed_services += 1
+                      if isinstance(telephone, str) and telephone.strip():
+                          if ensure_phone_channel(node, telephone.strip()):
+                              preserved_phone_channels += 1
+                  for value in list(node.values()):
+                      normalize(value)
+              elif isinstance(node, list):
+                  for value in node:
+                      normalize(value)
+
+          for path in Path('.').rglob('*.html'):
+              if any(part in {'.git', 'node_modules'} for part in path.parts):
+                  continue
+              raw = path.read_text(encoding='utf-8', errors='ignore')
+              file_changed = False
+
+              def repl(match):
+                  nonlocal_holder = {'changed': False}
+                  payload = match.group(2)
+                  try:
+                      data = json.loads(payload)
+                  except Exception:
+                      parse_skips.append(str(path))
+                      return match.group(0)
+
+                  before = json.dumps(data, ensure_ascii=False, separators=(',', ':'), sort_keys=True)
+                  normalize(data)
+                  after = json.dumps(data, ensure_ascii=False, separators=(',', ':'), sort_keys=True)
+                  if before == after:
+                      return match.group(0)
+
+                  nonlocal_holder['changed'] = True
+                  repl.changed = True
+                  encoded = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
+                  return match.group(1) + encoded + match.group(3)
+
+              repl.changed = False
+              updated = SCRIPT_RE.sub(repl, raw)
+              if repl.changed and updated != raw:
+                  path.write_text(updated, encoding='utf-8')
+                  changed_files.append(str(path))
+
+          # Safety check: no valid JSON-LD Service object should retain a direct telephone property.
+          remaining = []
+          for path in Path('.').rglob('*.html'):
+              if any(part in {'.git', 'node_modules'} for part in path.parts):
+                  continue
+              raw = path.read_text(encoding='utf-8', errors='ignore')
+              for match in SCRIPT_RE.finditer(raw):
+                  try:
+                      data = json.loads(match.group(2))
+                  except Exception:
+                      continue
+                  stack = [data]
+                  while stack:
+                      item = stack.pop()
+                      if isinstance(item, dict):
+                          if is_type(item, 'Service') and 'telephone' in item:
+                              remaining.append(str(path))
+                          stack.extend(item.values())
+                      elif isinstance(item, list):
+                          stack.extend(item)
+
+          print('FILES_CHANGED', len(changed_files))
+          print('SERVICE_TELEPHONE_PROPERTIES_REMOVED', changed_services)
+          print('PHONE_CHANNELS_PRESERVED_OR_CREATED', preserved_phone_channels)
+          print('JSON_LD_PARSE_SKIPS', len(set(parse_skips)))
+          print('REMAINING_INVALID_SERVICE_TELEPHONE', len(set(remaining)))
+          if remaining:
+              for p in sorted(set(remaining))[:50]:
+                  print('REMAINING', p)
+              raise SystemExit('Direct telephone property still present on Service schema')
+          PY
+
+      - name: Commit schema validation cleanup
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No Service schema telephone cleanup needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          git commit -m "Fix Service schema validation"
+          git push
