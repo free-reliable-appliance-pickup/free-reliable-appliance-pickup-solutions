@@ -1577,6 +1577,40 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change the homepage title or meta description again before 2026-10-14 unless there is verified technical breakage, factual error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-salem-heading-hierarchy-cleanup",
+      "market": "Salem, Oregon",
+      "hypothesis": "Removing the duplicate breadcrumb and the unrelated commercial H2 that appeared before the main H1 should clarify the Salem page's primary topic without changing its keyword target or substantive local content.",
+      "pagesChanged": [
+        "/salem-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/salem-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 2,
+          "impressions": 34,
+          "ctr": 0.058823529411764705,
+          "averagePosition": 9.294117647058824
+        }
+      },
+      "change": "Removed one duplicate visible breadcrumb and one redundant commercial/property-manager section that appeared before the hero H1. Title, meta description, phone, form and core Salem content were unchanged.",
+      "successSignals": [
+        "Salem page average position improves from the ~9.3 baseline.",
+        "Impressions remain stable or increase while clicks/CTR do not decline.",
+        "The Salem city page remains the primary URL for Salem appliance-pickup queries."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative content/title/internal-link/schema-intent changes to /salem-appliance-pickup/ before 2026-10-14. Only verified technical breakage, factual/contact error, indexability failure or safety issue may interrupt the freeze."
     }
   ]
 }
