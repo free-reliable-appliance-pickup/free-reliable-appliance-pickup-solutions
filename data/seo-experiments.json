@@ -1651,6 +1651,56 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change the Service Areas title again before 2026-10-14 unless there is verified technical breakage, factual error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-portland-h1-hierarchy-cleanup",
+      "market": "Portland, Oregon",
+      "hypothesis": "Moving three supporting sections below the hero so the city H1 becomes the first page heading should strengthen Portland's primary city intent without changing substantive content.",
+      "pagesChanged": [
+        "/portland-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/portland-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 1,
+          "impressions": 8,
+          "ctr": 0.125,
+          "averagePosition": 18.25
+        }
+      },
+      "change": "Moved existing local-scope, laundry-handoff and commercial-support sections from before the hero to immediately after it. No wording, title, meta description, canonical, phone or form change.",
+      "successSignals": [
+        "Portland page average position improves from the 18.25 baseline.",
+        "The city page gains impressions for Portland appliance-pickup/removal queries.",
+        "No loss of conversion paths or laundry-page separation."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /portland-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-nonfrozen-faq-schema-cleanup",
+      "market": "Non-frozen pages with mismatched FAQ structured data",
+      "hypothesis": "Removing FAQPage JSON-LD whose questions are not visibly present will eliminate structured-data mismatch without altering ranking intent or page content.",
+      "pagesChanged": [
+        "/freezer-pickup/",
+        "/encinitas-appliance-pickup/",
+        "/imperial-beach-appliance-pickup/",
+        "/portland-appliance-pickup/",
+        "/alhambra-appliance-pickup/",
+        "/oregon-city-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "change": "Removed only mismatched FAQPage structured-data nodes. Visible content, titles, canonicals, forms, phones and internal links were unchanged.",
+      "status": "completed"
     }
   ]
 }
