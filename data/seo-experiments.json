@@ -791,6 +791,12 @@
           "date": "2026-10-04",
           "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
         }
+      ],
+      "technicalFixes": [
+        {
+          "date": "2026-10-04",
+          "reason": "Technical audit repair after noindex-alias cleanup: retiring the noindex Claremont freezer specialty URL removed the required live freezer authority path. Added only a link to the existing /freezer-pickup/ authority guide; protected title/meta/H1/canonical, local copy, schema intent and city ownership remain unchanged."
+        }
       ]
     },
     {
@@ -1273,7 +1279,13 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, hero, body, internal-link, schema, canonical, or intent-ownership edits to the Stockton page before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged."
+      "freezeRule": "No speculative title, hero, body, internal-link, schema, canonical, or intent-ownership edits to the Stockton page before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-04",
+          "reason": "Verified factual correction: San Joaquin County announced Foothill Sanitary Landfill stopped accepting all waste on June 28, 2026 and consolidated operations at North County. Restored Stockton SEO experiment title/meta/authority-link variables to the pre-fix version and retained only a clearly labeled current-disposal update with official County sources."
+        }
+      ]
     },
     {
       "id": "2026-10-03-stockton-laundry-owner",
@@ -1546,6 +1558,12 @@
             "/los-angeles-appliance-pickup/"
           ],
           "reason": "FAQPage JSON-LD contained questions not visible in the page body on these pages. Removed only the mismatched FAQPage structured-data node; visible content, titles, canonicals, internal links and request forms were not changed. Google removed the FAQ rich-result feature from Search in May/June 2026, so no supported FAQ rich-result benefit was being preserved."
+        }
+      ],
+      "technicalFixes": [
+        {
+          "date": "2026-10-04",
+          "reason": "Technical audit repair after noindex-alias cleanup: retiring the noindex Claremont freezer specialty URL removed the required live freezer authority path. Added only a link to the existing /freezer-pickup/ authority guide; protected title/meta/H1/canonical, local copy, schema intent and city ownership remain unchanged."
         }
       ]
     },
