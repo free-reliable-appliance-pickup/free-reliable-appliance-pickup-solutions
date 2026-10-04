@@ -2456,6 +2456,40 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent changes to /stockton-stove-oven-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-arvada-page1-ctr-test",
+      "market": "Arvada, Colorado",
+      "hypothesis": "A clearer local meta description that adds removal language, direct phone/text contact and free-to-submit wording should improve CTR on an Arvada page already averaging page-one visibility without changing ranking ownership.",
+      "pagesChanged": [
+        "/arvada-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/arvada-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0,
+          "averagePosition": 8.25
+        }
+      },
+      "change": "Changed only the meta/OG/WebPage description from a generic Denver-metro route-review snippet to a local Arvada pickup/removal description with the existing 720-604-7498 call/text contact and free-to-submit wording. Title, H1, visible body, canonical, form, qualification rules and internal links were unchanged.",
+      "successSignals": [
+        "Arvada CTR rises above 0%.",
+        "Clicks begin while average position remains broadly stable around page one.",
+        "The Arvada city URL retains local query ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change Arvada title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
