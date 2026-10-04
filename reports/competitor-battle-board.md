@@ -30,7 +30,7 @@ This is a defensive comparison board, not a ranking claim. **PROTECT** means our
 | TakeMyAppliance | Pasadena, CA | access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | photo-first intake | photo-first intake, access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | PROTECT: no monitored benchmark gap; require live-query evidence before rewriting. |
 | TakeMyAppliance | Phoenix, AZ | access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | photo-first intake | photo-first intake, access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | PROTECT: no monitored benchmark gap; require live-query evidence before rewriting. |
 | TakeMyAppliance | Pomona, CA | access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | photo-first intake | photo-first intake, access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | PROTECT: no monitored benchmark gap; require live-query evidence before rewriting. |
-| TakeMyAppliance | Portland, OR | access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | photo-first intake | photo-first intake, access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | PROTECT: no monitored benchmark gap; require live-query evidence before rewriting. |
+| TakeMyAppliance | Portland, OR | access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | photo-first intake | photo-first intake, access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, appliance-specific guide depth | COUNTERMOVE: Add real customer questions and matching FAQPage schema only when answers are useful and accurate. |
 | TakeMyAppliance | Rancho Cucamonga, CA | access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | photo-first intake | photo-first intake, access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | PROTECT: no monitored benchmark gap; require live-query evidence before rewriting. |
 | TakeMyAppliance | Rialto, CA | access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | photo-first intake | photo-first intake, access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | PROTECT: no monitored benchmark gap; require live-query evidence before rewriting. |
 | TakeMyAppliance | San Bernardino, CA | access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | photo-first intake | photo-first intake, access detail, confirmation/trust flow, commercial/recurring coverage, local ZIP/neighborhood detail, official local fallback, FAQ coverage, appliance-specific guide depth | PROTECT: no monitored benchmark gap; require live-query evidence before rewriting. |
@@ -47,55 +47,3 @@ This is a defensive comparison board, not a ranking claim. **PROTECT** means our
 - Never create a thin city×appliance page merely because a competitor added one.
 - Never copy blanket claims such as ‘any condition,’ ‘same-day,’ or ‘100% free’ unless our real route can support them.
 - When a monitored competitor changes, use the change report plus an exact live-search check before editing a protected page.
-
-
-## Authority gap — 2026-10-03
-
-Detailed evidence: `reports/authority-competitor-gap-2026-10-03.md`.
-
-Current backlink/referring-domain comparison shows the site has 19 backlinks from 17 referring domains, versus TakeMyAppliance 48/26, AppliancePickupNow 390/96, and Fast Free Appliance Removal 1,482/355. On-page benchmark coverage is already largely at PROTECT status, so the current countermove is **earned authority, not another bulk rewrite**.
-
-Observed competitor tactic: TakeMyAppliance has a contextual partnership announcement from a real appliance business (Cobarruvias Appliance). Replicate the pattern only through genuine Free Reliable Appliance Pickup partners, property/commercial relationships, and eligible local directories. No paid spam links, fake addresses, fake reviews, or invented storefronts.
-
-Experiment guard: keep Fresno protected through 2026-10-11 and the Inland Empire primary-owner test protected through 2026-10-13 unless a verified technical/factual/indexability issue requires a minimal correction.
-
-## 2026-10-03 Evidence Update — GSC Reconnected + Live SERP Diagnostics
-
-### Finalized Google Search Console baseline
-- Property: `sc-domain:freereliableappliancepickup.com` (site owner).
-- Effective finalized window: 2026-09-03 through 2026-09-30.
-- Totals: 23 clicks, 1,258 impressions, 1.83% CTR, average position 20.07.
-- Rancho Cucamonga main page: 2 clicks, 51 impressions, average position 18.65.
-- Inland Empire hub: 2 clicks, 16 impressions, average position 5.25.
-- Fresno main page had a real GSC impression for `appliance recycling fresno` at average position 4 and `appliance pickup for free` at position 12.
-- GSC still shows broad-query cannibalization: generic appliance pickup/removal terms are spread across many city and specialty URLs.
-- Search Console data is finalized with an approximately 3-day delay, so 2026-10-03 ownership changes are not yet measurable in GSC. Do not judge those experiments early.
-
-### Keyword.com project-wide competitor evidence (2026-10-03)
-- 100 tracked keywords.
-- Top 3: 7 current vs 17 on 2026-09-26.
-- Top 10: 13 current vs 22 on 2026-09-26.
-- Top 20: 18 current vs 33 on 2026-09-26.
-- Top 100: 28 current vs 43 on 2026-09-26.
-- Strongest recurring pickup competitor across project top-10 appearances: TakeMyAppliance, 202 appearances, average rank 3.7.
-- Other frequent top-10 SERP surfaces: Facebook, Yelp, LoadUp, Instagram, Reddit, Yellow Pages and Fast Free Appliance Removal.
-
-### Priority-city current tracker signals
-- Fresno `free appliance pickup fresno`: unranked in current tracked top 100; prior best 18 desktop / 21 mobile. Wrong surfaced URLs included Clovis and Visalia pages.
-- Rancho Cucamonga `free appliance pickup rancho cucamonga`: unranked in current tracked top 100; prior best 2, but the surfaced URL was San Bernardino rather than the intended Rancho page.
-- Fontana `free appliance pickup fontana`: desktop rank 3, but Google surfaced the Southern California hub instead of the Fontana owner; mobile currently unranked after prior best 7 using the correct Fontana page.
-- Upland `free appliance pickup upland`: desktop rank 1, but Google surfaced the Upland washer/dryer page rather than the broad Upland appliance page.
-- Treat these as current directional tracker evidence, not universal personalized Google positions.
-
-### Off-site authority evidence
-- TakeMyAppliance has independent third-party mentions including an appliance-company partnership announcement and a property-management LinkedIn post tied to an industry-event discovery.
-- Searches for Free Reliable Appliance Pickup currently surface mostly first-party pages plus an older Google Search Central indexing-help thread.
-- Current authority gap is therefore not just page copy. We need legitimate third-party corroboration: real partner announcements, business/resource listings that permit service-area businesses, property-management/senior-living relationships, and consistent public social/business identity.
-- Do not buy links, create fake addresses, fabricate reviews, or open duplicate/fake Google Business Profiles.
-
-### Current action rule
-- Fresno sibling-boundary experiment, IE owner-stabilization experiment and Stockton experiments remain TESTING until their evaluate-not-before dates.
-- No speculative rewrites to protected pages before the observation gate.
-- Preserve Fontana/Upland gains; focus on correct owner selection and legitimate authority rather than adding more repetitive city copy.
-- Next fair decision source: finalized GSC rows that include a meaningful post-2026-10-03 period.
-
