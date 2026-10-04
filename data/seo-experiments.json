@@ -1960,6 +1960,42 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Calimesa title/meta/body/internal-link intent again before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-banning-meta-ctr-test",
+      "market": "Banning, California",
+      "hypothesis": "A more specific meta description that names pickup/removal, appliance types, the direct 909 contact path, and free submission should improve CTR for a page already averaging page-one visibility.",
+      "pagesChanged": [
+        "/banning-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/banning-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 9,
+          "ctr": 0,
+          "averagePosition": 8.777777777777779
+        }
+      },
+      "change": "Changed only the meta/OG/WebPage description. Title, H1, visible body, canonical, phone, form and internal links were unchanged.",
+      "oldMetaDescription": "Free appliance pickup in Banning, CA for qualifying refrigerators, freezers, stoves, ranges, washers and dryers. General major-appliance pickup and route review.",
+      "newMetaDescription": "Free appliance pickup & removal in Banning, CA for qualifying washers, dryers, refrigerators, freezers and stoves. Call/text 909-375-6685; free to submit.",
+      "successSignals": [
+        "CTR rises above the 0% baseline.",
+        "Clicks begin while average position remains broadly stable around page one.",
+        "Impressions remain stable or increase."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change Banning title/meta/body/internal-link intent again before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
