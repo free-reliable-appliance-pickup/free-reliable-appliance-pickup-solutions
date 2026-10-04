@@ -2392,6 +2392,35 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to the Fresno freezer or stove/oven specialty pages before 2026-10-14. Only verified technical, factual, contact, indexability or safety corrections may interrupt the freeze."
+    },
+    {
+      "id": "2026-10-04-stockton-refrigerator-direct-request",
+      "market": "Stockton, CA — refrigerator pickup",
+      "hypothesis": "A dedicated on-page request form should make the Stockton refrigerator page more complete for refrigerator-only search intent and reduce the extra transition to the protected general Stockton page.",
+      "pagesChanged": [
+        "/stockton-refrigerator-pickup/"
+      ],
+      "protectedOwners": [
+        "/stockton-refrigerator-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "preChange": "The page had refrigerator-specific content, local San Joaquin County disposal guidance and direct phone/text CTAs, but its request button routed to the general Stockton page and the specialty page had no form."
+      },
+      "change": "Added a dedicated Formspree refrigerator request form, changed the hero request CTA to the page-local #request section, and refreshed the specialty sitemap lastmod. Title, H1, canonical, local disposal guidance, qualification rules, protected Stockton general page and protected Stockton laundry page were unchanged.",
+      "successSignals": [
+        "The Stockton refrigerator URL begins earning or expands refrigerator-specific GSC query-page signals.",
+        "The specialty page retains refrigerator-only intent without displacing the protected Stockton general city owner.",
+        "Visitors can submit a refrigerator request without leaving the specialty page."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /stockton-refrigerator-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
