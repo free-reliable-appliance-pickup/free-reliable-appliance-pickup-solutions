@@ -237,8 +237,19 @@ jobs:
                       area=service.get('areaServed',{})
                       if not isinstance(area,dict) or str(area.get('name','')).lower()!=city.lower():
                           failures.append(f'{slug}: Service areaServed is not {city}')
-                      if norm_phone(service.get('telephone',''))!=expected_phone:
-                          failures.append(f'{slug}: Service telephone mismatch')
+                      # telephone is not a valid direct property on Schema.org Service.
+                      # Validate the contact phone through ServiceChannel -> servicePhone instead.
+                      channel=service.get('availableChannel',{})
+                      channels=channel if isinstance(channel,list) else ([channel] if isinstance(channel,dict) else [])
+                      service_phones=[]
+                      for ch in channels:
+                          if not isinstance(ch,dict) or ch.get('@type')!='ServiceChannel':
+                              continue
+                          phone=ch.get('servicePhone')
+                          if isinstance(phone,dict):
+                              service_phones.append(norm_phone(phone.get('telephone','')))
+                      if expected_phone not in service_phones:
+                          failures.append(f'{slug}: ServiceChannel servicePhone mismatch')
                   if 'seo-breadcrumb' not in low and 'aria-label="breadcrumb"' not in low:
                       failures.append(f'{slug}: missing visible breadcrumb')
                   ids=re.findall(r'\bid=["\']([^"\']+)["\']',raw,re.I)
