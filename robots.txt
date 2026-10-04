@@ -9,3 +9,4 @@ Sitemap: https://freereliableappliancepickup.com/sitemap-fresno.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-stockton.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-denver.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-phoenix.xml
+Sitemap: https://freereliableappliancepickup.com/sitemap-priority-sgv-ie.xml
