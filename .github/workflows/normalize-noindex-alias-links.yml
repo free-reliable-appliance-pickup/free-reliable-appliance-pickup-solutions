@@ -38,6 +38,18 @@ jobs:
             'pinon-hills-washer-dryer-pickup':'high-desert-washer-dryer-pickup',
             'helendale-silver-lakes-washer-dryer-pickup':'high-desert-washer-dryer-pickup',
             'bay-area-washer-dryer-pickup':'sf-bay-area-washer-dryer-pickup',
+            'upland-refrigerator-pickup':'upland-appliance-pickup',
+            'upland-freezer-pickup':'upland-appliance-pickup',
+            'upland-stove-oven-pickup':'upland-appliance-pickup',
+            'claremont-refrigerator-pickup':'claremont-appliance-pickup',
+            'claremont-freezer-pickup':'claremont-appliance-pickup',
+            'claremont-stove-oven-pickup':'claremont-appliance-pickup',
+            'la-verne-refrigerator-pickup':'la-verne-appliance-pickup',
+            'la-verne-freezer-pickup':'la-verne-appliance-pickup',
+            'la-verne-stove-oven-pickup':'la-verne-appliance-pickup',
+            'san-dimas-refrigerator-pickup':'san-dimas-appliance-pickup',
+            'san-dimas-freezer-pickup':'san-dimas-appliance-pickup',
+            'san-dimas-stove-oven-pickup':'san-dimas-appliance-pickup',
           }
 
           changed=[]
