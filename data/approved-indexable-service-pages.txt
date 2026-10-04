@@ -347,3 +347,7 @@ reviews
 # Approved priority service/topic pages — 2026-10-04
 appliances
 who-picks-up-old-appliances-for-free-near-me
+appliance-recycling
+appliance-removal-cost
+denver-refrigerator-pickup
+how-to-get-rid-of-old-refrigerator
