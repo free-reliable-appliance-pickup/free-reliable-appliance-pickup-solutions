@@ -1701,6 +1701,41 @@
       "lastChanged": "2026-10-04",
       "change": "Removed only mismatched FAQPage structured-data nodes. Visible content, titles, canonicals, forms, phones and internal links were unchanged.",
       "status": "completed"
+    },
+    {
+      "id": "2026-10-04-alhambra-anti-template-cleanup",
+      "market": "Alhambra, California",
+      "hypothesis": "Reducing repetitive network/corridor/SEO blocks while preserving local service facts, qualifications, access guidance, municipal alternatives, conversion paths and nearby-city links should improve topical clarity and click/ranking performance.",
+      "pagesChanged": [
+        "/alhambra-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/alhambra-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0,
+          "averagePosition": 7.375
+        }
+      },
+      "competitorEvidence": "Current search placed TakeMyAppliance near the top for Alhambra with roughly seven core H2 sections, while the pre-cleanup Alhambra page had more than twenty H2 sections and repeated SGV/network/corridor sections.",
+      "change": "Removed nine redundant sections covering duplicated appliance-category wording, duplicate request instructions, repeated SGV/network/corridor passages, duplicate local connection blocks and a Facebook bridge. Preserved title/meta/H1, qualification details, local access, official disposal alternative, visible FAQ, recurring-property section, request form, phone and nearby-city routes.",
+      "successSignals": [
+        "Alhambra CTR rises above the 0% baseline.",
+        "Average position improves from approximately 7.4 or remains page one while clicks begin.",
+        "The Alhambra city URL remains the primary result for Alhambra appliance pickup/removal intent."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /alhambra-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
