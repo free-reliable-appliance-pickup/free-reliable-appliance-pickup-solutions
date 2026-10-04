@@ -671,7 +671,14 @@
       ],
       "evaluateNotBefore": "2026-10-09",
       "preferredReview": "2026-10-16",
-      "status": "running"
+      "status": "running",
+      "technicalExceptions": [
+        {
+          "date": "2026-10-04",
+          "type": "Phoenix Metro contact correction",
+          "reason": "Added the current Phoenix Metro call/text number 602-726-7552 to the regional hub and synchronized central Contact/About organization contact information. No title, meta, canonical, body intent ownership or internal city/metro separation wording was changed."
+        }
+      ]
     },
     {
       "id": "2026-10-01-homepage-snippet",
