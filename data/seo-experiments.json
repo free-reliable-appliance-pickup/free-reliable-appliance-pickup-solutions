@@ -311,6 +311,11 @@
           "date": "2026-10-04",
           "commit": "4bcfaff7d9b262311587722b3c33d76a4dcc9ed7",
           "reason": "Rancho performance-budget audit found the below-fold stove image at about 966 KB, above the 350 KB limit. Replaced only that image reference with an existing 1200×1600 real stove photo already used on the Fontana stove page at about 316 KB. Title, meta description, H1, canonical, schema intent, internal links, and experiment ownership were unchanged."
+        },
+        {
+          "date": "2026-10-04",
+          "commit": "ea150d2655c2b11bb6d4d761dd68fb2fba9f711b",
+          "reason": "Synchronized the Rancho WebPage dateModified value to 2026-10-04 after the verified performance-image correction and sitemap lastmod refresh. This is metadata freshness only; title, meta description, H1, canonical, links, schema intent ownership and ranking copy were unchanged."
         }
       ]
     },
