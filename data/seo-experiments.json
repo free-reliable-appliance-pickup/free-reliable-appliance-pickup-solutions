@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-03",
+  "updated": "2026-10-04",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -305,7 +305,14 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical, or intent-ownership edits to these pages before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical, or intent-ownership edits to these pages before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-04",
+          "commit": "4bcfaff7d9b262311587722b3c33d76a4dcc9ed7",
+          "reason": "Rancho performance-budget audit found the below-fold stove image at about 966 KB, above the 350 KB limit. Replaced only that image reference with an existing 1200×1600 real stove photo already used on the Fontana stove page at about 316 KB. Title, meta description, H1, canonical, schema intent, internal links, and experiment ownership were unchanged."
+        }
+      ]
     },
     {
       "id": "2026-10-01-rancho-intent-concentration",
