@@ -2039,6 +2039,42 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /aurora-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-free-pickup-qualification-meta-ctr-test",
+      "market": "Free Pickup Qualification guide",
+      "hypothesis": "A meta description that immediately states the qualification outcome should improve CTR on a page already averaging position ~6.2 without changing its ranking target.",
+      "pagesChanged": [
+        "/free-pickup-qualification/"
+      ],
+      "protectedOwners": [
+        "/free-pickup-qualification/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 22,
+          "ctr": 0,
+          "averagePosition": 6.181818181818182
+        }
+      },
+      "change": "Changed only the meta/OG description to state that working appliances receive priority, eligible mixed loads may qualify, and single nonworking items usually do not. Title, H1, body, canonical, internal links and qualification rules were unchanged.",
+      "oldMetaDescription": "Use our quick free appliance pickup checker for washers, dryers, refrigerators, freezers and stoves. See condition rules before you request pickup.",
+      "newMetaDescription": "See what qualifies for free appliance pickup: working appliances get priority, eligible mixed loads may qualify, and single nonworking items usually do not.",
+      "successSignals": [
+        "CTR rises above 0%.",
+        "Clicks begin while average position remains broadly stable.",
+        "Impressions remain stable or increase."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change the Free Pickup Qualification title/meta/body/internal-link intent again before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
