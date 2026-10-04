@@ -1,0 +1,153 @@
+name: Normalize Open Graph Metadata
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/normalize-open-graph-metadata.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: normalize-open-graph-metadata
+  cancel-in-progress: true
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Add missing Open Graph metadata to active pages
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import html
+          import re
+          import xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          FALLBACK_IMAGE=BASE+'file_00000000b7c082308dccc73e5bd3acd2.png'
+          NS={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+
+          def path_for(url):
+              if url==BASE:
+                  return Path('index.html')
+              if not url.startswith(BASE):
+                  return None
+              slug=url[len(BASE):].strip('/')
+              return Path(slug)/'index.html'
+
+          def text_value(raw, pattern):
+              m=re.search(pattern,raw,re.I|re.S)
+              return html.unescape(re.sub(r'\s+',' ',m.group(1))).strip() if m else ''
+
+          def attr(tag,name):
+              m=re.search(r'\b'+re.escape(name)+r'\s*=\s*["\']([^"\']*)["\']',tag,re.I|re.S)
+              return html.unescape(m.group(1)).strip() if m else ''
+
+          def meta_property(raw, prop):
+              for tag in re.findall(r'<meta\b[^>]*>',raw,re.I|re.S):
+                  if attr(tag,'property').lower()==prop.lower():
+                      return attr(tag,'content')
+              return ''
+
+          def meta_name(raw, name):
+              for tag in re.findall(r'<meta\b[^>]*>',raw,re.I|re.S):
+                  if attr(tag,'name').lower()==name.lower():
+                      return attr(tag,'content')
+              return ''
+
+          def canonical(raw):
+              for tag in re.findall(r'<link\b[^>]*>',raw,re.I|re.S):
+                  if attr(tag,'rel').lower()=='canonical':
+                      return attr(tag,'href')
+              return ''
+
+          def first_image(raw):
+              # Prefer primaryImageOfPage when present, otherwise the first non-data image.
+              m=re.search(r'"primaryImageOfPage"\s*:\s*\{[^{}]*"url"\s*:\s*"([^"]+)"',raw,re.I|re.S)
+              if m:
+                  return m.group(1).replace('\\/','/')
+              for tag in re.findall(r'<img\b[^>]*>',raw,re.I|re.S):
+                  src=attr(tag,'src')
+                  if not src or src.startswith('data:'):
+                      continue
+                  if src.startswith('http://') or src.startswith('https://'):
+                      return src
+                  if src.startswith('/'):
+                      return BASE.rstrip('/')+src
+                  return BASE+src.lstrip('./')
+              return FALLBACK_IMAGE
+
+          root=ET.parse('sitemap.xml').getroot()
+          urls=[x.text.strip() for x in root.findall('.//s:loc',NS) if x.text]
+          changed=[]
+          skipped=[]
+
+          for url in urls:
+              p=path_for(url)
+              if not p or not p.exists():
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              robots=meta_name(raw,'robots').lower()
+              if 'noindex' in robots:
+                  continue
+
+              title=text_value(raw,r'<title>(.*?)</title>')
+              desc=meta_name(raw,'description')
+              can=canonical(raw) or url
+              image=first_image(raw)
+
+              values={
+                  'og:site_name':'Free Reliable Appliance Pickup',
+                  'og:type':'website',
+                  'og:url':can,
+                  'og:title':title,
+                  'og:description':desc,
+                  'og:image':image,
+              }
+              missing=[]
+              for prop,val in values.items():
+                  if val and not meta_property(raw,prop):
+                      missing.append(f'<meta property="{prop}" content="{html.escape(val,quote=True)}">')
+
+              if not meta_name(raw,'twitter:card'):
+                  missing.append('<meta name="twitter:card" content="summary_large_image">')
+              if image and not meta_name(raw,'twitter:image'):
+                  missing.append(f'<meta name="twitter:image" content="{html.escape(image,quote=True)}">')
+
+              if not missing:
+                  continue
+              if not re.search(r'</head>',raw,re.I):
+                  skipped.append(str(p))
+                  continue
+              block='\n'+'\n'.join(missing)+'\n'
+              updated=re.sub(r'</head>',block+'</head>',raw,count=1,flags=re.I)
+              p.write_text(updated,encoding='utf-8')
+              changed.append(str(p))
+
+          print('ACTIVE_URLS_SCANNED',len(urls))
+          print('FILES_CHANGED',len(changed))
+          print('SKIPPED_NO_HEAD',len(skipped))
+          if skipped:
+              for p in skipped[:50]: print('SKIP',p)
+          PY
+
+      - name: Commit Open Graph normalization
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No Open Graph metadata changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          git commit -m "Normalize Open Graph metadata"
+          git push
