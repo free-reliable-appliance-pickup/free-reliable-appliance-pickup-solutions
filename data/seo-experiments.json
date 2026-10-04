@@ -2243,6 +2243,77 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change the About title/meta/body/internal-link intent again before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-arcadia-altadena-top10-ctr-test",
+      "market": "Arcadia / Altadena, CA",
+      "hypothesis": "Shorter local meta descriptions that lead with qualifying free appliance pickup, major appliance categories and a direct eligibility/contact action should improve organic CTR on SGV pages already averaging page-one visibility without changing title, H1, canonical, body architecture or intent ownership.",
+      "pagesChanged": [
+        "/arcadia-appliance-pickup/",
+        "/altadena-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "arcadia": {
+            "clicks": 0,
+            "impressions": 11,
+            "ctr": 0,
+            "avgPosition": 8
+          },
+          "altadena": {
+            "clicks": 0,
+            "impressions": 8,
+            "ctr": 0,
+            "avgPosition": 8.25
+          }
+        }
+      },
+      "change": "Changed only the meta/OG/WebPage description on Arcadia and Altadena to a shorter local eligibility-and-contact snippet. Titles, H1s, canonicals, page bodies, schema intent, phone numbers and city ownership were left unchanged.",
+      "successSignals": [
+        "Arcadia and Altadena CTR improves from the zero-click baseline once finalized post-change GSC data is available.",
+        "Average position remains stable or improves while the same city URLs retain ownership.",
+        "No new city cannibalization appears."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change Arcadia or Altadena title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-compton-snippet-authority-test",
+      "market": "Compton, CA",
+      "hypothesis": "A complete local search snippet plus direct appliance-category authority paths should help the Compton page convert and hold its existing page-one visibility while clarifying refrigerator, laundry, freezer, stove and appliance-removal intent.",
+      "pagesChanged": [
+        "/compton-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "avgPosition": 7.2
+        }
+      },
+      "change": "Expanded the very short Compton meta/OG/WebPage description with qualifying appliance categories and direct 310 contact, and added one compact appliance-guide section linking to the established refrigerator, Compton laundry, freezer, stove/oven and appliance-removal authority pages. No title, H1, canonical, form, phone, FAQ schema or city ownership change.",
+      "successSignals": [
+        "Compton retains page-one average visibility and begins earning clicks.",
+        "The intended Compton city URL remains the ranking owner for broad local appliance pickup intent.",
+        "Category-specific searches route to the correct authority/local laundry pages without creating new cannibalization."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to the Compton page before 2026-10-14. Only verified technical, factual, contact, indexability or safety corrections may interrupt the freeze."
     }
   ]
 }
