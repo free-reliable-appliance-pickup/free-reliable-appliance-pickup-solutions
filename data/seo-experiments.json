@@ -282,7 +282,7 @@
         "/ontario-appliance-pickup/",
         "/upland-appliance-pickup/"
       ],
-      "lastChanged": "2026-10-03",
+      "lastChanged": "2026-10-04",
       "baselinePeriod": {
         "start": "2026-09-03",
         "end": "2026-09-30"
@@ -294,15 +294,21 @@
           "fontana": "2026-10-03 desktop rank 3 using Southern California hub; mobile unranked after rank 7 on 2026-10-02 using Fontana city page.",
           "ontario": "Unranked on tracked mobile and desktop snapshots for 2026-10-02 and 2026-10-03.",
           "upland": "2026-10-03 rank 1 using Upland washer/dryer page rather than the broad city appliance page."
+        },
+        "keywordCom20261004": {
+          "ranchoCucamonga": "tracked variants currently unranked; prior best rank 2 with wrong San Bernardino URL",
+          "fontana": "rank 22 on the correct /fontana-appliance-pickup/ URL on one tracked variant; another variant unranked",
+          "ontario": "tracked variants unranked",
+          "upland": "tracked variants unranked; prior best rank 1 on wrong /upland-washer-dryer-pickup/ URL"
         }
       },
-      "change": "Clarified dedicated city pages as broad-intent owners, strengthened regional hub handoffs, aligned city Service/WebPage schema relationships, and repaired Rancho metadata to satisfy existing intent and health rules.",
+      "change": "People-first simplification of Rancho Cucamonga, Fontana, Ontario and Upland owner pages after direct competitor-source comparison, plus removal of duplicate corridor/search-engine-facing sections. Goal remains exact-city owner stability with less templated repetition.",
       "successSignals": [
         "The dedicated city appliance page becomes the ranking URL for its broad city query.",
         "Wrong-page ranking from regional or specialty pages declines.",
         "Finalized GSC impressions/position for the intended city pages improve or remain stable without harming specialty-query ownership."
       ],
-      "evaluateNotBefore": "2026-10-13",
+      "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical, or intent-ownership edits to these pages before evaluateNotBefore. Only a verified technical breakage, factual error, contact error, indexability failure, or safety issue may interrupt the freeze, and the reason must be logged.",
@@ -316,6 +322,12 @@
           "date": "2026-10-04",
           "commit": "ea150d2655c2b11bb6d4d761dd68fb2fba9f711b",
           "reason": "Synchronized the Rancho WebPage dateModified value to 2026-10-04 after the verified performance-image correction and sitemap lastmod refresh. This is metadata freshness only; title, meta description, H1, canonical, links, schema intent ownership and ranking copy were unchanged."
+        }
+      ],
+      "measurementResets": [
+        {
+          "date": "2026-10-04",
+          "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
         }
       ]
     },
@@ -474,9 +486,15 @@
         "More consistent internal-link discovery between priority cities and commercial program pages"
       ],
       "status": "running",
-      "lastChanged": "2026-10-01",
-      "evaluateNotBefore": "2026-10-11",
-      "preferredReview": "2026-10-18"
+      "lastChanged": "2026-10-04",
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "measurementResets": [
+        {
+          "date": "2026-10-04",
+          "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
+        }
+      ]
     },
     {
       "id": "2026-10-01-laundry-hub-priority-links",
@@ -754,9 +772,16 @@
         "Test-group impressions remain stable or increase",
         "Average position does not materially deteriorate relative to controls"
       ],
-      "evaluateNotBefore": "2026-10-09",
-      "preferredReview": "2026-10-16",
-      "status": "running"
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "lastChanged": "2026-10-04",
+      "measurementResets": [
+        {
+          "date": "2026-10-04",
+          "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
+        }
+      ]
     },
     {
       "id": "2026-10-03-san-dimas-city-parity",
@@ -766,7 +791,7 @@
         "/san-dimas-appliance-pickup/"
       ],
       "protectedOwner": "/san-dimas-appliance-pickup/",
-      "lastChanged": "2026-10-03",
+      "lastChanged": "2026-10-04",
       "baselinePeriod": {
         "start": "2026-09-03",
         "end": "2026-09-30"
@@ -810,7 +835,7 @@
         "San Gabriel Valley hub ownership for the exact San Dimas query declines.",
         "Finalized GSC impressions and average position improve without harming washer/dryer-specific intent."
       ],
-      "evaluateNotBefore": "2026-10-13",
+      "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the San Dimas page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
@@ -818,6 +843,12 @@
         {
           "date": "2026-10-03",
           "reason": "Post-change California audits required a second non-logo real/page image, the established local-ranking-depth marker, the exact city pickup-timing FAQ pattern, post-pickup outcome guidance, and explicit network transparency. Added only these technical/structural requirements; title, meta, canonical, H1 and experiment hypothesis were unchanged."
+        }
+      ],
+      "measurementResets": [
+        {
+          "date": "2026-10-04",
+          "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
         }
       ]
     },
@@ -829,7 +860,7 @@
         "/la-verne-appliance-pickup/"
       ],
       "protectedOwner": "/la-verne-appliance-pickup/",
-      "lastChanged": "2026-10-03",
+      "lastChanged": "2026-10-04",
       "baselinePeriod": {
         "start": "2026-09-03",
         "end": "2026-09-30"
@@ -863,7 +894,7 @@
         "The San Gabriel Valley hub stops owning the exact La Verne query while retaining broader regional visibility.",
         "Finalized GSC impressions and average position improve or remain stable without harming laundry-specific intent."
       ],
-      "evaluateNotBefore": "2026-10-13",
+      "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the La Verne page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
@@ -871,6 +902,12 @@
         {
           "date": "2026-10-03",
           "reason": "Post-change California SEO audit required at least one external local/official reference. Restored the original City of La Verne Bulky Item Pick Up reference only; title, meta, canonical, H1, page architecture and experiment hypothesis were unchanged."
+        }
+      ],
+      "measurementResets": [
+        {
+          "date": "2026-10-04",
+          "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
         }
       ]
     },
@@ -927,7 +964,7 @@
         "/pomona-appliance-pickup/"
       ],
       "protectedOwner": "/pomona-appliance-pickup/",
-      "lastChanged": "2026-10-03",
+      "lastChanged": "2026-10-04",
       "baselinePeriod": {
         "start": "2026-09-03",
         "end": "2026-10-03"
@@ -973,10 +1010,16 @@
         "The Pomona city page enters or improves within the top 10 organic results while maintaining indexability and conversion paths.",
         "Finalized GSC impressions and average position improve or remain stable without harming Pomona washer/dryer-specific intent."
       ],
-      "evaluateNotBefore": "2026-10-13",
+      "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Pomona page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Pomona page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "measurementResets": [
+        {
+          "date": "2026-10-04",
+          "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
+        }
+      ]
     },
     {
       "id": "2026-10-03-covina-city-focus",
@@ -1255,31 +1298,50 @@
       "market": "Fresno / Clovis / Sanger / Fowler / Selma, CA",
       "hypothesis": "Explicit city-boundary handoffs on nearby Central Valley pages should reduce wrong-page rankings for Fresno queries and concentrate Fresno-specific relevance on the dedicated Fresno general and laundry pages without rewriting the protected Fresno pages.",
       "pagesChanged": [
+        "/fresno-appliance-pickup/",
+        "/fresno-washer-dryer-pickup/",
         "/clovis-appliance-pickup/",
         "/clovis-washer-dryer-pickup/",
         "/sanger-appliance-pickup/",
+        "/sanger-washer-dryer-pickup/",
         "/fowler-appliance-pickup/",
-        "/selma-washer-dryer-pickup/"
+        "/fowler-washer-dryer-pickup/",
+        "/selma-washer-dryer-pickup/",
+        "/central-valley-appliance-pickup/",
+        "/central-valley-washer-dryer-pickup/"
       ],
-      "lastChanged": "2026-10-03",
+      "lastChanged": "2026-10-04",
       "baselinePeriod": {
         "start": "2026-09-03",
         "end": "2026-09-30"
       },
       "baseline": {
         "keywordComSnapshot": "On 2026-10-03, multiple Fresno-tracked terms were surfacing neighboring URLs: Clovis appliance/laundry pages for free appliance removal Fresno and washer/dryer Fresno terms; Sanger appliance page for free freezer pickup Fresno; Fowler appliance page for appliance recycling/removal Fresno; Selma laundry page for free washer pickup Fresno. Several companion tracked variants were unranked.",
-        "liveSearchNote": "Live sampled Fresno searches continued to surface established competitors such as TakeMyAppliance and AppliancePickupNow while Free Reliable was not consistently visible for the broad Fresno query."
+        "liveSearchNote": "Live sampled Fresno searches continued to surface established competitors such as TakeMyAppliance and AppliancePickupNow while Free Reliable was not consistently visible for the broad Fresno query.",
+        "keywordCom20261004": {
+          "free washer and dryer pickup fresno": "rank 1 on /clovis-washer-dryer-pickup/ on one tracked variant; another variant rank 37 on /fresno-appliance-pickup/",
+          "free appliance pickup fresno": "unranked on tracked variants, with prior wrong-page ownership from Clovis/Visalia",
+          "free appliance removal fresno": "rank 5 on /clovis-appliance-pickup/ on one tracked variant",
+          "free appliance recycling fresno": "rank 4 on /clovis-appliance-pickup/ on one tracked variant",
+          "free freezer pickup fresno": "rank 2 on /sanger-appliance-pickup/"
+        }
       },
-      "change": "Added explicit, user-facing city-boundary handoffs from the neighboring Clovis, Sanger, Fowler and Selma pages to the dedicated Fresno general or Fresno washer/dryer owner URLs. No protected Fresno page content, title, canonical or schema was changed.",
+      "change": "Consolidated Fresno intent by trimming the Fresno laundry page, removing explicit Fresno-search handoff language from Clovis/Sanger/Selma supporting pages, and reducing Fresno/Stockton/Sacramento repetition on the Central Valley hubs. The goal is to make each city page the clearest owner of its own city intent rather than repeating neighboring-city terms.",
       "successSignals": [
         "Fresno-specific tracked queries stop surfacing Clovis/Sanger/Fowler/Selma URLs.",
         "The Fresno general page becomes the ranking URL for broad Fresno appliance/removal/recycling intent.",
         "The Fresno washer/dryer page becomes the ranking URL for Fresno laundry-only intent."
       ],
-      "evaluateNotBefore": "2026-10-13",
+      "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not make further speculative intent-boundary edits to these five supporting pages before evaluateNotBefore. Protected Fresno pages remain under their existing experiment freeze."
+      "freezeRule": "Do not make further speculative intent-boundary edits to these five supporting pages before evaluateNotBefore. Protected Fresno pages remain under their existing experiment freeze.",
+      "measurementResets": [
+        {
+          "date": "2026-10-04",
+          "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
+        }
+      ]
     },
     {
       "id": "2026-10-03-san-bernardino-support-page-handoff",
@@ -1322,7 +1384,7 @@
       "protectedOwners": [
         "/fontana-appliance-pickup/"
       ],
-      "lastChanged": "2026-10-03",
+      "lastChanged": "2026-10-04",
       "baselinePeriod": {
         "start": "2026-09-03",
         "end": "2026-09-30"
@@ -1338,10 +1400,16 @@
         "Stove/range/oven-specific Fontana queries remain on /fontana-stove-oven-pickup/.",
         "Image/search previews for the specialty page show a stove/range rather than unrelated laundry imagery."
       ],
-      "evaluateNotBefore": "2026-10-13",
+      "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative edits to the Fontana stove/range/oven support page or protected Fontana owner page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative edits to the Fontana stove/range/oven support page or protected Fontana owner page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "measurementResets": [
+        {
+          "date": "2026-10-04",
+          "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
+        }
+      ]
     }
   ]
 }
