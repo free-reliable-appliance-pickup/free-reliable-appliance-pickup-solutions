@@ -1885,6 +1885,45 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /brea-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-bakersfield-people-first-intent-cleanup",
+      "market": "Bakersfield, California",
+      "hypothesis": "Removing one search-engine-facing intent-owner block while keeping the concise local service, appliance, access, disposal, FAQ and conversion content should improve people-first clarity without weakening Bakersfield relevance.",
+      "pagesChanged": [
+        "/bakersfield-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/bakersfield-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 12,
+          "ctr": 0,
+          "averagePosition": 9.5
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 1131,
+          "h2Count": 13
+        }
+      },
+      "competitorEvidence": "Current TakeMyAppliance Bakersfield page uses local process, trust, request, appliance, local-details and FAQ sections without an explicit search-intent-owner statement.",
+      "change": "Removed only the visible section that declared the page the primary owner for named search queries. Title, meta, H1, canonical, schema, appliance routing, local access, disposal facts, image, FAQ, phone and request form were unchanged.",
+      "successSignals": [
+        "Bakersfield average position improves from about 9.5 or remains page one while clicks begin.",
+        "CTR rises above 0%.",
+        "Impressions remain stable or increase."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /bakersfield-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
