@@ -1,6 +1,6 @@
 # Explicitly approved indexable appliance-specific service pages.
 # These are separate from the frozen location-page inventory and must add material user value.
-# Approved non-location service, commercial, recycling and program pages.
+# Approved non-location service, commercial, recycling, program and trust pages.
 adelanto-washer-dryer-pickup
 alhambra-washer-dryer-pickup
 aliso-viejo-washer-dryer-pickup
@@ -342,3 +342,4 @@ alabama-appliance-pickup
 fresno-freezer-pickup
 fresno-refrigerator-pickup
 fresno-stove-oven-pickup
+reviews
