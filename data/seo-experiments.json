@@ -1842,6 +1842,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative internal-link/anchor changes on /california-appliance-pickup/ that target Anaheim or Arcadia before 2026-10-14. Only verified technical/factual/contact/indexability/safety fixes may interrupt the window."
+    },
+    {
+      "id": "2026-10-04-brea-anti-template-cleanup",
+      "market": "Brea, California",
+      "hypothesis": "Removing repeated network/corridor/priority/SEO sections while preserving the useful local service, qualification, access, city-alternative, commercial, photo, FAQ and request content should improve topical clarity and organic performance for Brea.",
+      "pagesChanged": [
+        "/brea-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/brea-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 13,
+          "ctr": 0,
+          "averagePosition": 9.85
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 2026,
+          "h2Count": 26
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/brea",
+          "pattern": "Process -> trust/reasons -> request -> appliance types -> FAQ -> nearby city/partner CTA",
+          "evidence": "Current competitor Brea page is materially simpler than the pre-cleanup page and avoids repeated corridor/network sections."
+        }
+      },
+      "change": "Removed 11 redundant dated sections: generic no-city handoff, duplicated local-scope block, duplicate appliance-intent review, turbo network, Orange-priority review, premium expansion, corridor/nearby/priority/connection repeats, and Facebook bridge. Title/meta/H1/canonical/form/phone, appliance qualification, access, ZIP/local facts, bulky-item alternative, real photo, commercial recurring path, FAQ and request form were preserved.",
+      "successSignals": [
+        "Brea average position improves from approximately 9.85 or remains page one while clicks begin.",
+        "CTR rises above the 0% baseline.",
+        "Impressions remain stable or increase and the Brea city URL remains the intended owner."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /brea-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
