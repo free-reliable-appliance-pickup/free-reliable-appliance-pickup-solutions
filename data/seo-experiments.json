@@ -1785,6 +1785,22 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /freezer-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-secondary-faq-schema-cleanup",
+      "market": "Additional impression-bearing pages",
+      "hypothesis": "Removing mismatched FAQPage structured data prevents schema/content mismatch while preserving visible content and ranking intent.",
+      "pagesChanged": [
+        "/loma-linda-appliance-pickup/",
+        "/oregon-appliance-pickup/",
+        "/paramount-appliance-pickup/",
+        "/adelanto-appliance-pickup/",
+        "/cathedral-city-appliance-pickup/",
+        "/aliso-viejo-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "change": "Removed only FAQPage JSON-LD where schema questions were not visibly present on the page.",
+      "status": "completed"
     }
   ]
 }
