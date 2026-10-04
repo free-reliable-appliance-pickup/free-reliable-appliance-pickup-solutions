@@ -2314,6 +2314,42 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to the Compton page before 2026-10-14. Only verified technical, factual, contact, indexability or safety corrections may interrupt the freeze."
+    },
+    {
+      "id": "2026-10-04-anaheim-people-first-simplification",
+      "market": "Anaheim, CA",
+      "hypothesis": "Removing redundant network, corridor, duplicate CTA and repeated Orange County sections while preserving Anaheim-specific appliance, access, official utility/bulky-item, FAQ and request content should improve exact-city relevance and reduce template noise.",
+      "pagesChanged": [
+        "/anaheim-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 34,
+          "ctr": 0,
+          "avgPosition": 19.1176470588
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 2745,
+          "h2Count": 27
+        },
+        "competitorPattern": "TakeMyAppliance Anaheim uses a compact sequence centered on process, trust, request, local details, appliance types, FAQ and nearby locations rather than many repeated network sections."
+      },
+      "change": "Removed redundant dated network/county/duplicate conversion sections from the Anaheim city page. Kept title/meta/H1/canonical, local appliance categories, apartments/access guidance, real appliance proof, FAQ, Anaheim bulky-item alternative, Anaheim Public Utilities refrigerator/freezer rebate, ZIP/local planning content, recurring-property section, request form and internal authority links. Post-change page is about 1,667 visible words with 15 H2s.",
+      "successSignals": [
+        "Anaheim average position improves from about 19 toward the top 10.",
+        "The intended /anaheim-appliance-pickup/ page retains exact-city ownership.",
+        "Impressions and clicks increase without shifting washer/dryer-only intent away from the dedicated Anaheim laundry page."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to the Anaheim city page before 2026-10-14. Only verified technical, factual, contact, indexability or safety corrections may interrupt the freeze."
     }
   ]
 }
