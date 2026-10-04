@@ -2114,6 +2114,44 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /anaheim-hills-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-chula-vista-people-first-intent-cleanup",
+      "market": "Chula Vista, California",
+      "hypothesis": "Removing one visible search-engine-facing intent-owner block while preserving the lean local service, qualification, access, FAQ and request content should improve people-first clarity and help the city page earn stronger organic visibility.",
+      "pagesChanged": [
+        "/chula-vista-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/chula-vista-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 17,
+          "ctr": 0,
+          "averagePosition": 34.294117647058826
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 751,
+          "h2Count": 10
+        }
+      },
+      "change": "Removed only the visible section labeled as the local appliance intent owner. Title/meta/H1/canonical, local qualification details, access guidance, FAQ, request form and internal links were unchanged.",
+      "successSignals": [
+        "Average position improves from ~34.3.",
+        "Impressions remain stable or increase.",
+        "The Chula Vista city URL continues to receive the local query signal without search-engine-facing ownership copy."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /chula-vista-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
