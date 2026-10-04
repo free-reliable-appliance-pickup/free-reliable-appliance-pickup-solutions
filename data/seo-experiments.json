@@ -1576,7 +1576,14 @@
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not change the homepage title or meta description again before 2026-10-14 unless there is verified technical breakage, factual error, indexability failure or safety issue."
+      "freezeRule": "Do not change the homepage title or meta description again before 2026-10-14 unless there is verified technical breakage, factual error, indexability failure or safety issue.",
+      "technicalExceptions": [
+        {
+          "date": "2026-10-04",
+          "type": "homepage contact-routing correction",
+          "reason": "Removed a national form-note instruction that sent every visitor to the 909 California text line and added Phoenix Metro ZIP routing to 602-726-7552. The homepage title/meta CTR test itself was not changed."
+        }
+      ]
     },
     {
       "id": "2026-10-04-salem-heading-hierarchy-cleanup",
