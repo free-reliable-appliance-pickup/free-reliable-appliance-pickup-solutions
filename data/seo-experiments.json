@@ -701,7 +701,10 @@
       ],
       "evaluateNotBefore": "2026-10-09",
       "preferredReview": "2026-10-16",
-      "status": "running"
+      "status": "superseded",
+      "supersededBy": "2026-10-04-homepage-meta-ctr-test",
+      "supersededOn": "2026-10-04",
+      "decision": "Superseded by the October 4 action-oriented homepage CTR test before the earlier experiment reached a clean evaluation window."
     },
     {
       "id": "2026-10-01-sgv-ctr-test",
