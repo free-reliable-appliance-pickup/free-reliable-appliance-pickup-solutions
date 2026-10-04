@@ -1736,6 +1736,48 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /alhambra-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-freezer-national-intent-cleanup",
+      "market": "National freezer pickup",
+      "hypothesis": "Consolidating repetitive location-specific sections should strengthen the national freezer/chest-freezer intent while preserving dedicated local freezer links and conversion paths.",
+      "pagesChanged": [
+        "/freezer-pickup/"
+      ],
+      "protectedOwners": [
+        "/freezer-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 2,
+          "impressions": 24,
+          "ctr": 0.08333333333333333,
+          "averagePosition": 9.916666666666666
+        },
+        "querySignals": [
+          {
+            "query": "chest freezer pickup",
+            "impressions": 6,
+            "position": 24.333333333333332
+          }
+        ]
+      },
+      "competitorEvidence": "Current search for free freezer pickup/chest freezer pickup favored simpler national/recycling resources. The pre-cleanup page had 23 H2s, including roughly ten separate regional/city SEO sections.",
+      "change": "Consolidated twelve location-specific/regional blocks into one compact local-freezer-guides section. Preserved title/meta/H1, freezer qualification guidance, chest/upright instructions, access/preparation content, visible FAQ, related appliance guides and seven dedicated city freezer links.",
+      "successSignals": [
+        "Average position improves from the ~9.9 baseline.",
+        "Chest-freezer query position improves from ~24.3.",
+        "Clicks and CTR remain stable or improve while impressions grow."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /freezer-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
