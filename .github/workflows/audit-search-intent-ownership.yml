@@ -34,6 +34,15 @@ jobs:
               x=re.sub(r'[^a-z0-9]+',' ',x)
               return ' '.join(x.split())
 
+          def visible_text(raw):
+              # Compare rendered text, not raw HTML. Inline tags such as <span>
+              # must not inject tag names between words in a visible phrase.
+              x=re.sub(r'<script\b[^>]*>.*?</script>',' ',raw,flags=re.I|re.S)
+              x=re.sub(r'<style\b[^>]*>.*?</style>',' ',x,flags=re.I|re.S)
+              x=re.sub(r'<!--.*?-->',' ',x,flags=re.S)
+              x=re.sub(r'<[^>]+>',' ',x)
+              return normalize_text(x)
+
           def core_visible(raw):
               # Remove script/style/comments and links entirely: exact generic phrases are allowed
               # as descriptive anchor text that points users to the canonical intent owner.
@@ -49,7 +58,7 @@ jobs:
               if not owner_file.exists():
                   failures.append(f'owner missing for {phrase}: {owner}')
                   continue
-              owner_text=normalize_text(owner_file.read_text(encoding='utf-8',errors='replace'))
+              owner_text=visible_text(owner_file.read_text(encoding='utf-8',errors='replace'))
               if normalize_text(phrase) not in owner_text:
                   failures.append(f'canonical owner {owner} does not visibly target phrase: {phrase}')
 
