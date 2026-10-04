@@ -2421,6 +2421,41 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /stockton-refrigerator-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-stockton-stove-oven-city-appliance",
+      "market": "Stockton, CA — stove/range/oven pickup",
+      "hypothesis": "A dedicated Stockton cooking-appliance page can capture stove/range/oven city intent without weakening the protected broad Stockton appliance page, especially by pairing appliance-specific logistics with current San Joaquin County disposal facts and a direct request form.",
+      "pagesChanged": [
+        "/stockton-stove-oven-pickup/",
+        "/stove-oven-pickup/"
+      ],
+      "protectedOwners": [
+        "/stockton-stove-oven-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": "No dedicated Stockton stove/range/oven owner page existed in the site during the finalized baseline period.",
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/appliances/oven-stove/northern-california/stockton",
+          "observedPattern": "Dedicated city-by-appliance URL with appliance logistics, prep, local Stockton details, FAQs and repeated request action.",
+          "factualGap": "The competitor page still referenced Foothill Sanitary Landfill as part of the Stockton waste route, while San Joaquin County announced Foothill ceased accepting all waste on June 28, 2026 and consolidated operations at North County."
+        }
+      },
+      "change": "Created a dedicated Stockton stove/range/oven page with gas/electric/induction and built-in logistics, safety/disconnection guidance, direct Formspree request flow, local Stockton access context, San Joaquin County appliance guidance and the verified 2026 Foothill closure. Added the URL to Stockton and main sitemaps and linked it from the established stove/oven authority hub. The protected Stockton general and laundry pages were not changed.",
+      "successSignals": [
+        "The new Stockton stove/oven URL begins receiving finalized GSC impressions for Stockton cooking-appliance queries.",
+        "The dedicated page becomes the owner for Stockton stove/range/oven intent while the general Stockton page retains broad appliance pickup intent.",
+        "No wrong-page ranking or cannibalization appears between the new specialty page and protected Stockton pages."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent changes to /stockton-stove-oven-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
