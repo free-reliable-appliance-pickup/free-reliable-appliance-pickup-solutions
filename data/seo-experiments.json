@@ -1299,6 +1299,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative edits to these two supporting pages or the protected San Bernardino owner page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-03-fontana-stove-support-page-handoff",
+      "market": "Fontana, CA",
+      "hypothesis": "Clarifying the stove/range/oven page as appliance-specific and using a matching real stove image should reduce broad Fontana appliance-pickup intent leakage while preserving stove/range/oven queries.",
+      "pagesChanged": [
+        "/fontana-stove-oven-pickup/"
+      ],
+      "protectedOwners": [
+        "/fontana-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "userObservedLiveOrganic": "User observed the Fontana stove/range/oven page surfacing for broad 'free appliance pickup Fontana' organic search.",
+        "keywordComSnapshot": "2026-10-03 desktop broad Fontana query rank 3 using Southern California hub; mobile unranked after prior best 7 using the correct Fontana owner. Live user observation adds a separate wrong-page signal from the Fontana stove/range/oven page.",
+        "imageIssue": "Fontana stove/range/oven page used assets/major-appliance-pickup-photo-3.jpg, which did not reliably match the cooking-appliance intent."
+      },
+      "change": "Added an explicit broad-intent handoff to the main Fontana appliance page and replaced the specialty page hero/OG/schema image with the repository's real stove/range photo.",
+      "successSignals": [
+        "Broad 'free appliance pickup Fontana' searches increasingly surface /fontana-appliance-pickup/ rather than the stove/range/oven page.",
+        "Stove/range/oven-specific Fontana queries remain on /fontana-stove-oven-pickup/.",
+        "Image/search previews for the specialty page show a stove/range rather than unrelated laundry imagery."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative edits to the Fontana stove/range/oven support page or protected Fontana owner page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
