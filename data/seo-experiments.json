@@ -2152,6 +2152,44 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /chula-vista-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-escondido-people-first-intent-cleanup",
+      "market": "Escondido, California",
+      "hypothesis": "Removing the visible search-engine-facing intent-owner block while preserving general-appliance scope, local access, official bulky-item alternative, FAQ and washer/dryer handoff should improve people-first clarity and reduce artificial intent signaling.",
+      "pagesChanged": [
+        "/escondido-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/escondido-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 10,
+          "ctr": 0,
+          "averagePosition": 42.2
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 854,
+          "h2Count": 12
+        }
+      },
+      "change": "Removed only the local-appliance-intent-owner block. Title/meta/H1/canonical, broad appliance scope, local access, official disposal alternative, FAQ, request form and washer/dryer handoff were unchanged.",
+      "successSignals": [
+        "Average position improves from ~42.2.",
+        "Impressions remain stable or increase.",
+        "The general city page continues to own broad Escondido appliance intent while the laundry page keeps washer/dryer-specific intent."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /escondido-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
