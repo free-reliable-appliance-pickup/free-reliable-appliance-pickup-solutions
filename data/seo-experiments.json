@@ -1611,6 +1611,39 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative content/title/internal-link/schema-intent changes to /salem-appliance-pickup/ before 2026-10-14. Only verified technical breakage, factual/contact error, indexability failure or safety issue may interrupt the freeze."
+    },
+    {
+      "id": "2026-10-04-service-areas-title-ctr-test",
+      "market": "Service Areas directory",
+      "hypothesis": "Adding 'Free' to the service-area title should better match the site's core user intent and improve CTR on a page already averaging about position 4.",
+      "pagesChanged": [
+        "/service-areas/"
+      ],
+      "protectedOwners": [
+        "/service-areas/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 1,
+          "impressions": 29,
+          "ctr": 0.034482758620689655,
+          "averagePosition": 3.9655172413793105
+        }
+      },
+      "change": "Changed only the HTML/OG structured title from 'Appliance Pickup Service Areas | Find Your City or Region' to 'Free Appliance Pickup Service Areas | Find Your City'. Body copy and internal links were left unchanged.",
+      "successSignals": [
+        "Service Areas CTR improves above the 3.45% baseline.",
+        "Clicks increase without a material decline in impressions or average position."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change the Service Areas title again before 2026-10-14 unless there is verified technical breakage, factual error, indexability failure or safety issue."
     }
   ]
 }
