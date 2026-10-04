@@ -18,7 +18,6 @@ apache-junction-appliance-pickup
 apple-valley-appliance-pickup
 apple-valley-washer-dryer-pickup
 appliance-installer-remodeler-pickup
-appliance-removal
 arcadia-appliance-pickup
 arcadia-washer-dryer-pickup
 arizona-appliance-pickup
