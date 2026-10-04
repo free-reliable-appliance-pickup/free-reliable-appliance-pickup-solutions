@@ -1801,6 +1801,47 @@
       "lastChanged": "2026-10-04",
       "change": "Removed only FAQPage JSON-LD where schema questions were not visibly present on the page.",
       "status": "completed"
+    },
+    {
+      "id": "2026-10-04-california-hub-anaheim-arcadia-anchor-test",
+      "market": "California hub → Anaheim and Arcadia",
+      "hypothesis": "Strengthening only the California hub anchor text to the exact pickup-and-removal service phrasing should increase internal relevance/authority for Anaheim and Arcadia without adding more city-page content.",
+      "pagesChanged": [
+        "/california-appliance-pickup/"
+      ],
+      "observedPages": [
+        "/anaheim-appliance-pickup/",
+        "/arcadia-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "anaheim": {
+          "clicks": 0,
+          "impressions": 34,
+          "ctr": 0,
+          "averagePosition": 19.11764705882353
+        },
+        "arcadia": {
+          "clicks": 0,
+          "impressions": 11,
+          "ctr": 0,
+          "averagePosition": 8
+        }
+      },
+      "change": "Changed only one California-hub internal anchor for Anaheim and one for Arcadia from short city/pickup wording to 'Free Appliance Pickup & Removal [City] CA'. No Anaheim or Arcadia page content, title, meta, schema, canonical, form or phone changed.",
+      "successSignals": [
+        "Anaheim average position improves from approximately 19.1 and/or impressions increase without wrong-page ownership.",
+        "Arcadia average position improves from approximately 8.0 and begins receiving clicks.",
+        "No material decline in either page's impressions."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative internal-link/anchor changes on /california-appliance-pickup/ that target Anaheim or Arcadia before 2026-10-14. Only verified technical/factual/contact/indexability/safety fixes may interrupt the window."
     }
   ]
 }
