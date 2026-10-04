@@ -1268,6 +1268,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative intent-boundary edits to these five supporting pages before evaluateNotBefore. Protected Fresno pages remain under their existing experiment freeze."
+    },
+    {
+      "id": "2026-10-03-san-bernardino-support-page-handoff",
+      "market": "San Bernardino, CA",
+      "hypothesis": "Clarifying that the nationwide appliance-removal guide and San Bernardino stove/oven page are supporting pages should help the main San Bernardino appliance page own broad city appliance-removal intent without changing the already-comprehensive city page.",
+      "pagesChanged": [
+        "/appliance-removal/",
+        "/san-bernardino-stove-oven-pickup/"
+      ],
+      "protectedOwners": [
+        "/san-bernardino-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-03",
+      "baselinePeriod": {
+        "start": "2026-09-03",
+        "end": "2026-09-30"
+      },
+      "baseline": {
+        "gscNote": "Finalized GSC showed 'appliance removal san bernardino' on /appliance-removal/ with 2 impressions at avg position 53.5 and on /san-bernardino-stove-oven-pickup/ with 1 impression at avg position 43; the main city page was not the returned owner for this query.",
+        "keywordComSnapshot": "2026-10-03 desktop 'free appliance pickup san bernardino' rank 23 using the correct /san-bernardino-appliance-pickup/ page; mobile unranked with prior wrong-page history."
+      },
+      "change": "Added explicit user-facing handoffs on the two supporting pages so broad San Bernardino appliance-removal requests route to the main city page while stove/range/oven-only intent remains on the specialty page.",
+      "successSignals": [
+        "Finalized GSC begins showing /san-bernardino-appliance-pickup/ for broad San Bernardino appliance removal/pickup queries.",
+        "Broad city-query impressions on /appliance-removal/ and /san-bernardino-stove-oven-pickup/ decline or become appliance-specific.",
+        "Stove/range/oven-specific San Bernardino visibility is preserved."
+      ],
+      "evaluateNotBefore": "2026-10-13",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative edits to these two supporting pages or the protected San Bernardino owner page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ]
 }
