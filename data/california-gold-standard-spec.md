@@ -15,10 +15,10 @@ Do not mass-copy a thin city template. New state rollouts must inherit the stron
 - Unique title, meta description, H1, and useful H2 structure.
 - Keep priority-city meta descriptions concise enough to avoid unnecessary truncation; the audit warns above 165 characters.
 - No repeated exact H2 headings on the same page.
-- WebPage, Service, FAQPage, and BreadcrumbList structured data on priority gold-standard city pages.
+- WebPage, Service, and BreadcrumbList structured data on priority gold-standard city pages. FAQPage schema is not required; keep visible FAQs when they help users, but do not add FAQ markup solely for a Google rich result that is no longer supported.
 - Internal links connect city -> regional/county -> state and appliance-specific guides.
 - Every priority gold-standard city page links to the refrigerator, washer/dryer, freezer, and stove/oven authority guides.
-- Priority gold-standard city pages maintain at least 20 useful internal links so they are integrated into the site rather than isolated doorway pages.
+- Priority gold-standard city pages maintain a useful internal-link network to parent/regional pages and appliance guides without link inflation; the automated minimum is 8 useful internal links.
 - Priority gold-standard city pages include at least one legitimate external local/official reference.
 - The request form and customer routing must remain functional.
 - Do not create separate indexable pages that only swap a city name while leaving the useful body substantially the same.
