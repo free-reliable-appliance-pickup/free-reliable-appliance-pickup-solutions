@@ -99,3 +99,25 @@ This is the kind of external corroboration to emulate legitimately: real partner
 - No duplicate/fake Google Business Profiles.
 - No directory submission unless business facts are accurate and eligibility is satisfied.
 - Keep protected city-page SEO experiments frozen until their evaluate-not-before dates.
+
+## Real appliance-business partnership targets
+
+These are research targets only. No outreach has been sent.
+
+### Rancho Cucamonga
+- Appliances 4 Less Rancho Cucamonga — used appliance / refrigerator / washer-dryer retailer at 10070 E 4th St, Rancho Cucamonga. Public business data shows a large review footprint and delivery/installation services. This is a strong fit for a legitimate reuse/referral partnership analogous to the competitor's appliance-store partnership model.
+
+### Fresno
+- Appliances For Less — 5153 N Blackstone Ave, Fresno. Appliance / refrigerator / washer-dryer store. Its own website describes the business as family-owned and serving the Central Valley with refrigerators, washers, dryers, cooking appliances and dishwashers.
+- Javier's Home Appliance — 1753 E Saginaw Way, Fresno. Appliance retailer with laundry, refrigeration, cooking, scratch-and-dent and commercial appliance categories.
+- Belmont Appliance — used appliance store and appliance repair service in Fresno. A potential reuse/referral relationship where working pickup inventory may align with resale/repair demand.
+- Urner's Fresno — major local appliance retailer with a Fresno showroom and delivery operation. Higher-value relationship target, but likely a more formal partnership process than a small independent store.
+
+Partnership concept:
+1. Free Reliable Appliance Pickup supplies or routes qualifying reusable appliances / replacement-day pickups.
+2. Retailer or repair partner can refer customers who need old-appliance pickup.
+3. If a real relationship forms, both parties may publish an accurate partner/resource mention.
+4. Never require a backlink as payment or condition of service; any mention must be editorially legitimate.
+
+Status: RESEARCHED / OUTREACH NOT SENT.
+
