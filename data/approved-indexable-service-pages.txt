@@ -343,3 +343,19 @@ fresno-freezer-pickup
 fresno-refrigerator-pickup
 fresno-stove-oven-pickup
 reviews
+
+# Approved priority service/topic pages — 2026-10-04
+appliances
+who-picks-up-old-appliances-for-free-near-me
+upland-refrigerator-pickup
+upland-freezer-pickup
+upland-stove-oven-pickup
+claremont-refrigerator-pickup
+claremont-freezer-pickup
+claremont-stove-oven-pickup
+la-verne-refrigerator-pickup
+la-verne-freezer-pickup
+la-verne-stove-oven-pickup
+san-dimas-refrigerator-pickup
+san-dimas-freezer-pickup
+san-dimas-stove-oven-pickup
