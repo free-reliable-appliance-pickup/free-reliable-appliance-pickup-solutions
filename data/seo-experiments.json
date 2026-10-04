@@ -1522,6 +1522,42 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative ranking/content/title/internal-link/schema-intent changes to these pages before 2026-10-14. Only verified technical breakage, factual/contact error, indexability failure or safety issue may interrupt the freeze."
+    },
+    {
+      "id": "2026-10-04-homepage-meta-ctr-test",
+      "market": "National homepage",
+      "hypothesis": "A more action-oriented meta description that immediately says check by ZIP, free to submit, and no account required should improve homepage organic CTR without changing the ranking target or page title.",
+      "pagesChanged": [
+        "/"
+      ],
+      "protectedOwners": [
+        "/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 60,
+          "ctr": 0,
+          "averagePosition": 3.6166666666666667
+        },
+        "oldMetaDescription": "Need appliance pickup near you? Qualifying working washers, dryers, refrigerators, freezers and stoves may get free pickup. Check your ZIP and send photos for review."
+      },
+      "change": "Changed only the homepage meta/OG/WebPage description to emphasize ZIP availability, free submission and no account required. Page title and primary ranking target were left unchanged.",
+      "newMetaDescription": "Check free appliance pickup availability by ZIP. Free to submit, no account required. Qualifying washers, dryers, refrigerators, freezers and stoves may get free pickup.",
+      "successSignals": [
+        "Homepage CTR rises above the 0% baseline while average position remains broadly stable.",
+        "Homepage clicks begin appearing without loss of impressions.",
+        "No material decline in homepage ranking visibility."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change the homepage title or meta description again before 2026-10-14 unless there is verified technical breakage, factual error, indexability failure or safety issue."
     }
   ]
 }
