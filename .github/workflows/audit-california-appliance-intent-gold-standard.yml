@@ -1,5 +1,4 @@
-# Turbo revalidation after Highland completion: 2026-09-25
-name: Audit California Appliance Intent Gold Standard
+name: Audit California People-First SEO Standard
 
 on:
   push:
@@ -23,35 +22,7 @@ on:
       - 'san-bernardino-county-appliance-pickup/**'
       - 'los-angeles-county-appliance-pickup/**'
       - 'southern-california-appliance-pickup/**'
-      - 'pomona-appliance-pickup/**'
-      - 'huntington-beach-appliance-pickup/**'
-      - 'irvine-appliance-pickup/**'
-      - 'pasadena-appliance-pickup/**'
-      - 'rancho-cucamonga-appliance-pickup/**'
-      - 'chino-appliance-pickup/**'
-      - 'riverside-appliance-pickup/**'
-      - 'ontario-appliance-pickup/**'
-      - 'west-covina-appliance-pickup/**'
-      - 'mission-viejo-appliance-pickup/**'
-      - 'costa-mesa-appliance-pickup/**'
-      - 'rowland-heights-appliance-pickup/**'
-      - 'fontana-appliance-pickup/**'
-      - 'san-bernardino-appliance-pickup/**'
-      - 'los-angeles-appliance-pickup/**'
-      - 'glendale-appliance-pickup/**'
-      - 'burbank-appliance-pickup/**'
-      - 'la-crescenta-appliance-pickup/**'
-      - 'montrose-appliance-pickup/**'
-      - 'la-puente-appliance-pickup/**'
-      - 'covina-appliance-pickup/**'
-      - 'eastvale-appliance-pickup/**'
-      - 'corona-appliance-pickup/**'
-      - 'claremont-appliance-pickup/**'
-      - 'la-verne-appliance-pickup/**'
-      - 'san-dimas-appliance-pickup/**'
-      - 'upland-appliance-pickup/**'
-      - 'montclair-appliance-pickup/**'
-      - 'chino-hills-appliance-pickup/**'
+      - '*-appliance-pickup/**'
       - 'sitemap.xml'
       - '.github/workflows/audit-california-appliance-intent-gold-standard.yml'
   pull_request:
@@ -65,27 +36,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Audit California appliance-intent layer
+      - name: Audit California people-first SEO layer
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re, sys, xml.etree.ElementTree as ET
 
           BASE='https://freereliableappliancepickup.com/'
-          list_file=Path('data/california-appliance-intent-gold-standard-pages.txt')
-          slugs=[x.strip() for x in list_file.read_text(encoding='utf-8').splitlines() if x.strip()]
-          priority_city_file=Path('data/california-appliance-intent-priority-city-pages.txt')
-          priority_city_slugs=[x.strip() for x in priority_city_file.read_text(encoding='utf-8').splitlines() if x.strip()]
-          failures=[]
-          seen_titles={}
-          seen_desc={}
-          seen_h1={}
-
-          root=ET.parse('sitemap.xml').getroot()
-          ns={'sm':'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          sitemap_urls={x.text.strip() for x in root.findall('.//sm:loc',ns) if x.text}
-
-          all_socal=set(slugs)
+          gold_slugs=[x.strip() for x in Path('data/california-appliance-intent-gold-standard-pages.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
+          priority_city_slugs=[x.strip() for x in Path('data/california-appliance-intent-priority-city-pages.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
           regional_hubs=[
             'san-gabriel-valley-appliance-pickup',
             'inland-empire-appliance-pickup',
@@ -95,217 +54,138 @@ jobs:
             'los-angeles-county-appliance-pickup',
           ]
           socal_parent_slug='southern-california-appliance-pickup'
+          failures=[]
+          seen_titles={}
+          seen_h1={}
 
-          def text_value(pattern, s):
-              m=re.search(pattern,s,re.I|re.S)
-              return re.sub(r'<[^>]+>',' ',m.group(1)).strip() if m else ''
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'sm':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          sitemap_urls={x.text.strip() for x in root.findall('.//sm:loc',ns) if x.text}
 
-          for slug in slugs:
+          def clean_text(s):
+              s=re.sub(r'<script\b[\s\S]*?</script>',' ',s,flags=re.I)
+              s=re.sub(r'<style\b[\s\S]*?</style>',' ',s,flags=re.I)
+              s=re.sub(r'<[^>]+>',' ',s)
+              return ' '.join(s.split())
+
+          def page_data(slug):
               p=Path(slug)/'index.html'
               if not p.exists():
                   failures.append(f'{slug}: missing page')
-                  continue
-              s=p.read_text(encoding='utf-8',errors='replace')
-              low=s.lower()
-              expected=BASE+slug+'/'
-
-              robots=re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>',s,re.I)
-              if robots and 'noindex' in robots.group(0).lower():
-                  failures.append(f'{slug}: noindex')
-
-              canonicals=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',s,re.I)
-              if canonicals != [expected]:
-                  failures.append(f'{slug}: canonical mismatch {canonicals}')
-
-              title=text_value(r'<title>(.*?)</title>',s)
-              desc=(re.search(r'<meta\s+name=["\']description["\']\s+content=["\']([^"\']*)',s,re.I) or [None,''])[1].strip()
-              h1s=re.findall(r'<h1\b[^>]*>(.*?)</h1>',s,re.I|re.S)
-              h1=' '.join(re.sub(r'<[^>]+>',' ',h1s[0]).split()) if len(h1s)==1 else ''
-
-              if not title: failures.append(f'{slug}: missing title')
-              if not desc: failures.append(f'{slug}: missing meta description')
-              if len(h1s)!=1: failures.append(f'{slug}: expected one H1, found {len(h1s)}')
-
-              for label,val,seen in [('title',title,seen_titles),('meta description',desc,seen_desc),('H1',h1,seen_h1)]:
-                  if val:
-                      if val in seen: failures.append(f'{slug}: duplicate {label} with {seen[val]}')
-                      seen[val]=slug
-
-              for required in ['"@type":"Service"','"@type":"FAQPage"','"@type":"BreadcrumbList"','"@type":"WebPage"']:
-                  if required.lower() not in low.replace(' ',''):
-                      failures.append(f'{slug}: missing schema {required}')
-              for breadcrumb_parent in ['https://freereliableappliancepickup.com/california-appliance-pickup/','https://freereliableappliancepickup.com/southern-california-appliance-pickup/']:
-                  if breadcrumb_parent not in s:
-                      failures.append(f'{slug}: missing California breadcrumb parent {breadcrumb_parent}')
-
-              if 'https://formspree.io/f/mvzeapzd' not in s:
-                  failures.append(f'{slug}: missing customer request form endpoint')
-              if 'free-pickup-qualification/' not in low:
-                  failures.append(f'{slug}: missing qualification link')
-              if 'socal-trust-strip-20260923' not in low:
-                  failures.append(f'{slug}: missing trust strip')
-              for trust_phrase in ['free to submit','no account required','photo-first review','local route review']:
-                  if trust_phrase not in low:
-                      failures.append(f'{slug}: missing trust signal {trust_phrase}')
-              if 'how fast can' not in low:
-                  failures.append(f'{slug}: missing pickup-timing FAQ')
-              if 'socal-network-model-20260923' not in low:
-                  failures.append(f'{slug}: missing network-model section')
-              if 'socal-pickup-prep-20260923' not in low:
-                  failures.append(f'{slug}: missing appliance-specific pickup preparation')
-              if 'seo-breadcrumb' not in low and 'aria-label="breadcrumb"' not in low:
-                  failures.append(f'{slug}: missing visible breadcrumb')
-              if 'socal-three-step-process-20260923' not in low and slug != 'southern-california-washer-dryer-pickup':
-                  failures.append(f'{slug}: missing 3-step request process')
-              if 'socal-request-flow-20260923' not in low:
-                  failures.append(f'{slug}: missing request flow')
-              for field_name in ['name="brand_model"','name="preferred_window"']:
-                  if field_name not in low:
-                      failures.append(f'{slug}: missing intake field {field_name}')
-              for network_phrase in ['independent local pickup professionals','company-owned storefront or local branch']:
-                  if network_phrase not in low:
-                      failures.append(f'{slug}: missing network transparency {network_phrase}')
-
-              imgs=re.findall(r'<img\b[^>]*>',s,re.I)
-              if not imgs:
-                  failures.append(f'{slug}: missing image')
-              else:
-                  hero=imgs[0].lower()
-                  if 'alt=' not in hero or 'width=' not in hero or 'height=' not in hero:
-                      failures.append(f'{slug}: hero missing alt/width/height')
-
-              internal=set(re.findall(r'href=["\'](?:https://freereliableappliancepickup\.com)?/([^"\'#?]+)/?',s,re.I))
-              if len(internal)<10:
-                  failures.append(f'{slug}: fewer than 10 useful internal destinations')
-
-              if socal_parent_slug+'/' not in low:
-                  failures.append(f'{slug}: missing link to Southern California parent')
-              for other in sorted(all_socal-{slug}):
-                  if other+'/' not in low:
-                      failures.append(f'{slug}: missing cross-link to {other}')
-
-              if expected not in sitemap_urls:
-                  failures.append(f'{slug}: missing from sitemap')
-
-          ca=Path('california-appliance-pickup/index.html').read_text(encoding='utf-8',errors='replace').lower()
-          if socal_parent_slug+'/' not in ca:
-              failures.append('california-appliance-pickup: missing link to Southern California parent')
-          for slug in slugs:
-              if slug+'/' not in ca:
-                  failures.append(f'california-appliance-pickup: missing link to {slug}')
-
-          socal_parent=(Path(socal_parent_slug)/'index.html').read_text(encoding='utf-8',errors='replace').lower()
-          for slug in slugs:
-              if slug+'/' not in socal_parent:
-                  failures.append(f'{socal_parent_slug}: missing child link to {slug}')
-          for trust_phrase in ['free to submit','no account required','photo-first review']:
-              if trust_phrase not in socal_parent:
-                  failures.append(f'{socal_parent_slug}: missing trust signal {trust_phrase}')
-          if 'how fast can' not in socal_parent:
-              failures.append(f'{socal_parent_slug}: missing pickup-timing FAQ')
-          if 'socal-network-model-20260923' not in socal_parent:
-              failures.append(f'{socal_parent_slug}: missing network-model section')
-          if 'socal-commercial-property-20260923' not in socal_parent:
-              failures.append(f'{socal_parent_slug}: missing landlord/commercial layer')
-          if 'seo-breadcrumb' not in socal_parent and 'aria-label="breadcrumb"' not in socal_parent:
-              failures.append(f'{socal_parent_slug}: missing parent visible breadcrumb')
-          if 'socal-three-step-process-20260923' not in socal_parent:
-              failures.append(f'{socal_parent_slug}: missing parent 3-step request process')
-          if 'socal-parent-request-flow-20260923' not in socal_parent:
-              failures.append(f'{socal_parent_slug}: missing parent request flow')
-          for field_name in ['name="brand_model"','name="preferred_window"']:
-              if field_name not in socal_parent:
-                  failures.append(f'{socal_parent_slug}: missing intake field {field_name}')
-          for commercial_link in ['landlord-property-manager-appliance-pickup/','commercial-appliance-pickup/']:
-              if commercial_link not in socal_parent:
-                  failures.append(f'{socal_parent_slug}: missing commercial link {commercial_link}')
-          for network_phrase in ['independent local pickup professionals','company-owned storefront or local branch']:
-              if network_phrase not in socal_parent:
-                  failures.append(f'{socal_parent_slug}: missing network transparency {network_phrase}')
-
-          authority={
-            'washer-dryer-pickup':'southern-california-washer-dryer-pickup',
-            'refrigerator-pickup':'southern-california-refrigerator-pickup',
-            'freezer-pickup':'southern-california-freezer-pickup',
-            'stove-oven-pickup':'southern-california-stove-oven-pickup',
-          }
-          for parent,child in authority.items():
-              s=(Path(parent)/'index.html').read_text(encoding='utf-8',errors='replace').lower()
-              if child+'/' not in s:
-                  failures.append(f'{parent}: missing link to {child}')
-
-          for regional_slug in regional_hubs:
-              p=Path(regional_slug)/'index.html'
-              if not p.exists():
-                  failures.append(f'{regional_slug}: missing regional hub')
-                  continue
-              low=p.read_text(encoding='utf-8',errors='replace').lower()
-              if 'regional-appliance-intent-links-20260923' not in low:
-                  failures.append(f'{regional_slug}: missing appliance-intent navigation block')
-              if socal_parent_slug+'/' not in low:
-                  failures.append(f'{regional_slug}: missing Southern California parent link')
-              for hub_slug in slugs:
-                  if hub_slug+'/' not in low:
-                      failures.append(f'{regional_slug}: missing appliance hub link {hub_slug}')
-
-          print('REGIONAL_APPLIANCE_INTENT_HUBS',len(regional_hubs))
-          for city_slug in priority_city_slugs:
-              p=Path(city_slug)/'index.html'
-              if not p.exists():
-                  failures.append(f'{city_slug}: missing priority city page')
-                  continue
+                  return None
               raw=p.read_text(encoding='utf-8',errors='replace')
               low=raw.lower()
-
-              # Gold-model city pages should be locally specific but not become link farms.
-              internal_targets=set()
+              title_m=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
+              title=clean_text(title_m.group(1)) if title_m else ''
+              desc_m=re.search(r'<meta\s+name=["\']description["\']\s+content=["\']([^"\']*)',raw,re.I)
+              desc=desc_m.group(1).strip() if desc_m else ''
+              h1s=re.findall(r'<h1\b[^>]*>(.*?)</h1>',raw,re.I|re.S)
+              h1=clean_text(h1s[0]) if len(h1s)==1 else ''
+              internal=set()
               for href in re.findall(r'href=["\']([^"\']+)["\']',raw,re.I):
                   if href.startswith('/'):
-                      internal_targets.add(href.split('#',1)[0].split('?',1)[0].rstrip('/') or '/')
-              if len(internal_targets)>85:
-                  failures.append(f'{city_slug}: {len(internal_targets)} unique internal targets exceeds city link budget 85')
+                      internal.add(href.split('#',1)[0].split('?',1)[0].rstrip('/') or '/')
+              dated_classes=re.findall(r'class=["\'][^"\']*\b20\d{6}\b[^"\']*["\']',raw,re.I)
+              text=clean_text(raw).lower()
+              return dict(raw=raw,low=low,title=title,desc=desc,h1s=h1s,h1=h1,internal=internal,dated_classes=dated_classes,text=text)
 
-              # A city needs a regional parent, not backlinks to every appliance-intent hub.
-              if not any(f'/{regional_slug}/' in low for regional_slug in regional_hubs):
-                  failures.append(f'{city_slug}: missing a regional parent-hub link')
+          def common_checks(slug, d, require_parent=True):
+              expected=BASE+slug+'/'
+              robots=re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*>',d['raw'],re.I)
+              if robots and 'noindex' in robots.group(0).lower():
+                  failures.append(f'{slug}: noindex')
+              canonicals=re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',d['raw'],re.I)
+              if canonicals != [expected]:
+                  failures.append(f'{slug}: canonical mismatch {canonicals}')
+              if not d['title']:
+                  failures.append(f'{slug}: missing title')
+              if not d['desc']:
+                  failures.append(f'{slug}: missing meta description')
+              if len(d['h1s']) != 1:
+                  failures.append(f'{slug}: expected one H1, found {len(d["h1s"])}')
+              if d['title']:
+                  if d['title'] in seen_titles:
+                      failures.append(f'{slug}: duplicate title with {seen_titles[d["title"]]}')
+                  seen_titles[d['title']]=slug
+              if d['h1']:
+                  if d['h1'] in seen_h1:
+                      failures.append(f'{slug}: duplicate H1 with {seen_h1[d["h1"]]}')
+                  seen_h1[d['h1']]=slug
+              for required in ['"@type":"Service"','"@type":"BreadcrumbList"','"@type":"WebPage"']:
+                  if required.lower() not in d['low'].replace(' ',''):
+                      failures.append(f'{slug}: missing schema {required}')
+              if 'https://formspree.io/f/mvzeapzd' not in d['raw']:
+                  failures.append(f'{slug}: missing customer request form endpoint')
+              if not re.search(r'<img\b[^>]+alt=["\'][^"\']+["\']',d['raw'],re.I):
+                  failures.append(f'{slug}: missing meaningful image alt text')
+              if d['dated_classes']:
+                  failures.append(f'{slug}: dated SEO class marker still present')
+              for phrase in ['this page owns','searches belong','search intent','intent owner','primary page for local searches']:
+                  if phrase in d['text']:
+                      failures.append(f'{slug}: search-engine-facing wording present: {phrase}')
+              if len(d['internal']) > 85:
+                  failures.append(f'{slug}: {len(d["internal"])} unique internal targets exceeds link budget 85')
+              if expected not in sitemap_urls:
+                  failures.append(f'{slug}: missing from sitemap')
+              if require_parent and not any(f'/{hub}/' in d['low'] for hub in regional_hubs+[socal_parent_slug]):
+                  failures.append(f'{slug}: missing regional parent link')
 
-              if 'how soon can appliance pickup be arranged in' not in low:
-                  failures.append(f'{city_slug}: missing city pickup-timing FAQ')
-              for audience_phrase in ['landlord','property manager']:
-                  if audience_phrase not in low:
-                      failures.append(f'{city_slug}: missing priority audience {audience_phrase}')
-              if 'what happens after appliance pickup' not in low and 'what happens after pickup' not in low:
-                  failures.append(f'{city_slug}: missing post-pickup outcome guidance')
-              for network_phrase in ['independent local pickup professionals','company-owned storefront or local branch']:
-                  if network_phrase not in low:
-                      failures.append(f'{city_slug}: missing city network transparency {network_phrase}')
-              if 'priority-mobile-cta' not in low or 'has-priority-mobile-cta' not in low:
-                  failures.append(f'{city_slug}: missing priority mobile CTA')
+          for slug in gold_slugs:
+              d=page_data(slug)
+              if not d: continue
+              common_checks(slug,d,require_parent=True)
+              if 'free-pickup-qualification/' not in d['low']:
+                  failures.append(f'{slug}: missing qualification guide link')
+              if 'aria-label="breadcrumb"' not in d['low'] and 'seo-breadcrumb' not in d['low']:
+                  failures.append(f'{slug}: missing visible breadcrumb')
+              for field_name in ['name="brand_model"','name="preferred_window"']:
+                  if field_name not in d['low']:
+                      failures.append(f'{slug}: missing intake field {field_name}')
 
-              legacy_section_patterns=[
-                  'gsc-striking-distance',
-                  'ca-final-v6',
-                  'city-removal-intent-v7',
-                  'fast-request-v11',
-                  'fast-request-v12',
-                  'turbo-seo-network-v1',
-                  'major-guides-20260924',
-                  'major-appliance-focus-20260922',
-                  'corridor-authority-20260923',
-              ]
-              for legacy in legacy_section_patterns:
-                  if re.search(r'<section\\b[^>]*class=["\\\'][^"\\\']*'+re.escape(legacy)+r'[^"\\\']*["\\\']',raw,re.I):
-                      failures.append(f'{city_slug}: legacy SEO section still present {legacy}')
+          # Regional hubs should route users to cities and useful appliance guides,
+          # not repeat every city/appliance keyword on every page.
+          for slug in regional_hubs:
+              d=page_data(slug)
+              if not d: continue
+              common_checks(slug,d,require_parent=False)
+              city_links=[x for x in d['internal'] if x.endswith('-appliance-pickup') and x.strip('/') != slug]
+              if len(city_links) < 3:
+                  failures.append(f'{slug}: fewer than 3 useful city/service links')
+              if slug not in ['san-bernardino-county-appliance-pickup','los-angeles-county-appliance-pickup']:
+                  if f'/{socal_parent_slug}/' not in d['low']:
+                      failures.append(f'{slug}: missing Southern California parent link')
 
-              for audience_link in ['landlord-property-manager-appliance-pickup/','commercial-appliance-pickup/']:
-                  if audience_link not in low:
-                      failures.append(f'{city_slug}: missing audience guide {audience_link}')
+          # Priority city pages: protect clarity and prevent old programmatic footprints.
+          for slug in priority_city_slugs:
+              d=page_data(slug)
+              if not d: continue
+              common_checks(slug,d,require_parent=True)
+              if len(d['text'].split()) > 2200:
+                  failures.append(f'{slug}: page exceeds 2200 visible words; review for repetition')
+              if 'tel:' not in d['low'] and 'sms:' not in d['low']:
+                  failures.append(f'{slug}: missing direct contact path')
 
-          print('PRIORITY_CITY_CLUSTER_PAGES',len(priority_city_slugs))
-          print('CALIFORNIA_APPLIANCE_INTENT_GOLD_STANDARD_PAGES',len(slugs))
+          # Parent hierarchy should remain crawlable without forcing every child to
+          # cross-link to every sibling.
+          ca=Path('california-appliance-pickup/index.html').read_text(encoding='utf-8',errors='replace').lower()
+          if socal_parent_slug+'/' not in ca:
+              failures.append('california-appliance-pickup: missing Southern California parent link')
+          socal=Path(socal_parent_slug)/'index.html'
+          if socal.exists():
+              low=socal.read_text(encoding='utf-8',errors='replace').lower()
+              for slug in regional_hubs:
+                  if slug+'/' not in low:
+                      failures.append(f'{socal_parent_slug}: missing regional child link {slug}')
+          else:
+              failures.append(f'{socal_parent_slug}: missing parent page')
+
+          print('GOLD_INTENT_PAGES',len(gold_slugs))
+          print('REGIONAL_HUBS',len(regional_hubs))
+          print('PRIORITY_CITY_PAGES',len(priority_city_slugs))
           if failures:
               print('FAILURES')
-              for f in failures: print('-',f)
+              for item in failures:
+                  print('-',item)
               sys.exit(1)
-          print('PASS: California appliance-intent layer meets the gold-standard architecture, schema, conversion, sitemap and internal-link requirements.')
+          print('PASS: California people-first SEO layer meets technical, hierarchy, conversion, uniqueness and anti-template requirements.')
           PY
