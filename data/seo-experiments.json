@@ -2190,6 +2190,41 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /escondido-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-about-network-title-ctr-test",
+      "market": "About / trust page",
+      "hypothesis": "Aligning the About title with the nationwide-network intent Google is already rewriting toward should improve CTR and title consistency without changing the visible body content.",
+      "pagesChanged": [
+        "/about/"
+      ],
+      "protectedOwners": [
+        "/about/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 12,
+          "ctr": 0,
+          "averagePosition": 8.833333333333332
+        }
+      },
+      "evidence": "Current Google result rewrites the About title toward 'About Our Nationwide Appliance Pickup Network', while the HTML title emphasized 'Serving Since 2010'. The page body is primarily about the nationwide request network, local partners, qualification, review process and regional contacts.",
+      "change": "Changed only the HTML/OG/WebPage title to 'About Our Nationwide Appliance Pickup Network | Free Reliable Appliance Pickup'. Meta description, H1, visible body, canonical, internal links, contact details and trust content were unchanged.",
+      "successSignals": [
+        "CTR rises above 0%.",
+        "Average position remains broadly stable or improves from ~8.83.",
+        "Google uses the supplied title more consistently and impressions remain stable or increase."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change the About title/meta/body/internal-link intent again before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
