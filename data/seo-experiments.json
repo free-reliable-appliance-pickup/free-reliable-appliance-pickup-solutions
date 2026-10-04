@@ -1996,6 +1996,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Banning title/meta/body/internal-link intent again before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+    },
+    {
+      "id": "2026-10-04-aurora-anti-template-cleanup",
+      "market": "Aurora, Colorado",
+      "hypothesis": "Removing repeated generic handoff, explicit intent-owner, network, Facebook and duplicate buyer/commercial blocks while preserving Aurora-specific service, access, reuse/recycling, FAQ, property-manager, photo and request content should improve topical clarity and organic performance.",
+      "pagesChanged": [
+        "/aurora-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/aurora-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 10,
+          "ctr": 0,
+          "averagePosition": 19.9
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 1970,
+          "h2Count": 24
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/colorado/aurora",
+          "pattern": "Request flow -> local Aurora details -> appliance links -> FAQ/CTA",
+          "evidence": "Current competitor Aurora page is more focused and avoids repeated network/intent-owner sections."
+        }
+      },
+      "change": "Removed six redundant sections: generic no-city handoff, explicit local intent-owner block, Front Range network block, Facebook bridge, buyer/repair/resale network block, and duplicate commercial network block. Title/meta/H1/canonical, Aurora access/local alternatives, refrigerator section, main property-manager section, FAQ, phone, form and real appliance photo were preserved.",
+      "successSignals": [
+        "Aurora average position improves from approximately 19.9.",
+        "Impressions remain stable or increase.",
+        "Clicks/CTR begin without loss of the Aurora city URL as the intended owner."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /aurora-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
     }
   ]
 }
