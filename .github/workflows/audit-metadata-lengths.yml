@@ -1,0 +1,71 @@
+name: Audit Metadata Lengths
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-metadata-lengths.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit title and meta description lengths
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import html
+          import re
+          import xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          NS={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+
+          def pfor(url):
+              if url==BASE: return Path('index.html')
+              return Path(url[len(BASE):].strip('/'))/'index.html'
+
+          def meta_desc(raw):
+              for tag in re.findall(r'<meta\b[^>]*>',raw,re.I|re.S):
+                  if re.search(r'\bname\s*=\s*["\']description["\']',tag,re.I):
+                      m=re.search(r'\bcontent\s*=\s*["\']([^"\']*)["\']',tag,re.I|re.S)
+                      if m: return html.unescape(m.group(1)).strip()
+              return ''
+
+          root=ET.parse('sitemap.xml').getroot()
+          urls=[x.text.strip() for x in root.findall('.//s:loc',NS) if x.text]
+          title_long=[]; desc_long=[]; desc_short=[]; missing=[]
+          for url in urls:
+              p=pfor(url)
+              if not p.exists(): continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              robots=' '.join(re.findall(r'<meta\b[^>]*name=["\']robots["\'][^>]*>',raw,re.I|re.S)).lower()
+              if 'noindex' in robots: continue
+              mt=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
+              title=html.unescape(re.sub(r'\s+',' ',mt.group(1))).strip() if mt else ''
+              desc=meta_desc(raw)
+              if not title or not desc:
+                  missing.append((url,len(title),len(desc)))
+              if len(title)>70:
+                  title_long.append((len(title),url,title))
+              if len(desc)>180:
+                  desc_long.append((len(desc),url,desc))
+              if desc and len(desc)<70:
+                  desc_short.append((len(desc),url,desc))
+
+          print('INDEXABLE_URLS',len(urls))
+          print('TITLE_OVER_70',len(title_long))
+          for n,u,v in sorted(title_long,reverse=True)[:30]: print('TITLE_LONG',n,u,v)
+          print('DESC_OVER_180',len(desc_long))
+          for n,u,v in sorted(desc_long,reverse=True)[:80]: print('DESC_LONG',n,u,v)
+          print('DESC_UNDER_70',len(desc_short))
+          for n,u,v in sorted(desc_short)[:80]: print('DESC_SHORT',n,u,v)
+          print('MISSING_TITLE_OR_DESC',len(missing))
+          for row in missing[:50]: print('MISSING',*row)
+          PY
