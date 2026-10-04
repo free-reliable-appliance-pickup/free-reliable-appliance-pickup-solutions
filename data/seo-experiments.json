@@ -1524,7 +1524,23 @@
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not make speculative ranking/content/title/internal-link/schema-intent changes to these pages before 2026-10-14. Only verified technical breakage, factual/contact error, indexability failure or safety issue may interrupt the freeze."
+      "freezeRule": "Do not make speculative ranking/content/title/internal-link/schema-intent changes to these pages before 2026-10-14. Only verified technical breakage, factual/contact error, indexability failure or safety issue may interrupt the freeze.",
+      "technicalExceptions": [
+        {
+          "date": "2026-10-04",
+          "type": "verified technical structured-data cleanup",
+          "pages": [
+            "/ontario-appliance-pickup/",
+            "/upland-appliance-pickup/",
+            "/inland-empire-appliance-pickup/",
+            "/san-gabriel-valley-appliance-pickup/",
+            "/irvine-appliance-pickup/",
+            "/huntington-beach-appliance-pickup/",
+            "/los-angeles-appliance-pickup/"
+          ],
+          "reason": "FAQPage JSON-LD contained questions not visible in the page body on these pages. Removed only the mismatched FAQPage structured-data node; visible content, titles, canonicals, internal links and request forms were not changed. Google removed the FAQ rich-result feature from Search in May/June 2026, so no supported FAQ rich-result benefit was being preserved."
+        }
+      ]
     },
     {
       "id": "2026-10-04-homepage-meta-ctr-test",
