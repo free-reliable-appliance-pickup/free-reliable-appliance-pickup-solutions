@@ -6112,6 +6112,135 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /adelanto-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-gilbert-structure-concentration",
+      "market": "Gilbert, AZ",
+      "hypothesis": "Removing the duplicate exact-keyword owner block, redundant washer/dryer handoff section and Facebook bridge while preserving the existing search snippet, municipal-service detail, appliance categories and conversion paths will concentrate Gilbert city intent and improve a page already showing finalized Google visibility.",
+      "pagesChanged": [
+        "/gilbert-appliance-pickup/"
+      ],
+      "protectedOwner": "/gilbert-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 18
+        },
+        "preChangeArchitecture": {
+          "approxWords": 1025,
+          "h2Count": 12
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/arizona/gilbert",
+          "approxWords": 971,
+          "h2Count": 9,
+          "pattern": "Process / value proposition -> request -> city-local detail -> appliance categories -> FAQ -> nearby-city handoff."
+        }
+      },
+      "change": "Simplified only the Gilbert city body from 12 H2 sections to 9 and approximately 862 visible words by removing the duplicate exact-keyword owner section, redundant washer/dryer handoff section and Facebook bridge. Preserved title/meta/canonical/schema, Arizona phone 602-726-7552, Formspree request form, qualification rules, municipal/public-service information, appliance-type links and Phoenix Metro routing.",
+      "successSignals": [
+        "The intended /gilbert-appliance-pickup/ page holds or improves from its finalized average position of 18.",
+        "Gilbert impressions increase while this city page remains the ranking owner.",
+        "CTR improves from 0% without changing the current title or meta description.",
+        "Content-quality, routing, internal-link, image and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /gilbert-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-goodyear-structure-concentration",
+      "market": "Goodyear, AZ",
+      "hypothesis": "Removing the duplicate exact-keyword owner block, redundant washer/dryer handoff section and Facebook bridge while preserving the existing search snippet, municipal-service detail, appliance categories and conversion paths will concentrate Goodyear city intent and improve a page already showing finalized Google visibility.",
+      "pagesChanged": [
+        "/goodyear-appliance-pickup/"
+      ],
+      "protectedOwner": "/goodyear-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 14
+        },
+        "preChangeArchitecture": {
+          "approxWords": 806,
+          "h2Count": 12
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/arizona/goodyear",
+          "approxWords": 1093,
+          "h2Count": 8,
+          "pattern": "Process / value proposition -> request -> city-local detail -> appliance categories -> FAQ -> nearby-city handoff."
+        }
+      },
+      "change": "Simplified only the Goodyear city body from 12 H2 sections to 9 and approximately 643 visible words by removing the duplicate exact-keyword owner section, redundant washer/dryer handoff section and Facebook bridge. Preserved title/meta/canonical/schema, Arizona phone 602-726-7552, Formspree request form, qualification rules, municipal/public-service information, appliance-type links and Phoenix Metro routing.",
+      "successSignals": [
+        "The intended /goodyear-appliance-pickup/ page holds or improves from its finalized average position of 14.",
+        "Goodyear impressions increase while this city page remains the ranking owner.",
+        "CTR improves from 0% without changing the current title or meta description.",
+        "Content-quality, routing, internal-link, image and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /goodyear-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-surprise-structure-concentration",
+      "market": "Surprise, AZ",
+      "hypothesis": "Removing the duplicate exact-keyword owner block, redundant washer/dryer handoff section and Facebook bridge while preserving the existing search snippet, municipal-service detail, appliance categories and conversion paths will concentrate Surprise city intent and improve a page already showing finalized Google visibility.",
+      "pagesChanged": [
+        "/surprise-appliance-pickup/"
+      ],
+      "protectedOwner": "/surprise-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 13
+        },
+        "preChangeArchitecture": {
+          "approxWords": 799,
+          "h2Count": 12
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/arizona/surprise",
+          "approxWords": 1118,
+          "h2Count": 9,
+          "pattern": "Process / value proposition -> request -> city-local detail -> appliance categories -> FAQ -> nearby-city handoff."
+        }
+      },
+      "change": "Simplified only the Surprise city body from 12 H2 sections to 9 and approximately 636 visible words by removing the duplicate exact-keyword owner section, redundant washer/dryer handoff section and Facebook bridge. Preserved title/meta/canonical/schema, Arizona phone 602-726-7552, Formspree request form, qualification rules, municipal/public-service information, appliance-type links and Phoenix Metro routing.",
+      "successSignals": [
+        "The intended /surprise-appliance-pickup/ page holds or improves from its finalized average position of 13.",
+        "Surprise impressions increase while this city page remains the ranking owner.",
+        "CTR improves from 0% without changing the current title or meta description.",
+        "Content-quality, routing, internal-link, image and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /surprise-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
