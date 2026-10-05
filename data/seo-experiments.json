@@ -4206,6 +4206,48 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /san-gabriel-inland-empire-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-upland-rancho-laundry-boundary",
+      "market": "Upland / Rancho Cucamonga washer & dryer, CA",
+      "hypothesis": "Reducing duplicate Rancho Cucamonga laundry links on the Upland washer/dryer page while retaining one neighboring-city handoff should reduce Rancho-specific leakage without weakening Upland laundry relevance.",
+      "pagesChanged": [
+        "/upland-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/upland-washer-dryer-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "free appliance pickup rancho cucamonga",
+            "page": "/upland-washer-dryer-pickup/",
+            "impressions": 1,
+            "position": 28
+          }
+        ],
+        "preChangeArchitecture": {
+          "bytes": 22064,
+          "ranchoMentions": 5,
+          "ranchoWdLinks": 4,
+          "h2": 19,
+          "sections": 22,
+          "form": 1
+        }
+      },
+      "change": "Reduced Rancho Cucamonga laundry links from four to one while preserving Upland title/meta/H1, hero context, form, 909-375-6685 contact, canonical and corridor navigation.",
+      "successSignals": [
+        "Upland washer/dryer stops surfacing for Rancho Cucamonga exact-city pickup queries.",
+        "Upland retains or improves Upland laundry visibility.",
+        "The remaining single Rancho link continues to provide a clear neighboring-city handoff."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /upland-washer-dryer-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
