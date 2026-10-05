@@ -3906,6 +3906,53 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /glendora-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-lakewood-denver-boundary",
+      "market": "Lakewood / Denver, CO",
+      "hypothesis": "Reducing repeated Denver references on the Lakewood page while keeping one explicit city-boundary handoff should reduce Lakewood cannibalization for Denver-specific queries and help the dedicated Denver page own Denver intent.",
+      "pagesChanged": [
+        "/lakewood-appliance-pickup/"
+      ],
+      "protectedOwner": "/lakewood-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "denver appliance pickup",
+            "page": "/lakewood-appliance-pickup/",
+            "impressions": 5,
+            "position": 10
+          },
+          {
+            "query": "appliance pick up denver",
+            "page": "/denver-appliance-pickup/",
+            "impressions": 1,
+            "position": 55
+          }
+        ],
+        "preChangeArchitecture": {
+          "bytes": 20765,
+          "denverMentions": 8,
+          "denverLinks": 4,
+          "h2": 13,
+          "sections": 14
+        }
+      },
+      "change": "Reduced Lakewood-to-Denver references from four internal Denver links to one explicit address-boundary handoff while preserving Lakewood title/meta/H1, form, 720-604-7498 contact, local access/reuse content and nearby Colorado links.",
+      "successSignals": [
+        "Lakewood stops or materially reduces impressions for Denver-specific appliance pickup queries.",
+        "The dedicated Denver page gains more Denver-specific impressions or improves position.",
+        "Lakewood retains Lakewood-specific visibility."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /lakewood-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
