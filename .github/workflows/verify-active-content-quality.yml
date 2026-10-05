@@ -8,6 +8,7 @@ on:
       - '.github/workflows/verify-active-content-quality.yml'
       - 'sitemap.xml'
       - 'data/approved-indexable-locations.txt'
+      - 'data/seo-experiments.json'
       - '**/index.html'
 
 permissions:
@@ -23,10 +24,36 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          import re, html, itertools, xml.etree.ElementTree as ET
+          import re, html, itertools, json, xml.etree.ElementTree as ET
+          from datetime import date
 
           BASE='https://freereliableappliancepickup.com/'
           INFORMATIONAL={'landlord-property-manager-appliance-pickup'}
+
+          protected_until_review=set()
+          exp_path=Path('data/seo-experiments.json')
+          if exp_path.exists():
+              try:
+                  exp_data=json.loads(exp_path.read_text(encoding='utf-8'))
+                  today=date.today()
+                  for exp in exp_data.get('experiments',[]):
+                      if exp.get('status')!='running' or not exp.get('evaluateNotBefore'):
+                          continue
+                      try:
+                          if today >= date.fromisoformat(exp['evaluateNotBefore']):
+                              continue
+                      except ValueError:
+                          continue
+                      pages=list(exp.get('pagesChanged',[]) or [])
+                      pages += list(exp.get('protectedOwners',[]) or [])
+                      if exp.get('protectedOwner'):
+                          pages.append(exp['protectedOwner'])
+                      for page in pages:
+                          slug=(page or '').strip('/')
+                          if slug:
+                              protected_until_review.add(slug)
+              except Exception as exc:
+                  print('EXPERIMENT_GUARD_PARSE_WARNING',exc)
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           active=[]
@@ -97,9 +124,23 @@ jobs:
           for score,a,b in ranked[:30]:
               print(f'{score:.3f} | {a} <-> {b}')
           near_clones=[(score,a,b) for score,a,b in ranked if score>=0.65]
-          if near_clones:
-              examples='; '.join(f'{score:.3f} {a} <-> {b}' for score,a,b in near_clones[:10])
-              raise SystemExit('Near-duplicate indexable location pages exceed the 0.65 normalized 5-word-shingle similarity ceiling: '+examples)
+          deferred=[]
+          actionable=[]
+          for item in near_clones:
+              score,a,b=item
+              if a in protected_until_review or b in protected_until_review:
+                  deferred.append(item)
+              else:
+                  actionable.append(item)
+
+          if deferred:
+              print('\nDEFERRED_PROTECTED_EXPERIMENT_SIMILARITY')
+              for score,a,b in deferred[:30]:
+                  print(f'WARNING {score:.3f} | {a} <-> {b} | protected ranking experiment still inside observation window')
+
+          if actionable:
+              examples='; '.join(f'{score:.3f} {a} <-> {b}' for score,a,b in actionable[:10])
+              raise SystemExit('Near-duplicate indexable location pages exceed the 0.65 normalized 5-word-shingle similarity ceiling outside protected experiments: '+examples)
 
           print('\nLOWEST_CORE_WORD_COUNTS')
           for r in sorted(rows,key=lambda x:x['core_words'])[:25]:
