@@ -4089,6 +4089,41 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /laguna-woods-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-pickup-checklist-ctr",
+      "market": "Nationwide informational / pickup checklist",
+      "hypothesis": "Leading the title with the exact 'Appliance Pickup Checklist' intent and making the meta description more actionable should improve CTR without changing the page's already-strong average ranking.",
+      "pagesChanged": [
+        "/appliance-pickup-checklist/"
+      ],
+      "protectedOwner": "/appliance-pickup-checklist/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 10,
+          "ctr": 0,
+          "position": 3.1,
+          "expectedCtr": 0.07
+        },
+        "title": "Free Appliance Pickup Checklist | Photos, Condition & Access",
+        "metaDescription": "Prepare for appliance pickup with the photos, working-condition details, measurements, stairs, doorway and access information needed for a faster review."
+      },
+      "change": "Title changed to \"Appliance Pickup Checklist | Photos, Condition & Access\" and meta description rewritten around photos, condition, city/ZIP, stairs, measurements and access. No body, internal-link, schema, canonical, form or H1 changes.",
+      "successSignals": [
+        "CTR rises above the 0% baseline while average position remains approximately stable.",
+        "Google is less likely to rewrite the title away from the exact checklist intent.",
+        "The page continues serving informational pickup-preparation searches."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change the checklist title/meta/body/internal links/schema again before 2026-10-14 unless there is verified technical, factual, indexability or safety breakage."
     }
   ]
 }
