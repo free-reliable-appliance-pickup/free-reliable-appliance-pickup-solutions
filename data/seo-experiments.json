@@ -5302,7 +5302,7 @@
         "ctr": 0,
         "position": 23.2
       },
-      "change": "Planned: change the support-page title suffix from broad 'Appliance Removal' to 'Laundry Removal', remove redundant corridor/network/all-appliance blocks, reduce repeated non-laundry appliance wording, preserve H1/canonical/local Arcadia detail/contact paths and one clear handoff to the protected all-appliance city page.",
+      "change": "Changed the support-page title suffix from broad 'Appliance Removal' to 'Laundry Removal', removed redundant corridor/network/all-appliance blocks, reduced repeated non-laundry appliance wording, cleaned dated class markers, preserved H1/canonical/local Arcadia pickup details/contact paths, and retained a clear handoff to the protected Arcadia city page.",
       "successSignals": [
         "The Arcadia washer/dryer page gains laundry-specific impressions and/or improves average position.",
         "CTR rises above the 0% baseline.",
@@ -5310,7 +5310,7 @@
       ],
       "evaluateNotBefore": "2026-10-15",
       "preferredReview": "2026-10-20",
-      "status": "setup",
+      "status": "running",
       "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Arcadia washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
     }
   ],
