@@ -6332,6 +6332,65 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /placentia-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-thornton-structure-concentration",
+      "market": "Thornton, CO",
+      "hypothesis": "A tighter exact-city page that removes duplicated keyword-owner, near-me, network and Facebook blocks while preserving Thornton-specific qualification, access, official city alternatives, real proof and conversion paths will improve relevance for a page already averaging near page one.",
+      "pagesChanged": [
+        "/thornton-appliance-pickup/"
+      ],
+      "protectedOwner": "/thornton-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "avgPosition": 10.2
+        },
+        "querySignals": [
+          {
+            "query": "appliance pick up free near me",
+            "clicks": 0,
+            "impressions": 1,
+            "position": 12
+          },
+          {
+            "query": "appliance drop off",
+            "clicks": 0,
+            "impressions": 1,
+            "position": 12
+          }
+        ],
+        "preChangeArchitecture": {
+          "htmlBytes": 18252,
+          "h2Count": 14,
+          "approxVisibleWords": 1073
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/colorado/thornton",
+          "title": "Free Appliance Pickup & Removal in Thornton, CO | TakeMyAppliance",
+          "approxWords": 1197,
+          "h2Count": 9,
+          "observedPattern": "Commercial -> request process -> why choose -> request -> local details -> appliance categories/guides -> FAQ."
+        }
+      },
+      "change": "Removed five redundant Thornton sections (keyword-owner, near-me repetition, duplicated network block, duplicated nearby-pages block and Facebook bridge). Preserved title/meta/H1/canonical/schema, 720-604-7498, Formspree intake, official Thornton Click & Haul source, qualification/category limits, real appliance proof and nearby Colorado links by consolidating those links inside the existing FAQ. H2 count changed from 14 to 9.",
+      "successSignals": [
+        "Thornton average position improves from the ~10.2 baseline toward the top 10.",
+        "Impressions remain stable or increase and CTR becomes positive.",
+        "The intended /thornton-appliance-pickup/ page remains the ranking URL for Thornton general appliance-pickup intent.",
+        "No loss of form, phone, qualification or local-authority signals."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, meta, body, internal-link, schema, canonical or intent-ownership edits to the Thornton page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
