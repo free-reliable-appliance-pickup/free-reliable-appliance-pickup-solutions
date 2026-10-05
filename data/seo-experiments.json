@@ -2946,6 +2946,45 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Coto de Caza title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-beverly-hills-text-conversion-action",
+      "market": "Beverly Hills, California",
+      "hypothesis": "Adding a direct text-photo action beside the existing 310 call and form should improve conversion readiness without changing the page's ranking variables.",
+      "pagesChanged": [
+        "/beverly-hills-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/beverly-hills-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "averagePosition": 15.3333333333
+        },
+        "conversionActions": {
+          "form": true,
+          "call": true,
+          "text": false
+        }
+      },
+      "change": "Added only a hero SMS action labeled 'Text Appliance Photos' using 310-774-4304. Title, meta description, H1, visible service copy, canonical, form, call action and internal links were unchanged.",
+      "successSignals": [
+        "Beverly Hills begins generating text-photo inquiries or other conversion activity.",
+        "Search impressions and average position are not harmed.",
+        "The city URL retains local appliance-pickup ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /beverly-hills-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
