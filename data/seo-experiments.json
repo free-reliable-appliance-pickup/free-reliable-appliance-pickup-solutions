@@ -5272,7 +5272,7 @@
           "position": 65
         }
       },
-      "change": "Planned: remove duplicate intent sections and repeated broad appliance-removal phrasing from the washer/dryer support page while preserving its laundry title, meta, H1, canonical, local access guidance, contact paths and a single handoff to the protected general city page.",
+      "change": "Narrowed only the Escondido washer/dryer support page: removed a duplicate intent-owner section, reduced broad appliance-removal phrasing, cleaned dated class markers, preserved the laundry title/meta/H1/canonical/local access guidance/contact paths, and kept one clear handoff to the protected general city page.",
       "successSignals": [
         "A larger share of broad Escondido appliance-removal impressions moves to /escondido-appliance-pickup/.",
         "The washer/dryer page retains washer/dryer-specific impressions.",
@@ -5280,7 +5280,7 @@
       ],
       "evaluateNotBefore": "2026-10-15",
       "preferredReview": "2026-10-20",
-      "status": "setup",
+      "status": "running",
       "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Escondido washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
     }
   ],
