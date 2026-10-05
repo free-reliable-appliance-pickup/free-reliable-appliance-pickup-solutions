@@ -6473,6 +6473,70 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /garden-grove-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-buena-park-structure-concentration",
+      "market": "Buena Park, CA",
+      "hypothesis": "Reducing repeated local-intent, route, appliance, premium, commercial and nearby-city sections while preserving conversion paths, qualification rules, real imagery, schema and Orange County internal links will strengthen exact-city intent concentration.",
+      "pagesChanged": [
+        "/buena-park-appliance-pickup/"
+      ],
+      "protectedOwner": "/buena-park-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": null,
+        "preChangeArchitecture": {
+          "approxWords": 1713,
+          "h2Count": 19
+        }
+      },
+      "change": "Simplified the city page main content from 19 H2 sections and approximately 1713 words to 7 H2 sections and approximately 639 words while preserving title/meta/canonical, valid structured data, 909 phone/text CTAs, Formspree request form, local washer/dryer path, appliance authority links, nearby Orange County links, qualification rules and real appliance imagery.",
+      "successSignals": [
+        "The intended city page gains impressions and ranking stability.",
+        "The city page remains the ranking owner for exact-city appliance pickup intent.",
+        "CTR improves as visibility grows.",
+        "Technical, schema, form and routing checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /buena-park-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-yorba-linda-structure-concentration",
+      "market": "Yorba Linda, CA",
+      "hypothesis": "Reducing repeated local-intent, route, appliance, premium, commercial and nearby-city sections while preserving conversion paths, qualification rules, real imagery, schema and Orange County internal links will strengthen exact-city intent concentration.",
+      "pagesChanged": [
+        "/yorba-linda-appliance-pickup/"
+      ],
+      "protectedOwner": "/yorba-linda-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": null,
+        "preChangeArchitecture": {
+          "approxWords": 1810,
+          "h2Count": 21
+        }
+      },
+      "change": "Simplified the city page main content from 21 H2 sections and approximately 1810 words to 7 H2 sections and approximately 623 words while preserving title/meta/canonical, valid structured data, 909 phone/text CTAs, Formspree request form, local washer/dryer path, appliance authority links, nearby Orange County links, qualification rules and real appliance imagery.",
+      "successSignals": [
+        "The intended city page gains impressions and ranking stability.",
+        "The city page remains the ranking owner for exact-city appliance pickup intent.",
+        "CTR improves as visibility grows.",
+        "Technical, schema, form and routing checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /yorba-linda-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
