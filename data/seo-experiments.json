@@ -2985,6 +2985,57 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /beverly-hills-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-visalia-commercial-intent-ctr-test",
+      "market": "Visalia, California",
+      "hypothesis": "Expanding Visalia's generic search description to explicitly mention appliance removal, major appliance types, the 310 contact, and free-to-submit wording should improve CTR for the commercial-intent queries already ranking around positions 7-11.",
+      "pagesChanged": [
+        "/visalia-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/visalia-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "querySignals": [
+          {
+            "query": "remove appliances free",
+            "clicks": 0,
+            "impressions": 9,
+            "ctr": 0,
+            "averagePosition": 10
+          },
+          {
+            "query": "free washer removal",
+            "clicks": 0,
+            "impressions": 7,
+            "ctr": 0,
+            "averagePosition": 11.4285714286
+          },
+          {
+            "query": "appliance pick up for free",
+            "clicks": 0,
+            "impressions": 4,
+            "ctr": 0,
+            "averagePosition": 7
+          }
+        ]
+      },
+      "change": "Changed only the meta/OG/WebPage description from a generic route-review snippet to one naming qualifying refrigerators, washers, dryers, freezers and stoves, plus 310-774-4304 and free-to-submit wording. Title, H1, visible body, canonical, form, phone actions and internal links were unchanged.",
+      "successSignals": [
+        "Visalia CTR rises above 0% on commercial appliance-removal/pickup queries.",
+        "Clicks begin while average positions remain broadly stable or improve.",
+        "The Visalia city URL retains local appliance-pickup ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change Visalia title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
