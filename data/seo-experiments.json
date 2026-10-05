@@ -2524,6 +2524,41 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Concord title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-buckeye-page1-phone-snippet",
+      "market": "Buckeye, Arizona",
+      "hypothesis": "Adding the confirmed Phoenix-market call/text number to the Buckeye meta description should improve CTR on a Buckeye page already averaging page-one visibility without changing the page body or intent ownership.",
+      "pagesChanged": [
+        "/buckeye-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/buckeye-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "averagePosition": 8.5
+        },
+        "contactEvidence": "The current Phoenix city page uses 602-726-7552 for the Arizona market."
+      },
+      "change": "Changed only the meta/OG/WebPage description to include the existing 602-726-7552 Arizona call/text number while preserving the Buckeye title, H1, visible body, canonical, form, qualification rules and internal links.",
+      "successSignals": [
+        "Buckeye CTR rises above 0%.",
+        "Clicks begin while average position remains broadly stable on page one.",
+        "The Buckeye city URL retains local query ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change Buckeye title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
