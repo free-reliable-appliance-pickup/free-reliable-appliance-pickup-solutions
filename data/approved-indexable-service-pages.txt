@@ -369,3 +369,4 @@ west-covina-refrigerator-pickup
 whittier-refrigerator-pickup
 anaheim-refrigerator-pickup
 santa-ana-refrigerator-pickup
+irvine-refrigerator-pickup
