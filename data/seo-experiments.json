@@ -2490,6 +2490,40 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Arvada title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-concord-top4-ctr-test",
+      "market": "Concord, California",
+      "hypothesis": "A fuller local meta description that names the qualifying appliance categories and free-to-submit action should improve CTR on a Concord page already averaging near the top of page one without changing ranking ownership.",
+      "pagesChanged": [
+        "/concord-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/concord-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-04",
+        "end": "2026-10-01"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 6,
+          "ctr": 0,
+          "averagePosition": 3.6666666667
+        }
+      },
+      "change": "Changed only the meta/OG/WebPage description from a very short generic route-review snippet to a local Concord pickup/removal description naming refrigerators, washers, dryers, freezers and stoves plus free-to-submit wording. Title, H1, visible body, canonical, phone, form and internal links were unchanged.",
+      "successSignals": [
+        "Concord CTR rises above 0%.",
+        "Clicks begin while average position remains broadly stable in the top 5.",
+        "The Concord city URL retains local query ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change Concord title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
