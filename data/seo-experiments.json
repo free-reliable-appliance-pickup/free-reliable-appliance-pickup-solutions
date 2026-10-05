@@ -5334,7 +5334,7 @@
         },
         "note": "New resource page; baseline is zero because the URL did not exist."
       },
-      "change": "Planned: launch a people-first appliance-flipping guide with testing, condition, transport, cost and resale workflow guidance; link it naturally from the partner and appliance buyer/reseller hubs; add it to the sitemap. No local city-page titles, bodies or ranking experiments will be changed.",
+      "change": "Launched a people-first appliance-flipping guide under /partners/resources/, linked it from the Partner Program and Appliance Buyers & Resellers hubs, added it to the sitemap, and preserved all active local city-page experiments unchanged.",
       "successSignals": [
         "The new resource begins receiving relevant informational impressions in Search Console.",
         "Partner/buyer hub users have a useful educational path before applying.",
@@ -5342,7 +5342,7 @@
       ],
       "evaluateNotBefore": "2026-10-20",
       "preferredReview": "2026-10-27",
-      "status": "setup",
+      "status": "running",
       "freezeRule": "After launch, do not make speculative title/body/internal-link/schema changes to the new resource or its two supporting hub links before the review gate unless a verified technical, factual, indexability or safety issue requires correction."
     }
   ],
