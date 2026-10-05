@@ -2643,6 +2643,43 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /baldwin-park-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-baldwin-park-refrigerator-city-appliance",
+      "market": "Baldwin Park, California",
+      "hypothesis": "A dedicated refrigerator page should capture Baldwin Park refrigerator/fridge pickup intent without changing the newly protected broad city owner page.",
+      "pagesChanged": [
+        "/baldwin-park-refrigerator-pickup/",
+        "/refrigerator-pickup/"
+      ],
+      "protectedOwners": [
+        "/baldwin-park-refrigerator-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscCityOwner": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "averagePosition": 16.6
+        },
+        "architectureGap": "Baldwin Park had a general appliance page and a laundry-specific page but no refrigerator-specific URL.",
+        "competitorEvidence": "TakeMyAppliance uses dedicated city × refrigerator pages across Southern California, while live search did not surface a Baldwin Park refrigerator-specific page from our site."
+      },
+      "change": "Created /baldwin-park-refrigerator-pickup/ with unique refrigerator qualification, cooling-condition, size/access, preparation, local Baldwin Park public bulky-item alternative, visible FAQ, direct 909-375-6685 call/text actions and a Formspree refrigerator request form. Added one link from the unfrozen refrigerator hub and added the new URL to the main sitemap. The protected Baldwin Park general page was not changed.",
+      "successSignals": [
+        "The new URL begins receiving impressions for Baldwin Park refrigerator/fridge pickup terms.",
+        "Refrigerator-specific queries consolidate on the specialty URL while broad appliance queries remain with /baldwin-park-appliance-pickup/.",
+        "No measurable cannibalization or position loss appears on the protected Baldwin Park general page."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent changes to the new Baldwin Park refrigerator page before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage. Keep the Baldwin Park general page under its separate existing freeze."
     }
   ]
 }
