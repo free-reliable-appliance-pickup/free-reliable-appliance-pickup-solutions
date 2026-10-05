@@ -3644,6 +3644,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /rosemead-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-san-gabriel-city-parity",
+      "market": "San Gabriel, CA",
+      "hypothesis": "A simpler exact-city architecture should help the dedicated San Gabriel page become a clearer owner for broad local appliance pickup/removal intent while preserving local Mission District/Valley Boulevard context and real-photo proof.",
+      "pagesChanged": [
+        "/san-gabriel-appliance-pickup/"
+      ],
+      "protectedOwner": "/san-gabriel-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful San Gabriel-specific query or top-page signal appeared in finalized Search Console planning data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 31354,
+          "h2Count": 23,
+          "sectionCount": 24
+        }
+      },
+      "change": "Simplified San Gabriel from 24 sections to 14 and 23 H2s to 13 while preserving title/meta, canonical, H1, 909-375-6685 contact, Formspree request form, qualification rules, official San Gabriel bulky-item reference, Mission District/Valley Boulevard access context, real appliance gallery, commercial/property paths and nearby-city links.",
+      "successSignals": [
+        "The intended /san-gabriel-appliance-pickup/ page begins receiving San Gabriel-specific impressions.",
+        "Broad San Gabriel appliance pickup/removal intent consolidates on the city page.",
+        "Laundry-only intent remains with /san-gabriel-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /san-gabriel-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
