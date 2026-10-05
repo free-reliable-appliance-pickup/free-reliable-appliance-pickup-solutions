@@ -101,8 +101,8 @@ jobs:
               raw=p.read_text(encoding='utf-8',errors='ignore')
               low=raw.lower()
               expected=BASE+slug+'/'
-              noindex=bool(re.search(r"<meta\\b[^>]*\\bname=['\"]robots['\"][^>]*\\bcontent=['\"][^'\"]*noindex",raw,re.I))
-              cm=re.search(r"<link\\b[^>]*\\brel=['\"]canonical['\"][^>]*\\bhref=['\"]([^'\"]+)['\"]",raw,re.I)
+              noindex=bool(re.search(r"<meta\b[^>]*\bname=['\"]robots['\"][^>]*\bcontent=['\"][^'\"]*noindex",raw,re.I))
+              cm=re.search(r"<link\b[^>]*\brel=['\"]canonical['\"][^>]*\bhref=['\"]([^'\"]+)['\"]",raw,re.I)
               canonical=cm.group(1).strip() if cm else ''
               approved_active.append((slug,noindex,canonical))
               if noindex:
