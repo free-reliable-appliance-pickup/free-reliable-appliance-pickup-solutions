@@ -4591,6 +4591,54 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to the Ontario or San Bernardino washer/dryer pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-temecula-riverside-boundary",
+      "market": "Temecula / Riverside County, CA",
+      "hypothesis": "Removing direct Riverside-city links and clarifying Southwest Riverside County routing should reduce Temecula leakage for Riverside-city appliance queries while preserving county-level hierarchy.",
+      "pagesChanged": [
+        "/temecula-appliance-pickup/"
+      ],
+      "protectedOwner": "/temecula-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "refrigerator removal riverside",
+            "page": "/temecula-appliance-pickup/",
+            "impressions": 1,
+            "position": 56
+          },
+          {
+            "query": "washer and dryer removal riverside",
+            "page": "/temecula-appliance-pickup/",
+            "impressions": 1,
+            "position": 47
+          }
+        ],
+        "architecture": {
+          "title": "Free Appliance Pickup & Removal Temecula CA | Recycling",
+          "h1": "Free Appliance Pickup &amp; Removal in Temecula, CA",
+          "cityLinks": 2,
+          "countyLinks": 11,
+          "forms": 1,
+          "phone": true
+        }
+      },
+      "change": "Removed two direct links from Temecula to the Riverside city page and changed the ambiguous regional H2 to 'Southwest Riverside County Route Review' while preserving county-hub links, title, H1, form, canonical and 909 contact.",
+      "successSignals": [
+        "Temecula stops surfacing for Riverside-city appliance queries.",
+        "Temecula retains Temecula and southwest Riverside County visibility.",
+        "Riverside city queries consolidate toward Riverside-specific pages."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /temecula-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
