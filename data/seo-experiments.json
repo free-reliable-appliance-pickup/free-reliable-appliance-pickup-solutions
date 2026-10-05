@@ -3676,6 +3676,70 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /san-gabriel-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-south-san-jose-hills-city-parity",
+      "market": "South San Jose Hills, CA",
+      "hypothesis": "A simpler exact-community architecture should help the dedicated South San Jose Hills page own local appliance pickup/removal intent while preserving unincorporated LA County access and disposal context.",
+      "pagesChanged": [
+        "/south-san-jose-hills-appliance-pickup/"
+      ],
+      "protectedOwner": "/south-san-jose-hills-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful South San Jose Hills-specific signal in finalized GSC data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 27066,
+          "h2Count": 20,
+          "sectionCount": 21
+        }
+      },
+      "change": "Simplified South San Jose Hills from 21 sections to 13 and 20 H2s to 12 while preserving 909-375-6685 contact, Formspree request form, qualification rules, Los Angeles County bulky-item reference, unincorporated-area access guidance, real appliance proof, commercial/property paths and nearby-city links.",
+      "successSignals": [
+        "The intended city page gains South San Jose Hills-specific impressions.",
+        "Broad local appliance pickup/removal intent consolidates on the community page.",
+        "Laundry-only intent remains with /south-san-jose-hills-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /south-san-jose-hills-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-avocado-heights-city-parity",
+      "market": "Avocado Heights, CA",
+      "hypothesis": "A simpler exact-community architecture should help the dedicated Avocado Heights page own local appliance pickup/removal intent while preserving county-route and access context.",
+      "pagesChanged": [
+        "/avocado-heights-appliance-pickup/"
+      ],
+      "protectedOwner": "/avocado-heights-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful Avocado Heights-specific signal in finalized GSC data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 26690,
+          "h2Count": 20,
+          "sectionCount": 21
+        }
+      },
+      "change": "Simplified Avocado Heights from 21 sections to 13 and 20 H2s to 12 while preserving 909-375-6685 contact, Formspree request form, qualification rules, Los Angeles County solid-waste reference, private-road/driveway access guidance, real appliance proof, commercial/property paths and nearby-city links.",
+      "successSignals": [
+        "The intended community page gains Avocado Heights-specific impressions.",
+        "Broad local appliance pickup/removal intent consolidates on the community page.",
+        "Laundry-only intent remains with /avocado-heights-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /avocado-heights-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
