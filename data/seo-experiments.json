@@ -4290,6 +4290,39 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /laguna-hills-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-stockton-county-appliance-guide-links",
+      "market": "Stockton / San Joaquin County, CA",
+      "hypothesis": "Linking the San Joaquin County hub directly to existing Stockton refrigerator and stove/oven guides should create a clearer county → city → appliance hierarchy and improve discovery of appliance-specific Stockton pages without changing their content.",
+      "pagesChanged": [
+        "/san-joaquin-county-appliance-pickup/"
+      ],
+      "protectedOwner": "/san-joaquin-county-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "preChangeArchitecture": {
+          "refrigeratorLinks": 0,
+          "stoveLinks": 0,
+          "washerLinks": 2,
+          "form": 1,
+          "title": "Free Appliance Pickup San Joaquin County CA | Removal & Recycling"
+        }
+      },
+      "change": "Added one contextual link each from the county hub to /stockton-refrigerator-pickup/ and /stockton-stove-oven-pickup/ alongside the existing Stockton general and washer/dryer links. No title/meta/H1/form/schema/canonical changes.",
+      "successSignals": [
+        "Stockton refrigerator and stove/oven pages gain impressions or improve discovery.",
+        "The county hub retains county-level intent.",
+        "No increase in Stockton general-page cannibalization."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /san-joaquin-county-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
