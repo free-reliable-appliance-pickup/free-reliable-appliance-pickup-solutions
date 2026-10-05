@@ -4452,6 +4452,46 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to these three refrigerator pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-ontario-pomona-riverside-freezer-localization",
+      "market": "Ontario / Pomona / Riverside freezer pages",
+      "hypothesis": "Replacing shared freezer template sections with verified city-specific access and cooling-appliance handling rules should reduce duplication and strengthen unique freezer intent.",
+      "pagesChanged": [
+        "/ontario-freezer-pickup/",
+        "/pomona-freezer-pickup/",
+        "/riverside-freezer-pickup/"
+      ],
+      "protectedOwner": "/ontario-freezer-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "normalizedFiveWordShingleSimilarity": {
+          "pomona-riverside": 0.671,
+          "ontario-riverside": 0.601,
+          "ontario-pomona": 0.585
+        }
+      },
+      "change": "Localized review, municipal/recycling fallback and FAQ sections while preserving title/meta/H1/canonical/form/909 contact. Riverside reflects separate refrigerant/RPU rules; Pomona avoids falsely claiming freezer eligibility; Ontario reflects its resident/property-manager programs.",
+      "postChange": {
+        "normalizedFiveWordShingleSimilarity": {
+          "ontario-riverside": 0.216,
+          "pomona-riverside": 0.253,
+          "ontario-pomona": 0.235
+        }
+      },
+      "successSignals": [
+        "Cross-city similarity remains materially lower.",
+        "Each page gains or retains city-specific freezer impressions.",
+        "No loss of conversion paths."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to these three freezer pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
