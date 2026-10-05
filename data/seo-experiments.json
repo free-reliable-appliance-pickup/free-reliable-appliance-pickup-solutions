@@ -5209,6 +5209,44 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to these two laundry support pages before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
+    },
+    {
+      "id": "2026-10-05-salem-laundry-intent-cleanup",
+      "market": "Salem, OR",
+      "hypothesis": "Removing search-engine-facing wording and over-specific transfer-station citation details from the unprotected Salem washer/dryer support page should reduce irrelevant informational matching and improve the page's laundry-specific intent without changing the protected Salem general city page.",
+      "pagesChanged": [
+        "/salem-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/salem-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "page": {
+          "clicks": 1,
+          "impressions": 6,
+          "ctr": 0.1666666667,
+          "position": 19.1666666667
+        },
+        "visibleQuery": {
+          "query": "\"salem-keizer recycling & transfer station\" \"3250 deer park dr se\"",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 6
+        }
+      },
+      "change": "Planned: remove literal search-ownership wording, consolidate duplicate laundry-intent sections, and shorten the disposal backup section to an official-link reference without publishing the exact station address/fee in the laundry page.",
+      "successSignals": [
+        "The Salem washer/dryer page begins receiving laundry-specific impressions rather than exact transfer-station citation queries.",
+        "The page's average position improves for relevant laundry intent without increasing broad city-page cannibalization.",
+        "The protected /salem-appliance-pickup/ owner page retains its general appliance visibility."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "setup",
+      "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Salem washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
     }
   ],
   "technicalMaintenance": [
