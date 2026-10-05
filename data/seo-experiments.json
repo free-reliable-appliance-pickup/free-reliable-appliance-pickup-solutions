@@ -3394,6 +3394,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /diamond-bar-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-whittier-city-parity",
+      "market": "Whittier, CA",
+      "hypothesis": "A simpler exact-city architecture should help the dedicated Whittier city page own broad Whittier appliance pickup/removal intent more clearly while preserving its existing refrigerator relevance.",
+      "pagesChanged": [
+        "/whittier-appliance-pickup/"
+      ],
+      "protectedOwner": "/whittier-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "refrigerator pick up free",
+            "impressions": 1,
+            "position": 5
+          },
+          {
+            "query": "appliance removal",
+            "impressions": 1,
+            "position": 12
+          }
+        ],
+        "preChangeArchitecture": {
+          "htmlBytes": 30712,
+          "h2Count": 24,
+          "sectionCount": 25
+        }
+      },
+      "change": "Simplified Whittier from 25 sections to 13 and 24 H2s to 12 while preserving title/meta, canonical, H1, 310-774-4304 call/text paths, Formspree request form, qualification rules, official Whittier bulky-item and landfill references, real appliance proof, commercial/property paths, appliance-specific handoffs and nearby-city links.",
+      "successSignals": [
+        "The intended /whittier-appliance-pickup/ page gains Whittier-specific impressions for broad appliance pickup/removal terms.",
+        "Existing refrigerator-related visibility is preserved or improves.",
+        "Whittier washer/dryer-only intent remains with /whittier-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /whittier-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
