@@ -2601,6 +2601,48 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /bloomington-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-baldwin-park-people-first-simplification",
+      "market": "Baldwin Park, California",
+      "hypothesis": "A tighter people-first city page that removes repeated network/search-facing sections and keeps one consistent local contact path should improve Baldwin Park's near-page-one performance and relevance.",
+      "pagesChanged": [
+        "/baldwin-park-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/baldwin-park-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "averagePosition": 16.6
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 2188,
+          "headingCount": 41
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/baldwin-park",
+          "pattern": "Compact city page organized around request, process, local service, appliance types and FAQ."
+        }
+      },
+      "change": "Rebuilt the Baldwin Park main content into a concise local service page. Removed repeated intent-owner, network/corridor, Facebook and City-of-Los-Angeles handoff sections; retained the existing title/meta/H1/canonical, 909-375-6685 Baldwin Park contact path, Formspree form, dedicated Baldwin Park laundry handoff, qualification rules, city bulky-item alternative, commercial/recurring paths and nearby SGV links.",
+      "successSignals": [
+        "Baldwin Park average position improves from about 16.6 toward page one.",
+        "Impressions remain stable or increase.",
+        "The Baldwin Park city URL retains broad local appliance pickup ownership without new cannibalization."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /baldwin-park-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
