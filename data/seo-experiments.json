@@ -3995,6 +3995,58 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /southern-california-refrigerator-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-socal-city-intent-boundary",
+      "market": "Southern California regional hub",
+      "hypothesis": "Removing redundant city-targeting sections from the Southern California hub should reduce the hub's tendency to rank for exact Fontana/Upland/Rancho city queries while retaining one comprehensive city-routing section.",
+      "pagesChanged": [
+        "/southern-california-appliance-pickup/"
+      ],
+      "protectedOwner": "/southern-california-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "free appliance pickup fontana",
+            "page": "/southern-california-appliance-pickup/",
+            "impressions": 3,
+            "position": 4.333333333333334
+          },
+          {
+            "query": "free appliance pickup upland",
+            "page": "/southern-california-appliance-pickup/",
+            "impressions": 2,
+            "position": 42
+          }
+        ],
+        "preChangeArchitecture": {
+          "bytes": 33851,
+          "h2": 26,
+          "sections": 27,
+          "ranchoMentions": 6,
+          "ranchoLinks": 4,
+          "fontanaMentions": 8,
+          "fontanaLinks": 3,
+          "uplandMentions": 7,
+          "uplandLinks": 3,
+          "form": 1
+        }
+      },
+      "change": "Removed three redundant city-heavy sections—Southern California City Pickup Pages, Western Inland Empire City Pages, and Priority Premium-Appliance Pickup Markets—while preserving the main priority-city routing section, regional coverage, request form, canonical and qualification language.",
+      "successSignals": [
+        "Exact Fontana and Upland queries consolidate toward their dedicated city pages.",
+        "The Southern California hub reduces city-specific cannibalization while retaining regional impressions.",
+        "Regional navigation and conversion paths remain intact."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /southern-california-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
