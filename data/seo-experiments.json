@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-04",
+  "updated": "2026-10-05",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -4894,6 +4894,77 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to these four Rancho appliance-specific pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-orange-city-local-uniqueness",
+      "market": "Orange, CA",
+      "hypothesis": "Tightening the City of Orange search snippet and replacing generic local copy with verified Old Towne, Eichler-district and CR&R context should strengthen Orange-city ownership, reduce template similarity, and improve appliance-removal visibility without changing qualification or conversion policy.",
+      "pagesChanged": [
+        "/orange-appliance-pickup/"
+      ],
+      "protectedOwner": "/orange-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "page": {
+            "impressions": 8,
+            "clicks": 0,
+            "ctr": 0,
+            "position": 43.375
+          },
+          "queries": [
+            {
+              "query": "appliance removal orange",
+              "impressions": 2,
+              "clicks": 0,
+              "position": 62
+            },
+            {
+              "query": "free appliance pick up orange county",
+              "impressions": 1,
+              "clicks": 0,
+              "position": 31
+            },
+            {
+              "query": "free appliance removal near me",
+              "impressions": 4,
+              "clicks": 0,
+              "position": 30.75
+            }
+          ]
+        },
+        "architecture": {
+          "title": "Free Appliance Pickup & Removal Orange CA | Recycling",
+          "description": "Free appliance pickup, removal and recycling review in Orange, CA for qualifying washers, dryers, refrigerators, freezers and stoves. Call/text 909-375-6685.",
+          "hadOldTowneSpecificSection": false,
+          "hadEichlerDistrictTerms": false
+        }
+      },
+      "change": "Changed the title/meta/WebPage name to emphasize Free Appliance Pickup Orange CA and Appliance Removal; added dateModified; replaced a generic local-planning section with verified Old Towne and Fairhaven/Fairhills/Fairmeadow access context; preserved the City of Orange CR&R bulky-item alternative, qualification rules, local form, canonical, 909 contact and Orange County hierarchy.",
+      "postChange": {
+        "architecture": {
+          "title": "Free Appliance Pickup Orange CA | Appliance Removal",
+          "hasOldTowneSpecificSection": true,
+          "hasEichlerDistrictTerms": true,
+          "canonical": "https://freereliableappliancepickup.com/orange-appliance-pickup/",
+          "form": 1,
+          "phone": true
+        }
+      },
+      "successSignals": [
+        "Orange-city query impressions increase or average position improves.",
+        "The query appliance removal orange moves materially closer to page one.",
+        "Orange form and phone conversion paths remain intact.",
+        "Normalized content similarity to nearby Orange County city pages does not increase."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /orange-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
