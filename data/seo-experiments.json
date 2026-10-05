@@ -2725,6 +2725,41 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /cudahy-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-chandler-contact-parity",
+      "market": "Chandler, Arizona",
+      "hypothesis": "Adding the confirmed Phoenix-market 602-726-7552 call/text path to Chandler should improve conversion readiness and local contact consistency without changing the ranking title, meta description, H1 or visible service copy.",
+      "pagesChanged": [
+        "/chandler-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/chandler-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "averagePosition": 15.6666666667
+        },
+        "contactGap": "Chandler had a Formspree request form but no visible phone, tel/sms actions, or ServiceChannel phone; Phoenix uses 602-726-7552."
+      },
+      "change": "Added 602-726-7552 call/text buttons in the Chandler hero, added the same number to the footer, and added a ServiceChannel ContactPoint to the Service schema. Title, meta description, H1, canonical, body copy, form and internal links were left unchanged.",
+      "successSignals": [
+        "Chandler begins generating calls/texts or form submissions from the Arizona route.",
+        "Search impressions remain stable or increase while average position is not harmed.",
+        "Chandler retains city-level appliance-pickup ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /chandler-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
