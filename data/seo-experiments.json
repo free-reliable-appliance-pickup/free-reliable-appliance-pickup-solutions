@@ -6391,6 +6391,47 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, meta, body, internal-link, schema, canonical or intent-ownership edits to the Thornton page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-05-fountain-valley-structure-concentration",
+      "market": "Fountain Valley, CA",
+      "hypothesis": "Reducing repeated local-intent, appliance, route, ZIP, premium, commercial and social sections while preserving Fountain Valley-specific qualification, official municipal alternatives and conversion paths will improve city-intent concentration for a page currently averaging position 38 in finalized Search Console data.",
+      "pagesChanged": [
+        "/fountain-valley-appliance-pickup/"
+      ],
+      "protectedOwner": "/fountain-valley-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 38
+        },
+        "preChangeArchitecture": {
+          "approxWords": 1780,
+          "h2Count": 23
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/fountain-valley",
+          "pattern": "Concise city page organized around process, why choose, appliance categories, FAQ and nearby locations."
+        }
+      },
+      "change": "Simplified the Fountain Valley city page main content from 23 H2 sections and approximately 1,780 words to 8 H2 sections and approximately 727 words. Preserved title/meta/canonical, Service/Breadcrumb/WebPage/FAQ schema, 909 phone and text CTAs, Formspree request form, Fountain Valley washer/dryer path, appliance-authority links, nearby Orange County links, qualification rules, real appliance proof and the current City of Fountain Valley bulky-item alternative.",
+      "successSignals": [
+        "The intended /fountain-valley-appliance-pickup/ page improves from its finalized average position of 38.",
+        "Fountain Valley impressions increase while the city page remains the ranking owner.",
+        "CTR begins to improve from 0% without changing title/meta.",
+        "Content-quality, routing, internal-link, schema and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /fountain-valley-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
