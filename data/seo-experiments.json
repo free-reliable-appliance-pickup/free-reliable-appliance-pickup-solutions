@@ -3953,6 +3953,48 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /lakewood-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-socal-refrigerator-rancho-boundary",
+      "market": "Southern California / Rancho Cucamonga refrigerator intent",
+      "hypothesis": "Removing the exact Rancho Cucamonga refrigerator section from the Southern California regional refrigerator page should reduce regional-page cannibalization and allow Rancho-specific appliance/refrigerator pages to own Rancho queries.",
+      "pagesChanged": [
+        "/southern-california-refrigerator-pickup/"
+      ],
+      "protectedOwner": "/southern-california-refrigerator-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "free appliance pickup rancho cucamonga",
+            "page": "/southern-california-refrigerator-pickup/",
+            "impressions": 5,
+            "position": 12.2
+          }
+        ],
+        "preChangeArchitecture": {
+          "bytes": 26588,
+          "h2": 19,
+          "sections": 19,
+          "ranchoMentions": 5,
+          "ranchoLinks": 2,
+          "form": 1
+        }
+      },
+      "change": "Removed the exact 'Rancho Cucamonga Refrigerator & Fridge Pickup' H2 section from the Southern California refrigerator page while preserving the regional route list, request form, canonical and other Southern California refrigerator guidance.",
+      "successSignals": [
+        "The regional refrigerator page reduces or loses Rancho Cucamonga-specific impressions.",
+        "Rancho Cucamonga-specific pages gain more Rancho impressions or improve position.",
+        "Southern California regional refrigerator visibility remains intact."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /southern-california-refrigerator-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
