@@ -2760,6 +2760,45 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /chandler-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-acton-rural-intent-rebuild",
+      "market": "Acton, California",
+      "hypothesis": "Replacing thin search-facing network copy with a direct rural-access service page and local request form should improve Acton's relevance and conversion readiness without changing the title, meta description or H1.",
+      "pagesChanged": [
+        "/acton-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/acton-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "averagePosition": 16.3333333333
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 345,
+          "headingCount": 5,
+          "forms": 0
+        }
+      },
+      "change": "Rebuilt the Acton visible main content around qualification, rural/foothill access, appliance types, dedicated Acton laundry handoff, pickup process, qualification rules and a direct Formspree request form. Removed search-engine-facing ownership wording, repeated network sections and the Facebook bridge. Preserved title/meta/H1/canonical and the existing 909-375-6685 contact.",
+      "successSignals": [
+        "Acton average position improves from about 16.3 toward page one.",
+        "Impressions remain stable or increase.",
+        "Acton begins receiving direct form/call/text activity without cannibalizing the Antelope Valley hub."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /acton-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
