@@ -2559,6 +2559,48 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Buckeye title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-bloomington-people-first-simplification",
+      "market": "Bloomington, California",
+      "hypothesis": "Reducing repeated route/network/search-engine-facing sections and keeping a concise local pickup, qualification, access, appliance, FAQ and request structure should improve Bloomington's near-page-one performance and topical clarity.",
+      "pagesChanged": [
+        "/bloomington-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/bloomington-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "averagePosition": 12.6666666667
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 1535,
+          "headingCount": 37
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/fontana",
+          "pattern": "Focused request/process/local-details/appliance/FAQ structure with far fewer repeated corridor and network sections."
+        }
+      },
+      "change": "Rebuilt the Bloomington main content into a concise people-first city page. Removed repeated intent-owner, priority-network, Facebook bridge and duplicate appliance/route sections; retained the existing title/meta/H1/canonical, 909-375-6685 contact, Formspree form, Bloomington laundry handoff, qualification rules, San Bernardino County local reference, appliance guides, property/recurring paths and nearby Inland Empire links.",
+      "successSignals": [
+        "Bloomington average position improves from about 12.7 into page one.",
+        "Impressions remain stable or increase.",
+        "The Bloomington city URL retains broad local appliance pickup ownership without new cannibalization."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /bloomington-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
