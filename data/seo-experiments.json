@@ -3537,6 +3537,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /irwindale-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-city-of-industry-commercial-parity",
+      "market": "City of Industry, CA",
+      "hypothesis": "A simpler city page centered on commercial, warehouse and loading access should help the dedicated City of Industry page own local appliance pickup/removal intent without dilution from repeated regional-network sections.",
+      "pagesChanged": [
+        "/city-of-industry-appliance-pickup/"
+      ],
+      "protectedOwner": "/city-of-industry-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful City of Industry-specific query or top-page signal appeared in finalized Search Console planning data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 27744,
+          "h2Count": 21,
+          "sectionCount": 22
+        }
+      },
+      "change": "Simplified City of Industry from 22 sections to 13 and 21 H2s to 12, preserving 909-375-6685 contact, Formspree request form, qualification rules, commercial/warehouse loading access, recurring program paths, official City solid-waste reference, real appliance proof and nearby-city handoffs.",
+      "successSignals": [
+        "The intended /city-of-industry-appliance-pickup/ page begins receiving City of Industry-specific impressions.",
+        "Commercial and warehouse queries consolidate on the City of Industry page rather than broad regional pages.",
+        "Laundry-only intent remains with /city-of-industry-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /city-of-industry-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
