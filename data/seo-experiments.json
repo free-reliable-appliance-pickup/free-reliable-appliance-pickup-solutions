@@ -3097,6 +3097,43 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /santa-ana-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-laguna-beach-removal-ctr-test",
+      "market": "Laguna Beach, California",
+      "hypothesis": "Adding exact removal wording, the established Orange County 909 contact, and free-to-submit language to Laguna Beach's search description should improve CTR and help a query already averaging about position 12.8 move toward page one without changing title, H1, body or internal links.",
+      "pagesChanged": [
+        "/laguna-beach-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/laguna-beach-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "querySignals": [
+          {
+            "query": "appliance removal laguna beach",
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "averagePosition": 12.8333333333
+          }
+        ]
+      },
+      "change": "Changed only the meta/OG/WebPage description to include 'pickup & removal', 909-375-6685, and free-to-submit wording. Title, H1, visible body, canonical, form, phone actions and internal links were unchanged.",
+      "successSignals": [
+        "Laguna Beach CTR rises above 0% for city removal queries.",
+        "Average position improves toward or into page one.",
+        "The city URL retains local appliance-pickup ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change Laguna Beach title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
