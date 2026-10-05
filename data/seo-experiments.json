@@ -3328,6 +3328,39 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent changes to /fresno-refrigerator-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-walnut-city-parity",
+      "market": "Walnut, CA",
+      "hypothesis": "A simpler exact-city architecture modeled on the consistently ranking competitor pattern should help the dedicated Walnut city page become a clearer owner for general Walnut appliance pickup and removal searches.",
+      "pagesChanged": [
+        "/walnut-appliance-pickup/"
+      ],
+      "protectedOwner": "/walnut-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful Walnut-specific query or top-page signal appeared in finalized Search Console planning data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 33205,
+          "h2Count": 28,
+          "sectionCount": 28
+        },
+        "competitorPattern": "Compact city page centered on service/process, appliance categories, trust/reasons, FAQ and request rather than repeated SEO-network blocks."
+      },
+      "change": "Simplified the Walnut city page from 28 sections to 13 and 28 H2s to 12 while preserving the title/meta, canonical, H1, 909-375-6685 phone/text paths, Formspree request form, qualification rules, official Walnut bulky-item reference, real appliance proof, commercial/property paths, appliance-specific handoffs and nearby-city links.",
+      "successSignals": [
+        "The intended /walnut-appliance-pickup/ page begins receiving Walnut-specific impressions.",
+        "The Walnut page enters or improves toward page one for broad Walnut appliance pickup/removal searches.",
+        "Walnut washer/dryer-only intent remains with /walnut-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /walnut-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
