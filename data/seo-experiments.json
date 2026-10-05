@@ -3298,6 +3298,36 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /aurora-washer-dryer-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-fresno-refrigerator-intent-ownership",
+      "market": "Fresno, California",
+      "hypothesis": "Reducing repeated links back to the broad Fresno appliance page and replacing SEO-facing wording should help the dedicated Fresno refrigerator URL own refrigerator-specific intent more clearly.",
+      "pagesChanged": [
+        "/fresno-refrigerator-pickup/"
+      ],
+      "protectedOwners": [
+        "/fresno-refrigerator-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "architecture": "Dedicated indexable/canonical Fresno refrigerator page existed with direct form, 310-774-4304, and both sitemap entries, but broad Fresno page was surfacing more strongly for refrigerator searches.",
+        "internalLinkGap": "The specialty page repeatedly linked back to /fresno-appliance-pickup/ and used the heading 'Fresno Refrigerator Pickup Is a Separate Search Need'."
+      },
+      "change": "Renamed the SEO-facing heading to a customer-focused qualification heading, removed the duplicate related-links section, refocused the remaining related links on appliance-specific Fresno guides, and reduced repeated links back to the broad Fresno appliance page. Title, meta description, H1, canonical, 310-774-4304 contact, form and refrigerator-specific service content were preserved.",
+      "successSignals": [
+        "The Fresno refrigerator URL begins surfacing for refrigerator/fridge-specific Fresno searches.",
+        "Broad Fresno appliance queries remain with /fresno-appliance-pickup/.",
+        "No loss of form/contact functionality or indexability."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent changes to /fresno-refrigerator-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
