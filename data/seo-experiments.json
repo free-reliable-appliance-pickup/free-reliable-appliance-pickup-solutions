@@ -4248,6 +4248,48 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /upland-washer-dryer-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-laguna-hills-niguel-boundary",
+      "market": "Laguna Hills / Laguna Niguel, CA",
+      "hypothesis": "Reducing duplicate Laguna Niguel references and links on the Laguna Hills page while retaining one connected-city handoff should reduce Laguna Niguel query leakage and clarify Laguna Hills local intent.",
+      "pagesChanged": [
+        "/laguna-hills-appliance-pickup/"
+      ],
+      "protectedOwner": "/laguna-hills-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "appliance removal laguna niguel",
+            "page": "/laguna-hills-appliance-pickup/",
+            "impressions": 1,
+            "position": 25
+          }
+        ],
+        "preChangeArchitecture": {
+          "bytes": 21224,
+          "lagunaNiguelMentions": 8,
+          "lagunaNiguelLinks": 4,
+          "h2": 15,
+          "sections": 16,
+          "form": 1
+        }
+      },
+      "change": "Reduced Laguna Niguel links on the Laguna Hills page from four to one and removed redundant neighbor mentions while preserving Laguna Hills title/meta/H1, form, 909-375-6685 contact, canonical and South Orange County navigation.",
+      "successSignals": [
+        "Laguna Hills stops surfacing for Laguna Niguel-specific removal queries.",
+        "Laguna Hills retains or improves Laguna Hills-specific visibility.",
+        "The remaining single Laguna Niguel link continues to provide a clear neighboring-city handoff."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /laguna-hills-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
