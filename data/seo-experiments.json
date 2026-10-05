@@ -3612,6 +3612,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /monterey-park-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-rosemead-city-parity",
+      "market": "Rosemead, CA",
+      "hypothesis": "A simpler exact-city architecture should help the dedicated Rosemead page become a clearer owner for broad local appliance pickup/removal searches while keeping laundry-only intent separate.",
+      "pagesChanged": [
+        "/rosemead-appliance-pickup/"
+      ],
+      "protectedOwner": "/rosemead-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful Rosemead-specific query or top-page signal appeared in finalized Search Console planning data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 23147,
+          "h2Count": 17,
+          "sectionCount": 18
+        }
+      },
+      "change": "Simplified Rosemead from 18 sections to 13 and 17 H2s to 12 while preserving title/meta, canonical, H1, 909-375-6685 contact, Formspree request form, qualification rules, official Rosemead bulky-item reference, home/apartment/shared-driveway access guidance, real appliance proof, commercial/property paths and nearby-city links.",
+      "successSignals": [
+        "The intended /rosemead-appliance-pickup/ page begins receiving Rosemead-specific impressions.",
+        "Broad Rosemead appliance pickup/removal intent consolidates on the city page.",
+        "Laundry-only intent remains with /rosemead-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /rosemead-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
