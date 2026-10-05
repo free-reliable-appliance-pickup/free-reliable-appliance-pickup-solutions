@@ -6026,6 +6026,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /rancho-mirage-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-cathedral-city-structure-concentration",
+      "market": "Cathedral City, CA",
+      "hypothesis": "Removing duplicate process, access, managed-property and keyword-owner sections while preserving the existing search snippet and Cathedral City's useful local/public-service content will concentrate exact-city relevance and move a page with a finalized position-12 baseline closer to page one without sacrificing its existing click-through signal.",
+      "pagesChanged": [
+        "/cathedral-city-appliance-pickup/"
+      ],
+      "protectedOwner": "/cathedral-city-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 1,
+          "impressions": 2,
+          "ctr": 0.5,
+          "position": 12
+        },
+        "preChangeArchitecture": {
+          "approxWords": 1383,
+          "h2Count": 17
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/cathedral-city",
+          "approxWords": 674,
+          "h2Count": 6,
+          "pattern": "Business pickup -> process -> why choose -> request -> appliance categories -> FAQ."
+        }
+      },
+      "change": "Simplified only the Cathedral City body from 17 H2 sections to 12 and approximately 990 words. Removed the keyword-owner block, one of two duplicate process sections, a duplicate access/route block, a duplicate managed-property block and the Facebook bridge. Preserved the existing title/meta/canonical to protect the current 50% CTR sample, plus schema, 909 phone, Formspree form, Burrtec/public bulky-appliance information, senior/55+ recurring content, real appliance proof, Coachella resource links, nearby-city links, local neighborhood/access detail and washer/dryer handoff.",
+      "successSignals": [
+        "The intended /cathedral-city-appliance-pickup/ page improves from its finalized average position of 12 toward page one.",
+        "The page keeps receiving clicks/impressions without a competing Cathedral City URL taking ownership.",
+        "CTR does not materially deteriorate while the title/meta remain unchanged.",
+        "Content-quality, routing, internal-link, image and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /cathedral-city-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
