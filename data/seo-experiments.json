@@ -5843,6 +5843,60 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /santa-clarita-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-refrigerator-city-crawl-support",
+      "market": "Priority California refrigerator city pages",
+      "hypothesis": "Adding one contextually relevant crawl/authority path from the generic appliance-type hub to six low-inlink refrigerator city guides will improve discovery and start producing Search Console impressions without changing the protected city owner pages.",
+      "pagesChanged": [
+        "/appliances/"
+      ],
+      "protectedOwner": "/appliances/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "internalLinkAudit": {
+          "anaheim-refrigerator-pickup": {
+            "activeInlinks": 2,
+            "gscImpressions": 0
+          },
+          "arcadia-refrigerator-pickup": {
+            "activeInlinks": 2,
+            "gscImpressions": 0
+          },
+          "irvine-refrigerator-pickup": {
+            "activeInlinks": 2,
+            "gscImpressions": 0
+          },
+          "santa-ana-refrigerator-pickup": {
+            "activeInlinks": 2,
+            "gscImpressions": 0
+          },
+          "west-covina-refrigerator-pickup": {
+            "activeInlinks": 2,
+            "gscImpressions": 0
+          },
+          "baldwin-park-refrigerator-pickup": {
+            "activeInlinks": 2,
+            "gscImpressions": 0
+          }
+        },
+        "note": "All six target pages were active/indexable in the sitemap and crawl graph but returned no finalized GSC page data in the 2026-09-05 to 2026-10-02 window."
+      },
+      "change": "Added one people-first 'California Refrigerator Pickup City Guides' block to /appliances/ with refrigerator-specific anchors to Anaheim, Arcadia, Irvine, Santa Ana, West Covina and Baldwin Park. No target page, city owner page, title, meta, schema, form, phone or qualification rule was changed.",
+      "successSignals": [
+        "Each target refrigerator page retains crawl reachability and gains an additional active inbound link.",
+        "One or more target refrigerator pages begin receiving finalized Google Search Console impressions.",
+        "General city pickup intent continues to rank on the city owner pages rather than shifting to refrigerator-only pages.",
+        "The /appliances/ hub does not create broken or noindex-alias links."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative content/internal-link/schema-intent edits to /appliances/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
