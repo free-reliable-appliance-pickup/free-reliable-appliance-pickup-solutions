@@ -3215,6 +3215,50 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Perris title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-san-jacinto-ctr-test",
+      "market": "San Jacinto, California",
+      "hypothesis": "Adding exact removal wording, the established 909 contact, and free-to-submit language to San Jacinto's search description should improve CTR on washer/dryer and refrigerator pickup queries already near page one without changing title, H1, body or internal links.",
+      "pagesChanged": [
+        "/san-jacinto-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/san-jacinto-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "querySignals": [
+          {
+            "query": "free pick up washer and dryer",
+            "clicks": 0,
+            "impressions": 2,
+            "ctr": 0,
+            "averagePosition": 11
+          },
+          {
+            "query": "recycle refrigerator near me",
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "averagePosition": 12
+          }
+        ]
+      },
+      "change": "Changed only the meta/WebPage description to include 'pickup & removal', 909-375-6685, and free-to-submit wording. Title, H1, visible body, canonical, form, phone actions and internal links were unchanged.",
+      "successSignals": [
+        "San Jacinto CTR rises above 0%.",
+        "Average position improves toward or into page one for appliance and laundry pickup intent.",
+        "The San Jacinto city URL retains local appliance-pickup ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change San Jacinto title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
