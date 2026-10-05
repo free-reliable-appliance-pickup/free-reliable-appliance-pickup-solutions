@@ -9,6 +9,8 @@ Sitemap: https://freereliableappliancepickup.com/sitemap-fontana.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-ontario.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-pomona.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-riverside.xml
+Sitemap: https://freereliableappliancepickup.com/sitemap-los-angeles.xml
+Sitemap: https://freereliableappliancepickup.com/sitemap-san-bernardino.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-fresno.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-stockton.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-sacramento.xml
