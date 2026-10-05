@@ -6241,6 +6241,56 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /surprise-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-gresham-title-ctr-test",
+      "market": "Gresham, OR",
+      "hypothesis": "For an already page-one Gresham page with impressions but zero clicks, adding the high-intent phrase 'Pickup & Removal' plus a direct 'Call or Text' action to the title will improve search-result CTR without requiring another body rewrite.",
+      "pagesChanged": [
+        "/gresham-appliance-pickup/"
+      ],
+      "controlPages": [
+        "/hillsboro-appliance-pickup/"
+      ],
+      "protectedOwner": "/gresham-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gresham": {
+          "clicks": 0,
+          "impressions": 6,
+          "ctr": 0,
+          "avgPosition": 8
+        },
+        "nearbyControlHillsboro": {
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0,
+          "avgPosition": 9.625
+        },
+        "preChangeTitle": "Free Appliance Pickup Gresham OR | Check Availability",
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/oregon/gresham",
+          "title": "Free Appliance Pickup & Removal in Gresham, OR | TakeMyAppliance",
+          "approxWords": 1130,
+          "h2Count": 9,
+          "observedPattern": "Winning result explicitly pairs Pickup & Removal in the title while the current Free Reliable page already has a competitive body and page-one average position."
+        }
+      },
+      "change": "Changed only the Gresham HTML title, OG title and WebPage schema name to 'Free Appliance Pickup & Removal Gresham OR | Call or Text'. Meta description, H1, body copy, canonical, form, phone, qualification rules, internal links and local-source content were left unchanged.",
+      "successSignals": [
+        "Gresham CTR becomes positive or materially improves from 0%.",
+        "Gresham average position remains page-one competitive or improves from the ~8 baseline.",
+        "Gresham impressions remain stable or increase relative to nearby Hillsboro control.",
+        "The intended /gresham-appliance-pickup/ URL remains the owner for Gresham appliance pickup intent."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "No speculative title, meta, body, internal-link, schema, canonical or intent-ownership edits to the Gresham page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
