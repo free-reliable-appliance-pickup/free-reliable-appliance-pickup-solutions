@@ -4323,6 +4323,55 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /san-joaquin-county-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-denver-refrigerator-intent-owner",
+      "market": "Denver refrigerator pickup, CO",
+      "hypothesis": "Adding refrigerator-specific preparation guidance plus a verified Denver municipal fallback should make the dedicated Denver refrigerator page more useful and help it own refrigerator-removal intent currently leaking to the general Denver page.",
+      "pagesChanged": [
+        "/denver-refrigerator-pickup/"
+      ],
+      "protectedOwner": "/denver-refrigerator-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "refrigerator removal denver",
+            "page": "/denver-appliance-pickup/",
+            "impressions": 1,
+            "position": 77
+          },
+          {
+            "query": "free refrigerator pick up",
+            "page": "/denver-appliance-pickup/",
+            "impressions": 1,
+            "position": 9
+          }
+        ],
+        "preChangeArchitecture": {
+          "bytes": 19444,
+          "h2": 12,
+          "sections": 13,
+          "form": 1,
+          "title": "Free Refrigerator Pickup Denver CO | Fridge Removal",
+          "city311": 0,
+          "prepPhrase": 0
+        }
+      },
+      "change": "Added a Denver refrigerator preparation section and a verified City and County of Denver Large Item Pickup/311 fallback section. Preserved title, meta/H1, business phone 720-604-7498, form, canonical, qualification rules and Denver general-page boundary.",
+      "successSignals": [
+        "The dedicated Denver refrigerator page begins receiving Denver refrigerator-removal impressions.",
+        "Denver refrigerator queries stop relying on the general Denver appliance page.",
+        "The page retains correct qualification messaging and conversion functionality."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /denver-refrigerator-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
