@@ -88,6 +88,32 @@ jobs:
           for r in sorted(rows,key=lambda x:x[1]):
               print(f"{r[1]:4d} | form={r[2]} local={r[3]} cta={r[4]} branded={r[5]} noindex={r[6]} | {r[0]}")
 
+          # Approved specialty/service pages are intentionally excluded from the
+          # location-page UX checks above, but if they are in the sitemap they must
+          # still be genuinely indexable and self-canonical. This prevents an
+          # approved city x appliance page from silently shipping with noindex.
+          approved_active=[]
+          for slug in sorted(SERVICE_PAGES.intersection(active)):
+              p=Path(slug)/'index.html'
+              if not p.exists():
+                  failures.append(f'APPROVED SERVICE PAGE MISSING FILE: {slug}/index.html')
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              low=raw.lower()
+              expected=BASE+slug+'/'
+              noindex=bool(re.search(r'<meta\\b[^>]*\\bname=["\\']robots["\\'][^>]*noindex',raw,re.I))
+              cm=re.search(r'<link\\b[^>]*\\brel=["\\']canonical["\\'][^>]*\\bhref=["\\']([^"\\']+)["\\']',raw,re.I)
+              canonical=cm.group(1).strip() if cm else ''
+              approved_active.append((slug,noindex,canonical))
+              if noindex:
+                  failures.append(f'APPROVED SERVICE PAGE IS NOINDEX: {slug}')
+              if canonical != expected:
+                  failures.append(f'APPROVED SERVICE PAGE CANONICAL MISMATCH: {slug} -> {canonical or "MISSING"}')
+
+          print('APPROVED_ACTIVE_SERVICE_PAGES',len(approved_active))
+          print('APPROVED_ACTIVE_NOINDEX',sum(1 for _,n,_ in approved_active if n))
+          print('APPROVED_ACTIVE_CANONICAL_MISMATCH',sum(1 for s,n,ca in approved_active if ca != BASE+s+'/'))
+
           if failures:
               print('\nFAILURES')
               for f in failures:
