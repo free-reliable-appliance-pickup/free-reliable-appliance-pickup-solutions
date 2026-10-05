@@ -5021,6 +5021,66 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /rialto-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-loma-linda-removal-owner",
+      "market": "Loma Linda, CA",
+      "hypothesis": "Making appliance removal the explicit Loma Linda title/snippet intent, strengthening the San Bernardino County hierarchy, and removing Riverside County leakage should improve the exact Loma Linda removal query while preserving local pickup conversion paths.",
+      "pagesChanged": [
+        "/loma-linda-appliance-pickup/"
+      ],
+      "protectedOwner": "/loma-linda-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "page": {
+            "impressions": 2,
+            "clicks": 0,
+            "ctr": 0,
+            "position": 34.5
+          },
+          "queries": [
+            {
+              "query": "appliance removal loma linda, ca",
+              "impressions": 2,
+              "clicks": 0,
+              "position": 34.5
+            }
+          ]
+        },
+        "architecture": {
+          "title": "Free Appliance Pickup Loma Linda CA | Removal & Recycling",
+          "breadcrumbDepth": 3,
+          "hadRiversideRouteHeading": true,
+          "bulkyProgramSpecificity": "generic CR&R reference"
+        }
+      },
+      "change": "Changed title/meta/OpenGraph/WebPage name to Appliance Removal Loma Linda CA | Free Appliance Pickup; added dateModified; expanded breadcrumb schema through California, Inland Empire and San Bernardino County; updated the bulky-item fallback with the current two-free-pickups CR&R rule; removed Riverside County from the primary route-review section. Form, canonical, 909 contact and qualification policy were preserved.",
+      "postChange": {
+        "architecture": {
+          "title": "Appliance Removal Loma Linda CA | Free Appliance Pickup",
+          "breadcrumbDepth": 6,
+          "hadRiversideRouteHeading": false,
+          "hasCurrentBulkyProgramDetail": true,
+          "canonical": "https://freereliableappliancepickup.com/loma-linda-appliance-pickup/",
+          "form": 1,
+          "phone": true
+        }
+      },
+      "successSignals": [
+        "The exact query appliance removal loma linda, ca improves from the 34.5 baseline.",
+        "Loma Linda impressions increase without leakage toward Riverside County intent.",
+        "San Bernardino County and Inland Empire hierarchy remains discoverable.",
+        "Form and phone conversion paths remain intact."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /loma-linda-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
