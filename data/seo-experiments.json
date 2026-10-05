@@ -3437,6 +3437,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /whittier-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-montebello-city-parity",
+      "market": "Montebello, CA",
+      "hypothesis": "A simpler exact-city architecture should help the dedicated Montebello city page become a clearer owner for general Montebello appliance pickup and removal searches.",
+      "pagesChanged": [
+        "/montebello-appliance-pickup/"
+      ],
+      "protectedOwner": "/montebello-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful Montebello-specific query or top-page signal appeared in finalized Search Console planning data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 26556,
+          "h2Count": 20,
+          "sectionCount": 21
+        }
+      },
+      "change": "Simplified Montebello from 21 sections to 13 and 20 H2s to 12 while preserving title/meta, canonical, H1, 909-375-6685 call/text paths, Formspree request form, qualification rules, official Montebello bulky-item reference, real appliance proof, commercial/property paths, appliance-specific handoffs and nearby-city links.",
+      "successSignals": [
+        "The intended /montebello-appliance-pickup/ page begins receiving Montebello-specific impressions.",
+        "The Montebello page enters or improves toward page one for broad Montebello appliance pickup/removal searches.",
+        "Montebello washer/dryer-only intent remains with /montebello-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /montebello-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
