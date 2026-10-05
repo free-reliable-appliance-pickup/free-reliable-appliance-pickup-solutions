@@ -3259,6 +3259,45 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change San Jacinto title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-aurora-laundry-people-first-simplification",
+      "market": "Aurora, Colorado",
+      "hypothesis": "A tighter laundry-specific Aurora page should improve its visibility and CTR for washer/dryer intent while leaving the protected broad Aurora appliance page untouched.",
+      "pagesChanged": [
+        "/aurora-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/aurora-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 7,
+          "ctr": 0,
+          "averagePosition": 28.7142857143
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 1425,
+          "headingCount": 24
+        },
+        "searchObservation": "The general Aurora appliance page surfaced prominently for a washer/dryer search while the specialty page was indexed but less visible."
+      },
+      "change": "Rebuilt only the visible main content of /aurora-washer-dryer-pickup/ into a focused laundry service page: washer testing, dryer testing, apartment/basement access, qualification rules, official Aurora reuse/disposal backup, schema-matched FAQ, direct Formspree request form with source_page attribution and nearby Colorado laundry links. Removed repeated network/Facebook/route sections. Preserved title/meta/H1/canonical, 720-604-7498 contact and the protected broad Aurora page.",
+      "successSignals": [
+        "Aurora laundry average position improves materially from about 28.7.",
+        "The specialty laundry URL gains impressions/clicks for washer and dryer pickup queries.",
+        "Broad appliance intent remains with /aurora-appliance-pickup/ while laundry intent shifts toward the specialty URL."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /aurora-washer-dryer-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
