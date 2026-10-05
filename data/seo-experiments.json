@@ -4965,6 +4965,62 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /orange-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-rialto-appliance-removal-locality",
+      "market": "Rialto, CA",
+      "hypothesis": "Aligning the Rialto title/snippet to appliance-removal intent and adding verified Rialto/Burrtec/Mid-Valley disposal context should improve local relevance and move the page closer to page one without adding generic template content.",
+      "pagesChanged": [
+        "/rialto-appliance-pickup/"
+      ],
+      "protectedOwner": "/rialto-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "page": {
+            "impressions": 1,
+            "clicks": 0,
+            "ctr": 0,
+            "position": 13
+          },
+          "queries": [
+            {
+              "query": "pick up appliances",
+              "impressions": 1,
+              "clicks": 0,
+              "position": 13
+            }
+          ]
+        },
+        "architecture": {
+          "title": "Free Appliance Pickup & Removal Rialto CA | Recycling",
+          "hadMidValleyLocalSection": false
+        }
+      },
+      "change": "Changed title/meta/OpenGraph/WebPage name to Free Appliance Pickup Rialto CA | Appliance Removal, refreshed dateModified, and replaced the existing disposal comparison with current Rialto bulky-item, HHW exclusion and San Bernardino County Mid-Valley accepted-waste context. Form, canonical, 909 contact, qualification rules and Inland Empire hierarchy were preserved.",
+      "postChange": {
+        "architecture": {
+          "title": "Free Appliance Pickup Rialto CA | Appliance Removal",
+          "hasMidValleyLocalSection": true,
+          "canonical": "https://freereliableappliancepickup.com/rialto-appliance-pickup/",
+          "form": 1,
+          "phone": true
+        }
+      },
+      "successSignals": [
+        "Rialto impressions increase while average position improves.",
+        "Rialto-specific appliance pickup/removal queries begin appearing.",
+        "The current page-one-adjacent generic pickup signal is retained or improved.",
+        "Form and phone conversion paths remain intact."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /rialto-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
