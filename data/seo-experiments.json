@@ -6432,6 +6432,47 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /fountain-valley-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-garden-grove-structure-concentration",
+      "market": "Garden Grove, CA",
+      "hypothesis": "Reducing repeated keyword-owner, route, access, premium, commercial and nearby-city sections while preserving qualification rules, local access details, conversion paths, municipal alternatives and Orange County links will strengthen Garden Grove city-intent concentration.",
+      "pagesChanged": [
+        "/garden-grove-appliance-pickup/"
+      ],
+      "protectedOwner": "/garden-grove-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 7
+        },
+        "preChangeArchitecture": {
+          "approxWords": 1779,
+          "h2Count": 21
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/garden-grove",
+          "pattern": "Concise Garden Grove city page centered on process, appliance categories, local details, FAQ, request CTA and nearby locations."
+        }
+      },
+      "change": "Simplified the Garden Grove city page main content from 21 H2 sections and approximately 1,779 words to 8 H2 sections and approximately 833 words. Preserved title/meta/canonical, valid structured data, 909 phone/text CTAs, Formspree request form, Garden Grove washer/dryer path, appliance-authority links, nearby Orange County links, qualification rules, a real appliance photo and current City of Garden Grove bulky-item alternatives.",
+      "successSignals": [
+        "The intended /garden-grove-appliance-pickup/ page holds or improves from its finalized average position of 7 as impressions grow.",
+        "Garden Grove impressions increase while the city page remains the ranking owner.",
+        "CTR begins to improve from 0% without changing title/meta.",
+        "Content-quality, routing, internal-link, schema and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /garden-grove-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
