@@ -4156,6 +4156,56 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative edits to /claremont-washer-dryer-pickup/ or remove this new authority link before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-sgv-ie-city-boundary",
+      "market": "San Gabriel Valley → Inland Empire corridor",
+      "hypothesis": "Removing duplicate exact-city handoff sections from the regional corridor hub should reduce the hub's tendency to surface for Rancho Cucamonga and Upland exact-city queries while preserving one comprehensive corridor network section.",
+      "pagesChanged": [
+        "/san-gabriel-inland-empire-appliance-pickup/"
+      ],
+      "protectedOwner": "/san-gabriel-inland-empire-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "free appliance pickup rancho cucamonga",
+            "page": "/san-gabriel-inland-empire-appliance-pickup/",
+            "impressions": 1,
+            "position": 12
+          },
+          {
+            "query": "free appliance pickup upland",
+            "page": "/san-gabriel-inland-empire-appliance-pickup/",
+            "impressions": 1,
+            "position": 11
+          }
+        ],
+        "preChangeArchitecture": {
+          "bytes": 31920,
+          "h2": 22,
+          "sections": 24,
+          "ranchoMentions": 10,
+          "ranchoLinks": 5,
+          "uplandMentions": 16,
+          "uplandLinks": 6,
+          "form": 1
+        }
+      },
+      "change": "Removed four repetitive city-heavy corridor/handoff sections while preserving the comprehensive priority network section, title/meta/H1, request form, canonical, qualification rules and regional routing.",
+      "successSignals": [
+        "Exact Rancho Cucamonga and Upland queries consolidate toward their dedicated city pages.",
+        "The regional hub retains broader corridor impressions.",
+        "No loss of request-form functionality or regional navigation."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /san-gabriel-inland-empire-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
