@@ -5983,6 +5983,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /hesperia-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-rancho-mirage-structure-concentration",
+      "market": "Rancho Mirage, CA",
+      "hypothesis": "Reducing duplicate exact-keyword, access, premium-gated and social sections while preserving Rancho Mirage property, senior/55+, waste-service, regional and conversion details will concentrate exact-city relevance for a page already averaging position 5 in finalized Search Console data.",
+      "pagesChanged": [
+        "/rancho-mirage-appliance-pickup/"
+      ],
+      "protectedOwner": "/rancho-mirage-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 5
+        },
+        "preChangeArchitecture": {
+          "approxWords": 1331,
+          "h2Count": 16
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/rancho-mirage",
+          "approxWords": 662,
+          "h2Count": 6,
+          "pattern": "Commercial removal -> process -> why choose -> request -> appliance categories -> FAQ."
+        }
+      },
+      "change": "Simplified only the Rancho Mirage body from 16 H2 sections to 11 and approximately 947 words by removing a keyword-owner block, a duplicate access/route block, a duplicate premium/gated-community block, a second gated/resort access block and the Facebook bridge. Preserved title/meta/canonical/schema, 909 phone, Formspree request form, appliance categories, real appliance proof, Burrtec/public waste options, senior/55+ recurring-service content, Coachella Valley resource links, nearby city links and washer/dryer handoff.",
+      "successSignals": [
+        "The intended /rancho-mirage-appliance-pickup/ page holds or improves from its finalized average position of 5.",
+        "Rancho Mirage impressions grow while exact-city ownership remains on the Rancho Mirage page.",
+        "CTR improves from 0% without changing the existing title/meta snippet.",
+        "Regional/internal-link, content-quality, routing, image and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /rancho-mirage-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
