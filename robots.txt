@@ -5,6 +5,7 @@ Sitemap: https://freereliableappliancepickup.com/sitemap.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-regular-washer-dryer.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-images.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-rancho-cucamonga.xml
+Sitemap: https://freereliableappliancepickup.com/sitemap-fontana.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-fresno.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-stockton.xml
 Sitemap: https://freereliableappliancepickup.com/sitemap-sacramento.xml
