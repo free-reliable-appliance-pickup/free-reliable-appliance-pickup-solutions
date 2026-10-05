@@ -5282,6 +5282,36 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Escondido washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
+    },
+    {
+      "id": "2026-10-05-arcadia-laundry-intent-cleanup",
+      "market": "Arcadia, CA",
+      "hypothesis": "Narrowing the unprotected Arcadia washer/dryer support page to laundry-only intent should improve relevance and CTR for laundry searches while reducing overlap with the protected Arcadia all-appliance city page.",
+      "pagesChanged": [
+        "/arcadia-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/arcadia-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "clicks": 0,
+        "impressions": 5,
+        "ctr": 0,
+        "position": 23.2
+      },
+      "change": "Planned: change the support-page title suffix from broad 'Appliance Removal' to 'Laundry Removal', remove redundant corridor/network/all-appliance blocks, reduce repeated non-laundry appliance wording, preserve H1/canonical/local Arcadia detail/contact paths and one clear handoff to the protected all-appliance city page.",
+      "successSignals": [
+        "The Arcadia washer/dryer page gains laundry-specific impressions and/or improves average position.",
+        "CTR rises above the 0% baseline.",
+        "The protected Arcadia all-appliance page retains broad city intent."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "setup",
+      "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Arcadia washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
     }
   ],
   "technicalMaintenance": [
