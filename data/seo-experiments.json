@@ -4796,6 +4796,69 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /laguna-niguel-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-newport-beach-owner-page-cleanup",
+      "market": "Newport Beach, CA",
+      "hypothesis": "Reducing repetitive network sections and Irvine cross-linking while strengthening current Newport Beach bulky-item facts should make the city page a clearer local owner and improve weak Newport Beach query performance.",
+      "pagesChanged": [
+        "/newport-beach-appliance-pickup/"
+      ],
+      "protectedOwner": "/newport-beach-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "query": "appliance removal newport beach",
+          "impressions": 4,
+          "clicks": 0,
+          "position": 68.25
+        },
+        "architecture": {
+          "bytes": 33825,
+          "sections": 27,
+          "h2": 26,
+          "irvineLinks": 7,
+          "title": "Free Appliance Pickup & Removal Newport Beach CA | Recycling",
+          "desc": "Free appliance pickup, removal and recycling review in Newport Beach, CA for qualifying washers, dryers, refrigerators, freezers and stoves. Call/text 909-375-6685.",
+          "h1": "Free Appliance Pickup & Removal in Newport Beach, CA",
+          "form": 1,
+          "canonical": "https://freereliableappliancepickup.com/newport-beach-appliance-pickup/",
+          "phone": true
+        }
+      },
+      "change": "Removed nine repetitive sections; reduced Irvine links from seven to one; updated the local municipal fallback to the current Newport Beach rule of five free bulky-item pickups per year with up to five items per collection; preserved title/meta/H1, form, canonical, 909 contact, coastal/harbor access, premium-property content, FAQ and commercial/property programs.",
+      "postChange": {
+        "architecture": {
+          "bytes": 25099,
+          "sections": 18,
+          "h2": 17,
+          "irvineLinks": 1,
+          "title": "Free Appliance Pickup & Removal Newport Beach CA | Recycling",
+          "desc": "Free appliance pickup, removal and recycling review in Newport Beach, CA for qualifying washers, dryers, refrigerators, freezers and stoves. Call/text 909-375-6685.",
+          "h1": "Free Appliance Pickup & Removal in Newport Beach, CA",
+          "form": 1,
+          "canonical": "https://freereliableappliancepickup.com/newport-beach-appliance-pickup/",
+          "phone": true,
+          "hasFiveByFive": true,
+          "hasCoastal": true,
+          "hasPremium": true,
+          "hasProperty": true,
+          "hasFAQ": true
+        }
+      },
+      "successSignals": [
+        "Newport Beach impressions and/or average position improve for local appliance-removal intent.",
+        "Irvine cross-city dilution decreases.",
+        "Form and phone conversion paths remain intact."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /newport-beach-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
