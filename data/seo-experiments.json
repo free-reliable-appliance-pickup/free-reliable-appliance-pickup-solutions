@@ -4672,6 +4672,71 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to these three pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-tustin-owner-page-cleanup",
+      "market": "Tustin, CA",
+      "hypothesis": "Removing repetitive city/service sections and excessive Irvine/Santa Ana cross-links while preserving Tustin-specific local rules, commercial intent, appliance categories, FAQ and conversion paths should strengthen Tustin as the clear owner for Tustin appliance-removal queries.",
+      "pagesChanged": [
+        "/tustin-appliance-pickup/"
+      ],
+      "protectedOwner": "/tustin-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "query": "appliance removal tustin",
+          "impressions": 9,
+          "clicks": 0,
+          "position": 25.555555555555557
+        },
+        "architecture": {
+          "bytes": 34752,
+          "sections": 27,
+          "h2": 26,
+          "irvineLinks": 8,
+          "santaAnaLinks": 8,
+          "title": "Appliance Removal Tustin CA | Free Appliance Pickup",
+          "desc": "Appliance removal and free appliance pickup review in Tustin, CA for qualifying refrigerators, washers, dryers, freezers and stoves. Call/text 909-375-6685.",
+          "h1": "Appliance Removal &amp; Free Appliance Pickup in Tustin, CA",
+          "form": 1,
+          "canonical": "https://freereliableappliancepickup.com/tustin-appliance-pickup/",
+          "phone": true
+        }
+      },
+      "change": "Removed nine repetitive sections; reduced Irvine and Santa Ana city links from 8 each to 1 each; preserved title, meta description, H1, form, canonical, 909 contact, Tustin bulky-item rules, appliance categories, process, FAQ, local access/ZIP context and commercial/property programs.",
+      "postChange": {
+        "architecture": {
+          "bytes": 25726,
+          "sections": 18,
+          "h2": 17,
+          "irvineLinks": 1,
+          "santaAnaLinks": 1,
+          "title": "Appliance Removal Tustin CA | Free Appliance Pickup",
+          "desc": "Appliance removal and free appliance pickup review in Tustin, CA for qualifying refrigerators, washers, dryers, freezers and stoves. Call/text 909-375-6685.",
+          "h1": "Appliance Removal &amp; Free Appliance Pickup in Tustin, CA",
+          "form": 1,
+          "canonical": "https://freereliableappliancepickup.com/tustin-appliance-pickup/",
+          "phone": true,
+          "hasBulkyRules": true,
+          "hasCommercial": true,
+          "hasCategories": true,
+          "hasProcess": true,
+          "hasFAQ": true
+        }
+      },
+      "successSignals": [
+        "The Tustin city page improves position and/or impressions for appliance removal Tustin.",
+        "The Orange County hub and Tustin laundry page reduce general Tustin-query leakage.",
+        "Tustin form/phone conversion paths remain intact."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /tustin-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
