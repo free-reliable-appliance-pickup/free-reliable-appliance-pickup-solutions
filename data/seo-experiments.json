@@ -4124,6 +4124,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change the checklist title/meta/body/internal links/schema again before 2026-10-14 unless there is verified technical, factual, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-claremont-laundry-authority-link",
+      "market": "Claremont washer & dryer, CA",
+      "hypothesis": "A direct contextual link from the California washer/dryer hub to the dedicated Claremont laundry page should strengthen discovery and authority for Claremont laundry intent without changing the city page itself.",
+      "pagesChanged": [
+        "/california-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/claremont-washer-dryer-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 6,
+          "ctr": 0,
+          "position": 20.333333333333332
+        }
+      },
+      "change": "Added one contextual internal link from /california-washer-dryer-pickup/ to /claremont-washer-dryer-pickup/. No Claremont title, meta, H1, body, schema, form or canonical changes.",
+      "successSignals": [
+        "Claremont washer/dryer impressions increase or average position improves.",
+        "The Claremont page begins surfacing for more local laundry-specific searches.",
+        "No loss of California laundry hub visibility."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative edits to /claremont-washer-dryer-pickup/ or remove this new authority link before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
