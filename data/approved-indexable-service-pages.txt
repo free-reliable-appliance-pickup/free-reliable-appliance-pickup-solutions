@@ -367,3 +367,4 @@ rowland-heights-refrigerator-pickup
 sacramento-refrigerator-pickup
 west-covina-refrigerator-pickup
 whittier-refrigerator-pickup
+anaheim-refrigerator-pickup
