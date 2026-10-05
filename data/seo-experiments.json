@@ -2687,6 +2687,44 @@
           "commit": "fc5ca3bf343100f70ceb257773960b0b50615c8d"
         }
       ]
+    },
+    {
+      "id": "2026-10-04-cudahy-people-first-simplification",
+      "market": "Cudahy, California",
+      "hypothesis": "Removing duplicated appliance sections and search-facing ownership language while preserving the existing title, meta description, H1, 310 contact path, local access detail and request form should improve topical clarity and help Cudahy move from just outside page one into page one.",
+      "pagesChanged": [
+        "/cudahy-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/cudahy-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "averagePosition": 11.2
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 762,
+          "headingCount": 24
+        }
+      },
+      "change": "Simplified only the visible main content. Consolidated duplicate appliance qualification sections, removed the redundant 'near me' ownership block, and kept the existing title/meta/H1/canonical, 310-774-4304 phone, Formspree form, Cudahy compact-lot/access guidance, City trash-provider reference, qualification rules, dedicated laundry handoff and nearby-city links.",
+      "successSignals": [
+        "Cudahy average position improves from about 11.2 into page one.",
+        "Impressions remain stable or increase.",
+        "The Cudahy city URL retains broad local appliance-pickup ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /cudahy-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
