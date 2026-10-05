@@ -2806,6 +2806,44 @@
           "commit": "e5653168b8eb231035159d8a7a40b1998ea521a1"
         }
       ]
+    },
+    {
+      "id": "2026-10-04-colton-people-first-simplification",
+      "market": "Colton, California",
+      "hypothesis": "Reducing repeated appliance/network sections while preserving the existing top-page-one title/meta/H1 and 909 contact path should improve Colton's topical clarity and CTR without destabilizing its existing visibility.",
+      "pagesChanged": [
+        "/colton-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/colton-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "averagePosition": 7.5
+        },
+        "preChangeArchitecture": {
+          "approxVisibleWords": 1993,
+          "headingCount": 48
+        }
+      },
+      "change": "Simplified Colton into a focused local service page with qualification, three-step pickup process, appliance types, property access, current City of Colton bulky-item alternative, FAQ, request form and nearby Inland Empire routes. Preserved title/meta/H1/canonical, 909-375-6685 contact and Formspree endpoint.",
+      "successSignals": [
+        "Colton remains on page one and begins receiving clicks.",
+        "Impressions remain stable or increase.",
+        "Average position remains broadly stable or improves from about 7.5."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /colton-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
