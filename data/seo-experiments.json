@@ -4529,6 +4529,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to the San Bernardino refrigerator/freezer pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-la-verne-san-dimas-laundry-localization",
+      "market": "La Verne / San Dimas washer & dryer, CA",
+      "hypothesis": "Replacing shared laundry-route template sections with verified city-specific access and municipal bulky-item rules should reduce cross-city similarity and strengthen unique local laundry intent.",
+      "pagesChanged": [
+        "/la-verne-washer-dryer-pickup/",
+        "/san-dimas-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/la-verne-washer-dryer-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "normalizedFiveWordShingleSimilarity": 0.486
+      },
+      "change": "Localized the core route/access and FAQ sections; added distinct municipal fallback sections reflecting La Verne's four-pickup program and San Dimas's six-pickup program. Titles, meta descriptions, H1s, canonicals, forms and 909 contact were preserved.",
+      "postChange": {
+        "normalizedFiveWordShingleSimilarity": 0.316
+      },
+      "successSignals": [
+        "Cross-city similarity remains materially lower.",
+        "Each page gains or retains its own city-specific laundry impressions.",
+        "No loss of request-form or phone conversions."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to the La Verne or San Dimas washer/dryer pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
