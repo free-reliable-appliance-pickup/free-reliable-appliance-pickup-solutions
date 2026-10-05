@@ -2798,7 +2798,14 @@
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /acton-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /acton-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-04",
+          "reason": "Links-to-noindex audit found the rebuilt Acton page linked to the intentionally noindex /acton-washer-dryer-pickup/ alias. Replaced that link with the indexable /antelope-valley-washer-dryer-pickup/ page. No title, meta description, H1, qualification rules, form, phone or core Acton copy changed.",
+          "commit": "e5653168b8eb231035159d8a7a40b1998ea521a1"
+        }
+      ]
     }
   ]
 }
