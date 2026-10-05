@@ -3740,6 +3740,44 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /avocado-heights-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-hacienda-heights-city-parity",
+      "market": "Hacienda Heights, CA",
+      "hypothesis": "A simpler exact-community architecture should help the dedicated Hacienda Heights page own broad local appliance pickup/removal intent while preserving its existing refrigerator relevance and hillside/gated access context.",
+      "pagesChanged": [
+        "/hacienda-heights-appliance-pickup/"
+      ],
+      "protectedOwner": "/hacienda-heights-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "free refrigerator pick up near me",
+            "impressions": 1,
+            "position": 11
+          }
+        ],
+        "preChangeArchitecture": {
+          "htmlBytes": 27118,
+          "h2Count": 19,
+          "sectionCount": 20
+        }
+      },
+      "change": "Simplified Hacienda Heights from 20 sections to 12 and 19 H2s to 11 while preserving title/meta, canonical, H1, 909-375-6685 contact, Formspree request form, qualification rules, LA County/Valley Vista bulky-item guidance, hillside/gated access context, real appliance proof, commercial/property paths and nearby-city links.",
+      "successSignals": [
+        "The intended /hacienda-heights-appliance-pickup/ page gains Hacienda Heights-specific broad pickup/removal impressions.",
+        "Existing refrigerator-related relevance is preserved or improves.",
+        "Laundry-only intent remains with /hacienda-heights-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /hacienda-heights-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
