@@ -2679,7 +2679,14 @@
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent changes to the new Baldwin Park refrigerator page before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage. Keep the Baldwin Park general page under its separate existing freeze."
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent changes to the new Baldwin Park refrigerator page before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage. Keep the Baldwin Park general page under its separate existing freeze.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-04",
+          "reason": "Search Appearance validation found the new Baldwin Park refrigerator page was missing the shared favicon link and the WebPage -> #website relationship. Added those metadata-only elements; visible ranking copy, title, meta description, H1, form, phone, links and intent were unchanged.",
+          "commit": "fc5ca3bf343100f70ceb257773960b0b50615c8d"
+        }
+      ]
     }
   ]
 }
