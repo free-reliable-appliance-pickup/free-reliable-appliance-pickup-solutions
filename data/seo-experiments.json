@@ -3469,6 +3469,42 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /montebello-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-pico-rivera-intent-concentration",
+      "market": "Pico Rivera, CA",
+      "hypothesis": "Reducing broad regional-network language should help Pico Rivera own its exact-city appliance pickup intent and stop surfacing for unrelated Inland Empire queries such as Upland.",
+      "pagesChanged": [
+        "/pico-rivera-appliance-pickup/"
+      ],
+      "protectedOwner": "/pico-rivera-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscWrongIntent": {
+          "query": "free appliance pickup upland",
+          "impressions": 2,
+          "position": 45
+        },
+        "preChangeArchitecture": {
+          "htmlBytes": 19903,
+          "h2Count": 15,
+          "sectionCount": 16
+        }
+      },
+      "change": "Reduced Pico Rivera to 12 sections and 11 H2s, removed broad San Gabriel Valley/Inland Empire-style network language, and kept the page focused on Pico Rivera and nearby southeast Los Angeles County service. Preserved title/meta, canonical, H1, 909-375-6685 contact, Formspree request form, qualification rules, official Pico Rivera bulky-item reference, real appliance proof and appliance-specific handoffs.",
+      "successSignals": [
+        "Unrelated Upland/IE impressions on the Pico Rivera page decline.",
+        "The intended /pico-rivera-appliance-pickup/ page gains Pico Rivera-specific impressions.",
+        "Pico Rivera washer/dryer-only intent remains with /pico-rivera-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /pico-rivera-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
