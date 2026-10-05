@@ -6069,6 +6069,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /cathedral-city-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-adelanto-structure-concentration",
+      "market": "Adelanto, CA",
+      "hypothesis": "Removing repeated keyword, near-me, route-network and social sections while retaining Adelanto-specific reuse qualification and city-versus-unincorporated routing detail will concentrate exact-city intent for a page already averaging position 7.5 in finalized Search Console data.",
+      "pagesChanged": [
+        "/adelanto-appliance-pickup/"
+      ],
+      "protectedOwner": "/adelanto-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 7.5
+        },
+        "preChangeArchitecture": {
+          "approxWords": 1246,
+          "h2Count": 15
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/adelanto",
+          "approxWords": 633,
+          "h2Count": 6,
+          "pattern": "Business removal -> process -> why choose -> request -> appliance categories -> FAQ."
+        }
+      },
+      "change": "Simplified only the Adelanto body from 15 H2 sections to 9 and approximately 788 words by removing duplicate exact-keyword, near-me, generic network-route, extra route-review, extra category and Facebook sections. Preserved title/meta/canonical/schema, 909 phone, Formspree request form, reuse qualification, city-versus-unincorporated High Desert routing detail, real appliance proof, access details, nearby-city links and qualification rules.",
+      "successSignals": [
+        "The intended /adelanto-appliance-pickup/ page holds or improves from its finalized average position of 7.5.",
+        "Adelanto impressions increase while the city page remains the ranking owner.",
+        "CTR improves from 0% without changing title/meta.",
+        "Content-quality, routing, image, internal-link and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /adelanto-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
