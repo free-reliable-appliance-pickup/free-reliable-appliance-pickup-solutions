@@ -4737,6 +4737,65 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /tustin-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-laguna-niguel-mission-viejo-boundary",
+      "market": "Laguna Niguel / Mission Viejo, CA",
+      "hypothesis": "Reducing repeated Mission Viejo links on the Laguna Niguel owner page while preserving one explicit neighbor handoff should strengthen Laguna Niguel local ownership without weakening South Orange County navigation.",
+      "pagesChanged": [
+        "/laguna-niguel-appliance-pickup/"
+      ],
+      "protectedOwner": "/laguna-niguel-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "query": "appliance removal laguna niguel",
+          "impressions": 3,
+          "clicks": 0,
+          "position": 17.666666666666668
+        },
+        "architecture": {
+          "bytes": 23183,
+          "sections": 19,
+          "missionViejoLinks": 6,
+          "orangeCountyLinks": 11,
+          "title": "Free Appliance Pickup & Removal Laguna Niguel CA | Recycling",
+          "desc": "Free appliance pickup in Laguna Niguel, CA for qualifying washers, dryers, refrigerators, freezers and stoves. Call/text 909-375-6685 or submit online.",
+          "h1": "Free Appliance <span>Pickup &amp; Removal</span> in Laguna Niguel, CA",
+          "form": 1,
+          "canonical": "https://freereliableappliancepickup.com/laguna-niguel-appliance-pickup/",
+          "phone": true
+        }
+      },
+      "change": "Reduced direct Mission Viejo links from six to one while preserving Orange County parent links, Laguna Niguel bulky-item rules, title/meta/H1, form, canonical and 909 contact.",
+      "postChange": {
+        "architecture": {
+          "bytes": 22942,
+          "sections": 19,
+          "missionViejoLinks": 1,
+          "orangeCountyLinks": 11,
+          "title": "Free Appliance Pickup & Removal Laguna Niguel CA | Recycling",
+          "desc": "Free appliance pickup in Laguna Niguel, CA for qualifying washers, dryers, refrigerators, freezers and stoves. Call/text 909-375-6685 or submit online.",
+          "h1": "Free Appliance <span>Pickup &amp; Removal</span> in Laguna Niguel, CA",
+          "form": 1,
+          "canonical": "https://freereliableappliancepickup.com/laguna-niguel-appliance-pickup/",
+          "phone": true,
+          "hasBulky": true
+        }
+      },
+      "successSignals": [
+        "Laguna Niguel improves or maintains position for its own removal query.",
+        "Neighbor-city link dilution decreases without losing South Orange County navigation.",
+        "Laguna Niguel form/phone conversion paths remain intact."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /laguna-niguel-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
