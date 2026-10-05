@@ -351,3 +351,5 @@ appliance-recycling
 appliance-removal-cost
 denver-refrigerator-pickup
 how-to-get-rid-of-old-refrigerator
+baldwin-park-refrigerator-pickup
+stockton-stove-oven-pickup
