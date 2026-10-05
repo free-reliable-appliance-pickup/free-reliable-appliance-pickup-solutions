@@ -5940,6 +5940,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /victorville-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-hesperia-structure-concentration",
+      "market": "Hesperia, CA",
+      "hypothesis": "Reducing repeated Hesperia SEO/network sections while preserving the proven title/meta, local High Desert access detail, direct 909 phone/form path, public bulky-item comparison, appliance categories, real appliance proof and nearby-city links will concentrate exact-city relevance for a page already averaging position 6 in finalized Search Console data.",
+      "pagesChanged": [
+        "/hesperia-appliance-pickup/"
+      ],
+      "protectedOwner": "/hesperia-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 6
+        },
+        "preChangeArchitecture": {
+          "approxWords": 1302,
+          "h2Count": 16
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/hesperia",
+          "approxWords": 1081,
+          "h2Count": 7,
+          "pattern": "Business removal -> process -> why choose -> request -> local details -> appliance categories -> FAQ."
+        }
+      },
+      "change": "Simplified only the Hesperia body from 16 H2 sections to 9 and approximately 747 words by removing duplicated exact-keyword, near-me, route-network, repeated High Desert, extra category and Facebook bridge sections. Preserved title, meta description, canonical, schema, 909 phone, Formspree form, qualification rules, City of Hesperia/public bulky-item comparison, real appliance proof, access details, local High Desert detail, nearby-city links and washer/dryer handoff.",
+      "successSignals": [
+        "The intended /hesperia-appliance-pickup/ page holds or improves from its finalized average position of 6.",
+        "Hesperia impressions increase while the Hesperia city page remains the ranking owner.",
+        "CTR improves from the current 0% baseline without changing title or meta.",
+        "Content-quality, routing, image, internal-link and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /hesperia-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
