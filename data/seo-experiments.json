@@ -3569,6 +3569,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /city-of-industry-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-monterey-park-city-parity",
+      "market": "Monterey Park, CA",
+      "hypothesis": "A simpler exact-city architecture should help the dedicated Monterey Park page own broad local appliance pickup/removal intent more clearly and hand laundry-only intent to the dedicated washer/dryer page.",
+      "pagesChanged": [
+        "/monterey-park-appliance-pickup/"
+      ],
+      "protectedOwner": "/monterey-park-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gscSignals": [
+          {
+            "query": "free washer and dryer near me",
+            "impressions": 1,
+            "position": 9
+          },
+          {
+            "query": "ware disposal bulky item pickup",
+            "impressions": 1,
+            "position": 64
+          }
+        ],
+        "preChangeArchitecture": {
+          "htmlBytes": 27830,
+          "h2Count": 22,
+          "sectionCount": 23
+        }
+      },
+      "change": "Simplified Monterey Park from 23 sections to 13 and 22 H2s to 12 while preserving title/meta, canonical, H1, 909-375-6685 contact, Formspree request form, qualification rules, official Monterey Park bulky-item reference, apartment/hillside access guidance, real appliance proof, commercial/property paths and nearby-city links.",
+      "successSignals": [
+        "The intended /monterey-park-appliance-pickup/ page gains Monterey Park-specific broad appliance pickup/removal impressions.",
+        "Laundry-only intent increasingly routes to /monterey-park-washer-dryer-pickup/.",
+        "Unrelated bulky-item/disposal query overlap does not increase."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /monterey-park-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
