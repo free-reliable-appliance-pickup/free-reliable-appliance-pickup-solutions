@@ -4859,6 +4859,41 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /newport-beach-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-rancho-appliance-guide-form-fix",
+      "market": "Rancho Cucamonga appliance-specific guides",
+      "hypothesis": "Putting a direct request form on each high-intent Rancho appliance guide should reduce conversion friction and eliminate dead-end #request behavior without changing the protected general Rancho owner page.",
+      "pagesChanged": [
+        "/rancho-cucamonga-washer-dryer-pickup/",
+        "/rancho-cucamonga-refrigerator-pickup/",
+        "/rancho-cucamonga-freezer-pickup/",
+        "/rancho-cucamonga-stove-oven-pickup/"
+      ],
+      "protectedOwner": "/rancho-cucamonga-refrigerator-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "directForms": {
+          "washerDryer": 0,
+          "refrigerator": 0,
+          "freezer": 0,
+          "stoveOven": 0
+        }
+      },
+      "change": "Replaced each appliance guide's outbound/general request section with a direct Formspree form using city, state, source_page and appliance-specific fields. Existing request CTAs that pointed to the Rancho general-page form now point to the local #request section. Titles, H1s, canonicals and the protected general Rancho page were not changed.",
+      "successSignals": [
+        "Each Rancho appliance-specific page has a working local request form.",
+        "Form submissions carry a page-specific source_page value.",
+        "Appliance-guide visitors no longer need to leave the page to submit."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to these four Rancho appliance-specific pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
