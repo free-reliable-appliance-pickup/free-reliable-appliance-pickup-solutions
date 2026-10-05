@@ -5312,6 +5312,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Arcadia washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
+    },
+    {
+      "id": "2026-10-05-partner-resource-authority-guide",
+      "market": "Nationwide partner acquisition",
+      "hypothesis": "A genuinely useful appliance-flipping resource linked from the partner and buyer/reseller hubs can expand informational visibility, strengthen the partner topical cluster and attract qualified pickup/reseller applicants without adding more local doorway-style pages.",
+      "pagesChanged": [
+        "/partners/resources/appliance-flipping-guide/",
+        "/partners/",
+        "/appliance-buyers-resellers/"
+      ],
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "newResource": {
+          "clicks": 0,
+          "impressions": 0
+        },
+        "note": "New resource page; baseline is zero because the URL did not exist."
+      },
+      "change": "Planned: launch a people-first appliance-flipping guide with testing, condition, transport, cost and resale workflow guidance; link it naturally from the partner and appliance buyer/reseller hubs; add it to the sitemap. No local city-page titles, bodies or ranking experiments will be changed.",
+      "successSignals": [
+        "The new resource begins receiving relevant informational impressions in Search Console.",
+        "Partner/buyer hub users have a useful educational path before applying.",
+        "The page earns external mentions or links over time without city-page duplication."
+      ],
+      "evaluateNotBefore": "2026-10-20",
+      "preferredReview": "2026-10-27",
+      "status": "setup",
+      "freezeRule": "After launch, do not make speculative title/body/internal-link/schema changes to the new resource or its two supporting hub links before the review gate unless a verified technical, factual, indexability or safety issue requires correction."
     }
   ],
   "technicalMaintenance": [
