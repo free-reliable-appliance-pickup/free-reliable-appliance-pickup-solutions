@@ -3874,6 +3874,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /la-canada-flintridge-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-glendora-foothill-parity",
+      "market": "Glendora, CA",
+      "hypothesis": "A simpler exact-city architecture centered on foothill access and broad appliance pickup/removal intent should help the dedicated Glendora page become a clearer local owner without dilution from repeated regional-network sections.",
+      "pagesChanged": [
+        "/glendora-appliance-pickup/"
+      ],
+      "protectedOwner": "/glendora-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful Glendora-specific query-page relationship appeared in finalized Search Console planning data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 29797,
+          "h2Count": 24,
+          "sectionCount": 25
+        }
+      },
+      "change": "Simplified Glendora from 25 sections to 14 and 24 H2s to 13 while preserving the existing title/meta/canonical/H1, 909-375-6685 contact, Formspree request form, qualification rules, foothill/long-driveway access context, real appliance proof, senior/property-manager recurring path, local Route 66 context and nearby-city links.",
+      "successSignals": [
+        "The intended /glendora-appliance-pickup/ page begins receiving Glendora-specific impressions.",
+        "Broad Glendora appliance pickup/removal intent consolidates on the city page.",
+        "Laundry-only intent remains with /glendora-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /glendora-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
