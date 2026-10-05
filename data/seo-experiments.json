@@ -3505,6 +3505,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /pico-rivera-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-irwindale-city-parity",
+      "market": "Irwindale, CA",
+      "hypothesis": "A simpler exact-city architecture with stronger residential/commercial loading clarity should help the dedicated Irwindale page become a clearer owner for Irwindale appliance pickup and removal searches.",
+      "pagesChanged": [
+        "/irwindale-appliance-pickup/"
+      ],
+      "protectedOwner": "/irwindale-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful Irwindale-specific query or top-page signal appeared in finalized Search Console planning data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 28026,
+          "h2Count": 22,
+          "sectionCount": 23
+        }
+      },
+      "change": "Simplified Irwindale from 23 sections to 13 and 22 H2s to 12 while preserving title/meta, canonical, H1, 909-375-6685 contact, Formspree request form, qualification rules, official Irwindale trash/recycling reference, industrial and commercial pickup relevance, real appliance proof, appliance-specific handoffs and nearby-city links.",
+      "successSignals": [
+        "The intended /irwindale-appliance-pickup/ page begins receiving Irwindale-specific impressions.",
+        "Commercial and residential Irwindale relevance improves without broad regional cannibalization.",
+        "Irwindale washer/dryer-only intent remains with /irwindale-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /irwindale-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
