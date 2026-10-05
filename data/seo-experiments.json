@@ -2878,6 +2878,40 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Carson title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-centennial-page1-ctr-test",
+      "market": "Centennial, Colorado",
+      "hypothesis": "Adding the direct 720 contact advantage and free-to-submit wording to Centennial's search description should improve CTR on a page already averaging page-one visibility without changing title, H1, visible body or internal links.",
+      "pagesChanged": [
+        "/centennial-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/centennial-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "averagePosition": 8
+        }
+      },
+      "change": "Changed only the meta and Open Graph description to include 720-604-7498 and free-to-submit wording. Title, H1, visible body, canonical, form, phone actions and internal links were unchanged.",
+      "successSignals": [
+        "Centennial CTR rises above 0%.",
+        "Clicks begin while average position remains broadly stable on page one.",
+        "The Centennial city URL retains local appliance-pickup ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change Centennial title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
