@@ -5199,7 +5199,7 @@
           }
         }
       },
-      "change": "Planned: remove duplicate broad-appliance sections and generic removal phrasing from the two washer/dryer support pages while preserving laundry titles, H1s, canonicals, local details, qualification rules, contact paths and one clear handoff to each city appliance page.",
+      "change": "Narrowed only the Laguna Hills and Tustin washer/dryer support pages: removed duplicate broad-appliance/network sections, reduced generic removal phrasing, kept laundry-specific titles/H1s/canonicals/local details/contact paths, and retained one clear handoff to each city appliance page.",
       "successSignals": [
         "Broad Laguna Hills removal impressions consolidate more strongly on /laguna-hills-appliance-pickup/.",
         "Broad Tustin removal impressions consolidate more strongly on /tustin-appliance-pickup/.",
@@ -5207,7 +5207,7 @@
       ],
       "evaluateNotBefore": "2026-10-15",
       "preferredReview": "2026-10-20",
-      "status": "setup",
+      "status": "running",
       "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to these two laundry support pages before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
     }
   ],
