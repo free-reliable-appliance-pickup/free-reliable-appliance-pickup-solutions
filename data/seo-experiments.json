@@ -5145,6 +5145,70 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /fullerton-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-south-oc-laundry-support-handoff",
+      "market": "Laguna Hills + Tustin, CA",
+      "hypothesis": "Narrowing unprotected washer/dryer support pages to laundry-only language and removing repeated broad appliance-removal/network wording should reduce query overlap and help the dedicated city appliance pages own broad local removal searches.",
+      "pagesChanged": [
+        "/laguna-hills-washer-dryer-pickup/",
+        "/tustin-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/laguna-hills-appliance-pickup/",
+        "/tustin-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "lagunaHillsQuery": {
+          "query": "appliance removal laguna hills",
+          "mainPage": {
+            "impressions": 8,
+            "position": 16.375
+          },
+          "laundryPage": {
+            "impressions": 5,
+            "position": 59
+          },
+          "lagunaBeachPage": {
+            "impressions": 8,
+            "position": 40.875
+          },
+          "lagunaWoodsPage": {
+            "impressions": 3,
+            "position": 24.3333333333
+          }
+        },
+        "tustinQuery": {
+          "query": "appliance removal tustin",
+          "mainPage": {
+            "impressions": 9,
+            "position": 25.5555555556
+          },
+          "laundryPage": {
+            "impressions": 1,
+            "position": 66
+          },
+          "orangeCountyPage": {
+            "impressions": 3,
+            "position": 63.6666666667
+          }
+        }
+      },
+      "change": "Planned: remove duplicate broad-appliance sections and generic removal phrasing from the two washer/dryer support pages while preserving laundry titles, H1s, canonicals, local details, qualification rules, contact paths and one clear handoff to each city appliance page.",
+      "successSignals": [
+        "Broad Laguna Hills removal impressions consolidate more strongly on /laguna-hills-appliance-pickup/.",
+        "Broad Tustin removal impressions consolidate more strongly on /tustin-appliance-pickup/.",
+        "The two washer/dryer pages retain laundry-specific visibility without gaining more broad appliance-removal impressions."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "setup",
+      "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to these two laundry support pages before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
     }
   ],
   "technicalMaintenance": [
