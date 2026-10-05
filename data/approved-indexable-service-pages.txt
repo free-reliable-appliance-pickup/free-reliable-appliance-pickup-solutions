@@ -353,3 +353,17 @@ denver-refrigerator-pickup
 how-to-get-rid-of-old-refrigerator
 baldwin-park-refrigerator-pickup
 stockton-stove-oven-pickup
+
+# Approved city x appliance and county authority pages — 2026-10-05
+arcadia-refrigerator-pickup
+aurora-freezer-pickup
+aurora-refrigerator-pickup
+aurora-stove-oven-pickup
+denver-freezer-pickup
+denver-stove-oven-pickup
+fresno-county-appliance-pickup
+pasadena-refrigerator-pickup
+rowland-heights-refrigerator-pickup
+sacramento-refrigerator-pickup
+west-covina-refrigerator-pickup
+whittier-refrigerator-pickup
