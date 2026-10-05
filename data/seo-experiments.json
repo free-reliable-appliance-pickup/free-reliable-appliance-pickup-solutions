@@ -4412,6 +4412,46 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to these three stove/oven pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-ontario-pomona-riverside-refrigerator-localization",
+      "market": "Ontario / Pomona / Riverside refrigerator pages",
+      "hypothesis": "Replacing shared refrigerator template sections with verified city-specific access and disposal/recycling rules should reduce cross-city duplication and strengthen local refrigerator intent.",
+      "pagesChanged": [
+        "/ontario-refrigerator-pickup/",
+        "/pomona-refrigerator-pickup/",
+        "/riverside-refrigerator-pickup/"
+      ],
+      "protectedOwner": "/ontario-refrigerator-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "normalizedFiveWordShingleSimilarity": {
+          "pomona-riverside": 0.65,
+          "ontario-pomona": 0.59,
+          "ontario-riverside": 0.583
+        }
+      },
+      "change": "Localized review, municipal/recycling fallback and FAQ sections. Riverside now reflects its separate refrigerant-appliance/RPU program; Pomona reflects its refrigerator bulky-item rules; Ontario reflects its resident/property-manager bulky-item structure. Titles, H1s, forms, canonicals and 909 contact were preserved.",
+      "postChange": {
+        "normalizedFiveWordShingleSimilarity": {
+          "ontario-riverside": 0.195,
+          "pomona-riverside": 0.229,
+          "ontario-pomona": 0.236
+        }
+      },
+      "successSignals": [
+        "Cross-city similarity remains materially lower.",
+        "Each page gains or retains city-specific refrigerator impressions.",
+        "No loss of conversion paths."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to these three refrigerator pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
