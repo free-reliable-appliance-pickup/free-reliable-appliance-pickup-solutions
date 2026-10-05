@@ -6291,6 +6291,47 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "No speculative title, meta, body, internal-link, schema, canonical or intent-ownership edits to the Gresham page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-05-placentia-structure-concentration",
+      "market": "Placentia, CA",
+      "hypothesis": "Reducing repeated appliance, route, access, near-me and premium sections while preserving Placentia-specific qualification, local municipal alternatives and conversion paths will concentrate exact-city intent for a page already averaging position 16.5 in finalized Search Console data.",
+      "pagesChanged": [
+        "/placentia-appliance-pickup/"
+      ],
+      "protectedOwner": "/placentia-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 16.5
+        },
+        "preChangeArchitecture": {
+          "approxWords": 1202,
+          "h2Count": 15
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/placentia",
+          "pattern": "Concise city page organized around process, why choose, appliance categories, FAQ and nearby locations."
+        }
+      },
+      "change": "Simplified the Placentia city page main content from 15 H2 sections and approximately 1,202 words to 7 H2 sections and approximately 674 words. Preserved title/meta/canonical, Service/Breadcrumb/WebPage/FAQ schema, 909 phone and text CTAs, Formspree request form, Placentia washer/dryer path, appliance-authority links, north Orange County nearby-city links, qualification rules, real hero image and the current City of Placentia bulky-item alternative.",
+      "successSignals": [
+        "The intended /placentia-appliance-pickup/ page holds or improves from its finalized average position of 16.5.",
+        "Placentia impressions increase while the city page remains the ranking owner.",
+        "CTR begins to improve from 0% without changing title/meta.",
+        "Content-quality, routing, internal-link, schema and intent-ownership audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /placentia-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
