@@ -3810,6 +3810,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /duarte-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-sierra-madre-foothill-parity",
+      "market": "Sierra Madre, CA",
+      "hypothesis": "A simpler exact-city architecture centered on foothill-property access should help the dedicated Sierra Madre page own local appliance pickup/removal intent without dilution from generic regional-network sections.",
+      "pagesChanged": [
+        "/sierra-madre-appliance-pickup/"
+      ],
+      "protectedOwner": "/sierra-madre-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful Sierra Madre-specific query or top-page signal appeared in finalized Search Console planning data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 21101,
+          "h2Count": 14,
+          "sectionCount": 15
+        }
+      },
+      "change": "Simplified Sierra Madre from 15 sections to 12 and 14 H2s to 11 while preserving 909-375-6685 contact, Formspree request form, qualification rules, foothill-property/narrow-street access context, real appliance proof, commercial/property paths and nearby-city links.",
+      "successSignals": [
+        "The intended /sierra-madre-appliance-pickup/ page begins receiving Sierra Madre-specific impressions.",
+        "Broad Sierra Madre appliance pickup/removal intent consolidates on the city page.",
+        "Laundry-only intent remains with /sierra-madre-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /sierra-madre-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
