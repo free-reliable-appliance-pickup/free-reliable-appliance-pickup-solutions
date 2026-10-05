@@ -3171,6 +3171,50 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Downey title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-perris-page1-ctr-test",
+      "market": "Perris, California",
+      "hypothesis": "Adding exact removal wording, the established 909 contact, and free-to-submit language to Perris's search description should improve CTR on queries already ranging from page-one to striking-distance positions without changing title, H1, body or internal links.",
+      "pagesChanged": [
+        "/perris-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/perris-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "querySignals": [
+          {
+            "query": "appliance pickup near me",
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "averagePosition": 7
+          },
+          {
+            "query": "appliance pick up free",
+            "clicks": 0,
+            "impressions": 2,
+            "ctr": 0,
+            "averagePosition": 14
+          }
+        ]
+      },
+      "change": "Changed only the meta/OG/WebPage description to include 'pickup & removal', 909-375-6685, and free-to-submit wording. Title, H1, visible body, canonical, form, phone actions and internal links were unchanged.",
+      "successSignals": [
+        "Perris CTR rises above 0%.",
+        "Clicks begin while page-one and striking-distance positions remain stable or improve.",
+        "The Perris city URL retains local appliance-pickup ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not change Perris title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
