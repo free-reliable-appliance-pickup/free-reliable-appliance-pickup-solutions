@@ -5247,6 +5247,41 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Salem washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
+    },
+    {
+      "id": "2026-10-05-escondido-laundry-support-handoff",
+      "market": "Escondido, CA",
+      "hypothesis": "Reducing broad appliance-removal phrasing on the unprotected Escondido washer/dryer support page should help the protected general Escondido page become the clearer owner for the broad local removal query while preserving laundry-specific relevance.",
+      "pagesChanged": [
+        "/escondido-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/escondido-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "query": "appliance removal escondido",
+        "laundryPage": {
+          "impressions": 21,
+          "position": 67.2857142857
+        },
+        "mainPage": {
+          "impressions": 6,
+          "position": 65
+        }
+      },
+      "change": "Planned: remove duplicate intent sections and repeated broad appliance-removal phrasing from the washer/dryer support page while preserving its laundry title, meta, H1, canonical, local access guidance, contact paths and a single handoff to the protected general city page.",
+      "successSignals": [
+        "A larger share of broad Escondido appliance-removal impressions moves to /escondido-appliance-pickup/.",
+        "The washer/dryer page retains washer/dryer-specific impressions.",
+        "The general page improves without requiring another protected-page rewrite."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "setup",
+      "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Escondido washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
     }
   ],
   "technicalMaintenance": [
