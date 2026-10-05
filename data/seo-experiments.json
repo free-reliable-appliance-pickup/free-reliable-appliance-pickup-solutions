@@ -4372,6 +4372,46 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /denver-refrigerator-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-ontario-pomona-riverside-stove-localization",
+      "market": "Ontario / Pomona / Riverside stove & oven pages",
+      "hypothesis": "Replacing shared template sections with verified city-specific access and municipal backup rules should reduce cross-city similarity and strengthen unique local stove/oven intent without changing titles or conversion paths.",
+      "pagesChanged": [
+        "/ontario-stove-oven-pickup/",
+        "/pomona-stove-oven-pickup/",
+        "/riverside-stove-oven-pickup/"
+      ],
+      "protectedOwner": "/ontario-stove-oven-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "normalizedFiveWordShingleSimilarity": {
+          "ontario-riverside": 0.736,
+          "pomona-riverside": 0.694,
+          "ontario-pomona": 0.684
+        }
+      },
+      "change": "Localized each page's main review, municipal fallback and FAQ using current official city rules while preserving title/meta/H1/canonical/form/909 contact.",
+      "postChange": {
+        "normalizedFiveWordShingleSimilarity": {
+          "ontario-riverside": 0.296,
+          "pomona-riverside": 0.3,
+          "ontario-pomona": 0.283
+        }
+      },
+      "successSignals": [
+        "Cross-city similarity remains materially lower.",
+        "Each page gains or retains its own local stove/oven impressions.",
+        "No loss of form or phone conversions."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to these three stove/oven pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
