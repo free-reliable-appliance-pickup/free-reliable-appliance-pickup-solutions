@@ -5897,6 +5897,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative content/internal-link/schema-intent edits to /appliances/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-victorville-structure-concentration",
+      "market": "Victorville, CA",
+      "hypothesis": "Reducing duplicated Victorville city-page sections while preserving the proven title/meta, local service facts, direct phone/form conversion path, official Victorville disposal reference, appliance categories, real appliance proof and High Desert links will concentrate city intent and improve a page already averaging position 9 in finalized Search Console data.",
+      "pagesChanged": [
+        "/victorville-appliance-pickup/"
+      ],
+      "protectedOwner": "/victorville-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "searchConsole": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 9
+        },
+        "preChangeArchitecture": {
+          "approxWords": 1502,
+          "h2Count": 17
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/southern-california/victorville",
+          "approxWords": 1004,
+          "h2Count": 7,
+          "pattern": "Business removal -> 3-step process -> why choose -> request -> local details -> appliance categories -> FAQ."
+        }
+      },
+      "change": "Simplified only the Victorville body from 17 H2 sections to 9 and approximately 830 words by removing duplicated near-me, route-network, repeated High Desert, extra category, unrelated planning and Facebook bridge sections. Preserved title, meta description, canonical, Service/FAQ/Breadcrumb schema, 909 phone, Formspree request form, qualification rules, real appliance proof, official City of Victorville bulky-item reference, access details, nearby High Desert links and washer/dryer intent handoff.",
+      "successSignals": [
+        "The intended /victorville-appliance-pickup/ page holds or improves from its finalized average position of 9 for Victorville appliance-pickup intent.",
+        "Victorville impressions increase without a new competing Victorville URL taking over the query.",
+        "CTR improves from the current 0% baseline while the existing title/meta remain unchanged.",
+        "The page continues to pass content-quality, routing, image and search-intent ownership audits."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /victorville-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
