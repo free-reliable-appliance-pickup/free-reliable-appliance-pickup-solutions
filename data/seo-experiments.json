@@ -3036,6 +3036,67 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not change Visalia title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-santa-ana-people-first-simplification",
+      "market": "Santa Ana, California",
+      "hypothesis": "A tighter people-first Santa Ana city page should improve relevance for appliance-removal queries while preserving the existing strong title/meta/H1 and 909 contact path.",
+      "pagesChanged": [
+        "/santa-ana-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/santa-ana-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "querySignals": [
+          {
+            "query": "appliance removal santa ana",
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "averagePosition": 13.2
+          },
+          {
+            "query": "fridge pickup",
+            "clicks": 0,
+            "impressions": 3,
+            "ctr": 0,
+            "averagePosition": 6.3333333333
+          },
+          {
+            "query": "who picks up old refrigerators for free",
+            "clicks": 0,
+            "impressions": 2,
+            "ctr": 0,
+            "averagePosition": 7
+          },
+          {
+            "query": "refrigerator pickup",
+            "clicks": 0,
+            "impressions": 2,
+            "ctr": 0,
+            "averagePosition": 10
+          }
+        ],
+        "preChangeArchitecture": {
+          "approxVisibleWords": 2278
+        }
+      },
+      "change": "Rebuilt visible main content into a concise Santa Ana service flow: qualification, three-step process, appliance types, apartment/property access, qualification rules, official Republic Services bulky-item alternative, schema-matched FAQ, existing Formspree request form with source_page attribution, and nearby Orange County routes. Preserved title/meta/H1/canonical and 909-375-6685 contact path.",
+      "successSignals": [
+        "Santa Ana average position improves for appliance-removal queries.",
+        "Existing refrigerator-query page-one visibility is retained.",
+        "CTR and/or clicks begin without loss of city-level intent ownership."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /santa-ana-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
