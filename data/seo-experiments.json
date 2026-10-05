@@ -5146,5 +5146,30 @@
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /fullerton-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
+  ],
+  "technicalMaintenance": [
+    {
+      "date": "2026-10-05",
+      "type": "verified CI/technical SEO repair",
+      "reason": "GitHub SEO audits identified internal links to retired noindex aliases, stale dated CSS class markers, duplicate Rancho specialty forms that violated the single-city-intake model, and stale WebPage JSON-LD metadata. Repairs are limited to those verified technical failures and do not intentionally change protected ranking hypotheses.",
+      "pages": [
+        "/claremont-appliance-pickup/",
+        "/la-verne-appliance-pickup/",
+        "/san-dimas-appliance-pickup/",
+        "/upland-appliance-pickup/",
+        "/rancho-cucamonga-washer-dryer-pickup/",
+        "/rancho-cucamonga-refrigerator-pickup/",
+        "/rancho-cucamonga-freezer-pickup/",
+        "/rancho-cucamonga-stove-oven-pickup/",
+        "/san-gabriel-valley-appliance-pickup/",
+        "/inland-empire-appliance-pickup/",
+        "/orange-county-appliance-pickup/",
+        "/irvine-appliance-pickup/",
+        "/ontario-appliance-pickup/",
+        "/fontana-appliance-pickup/",
+        "/eastvale-appliance-pickup/",
+        "/highland-appliance-pickup/"
+      ]
+    }
   ]
 }
