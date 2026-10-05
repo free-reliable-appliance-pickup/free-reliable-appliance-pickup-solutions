@@ -5081,6 +5081,70 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /loma-linda-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-fullerton-removal-locality",
+      "market": "Fullerton, CA",
+      "hypothesis": "Aligning Fullerton metadata to the exact appliance-removal query and adding current Republic bulky-item plus Downtown/historic access context should improve city relevance and CTR without changing service qualification.",
+      "pagesChanged": [
+        "/fullerton-appliance-pickup/"
+      ],
+      "protectedOwner": "/fullerton-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": {
+          "page": {
+            "impressions": 2,
+            "clicks": 0,
+            "ctr": 0,
+            "position": 26
+          },
+          "queries": [
+            {
+              "query": "appliance removal fullerton",
+              "impressions": 1,
+              "clicks": 0,
+              "position": 43
+            },
+            {
+              "query": "appliance removal near me",
+              "impressions": 1,
+              "clicks": 0,
+              "position": 9
+            }
+          ]
+        },
+        "architecture": {
+          "title": "Free Appliance Pickup & Removal Fullerton CA | Recycling",
+          "municipalAlternative": "generic special-item reference",
+          "hadDowntownHistoricSpecificity": false
+        }
+      },
+      "change": "Changed title/meta/OpenGraph/WebPage name to Appliance Removal Fullerton CA | Free Appliance Pickup; added dateModified; replaced the vague municipal alternative with current Republic/Fullerton bulky-item and refrigerant-unit guidance; localized Downtown and historic-area access using current City sources. Form, canonical, 909 contact, appliance limits and Orange County hierarchy were preserved.",
+      "postChange": {
+        "architecture": {
+          "title": "Appliance Removal Fullerton CA | Free Appliance Pickup",
+          "hasCurrentRepublicBulkyContext": true,
+          "hasDowntownHistoricSpecificity": true,
+          "canonical": "https://freereliableappliancepickup.com/fullerton-appliance-pickup/",
+          "form": 1,
+          "phone": true
+        }
+      },
+      "successSignals": [
+        "The query appliance removal fullerton improves from the position-43 baseline.",
+        "Fullerton retains or improves the existing near-me page-one signal.",
+        "Fullerton city impressions increase without increased similarity to nearby Orange County pages.",
+        "Form and phone conversion paths remain intact."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /fullerton-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
