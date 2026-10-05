@@ -371,3 +371,4 @@ anaheim-refrigerator-pickup
 santa-ana-refrigerator-pickup
 irvine-refrigerator-pickup
 costa-mesa-refrigerator-pickup
+huntington-beach-refrigerator-pickup
