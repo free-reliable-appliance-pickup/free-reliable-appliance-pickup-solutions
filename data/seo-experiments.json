@@ -5237,7 +5237,7 @@
           "position": 6
         }
       },
-      "change": "Planned: remove literal search-ownership wording, consolidate duplicate laundry-intent sections, and shorten the disposal backup section to an official-link reference without publishing the exact station address/fee in the laundry page.",
+      "change": "Removed literal search-ownership wording, consolidated duplicate laundry-intent sections, removed a redundant network block, and shortened the disposal backup to an official Marion County link without the exact transfer-station address/fee. Laundry title, meta, H1, canonical, local pickup details, request form and Salem city-page handoff were preserved.",
       "successSignals": [
         "The Salem washer/dryer page begins receiving laundry-specific impressions rather than exact transfer-station citation queries.",
         "The page's average position improves for relevant laundry intent without increasing broad city-page cannibalization.",
@@ -5245,7 +5245,7 @@
       ],
       "evaluateNotBefore": "2026-10-15",
       "preferredReview": "2026-10-20",
-      "status": "setup",
+      "status": "running",
       "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Salem washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
     }
   ],
