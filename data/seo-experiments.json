@@ -3842,6 +3842,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /sierra-madre-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-04-la-canada-flintridge-foothill-parity",
+      "market": "La Cañada Flintridge, CA",
+      "hypothesis": "A simpler exact-city architecture centered on hillside and gated-property access should help the dedicated La Cañada Flintridge page own local appliance pickup/removal intent without dilution from generic regional-network sections.",
+      "pagesChanged": [
+        "/la-canada-flintridge-appliance-pickup/"
+      ],
+      "protectedOwner": "/la-canada-flintridge-appliance-pickup/",
+      "lastChanged": "2026-10-04",
+      "baselinePeriod": {
+        "start": "2026-09-05",
+        "end": "2026-10-02"
+      },
+      "baseline": {
+        "gsc": "No useful La Cañada Flintridge-specific query or top-page signal appeared in finalized Search Console planning data ending 2026-10-02.",
+        "preChangeArchitecture": {
+          "htmlBytes": 19697,
+          "h2Count": 13,
+          "sectionCount": 14
+        }
+      },
+      "change": "Simplified La Cañada Flintridge from 14 sections to 12 and 13 H2s to 11 while preserving 909-375-6685 contact, Formspree request form, qualification rules, hillside/gated-property access context, real appliance proof, commercial/property paths and nearby-city links.",
+      "successSignals": [
+        "The intended /la-canada-flintridge-appliance-pickup/ page begins receiving city-specific impressions.",
+        "Broad La Cañada Flintridge appliance pickup/removal intent consolidates on the city page.",
+        "Laundry-only intent remains with /la-canada-flintridge-washer-dryer-pickup/."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /la-canada-flintridge-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ]
 }
