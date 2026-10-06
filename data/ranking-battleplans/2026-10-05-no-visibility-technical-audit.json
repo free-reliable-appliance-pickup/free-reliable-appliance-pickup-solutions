@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-05",
+  "purpose": "No-visibility technical/discovery audit for protected priority city pages. No protected-page body changes made.",
+  "pages": {
+    "Glendora": {
+      "path": "/glendora-appliance-pickup/",
+      "gscFinalizedVisibility": false,
+      "technical": {
+        "indexable": true,
+        "selfCanonical": true,
+        "inSitemap": true,
+        "regionalHubLinks": [
+          "San Gabriel Valley",
+          "Los Angeles County"
+        ]
+      },
+      "webIndexSample": "Exact city page surfaced in current web search sample.",
+      "gateAction": "At unlock, recheck finalized GSC. If still no impressions despite current web discovery, focus on query ownership/internal authority rather than indexability."
+    },
+    "Jurupa Valley": {
+      "path": "/jurupa-valley-appliance-pickup/",
+      "gscFinalizedVisibility": false,
+      "technical": {
+        "indexable": true,
+        "selfCanonical": true,
+        "inSitemap": true,
+        "regionalHubLinks": [
+          "Riverside County"
+        ],
+        "missingRegionalHubLink": [
+          "Inland Empire"
+        ]
+      },
+      "webIndexSample": "Exact page did not surface in the sampled site/title web search.",
+      "gateAction": "On/after Oct 14, first verify index/discovery and add a natural Inland Empire hub handoff if the existing experiment permits. Then evaluate whether the 27-H2/2.5k-word city page needs competitor-model simplification."
+    },
+    "La Cañada Flintridge": {
+      "path": "/la-canada-flintridge-appliance-pickup/",
+      "gscFinalizedVisibility": false,
+      "technical": {
+        "indexable": true,
+        "selfCanonical": true,
+        "inSitemap": true,
+        "regionalHubLinks": [
+          "San Gabriel Valley",
+          "Los Angeles County"
+        ]
+      },
+      "webIndexSample": "Exact city page surfaced in current web search sample.",
+      "gateAction": "At unlock, treat as visibility/query-demand issue before changing page structure."
+    },
+    "La Crescenta": {
+      "path": "/la-crescenta-appliance-pickup/",
+      "gscFinalizedVisibility": false,
+      "technical": {
+        "indexable": true,
+        "selfCanonical": true,
+        "inSitemap": true,
+        "regionalHubLinks": [
+          "San Gabriel Valley",
+          "Los Angeles County"
+        ]
+      },
+      "webIndexSample": "Exact city page surfaced in current web search sample.",
+      "gateAction": "At unlock, recheck finalized GSC and organic city query; if still no impressions, investigate intent overlap and page density before edits."
+    },
+    "Montebello": {
+      "path": "/montebello-appliance-pickup/",
+      "gscFinalizedVisibility": false,
+      "technical": {
+        "indexable": true,
+        "selfCanonical": true,
+        "inSitemap": true,
+        "regionalHubLinks": [
+          "San Gabriel Valley",
+          "Los Angeles County"
+        ]
+      },
+      "webIndexSample": "Exact page did not surface in the sampled site/title web search.",
+      "gateAction": "At unlock, verify current index/discovery and exact-city organic SERP before content changes."
+    },
+    "Buena Park": {
+      "path": "/buena-park-appliance-pickup/",
+      "gscFinalizedVisibility": false,
+      "technical": {
+        "indexable": true,
+        "selfCanonical": true,
+        "inSitemap": true,
+        "regionalHubLinks": [
+          "Orange County"
+        ]
+      },
+      "webIndexSample": "Exact page did not surface in the sampled site/title web search.",
+      "gateAction": "At unlock, verify discovery/indexing and authority first; page is already concise at ~648 words / 7 H2, so do not expand blindly."
+    },
+    "Yorba Linda": {
+      "path": "/yorba-linda-appliance-pickup/",
+      "gscFinalizedVisibility": false,
+      "technical": {
+        "indexable": true,
+        "selfCanonical": true,
+        "inSitemap": true,
+        "regionalHubLinks": [
+          "Orange County"
+        ]
+      },
+      "webIndexSample": "Exact city page surfaced in current web search sample.",
+      "gateAction": "At unlock, check GSC/live query ownership; page is already concise at ~632 words / 7 H2, so favor authority/discovery over another rewrite."
+    }
+  },
+  "rule": "Indexable + self-canonical + sitemap presence is necessary but not sufficient. No-data pages that already surface in web search should not be treated as indexing failures. Exact-page non-surfacing in a sampled search is a signal to verify discovery, not proof of deindexing."
+}
