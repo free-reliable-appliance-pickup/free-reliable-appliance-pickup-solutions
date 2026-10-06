@@ -1,0 +1,138 @@
+{
+  "date": "2026-10-05",
+  "unlock": "2026-10-13",
+  "principle": "Recheck finalized GSC and regular organic results at the gate. Preserve near-page-one wins; only simplify or narrow pages where evidence shows weak ownership, cannibalization or stalled broad-city intent.",
+  "cities": {
+    "San Bernardino": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 28,
+        "avgPosition": 11.107142857142858
+      },
+      "querySignals": {
+        "free appliance pickup san bernardino": {
+          "impressions": 3,
+          "position": 26.666666666666668
+        },
+        "free appliance pickup rancho cucamonga": {
+          "impressions": 4,
+          "position": 4.75
+        },
+        "free appliance pickup upland": {
+          "impressions": 2,
+          "position": 10.5
+        }
+      },
+      "architecture": {
+        "mainWords": 1377,
+        "h2Count": 15
+      },
+      "diagnosis": "Strong cross-city cannibalization signal. San Bernardino page is ranking well for Rancho/Upland terms while its own exact city term is much weaker. Ownership cleanup is higher priority than adding content.",
+      "gateDecision": "If this relationship persists, reduce neighboring-city broad intent and keep San Bernardino-specific city/process/qualification/local/FAQ/request sections."
+    },
+    "Chino": {
+      "gsc": {
+        "clicks": 1,
+        "impressions": 13,
+        "avgPosition": 17.615384615384617
+      },
+      "querySignals": {
+        "free appliance pickup chino": {
+          "impressions": 3,
+          "position": 21.333333333333332
+        },
+        "free appliance pickup chino hills": {
+          "impressions": 4,
+          "position": 28.25
+        }
+      },
+      "architecture": {
+        "mainWords": 1207,
+        "h2Count": 13
+      },
+      "diagnosis": "Exact Chino query is weak and page also overlaps Chino Hills. Recheck owner relationships before structural simplification.",
+      "gateDecision": "If exact Chino remains outside top 15, concentrate page on Chino and narrow Chino Hills references."
+    },
+    "Covina": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 14,
+        "avgPosition": 9.071428571428571
+      },
+      "querySignals": {
+        "free appliance pickup covina": {
+          "impressions": 2,
+          "position": 23.5
+        },
+        "free appliance pickup san dimas": {
+          "impressions": 3,
+          "position": 7
+        }
+      },
+      "architecture": {
+        "mainWords": 1150,
+        "h2Count": 13
+      },
+      "diagnosis": "Overall page is near page one but exact Covina query is weak and San Dimas overlap is stronger. Treat as ownership issue, not blanket rewrite.",
+      "gateDecision": "Preserve the current structure unless finalized data confirms continued cross-city ownership; then narrow San Dimas signals and reinforce Covina owner language."
+    },
+    "Monrovia": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 13,
+        "avgPosition": 7.769230769230769
+      },
+      "architecture": {
+        "mainWords": 1036,
+        "h2Count": 13
+      },
+      "diagnosis": "Already showing a solid overall page-one signal. Protect unless exact-query ownership or CTR evidence says otherwise.",
+      "gateDecision": "Prefer keep/CTR/internal authority over major rewrite if position remains top 10."
+    },
+    "Temple City": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 1,
+        "avgPosition": 3
+      },
+      "architecture": {
+        "mainWords": 871,
+        "h2Count": 13
+      },
+      "diagnosis": "Tiny sample but excellent position. Do not rewrite based on one impression; verify growth first.",
+      "gateDecision": "Protect if additional finalized impressions hold top positions."
+    },
+    "La Puente": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 6,
+        "avgPosition": 14.333333333333334
+      },
+      "querySignals": {
+        "free appliance pickup la puente": {
+          "impressions": 3,
+          "position": 19.666666666666668
+        }
+      },
+      "architecture": {
+        "mainWords": 1048,
+        "h2Count": 13
+      },
+      "diagnosis": "Broad and exact city positions are still outside the target range. Candidate for a concise competitor-model pass if no post-test improvement appears.",
+      "gateDecision": "If exact query remains ~20, simplify to the proven city/process/qualification/local/FAQ/request architecture."
+    },
+    "Stockton": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 14,
+        "avgPosition": 8.285714285714285
+      },
+      "architecture": {
+        "mainWords": 1312,
+        "h2Count": 13
+      },
+      "diagnosis": "Overall page is already in the first-page range. Avoid aggressive rewrite unless exact broad-city query remains weak or a specialty page owns it.",
+      "gateDecision": "Protect current ranking if stable; use CTR/ownership improvements before body restructuring."
+    }
+  }
+}
