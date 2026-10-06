@@ -7098,6 +7098,76 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /retail-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-commercial-refrigeration-scope-concentration",
+      "market": "Commercial refrigerator and freezer pickup intent",
+      "hypothesis": "A concise commercial refrigeration page focused on repeat work, equipment details, access, cadence, multi-site scope and request review will better match commercial search intent and begin earning relevant impressions without competing with local city owners.",
+      "pagesChanged": [
+        "/commercial-refrigeration-appliance-pickup/"
+      ],
+      "protectedOwner": "/commercial-refrigeration-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": null,
+        "preChangeArchitecture": {
+          "approxMainWords": 765,
+          "h2Count": 11
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/commercial/commercial-refrigerator-pickup",
+          "pattern": "Repeat work -> scope/equipment -> access/cadence -> multi-site -> FAQ -> commercial inquiry."
+        }
+      },
+      "change": "Reduced the page from 11 H2 sections / about 765 words to 8 H2 sections / about 429 words. Preserved title/meta/H1/canonical and request form while clarifying equipment details, access, cadence, multi-site scope and priority-market handoffs.",
+      "successSignals": [
+        "Relevant commercial refrigeration impressions begin appearing from the no-data baseline.",
+        "City pages retain exact local ownership while this page earns commercial equipment intent.",
+        "Search-intent, metadata, JSON-LD, internal-link and final SEO audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /commercial-refrigeration-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-commercial-laundry-scope-concentration",
+      "market": "Commercial washer and dryer pickup intent",
+      "hypothesis": "A concise commercial laundry page focused on machine type, utility/access details, cadence, multi-site scope and request review will better match commercial laundry intent and begin earning relevant impressions without weakening city or residential washer/dryer pages.",
+      "pagesChanged": [
+        "/commercial-laundry-appliance-pickup/"
+      ],
+      "protectedOwner": "/commercial-laundry-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": null,
+        "preChangeArchitecture": {
+          "approxMainWords": 847,
+          "h2Count": 12
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/commercial/commercial-washer-dryer-pickup",
+          "pattern": "Equipment streams -> cadence -> access -> multi-site scope -> FAQ -> commercial inquiry."
+        }
+      },
+      "change": "Reduced the page from 12 H2 sections / about 847 words to 8 H2 sections / about 411 words. Preserved title/meta/H1/canonical and request form while clarifying machine details, utilities/access, cadence, multi-site scope and priority-market handoffs.",
+      "successSignals": [
+        "Relevant commercial laundry impressions begin appearing from the no-data baseline.",
+        "Residential/city washer-dryer pages keep their local intent while this page earns commercial laundry intent.",
+        "Search-intent, metadata, JSON-LD, internal-link and final SEO audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /commercial-laundry-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
