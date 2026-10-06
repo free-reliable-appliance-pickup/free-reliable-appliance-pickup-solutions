@@ -8125,6 +8125,23 @@
         "/san-luis-obispo-appliance-pickup/",
         "/ventura-washer-dryer-pickup/"
       ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "duplicate WebPage schema consolidation — priority follow-up",
+      "reason": "Priority-page schema scan found additional pages defining the same WebPage #webpage entity more than once across separate JSON-LD blocks. Consolidated complementary properties into one WebPage entity and removed only the duplicate entity blocks. Visible content, titles, meta descriptions, H1s, canonicals, forms, phones, qualification rules and search-intent ownership were preserved. Stockton and Phoenix were active experiments, so only this verified technical repair was applied under their allowed technical-maintenance exception.",
+      "pages": [
+        "/oxnard-washer-dryer-pickup/",
+        "/santa-barbara-washer-dryer-pickup/",
+        "/santa-maria-washer-dryer-pickup/",
+        "/san-luis-obispo-washer-dryer-pickup/",
+        "/stockton-appliance-pickup/",
+        "/chino-washer-dryer-pickup/",
+        "/baldwin-park-washer-dryer-pickup/",
+        "/whittier-washer-dryer-pickup/",
+        "/la-habra-washer-dryer-pickup/",
+        "/phoenix-washer-dryer-pickup/"
+      ]
     }
   ]
 }
