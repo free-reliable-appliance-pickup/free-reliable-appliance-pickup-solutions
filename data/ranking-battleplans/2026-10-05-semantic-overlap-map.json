@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-05",
+  "purpose": "Semantic overlap map for owner-page cannibalization diagnosis. Metrics come from read-only CI comparison of active HTML bodies and headings.",
+  "interpretation": "Higher relative overlap means two URLs discuss substantially similar entities/processes and may be harder for Google to separate when both target the same city. Use together with GSC ownership evidence; do not treat the metric alone as proof of cannibalization.",
+  "pairs": [
+    {
+      "owner": "/denver-appliance-pickup/",
+      "other": "/denver-washer-dryer-pickup/",
+      "bodyCosine": 0.7867,
+      "bodyJaccard": 0.3994,
+      "headingJaccard": 0.3978,
+      "priority": "very high",
+      "gate": "2026-10-09"
+    },
+    {
+      "owner": "/orange-appliance-pickup/",
+      "other": "/orange-county-appliance-pickup/",
+      "bodyCosine": 0.7475,
+      "bodyJaccard": 0.3534,
+      "headingJaccard": 0.2603,
+      "priority": "very high",
+      "gate": "2026-10-15"
+    },
+    {
+      "owner": "/phoenix-appliance-pickup/",
+      "other": "/phoenix-refrigerator-pickup/",
+      "bodyCosine": 0.7443,
+      "bodyJaccard": 0.2452,
+      "headingJaccard": 0.2609,
+      "priority": "very high",
+      "gate": "2026-10-09"
+    },
+    {
+      "owner": "/fontana-appliance-pickup/",
+      "other": "/fontana-stove-oven-pickup/",
+      "bodyCosine": 0.7407,
+      "bodyJaccard": 0.3174,
+      "headingJaccard": 0.2364,
+      "priority": "high",
+      "gate": "2026-10-14"
+    },
+    {
+      "owner": "/phoenix-appliance-pickup/",
+      "other": "/phoenix-metro-appliance-pickup/",
+      "bodyCosine": 0.7336,
+      "bodyJaccard": 0.3486,
+      "headingJaccard": 0.2195,
+      "priority": "high",
+      "gate": "2026-10-09"
+    },
+    {
+      "owner": "/upland-appliance-pickup/",
+      "other": "/upland-washer-dryer-pickup/",
+      "bodyCosine": 0.7239,
+      "bodyJaccard": 0.3863,
+      "headingJaccard": 0.1486,
+      "priority": "high",
+      "gate": "2026-10-14"
+    },
+    {
+      "owner": "/fresno-appliance-pickup/",
+      "other": "/sanger-appliance-pickup/",
+      "bodyCosine": 0.6315,
+      "bodyJaccard": 0.4343,
+      "headingJaccard": 0.2787,
+      "priority": "medium",
+      "gate": "2026-10-14"
+    },
+    {
+      "owner": "/fresno-appliance-pickup/",
+      "other": "/clovis-appliance-pickup/",
+      "bodyCosine": 0.6018,
+      "bodyJaccard": 0.4277,
+      "headingJaccard": 0.2222,
+      "priority": "medium",
+      "gate": "2026-10-14"
+    },
+    {
+      "owner": "/fresno-appliance-pickup/",
+      "other": "/selma-appliance-pickup/",
+      "bodyCosine": 0.5705,
+      "bodyJaccard": 0.4018,
+      "headingJaccard": 0.2615,
+      "priority": "medium",
+      "gate": "2026-10-14"
+    },
+    {
+      "owner": "/fontana-appliance-pickup/",
+      "other": "/rialto-washer-dryer-pickup/",
+      "bodyCosine": 0.55,
+      "bodyJaccard": 0.3116,
+      "headingJaccard": 0.2679,
+      "priority": "medium",
+      "gate": "2026-10-14"
+    },
+    {
+      "owner": "/fontana-appliance-pickup/",
+      "other": "/southern-california-appliance-pickup/",
+      "bodyCosine": 0.5021,
+      "bodyJaccard": 0.3203,
+      "headingJaccard": 0.1111,
+      "priority": "medium",
+      "gate": "2026-10-14"
+    }
+  ],
+  "strongestNextActions": [
+    "Denver: after Oct 9 gate, preserve laundry-specific ranking but reduce broad city overlap between general and washer/dryer pages if finalized GSC still shows ownership conflict.",
+    "Phoenix: after Oct 9 gate, simplify the 19-H2 general owner and separate Phoenix city, Phoenix Metro and refrigerator intent more sharply.",
+    "Orange: after Oct 15 gate, explicitly distinguish City of Orange from Orange County and reduce semantic overlap between the city page and county hub.",
+    "Fontana/Upland: after Oct 14 gate, make only surgical specialty-boundary changes if wrong-page ownership persists because general owners already have stronger internal-link authority."
+  ]
+}
