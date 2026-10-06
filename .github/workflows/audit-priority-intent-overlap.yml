@@ -78,4 +78,28 @@ jobs:
               print('OWNER_TITLE',a['title'])
               print('OTHER_TITLE',b['title'])
               print()
+
+          # Network-wide scan: every city with both general appliance and washer/dryer pages.
+          discovered=[]
+          for p in Path('.').glob('*-appliance-pickup/index.html'):
+              slug=p.parent.name[:-len('-appliance-pickup')]
+              laundry=Path(slug+'-washer-dryer-pickup')/'index.html'
+              if not laundry.exists():
+                  continue
+              owner=slug+'-appliance-pickup'
+              other=slug+'-washer-dryer-pickup'
+              a=load(owner); b=load(other)
+              head_a=re.findall(r'[a-z0-9]+',(a['title']+' '+a['h1']+' '+' '.join(a['h2'])).lower())
+              head_b=re.findall(r'[a-z0-9]+',(b['title']+' '+b['h1']+' '+' '.join(b['h2'])).lower())
+              discovered.append((cosine(a['tokens'],b['tokens']),jaccard(a['tokens'],b['tokens']),jaccard(head_a,head_b),owner,other))
+          print('NETWORK_CITY_LAUNDRY_OVERLAP_TOP')
+          for body_cos,body_jac,head_jac,owner,other in sorted(discovered,reverse=True)[:40]:
+              print(f'{owner} <> {other} | BODY_COSINE={body_cos:.4f} BODY_JACCARD={body_jac:.4f} HEADING_JACCARD={head_jac:.4f}')
+          priority_slugs=set('''rancho-cucamonga upland claremont la-verne san-dimas glendora fontana montclair pomona ontario eastvale san-bernardino rialto chino chino-hills highland redlands loma-linda yucaipa colton bloomington riverside moreno-valley jurupa-valley norco corona covina west-covina azusa duarte arcadia monrovia bradbury sierra-madre temple-city san-marino altadena pasadena la-canada-flintridge la-crescenta alhambra el-monte baldwin-park la-puente diamond-bar walnut rowland-heights whittier pico-rivera montebello irwindale rosemead monterey-park anaheim santa-ana irvine tustin garden-grove fullerton la-habra buena-park brea yorba-linda orange costa-mesa huntington-beach fountain-valley westminster-ca lake-forest mission-viejo laguna-niguel laguna-hills laguna-woods san-clemente newport-beach placentia fresno sacramento stockton phoenix mesa scottsdale tempe glendale-az gilbert goodyear surprise chandler denver aurora thornton portland salem gresham'''.split())
+          print('PRIORITY_CITY_LAUNDRY_OVERLAP')
+          for body_cos,body_jac,head_jac,owner,other in sorted(discovered,reverse=True):
+              city=owner[:-len('-appliance-pickup')]
+              if city in priority_slugs:
+                  print(f'{owner} <> {other} | BODY_COSINE={body_cos:.4f} BODY_JACCARD={body_jac:.4f} HEADING_JACCARD={head_jac:.4f}')
+          print('NETWORK_CITY_LAUNDRY_PAIR_COUNT',len(discovered))
           PY
