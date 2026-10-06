@@ -207,3 +207,50 @@ The City of Palm Desert currently confirms:
 Our Palm Desert/Coachella content already uses qualification-based language and the official fallback without making blanket same-day/always-free promises.
 
 Decision: protect existing page-one Palm Desert/Indio signals and avoid copying competitor claims that are broader than our operating rules.
+
+
+## Effective page gates after overlap audit — 2026-10-06
+
+The experiment registry was audited page-by-page across all running experiments. A page is editable only after the **latest evaluateNotBefore date among every running experiment that touches that page**.
+
+### Coachella Valley cluster
+
+All seven pages in `2026-10-01-coachella-v2-cluster` have an effective gate of **2026-10-09**:
+- `/coachella-valley-appliance-pickup/`
+- `/coachella-valley-washer-dryer-pickup/`
+- `/coachella-valley-refrigerator-pickup/`
+- `/palm-springs-appliance-pickup/`
+- `/palm-desert-appliance-pickup/`
+- `/la-quinta-appliance-pickup/`
+- `/indio-appliance-pickup/`
+
+This does not mean they should be edited on Oct 9; it only means no overlapping experiment pushes their technical freeze later. Finalized GSC still decides whether any change is warranted.
+
+### Denver
+
+- `/denver-appliance-pickup/` — effective gate **2026-10-09**
+- `/denver-washer-dryer-pickup/` — effective gate **2026-10-09**
+
+However, broad Denver-vs-Lakewood ownership cannot be fairly changed until the Lakewood boundary experiment reaches **2026-10-14**. Oct 9 may evaluate Denver-page behavior, but must not make a Denver/Lakewood ownership countermove.
+
+### Phoenix
+
+The Phoenix experiment has mixed effective gates because the city page overlaps another running experiment:
+
+- `/phoenix-appliance-pickup/` — effective gate **2026-10-14**
+  - overlapped by `2026-10-01-commercial-authority-links`, last changed 2026-10-04, gate 2026-10-14
+- `/phoenix-metro-appliance-pickup/` — effective gate **2026-10-09**
+- `/phoenix-washer-dryer-pickup/` — effective gate **2026-10-09**
+
+Therefore:
+- **Do not edit the Phoenix city page on Oct 9.**
+- Oct 9 may observe city-page data and may evaluate metro/laundry ownership.
+- Any Phoenix city-page ranking/CTR/content change must wait until at least Oct 14 and still requires finalized evidence.
+
+## Effective-gate rule
+
+For all future reviews:
+1. Determine every running experiment touching the target page.
+2. Use the **maximum** `evaluateNotBefore` date as the page's effective gate.
+3. If the ranking problem involves a sibling/support page, also respect that sibling page's effective gate.
+4. Do not use an earlier experiment's gate to bypass a later overlapping freeze.
