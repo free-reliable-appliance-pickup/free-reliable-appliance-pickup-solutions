@@ -169,6 +169,7 @@ jobs:
           expect('Beaverton','OR','regional','direct','Portland Metro','503-868-4455','DIRECT_OPERATION')
           expect('Keizer','OR','regional','direct','Salem Metro','503-868-4455','DIRECT_OPERATION')
           expect('Denver','CO','exact','direct','Denver Metro','720-604-7498','DIRECT_OPERATION')
+          expect('Phoenix','AZ','regional','partner-recruiting','Phoenix Metro','602-726-7552','RECRUITING_QUEUE')
           expect('Wheat Ridge','CO','regional','direct','Denver Metro','720-604-7498','DIRECT_OPERATION')
           expect('Victorville','CA','regional','partner-recruiting','Victorville Valley','909-375-6685','RECRUITING_QUEUE')
           expect('Lancaster','CA','regional','partner-recruiting','Antelope Valley','310-774-4304','RECRUITING_QUEUE')
