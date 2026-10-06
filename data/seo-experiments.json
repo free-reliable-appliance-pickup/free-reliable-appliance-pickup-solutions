@@ -6805,6 +6805,87 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /appliance-installer-remodeler-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-landlord-property-manager-concentration",
+      "market": "Landlords / property managers / unit-turn commercial intent",
+      "hypothesis": "A concise property-management page modeled on the winning commercial competitor pattern—common work, intake scope, qualification, priority markets, FAQ and request—will improve relevant commercial visibility and strengthen internal authority into priority city pages.",
+      "pagesChanged": [
+        "/landlord-property-manager-appliance-pickup/"
+      ],
+      "protectedOwner": "/landlord-property-manager-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "avgPosition": 32.66666666666667,
+          "note": "One returned query was property management appliance replacement at position 79."
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 1728,
+          "h2Count": 19
+        },
+        "competitorBenchmark": {
+          "page": "TakeMyAppliance commercial/property-management model",
+          "pattern": "Common repeat work -> scope/intake -> access -> priority markets -> FAQ -> commercial inquiry."
+        }
+      },
+      "change": "Reduced the landlord/property-manager page from 19 H2 sections and about 1,728 main-content words to 8 H2 sections and about 473 words. Preserved title/meta/canonical, structured data and request form while adding clean priority-market handoffs including Phoenix, Denver, Aurora, Portland and Salem.",
+      "successSignals": [
+        "Relevant property-manager and unit-turn impressions increase from the 3-impression baseline.",
+        "Average position improves from the 32.67 baseline as unrelated or weak intent declines.",
+        "Priority city pages gain stronger commercial internal authority without losing city-query ownership."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /landlord-property-manager-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-phoenix-denver-commercial-authority-handoffs",
+      "market": "Phoenix / Denver supporting commercial authority",
+      "hypothesis": "Adding concise Phoenix, Denver, Aurora, Portland and Salem market handoffs from unprotected hospitality, home-improvement and reverse-logistics commercial pages will strengthen relevant crawl and authority paths to priority market pages without disturbing their active city-page experiments.",
+      "pagesChanged": [
+        "/hotel-hospitality-appliance-pickup/",
+        "/home-improvement-store-appliance-pickup/",
+        "/reverse-logistics-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "hotelHospitality": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "avgPosition": 60.5
+        },
+        "homeImprovementStore": null,
+        "reverseLogistics": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "avgPosition": 81
+        }
+      },
+      "change": "Added one concise Priority Markets Beyond California section to each page linking Phoenix, Denver, Aurora, Portland and Salem. No target city page, title/meta, canonical, schema intent, request form or qualification rule was changed.",
+      "successSignals": [
+        "Supporting commercial pages gain relevant impressions or retain stable indexing.",
+        "Phoenix and Denver receive additional contextual internal authority without wrong-page ownership increasing.",
+        "No new cannibalization, routing, sitemap or content-quality audit failures appear."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative body/internal-link/schema-intent edits to these three commercial support pages before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
