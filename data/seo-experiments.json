@@ -8293,6 +8293,45 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /san-jose-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-lancaster-people-first-concentration",
+      "market": "Lancaster, CA",
+      "hypothesis": "Removing repeated Antelope Valley network/priority blocks and search-engine-facing legacy sections will make the Lancaster page more concise and focused on actual appliance removal, qualification, access and local alternatives.",
+      "pagesChanged": [
+        "/lancaster-appliance-pickup/"
+      ],
+      "protectedOwner": "/lancaster-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 65,
+          "query": {
+            "query": "appliance removal lancaster",
+            "impressions": 2,
+            "position": 65
+          }
+        },
+        "currentStructure": "Current live repository already had the older RV section removed, but still contained overlapping local-intent, network, desert-priority, Antelope-priority, general-plan and Facebook blocks.",
+        "competitorObservation": "Current Lancaster competitors present a much simpler appliance-removal service structure centered on appliance scope, process, access/preparation and a clear request path."
+      },
+      "change": "Removed the legacy 'local searches such as' block, generic network block, duplicate desert/Antelope priority blocks, generic General Plan depth section and Facebook bridge. Preserved title, meta description, H1, canonical, 909 contact, appliance scope, nearby routes, FAQ, verified bulky-item alternative, request form and local qualification/access copy.",
+      "successSignals": [
+        "Average position improves for appliance removal Lancaster and related exact-city queries.",
+        "The Lancaster city page remains the owner for general Lancaster appliance intent.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /lancaster-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
