@@ -7306,6 +7306,46 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /southern-california-freezer-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-keizer-city-boundary",
+      "market": "Keizer OR city intent",
+      "hypothesis": "Reducing repeated Salem-route language and routing laundry-only requests to Keizer's own washer/dryer page will strengthen Keizer city ownership without losing the legitimate Salem-Keizer regional/transfer-station context.",
+      "pagesChanged": [
+        "/keizer-appliance-pickup/"
+      ],
+      "protectedOwner": "/keizer-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": null,
+        "preChangeArchitecture": {
+          "approxMainWords": 999,
+          "h2Count": 13,
+          "salemMentions": 14
+        },
+        "crossCityAudit": {
+          "otherCity": "Salem",
+          "headings": 3,
+          "bodyNonlink": 8,
+          "severity": 20
+        },
+        "ownershipProblem": "Keizer general page repeatedly framed itself as part of a Salem route and sent washer/dryer-only users to /salem-washer-dryer-pickup/ even though /keizer-washer-dryer-pickup/ exists."
+      },
+      "change": "Reduced the Keizer page to 8 H2 sections / about 534 words, cut Salem mentions from 14 to 3, changed laundry-only routing to /keizer-washer-dryer-pickup/, and retained only the legitimate Salem-Keizer Transfer Station name plus a single nearby Salem regional handoff. Preserved title/meta/H1/canonical, 503-868-4455, Formspree request form, qualification rules and real appliance photos.",
+      "successSignals": [
+        "Keizer-specific impressions begin appearing from the no-data baseline.",
+        "Keizer laundry intent resolves to /keizer-washer-dryer-pickup/ rather than Salem laundry.",
+        "Salem and Keizer general pages remain distinct while regional routing stays useful.",
+        "Search-intent, metadata, JSON-LD, image, routing and final SEO audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /keizer-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
