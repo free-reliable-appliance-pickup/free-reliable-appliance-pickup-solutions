@@ -1,0 +1,195 @@
+{
+  "date": "2026-10-05",
+  "purpose": "Priority remediation queue combining semantic city-vs-laundry overlap with finalized GSC weakness. High overlap alone is not a rewrite trigger.",
+  "immediatePostGateCandidates": [
+    {
+      "city": "Denver",
+      "gate": "2026-10-09",
+      "overlap": 0.7867,
+      "gscAvgPosition": 39.833333333333336,
+      "reason": "General page weak while laundry page is materially stronger; high semantic overlap."
+    },
+    {
+      "city": "Phoenix",
+      "gate": "2026-10-09",
+      "overlap": 0.8349,
+      "gscAvgPosition": 28.4468085106383,
+      "reason": "General page weak; refrigerator and laundry siblings overlap strongly; city-vs-metro separation also needs tightening."
+    },
+    {
+      "city": "Jurupa Valley",
+      "gate": "2026-10-14",
+      "overlap": 0.8591,
+      "gscAvgPosition": null,
+      "reason": "No finalized visibility, very dense owner page, high laundry overlap."
+    },
+    {
+      "city": "Highland",
+      "gate": "2026-10-14",
+      "overlap": 0.8181,
+      "gscAvgPosition": 35,
+      "reason": "Weak visibility plus high general/laundry similarity and cross-city Upland signal."
+    },
+    {
+      "city": "Mission Viejo",
+      "gate": "2026-10-14",
+      "overlap": 0.7825,
+      "gscAvgPosition": 43,
+      "reason": "Very weak local visibility and substantial laundry overlap."
+    },
+    {
+      "city": "Laguna Hills",
+      "gate": "2026-10-14",
+      "overlap": 0.798,
+      "gscAvgPosition": 20,
+      "reason": "Outside target range and high overlap."
+    },
+    {
+      "city": "Laguna Woods",
+      "gate": "2026-10-14",
+      "overlap": 0.787,
+      "gscAvgPosition": 22.25,
+      "reason": "Weak visibility and nearby-city ownership risk."
+    },
+    {
+      "city": "Monterey Park",
+      "gate": "2026-10-14",
+      "overlap": 0.7973,
+      "gscAvgPosition": 15.307692307692308,
+      "reason": "Outside target range with high overlap and weak query mix."
+    },
+    {
+      "city": "Chandler",
+      "gate": "2026-10-14",
+      "overlap": 0.7693,
+      "gscAvgPosition": 22.6,
+      "reason": "Weak overall position and meaningful laundry overlap."
+    },
+    {
+      "city": "Orange",
+      "gate": "2026-10-15",
+      "overlap": 0.8497,
+      "gscAvgPosition": 40.54545454545455,
+      "reason": "Very weak City of Orange ranking, high laundry overlap, plus Orange-vs-Orange-County ambiguity."
+    },
+    {
+      "city": "Scottsdale",
+      "gate": "2026-10-15",
+      "overlap": 0.784,
+      "gscAvgPosition": 42.27777777777778,
+      "reason": "One of the weakest priority pages and substantial laundry overlap."
+    },
+    {
+      "city": "Mesa",
+      "gate": "2026-10-15",
+      "overlap": 0.7811,
+      "gscAvgPosition": 27.22222222222222,
+      "reason": "Weak exact-city removal visibility and high laundry overlap."
+    },
+    {
+      "city": "Loma Linda",
+      "gate": "2026-10-15",
+      "overlap": 0.8116,
+      "gscAvgPosition": 21,
+      "reason": "Weak local removal visibility and high laundry overlap."
+    }
+  ],
+  "protectIfStable": [
+    {
+      "city": "Alhambra",
+      "overlap": 0.843,
+      "gscAvgPosition": 7.375
+    },
+    {
+      "city": "Norco",
+      "overlap": 0.8396,
+      "gscAvgPosition": 7
+    },
+    {
+      "city": "Rowland Heights",
+      "overlap": 0.829,
+      "gscAvgPosition": 4.375
+    },
+    {
+      "city": "Moreno Valley",
+      "overlap": 0.8227,
+      "gscAvgPosition": 7.25
+    },
+    {
+      "city": "Lake Forest",
+      "overlap": 0.8074,
+      "gscAvgPosition": 7.333333333333333
+    },
+    {
+      "city": "Salem",
+      "overlap": 0.8041,
+      "gscAvgPosition": 9.903225806451612
+    },
+    {
+      "city": "San Marino",
+      "overlap": 0.8003,
+      "gscAvgPosition": 5.818181818181818
+    },
+    {
+      "city": "La Habra",
+      "overlap": 0.7999,
+      "gscAvgPosition": 6.333333333333333
+    },
+    {
+      "city": "Corona",
+      "overlap": 0.7984,
+      "gscAvgPosition": 9.2
+    },
+    {
+      "city": "Chino Hills",
+      "overlap": 0.797,
+      "gscAvgPosition": 8.25
+    },
+    {
+      "city": "Claremont",
+      "overlap": 0.7933,
+      "gscAvgPosition": 8.3
+    },
+    {
+      "city": "Huntington Beach",
+      "overlap": 0.783,
+      "gscAvgPosition": 12.063829787234043,
+      "reason": "Borderline; protect broad wins unless exact-city removal remains weak."
+    },
+    {
+      "city": "Ontario",
+      "overlap": 0.7827,
+      "gscAvgPosition": 6.7778
+    },
+    {
+      "city": "Laguna Niguel",
+      "overlap": 0.78,
+      "gscAvgPosition": 15,
+      "reason": "Borderline; use surgical correction only if local exact terms stay weak."
+    },
+    {
+      "city": "Costa Mesa",
+      "overlap": 0.7758,
+      "gscAvgPosition": 17.38888888888889,
+      "reason": "Needs local-intent review but has strong refrigerator/free-pickup signals."
+    },
+    {
+      "city": "Redlands",
+      "overlap": 0.7752,
+      "gscAvgPosition": 7.545454545454546
+    },
+    {
+      "city": "Irvine",
+      "overlap": 0.7467,
+      "gscAvgPosition": 18.5,
+      "reason": "Weak local removal but has clicks and useful refrigerator visibility; surgical only."
+    }
+  ],
+  "rules": [
+    "Do not rewrite a page solely because semantic overlap is high.",
+    "Require both weak/wrong-page GSC evidence and post-gate confirmation before structural edits.",
+    "When a general city owner is weak but a specialty page is strong, preserve specialty intent and simplify/separate the general owner first.",
+    "When the general city owner is already top 10, protect it unless exact-city ownership or CTR evidence says otherwise.",
+    "Use regular organic Google results as the ranking KPI; keep Images, Maps/local pack and AI surfaces separate."
+  ]
+}
