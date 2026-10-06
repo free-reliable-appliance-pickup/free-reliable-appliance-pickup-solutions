@@ -96,7 +96,7 @@ jobs:
         run: exit 1
 
   full-site-audit:
-    if: github.event_name == 'schedule' && github.event.schedule == '43 9 * * *'
+    if: (github.event_name == 'schedule' && github.event.schedule == '43 9 * * *') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[full-site-audit]'))
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
