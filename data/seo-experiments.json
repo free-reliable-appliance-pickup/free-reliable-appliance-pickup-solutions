@@ -6969,6 +6969,61 @@
       "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /colorado-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     },
     {
+      "id": "2026-10-05-old-appliance-disposal-intent-rebuild",
+      "market": "National informational old-appliance disposal intent",
+      "hypothesis": "Aligning the disposal guide to the actual informational queries already appearing in GSC—how to dispose of old appliances/stoves—and reducing mixed local/commercial/search-intent sections will improve relevance and organic visibility while routing users to qualification, appliance guides and service-area hubs.",
+      "pagesChanged": [
+        "/old-appliance-disposal-options/"
+      ],
+      "protectedOwner": "/old-appliance-disposal-options/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "avgPosition": 86.25,
+          "queries": [
+            {
+              "query": "how do i dispose of old appliances",
+              "position": 100
+            },
+            {
+              "query": "how to dispose of appliances",
+              "position": 86
+            },
+            {
+              "query": "how to dispose of old appliances",
+              "position": 73
+            },
+            {
+              "query": "how to dispose of old stove",
+              "position": 86
+            }
+          ]
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 3054,
+          "h2Count": 21
+        }
+      },
+      "change": "Rebuilt the page around informational disposal intent, changing the title/H1/meta to 'How to Dispose of Old Appliances' and reducing the main content to 8 H2 sections / about 685 words. Added practical reuse, qualification-based pickup, retailer, municipal, utility and recycling paths; EPA/ENERGY STAR refrigerant-safety sources; appliance-type guides; and state/nationwide routing. Preserved canonical and FAQ schema, updating WebPage metadata to match the new snippet.",
+      "successSignals": [
+        "Relevant 'how to dispose of old appliances' impressions grow beyond the 4-impression baseline.",
+        "Average position for disposal-intent queries improves materially from the 86.25 baseline.",
+        "The page gains informational traffic without competing with city appliance-pickup owners.",
+        "Metadata, JSON-LD, internal-link and final SEO audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /old-appliance-disposal-options/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
       "id": "2026-10-05-how-it-works-snippet-ctr",
       "market": "National how-appliance-pickup-works informational intent",
       "hypothesis": "A clearer title/meta that leads with 'Free Appliance Pickup' and explains eligibility plus scheduling will improve CTR on a page already averaging near page one without changing its body or intent architecture.",
