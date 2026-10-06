@@ -7604,6 +7604,44 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /manhattan-beach-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-villa-park-general-laundry-separation",
+      "market": "Villa Park, CA",
+      "hypothesis": "Reducing heavy overlap between Villa Park general-appliance and washer/dryer pages will strengthen city-specific appliance-removal ownership while preserving premium-home and property-access relevance.",
+      "pagesChanged": [
+        "/villa-park-appliance-pickup/"
+      ],
+      "protectedOwner": "/villa-park-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "overlapAudit": {
+          "comparedWith": "/villa-park-washer-dryer-pickup/",
+          "bodyCosine": 0.8593
+        },
+        "gsc": {
+          "impressions": 16,
+          "position": 9.5625,
+          "query": "appliance removal villa park",
+          "queryImpressions": 3,
+          "queryPosition": 27.3333
+        }
+      },
+      "change": "Concentrated the Villa Park general page on refrigerators, freezers, ranges, mixed major-appliance loads, long-driveway/gated-property access and premium-appliance details; routed laundry-only intent to the dedicated laundry page. Measured cosine decreased from about 0.8593 to 0.7546.",
+      "successSignals": [
+        "Villa Park general-vs-laundry similarity remains materially below the 0.8593 baseline.",
+        "The city-specific query 'appliance removal villa park' improves from the ~27.3 baseline.",
+        "The page retains or improves its current page-average visibility while laundry-only intent remains separate.",
+        "Content, routing, metadata, schema, internal-link and experiment-guard checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /villa-park-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
