@@ -7540,6 +7540,66 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /vernon-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-redondo-beach-general-laundry-separation",
+      "market": "Redondo Beach, CA",
+      "hypothesis": "Reducing heavy overlap between Redondo Beach general-appliance and washer/dryer pages will strengthen intent separation while preserving local coastal and premium-appliance relevance.",
+      "pagesChanged": [
+        "/redondo-beach-appliance-pickup/"
+      ],
+      "protectedOwner": "/redondo-beach-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "overlapAudit": {
+          "comparedWith": "/redondo-beach-washer-dryer-pickup/",
+          "bodyCosine": 0.8682
+        }
+      },
+      "change": "Removed duplicated laundry qualification/testing/access language from the general page, routed washer/dryer-only requests to the dedicated laundry page, and retained unique coastal condo, premium refrigeration, range and mixed-load content. Measured cosine decreased to about 0.7827.",
+      "successSignals": [
+        "General-vs-laundry similarity remains materially below 0.8682.",
+        "Redondo Beach general-appliance impressions remain or improve without stealing laundry-only intent.",
+        "Content, routing, metadata, schema, internal-link and experiment-guard checks stay green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /redondo-beach-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-manhattan-beach-general-laundry-separation",
+      "market": "Manhattan Beach, CA",
+      "hypothesis": "Reducing heavy overlap between Manhattan Beach general-appliance and washer/dryer pages will strengthen intent separation while preserving premium-home, hillside and coastal-access relevance.",
+      "pagesChanged": [
+        "/manhattan-beach-appliance-pickup/"
+      ],
+      "protectedOwner": "/manhattan-beach-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "overlapAudit": {
+          "comparedWith": "/manhattan-beach-washer-dryer-pickup/",
+          "bodyCosine": 0.8665
+        }
+      },
+      "change": "Removed duplicated laundry qualification/testing/access language from the general page, routed washer/dryer-only requests to the dedicated laundry page, and concentrated the page on premium refrigeration, cooking appliances and mixed loads. Measured cosine decreased to about 0.7723.",
+      "successSignals": [
+        "General-vs-laundry similarity remains materially below 0.8665.",
+        "Manhattan Beach general-appliance impressions remain or improve without stealing laundry-only intent.",
+        "Content, routing, metadata, schema, internal-link and experiment-guard checks stay green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /manhattan-beach-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
