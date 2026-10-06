@@ -7966,6 +7966,60 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /rialto-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-peoria-queen-creek-avondale-local-concentration",
+      "market": "Peoria / Queen Creek / Avondale, AZ",
+      "hypothesis": "Replacing search-engine-facing keyword repetition and generic social blocks with concise, useful local pickup/disposal guidance will improve city-page clarity and discovery while preserving conversion, qualification truthfulness and appliance-intent boundaries.",
+      "pagesChanged": [
+        "/peoria-az-appliance-pickup/",
+        "/queen-creek-appliance-pickup/",
+        "/avondale-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/peoria-az-appliance-pickup/",
+        "/queen-creek-appliance-pickup/",
+        "/avondale-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "peoria": {
+            "clicks": 0,
+            "impressions": 4,
+            "ctr": 0,
+            "position": 27.75
+          },
+          "queenCreek": {
+            "clicks": 0,
+            "impressions": 3,
+            "ctr": 0,
+            "position": 54.333333333333336
+          },
+          "avondale": {
+            "clicks": 0,
+            "impressions": 3,
+            "ctr": 0,
+            "position": 35.666666666666664
+          }
+        },
+        "competitorObservation": "Current TakeMyAppliance Arizona city pages emphasize a simple request flow, appliance categories, local details/disposal context and FAQs rather than explicit 'this page ranks for these queries' copy.",
+        "localEvidence": "Queen Creek's current official bulk-trash page accepts washers/dryers but excludes refrigerators/freezers. Avondale's current official bulk-trash rules exclude refrigerators, freezers and Freon-containing items. Peoria city guidance documents appointment-based bulk service for eligible solid-waste customers."
+      },
+      "change": "Removed the legacy search-engine-facing local-intent paragraph and generic Facebook bridge from all three pages. Kept HTML titles, meta descriptions, H1s, canonicals, phone 602-726-7552, forms, appliance guidance, qualification rules and city/laundry ownership intact. Added concise municipal-alternative guidance to Peoria and Avondale, and refreshed Queen Creek's official bulk-trash URL.",
+      "successSignals": [
+        "Each intended city page gains finalized Search Console impressions for its own appliance pickup/removal intent.",
+        "Average position improves from the weak baseline without shifting broad city intent to laundry or neighboring-city pages.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these three pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
