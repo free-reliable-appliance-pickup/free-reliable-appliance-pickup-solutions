@@ -99,6 +99,36 @@ def jsonld_errors(html):
             errors.append(f"JSON-LD block {i}: {e}")
     return len(blocks), errors
 
+def jsonld_duplicate_webpage_ids(html):
+    ids = []
+    blocks = re.findall(r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>([\s\S]*?)</script>', html, re.I)
+
+    def collect(node):
+        if not isinstance(node, dict):
+            return
+        node_type = node.get("@type")
+        is_webpage = node_type == "WebPage" or (isinstance(node_type, list) and "WebPage" in node_type)
+        if is_webpage and node.get("@id"):
+            ids.append(str(node["@id"]).strip())
+        graph = node.get("@graph")
+        if isinstance(graph, list):
+            for item in graph:
+                collect(item)
+
+    for block in blocks:
+        try:
+            collect(json.loads(unescape(block).strip()))
+        except Exception:
+            continue
+
+    seen = set()
+    duplicates = []
+    for item in ids:
+        if item in seen and item not in duplicates:
+            duplicates.append(item)
+        seen.add(item)
+    return duplicates
+
 def audit_page(url):
     findings = []
     try:
@@ -118,6 +148,7 @@ def audit_page(url):
     h1s = re.findall(r"<h1\b[^>]*>([\s\S]*?)</h1>", html, re.I)
     visible = text_content(html)
     ld_count, ld_errors = jsonld_errors(html)
+    duplicate_webpages = jsonld_duplicate_webpage_ids(html)
 
     if not title:
         findings.append("Missing <title>")
@@ -150,6 +181,8 @@ def audit_page(url):
     if ld_count == 0:
         findings.append("No JSON-LD structured data found")
     findings.extend(ld_errors)
+    for duplicate_id in duplicate_webpages:
+        findings.append(f"Duplicate WebPage JSON-LD @id: {duplicate_id}")
 
     return findings, {
         "title": title,
@@ -231,6 +264,8 @@ def main():
                     problems.append((url, "Missing canonical"))
                 elif canon.rstrip("/") != url.rstrip("/"):
                     problems.append((url, f"Canonical mismatch: {canon}"))
+                for duplicate_id in jsonld_duplicate_webpage_ids(html):
+                    problems.append((url, f"Duplicate WebPage JSON-LD @id: {duplicate_id}"))
             except Exception as e:
                 problems.append((url, f"Fetch failed: {e}"))
 
