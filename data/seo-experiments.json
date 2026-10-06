@@ -6886,6 +6886,87 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative body/internal-link/schema-intent edits to these three commercial support pages before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-arizona-state-hub-routing-concentration",
+      "market": "Arizona statewide appliance pickup hub",
+      "hypothesis": "A concise state-routing page modeled on the current winning competitor state hierarchy—choose city, appliance types, qualification, commercial paths, FAQ and request—will improve crawl clarity and reinforce exact city ownership for Phoenix, Mesa, Scottsdale, Chandler and other Valley markets without editing protected city pages.",
+      "pagesChanged": [
+        "/arizona-appliance-pickup/"
+      ],
+      "protectedOwner": "/arizona-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": null,
+        "preChangeArchitecture": {
+          "approxMainWords": 1106,
+          "h2Count": 15
+        },
+        "competitorBenchmark": {
+          "pages": [
+            "https://www.takemyappliance.com/locations/arizona",
+            "https://www.takemyappliance.com/locations/arizona/phoenix"
+          ],
+          "pattern": "State routing hub -> city choices -> appliance-type paths -> FAQ/request; city pages own exact local intent."
+        }
+      },
+      "change": "Reduced Arizona state hub from 15 H2 sections and about 1,106 main-content words to 8 H2 sections and about 514 words. Preserved title/H1/canonical, Formspree request form, qualification rules and real appliance image while making city-owner routing explicit for Phoenix, Mesa, Scottsdale, Chandler, Tempe, Glendale, Gilbert, Peoria, Goodyear, Surprise, Queen Creek, Avondale and Buckeye.",
+      "successSignals": [
+        "Arizona hub begins receiving relevant state/region impressions without replacing exact city owners.",
+        "Phoenix/Mesa/Scottsdale/Chandler city pages retain or improve exact-city ownership.",
+        "Search-intent, metadata, JSON-LD, internal-link and final SEO audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /arizona-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-colorado-state-hub-routing-concentration",
+      "market": "Colorado statewide appliance pickup hub",
+      "hypothesis": "A concise state-routing page modeled on the current winning competitor state hierarchy will reinforce exact city ownership for Denver, Aurora, Thornton and nearby Front Range markets while reducing statewide/city semantic overlap.",
+      "pagesChanged": [
+        "/colorado-appliance-pickup/"
+      ],
+      "protectedOwner": "/colorado-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "avgPosition": 3
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 1364,
+          "h2Count": 19
+        },
+        "competitorBenchmark": {
+          "pages": [
+            "https://www.takemyappliance.com/locations/colorado",
+            "https://www.takemyappliance.com/locations/colorado/denver"
+          ],
+          "pattern": "State routing hub -> city choices -> appliance-type paths -> FAQ/request; city pages own exact local intent."
+        }
+      },
+      "change": "Reduced Colorado state hub from 19 H2 sections and about 1,364 main-content words to 8 H2 sections and about 479 words. Preserved title/H1/canonical, 720 contact routing outside the replaced body, Formspree request form, qualification rules and real appliance image while strengthening clean links to Denver, Aurora, Thornton, Lakewood, Arvada and Centennial.",
+      "successSignals": [
+        "Colorado hub retains relevant statewide visibility while exact Denver/Aurora queries resolve to city owners.",
+        "Denver general city page gains clearer hierarchical support relative to laundry/specialty pages.",
+        "Search-intent, metadata, JSON-LD, internal-link and final SEO audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /colorado-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
