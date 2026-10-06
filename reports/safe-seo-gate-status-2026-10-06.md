@@ -178,3 +178,79 @@ Because wrong-page URLs have their own active experiments:
 - Oct 16: Fontana overlap involving `/rialto-washer-dryer-pickup/`.
 
 Do not invalidate a support-page experiment to accelerate an owner-page experiment.
+
+
+## Continuation checkpoint — late 2026-10-06
+
+### CI validation
+
+The current safeguards have been validated in GitHub Actions:
+- Final SEO safety audit after all-advertised-sitemap expansion: **PASS**
+- SEO Health Monitor after auto-close API repair: **PASS**
+- SEO Experiment Guard after registry-integrity hardening: **PASS**
+- relevant Pages deployments: **PASS**
+- IndexNow workflow: **PASS**
+
+The earlier health-monitor failures are superseded. The page audit itself had already reached 34 priority pages with 0 findings; the remaining failure was only GitHub rejecting an issue-close call without a state reason. Commit `d30c17c780c7d548132274511a5244f975f8c8b8` fixed that API call.
+
+### Experiment registry integrity
+
+Registry audit found three running experiments missing `lastChanged`:
+- `2026-10-01-coachella-v2-cluster`
+- `2026-10-01-denver-intent-separation`
+- `2026-10-01-phoenix-city-metro-separation`
+
+Commit history confirms their operating change date was 2026-10-01 local project date. Commit `4cc72bc02fc3c0c9e3c3c887b54979f1e7eb8c28` restored those dates.
+
+Commit `539ee656d18e2f8954eac043c40c033d6a8dc86d` now makes the SEO Experiment Guard fail when a running experiment:
+- lacks an ID
+- lacks `lastChanged`
+- lacks `evaluateNotBefore`
+- uses an `evaluateNotBefore` date less than 7 days after `lastChanged`
+
+The stricter guard passed after the registry repair.
+
+### Effective overlap gates
+
+There are **14 pages** touched by multiple running experiments with different gates. The full matrix is in:
+- `reports/overlapping-experiment-effective-gates-2026-10-06.md`
+
+Notable corrections:
+- Phoenix city page effective gate: **Oct 14**, not Oct 9
+- Pasadena, West Covina, Covina, Chino, La Puente, Orange County hub, San Bernardino city and Stockton laundry: effective gate **Oct 14**, not Oct 13
+- Arcadia, Escondido, Laguna Hills, Salem and Tustin: effective gate **Oct 15**, not Oct 14
+
+### Fresh GSC early-warning layer
+
+Fresh/non-finalized Oct 4–6 rows were captured separately in:
+- `reports/fresh-gsc-early-warning-2026-10-06.md`
+
+Directional signals only:
+- Rancho intended owner has begun appearing for the exact Rancho query, but wrong pages still rank above it.
+- Fontana intended owner is appearing, but the Southern California hub remains stronger in fresh rows.
+- Upland still shows strong county/laundry leakage.
+- Fresno still shows heavy sibling/specialty leakage.
+- Phoenix exact-city rows continue to route to the intended city owner.
+- Denver laundry has a fresh page-one signal on the dedicated washer/dryer page.
+
+No edit is authorized from these fresh rows alone.
+
+### Live competitor benchmark
+
+Fresh public-web evidence is saved in:
+- `reports/live-competitor-snapshot-2026-10-06.md`
+
+Current useful competitor pattern remains exact city ownership + local hierarchy + neighborhoods/ZIPs + appliance guides + FAQs + commercial path + official alternatives.
+
+Do not copy blanket always-free/no-catches/same-day/no-stair-fee claims.
+
+### Unfrozen opportunity and cannibalization scan
+
+After excluding every running experiment page:
+- the only finalized page with at least 5 impressions and a useful <=35 average-position signal was `/imperial-beach-appliance-pickup/`
+- it already has 2 clicks and a `free refrigerator pick up near me` signal around position 4.5
+- decision: **PROTECT**, not rewrite
+
+A separate finalized query scan found **no meaningful query with >=5 impressions split across 2+ pages where every competing page is currently unfrozen**.
+
+Conclusion: there is no evidence-backed customer-facing ownership rewrite available today that would avoid active experiment contamination.
