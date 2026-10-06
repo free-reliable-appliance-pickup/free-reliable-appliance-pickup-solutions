@@ -7856,6 +7856,64 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these four laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-second-wave-zero-visibility-laundry-simplification",
+      "market": "Duarte / Azusa / Montclair / Mission Viejo / Lake Forest, CA washer-dryer",
+      "hypothesis": "Removing repetitive legacy network, corridor and Facebook sections from zero-impression laundry pages will concentrate local washer/dryer intent and help the intended city page earn first finalized Search Console visibility.",
+      "pagesChanged": [
+        "/duarte-washer-dryer-pickup/",
+        "/azusa-washer-dryer-pickup/",
+        "/montclair-washer-dryer-pickup/",
+        "/mission-viejo-washer-dryer-pickup/",
+        "/lake-forest-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/duarte-washer-dryer-pickup/",
+        "/azusa-washer-dryer-pickup/",
+        "/montclair-washer-dryer-pickup/",
+        "/mission-viejo-washer-dryer-pickup/",
+        "/lake-forest-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "duarte": {
+            "current": null,
+            "queries": []
+          },
+          "azusa": {
+            "current": null,
+            "queries": []
+          },
+          "montclair": {
+            "current": null,
+            "queries": []
+          },
+          "missionViejo": {
+            "current": null,
+            "queries": []
+          },
+          "lakeForest": {
+            "current": null,
+            "queries": []
+          }
+        }
+      },
+      "change": "Removed repetitive turbo/network, generic laundry-priority, appliance-network, duplicate route and Facebook sections. Preserved title, meta description, H1, canonical, local laundry service content, access details, real photos, FAQ, request form, phone, qualification rules and relevant nearby links.",
+      "successSignals": [
+        "One or more pages begin receiving finalized Search Console impressions for city-specific washer/dryer pickup or laundry-removal intent.",
+        "The intended laundry page is the ranking URL for its city query.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these five laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
