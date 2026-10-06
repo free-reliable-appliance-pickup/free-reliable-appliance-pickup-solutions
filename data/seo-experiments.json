@@ -7762,6 +7762,82 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /altadena-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-cave-creek-general-laundry-separation",
+      "market": "Cave Creek, AZ",
+      "hypothesis": "Removing washer/dryer targeting from the Cave Creek general-page title, metadata and body will strengthen refrigerator/freezer/stove/mixed-load ownership while leaving laundry-only intent to the dedicated laundry page.",
+      "pagesChanged": [
+        "/cave-creek-appliance-pickup/"
+      ],
+      "protectedOwner": "/cave-creek-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "position": 25.4
+        },
+        "overlapAudit": {
+          "comparedWith": "/cave-creek-washer-dryer-pickup/",
+          "bodyCosine": 0.8004
+        },
+        "title": "Free Appliance Pickup Cave Creek AZ | Washer, Dryer, Fridge & Stove"
+      },
+      "change": "Changed the general-page title/meta away from washer/dryer targeting and concentrated visible copy on refrigerators, freezers, stoves, ranges, ovens and mixed major-appliance loads. Routed laundry-only intent to /cave-creek-washer-dryer-pickup/. Measured cosine decreased to about 0.7791.",
+      "successSignals": [
+        "Cave Creek general-page impressions and/or average position improve from the 5-impression / 25.4 baseline.",
+        "Laundry-only queries remain on the dedicated washer/dryer page.",
+        "General-vs-laundry similarity remains below the 0.8004 baseline.",
+        "Metadata, schema, routing, link, content-quality and experiment-guard checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /cave-creek-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-anthem-general-laundry-separation",
+      "market": "Anthem, AZ",
+      "hypothesis": "Removing washer/dryer targeting from the Anthem general-page title, metadata and body will strengthen refrigerator/freezer/stove/mixed-load ownership while preserving laundry-only intent on the dedicated Anthem laundry page.",
+      "pagesChanged": [
+        "/anthem-appliance-pickup/"
+      ],
+      "protectedOwner": "/anthem-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 25.5
+        },
+        "overlapAudit": {
+          "comparedWith": "/anthem-washer-dryer-pickup/",
+          "bodyCosine": 0.7782
+        },
+        "title": "Free Appliance Pickup Anthem AZ | Washer, Dryer, Fridge & Stove"
+      },
+      "change": "Changed the general-page title/meta away from washer/dryer targeting and concentrated visible copy on refrigerators, freezers, stoves, ranges, ovens and mixed major-appliance loads. Routed laundry-only intent to /anthem-washer-dryer-pickup/. Measured cosine decreased to about 0.7589.",
+      "successSignals": [
+        "Anthem general-page impressions and/or average position improve from the 4-impression / 25.5 baseline.",
+        "Laundry-only intent remains with the dedicated Anthem washer/dryer page.",
+        "General-vs-laundry similarity remains below the 0.7782 baseline.",
+        "Metadata, schema, routing, link, content-quality and experiment-guard checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /anthem-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
