@@ -1,0 +1,85 @@
+name: Audit Neighbor City Intent Overlap
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - '**/*-appliance-pickup/index.html'
+      - '.github/workflows/audit-neighbor-city-intent-overlap.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare neighboring city owner pages
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from collections import Counter
+          import re, html, math
+
+          PAIRS=[
+            ('rancho-cucamonga','san-bernardino'),
+            ('laguna-hills','laguna-beach'),
+            ('chino','diamond-bar'),
+            ('san-dimas','covina'),
+            ('whittier','pico-rivera'),
+            ('fresno','clovis'),
+            ('fresno','sanger'),
+            ('fresno','visalia'),
+            ('denver','lakewood'),
+            ('san-marino','san-gabriel'),
+            ('chino-hills','chino'),
+            ('west-covina','diamond-bar'),
+            ('rowland-heights','diamond-bar'),
+            ('pasadena','south-pasadena'),
+            ('laguna-niguel','laguna-hills'),
+            ('rialto','bloomington'),
+            ('duarte','irwindale'),
+            ('arcadia','el-monte'),
+          ]
+          STOP=set('the a an and or for of to in on with from by is are this that your our free pickup appliance appliances removal service services page city local can we you it as at be if when how what'.split())
+          tag_re=re.compile(r'<[^>]+>')
+          script_re=re.compile(r'<script[\s\S]*?</script>|<style[\s\S]*?</style>',re.I)
+
+          def load(slug):
+              p=Path(slug+'-appliance-pickup')/'index.html'
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              title=html.unescape((re.search(r'<title>(.*?)</title>',raw,re.I|re.S).group(1) if re.search(r'<title>(.*?)</title>',raw,re.I|re.S) else ''))
+              h1m=re.search(r'<h1[^>]*>(.*?)</h1>',raw,re.I|re.S)
+              h1=html.unescape(tag_re.sub(' ',h1m.group(1))) if h1m else ''
+              h2s=[html.unescape(tag_re.sub(' ',m.group(1))) for m in re.finditer(r'<h2[^>]*>(.*?)</h2>',raw,re.I|re.S)]
+              body=html.unescape(tag_re.sub(' ',script_re.sub(' ',raw)))
+              body=' '.join(body.lower().split())
+              tokens=[t for t in re.findall(r'[a-z0-9]+',body) if len(t)>2 and t not in STOP]
+              return title.strip(),h1.strip(),h2s,tokens
+
+          def cos(a,b):
+              ca=Counter(a); cb=Counter(b); keys=set(ca)|set(cb)
+              dot=sum(ca[k]*cb[k] for k in keys)
+              na=math.sqrt(sum(v*v for v in ca.values())); nb=math.sqrt(sum(v*v for v in cb.values()))
+              return dot/(na*nb) if na and nb else 0
+
+          def jac(a,b):
+              A=set(a); B=set(b)
+              return len(A&B)/len(A|B) if A|B else 0
+
+          print('NEIGHBOR_CITY_OVERLAP')
+          for a,b in PAIRS:
+              pa=Path(a+'-appliance-pickup')/'index.html'
+              pb=Path(b+'-appliance-pickup')/'index.html'
+              if not pa.exists() or not pb.exists():
+                  print('MISSING',a,b)
+                  continue
+              ta,h1a,h2a,toka=load(a); tb,h1b,h2b,tokb=load(b)
+              ha=re.findall(r'[a-z0-9]+',(ta+' '+h1a+' '+' '.join(h2a)).lower())
+              hb=re.findall(r'[a-z0-9]+',(tb+' '+h1b+' '+' '.join(h2b)).lower())
+              print(f'{a} <> {b} | BODY_COSINE={cos(toka,tokb):.4f} BODY_JACCARD={jac(toka,tokb):.4f} HEADING_JACCARD={jac(ha,hb):.4f}')
+          PY
