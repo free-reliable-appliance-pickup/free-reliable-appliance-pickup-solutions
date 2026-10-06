@@ -7422,6 +7422,43 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /la-mesa-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-hawaiian-gardens-general-laundry-separation",
+      "market": "Hawaiian Gardens, CA",
+      "hypothesis": "Separating the Hawaiian Gardens general-appliance page from its washer/dryer page will reduce template overlap and reduce cross-city leakage into unrelated city-modified appliance queries.",
+      "pagesChanged": [
+        "/hawaiian-gardens-appliance-pickup/"
+      ],
+      "protectedOwner": "/hawaiian-gardens-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "overlapAudit": {
+          "comparedWith": "/hawaiian-gardens-washer-dryer-pickup/",
+          "bodyCosine": 0.8051
+        },
+        "gscCrossCityLeak": {
+          "query": "free appliance pickup upland",
+          "page": "/hawaiian-gardens-appliance-pickup/",
+          "impressions": 1,
+          "position": 44
+        }
+      },
+      "change": "Concentrated the Hawaiian Gardens general page on cooling, cooking and mixed-load intent; removed broad laundry wording from metadata and body; routed laundry-only requests to the dedicated washer/dryer page; replaced generic near-me language with exact city routing. Measured general-vs-laundry cosine decreased from about 0.8051 to 0.7346.",
+      "successSignals": [
+        "Hawaiian Gardens general-vs-laundry similarity remains materially below the 0.8051 baseline.",
+        "The Hawaiian Gardens general page no longer appears for Upland-modified appliance queries.",
+        "Hawaiian Gardens local general-appliance impressions remain or improve while laundry-only intent stays separate.",
+        "All content, routing, metadata, schema, ownership and experiment-guard checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /hawaiian-gardens-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
