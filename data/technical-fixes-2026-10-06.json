@@ -29,5 +29,11 @@
     "whittier-washer-dryer-pickup",
     "la-habra-washer-dryer-pickup"
   ],
-  "validation": "Re-run the full-site SEO health monitor and confirm issue #237 auto-closes or reports zero duplicate WebPage @id findings."
+  "validation": "Re-run the full-site SEO health monitor and confirm issue #237 auto-closes or reports zero duplicate WebPage @id findings.",
+  "followUp": {
+    "reason": "After de-duplicating WebPage entities, Validate Google Search Appearance correctly detected that the retained WebPage entities on the same 20 pages lacked the WebSite relationship previously supplied by the removed duplicate block.",
+    "fix": "Add isPartOf @id https://freereliableappliancepickup.com/#website to the single retained WebPage entity only. No visible content, title, meta description, canonical, links, phone, form, image, or intent ownership changed.",
+    "failedRunId": 37520211031,
+    "validation": "Require Audit Active JSON-LD Schema, Validate Google Search Appearance, SEO Health Monitor, SEO Experiment Guard, and deployment to pass on the batch commit."
+  }
 }
