@@ -87,7 +87,8 @@ jobs:
                   body: 'Latest automated SEO health run is clean. Closing this alert.'
                 });
                 await github.rest.issues.update({
-                  owner, repo, issue_number: issue.number, state: 'closed'
+                  owner, repo, issue_number: issue.number,
+                  state: 'closed', state_reason: 'completed'
                 });
               }
             }
@@ -154,7 +155,8 @@ jobs:
                   body: 'Latest automated full-site SEO run is clean. Closing this alert.'
                 });
                 await github.rest.issues.update({
-                  owner, repo, issue_number: issue.number, state: 'closed'
+                  owner, repo, issue_number: issue.number,
+                  state: 'closed', state_reason: 'completed'
                 });
               }
             }
