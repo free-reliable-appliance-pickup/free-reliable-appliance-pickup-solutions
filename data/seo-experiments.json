@@ -7385,6 +7385,43 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /hermosa-beach-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-la-mesa-general-laundry-separation",
+      "market": "La Mesa, CA",
+      "hypothesis": "Separating the La Mesa general-appliance page from its similar washer/dryer page will reduce template overlap and reduce the chance that the general La Mesa page is selected for unrelated city-modified appliance queries.",
+      "pagesChanged": [
+        "/la-mesa-appliance-pickup/"
+      ],
+      "protectedOwner": "/la-mesa-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "overlapAudit": {
+          "comparedWith": "/la-mesa-washer-dryer-pickup/",
+          "bodyCosine": 0.8343
+        },
+        "gscCrossCityLeak": {
+          "query": "free appliance pickup upland",
+          "page": "/la-mesa-appliance-pickup/",
+          "impressions": 3,
+          "position": 48.6667
+        }
+      },
+      "change": "Concentrated the La Mesa general page on refrigerators, freezers, stoves/ranges/ovens and mixed loads; routed washer/dryer-only intent to the dedicated laundry page; rewrote access and FAQ sections; replaced generic near-me language with exact city-routing guidance. Measured general-vs-laundry cosine decreased from about 0.8343 to 0.7355.",
+      "successSignals": [
+        "La Mesa general-vs-laundry similarity remains materially below the 0.8343 baseline.",
+        "The La Mesa general page stops appearing for Upland-modified appliance queries.",
+        "La Mesa general-appliance impressions remain or improve while laundry-only intent stays on the laundry page.",
+        "All content, schema, routing, internal-link, ownership and experiment-guard checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /la-mesa-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
