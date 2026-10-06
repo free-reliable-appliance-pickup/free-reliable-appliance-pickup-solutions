@@ -88,3 +88,122 @@ Interpretation: Phoenix city discovery is broader than the original query-only b
 3. For Denver/Phoenix, require evidence that the post-change window includes enough finalized days after the October 1 changes.
 4. If exact-city modifiers remain weak, prefer one minimal authority/ownership improvement over another full-page rewrite.
 5. Do not copy blanket competitor promises, create thin city×appliance pages, or weaken qualification truthfulness.
+
+
+## Ownership dependency update — 2026-10-06
+
+A broader finalized GSC query/page pull exposed an important dependency that changes how the October 9 review should be handled.
+
+### Denver / Lakewood
+
+Finalized GSC through 2026-10-03 shows:
+- `denver appliance pickup` → **/lakewood-appliance-pickup/** — 5 impressions, avg position **10**
+- `appliance pick up denver` → **/denver-appliance-pickup/** — 1 impression, avg position **55**
+- `appliance removal denver` → **/denver-appliance-pickup/** — 6 impressions, avg position **75.83**
+
+This is a real wrong-page ownership signal, but it is **already under a separate active experiment**:
+- experiment: `2026-10-04-lakewood-denver-boundary`
+- Lakewood last changed: 2026-10-04
+- Lakewood evaluateNotBefore: **2026-10-14**
+- change already made: Denver references/links on the Lakewood page were reduced to one explicit address-boundary handoff.
+
+Therefore:
+- **Do not make a second Denver/Lakewood ownership change on October 9.**
+- On October 9, observe the Denver city experiment only.
+- The first fair combined Denver/Lakewood ownership decision is **October 14 or later**, using finalized post-October-4 GSC.
+- Do not strengthen the Denver page in a way intended to pull the exact query away from Lakewood while the Lakewood boundary experiment is still measuring that same ownership problem.
+
+### Phoenix
+
+All currently returned Phoenix-modifier rows in the broader finalized GSC pull are owned by **/phoenix-appliance-pickup/**, including:
+- `appliance removal phoenix` — 5 impressions, avg position **82.4**
+- `appliance removal phoenix, az` — 3 impressions, avg position **81**
+- `appliance recycling phoenix` — 2 impressions, avg position **34.5**
+- `appliance pick up phoenix` — 1 impression, avg position **64**
+- `free appliance removal phoenix` — 1 impression, avg position **17**
+- `free appliance removal phoenix az` — 1 impression, avg position **19**
+
+Interpretation:
+- Phoenix city-vs-metro ownership is currently **clean in the returned exact-city data**.
+- The problem is ranking strength, not wrong-page cannibalization.
+- On October 9, do not change city/metro routing unless new finalized evidence shows leakage.
+- If exact-city positions remain weak after a mature window, prefer one minimal city-authority/CTR test; do not restructure city-vs-metro ownership again.
+
+### Coachella Valley / Palm Desert
+
+No exact desert-city modifier rows were returned in the broader query filter even though page-level GSC shows Palm Desert and Indio page-one signals.
+
+Interpretation:
+- Treat the hub as **discovery/low-data**.
+- Protect Palm Desert and Indio.
+- Do not use absence of query rows as proof of failure.
+- Do not mass-edit Palm Springs, La Quinta, Cathedral City, Rancho Mirage or Indian Wells without page-level evidence.
+
+## Fresh competitor snapshot — checked 2026-10-06
+
+### Denver
+
+TakeMyAppliance currently exposes:
+- exact Denver city page
+- free-to-submit / no-account request framing
+- commercial request path
+- Denver neighborhoods and a very large ZIP list
+- appliance-specific Denver guides
+- FAQ coverage
+- official/utility alternatives including Xcel and Denver disposal references
+
+Our Denver page already has:
+- direct 720 phone/text
+- explicit qualification rules
+- mixed-load rule
+- direct access/stairs/elevator requirements
+- dedicated laundry ownership
+- real appliance proof
+- official Denver fallback
+- commercial/property-manager paths
+
+Decision: the primary measurable gap remains **exact Denver query ownership/strength**, not missing general page features.
+
+### Phoenix
+
+TakeMyAppliance currently exposes:
+- exact Phoenix city page
+- city neighborhoods and ZIPs
+- appliance-specific city guide links
+- partner request flow and commercial path
+
+AppliancePickupNow currently exposes:
+- Phoenix city page
+- photo-first intake
+- clear access notes
+- city disposal alternative
+- request matching and qualification language
+
+Our Phoenix page already has:
+- direct 602-726-7552 phone/text
+- exact Phoenix city ownership statement
+- separate city/metro/laundry routing
+- neighborhoods and ZIPs
+- official City of Phoenix fallback
+- commercial/property/senior/installer paths
+- appliance-specific Phoenix child links
+- truthful qualification rules
+
+Official City of Phoenix 2026 rates remain:
+- up to five non-refrigerant appliances curbside: **$30**
+- refrigerant appliance curbside: **$25 each**
+
+Decision: do not add another broad structural block merely for competitor parity. Measure exact-city strength first.
+
+### Palm Desert / Coachella Valley
+
+TakeMyAppliance and AppliancePickupNow both expose Palm Desert-specific pages with broad appliance lists, FAQs and aggressive free/fast language.
+
+The City of Palm Desert currently confirms:
+- Burrtec is the contracted waste/recycling provider.
+- Residents can schedule bulky-item pickup and place up to **four items** at the curb.
+- Large appliances are listed as examples of accepted bulky items.
+
+Our Palm Desert/Coachella content already uses qualification-based language and the official fallback without making blanket same-day/always-free promises.
+
+Decision: protect existing page-one Palm Desert/Indio signals and avoid copying competitor claims that are broader than our operating rules.
