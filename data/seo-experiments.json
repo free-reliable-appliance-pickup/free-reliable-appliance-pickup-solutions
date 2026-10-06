@@ -6571,6 +6571,42 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative title, body, internal-link, schema, canonical or intent-ownership edits to the recurring-program page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-05-senior-living-snippet-ctr",
+      "market": "Senior living / 55+ / assisted living commercial intent",
+      "hypothesis": "A shorter search title and description focused on Senior Living Appliance Pickup, 55+ communities and Assisted Living will improve click-through rate for the senior-living commercial page without changing its body content or qualification rules.",
+      "pagesChanged": [
+        "/senior-living-appliance-pickup/"
+      ],
+      "protectedOwner": "/senior-living-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 35,
+          "ctr": 0,
+          "avgPosition": 11.685714285714285,
+          "note": "Finalized Search Console returned no query rows for this page in the effective period."
+        },
+        "preChangeTitle": "Senior Living, 55+ & Mobile Home Community Appliance Pickup",
+        "preChangeMeta": "Appliance pickup review for senior living, 55+ communities, senior apartments, retirement properties and age-qualified mobile home communities. One-time and recurring programs; requests accepted by city nationwide.",
+        "changeCommit": "40161bd90c3b893821b84da87c6225be21b47f73"
+      },
+      "change": "Changed only search/social/WebPage metadata to the shorter title 'Senior Living Appliance Pickup | 55+ & Assisted Living' and a concise qualification-based description. Body copy, H1, internal links, canonical, Service schema, contact details and request form were not changed.",
+      "successSignals": [
+        "Finalized GSC CTR rises above the 0% baseline while impressions remain stable or improve.",
+        "Average position remains stable or improves from the 11.69 baseline.",
+        "The senior-living page gains clicks for relevant commercial/senior-housing intent without cannibalizing city pages."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title, description, body, internal-link, schema, canonical or intent-ownership edits to the senior-living page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
