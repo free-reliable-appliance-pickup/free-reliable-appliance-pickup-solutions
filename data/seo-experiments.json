@@ -7493,12 +7493,16 @@
             "position": 67
           }
         },
-        "routingIssue": "The page linked /san-diego-county-washer-dryer-pickup/ while labeling it the Oceanside washer & dryer pickup page, despite a dedicated /oceanside-washer-dryer-pickup/ page."
+        "noindexRouting": {
+          "alias": "/oceanside-washer-dryer-pickup/",
+          "robots": "noindex, follow",
+          "canonical": "/san-diego-county-washer-dryer-pickup/"
+        }
       },
-      "change": "Replaced broad generic-removal/near-me handoff wording with Oceanside-specific city routing, removed keyword-list prose, and corrected washer/dryer handoffs to /oceanside-washer-dryer-pickup/.",
+      "change": "Replaced broad generic-removal/near-me handoff wording with Oceanside-specific city routing and removed keyword-list prose. Washer/dryer-only handoffs remain on the indexed /san-diego-county-washer-dryer-pickup/ hub because the Oceanside laundry alias is intentionally noindex and canonicalized to that hub.",
       "successSignals": [
         "Oceanside city-modified pickup/removal queries improve relative to the generic unmodified 'appliance removal' query.",
-        "Washer/dryer-only Oceanside intent routes to /oceanside-washer-dryer-pickup/.",
+        "Indexable Oceanside pages do not link to the noindex /oceanside-washer-dryer-pickup/ alias.",
         "Search-intent, internal-link, metadata, schema and content-quality checks remain green."
       ],
       "evaluateNotBefore": "2026-10-16",
@@ -7658,6 +7662,18 @@
       ],
       "files": [
         "california-appliance-pickup/index.html",
+        "data/seo-experiments.json"
+      ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "noindex alias routing repair",
+      "reason": "Post-merge link audit showed /oceanside-washer-dryer-pickup/ is noindex and canonicalized to /san-diego-county-washer-dryer-pickup/. Restored all Oceanside general-page laundry links to the indexed county hub and corrected the experiment record.",
+      "pages": [
+        "/oceanside-appliance-pickup/"
+      ],
+      "files": [
+        "oceanside-appliance-pickup/index.html",
         "data/seo-experiments.json"
       ]
     }
