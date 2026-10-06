@@ -7058,6 +7058,46 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /how-appliance-pickup-works/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-retail-commercial-snippet-ctr",
+      "market": "Commercial retail appliance pickup intent",
+      "hypothesis": "A clearer commercial/buyer-intent title and description will improve CTR on the retail appliance pickup page, which is already averaging near page one, without changing the page body or commercial program structure.",
+      "pagesChanged": [
+        "/retail-appliance-pickup/"
+      ],
+      "protectedOwner": "/retail-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "avgPosition": 9.8
+        },
+        "preChangeSnippet": {
+          "title": "Retail Store Appliance Pickup | Dealer Returns & Replacements",
+          "description": "Commercial appliance pickup review for appliance retailers, dealers, home-improvement stores and showrooms handling returns, display changes, trade-ins and recurring appliance flow."
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/commercial/retail-store-appliance-pickup",
+          "pattern": "Commercial appliance pickup for retail stores/dealers; repeat work -> clear scope -> access -> inquiry."
+        }
+      },
+      "change": "Changed only title/meta/OG/WebPage schema name+description to 'Commercial Appliance Pickup for Retail Stores | Returns & Displays' and a concise returns/display/trade-in description. H1, body, form, canonical, qualification and internal links were not changed.",
+      "successSignals": [
+        "CTR rises above the 0% baseline while average position remains stable or improves.",
+        "Impressions continue to grow from the 5-impression baseline.",
+        "No metadata, JSON-LD, intent-ownership or final SEO safety regression appears."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /retail-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
