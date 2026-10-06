@@ -115,3 +115,66 @@ At each gate:
 4. Identify exact wrong-page ownership before editing.
 5. Make one minimal evidence-backed change, validate it, reset the observation window.
 6. Do not create thin city × appliance pages or copy competitor promises.
+
+
+## Additional technical safeguards completed
+
+### Priority health-monitor expansion
+
+Commit `e66e3b9742e746aee5f9375a5e5f9873edbbd899` expanded the fast priority monitor beyond the original 22-page set.
+
+New high-priority checks include:
+- Fontana
+- Ontario
+- San Bernardino city + county
+- Riverside city + county
+- Phoenix Metro
+- Sacramento
+- Stockton
+- Coachella Valley
+- Palm Desert
+- Aurora
+
+This is monitoring-only and does not modify any ranking experiment.
+
+### All advertised sitemap validation
+
+Commit `a8f453055d3b6048e7a82de108911677d47986f6` changed the Final SEO Safety Audit so it reads every same-domain `Sitemap:` directive from `robots.txt`, verifies the advertised file exists, and validates the URLs from all advertised sitemap files against the approved indexable inventory.
+
+Current validation:
+- Rancho Cucamonga sitemap: 5 URLs, all present in main sitemap
+- Fontana: 5 / clean
+- Ontario: 5 / clean
+- Pomona: 5 / clean
+- Riverside: 5 / clean
+- Los Angeles: 5 / clean
+- San Bernardino: 5 / clean
+- Fresno: 5 / clean
+- Stockton: 5 / clean
+- Sacramento: 6 / clean
+- Denver: 11 / clean
+- Phoenix: 37 / clean
+- priority SGV/IE: 50 / clean
+- regular washer/dryer sitemap: 97 / clean
+- image sitemap: 563 page URLs; all 563 also appear in the main sitemap
+
+No advertised priority sitemap was missing and no tested priority sitemap contained a foreign or main-sitemap-orphan URL.
+
+## October 9 dependency clarification
+
+The Denver exact-query ownership problem overlaps the running Lakewood/Denver boundary experiment:
+- `denver appliance pickup` → `/lakewood-appliance-pickup/` — 5 impressions, avg position 10 in the finalized baseline.
+- Lakewood boundary experiment evaluateNotBefore: **2026-10-14**.
+
+Therefore the October 9 Denver review must not force a Denver/Lakewood ownership edit. The first combined ownership decision is October 14+.
+
+Phoenix exact city-modifier rows currently route to `/phoenix-appliance-pickup/`, so Phoenix's measured problem is ranking strength rather than wrong-page city/metro ownership.
+
+## October 14–16 ownership sequencing
+
+Because wrong-page URLs have their own active experiments:
+- Oct 14: first review for Fresno, Upland, and the mature portions of Rancho/Fontana.
+- Oct 15: Rancho overlap involving `/southern-california-freezer-pickup/`.
+- Oct 16: Fontana overlap involving `/rialto-washer-dryer-pickup/`.
+
+Do not invalidate a support-page experiment to accelerate an owner-page experiment.
