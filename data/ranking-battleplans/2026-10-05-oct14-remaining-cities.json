@@ -1,0 +1,271 @@
+{
+  "date": "2026-10-05",
+  "unlock": "2026-10-14",
+  "purpose": "Pre-unlock go/no-go plan for the remaining October 14 priority cities. Protect current page-one signals; prioritize weak/no-data/cross-city ownership problems.",
+  "groups": {
+    "protect_if_stable": [
+      {
+        "city": "Claremont",
+        "impressions": 10,
+        "avgPosition": 8.3
+      },
+      {
+        "city": "La Verne",
+        "impressions": 7,
+        "avgPosition": 5.571428571428571,
+        "note": "One San Dimas query at position 3 indicates some cross-city overlap; verify before changing."
+      },
+      {
+        "city": "Montclair",
+        "impressions": 17,
+        "avgPosition": 5.823529411764706
+      },
+      {
+        "city": "Eastvale",
+        "impressions": 3,
+        "avgPosition": 6.333333333333333
+      },
+      {
+        "city": "Chino Hills",
+        "impressions": 4,
+        "avgPosition": 8.25,
+        "note": "Exact Chino Hills query sampled at position 21; protect overall win but verify exact city ownership."
+      },
+      {
+        "city": "Colton",
+        "impressions": 2,
+        "avgPosition": 7.5
+      },
+      {
+        "city": "Moreno Valley",
+        "impressions": 4,
+        "avgPosition": 7.25
+      },
+      {
+        "city": "Norco",
+        "impressions": 3,
+        "avgPosition": 7
+      },
+      {
+        "city": "Corona",
+        "impressions": 5,
+        "avgPosition": 9.2
+      },
+      {
+        "city": "Azusa",
+        "impressions": 18,
+        "avgPosition": 7.888888888888889
+      },
+      {
+        "city": "Duarte",
+        "impressions": 10,
+        "avgPosition": 6.3
+      },
+      {
+        "city": "Arcadia",
+        "impressions": 19,
+        "avgPosition": 6.368421052631579,
+        "note": "Exact Arcadia sampled at position 4."
+      },
+      {
+        "city": "Sierra Madre",
+        "impressions": 6,
+        "avgPosition": 4.5
+      },
+      {
+        "city": "Altadena",
+        "impressions": 12,
+        "avgPosition": 6.5
+      },
+      {
+        "city": "Alhambra",
+        "impressions": 8,
+        "avgPosition": 7.375
+      },
+      {
+        "city": "Rowland Heights",
+        "impressions": 8,
+        "avgPosition": 4.375,
+        "note": "Exact Rowland Heights sampled at position 7.5."
+      },
+      {
+        "city": "Irwindale",
+        "impressions": 4,
+        "avgPosition": 7.25
+      },
+      {
+        "city": "Rosemead",
+        "impressions": 1,
+        "avgPosition": 7
+      },
+      {
+        "city": "Anaheim Hills",
+        "impressions": 23,
+        "avgPosition": 11.826086956521738,
+        "note": "Close to page one; avoid blanket rewrite."
+      },
+      {
+        "city": "Santa Ana",
+        "impressions": 27,
+        "avgPosition": 10.555555555555555,
+        "note": "Local removal sampled at position 13.2 with several refrigerator terms top 5-10."
+      },
+      {
+        "city": "Laguna Niguel",
+        "impressions": 4,
+        "avgPosition": 15,
+        "note": "Borderline; local removal sampled at 17.67."
+      }
+    ],
+    "weak_or_ownership_review": [
+      {
+        "city": "Highland",
+        "impressions": 1,
+        "avgPosition": 35,
+        "architecture": {
+          "mainWords": 2046,
+          "h2Count": 26
+        },
+        "diagnosis": "Only sampled query was 'free appliance pickup upland' at position 35. Strong cross-city ownership problem and excessive density."
+      },
+      {
+        "city": "Whittier",
+        "impressions": 10,
+        "avgPosition": 15.6,
+        "architecture": {
+          "mainWords": 904,
+          "h2Count": 12
+        },
+        "diagnosis": "Exact Whittier query sampled at 23.5 while refrigerator intent is stronger. Candidate for exact-city concentration."
+      },
+      {
+        "city": "Pico Rivera",
+        "impressions": 20,
+        "avgPosition": 19.3,
+        "architecture": {
+          "mainWords": 846,
+          "h2Count": 11
+        },
+        "diagnosis": "Cross-city overlap is clear: Whittier query ranks better than Pico Rivera's own exact query. Ownership correction is higher priority than adding copy."
+      },
+      {
+        "city": "Monterey Park",
+        "impressions": 13,
+        "avgPosition": 15.307692307692308,
+        "architecture": {
+          "mainWords": 824,
+          "h2Count": 12
+        },
+        "diagnosis": "Outside target range with weak/irrelevant query mix. Candidate for city-intent concentration if post-gate data stays weak."
+      },
+      {
+        "city": "Tustin",
+        "impressions": 17,
+        "avgPosition": 16.176470588235293,
+        "architecture": {
+          "mainWords": 1510,
+          "h2Count": 17
+        },
+        "diagnosis": "Exact local removal query has 9 impressions at ~25.6. Dense page and clear local-intent weakness."
+      },
+      {
+        "city": "Mission Viejo",
+        "impressions": 10,
+        "avgPosition": 43,
+        "architecture": {
+          "mainWords": 1301,
+          "h2Count": 12
+        },
+        "diagnosis": "One of the weakest OC pages; exact removal is ~63.2. Strong candidate for competitor-model concentration."
+      },
+      {
+        "city": "Laguna Hills",
+        "impressions": 14,
+        "avgPosition": 20,
+        "architecture": {
+          "mainWords": 1241,
+          "h2Count": 15
+        },
+        "diagnosis": "Exact Laguna Hills removal sampled at ~16.4. Candidate for focused simplification if no improvement."
+      },
+      {
+        "city": "Laguna Woods",
+        "impressions": 4,
+        "avgPosition": 22.25,
+        "architecture": {
+          "mainWords": 858,
+          "h2Count": 10
+        },
+        "diagnosis": "Current visibility is mainly for Laguna Hills, not Laguna Woods. Ownership correction needed if this persists."
+      },
+      {
+        "city": "Newport Beach",
+        "impressions": 19,
+        "avgPosition": 19.263157894736842,
+        "architecture": {
+          "mainWords": 1526,
+          "h2Count": 17
+        },
+        "diagnosis": "Exact Newport Beach removal sampled at ~68.25 despite broader appliance visibility. Strong local-intent concentration candidate."
+      },
+      {
+        "city": "Chandler",
+        "impressions": 5,
+        "avgPosition": 22.6,
+        "architecture": {
+          "mainWords": 1019,
+          "h2Count": 13
+        },
+        "diagnosis": "Outside target range; recheck exact city query and competitor structure after current contact-parity test."
+      }
+    ],
+    "no_finalized_visibility": [
+      {
+        "city": "Glendora",
+        "architecture": {
+          "mainWords": 941,
+          "h2Count": 13
+        },
+        "gateDecision": "Check live ownership/indexing and internal authority first; do not assume content is the problem."
+      },
+      {
+        "city": "Jurupa Valley",
+        "architecture": {
+          "mainWords": 2564,
+          "h2Count": 27
+        },
+        "gateDecision": "No finalized visibility plus very dense architecture. If indexing is healthy, high-priority simplification candidate."
+      },
+      {
+        "city": "La Cañada Flintridge",
+        "architecture": {
+          "mainWords": 813,
+          "h2Count": 11
+        },
+        "gateDecision": "Check indexing/internal links/live ownership first."
+      },
+      {
+        "city": "La Crescenta",
+        "architecture": {
+          "mainWords": 1670,
+          "h2Count": 18
+        },
+        "gateDecision": "Check indexing/internal authority; if healthy but still no visibility, simplify dense structure."
+      },
+      {
+        "city": "Montebello",
+        "architecture": {
+          "mainWords": 790,
+          "h2Count": 12
+        },
+        "gateDecision": "Check indexing and ownership before body changes."
+      }
+    ]
+  },
+  "guardrails": [
+    "Do not edit any of these protected city pages before the current experiment gate unless there is verified technical/factual/contact/indexability/safety breakage.",
+    "Evaluate regular organic separately from Images, Maps/local pack and AI.",
+    "If a city page is already top 10 on finalized data, prefer protection/CTR/internal authority over a structural rewrite.",
+    "If a neighboring or specialty page owns the city query, fix ownership before adding content."
+  ]
+}
