@@ -6723,6 +6723,88 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /glendale-az-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-multifamily-commercial-scope-concentration",
+      "market": "Multifamily / apartments / student housing commercial intent",
+      "hypothesis": "A concise commercial page modeled on the current winning multifamily competitor structure—repeat-work patterns, clear scope, equipment streams, access rules, priority markets, FAQ and request—will improve relevant commercial visibility and strengthen internal authority to priority city pages.",
+      "pagesChanged": [
+        "/multifamily-appliance-pickup/"
+      ],
+      "protectedOwner": "/multifamily-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 6,
+          "ctr": 0,
+          "avgPosition": 19,
+          "note": "The only returned query row was unrelated elevator-load-testing intent."
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 828,
+          "h2Count": 11
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/commercial/multifamily-appliance-pickup",
+          "pattern": "Common repeat work -> scope -> equipment streams -> site/access checklist -> FAQ -> commercial inquiry."
+        }
+      },
+      "change": "Reduced the multifamily page from 11 H2 sections and approximately 828 main-content words to 8 H2 sections and approximately 494 words. Preserved title/meta/canonical, structured data and existing request form while adding concise priority-market handoffs to Rancho Cucamonga, Fontana, Ontario, Upland, Fresno, Sacramento, Stockton, Phoenix, Denver, Aurora, Portland and Salem.",
+      "successSignals": [
+        "Relevant multifamily/property-manager impressions increase from the 6-impression baseline.",
+        "Average position improves from the 19 baseline without unrelated-query growth.",
+        "Priority city pages receive stronger internal authority without losing city-query ownership."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /multifamily-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-installer-remodeler-commercial-scope-concentration",
+      "market": "Installers / remodelers / contractors commercial intent",
+      "hypothesis": "A concise commercial page modeled on the current winning installer/remodeler competitor structure—repeat work, handoff definition, access/responsibility, safety, priority markets, FAQ and request—will improve relevant commercial visibility and strengthen internal authority to priority city pages.",
+      "pagesChanged": [
+        "/appliance-installer-remodeler-pickup/"
+      ],
+      "protectedOwner": "/appliance-installer-remodeler-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "avgPosition": 51.5,
+          "note": "Finalized Search Console returned no query rows for this page."
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 748,
+          "h2Count": 11
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/commercial/appliance-installer-pickup",
+          "pattern": "Common repeat work -> clear scope -> equipment streams -> project handoff -> site/access checklist -> FAQ -> commercial inquiry."
+        }
+      },
+      "change": "Reduced the installer/remodeler page from 11 H2 sections and approximately 748 main-content words to 8 H2 sections and approximately 493 words. Preserved title/meta/canonical, structured data and existing request form while adding concise priority-market handoffs to Rancho Cucamonga, Fontana, Ontario, Upland, Fresno, Sacramento, Stockton, Phoenix, Denver, Aurora, Portland and Salem.",
+      "successSignals": [
+        "Relevant installer/remodeler/contractor impressions increase from the 2-impression baseline.",
+        "Average position improves from the 51.5 baseline.",
+        "Priority city pages receive stronger internal authority without losing city-query ownership."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /appliance-installer-remodeler-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
