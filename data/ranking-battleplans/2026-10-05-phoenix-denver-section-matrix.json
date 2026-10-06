@@ -1,0 +1,166 @@
+{
+  "date": "2026-10-05",
+  "purpose": "Section-level conditional edit matrix for the first post-freeze markets. No protected page changes before the 2026-10-09 gate and finalized GSC review.",
+  "Denver": {
+    "gate": "2026-10-09",
+    "currentGeneral": {
+      "path": "/denver-appliance-pickup/",
+      "mainWords": 2832,
+      "h2Count": 30,
+      "gsc": {
+        "clicks": 0,
+        "impressions": 18,
+        "avgPosition": 39.833333333333336
+      }
+    },
+    "currentLaundry": {
+      "path": "/denver-washer-dryer-pickup/",
+      "mainWords": 1366,
+      "h2Count": 18,
+      "gsc": {
+        "clicks": 0,
+        "impressions": 6,
+        "avgPosition": 17.333333333333332
+      }
+    },
+    "semanticOverlap": {
+      "bodyCosine": 0.7867,
+      "bodyJaccard": 0.3994,
+      "headingJaccard": 0.3978
+    },
+    "keepOnGeneral": [
+      "One Denver city-intent introduction",
+      "Simple pickup/request process",
+      "Major appliance categories and qualification rules",
+      "Denver access/property-type guidance",
+      "Official utility/city alternatives",
+      "Commercial/property-manager path",
+      "FAQ",
+      "Request form and Colorado contact routing"
+    ],
+    "mergeOnGeneral": [
+      [
+        "Free Appliance Pickup, Removal & Recycling in Denver, CO",
+        "Denver Appliance Pickup: What This Page Covers",
+        "Denver Appliance Pickup, Removal & Recycling Review",
+        "Free Appliance Pickup in Denver, CO",
+        "Appliance Removal, Haul-Away and Recycling in Denver"
+      ],
+      [
+        "Washer or Dryer Only? Use the Denver Laundry Page",
+        "Denver Washer & Dryer Requests Use the Laundry Page",
+        "Washer & Dryer Pickup in Denver"
+      ],
+      [
+        "Outside Denver City?",
+        "Denver and Aurora Pickup Coverage",
+        "Denver appliance pickup within the Colorado Front Range service network"
+      ],
+      [
+        "Denver Appliance Pickup by Property Type",
+        "Commercial Appliance Pickup in Denver",
+        "Denver Commercial, Multifamily & Buyer Network"
+      ],
+      [
+        "Appliance Pickup Guides",
+        "Denver Appliance Buyer, Repair & Resale Network"
+      ]
+    ],
+    "protectOrNarrowOnLaundry": [
+      "Preserve washer/dryer-specific title, H1, qualification, testing, laundry access, FAQ and request.",
+      "Keep a single explicit link back to the general Denver appliance page for non-laundry appliances.",
+      "If broad Denver appliance queries still land on laundry after the gate, narrow generic appliance/removal/network wording that is not necessary for laundry intent."
+    ],
+    "decision": "If general Denver remains materially weaker than laundry after finalized post-gate data, simplify the general page first and only narrow laundry wording where GSC confirms broad-query leakage."
+  },
+  "Phoenix": {
+    "gate": "2026-10-09",
+    "currentGeneral": {
+      "path": "/phoenix-appliance-pickup/",
+      "mainWords": 1502,
+      "h2Count": 19,
+      "gsc": {
+        "clicks": 1,
+        "impressions": 47,
+        "avgPosition": 28.4468085106383
+      }
+    },
+    "currentRefrigerator": {
+      "path": "/phoenix-refrigerator-pickup/",
+      "mainWords": 333,
+      "h2Count": 8,
+      "gsc": {
+        "clicks": 0,
+        "impressions": 5,
+        "avgPosition": 18.8
+      }
+    },
+    "currentMetro": {
+      "path": "/phoenix-metro-appliance-pickup/",
+      "mainWords": 995,
+      "h2Count": 15
+    },
+    "semanticOverlap": {
+      "refrigerator": {
+        "bodyCosine": 0.7443,
+        "bodyJaccard": 0.2452,
+        "headingJaccard": 0.2609
+      },
+      "metro": {
+        "bodyCosine": 0.7336,
+        "bodyJaccard": 0.3486,
+        "headingJaccard": 0.2195
+      }
+    },
+    "keepOnGeneral": [
+      "One Phoenix city-intent introduction",
+      "Phone/request CTA with 602-726-7552",
+      "Simple pickup process",
+      "Major appliance categories and qualification",
+      "Phoenix-specific access/ZIP/local City alternative",
+      "Commercial/property/senior path",
+      "Clear Phoenix Metro handoff for addresses outside Phoenix",
+      "FAQ/request form"
+    ],
+    "mergeOnGeneral": [
+      [
+        "Free Appliance Pickup in Phoenix, Arizona",
+        "Phoenix Appliance Pickup: What This Page Covers",
+        "Phoenix Appliance Pickup & Removal",
+        "Phoenix Search Intent: Free Appliance Pick Up & Removal"
+      ],
+      [
+        "Washer or Dryer Only? Use the Phoenix Laundry Page",
+        "Phoenix Washer & Dryer Pickup"
+      ],
+      [
+        "Outside Phoenix City? Use the Phoenix Metro Hub",
+        "Phoenix City vs. Phoenix Metro Requests"
+      ],
+      [
+        "Phoenix Pickup Details",
+        "Phoenix Neighborhoods & ZIP Areas",
+        "Prepare Your Request"
+      ],
+      [
+        "Who We Want to Hear From in Phoenix",
+        "Phoenix Property, Senior & Business Appliance Sources"
+      ],
+      [
+        "Phoenix Core Appliance Pickup Pages",
+        "Phoenix Pickup Updates on Facebook"
+      ]
+    ],
+    "protectOrNarrowOnRefrigerator": [
+      "Preserve refrigerator-specific cooling condition, photos, qualification, utility/city alternatives and request.",
+      "Keep only one concise handoff for other Phoenix appliances to the general owner.",
+      "Do not add broad Phoenix appliance/removal sections."
+    ],
+    "protectOrNarrowOnMetro": [
+      "Keep regional-hub title/H1 and city-list routing.",
+      "Keep explicit instruction that Phoenix-city addresses use the Phoenix city owner.",
+      "If metro hub begins taking exact Phoenix-city queries, reduce city-specific Phoenix copy while retaining regional navigation."
+    ],
+    "decision": "If the Phoenix general owner remains outside the target range on Oct 9, simplify the 19-section owner first; change refrigerator/metro pages only if finalized query-to-page evidence shows continued broad Phoenix leakage."
+  }
+}
