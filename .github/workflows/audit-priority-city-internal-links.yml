@@ -105,6 +105,19 @@ jobs:
           print('PRIORITY_WEAK_LINK_PATHS')
           for count,depth,slug in sorted(weak):
               print(f'{slug}: inlinks={count} depth={depth if depth<999 else "NA"}')
+          print('COMPETING_PAGE_INLINKS')
+          competing = [
+              'upland-appliance-pickup','upland-washer-dryer-pickup',
+              'fontana-appliance-pickup','fontana-stove-oven-pickup','southern-california-appliance-pickup','rialto-washer-dryer-pickup',
+              'phoenix-appliance-pickup','phoenix-refrigerator-pickup',
+              'fresno-appliance-pickup','clovis-appliance-pickup','sanger-appliance-pickup','selma-appliance-pickup'
+          ]
+          for slug in competing:
+              u=BASE+slug+'/'
+              count=len(inlinks.get(u,set()) & active)
+              depth=depths.get(u,999)
+              print(f'{slug}: inlinks={count} depth={depth if depth<999 else "NA"}')
+
           print('BROKEN_INTERNAL_LINKS')
           for src,dest,target in sorted(set(broken))[:200]:
               print(src,'->',dest,'| missing',target)
