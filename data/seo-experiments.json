@@ -8092,6 +8092,47 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these four pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-north-hollywood-local-authority",
+      "market": "North Hollywood, CA",
+      "hypothesis": "Adding a concise, verified City of Los Angeles appliance-pickup alternative will strengthen North Hollywood local usefulness and trust while preserving the page's reuse-focused qualification model and exact-city ownership.",
+      "pagesChanged": [
+        "/north-hollywood-appliance-pickup/"
+      ],
+      "protectedOwner": "/north-hollywood-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 13,
+          "ctr": 0,
+          "position": 35.84615384615385,
+          "query": {
+            "query": "appliance removal north hollywood",
+            "clicks": 0,
+            "impressions": 3,
+            "ctr": 0,
+            "position": 38.666666666666664
+          }
+        },
+        "currentCompetitorPattern": "Current North Hollywood removal competitors emphasize concrete local access conditions, clear pickup process and local disposal context.",
+        "verifiedLocalAlternative": "LA Sanitation currently offers metal household appliance pickup at no extra cost for eligible single-family curbside customers and lists refrigerators, freezers, washers and dryers among accepted items."
+      },
+      "change": "Added one official-local-resource section linking to LA Sanitation's metal appliance pickup page. Kept HTML title, meta description, H1, canonical, direct 310 contact, request form, qualification rules, appliance details and internal links unchanged.",
+      "successSignals": [
+        "The North Hollywood page improves average position and/or impressions for appliance removal North Hollywood.",
+        "The intended North Hollywood page remains the ranking URL for exact-city removal intent.",
+        "No loss of pickup/reuse clarity or technical audit health."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /north-hollywood-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
