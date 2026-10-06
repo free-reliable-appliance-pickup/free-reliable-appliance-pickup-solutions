@@ -1,0 +1,154 @@
+{
+  "date": "2026-10-05",
+  "purpose": "Conditional post-gate edit specifications for the four clearest wrong-page ownership cases. These are plans only; protected ranking pages remain unchanged until their gates and finalized GSC review.",
+  "evidence": {
+    "crawl": "All audited owners are reachable and have no broken internal targets.",
+    "anchors": "Broad city anchors point cleanly to intended city owners; regional hub anchors are separated from exact city-owner anchors.",
+    "freshness": "General owners and competing URLs share 2026-10-04 sitemap lastmod dates.",
+    "inlinks": {
+      "upland": {
+        "owner": 32,
+        "competitor": {
+          "upland-washer-dryer-pickup": 14
+        }
+      },
+      "fontana": {
+        "owner": 39,
+        "competitor": {
+          "fontana-stove-oven-pickup": 5,
+          "southern-california-appliance-pickup": 30,
+          "rialto-washer-dryer-pickup": 10
+        }
+      },
+      "phoenix": {
+        "owner": 22,
+        "competitor": {
+          "phoenix-refrigerator-pickup": 5
+        }
+      },
+      "fresno": {
+        "owner": 28,
+        "competitor": {
+          "clovis-appliance-pickup": 11,
+          "sanger-appliance-pickup": 10,
+          "selma-appliance-pickup": 10
+        }
+      }
+    },
+    "conclusion": "Wrong-page visibility is not explained by crawl depth, broken links, broad anchor leakage, freshness, or raw internal-link count. Primary remaining hypotheses are owner-page intent concentration, overbuilt structure, regional/sibling semantic overlap, and historical Google query association."
+  },
+  "markets": {
+    "Upland": {
+      "gate": "2026-10-14",
+      "currentOwnerArchitecture": {
+        "mainWords": 1501,
+        "h2Count": 12
+      },
+      "currentCompetitor": "/upland-washer-dryer-pickup/",
+      "gscCannibalization": {
+        "query": "free appliance pickup upland",
+        "impressions": 36,
+        "competingPages": 10,
+        "washerDryerImpressions": 11,
+        "washerDryerPosition": 11.545454545454545
+      },
+      "decisionRule": "If the general Upland owner gains clear finalized ownership by the gate, do not rewrite. If laundry still leads broad intent, make a surgical boundary correction rather than a full page rebuild.",
+      "conditionalChanges": [
+        "Keep title, H1, canonical, 909 phone, request form, qualification rules and dedicated laundry handoff.",
+        "Keep one city-intent opening, appliance categories, simple process, access/local section, qualification limits, FAQ, commercial/recurring path and request.",
+        "Merge any overlapping removal/recycling explanation into one local alternatives section if duplication remains.",
+        "On the washer/dryer page, preserve breadcrumb and explicit handoff to the general owner; only narrow additional broad-appliance wording if finalized query data still shows leakage."
+      ]
+    },
+    "Fontana": {
+      "gate": "2026-10-14",
+      "currentOwnerArchitecture": {
+        "mainWords": 1605,
+        "h2Count": 10
+      },
+      "currentCompetingPages": [
+        "/fontana-stove-oven-pickup/",
+        "/southern-california-appliance-pickup/",
+        "/rialto-washer-dryer-pickup/"
+      ],
+      "gscCannibalization": {
+        "query": "free appliance pickup fontana",
+        "impressions": 28,
+        "competingPages": 5,
+        "ownerImpressions": 3,
+        "ownerPosition": 18.666666666666668,
+        "regionalHubImpressions": 8,
+        "regionalHubPosition": 5.625
+      },
+      "decisionRule": "Because the owner is already relatively concise and strongly linked, first test regional/sibling intent boundaries. Do not automatically cut the city page.",
+      "conditionalChanges": [
+        "Preserve the 10-section city owner unless finalized data shows structural weakness.",
+        "If Southern California hub still outranks the Fontana owner, reduce Fontana-specific broad language on the regional hub while keeping a clear link to the city owner.",
+        "If stove/oven or Rialto laundry still receives broad Fontana impressions, narrow only the offending generic city wording while keeping specialty/local intent intact.",
+        "Keep local Fontana access, appliance qualification, official bulky-item alternative, FAQ and request flow."
+      ]
+    },
+    "Phoenix": {
+      "gate": "2026-10-09",
+      "currentOwnerArchitecture": {
+        "mainWords": 1568,
+        "h2Count": 19
+      },
+      "currentCompetitor": "/phoenix-refrigerator-pickup/",
+      "currentSignals": {
+        "generalGsc": {
+          "clicks": 1,
+          "impressions": 47,
+          "avgPosition": 28.4468085106383
+        },
+        "refrigeratorGsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "avgPosition": 18.8
+        }
+      },
+      "decisionRule": "If the broad Phoenix owner remains weak on Oct 9, this is the strongest immediate candidate for competitor-model structural concentration.",
+      "conditionalChanges": [
+        "Reduce 19 H2 sections toward roughly 7-9 distinct sections.",
+        "Keep one Phoenix city-intent intro, simple 3-step process, appliance categories/qualification, access/local City alternative, commercial/recurring path, FAQ and request.",
+        "Merge overlapping Phoenix city-vs-metro, search-intent, route, neighborhood and preparation sections instead of deleting useful facts.",
+        "Preserve 602-726-7552, canonical, request form, official City of Phoenix alternative and direct Phoenix Metro handoff.",
+        "Do not weaken the refrigerator page unless finalized broad-query ownership confirms it is still stealing the generic city query."
+      ]
+    },
+    "Fresno": {
+      "gate": "2026-10-14",
+      "currentOwnerArchitecture": {
+        "mainWords": 1745,
+        "h2Count": 14
+      },
+      "currentCompetingPages": [
+        "/clovis-appliance-pickup/",
+        "/sanger-appliance-pickup/",
+        "/selma-appliance-pickup/"
+      ],
+      "currentSignals": {
+        "generalGsc": {
+          "clicks": 0,
+          "impressions": 18,
+          "avgPosition": 19
+        },
+        "appliance recycling fresno": {
+          "impressions": 1,
+          "position": 4
+        },
+        "appliance removal fresno": {
+          "impressions": 1,
+          "position": 19
+        }
+      },
+      "decisionRule": "If neighboring city pages continue to surface for broad Fresno intent, concentrate the Fresno owner and narrow Fresno-targeting language on siblings rather than adding more content.",
+      "conditionalChanges": [
+        "Reduce owner structure toward city intent, request/process, appliance categories/qualification, access/local cleanup alternative, commercial/multifamily path, FAQ, request and nearby-market handoff.",
+        "Merge ZIP/neighborhood/nearby-route overlap so Fresno remains the clear city entity.",
+        "Preserve the strong Fresno recycling signal, 310 contact routing, form and official local cleanup alternative.",
+        "Keep Clovis/Sanger/Selma pages focused on their own cities and Fresno County relationships, not Fresno-city broad intent."
+      ]
+    }
+  }
+}
