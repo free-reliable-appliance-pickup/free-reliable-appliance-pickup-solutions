@@ -28,7 +28,7 @@ jobs:
 
           BASE='https://freereliableappliancepickup.com/'
           NS={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          SCRIPT_RE=re.compile(r'<script\\b[^>]*type=["\\']application/ld\\+json["\\'][^>]*>(.*?)</script>',re.I|re.S)
+          SCRIPT_RE=re.compile(r"<script\\b[^>]*type=['\"]application/ld\\+json['\"][^>]*>(.*?)</script>",re.I|re.S)
 
           def file_for(url):
               if url == BASE:
