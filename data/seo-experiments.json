@@ -8332,6 +8332,99 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /lancaster-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-paradise-valley-local-authority",
+      "market": "Paradise Valley, AZ",
+      "hypothesis": "Adding verified local disposal-provider context and removing a generic social block will improve Paradise Valley local usefulness while preserving the existing pickup qualification and city intent.",
+      "pagesChanged": [
+        "/paradise-valley-appliance-pickup/"
+      ],
+      "protectedOwner": "/paradise-valley-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 66,
+          "query": {
+            "query": "appliance removal paradise valley, az",
+            "impressions": 2,
+            "position": 66
+          }
+        },
+        "verifiedLocalFact": "Town of Paradise Valley does not provide municipal solid-waste/recycling collection; residents subscribe to licensed private companies."
+      },
+      "change": "Added one official-local-resource section linking to the Town's current trash/recycling provider list and removed the generic Facebook bridge. Kept title, meta description, H1, canonical, form, qualification rules, appliance details, local access/planning and Phoenix Metro routing unchanged.",
+      "successSignals": [
+        "Exact-city appliance removal visibility improves from the current weak baseline.",
+        "Paradise Valley remains the intended city owner for general appliance pickup/removal intent.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /paradise-valley-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-carlsbad-narrow-legacy-cleanup",
+      "market": "Carlsbad, CA",
+      "hypothesis": "Removing only the search-engine-facing local-intent declaration and unrelated General Plan depth block will reduce templated noise while preserving Carlsbad's existing page-one haul-away signal and strong official bulky-item section.",
+      "pagesChanged": [
+        "/carlsbad-appliance-pickup/"
+      ],
+      "protectedOwner": "/carlsbad-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "position": 50,
+          "queries": [
+            {
+              "query": "appliance removal carlsbad",
+              "impressions": 1,
+              "position": 75
+            },
+            {
+              "query": "refrigerator removal carlsbad",
+              "impressions": 2,
+              "position": 51.5
+            },
+            {
+              "query": "washer dryer removal carlsbad",
+              "impressions": 1,
+              "position": 68
+            },
+            {
+              "query": "free appliance haul away",
+              "impressions": 1,
+              "position": 4
+            }
+          ]
+        },
+        "protectSignal": "free appliance haul away already appeared around position 4, so no title/H1/snippet/core service or official bulky-item section was changed."
+      },
+      "change": "Removed only the legacy 'local searches such as' intent-owner block and generic General Plan/local-depth section. Preserved title, meta description, H1, canonical, 310 contact, form, appliance scope, condo/HOA access details, FAQ, official Carlsbad/Republic Services bulky-item section, nearby links and qualification rules.",
+      "successSignals": [
+        "Exact-city Carlsbad removal queries improve without losing the page-one free appliance haul-away signal.",
+        "Carlsbad remains the intended general city owner while laundry-specific intent remains separate.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /carlsbad-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
