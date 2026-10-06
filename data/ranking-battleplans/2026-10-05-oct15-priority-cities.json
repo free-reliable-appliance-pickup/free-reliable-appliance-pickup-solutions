@@ -1,0 +1,198 @@
+{
+  "date": "2026-10-05",
+  "unlock": "2026-10-15",
+  "principle": "Protect current page-one signals. Use the competitor model only where finalized data still shows weak exact-city ownership or excessive architecture.",
+  "cities": {
+    "Rialto": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 5,
+        "avgPosition": 15
+      },
+      "architecture": {
+        "mainWords": 2333,
+        "h2Count": 28
+      },
+      "diagnosis": "Very dense and still outside the target range. Strong simplification candidate if no improvement appears.",
+      "gateDecision": "If still ~15 or worse, compress to city/process/qualification/local alternatives/FAQ/request and preserve IE links."
+    },
+    "Redlands": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 11,
+        "avgPosition": 7.545454545454546
+      },
+      "architecture": {
+        "mainWords": 2069,
+        "h2Count": 26
+      },
+      "diagnosis": "Dense but already page-one. Do not rewrite solely because it is long.",
+      "gateDecision": "Protect if top-10 holds; prefer CTR/ownership improvements."
+    },
+    "Loma Linda": {
+      "gsc": {
+        "clicks": 1,
+        "impressions": 4,
+        "avgPosition": 21
+      },
+      "querySignals": {
+        "appliance removal loma linda, ca": {
+          "impressions": 2,
+          "position": 34.5
+        }
+      },
+      "architecture": {
+        "mainWords": 1368,
+        "h2Count": 18
+      },
+      "diagnosis": "Weak local removal visibility and moderate structural density. Candidate for concentration if sample grows without improvement.",
+      "gateDecision": "If local query remains 30+, simplify and reinforce Loma Linda ownership."
+    },
+    "San Marino": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 11,
+        "avgPosition": 5.818181818181818
+      },
+      "architecture": {
+        "mainWords": 885,
+        "h2Count": 10
+      },
+      "diagnosis": "Already strong and reasonably concise.",
+      "gateDecision": "Protect unless finalized data deteriorates."
+    },
+    "Fullerton": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 13,
+        "avgPosition": 10.76923076923077
+      },
+      "querySignals": {
+        "appliance removal fullerton": {
+          "impressions": 1,
+          "position": 43
+        }
+      },
+      "architecture": {
+        "mainWords": 2319,
+        "h2Count": 30
+      },
+      "diagnosis": "Near page one overall but extremely dense; exact local removal weak.",
+      "gateDecision": "If overall remains near top 10, use surgical city-intent cleanup rather than full rewrite."
+    },
+    "La Habra": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 3,
+        "avgPosition": 6.333333333333333
+      },
+      "architecture": {
+        "mainWords": 1832,
+        "h2Count": 20
+      },
+      "diagnosis": "Small sample but strong position. Preserve if more impressions confirm.",
+      "gateDecision": "Protect if top-10 persists."
+    },
+    "Buena Park": {
+      "gsc": null,
+      "architecture": {
+        "mainWords": 648,
+        "h2Count": 7
+      },
+      "diagnosis": "Already concise competitor-model structure but no finalized GSC visibility yet.",
+      "gateDecision": "Do not rewrite structure first; check indexing/internal authority and live ownership before any content change."
+    },
+    "Yorba Linda": {
+      "gsc": null,
+      "architecture": {
+        "mainWords": 632,
+        "h2Count": 7
+      },
+      "diagnosis": "Already concise competitor-model structure but no finalized GSC visibility yet.",
+      "gateDecision": "Do not rewrite structure first; check indexing/internal authority and live ownership before any content change."
+    },
+    "Orange": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 11,
+        "avgPosition": 40.54545454545455
+      },
+      "querySignals": {
+        "appliance removal orange": {
+          "impressions": 2,
+          "position": 62
+        },
+        "free appliance pick up orange county": {
+          "impressions": 1,
+          "position": 31
+        }
+      },
+      "architecture": {
+        "mainWords": 1953,
+        "h2Count": 21
+      },
+      "diagnosis": "Clear weak performer with dense architecture and Orange-vs-Orange-County intent overlap.",
+      "gateDecision": "High-priority simplification and city/hub separation if still weak."
+    },
+    "Lake Forest": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 12,
+        "avgPosition": 7.333333333333333
+      },
+      "architecture": {
+        "mainWords": 1878,
+        "h2Count": 23
+      },
+      "diagnosis": "Strong page-one position despite dense content.",
+      "gateDecision": "Protect if top-10 holds; avoid unnecessary simplification."
+    },
+    "Mesa": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 9,
+        "avgPosition": 27.22222222222222
+      },
+      "querySignals": {
+        "appliance removal mesa az": {
+          "impressions": 1,
+          "position": 73
+        }
+      },
+      "architecture": {
+        "mainWords": 999,
+        "h2Count": 13
+      },
+      "diagnosis": "Weak exact-city removal ownership; candidate for a concise competitor-model pass.",
+      "gateDecision": "If exact Mesa remains weak, simplify around city/process/qualification/local/FAQ/request."
+    },
+    "Scottsdale": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 18,
+        "avgPosition": 42.27777777777778
+      },
+      "querySignals": {
+        "appliance removal scottsdale": {
+          "impressions": 2,
+          "position": 66.5
+        },
+        "appliance removal scottsdale, az": {
+          "impressions": 2,
+          "position": 69
+        },
+        "appliance removal north scottsdale, az": {
+          "impressions": 2,
+          "position": 82
+        }
+      },
+      "architecture": {
+        "mainWords": 828,
+        "h2Count": 13
+      },
+      "diagnosis": "One of the weakest priority pages. Current title test must finish, then likely needs stronger city-intent concentration and competitor comparison.",
+      "gateDecision": "High-priority post-gate correction if positions remain 40-80."
+    }
+  },
+  "measurementRule": "Evaluate regular organic separately from Images, Maps/local pack and AI results."
+}
