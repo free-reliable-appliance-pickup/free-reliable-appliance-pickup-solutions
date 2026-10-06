@@ -7346,6 +7346,41 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /keizer-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-california-stockton-laundry-handoff",
+      "market": "California hub → Stockton washer/dryer intent",
+      "hypothesis": "Adding one explicit Stockton washer/dryer handoff from the California hub will help the dedicated Stockton laundry page own washer/dryer queries while leaving the protected Stockton general and laundry pages unchanged.",
+      "pagesChanged": [
+        "/california-appliance-pickup/"
+      ],
+      "protectedOwner": "/stockton-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "generalPage": "/stockton-appliance-pickup/",
+          "impressions": 14,
+          "position": 8.285714285714285,
+          "strayQuery": "free washer and dryer pickup",
+          "strayQueryImpressions": 1,
+          "strayQueryPosition": 10
+        },
+        "ownershipProblem": "The California hub linked Stockton general/county routing but did not link the dedicated Stockton washer/dryer page, while GSC showed the general Stockton page appearing for a washer/dryer query."
+      },
+      "change": "Added a single Central Valley washer/dryer handoff link from /california-appliance-pickup/ to /stockton-washer-dryer-pickup/ (with Fresno laundry parity) without changing the protected Stockton city pages or the existing Anaheim/Arcadia anchor experiment.",
+      "successSignals": [
+        "The dedicated Stockton washer/dryer page begins receiving Stockton or washer/dryer query impressions.",
+        "The general Stockton page stops or reduces appearances for washer/dryer-only intent.",
+        "California hub, internal-link, search-intent and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative Stockton/Fresno laundry-anchor changes on /california-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage. Preserve the existing Anaheim/Arcadia experiment."
     }
   ],
   "technicalMaintenance": [
