@@ -1,0 +1,114 @@
+name: Audit Priority City Internal Links
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - '.github/workflows/audit-priority-city-internal-links.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Analyze priority city crawl paths
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from urllib.parse import urljoin, urlparse
+          from collections import defaultdict, deque
+          import re, xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          HOST='freereliableappliancepickup.com'
+          PRIORITY='''phoenix denver san-bernardino chino la-puente fresno sacramento anaheim costa-mesa irvine highland pico-rivera monterey-park tustin mission-viejo laguna-hills laguna-woods newport-beach chandler orange scottsdale mesa loma-linda rialto jurupa-valley glendora la-canada-flintridge la-crescenta montebello buena-park yorba-linda'''.split()
+
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          sitemap_urls=[el.text.strip() for el in root.findall('.//s:loc',ns) if el.text]
+          active=set(sitemap_urls)
+
+          def url_to_file(url):
+              if url.rstrip('/')==BASE.rstrip('/'):
+                  return Path('index.html')
+              if not url.startswith(BASE):
+                  return None
+              rel=url[len(BASE):].split('#',1)[0].split('?',1)[0].strip('/')
+              if not rel:
+                  return Path('index.html')
+              p=Path(rel)
+              return p if p.suffix else p/'index.html'
+
+          graph=defaultdict(set)
+          inlinks=defaultdict(set)
+          broken=[]
+          href_re=re.compile(r'href\s*=\s*["\']([^"\']+)["\']',re.I)
+
+          for src in sitemap_urls:
+              fp=url_to_file(src)
+              if not fp or not fp.exists():
+                  continue
+              raw=fp.read_text(encoding='utf-8',errors='ignore')
+              for href in href_re.findall(raw):
+                  href=href.strip()
+                  if not href or href.startswith(('#','mailto:','tel:','javascript:','data:')):
+                      continue
+                  dest=urljoin(src,href)
+                  parsed=urlparse(dest)
+                  if parsed.netloc!=HOST:
+                      continue
+                  clean=parsed._replace(fragment='',query='').geturl()
+                  if clean.endswith('/index.html'):
+                      clean=clean[:-10]
+                  rel=parsed.path.strip('/')
+                  candidate=Path(rel)
+                  if rel and not candidate.suffix and (candidate/'index.html').exists():
+                      clean=BASE+rel+'/'
+                  elif not rel:
+                      clean=BASE
+                  graph[src].add(clean)
+                  inlinks[clean].add(src)
+                  target=url_to_file(clean)
+                  if target is not None and not target.exists():
+                      broken.append((src,clean,str(target)))
+
+          depths={BASE:0}
+          q=deque([BASE])
+          while q:
+              u=q.popleft()
+              for v in graph.get(u,()):
+                  if v in active and v not in depths:
+                      depths[v]=depths[u]+1
+                      q.append(v)
+
+          print('SITEMAP_URLS',len(sitemap_urls))
+          print('REACHABLE_FROM_HOME',sum(u in depths for u in sitemap_urls))
+          print('UNREACHABLE_FROM_HOME',sum(u not in depths for u in sitemap_urls))
+          print('BROKEN_INTERNAL_TARGETS',len(set(broken)))
+          print('PRIORITY_CITY_RESULTS')
+          weak=[]
+          for slug in PRIORITY:
+              u=BASE+slug+'-appliance-pickup/'
+              count=len(inlinks.get(u,set()) & active)
+              depth=depths.get(u,999)
+              print(f'{slug}: inlinks={count} depth={depth if depth<999 else "NA"}')
+              if count < 3 or depth > 3:
+                  weak.append((count,depth,slug))
+          print('PRIORITY_WEAK_LINK_PATHS')
+          for count,depth,slug in sorted(weak):
+              print(f'{slug}: inlinks={count} depth={depth if depth<999 else "NA"}')
+          print('BROKEN_INTERNAL_LINKS')
+          for src,dest,target in sorted(set(broken))[:200]:
+              print(src,'->',dest,'| missing',target)
+
+          if broken:
+              raise SystemExit('Broken internal targets found')
+          PY
