@@ -6607,6 +6607,122 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative title, description, body, internal-link, schema, canonical or intent-ownership edits to the senior-living page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-05-bradbury-competitor-model-concentration",
+      "market": "Bradbury, CA",
+      "hypothesis": "A concise people-first city page using the winning Southern California competitor pattern—clear city intent, simple process, qualification, access, proof, commercial/recurring paths and nearby-market links—will help Bradbury establish organic visibility without repetitive search-engine-facing sections.",
+      "pagesChanged": [
+        "/bradbury-appliance-pickup/"
+      ],
+      "protectedOwner": "/bradbury-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": null,
+        "preChangeArchitecture": {
+          "approxMainWords": 769,
+          "h2Count": 12
+        },
+        "competitorBenchmark": {
+          "page": "TakeMyAppliance Southern California city-page model",
+          "pattern": "City intent -> process -> qualification/services -> local detail -> commercial/request path -> nearby locations/FAQ."
+        }
+      },
+      "change": "Reduced the Bradbury main content from 12 H2 sections to a concise city-intent structure while preserving title/meta/canonical, 909 phone/text CTAs, Formspree request form, qualification rules, property/recurring paths and nearby SGV links. Added two existing real appliance proof images; no fake local office or unsupported service claim was added.",
+      "successSignals": [
+        "The intended /bradbury-appliance-pickup/ page begins receiving finalized GSC impressions for relevant Bradbury appliance-pickup queries.",
+        "The Bradbury city page becomes the ranking URL for broad Bradbury appliance-pickup intent.",
+        "Technical, form, routing and content-quality audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /bradbury-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-tempe-competitor-model-concentration",
+      "market": "Tempe, AZ",
+      "hypothesis": "Simplifying Tempe around the current top competitor's city-page pattern while keeping our stricter qualification rules, direct phone/text contact and local request form will improve city-intent concentration and organic visibility.",
+      "pagesChanged": [
+        "/tempe-appliance-pickup/"
+      ],
+      "protectedOwner": "/tempe-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "avgPosition": 43,
+          "note": "One returned query was unrelated delivery-service intent at position 60."
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 742,
+          "h2Count": 12
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/arizona/tempe",
+          "pattern": "Commercial path -> simple process -> trust reasons -> request -> local details -> appliance categories -> FAQ -> nearby locations."
+        }
+      },
+      "change": "Reduced Tempe from 12 H2 sections to a concise city page centered on pickup process, qualification, access/disposal alternatives, recurring-property paths, Phoenix Metro handoffs, visible FAQs and the existing request form. Title/meta/canonical, Arizona phone 602-726-7552, Formspree endpoint and qualification rules were preserved.",
+      "successSignals": [
+        "Finalized GSC average position improves from the 43 baseline as relevant Tempe impressions grow.",
+        "Relevant appliance-pickup queries replace unrelated delivery-service impressions.",
+        "The intended /tempe-appliance-pickup/ page remains the owner for broad Tempe appliance-pickup intent."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /tempe-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-glendale-az-competitor-model-concentration",
+      "market": "Glendale, AZ",
+      "hypothesis": "Simplifying Glendale, Arizona around the current competitor city-page pattern while preserving our stricter qualification rules, direct phone/text contact and local form will improve broad Glendale organic relevance.",
+      "pagesChanged": [
+        "/glendale-az-appliance-pickup/"
+      ],
+      "protectedOwner": "/glendale-az-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "avgPosition": 93
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 776,
+          "h2Count": 12
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/locations/arizona/glendale",
+          "pattern": "Commercial path -> three-step process -> trust reasons -> request -> local details -> appliance categories -> FAQ -> nearby locations."
+        }
+      },
+      "change": "Reduced Glendale AZ from 12 H2 sections to a concise city page centered on pickup process, qualification, access/disposal alternatives, recurring-property paths, Phoenix Metro handoffs, visible FAQs and the existing request form. Title/meta/canonical, Arizona phone 602-726-7552, Formspree endpoint and qualification rules were preserved.",
+      "successSignals": [
+        "Finalized GSC average position improves from the 93 baseline as Glendale appliance-pickup impressions grow.",
+        "The intended /glendale-az-appliance-pickup/ page gains broad city-query ownership.",
+        "Technical, form, routing and content-quality audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /glendale-az-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
