@@ -8238,6 +8238,61 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /san-diego-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-san-jose-narrow-legacy-cleanup",
+      "market": "San Jose, CA",
+      "hypothesis": "Removing only the search-engine-facing local-intent declaration and unrelated planning-content block will reduce templated noise while preserving the page-one generic pickup signal and the stronger user-facing San Jose service content.",
+      "pagesChanged": [
+        "/san-jose-appliance-pickup/"
+      ],
+      "protectedOwner": "/san-jose-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 22,
+          "ctr": 0,
+          "position": 23.5,
+          "queries": [
+            {
+              "query": "appliance removal san jose",
+              "impressions": 1,
+              "position": 68
+            },
+            {
+              "query": "appliance removal san jose ca",
+              "impressions": 1,
+              "position": 70
+            },
+            {
+              "query": "free pick up appliances near me",
+              "impressions": 1,
+              "position": 9
+            },
+            {
+              "query": "washer and dryer removal san jose",
+              "impressions": 1,
+              "position": 65
+            }
+          ]
+        },
+        "protectSignal": "The page already had a page-one generic pickup signal, so the experiment intentionally avoids title, H1, snippet, core pickup copy, City of San Jose public-pickup section, form and internal-link changes."
+      },
+      "change": "Removed only the legacy 'local searches such as' intent-owner block and the generic San Jose growth/General Plan section. Preserved title, meta description, H1, canonical, 310 contact, form, qualification rules, appliance detail, access guidance, FAQ, City of San Jose no-cost junk-pickup comparison, laundry handoff and Bay Area links.",
+      "successSignals": [
+        "Exact-city appliance removal queries improve without losing the existing page-one generic pickup signal.",
+        "San Jose remains the owner page for broad city appliance pickup/removal intent.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /san-jose-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
