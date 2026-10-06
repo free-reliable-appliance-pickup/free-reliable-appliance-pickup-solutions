@@ -7260,6 +7260,52 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /south-pasadena-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-socal-freezer-city-boundary-routing",
+      "market": "Southern California regional freezer intent",
+      "hypothesis": "Removing broad city-owner links from the regional freezer routing layer and sending Rancho Cucamonga freezer intent to the dedicated Rancho freezer page will preserve regional freezer visibility while reducing leakage into broad city appliance-pickup queries.",
+      "pagesChanged": [
+        "/southern-california-freezer-pickup/"
+      ],
+      "protectedOwner": "/southern-california-freezer-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 13,
+          "ctr": 0,
+          "avgPosition": 14.076923076923077,
+          "queries": [
+            {
+              "query": "free appliance pickup rancho cucamonga",
+              "impressions": 1,
+              "position": 14
+            }
+          ]
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 1501,
+          "h2Count": 19,
+          "ranchoBroadLink": true
+        },
+        "problem": "Regional freezer page was linking broad city appliance owners, including Rancho Cucamonga, even though a dedicated Rancho freezer page exists."
+      },
+      "change": "Kept title/meta/H1/canonical/form and overall freezer content intact. Removed the direct broad San Bernardino example from the freezer-only scope, replaced the general-city priority-route block with regional hub routing, removed the broad Rancho appliance link, and added /rancho-cucamonga-freezer-pickup/ to the dedicated freezer guides.",
+      "successSignals": [
+        "Regional freezer impressions remain stable or improve from the 13-impression / 14.08 position baseline.",
+        "The page stops receiving broad 'free appliance pickup rancho cucamonga' impressions.",
+        "Rancho broad intent resolves to /rancho-cucamonga-appliance-pickup/ while freezer intent can resolve to /rancho-cucamonga-freezer-pickup/.",
+        "Search-intent, metadata, JSON-LD, internal-link and final SEO audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /southern-california-freezer-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
