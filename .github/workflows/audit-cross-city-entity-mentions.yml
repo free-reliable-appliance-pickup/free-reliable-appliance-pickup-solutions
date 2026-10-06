@@ -1,0 +1,114 @@
+name: Audit Cross-City Entity Mentions
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - '**/*-appliance-pickup/index.html'
+      - '.github/workflows/audit-cross-city-entity-mentions.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Report neighboring-city entity leakage
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from collections import Counter
+          import re, html
+
+          SPECIAL={
+            'la-canada-flintridge':'la cañada flintridge',
+            'la-crescenta':'la crescenta',
+            'glendale-az':'glendale',
+            'westminster-ca':'westminster',
+            'rancho-cucamonga':'rancho cucamonga',
+            'san-bernardino':'san bernardino',
+            'chino-hills':'chino hills',
+            'rowland-heights':'rowland heights',
+            'pico-rivera':'pico rivera',
+            'monterey-park':'monterey park',
+            'anaheim-hills':'anaheim hills',
+            'santa-ana':'santa ana',
+            'costa-mesa':'costa mesa',
+            'huntington-beach':'huntington beach',
+            'lake-forest':'lake forest',
+            'mission-viejo':'mission viejo',
+            'laguna-niguel':'laguna niguel',
+            'laguna-hills':'laguna hills',
+            'laguna-woods':'laguna woods',
+            'san-clemente':'san clemente',
+            'newport-beach':'newport beach',
+            'south-pasadena':'south pasadena',
+            'west-covina':'west covina',
+            'san-dimas':'san dimas',
+            'la-verne':'la verne',
+            'sierra-madre':'sierra madre',
+            'temple-city':'temple city',
+            'san-marino':'san marino',
+            'baldwin-park':'baldwin park',
+            'la-puente':'la puente',
+            'diamond-bar':'diamond bar',
+            'el-monte':'el monte',
+            'moreno-valley':'moreno valley',
+            'jurupa-valley':'jurupa valley',
+            'loma-linda':'loma linda',
+            'buena-park':'buena park',
+            'yorba-linda':'yorba linda'
+          }
+
+          pages=[]
+          for p in Path('.').glob('*-appliance-pickup/index.html'):
+              slug=p.parent.name[:-len('-appliance-pickup')]
+              label=SPECIAL.get(slug,slug.replace('-',' '))
+              pages.append((slug,label,p))
+          names=sorted(pages,key=lambda x:len(x[1]),reverse=True)
+          tag_re=re.compile(r'<[^>]+>')
+          script_re=re.compile(r'<script[\s\S]*?</script>|<style[\s\S]*?</style>',re.I)
+          anchor_re=re.compile(r'<a\b[^>]*>.*?</a>',re.I|re.S)
+
+          print('CROSS_CITY_ENTITY_REPORT')
+          risky=[]
+          for slug,own,p in pages:
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              tm=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
+              h1m=re.search(r'<h1[^>]*>(.*?)</h1>',raw,re.I|re.S)
+              heads=' '.join(tag_re.sub(' ',m.group(1)) for m in re.finditer(r'<h[2-3][^>]*>(.*?)</h[2-3]>',raw,re.I|re.S))
+              title=html.unescape(tag_re.sub(' ',tm.group(1))).lower() if tm else ''
+              h1=html.unescape(tag_re.sub(' ',h1m.group(1))).lower() if h1m else ''
+              body_raw=anchor_re.sub(' ',script_re.sub(' ',raw))
+              body=html.unescape(tag_re.sub(' ',body_raw)).lower()
+              body=' '.join(body.split())
+              head_text=' '.join(html.unescape(heads).lower().split())
+
+              hits=[]
+              for other_slug,other,_ in names:
+                  if other_slug==slug: continue
+                  # Avoid counting a shorter city name when it is only part of the owner name.
+                  if other in own and other!=own: continue
+                  patt=r'(?<![a-z])'+re.escape(other)+r'(?![a-z])'
+                  title_n=len(re.findall(patt,title))
+                  h1_n=len(re.findall(patt,h1))
+                  head_n=len(re.findall(patt,head_text))
+                  body_n=len(re.findall(patt,body))
+                  if title_n or h1_n or head_n>=2 or body_n>=4:
+                      hits.append((title_n,h1_n,head_n,body_n,other_slug,other))
+              if hits:
+                  hits=sorted(hits,reverse=True)
+                  severity=sum(20*t+20*h+4*hd+b for t,h,hd,b,_,_ in hits)
+                  risky.append((severity,slug,hits))
+
+          for severity,slug,hits in sorted(risky,reverse=True)[:100]:
+              print(f'PAGE {slug} severity={severity}')
+              for title_n,h1_n,head_n,body_n,other_slug,other in hits[:10]:
+                  print(f'  OTHER {other_slug} title={title_n} h1={h1_n} headings={head_n} body_nonlink={body_n}')
+          print('FLAGGED_PAGE_COUNT',len(risky))
+          PY
