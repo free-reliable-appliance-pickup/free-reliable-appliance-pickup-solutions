@@ -108,3 +108,19 @@ No customer-facing Sacramento rewrite today. At the next unfrozen decision point
 3. Do not create thin city × appliance pages just because TakeMyAppliance has them.
 4. Preserve dedicated washer/dryer ownership and avoid pulling laundry intent back into the general page.
 5. Use later finalized GSC, not same-day rank volatility, to trigger the next edit.
+
+
+## Laundry / metro ownership check
+
+Additional finalized GSC through **2026-10-03**:
+
+- `/stockton-washer-dryer-pickup/` — no usable row yet.
+- `/sacramento-washer-dryer-pickup/` — 2 impressions, avg position **8.0**.
+  - `washer and dryer removal sacramento` — 1 impression, position **4**.
+- `/sacramento-metro-appliance-pickup/` — 7 impressions, avg position **11.0**.
+- `/sacramento-metro-washer-dryer-pickup/` — 1 impression, avg position **10.0**.
+
+Interpretation:
+- Sacramento's dedicated laundry page already has a small but clean page-one signal. **Protect it.**
+- The Sacramento metro pages are visible but still low-volume; keep city and metro ownership separated.
+- Stockton laundry has insufficient evidence, so the one laundry impression on the Stockton general page is not enough to justify an ownership edit.
