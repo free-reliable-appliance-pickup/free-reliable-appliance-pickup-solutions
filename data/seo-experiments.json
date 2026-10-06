@@ -8481,6 +8481,56 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /long-beach-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-los-angeles-refrigerator-concentration",
+      "market": "Los Angeles, CA refrigerator pickup",
+      "hypothesis": "Removing repeated regional/qualification blocks and replacing the indirect disposal fallback with the direct LA Sanitation metal-appliance resource will concentrate this page on refrigerator pickup/removal intent and improve weak exact-city refrigerator visibility.",
+      "pagesChanged": [
+        "/los-angeles-refrigerator-pickup/"
+      ],
+      "protectedOwner": "/los-angeles-refrigerator-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 13,
+          "ctr": 0,
+          "position": 33.76923076923077,
+          "queries": [
+            {
+              "query": "free appliance pick up los angeles",
+              "impressions": 1,
+              "position": 43
+            },
+            {
+              "query": "free refrigerator pick up los angeles",
+              "impressions": 1,
+              "position": 42
+            },
+            {
+              "query": "refrigerator removal los angeles",
+              "impressions": 1,
+              "position": 55
+            }
+          ]
+        },
+        "verifiedLocalAlternative": "LA Sanitation currently lists metal household appliance pickup for eligible single-family curbside customers, including refrigerators and freezers."
+      },
+      "change": "Replaced the indirect MyLA311 disposal mention with a direct LA Sanitation metal-appliance pickup resource and removed the redundant turbo regional-service block plus duplicate LA category qualification block. Preserved title, meta description, H1, canonical, 310 contact, refrigerator testing/photos/access guidance, apartment/hillside access, FAQ, appliance-topic links and request form.",
+      "successSignals": [
+        "Exact Los Angeles refrigerator pickup/removal queries gain impressions and improve average position.",
+        "Broad Los Angeles appliance intent remains on the general Los Angeles page while this page remains refrigerator-specific.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /los-angeles-refrigerator-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
