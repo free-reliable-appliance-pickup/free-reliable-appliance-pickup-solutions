@@ -1,0 +1,77 @@
+name: Audit Priority Anchor Ownership
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - '.github/workflows/audit-priority-anchor-ownership.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Analyze broad city anchors
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from collections import defaultdict
+          import re, html
+
+          CITIES = {
+              'phoenix':'Phoenix',
+              'denver':'Denver',
+              'fresno':'Fresno',
+              'upland':'Upland',
+              'fontana':'Fontana',
+              'rancho-cucamonga':'Rancho Cucamonga',
+              'ontario':'Ontario',
+              'mission-viejo':'Mission Viejo',
+              'scottsdale':'Scottsdale',
+              'orange':'Orange',
+              'jurupa-valley':'Jurupa Valley'
+          }
+
+          anchor_re=re.compile(r'<a\b[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>',re.I|re.S)
+          tag_re=re.compile(r'<[^>]+>')
+          rows=defaultdict(list)
+
+          for p in Path('.').rglob('*.html'):
+              if any(part in {'.git','node_modules'} for part in p.parts):
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              for href,inner in anchor_re.findall(raw):
+                  if not href.startswith('/'):
+                      continue
+                  text=html.unescape(tag_re.sub(' ',inner))
+                  text=' '.join(text.split())
+                  low=text.lower()
+                  for slug,label in CITIES.items():
+                      label_low=label.lower()
+                      if label_low not in low:
+                          continue
+                      if not any(term in low for term in ('appliance pickup','appliance removal','free appliance pickup','appliance recycling')):
+                          continue
+                      rows[slug].append((str(p),href,text))
+
+          for slug,label in CITIES.items():
+              owner=f'/{slug}-appliance-pickup/'
+              broad=rows.get(slug,[])
+              owner_hits=[r for r in broad if r[1]==owner]
+              specialty=[r for r in broad if r[1]!=owner and slug in r[1]]
+              other=[r for r in broad if r[1]!=owner and slug not in r[1]]
+              print(f'CITY {label}')
+              print('BROAD_ANCHORS',len(broad),'OWNER',len(owner_hits),'SPECIALTY_OR_SIBLING',len(specialty),'OTHER',len(other))
+              for src,href,text in specialty[:30]:
+                  print('SPECIALTY',src,'->',href,'|',text)
+              for src,href,text in other[:20]:
+                  print('OTHER',src,'->',href,'|',text)
+              print()
+          PY
