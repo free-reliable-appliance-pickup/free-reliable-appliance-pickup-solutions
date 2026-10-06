@@ -48,7 +48,7 @@ async function main(){
     ['San Diego','CA','partner-recruiting','San Diego County','priority-california-city','310-774-4304'],
     ['San Francisco','CA','partner-recruiting','San Francisco Bay Area','priority-california-city','310-774-4304'],
     ['Fresno','CA','partner-recruiting','Central Valley','priority-california-city','310-774-4304'],
-    ['Phoenix Metro','AZ','partner-recruiting','Phoenix Metro','regional',null],
+    ['Phoenix Metro','AZ','partner-recruiting','Phoenix Metro','regional','602-726-7552'],
     ['Las Vegas Valley','NV','partner-recruiting','Las Vegas Valley','regional',null],
     ['Columbus','OH','request-only','Ohio statewide intake','statewide',null]
   ];
