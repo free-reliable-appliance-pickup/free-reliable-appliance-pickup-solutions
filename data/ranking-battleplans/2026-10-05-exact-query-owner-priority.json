@@ -1,0 +1,268 @@
+{
+  "date": "2026-10-05",
+  "purpose": "Exact money-query owner priority map. Use exact city-modified queries ahead of flattering page averages when deciding post-gate work.",
+  "markets": [
+    {
+      "city": "Denver",
+      "owner": "/denver-appliance-pickup/",
+      "pageAvgPosition": 39.8333,
+      "exactQueries": [
+        {
+          "query": "appliance pick up denver",
+          "position": 55,
+          "impressions": 1
+        },
+        {
+          "query": "appliance removal denver",
+          "position": 75.8333,
+          "impressions": 6
+        },
+        {
+          "query": "appliance removal denver co",
+          "position": 69,
+          "impressions": 1
+        }
+      ],
+      "wrongPage": {
+        "query": "denver appliance pickup",
+        "page": "/lakewood-appliance-pickup/",
+        "position": 10,
+        "impressions": 5
+      },
+      "priority": "critical",
+      "gate": "2026-10-09"
+    },
+    {
+      "city": "Fontana",
+      "owner": "/fontana-appliance-pickup/",
+      "pageAvgPosition": 8,
+      "exactQueries": [
+        {
+          "query": "free appliance pickup fontana",
+          "position": 18.6667,
+          "impressions": 3
+        }
+      ],
+      "wrongPages": [
+        {
+          "page": "/southern-california-appliance-pickup/",
+          "position": 5.625,
+          "impressions": 8
+        },
+        {
+          "page": "/rialto-washer-dryer-pickup/",
+          "position": 6.5,
+          "impressions": 4
+        }
+      ],
+      "priority": "critical despite strong page average",
+      "gate": "2026-10-14"
+    },
+    {
+      "city": "Chino Hills",
+      "owner": "/chino-hills-appliance-pickup/",
+      "pageAvgPosition": 8.25,
+      "exactQueries": [
+        {
+          "query": "free appliance pickup chino hills",
+          "position": 21,
+          "impressions": 1
+        }
+      ],
+      "wrongPage": {
+        "page": "/chino-appliance-pickup/",
+        "position": 28.25,
+        "impressions": 4
+      },
+      "priority": "high despite strong page average",
+      "gate": "2026-10-14"
+    },
+    {
+      "city": "Laguna Hills",
+      "owner": "/laguna-hills-appliance-pickup/",
+      "pageAvgPosition": 20,
+      "exactQueries": [
+        {
+          "query": "appliance removal laguna hills",
+          "position": 16.375,
+          "impressions": 8
+        }
+      ],
+      "wrongPages": [
+        {
+          "page": "/laguna-beach-appliance-pickup/",
+          "position": 38.2222,
+          "impressions": 9
+        },
+        {
+          "page": "/laguna-woods-appliance-pickup/",
+          "position": 24.3333,
+          "impressions": 3
+        }
+      ],
+      "priority": "high",
+      "gate": "2026-10-14"
+    },
+    {
+      "city": "Fresno",
+      "owner": "/fresno-appliance-pickup/",
+      "pageAvgPosition": 19,
+      "exactQueries": [
+        {
+          "query": "appliance recycling fresno",
+          "position": 4,
+          "impressions": 1
+        },
+        {
+          "query": "appliance removal fresno",
+          "position": 19,
+          "impressions": 1
+        }
+      ],
+      "wrongPages": [
+        {
+          "page": "/visalia-appliance-pickup/",
+          "query": "free appliance pickup fresno",
+          "position": 30,
+          "impressions": 3
+        },
+        {
+          "page": "/clovis-appliance-pickup/",
+          "query": "free appliance pickup fresno",
+          "position": 21,
+          "impressions": 2
+        },
+        {
+          "page": "/sanger-appliance-pickup/",
+          "query": "free appliance pickup fresno",
+          "position": 27.5,
+          "impressions": 2
+        }
+      ],
+      "priority": "high but preserve recycling win",
+      "gate": "2026-10-14"
+    },
+    {
+      "city": "Whittier",
+      "owner": "/whittier-appliance-pickup/",
+      "pageAvgPosition": 15.6,
+      "exactQueries": [
+        {
+          "query": "free appliance pickup whittier",
+          "position": 23.5,
+          "impressions": 2
+        }
+      ],
+      "wrongPage": {
+        "page": "/pico-rivera-appliance-pickup/",
+        "position": 4,
+        "impressions": 2
+      },
+      "priority": "high",
+      "gate": "2026-10-14"
+    },
+    {
+      "city": "Chino",
+      "owner": "/chino-appliance-pickup/",
+      "pageAvgPosition": 17.6154,
+      "exactQueries": [
+        {
+          "query": "free appliance pickup chino",
+          "position": 21.3333,
+          "impressions": 3
+        }
+      ],
+      "wrongPage": {
+        "page": "/diamond-bar-appliance-pickup/",
+        "position": 34.4,
+        "impressions": 5
+      },
+      "priority": "high",
+      "gate": "2026-10-13"
+    },
+    {
+      "city": "Rancho Cucamonga",
+      "owner": "/rancho-cucamonga-appliance-pickup/",
+      "pageAvgPosition": 17.4909,
+      "exactLikeQueries": [
+        {
+          "query": "free appliance pickup",
+          "position": 11,
+          "impressions": 2
+        },
+        {
+          "query": "free appliance recycling",
+          "position": 7,
+          "impressions": 2
+        }
+      ],
+      "wrongPages": [
+        {
+          "page": "/san-bernardino-appliance-pickup/",
+          "query": "free appliance pickup rancho cucamonga",
+          "position": 4.75,
+          "impressions": 4
+        },
+        {
+          "page": "/southern-california-refrigerator-pickup/",
+          "query": "free appliance pickup rancho cucamonga",
+          "position": 11.3333,
+          "impressions": 6
+        },
+        {
+          "page": "/southern-california-freezer-pickup/",
+          "query": "free appliance pickup rancho cucamonga",
+          "position": 14,
+          "impressions": 1
+        }
+      ],
+      "priority": "critical ownership cleanup",
+      "gate": "owner 2026-10-14; San Bernardino source 2026-10-13"
+    },
+    {
+      "city": "San Dimas",
+      "owner": "/san-dimas-appliance-pickup/",
+      "pageAvgPosition": 3.1,
+      "exactQueries": [],
+      "wrongPages": [
+        {
+          "page": "/covina-appliance-pickup/",
+          "query": "free appliance pickup san dimas",
+          "position": 7,
+          "impressions": 3
+        },
+        {
+          "page": "/san-gabriel-valley-appliance-pickup/",
+          "query": "free appliance pickup san dimas",
+          "position": 3.5,
+          "impressions": 2
+        }
+      ],
+      "priority": "protect winner; investigate only if exact city owner fails after gate",
+      "gate": "2026-10-14"
+    },
+    {
+      "city": "San Marino",
+      "owner": "/san-marino-appliance-pickup/",
+      "pageAvgPosition": 5.8182,
+      "exactQueries": [],
+      "wrongPages": [
+        {
+          "page": "/service-areas/",
+          "query": "free appliance pickup san marino",
+          "position": 41.4,
+          "impressions": 5
+        },
+        {
+          "page": "/san-gabriel-appliance-pickup/",
+          "query": "free appliance pickup san marino",
+          "position": 12.75,
+          "impressions": 4
+        }
+      ],
+      "priority": "protect current owner unless exact city query stays absent",
+      "gate": "2026-10-15"
+    }
+  ],
+  "rule": "Use exact city-modified query ownership and wrong-page relationships as the primary ranking KPI. Page-level average position is secondary and can hide serious ownership failures."
+}
