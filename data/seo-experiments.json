@@ -7726,43 +7726,6 @@
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /el-cajon-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     },
     {
-      "id": "2026-10-06-claremont-laundry-ctr-locality",
-      "market": "Claremont, CA washer/dryer",
-      "hypothesis": "Tightening the Claremont laundry page around exact-city washer/dryer intent, machine testing and local access will improve CTR/visibility while keeping it distinct from the frozen general Claremont page.",
-      "pagesChanged": [
-        "/claremont-washer-dryer-pickup/"
-      ],
-      "protectedOwner": "/claremont-washer-dryer-pickup/",
-      "lastChanged": "2026-10-06",
-      "baselinePeriod": {
-        "start": "2026-09-06",
-        "end": "2026-10-03"
-      },
-      "baseline": {
-        "gsc": {
-          "clicks": 0,
-          "impressions": 7,
-          "ctr": 0,
-          "position": 20.5714
-        },
-        "overlapAudit": {
-          "comparedWith": "/claremont-appliance-pickup/",
-          "bodyCosine": 0.7933
-        }
-      },
-      "change": "Strengthened the meta description with Claremont-specific qualification/contact language; replaced corridor-heavy body sections with city-specific washer/dryer review, access and general-vs-laundry ownership guidance. Measured overlap with the general page decreased to about 0.7700.",
-      "successSignals": [
-        "Claremont laundry impressions and/or average position improve from the 7-impression / ~20.6 baseline.",
-        "CTR rises above 0 without the general Claremont page losing its protected broad-appliance ownership.",
-        "General-vs-laundry similarity remains below the 0.7933 baseline.",
-        "All routing, metadata, schema, internal-link and experiment-guard checks remain green."
-      ],
-      "evaluateNotBefore": "2026-10-16",
-      "preferredReview": "2026-10-21",
-      "status": "running",
-      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /claremont-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
-    },
-    {
       "id": "2026-10-06-altadena-laundry-ctr-locality",
       "market": "Altadena, CA washer/dryer",
       "hypothesis": "Making the Altadena laundry page explicitly laundry-specific in title, metadata and machine-level content will improve city-page relevance and CTR while reducing overlap with the frozen general Altadena page.",
@@ -7929,6 +7892,20 @@
       ],
       "files": [
         "oceanside-appliance-pickup/index.html",
+        "data/seo-experiments.json"
+      ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "experiment-freeze and search-appearance repair",
+      "reason": "Reverted the speculative Claremont washer/dryer rewrite because /claremont-washer-dryer-pickup/ was already protected by 2026-10-04-claremont-laundry-authority-link through 2026-10-14. Kept the unfrozen Altadena laundry experiment but synchronized its WebPage structured-data name/description with the new visible title/meta after Validate Google Search Appearance failed.",
+      "pages": [
+        "/claremont-washer-dryer-pickup/",
+        "/altadena-washer-dryer-pickup/"
+      ],
+      "files": [
+        "claremont-washer-dryer-pickup/index.html",
+        "altadena-washer-dryer-pickup/index.html",
         "data/seo-experiments.json"
       ]
     }
