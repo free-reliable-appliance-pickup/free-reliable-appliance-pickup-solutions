@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-05",
+  "purpose": "Pre-unlock competitor and cannibalization battle plan for Phoenix and Denver. No protected city page changes before the active experiment gates.",
+  "markets": {
+    "Phoenix, AZ": {
+      "unlock": "2026-10-09",
+      "gscGeneral": {
+        "clicks": 1,
+        "impressions": 47,
+        "ctr": 0.02127659574468085,
+        "avgPosition": 28.4468085106383
+      },
+      "specialtySignals": {
+        "phoenix-refrigerator-pickup": {
+          "clicks": 0,
+          "impressions": 5,
+          "avgPosition": 18.8,
+          "liveBroadQuerySignal": "Appeared around #19 organic for 'free appliance pickup Phoenix AZ' in the latest Ubersuggest snapshot."
+        },
+        "phoenix-washer-dryer-pickup": {
+          "clicks": 0,
+          "impressions": 3,
+          "avgPosition": 59
+        },
+        "phoenix-freezer-pickup": {
+          "clicks": 0,
+          "impressions": 2,
+          "avgPosition": 39.5
+        },
+        "phoenix-stove-oven-pickup": {
+          "clicks": 0,
+          "impressions": 1,
+          "avgPosition": 5
+        }
+      },
+      "competitorModel": {
+        "TakeMyAppliance": "Concise city intent -> 3-step process -> why choose -> request CTA -> local details/neighborhoods/ZIPs -> appliance categories -> FAQ -> nearby city handoff.",
+        "AppliancePickupNow": "Short request-first page -> 3-step process -> appliance categories -> trust/access notes -> municipal alternative -> request CTA."
+      },
+      "preUnlockDiagnosis": [
+        "General Phoenix page is too structurally dense at ~19 H2 sections / ~1,502 main-content words compared with the tighter winning competitor pages.",
+        "Wrong-page risk is real: Phoenix refrigerator page is surfacing for the broad city query while the general Phoenix owner is not the visible organic result in that snapshot.",
+        "Do not weaken specialty relevance; instead reduce broad generic city language on specialty pages only if finalized post-gate evidence confirms overlap."
+      ],
+      "postUnlockDecisionOrder": [
+        "Check finalized GSC query-to-page ownership first.",
+        "Recheck live regular organic SERP for broad Phoenix query and removal variant.",
+        "If general owner remains weak, simplify city page to one clear city/process/qualification/local/FAQ/request structure.",
+        "If specialty page still owns broad city query, narrow its broad generic language and strengthen contextual handoff to the general Phoenix owner.",
+        "Preserve Arizona phone 602-726-7552, canonical, request form and specialty intent."
+      ]
+    },
+    "Denver, CO": {
+      "unlock": "2026-10-09",
+      "gscGeneral": {
+        "clicks": 0,
+        "impressions": 18,
+        "ctr": 0,
+        "avgPosition": 39.833333333333336
+      },
+      "specialtySignals": {
+        "denver-refrigerator-pickup": null,
+        "denver-washer-dryer-pickup": {
+          "clicks": 0,
+          "impressions": 6,
+          "avgPosition": 17.333333333333332
+        },
+        "denver-freezer-pickup": null,
+        "denver-stove-oven-pickup": null
+      },
+      "competitorModel": {
+        "TakeMyAppliance": "Commercial handoff -> 3-step process -> trust reasons -> request CTA -> local details -> municipal/utility alternatives -> neighborhoods/ZIPs -> appliance categories -> FAQ."
+      },
+      "preUnlockDiagnosis": [
+        "General Denver page is extremely dense at ~30 H2 sections / ~2,832 main-content words versus the much tighter competitor model.",
+        "Denver washer/dryer page has materially stronger average position than the general Denver page, creating ownership risk for broad appliance intent.",
+        "The competitor wins with fewer, clearer sections and strong local municipal/utility context rather than repeated search-intent sections."
+      ],
+      "postUnlockDecisionOrder": [
+        "Check finalized GSC query-to-page ownership first.",
+        "Recheck regular organic visibility for free appliance pickup Denver and appliance removal Denver.",
+        "If general owner remains weak, simplify Denver to city intent, process, qualification, local access/options, commercial path, FAQ/request and nearby-market handoffs.",
+        "If washer/dryer page is taking broad city queries, narrow broad generic terms there while preserving laundry-specific ranking.",
+        "Preserve Colorado phone 720-604-7498, canonical, request form, official Denver/Xcel alternatives and specialty intent."
+      ]
+    }
+  }
+}
