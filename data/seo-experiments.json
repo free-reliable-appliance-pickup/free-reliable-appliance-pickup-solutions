@@ -7168,6 +7168,46 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /commercial-laundry-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-commercial-locations-multistate-routing",
+      "market": "Commercial appliance pickup locations hub",
+      "hypothesis": "Expanding the commercial locations hub from California-only routing to the actual priority operating markets—California, Arizona, Colorado and Oregon—will better match its nationwide inquiry intent, strengthen state/city handoffs, and begin earning relevant commercial-location impressions without replacing city owners.",
+      "pagesChanged": [
+        "/commercial-appliance-pickup-locations/"
+      ],
+      "protectedOwner": "/commercial-appliance-pickup-locations/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "avgPosition": 100
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 455,
+          "h2Count": 6
+        },
+        "competitorBenchmark": {
+          "page": "https://www.takemyappliance.com/commercial/locations",
+          "pattern": "Commercial locations hub -> state/metro selection -> business-type guides -> inquiry form."
+        }
+      },
+      "change": "Kept the title/H1/canonical/form and concise page structure, but replaced the California-only priority-market block with clear routing for California, Arizona, Colorado and Oregon. Added contextual links to the state/region hubs and exact Phoenix, Mesa, Scottsdale, Denver, Aurora, Thornton, Portland and Salem city owners. Service-availability disclaimer remains explicit.",
+      "successSignals": [
+        "Commercial-location impressions grow beyond the 1-impression baseline.",
+        "Priority state/city owners gain contextual commercial authority without broad-query cannibalization.",
+        "No routing, metadata, JSON-LD, internal-link, experiment-guard or final SEO safety regression appears."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /commercial-appliance-pickup-locations/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
