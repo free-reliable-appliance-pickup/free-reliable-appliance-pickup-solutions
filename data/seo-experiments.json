@@ -7642,6 +7642,88 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /villa-park-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-san-marcos-general-laundry-separation",
+      "market": "San Marcos, CA",
+      "hypothesis": "Reducing overlap between the San Marcos general and washer/dryer pages will strengthen city-specific appliance-removal ownership and stop the general page from absorbing laundry-only queries.",
+      "pagesChanged": [
+        "/san-marcos-appliance-pickup/"
+      ],
+      "protectedOwner": "/san-marcos-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "overlapAudit": {
+          "comparedWith": "/san-marcos-washer-dryer-pickup/",
+          "bodyCosine": 0.8605
+        },
+        "gsc": {
+          "impressions": 5,
+          "position": 27.6,
+          "cityQuery": "appliance removal san marcos",
+          "cityQueryImpressions": 2,
+          "cityQueryPosition": 61,
+          "laundryLeakQuery": "washer and dryer recycling pickup",
+          "laundryLeakImpressions": 1,
+          "laundryLeakPosition": 10
+        }
+      },
+      "change": "Concentrated the general page on refrigerators, freezers, ranges and mixed loads; rewrote access/FAQ sections around general-appliance intent; routed washer/dryer-only requests to the dedicated laundry page. Measured cosine decreased to about 0.8071.",
+      "successSignals": [
+        "The San Marcos city-specific removal query improves from the ~61 baseline.",
+        "Laundry-only query impressions move away from the general page toward /san-marcos-washer-dryer-pickup/.",
+        "General-vs-laundry similarity remains below the 0.8605 baseline.",
+        "All SEO, routing, schema, link and experiment-guard checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /san-marcos-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-el-cajon-general-laundry-separation",
+      "market": "El Cajon, CA",
+      "hypothesis": "Reducing overlap and removing broad keyword-list language from the El Cajon general page will strengthen appliance-removal ownership while moving washer/dryer-only intent to the dedicated laundry page.",
+      "pagesChanged": [
+        "/el-cajon-appliance-pickup/"
+      ],
+      "protectedOwner": "/el-cajon-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "overlapAudit": {
+          "comparedWith": "/el-cajon-washer-dryer-pickup/",
+          "bodyCosine": 0.8459
+        },
+        "gsc": {
+          "impressions": 4,
+          "position": 65.5,
+          "cityQuery": "appliance removal el cajon",
+          "cityQueryImpressions": 2,
+          "cityQueryPosition": 70,
+          "laundryLeakQuery": "washer dryer removal el cajon",
+          "laundryLeakImpressions": 1,
+          "laundryLeakPosition": 58
+        }
+      },
+      "change": "Replaced keyword-list ownership copy with direct city/service routing; concentrated the general page on cooling, cooking and mixed-load intent; routed laundry-only removal to /el-cajon-washer-dryer-pickup/. Measured cosine decreased to about 0.7984.",
+      "successSignals": [
+        "The El Cajon city-specific removal query improves from the ~70 baseline.",
+        "Washer/dryer-only El Cajon intent shifts toward the dedicated laundry page.",
+        "General-vs-laundry similarity remains below the 0.8459 baseline.",
+        "All SEO, routing, schema, link and experiment-guard checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /el-cajon-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
