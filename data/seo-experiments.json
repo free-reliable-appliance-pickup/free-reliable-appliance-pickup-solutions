@@ -7208,6 +7208,58 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /commercial-appliance-pickup-locations/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-south-pasadena-city-boundary",
+      "market": "South Pasadena CA city intent",
+      "hypothesis": "Reducing template overlap and eliminating standalone Pasadena references from the South Pasadena page will help Google distinguish South Pasadena from Pasadena and shift the page toward its actual city intent.",
+      "pagesChanged": [
+        "/south-pasadena-appliance-pickup/"
+      ],
+      "protectedOwner": "/south-pasadena-appliance-pickup/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "avgPosition": 19.75,
+          "queries": [
+            {
+              "query": "free appliance pickup pasadena",
+              "impressions": 2,
+              "position": 33.5
+            }
+          ]
+        },
+        "preChangeArchitecture": {
+          "approxMainWords": 1320,
+          "h2Count": 15,
+          "southPasadenaMentions": 34,
+          "totalPasadenaMentions": 44
+        },
+        "neighborOverlap": {
+          "pair": "pasadena <> south-pasadena",
+          "bodyCosine": 0.7749,
+          "bodyJaccard": 0.389,
+          "headingJaccard": 0.1795
+        }
+      },
+      "change": "Reduced the South Pasadena city page from 15 H2 sections / about 1,320 words to 8 H2 sections / about 428 words. The new body contains South Pasadena city intent only, with zero standalone Pasadena references. Preserved title/meta/H1/canonical, 909 contact routing, Formspree request form, qualification rules and a real appliance image.",
+      "successSignals": [
+        "South Pasadena-specific impressions begin appearing instead of only Pasadena query impressions.",
+        "The page stops receiving or materially reduces broad Pasadena impressions.",
+        "Average position improves from the 19.75 baseline without creating new nearby-city cannibalization.",
+        "Search-intent, metadata, JSON-LD, image, routing and final SEO audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /south-pasadena-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
