@@ -26,17 +26,17 @@ jobs:
           import re, html
 
           CITIES = {
-              'phoenix':'Phoenix',
-              'denver':'Denver',
-              'fresno':'Fresno',
-              'upland':'Upland',
-              'fontana':'Fontana',
-              'rancho-cucamonga':'Rancho Cucamonga',
-              'ontario':'Ontario',
-              'mission-viejo':'Mission Viejo',
-              'scottsdale':'Scottsdale',
-              'orange':'Orange',
-              'jurupa-valley':'Jurupa Valley'
+              'phoenix':('Phoenix',['phoenix metro']),
+              'denver':('Denver',[]),
+              'fresno':('Fresno',['fresno county']),
+              'upland':('Upland',[]),
+              'fontana':('Fontana',[]),
+              'rancho-cucamonga':('Rancho Cucamonga',[]),
+              'ontario':('Ontario',[]),
+              'mission-viejo':('Mission Viejo',[]),
+              'scottsdale':('Scottsdale',[]),
+              'orange':('Orange',['orange county','south orange county']),
+              'jurupa-valley':('Jurupa Valley',[])
           }
 
           anchor_re=re.compile(r'<a\b[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>',re.I|re.S)
@@ -53,7 +53,7 @@ jobs:
                   text=html.unescape(tag_re.sub(' ',inner))
                   text=' '.join(text.split())
                   low=text.lower()
-                  for slug,label in CITIES.items():
+                  for slug,(label,regional_terms) in CITIES.items():
                       label_low=label.lower()
                       if label_low not in low:
                           continue
@@ -61,14 +61,17 @@ jobs:
                           continue
                       rows[slug].append((str(p),href,text))
 
-          for slug,label in CITIES.items():
+          for slug,(label,regional_terms) in CITIES.items():
               owner=f'/{slug}-appliance-pickup/'
               broad=rows.get(slug,[])
               owner_hits=[r for r in broad if r[1]==owner]
-              specialty=[r for r in broad if r[1]!=owner and slug in r[1]]
-              other=[r for r in broad if r[1]!=owner and slug not in r[1]]
+              regional=[r for r in broad if r[1]!=owner and any(term in r[2].lower() for term in regional_terms)]
+              specialty=[r for r in broad if r[1]!=owner and r not in regional and slug in r[1]]
+              other=[r for r in broad if r[1]!=owner and r not in regional and slug not in r[1]]
               print(f'CITY {label}')
-              print('BROAD_ANCHORS',len(broad),'OWNER',len(owner_hits),'SPECIALTY_OR_SIBLING',len(specialty),'OTHER',len(other))
+              print('BROAD_ANCHORS',len(broad),'OWNER',len(owner_hits),'REGIONAL_HUB',len(regional),'SPECIALTY_OR_SIBLING',len(specialty),'OTHER',len(other))
+              for src,href,text in regional[:15]:
+                  print('REGIONAL',src,'->',href,'|',text)
               for src,href,text in specialty[:30]:
                   print('SPECIALTY',src,'->',href,'|',text)
               for src,href,text in other[:20]:
