@@ -7346,6 +7346,45 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /keizer-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-hermosa-general-laundry-separation",
+      "market": "Hermosa Beach, CA",
+      "hypothesis": "Separating the Hermosa Beach general-appliance page from its highly similar washer/dryer page will reduce template overlap and lower the chance that the general page is selected for unrelated city-modified appliance queries.",
+      "pagesChanged": [
+        "/hermosa-beach-appliance-pickup/"
+      ],
+      "protectedOwner": "/hermosa-beach-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "overlapAudit": {
+          "comparedWith": "/hermosa-beach-washer-dryer-pickup/",
+          "bodyCosine": 0.8694,
+          "bodyJaccard": 0.5853,
+          "headingJaccard": 0.475
+        },
+        "gscCrossCityLeak": {
+          "query": "free appliance pickup upland",
+          "page": "/hermosa-beach-appliance-pickup/",
+          "impressions": 3,
+          "position": 45.6667
+        }
+      },
+      "change": "Reworked the general Hermosa Beach page around refrigerators, freezers, stoves/ranges and mixed major-appliance loads; routed washer/dryer-only intent to the dedicated laundry page; removed duplicated qualification and South Bay sections; replaced generic near-me copy with city/route ownership language. Post-edit general-vs-laundry cosine similarity measured about 0.7299.",
+      "successSignals": [
+        "Hermosa Beach general-vs-laundry overlap remains materially below the 0.8694 baseline.",
+        "The Hermosa Beach general page stops appearing for Upland-modified appliance queries.",
+        "Hermosa Beach general-appliance impressions remain or improve without stealing washer/dryer-only intent.",
+        "Content quality, metadata, schema, intent, internal-link and experiment-guard checks stay green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /hermosa-beach-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
