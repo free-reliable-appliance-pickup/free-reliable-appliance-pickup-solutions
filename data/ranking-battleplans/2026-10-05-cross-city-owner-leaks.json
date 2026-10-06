@@ -1,0 +1,138 @@
+{
+  "date": "2026-10-05",
+  "source": "Google Search Console finalized query-page relationships",
+  "effectiveRange": {
+    "start": "2026-09-06",
+    "end": "2026-10-03"
+  },
+  "purpose": "High-confidence cross-city ownership leaks. Excludes ambiguous Orange County / City of Orange and La Mesa / Mesa matches. Regular organic only.",
+  "highestImpact": [
+    {
+      "query": "appliance removal laguna hills",
+      "intendedOwner": "/laguna-hills-appliance-pickup/",
+      "wrongPage": "/laguna-beach-appliance-pickup/",
+      "impressions": 9,
+      "position": 38.22222222222222,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "free appliance pickup fontana",
+      "intendedOwner": "/fontana-appliance-pickup/",
+      "wrongPage": "/southern-california-appliance-pickup/",
+      "impressions": 8,
+      "position": 5.625,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "free appliance pickup upland",
+      "intendedOwner": "/upland-appliance-pickup/",
+      "wrongPage": "/san-bernardino-county-appliance-pickup/",
+      "impressions": 7,
+      "position": 16,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "free appliance pickup rancho cucamonga",
+      "intendedOwner": "/rancho-cucamonga-appliance-pickup/",
+      "wrongPage": "/southern-california-refrigerator-pickup/",
+      "impressions": 6,
+      "position": 11.333333333333334,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "denver appliance pickup",
+      "intendedOwner": "/denver-appliance-pickup/",
+      "wrongPage": "/lakewood-appliance-pickup/",
+      "impressions": 5,
+      "position": 10,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "free appliance pickup chino",
+      "intendedOwner": "/chino-appliance-pickup/",
+      "wrongPage": "/diamond-bar-appliance-pickup/",
+      "impressions": 5,
+      "position": 34.4,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "free appliance pickup san marino",
+      "intendedOwner": "/san-marino-appliance-pickup/",
+      "wrongPage": "/service-areas/",
+      "impressions": 5,
+      "position": 41.4,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "free appliance pickup rancho cucamonga",
+      "intendedOwner": "/rancho-cucamonga-appliance-pickup/",
+      "wrongPage": "/san-bernardino-appliance-pickup/",
+      "impressions": 4,
+      "position": 4.75,
+      "wrongPageGate": "2026-10-13"
+    },
+    {
+      "query": "free appliance pickup fontana",
+      "intendedOwner": "/fontana-appliance-pickup/",
+      "wrongPage": "/rialto-washer-dryer-pickup/",
+      "impressions": 4,
+      "position": 6.5,
+      "wrongPageGate": null,
+      "note": "Unprotected but page is already Rialto/laundry-specific with zero Fontana mentions; do not force an edit without stronger evidence."
+    },
+    {
+      "query": "free appliance pickup san marino",
+      "intendedOwner": "/san-marino-appliance-pickup/",
+      "wrongPage": "/san-gabriel-appliance-pickup/",
+      "impressions": 4,
+      "position": 12.75,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "free appliance pickup chino hills",
+      "intendedOwner": "/chino-hills-appliance-pickup/",
+      "wrongPage": "/chino-appliance-pickup/",
+      "impressions": 4,
+      "position": 28.25,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "free appliance pickup san dimas",
+      "intendedOwner": "/san-dimas-appliance-pickup/",
+      "wrongPage": "/covina-appliance-pickup/",
+      "impressions": 3,
+      "position": 7,
+      "wrongPageGate": "2026-10-13"
+    },
+    {
+      "query": "free appliance pickup azusa",
+      "intendedOwner": "/azusa-appliance-pickup/",
+      "wrongPage": "/service-areas/",
+      "impressions": 3,
+      "position": 21,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "appliance removal laguna hills",
+      "intendedOwner": "/laguna-hills-appliance-pickup/",
+      "wrongPage": "/laguna-woods-appliance-pickup/",
+      "impressions": 3,
+      "position": 24.333333333333332,
+      "wrongPageGate": "2026-10-14"
+    },
+    {
+      "query": "free appliance pickup fresno",
+      "intendedOwner": "/fresno-appliance-pickup/",
+      "wrongPage": "/visalia-appliance-pickup/",
+      "impressions": 3,
+      "position": 30,
+      "wrongPageGate": "2026-10-14"
+    }
+  ],
+  "diagnosis": {
+    "denverLakewood": "Denver owner is ~2,929 rendered words / 30 H2 while Lakewood is ~1,364 / 13 H2. Lakewood contains only two Denver mentions and has ~0.56 body cosine similarity with Denver, so the wrong-page choice is more consistent with weak Denver owner focus / historical association than with Lakewood keyword stuffing.",
+    "rialtoFontana": "Rialto washer/dryer page has zero Fontana mentions and Rialto-only Service schema. Treat its Fontana visibility as a weak geographic/historical association, not evidence to add or remove Fontana copy.",
+    "global": "Most high-impact wrong pages are already protected by active experiments through Oct 13-14. Preserve measurement until gates, then correct the wrong ranking page and intended owner as one ownership pair."
+  },
+  "actionRule": "At each gate, recheck the exact query-to-page relationship. If the wrong page still leads, narrow the wrong page only where its content actually overlaps and concentrate the intended owner. Do not rewrite pages that are already narrowly scoped just because Google briefly tests them for a nearby city."
+}
