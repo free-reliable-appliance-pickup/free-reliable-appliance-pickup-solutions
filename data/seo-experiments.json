@@ -7459,6 +7459,87 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /hawaiian-gardens-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-oceanside-removal-boundary",
+      "market": "Oceanside, CA",
+      "hypothesis": "Removing broad unmodified removal/near-me wording and correcting washer/dryer routing will help the Oceanside page own city-modified appliance intent instead of appearing for generic removal queries.",
+      "pagesChanged": [
+        "/oceanside-appliance-pickup/"
+      ],
+      "protectedOwner": "/oceanside-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "impressions": 8,
+          "position": 22.875,
+          "broadQuery": {
+            "query": "appliance removal",
+            "impressions": 1,
+            "position": 11
+          },
+          "cityQuery": {
+            "query": "appliance removal oceanside",
+            "impressions": 1,
+            "position": 62
+          },
+          "laundryQuery": {
+            "query": "washer dryer removal oceanside",
+            "impressions": 1,
+            "position": 67
+          }
+        },
+        "routingIssue": "The page linked /san-diego-county-washer-dryer-pickup/ while labeling it the Oceanside washer & dryer pickup page, despite a dedicated /oceanside-washer-dryer-pickup/ page."
+      },
+      "change": "Replaced broad generic-removal/near-me handoff wording with Oceanside-specific city routing, removed keyword-list prose, and corrected washer/dryer handoffs to /oceanside-washer-dryer-pickup/.",
+      "successSignals": [
+        "Oceanside city-modified pickup/removal queries improve relative to the generic unmodified 'appliance removal' query.",
+        "Washer/dryer-only Oceanside intent routes to /oceanside-washer-dryer-pickup/.",
+        "Search-intent, internal-link, metadata, schema and content-quality checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /oceanside-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-vernon-removal-boundary",
+      "market": "Vernon, CA",
+      "hypothesis": "Replacing broad generic removal/near-me handoff language with Vernon-specific commercial and city routing will reduce broad-query cannibalization while preserving Vernon appliance-removal relevance.",
+      "pagesChanged": [
+        "/vernon-appliance-pickup/"
+      ],
+      "protectedOwner": "/vernon-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "impressions": 9,
+          "position": 15.4444,
+          "broadQuery": {
+            "query": "appliance removal",
+            "impressions": 1,
+            "position": 10
+          }
+        }
+      },
+      "change": "Replaced the broad unmodified removal/near-me handoff with Vernon-specific business, warehouse, industrial and residential routing language; replaced the generic near-me section with nearby-city handoffs while preserving local appliance-removal title/H1/service relevance.",
+      "successSignals": [
+        "Vernon-specific appliance queries emerge or improve while broad unmodified 'appliance removal' leakage declines.",
+        "Commercial/industrial Vernon relevance remains clear.",
+        "Search-intent, internal-link, metadata, schema and content-quality checks remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /vernon-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
