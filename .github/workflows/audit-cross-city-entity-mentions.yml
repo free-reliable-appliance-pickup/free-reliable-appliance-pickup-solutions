@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - '**/*-appliance-pickup/index.html'
+      - 'data/cities.json'
       - '.github/workflows/audit-cross-city-entity-mentions.yml'
   workflow_dispatch:
 
@@ -17,98 +18,103 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Report neighboring-city entity leakage
+      - name: Report true city-to-city entity leakage
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          from collections import Counter
-          import re, html
+          import json, re, html, unicodedata
 
-          SPECIAL={
-            'la-canada-flintridge':'la cañada flintridge',
-            'la-crescenta':'la crescenta',
-            'glendale-az':'glendale',
-            'westminster-ca':'westminster',
-            'rancho-cucamonga':'rancho cucamonga',
-            'san-bernardino':'san bernardino',
-            'chino-hills':'chino hills',
-            'rowland-heights':'rowland heights',
-            'pico-rivera':'pico rivera',
-            'monterey-park':'monterey park',
-            'anaheim-hills':'anaheim hills',
-            'santa-ana':'santa ana',
-            'costa-mesa':'costa mesa',
-            'huntington-beach':'huntington beach',
-            'lake-forest':'lake forest',
-            'mission-viejo':'mission viejo',
-            'laguna-niguel':'laguna niguel',
-            'laguna-hills':'laguna hills',
-            'laguna-woods':'laguna woods',
-            'san-clemente':'san clemente',
-            'newport-beach':'newport beach',
-            'south-pasadena':'south pasadena',
-            'west-covina':'west covina',
-            'san-dimas':'san dimas',
-            'la-verne':'la verne',
-            'sierra-madre':'sierra madre',
-            'temple-city':'temple city',
-            'san-marino':'san marino',
-            'baldwin-park':'baldwin park',
-            'la-puente':'la puente',
-            'diamond-bar':'diamond bar',
-            'el-monte':'el monte',
-            'moreno-valley':'moreno valley',
-            'jurupa-valley':'jurupa valley',
-            'loma-linda':'loma linda',
-            'buena-park':'buena park',
-            'yorba-linda':'yorba linda'
-          }
+          catalog=json.loads(Path('data/cities.json').read_text(encoding='utf-8'))['cities']
 
-          pages=[]
-          for p in Path('.').glob('*-appliance-pickup/index.html'):
-              slug=p.parent.name[:-len('-appliance-pickup')]
-              label=SPECIAL.get(slug,slug.replace('-',' '))
-              pages.append((slug,label,p))
-          names=sorted(pages,key=lambda x:len(x[1]),reverse=True)
+          def slugify(s):
+              s=unicodedata.normalize('NFKD',s).encode('ascii','ignore').decode('ascii').lower()
+              s=re.sub(r'[^a-z0-9]+','-',s).strip('-')
+              return s
+
+          # Keep one visible label per city name. Duplicate city names across states
+          # are intentionally treated as the same visible entity because page copy
+          # usually does not include the state every time the city is mentioned.
+          city_names=sorted({c['city'].lower() for c in catalog},key=len,reverse=True)
+
           tag_re=re.compile(r'<[^>]+>')
           script_re=re.compile(r'<script[\s\S]*?</script>|<style[\s\S]*?</style>',re.I)
           anchor_re=re.compile(r'<a\b[^>]*>.*?</a>',re.I|re.S)
 
-          print('CROSS_CITY_ENTITY_REPORT')
-          risky=[]
-          for slug,own,p in pages:
-              raw=p.read_text(encoding='utf-8',errors='ignore')
+          def identify_page(p,raw):
+              slug=p.parent.name[:-len('-appliance-pickup')]
               tm=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
               h1m=re.search(r'<h1[^>]*>(.*?)</h1>',raw,re.I|re.S)
-              heads=' '.join(tag_re.sub(' ',m.group(1)) for m in re.finditer(r'<h[2-3][^>]*>(.*?)</h[2-3]>',raw,re.I|re.S))
+              identity=html.unescape(
+                  (tag_re.sub(' ',tm.group(1)) if tm else '')+' '+
+                  (tag_re.sub(' ',h1m.group(1)) if h1m else '')
+              ).lower()
+              matches=[]
+              for c in catalog:
+                  base=slugify(c['city'])
+                  if slug not in {base,base+'-'+c['state_code'].lower()}:
+                      continue
+                  city=c['city'].lower()
+                  state=c['state'].lower()
+                  code=c['state_code'].lower()
+                  if city not in identity:
+                      continue
+                  if state in identity or re.search(r'(?<![a-z])'+re.escape(code)+r'(?![a-z])',identity):
+                      matches.append(c)
+              if not matches:
+                  return None
+              # Prefer the longest city name in the unlikely case more than one matches.
+              return sorted(matches,key=lambda c:len(c['city']),reverse=True)[0]
+
+          print('CROSS_CITY_ENTITY_REPORT')
+          risky=[]
+          checked=0
+
+          for p in Path('.').glob('*-appliance-pickup/index.html'):
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              own=identify_page(p,raw)
+              if not own:
+                  continue
+              checked+=1
+              own_name=own['city'].lower()
+
+              tm=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
+              h1m=re.search(r'<h1[^>]*>(.*?)</h1>',raw,re.I|re.S)
               title=html.unescape(tag_re.sub(' ',tm.group(1))).lower() if tm else ''
               h1=html.unescape(tag_re.sub(' ',h1m.group(1))).lower() if h1m else ''
+              head_text=' '.join(
+                  html.unescape(tag_re.sub(' ',m.group(1))).lower()
+                  for m in re.finditer(r'<h[2-3][^>]*>(.*?)</h[2-3]>',raw,re.I|re.S)
+              )
               body_raw=anchor_re.sub(' ',script_re.sub(' ',raw))
-              body=html.unescape(tag_re.sub(' ',body_raw)).lower()
-              body=' '.join(body.split())
-              head_text=' '.join(html.unescape(heads).lower().split())
+              body=' '.join(html.unescape(tag_re.sub(' ',body_raw)).lower().split())
 
               hits=[]
-              for other_slug,other,_ in names:
-                  if other_slug==slug: continue
-                  # Avoid counting a shorter city name when it is only part of the owner name.
-                  if other in own and other!=own: continue
+              for other in city_names:
+                  if other==own_name:
+                      continue
+                  # Avoid shorter-name false positives inside the owner's own longer name:
+                  # Pasadena inside South Pasadena, Chino inside Chino Hills, etc.
+                  if other in own_name:
+                      continue
                   patt=r'(?<![a-z])'+re.escape(other)+r'(?![a-z])'
                   title_n=len(re.findall(patt,title))
                   h1_n=len(re.findall(patt,h1))
                   head_n=len(re.findall(patt,head_text))
                   body_n=len(re.findall(patt,body))
                   if title_n or h1_n or head_n>=2 or body_n>=4:
-                      hits.append((title_n,h1_n,head_n,body_n,other_slug,other))
+                      hits.append((title_n,h1_n,head_n,body_n,other))
+
               if hits:
                   hits=sorted(hits,reverse=True)
-                  severity=sum(20*t+20*h+4*hd+b for t,h,hd,b,_,_ in hits)
-                  risky.append((severity,slug,hits))
+                  severity=sum(20*t+20*h+4*hd+b for t,h,hd,b,_ in hits)
+                  risky.append((severity,p.parent.name,own,hits))
 
-          for severity,slug,hits in sorted(risky,reverse=True)[:100]:
-              print(f'PAGE {slug} severity={severity}')
-              for title_n,h1_n,head_n,body_n,other_slug,other in hits[:10]:
-                  print(f'  OTHER {other_slug} title={title_n} h1={h1_n} headings={head_n} body_nonlink={body_n}')
-          print('FLAGGED_PAGE_COUNT',len(risky))
+          for severity,page,own,hits in sorted(risky,reverse=True)[:100]:
+              print(f"PAGE {page} city={own['city']} state={own['state_code']} severity={severity}")
+              for title_n,h1_n,head_n,body_n,other in hits[:10]:
+                  print(f'  OTHER {other} title={title_n} h1={h1_n} headings={head_n} body_nonlink={body_n}')
+
+          print('CHECKED_CITY_PAGE_COUNT',checked)
+          print('FLAGGED_CITY_PAGE_COUNT',len(risky))
           PY
