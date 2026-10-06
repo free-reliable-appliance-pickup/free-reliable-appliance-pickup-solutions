@@ -1,0 +1,121 @@
+{
+  "date": "2026-10-05",
+  "competitor": "takemyappliance.com",
+  "purpose": "Current structural benchmark for Free Reliable Appliance Pickup. Copy the architecture lessons, not competitor wording or unsupported service claims.",
+  "observedPages": [
+    {
+      "url": "https://www.takemyappliance.com/locations/arizona",
+      "role": "state hub",
+      "observedPattern": [
+        "state intent",
+        "city directory",
+        "largest cities",
+        "county directory",
+        "FAQ",
+        "request CTA"
+      ],
+      "lesson": "State pages route users downward instead of trying to own every city query."
+    },
+    {
+      "url": "https://www.takemyappliance.com/locations/colorado",
+      "role": "state hub",
+      "observedPattern": [
+        "state intent",
+        "city directory",
+        "largest cities",
+        "FAQ",
+        "request CTA"
+      ],
+      "lesson": "The state hub is a routing layer; city pages own local intent."
+    },
+    {
+      "url": "https://www.takemyappliance.com/locations/southern-california",
+      "role": "regional hub",
+      "observedPattern": [
+        "regional intent",
+        "large city directory",
+        "appliance-type browse paths",
+        "request CTA"
+      ],
+      "lesson": "Regional hubs support city pages rather than duplicating each city page."
+    },
+    {
+      "url": "https://www.takemyappliance.com/locations/arizona/phoenix",
+      "role": "city owner",
+      "observedPattern": [
+        "city CTA",
+        "3-step request flow",
+        "trust/review reasons",
+        "local details",
+        "appliance categories",
+        "FAQ",
+        "nearby/regional handoff"
+      ],
+      "lesson": "City page owns one location with a concise transaction path and local context."
+    },
+    {
+      "url": "https://www.takemyappliance.com/locations/colorado/denver",
+      "role": "city owner",
+      "observedPattern": [
+        "city CTA",
+        "commercial handoff",
+        "3-step process",
+        "trust reasons",
+        "local details",
+        "ZIPs",
+        "appliance categories",
+        "FAQ"
+      ],
+      "lesson": "Commercial and appliance-specific intents are linked from the city owner but do not replace it."
+    },
+    {
+      "url": "https://www.takemyappliance.com/locations/northern-california/fresno",
+      "role": "city owner",
+      "observedPattern": [
+        "city CTA",
+        "commercial handoff",
+        "3-step process",
+        "local housing/access facts",
+        "official disposal alternatives",
+        "neighborhoods/ZIPs",
+        "appliance guides",
+        "FAQ"
+      ],
+      "lesson": "Unique local facts and official alternatives distinguish Fresno from neighboring city pages."
+    },
+    {
+      "url": "https://www.takemyappliance.com/locations/northern-california/sacramento",
+      "role": "city owner",
+      "observedPattern": [
+        "city CTA",
+        "3-step process",
+        "local housing/access facts",
+        "official disposal alternatives",
+        "neighborhoods/ZIPs",
+        "appliance categories",
+        "FAQ"
+      ],
+      "lesson": "Exact city ownership is reinforced with locally specific information and appliance paths."
+    },
+    {
+      "url": "https://www.takemyappliance.com/commercial/locations",
+      "role": "commercial location hub",
+      "observedPattern": [
+        "commercial inquiry",
+        "state/metro selection",
+        "site access and handling context",
+        "multi-site routing"
+      ],
+      "lesson": "Commercial intent has its own hierarchy rather than being repeated heavily on every residential city page."
+    }
+  ],
+  "freeReliableRules": [
+    "Use original wording and real business qualification rules.",
+    "Do not copy competitor claims that all appliances or broken units qualify.",
+    "General city owner pages should own broad city appliance-pickup/removal intent.",
+    "Specialty washer/dryer, refrigerator, freezer and stove pages should remain narrow.",
+    "State, county and regional hubs should route authority to exact city owners.",
+    "Preserve real photos, correct phone routing, Formspree request flow and people-first local details.",
+    "Judge success with finalized GSC and regular organic query-to-page ownership."
+  ]
+}
