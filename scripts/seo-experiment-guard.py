@@ -4,7 +4,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from datetime import date
+from datetime import date, timedelta
 
 data=json.loads(Path("data/seo-experiments.json").read_text(encoding="utf-8"))
 today=date.today()
@@ -60,6 +60,41 @@ if changed:
         print(" -",p)
 if technical_override:
     print("::warning title=SEO experiment technical override::Protected-page change allowed because commit message starts with [technical-fix]. Verify that this is truly technical/factual/indexability/safety work and log the reason.")
+
+integrity_errors=[]
+seen_ids=set()
+for e in data.get("experiments",[]):
+    if e.get("status")!="running":
+        continue
+    exp_id=e.get("id")
+    if not exp_id:
+        integrity_errors.append("running experiment missing id")
+        continue
+    if exp_id in seen_ids:
+        integrity_errors.append(f"{exp_id}: duplicate running experiment id")
+    seen_ids.add(exp_id)
+    last_changed=e.get("lastChanged")
+    gate=e.get("evaluateNotBefore")
+    if not last_changed:
+        integrity_errors.append(f"{exp_id}: missing lastChanged")
+    if not gate:
+        integrity_errors.append(f"{exp_id}: missing evaluateNotBefore")
+    if last_changed and gate:
+        try:
+            last_date=date.fromisoformat(last_changed)
+            gate_date=date.fromisoformat(gate)
+            if gate_date < last_date + timedelta(days=7):
+                integrity_errors.append(
+                    f"{exp_id}: evaluateNotBefore {gate} is less than 7 days after lastChanged {last_changed}"
+                )
+        except ValueError as exc:
+            integrity_errors.append(f"{exp_id}: invalid experiment date: {exc}")
+
+if integrity_errors:
+    print("\nSEO_EXPERIMENT_REGISTRY_INTEGRITY_ERROR")
+    for item in integrity_errors:
+        print("-",item)
+    sys.exit(1)
 
 running=0
 blocked=[]
