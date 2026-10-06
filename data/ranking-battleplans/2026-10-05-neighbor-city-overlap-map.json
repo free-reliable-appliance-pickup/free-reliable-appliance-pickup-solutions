@@ -1,0 +1,156 @@
+{
+  "date": "2026-10-05",
+  "purpose": "Neighbor-city semantic overlap map for cross-city ownership diagnosis. Metrics are from active HTML. Combine with finalized GSC leakage before editing.",
+  "pairs": [
+    {
+      "a": "chino-hills",
+      "b": "chino",
+      "bodyCosine": 0.8389,
+      "bodyJaccard": 0.5231,
+      "headingJaccard": 0.2656,
+      "leakEvidence": "free appliance pickup chino hills surfaced Chino page"
+    },
+    {
+      "a": "laguna-niguel",
+      "b": "laguna-hills",
+      "bodyCosine": 0.8026,
+      "bodyJaccard": 0.6384,
+      "headingJaccard": 0.5672,
+      "leakEvidence": "appliance removal laguna niguel surfaced Laguna Hills page"
+    },
+    {
+      "a": "laguna-hills",
+      "b": "laguna-beach",
+      "bodyCosine": 0.7804,
+      "bodyJaccard": 0.7481,
+      "headingJaccard": 0.6949,
+      "leakEvidence": "appliance removal laguna hills surfaced Laguna Beach page"
+    },
+    {
+      "a": "pasadena",
+      "b": "south-pasadena",
+      "bodyCosine": 0.7749,
+      "bodyJaccard": 0.389,
+      "headingJaccard": 0.1795,
+      "leakEvidence": "free appliance pickup pasadena surfaced South Pasadena page"
+    },
+    {
+      "a": "san-marino",
+      "b": "san-gabriel",
+      "bodyCosine": 0.7271,
+      "bodyJaccard": 0.4,
+      "headingJaccard": 0.3036,
+      "leakEvidence": "free appliance pickup san marino surfaced San Gabriel page"
+    },
+    {
+      "a": "duarte",
+      "b": "irwindale",
+      "bodyCosine": 0.6757,
+      "bodyJaccard": 0.717,
+      "headingJaccard": 0.6429,
+      "leakEvidence": "free appliance pickup duarte surfaced Irwindale page"
+    },
+    {
+      "a": "fresno",
+      "b": "sanger",
+      "bodyCosine": 0.6315,
+      "bodyJaccard": 0.4343,
+      "headingJaccard": 0.2787,
+      "leakEvidence": "free appliance pickup fresno surfaced Sanger page"
+    },
+    {
+      "a": "arcadia",
+      "b": "el-monte",
+      "bodyCosine": 0.6221,
+      "bodyJaccard": 0.4562,
+      "headingJaccard": 0.3889,
+      "leakEvidence": "free appliance pickup arcadia surfaced El Monte page"
+    },
+    {
+      "a": "fresno",
+      "b": "clovis",
+      "bodyCosine": 0.6018,
+      "bodyJaccard": 0.4277,
+      "headingJaccard": 0.2222,
+      "leakEvidence": "free appliance pickup fresno surfaced Clovis page"
+    },
+    {
+      "a": "whittier",
+      "b": "pico-rivera",
+      "bodyCosine": 0.5941,
+      "bodyJaccard": 0.7671,
+      "headingJaccard": 0.8158,
+      "leakEvidence": "free appliance pickup whittier surfaced Pico Rivera page"
+    },
+    {
+      "a": "san-dimas",
+      "b": "covina",
+      "bodyCosine": 0.5805,
+      "bodyJaccard": 0.5592,
+      "headingJaccard": 0.5319,
+      "leakEvidence": "free appliance pickup san dimas surfaced Covina page"
+    },
+    {
+      "a": "rialto",
+      "b": "bloomington",
+      "bodyCosine": 0.573,
+      "bodyJaccard": 0.3314,
+      "headingJaccard": 0.275,
+      "leakEvidence": "free appliance pickup rialto surfaced Bloomington page"
+    },
+    {
+      "a": "denver",
+      "b": "lakewood",
+      "bodyCosine": 0.5596,
+      "bodyJaccard": 0.3927,
+      "headingJaccard": 0.2593,
+      "leakEvidence": "denver appliance pickup surfaced Lakewood page"
+    },
+    {
+      "a": "chino",
+      "b": "diamond-bar",
+      "bodyCosine": 0.5369,
+      "bodyJaccard": 0.535,
+      "headingJaccard": 0.6364,
+      "leakEvidence": "free appliance pickup chino surfaced Diamond Bar page"
+    },
+    {
+      "a": "rancho-cucamonga",
+      "b": "san-bernardino",
+      "bodyCosine": 0.5289,
+      "bodyJaccard": 0.3554,
+      "headingJaccard": 0.2941,
+      "leakEvidence": "free appliance pickup rancho cucamonga surfaced San Bernardino page"
+    },
+    {
+      "a": "fresno",
+      "b": "visalia",
+      "bodyCosine": 0.5,
+      "bodyJaccard": 0.3183,
+      "headingJaccard": 0.3455,
+      "leakEvidence": "free appliance pickup fresno surfaced Visalia page"
+    },
+    {
+      "a": "rowland-heights",
+      "b": "diamond-bar",
+      "bodyCosine": 0.4965,
+      "bodyJaccard": 0.4108,
+      "headingJaccard": 0.2222,
+      "leakEvidence": "free appliance pickup rowland heights surfaced Diamond Bar page"
+    },
+    {
+      "a": "west-covina",
+      "b": "diamond-bar",
+      "bodyCosine": 0.4709,
+      "bodyJaccard": 0.4667,
+      "headingJaccard": 0.5208,
+      "leakEvidence": "free appliance pickup west covina surfaced Diamond Bar page"
+    }
+  ],
+  "interpretation": [
+    "High overlap plus finalized wrong-page GSC evidence is a strong candidate for city-boundary cleanup after the relevant experiment gate.",
+    "High overlap alone is not sufficient to rewrite a page; protect pages already ranking well.",
+    "Heading overlap can reveal template-level duplication even when full-body cosine is moderate.",
+    "For neighboring cities with inherently similar names (South Pasadena/Pasadena, Chino/Chino Hills), strengthen exact entity boundaries rather than adding more generic appliance copy."
+  ]
+}
