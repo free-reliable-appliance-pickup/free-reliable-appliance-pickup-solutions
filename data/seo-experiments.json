@@ -7914,6 +7914,58 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these five laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-rialto-laundry-intent-concentration",
+      "market": "Rialto, CA washer-dryer",
+      "hypothesis": "Removing redundant regional/general-appliance network sections from the Rialto laundry page will reduce cross-city/general-appliance query leakage and concentrate the page on Rialto washer/dryer intent.",
+      "pagesChanged": [
+        "/rialto-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/rialto-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "current": {
+            "clicks": 0,
+            "impressions": 22,
+            "ctr": 0,
+            "position": 22.40909090909091
+          },
+          "queries": [
+            {
+              "query": "free appliance pickup fontana",
+              "clicks": 0,
+              "impressions": 4,
+              "ctr": 0,
+              "position": 6.5
+            },
+            {
+              "query": "free appliance pickup rialto",
+              "clicks": 0,
+              "impressions": 3,
+              "ctr": 0,
+              "position": 26
+            }
+          ]
+        }
+      },
+      "change": "Preserved title, meta description, H1, canonical, local Rialto laundry service content, form, phone and the direct handoff to the main Rialto appliance page. Removed redundant legacy route-depth and appliance-network sections plus broad regional/commercial routing language.",
+      "successSignals": [
+        "Rialto laundry queries gain impressions or improve average position.",
+        "The page stops surfacing disproportionately for Fontana general-appliance intent.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /rialto-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
