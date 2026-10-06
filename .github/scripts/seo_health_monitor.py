@@ -4,13 +4,17 @@ import json
 import re
 import ssl
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
+import time
 from html import unescape
 
 BASE = "https://freereliableappliancepickup.com"
-UA = "FreeReliableSEOHealthMonitor/1.0 (+https://freereliableappliancepickup.com/)"
+UA = "FreeReliableSEOHealthMonitor/1.1 (+https://freereliableappliancepickup.com/)"
+RETRYABLE_STATUS = {429, 500, 502, 503, 504}
+MAX_FETCH_ATTEMPTS = 3
 
 PRIORITY_PATHS = [
     "/",
@@ -41,9 +45,22 @@ CTX = ssl.create_default_context()
 
 def fetch(url, timeout=20):
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "text/html,application/xhtml+xml,*/*;q=0.8"})
-    with urllib.request.urlopen(req, timeout=timeout, context=CTX) as r:
-        body = r.read().decode("utf-8", "replace")
-        return r.getcode(), r.geturl(), dict(r.headers), body
+    last_error = None
+    for attempt in range(1, MAX_FETCH_ATTEMPTS + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout, context=CTX) as r:
+                body = r.read().decode("utf-8", "replace")
+                return r.getcode(), r.geturl(), dict(r.headers), body
+        except urllib.error.HTTPError as e:
+            last_error = e
+            if e.code not in RETRYABLE_STATUS or attempt == MAX_FETCH_ATTEMPTS:
+                raise
+        except (urllib.error.URLError, TimeoutError) as e:
+            last_error = e
+            if attempt == MAX_FETCH_ATTEMPTS:
+                raise
+        time.sleep(attempt)
+    raise last_error
 
 def text_content(html):
     txt = re.sub(r"<script\b[\s\S]*?</script>", " ", html, flags=re.I)
