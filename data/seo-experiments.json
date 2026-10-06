@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-05",
+  "updated": "2026-10-06",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -7762,6 +7762,47 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /altadena-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-western-foothill-laundry-snippet-locality",
+      "market": "La Crescenta / Montrose, CA washer-dryer",
+      "hypothesis": "Tighter laundry-specific search snippets with explicit California locality will help the La Crescenta and Montrose washer/dryer pages begin earning impressions while reducing geographic ambiguity around Montrose.",
+      "pagesChanged": [
+        "/la-crescenta-washer-dryer-pickup/",
+        "/montrose-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/la-crescenta-washer-dryer-pickup/",
+        "/montrose-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "laCrescenta": {
+            "current": null,
+            "queries": []
+          },
+          "montrose": {
+            "current": null,
+            "queries": []
+          }
+        },
+        "searchObservation": "Current web search surfaces the Free Reliable La Crescenta and Montrose laundry pages, while Montrose is geographically ambiguous because unrelated Montrose results in other states also exist."
+      },
+      "change": "Changed only HTML title, meta description, OpenGraph title/description and WebPage name on the two laundry pages. Body copy, H1, canonical, internal links, phone, form, qualification rules, images and service intent were left unchanged.",
+      "successSignals": [
+        "Either page begins receiving finalized Search Console impressions for washer/dryer pickup or removal queries.",
+        "The intended California page remains the ranking URL for its local laundry intent.",
+        "Any new impressions do not come with increased general-appliance intent leakage."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to either laundry page before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
