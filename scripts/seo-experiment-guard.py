@@ -29,7 +29,14 @@ def page_file(path):
     return "index.html" if not slug else f"{slug}/index.html"
 
 changed=changed_files()
-message=sh("git","log","-1","--pretty=%B")
+base_ref=os.environ.get("GITHUB_BASE_REF","").strip()
+if base_ref:
+    # Pull-request workflows run on GitHub's synthetic merge commit, whose
+    # message starts with "Merge" and hides the real branch commit prefix.
+    # Read the latest non-merge commit introduced by the PR instead.
+    message=sh("git","log","--no-merges","-1","--pretty=%B",f"origin/{base_ref}..HEAD")
+else:
+    message=sh("git","log","-1","--pretty=%B")
 technical_override=message.lstrip().startswith("[technical-fix]")
 
 # Allow the one-time introduction of a brand-new experiment and its initial page change.
