@@ -1,0 +1,349 @@
+{
+  "date": "2026-10-05",
+  "purpose": "Conditional section-level remediation plan for the weakest Oct 14-15 priority city pages. Plans only; no protected HTML changed before gates.",
+  "cities": {
+    "Jurupa Valley": {
+      "gate": "2026-10-14",
+      "gsc": null,
+      "architecture": {
+        "words": 2564,
+        "h2": 27,
+        "cityLaundryOverlap": 0.8591
+      },
+      "keep": [
+        "One city-intent intro",
+        "Appliance categories + qualification",
+        "Simple process",
+        "Jurupa access/address-level routing",
+        "Official bulky-item alternative",
+        "Commercial/recurring path",
+        "FAQ",
+        "Request form",
+        "Riverside County + Inland Empire handoffs"
+      ],
+      "merge": [
+        [
+          "What This Page Covers",
+          "Local Appliance Page",
+          "Pickup, Removal & Recycling Review",
+          "Free Appliance Pickup in Jurupa Valley: Address-Level Route Review",
+          "Final Local Route Review",
+          "Free Appliance Pickup in Jurupa Valley for Major Appliances"
+        ],
+        [
+          "How Jurupa Valley Appliance Pickup Works",
+          "Fast Appliance Pickup Review in Jurupa Valley"
+        ],
+        [
+          "ZIP Geography",
+          "Access in Jurupa Valley",
+          "Property & Route Access Review"
+        ],
+        [
+          "Appliance & Regional Guides",
+          "Major Appliance Pickup Guides",
+          "Nearby Jurupa Valley Appliance Pickup Routes",
+          "service network"
+        ],
+        [
+          "Property, Senior & Recurring",
+          "Reuse, Premium Replacements & Property Managers"
+        ]
+      ],
+      "afterGate": "First verify index/query visibility. If still absent, add the missing Inland Empire hub handoff after its freeze, then compress the 27-section page."
+    },
+    "Mission Viejo": {
+      "gate": "2026-10-14",
+      "gsc": {
+        "clicks": 0,
+        "impressions": 10,
+        "avgPosition": 43,
+        "exactRemovalPosition": 63.2
+      },
+      "architecture": {
+        "words": 1301,
+        "h2": 12,
+        "cityLaundryOverlap": 0.7825
+      },
+      "keep": [
+        "Appliance types",
+        "Strong request details",
+        "Gated/HOA/hillside access",
+        "Official City bulky-item backup",
+        "FAQ",
+        "Commercial/recurring path",
+        "Request form"
+      ],
+      "merge": [
+        [
+          "What Makes a Strong Mission Viejo Request?",
+          "Photos and Working Tests Reduce Unnecessary Trips"
+        ],
+        [
+          "Garages, Hillside Driveways and Community Rules",
+          "Core Area & Residential Pickup Review"
+        ],
+        [
+          "What Happens After Appliance Pickup in Mission Viejo?",
+          "Senior, Property & Recurring Appliance Pickup"
+        ]
+      ],
+      "afterGate": "If local removal remains 50+, reduce to a concise process/local/qualification/FAQ/request flow. Preserve the city alternative and 909 routing."
+    },
+    "Orange": {
+      "gate": "2026-10-15",
+      "gsc": {
+        "clicks": 0,
+        "impressions": 11,
+        "avgPosition": 40.54545454545455,
+        "exactRemovalPosition": 62
+      },
+      "architecture": {
+        "words": 1953,
+        "h2": 21,
+        "cityLaundryOverlap": 0.8497,
+        "cityCountyOverlap": 0.7475
+      },
+      "keep": [
+        "Explicit City of Orange entity",
+        "Appliance categories + qualification",
+        "Simple process",
+        "City-specific neighborhoods/access",
+        "Official City bulky-item alternative",
+        "Commercial/recurring path",
+        "FAQ",
+        "Request form",
+        "Clear Orange County hub handoff"
+      ],
+      "merge": [
+        [
+          "Local Appliance Page",
+          "City of Orange Appliance Pickup & Removal Review",
+          "City of Orange Local Appliance Pickup & Removal Review"
+        ],
+        [
+          "Orange Pickup for Washers...",
+          "Appliances We Review",
+          "Orange Appliance Type Guides"
+        ],
+        [
+          "Orange Neighborhood & Property Access Details",
+          "Orange Pickup Access & Route Details",
+          "Orange Neighborhood, Historic & Multi-Use Property Pickup Review",
+          "Orange Appliance Condition & Property-Access Review"
+        ],
+        [
+          "Appliance Pickup Near Me in Orange",
+          "Orange appliance pickup within the Orange County service network",
+          "Orange Appliance Pickup Connections"
+        ],
+        [
+          "Senior, Property & Recurring",
+          "Premium Appliance Pickup & Reuse Review"
+        ]
+      ],
+      "afterGate": "If county hub still surfaces for city intent, explicitly disambiguate City of Orange, CA from Orange County while keeping county-wide hub intent separate."
+    },
+    "Scottsdale": {
+      "gate": "2026-10-15",
+      "gsc": {
+        "clicks": 0,
+        "impressions": 18,
+        "avgPosition": 42.27777777777778,
+        "exactRemovalPosition": 66.5,
+        "exactRemovalAzPosition": 69,
+        "northScottsdalePosition": 82
+      },
+      "architecture": {
+        "words": 828,
+        "h2": 13,
+        "cityLaundryOverlap": 0.784
+      },
+      "keep": [
+        "City-intent intro",
+        "Appliance categories",
+        "Scottsdale access/gated-community context",
+        "Official City appliance collection alternative",
+        "Qualification",
+        "Nearby Valley handoff",
+        "Request form",
+        "602 phone"
+      ],
+      "merge": [
+        [
+          "Local Appliance Page",
+          "Scottsdale Appliance Pickup & Removal"
+        ],
+        [
+          "Why Scottsdale Requests Need Their Own Review",
+          "Before You Request Pickup"
+        ],
+        [
+          "Washer, Dryer, Refrigerator, Freezer & Stove Pickup",
+          "Scottsdale Washer & Dryer Pickup"
+        ],
+        [
+          "Reusable Appliance Sources",
+          "Free Pickup Qualification"
+        ]
+      ],
+      "afterGate": "If exact city removal remains 60+, simplify and separate laundry intent while preserving city-specific access and municipal alternative."
+    },
+    "Mesa": {
+      "gate": "2026-10-15",
+      "gsc": {
+        "clicks": 0,
+        "impressions": 9,
+        "avgPosition": 27.22222222222222,
+        "exactRemovalAzPosition": 73
+      },
+      "architecture": {
+        "words": 999,
+        "h2": 13,
+        "cityLaundryOverlap": 0.7811
+      },
+      "keep": [
+        "City-intent intro",
+        "Appliance categories",
+        "Mesa-specific access",
+        "Official recycling/bulk-trash distinction",
+        "Qualification",
+        "Nearby Valley handoff",
+        "Request form",
+        "602 phone"
+      ],
+      "merge": [
+        [
+          "Local Appliance Page",
+          "Mesa Appliance Pickup & Removal"
+        ],
+        [
+          "Why Mesa Requests Need Their Own Review",
+          "Before You Request Pickup"
+        ],
+        [
+          "Washer, Dryer, Refrigerator, Freezer & Stove Pickup",
+          "Mesa Washer & Dryer Pickup"
+        ],
+        [
+          "Residential & Community Pickup Sources",
+          "Free Pickup Qualification"
+        ]
+      ],
+      "afterGate": "If exact Mesa removal remains weak, use a concise city/process/qualification/local-alternative/FAQ/request structure."
+    },
+    "Highland": {
+      "gate": "2026-10-14",
+      "gsc": {
+        "clicks": 0,
+        "impressions": 1,
+        "avgPosition": 35,
+        "observedQuery": "free appliance pickup upland"
+      },
+      "architecture": {
+        "words": 2046,
+        "h2": 26,
+        "cityLaundryOverlap": 0.8181
+      },
+      "keep": [
+        "One Highland city-intent intro",
+        "Appliance categories",
+        "Simple process",
+        "92346/access",
+        "Official bulky-item alternative",
+        "Commercial/recurring path",
+        "FAQ",
+        "Request form"
+      ],
+      "merge": [
+        [
+          "What This Page Covers",
+          "Local Appliance Page",
+          "Highland Appliance Pickup Review",
+          "Free Appliance Pickup in Highland: Local Qualification Review"
+        ],
+        [
+          "Start Your Highland Appliance Pickup Review",
+          "Appliance Pickup Near Me in Highland"
+        ],
+        [
+          "Pickup for All Major Appliance Types",
+          "Appliances We Review",
+          "Highland Appliance Pickup by Appliance Type",
+          "Major Appliance Pickup Guides"
+        ],
+        [
+          "Local Highland Pickup Planning",
+          "92346 Appliance Pickup & Local Access",
+          "Property, Terrain & Pickup Access Review"
+        ],
+        [
+          "service network",
+          "Nearby Highland Appliance Pickup Routes",
+          "Connections Within the San Bernardino / Inland Empire Pickup Network"
+        ],
+        [
+          "Property, Senior & Recurring",
+          "Reuse & Managed Property Replacements"
+        ]
+      ],
+      "afterGate": "If Highland still appears mainly for Upland or has no Highland query visibility, compress the page and remove cross-city ambiguity."
+    },
+    "Loma Linda": {
+      "gate": "2026-10-15",
+      "gsc": {
+        "clicks": 1,
+        "impressions": 4,
+        "avgPosition": 21,
+        "exactRemovalCaPosition": 34.5
+      },
+      "architecture": {
+        "words": 1368,
+        "h2": 18,
+        "cityLaundryOverlap": 0.8116
+      },
+      "keep": [
+        "One city-intent intro",
+        "Appliance categories",
+        "Simple process",
+        "92354/access",
+        "Official bulky-item alternative",
+        "Commercial/recurring path",
+        "FAQ",
+        "Request form"
+      ],
+      "merge": [
+        [
+          "Local Appliance Page",
+          "Loma Linda Appliance Pickup Review",
+          "Free Appliance Pickup in Loma Linda: Eastern Inland Empire Route Review"
+        ],
+        [
+          "Start Your Loma Linda Appliance Pickup Review",
+          "Appliance Pickup Near Me in Loma Linda"
+        ],
+        [
+          "Pickup for All Major Appliance Types",
+          "Appliances We Review",
+          "Major Appliance Pickup Guides"
+        ],
+        [
+          "Local Loma Linda Pickup Planning",
+          "92354 Appliance Pickup & Local Access",
+          "Property & Circulation Access Review"
+        ],
+        [
+          "Nearby Loma Linda Appliance Pickup Routes",
+          "Connections Within the San Bernardino / Inland Empire Pickup Network"
+        ]
+      ],
+      "afterGate": "If exact local removal remains 30+, simplify without disturbing the page's existing click signal."
+    }
+  },
+  "guardrails": [
+    "Do not edit before each gate unless there is verified technical/factual/contact/indexability/safety breakage.",
+    "Recheck finalized GSC first. If a page improves materially, protect it rather than executing the planned rewrite.",
+    "Preserve correct phones, forms, canonicals, qualification rules, official local alternatives and real images.",
+    "Make one measurable hypothesis per city; do not combine unrelated title/body/schema changes."
+  ]
+}
