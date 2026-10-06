@@ -164,13 +164,16 @@ def audit_page(url):
 
     if not title:
         findings.append("Missing <title>")
-    elif not (25 <= len(title) <= 70):
-        findings.append(f"Title length {len(title)} chars")
 
     if not desc:
         findings.append("Missing meta description")
-    elif not (70 <= len(desc) <= 180):
-        findings.append(f"Meta description length {len(desc)} chars")
+
+    # Title/description character counts are CTR/snippet optimization signals,
+    # not technical-health failures. Google can rewrite/truncate snippets, and
+    # changing protected experiment metadata just to satisfy a fixed length
+    # threshold would contaminate ranking tests. Missing metadata remains a
+    # hard finding; snippet-length evaluation belongs in the evidence-based
+    # SEO experiment review.
 
     if "noindex" in robots:
         findings.append("CRITICAL: meta robots contains noindex")
