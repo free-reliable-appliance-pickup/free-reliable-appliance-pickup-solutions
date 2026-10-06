@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-05",
+  "market": "City of Orange, CA",
+  "gate": "2026-10-15",
+  "problem": "City-name ambiguity with Orange County. Current live search sample surfaced the site's Orange County hub, not the dedicated City of Orange owner. Anchor audit found 5 broad exact-city owner anchors versus 42 regional Orange County anchors.",
+  "currentOwner": {
+    "path": "/orange-appliance-pickup/",
+    "gsc": {
+      "clicks": 0,
+      "impressions": 11,
+      "avgPosition": 40.54545454545455
+    },
+    "exactSignals": {
+      "appliance removal orange": {
+        "impressions": 2,
+        "position": 62
+      },
+      "free appliance pick up orange county": {
+        "impressions": 1,
+        "position": 31
+      }
+    },
+    "architecture": {
+      "mainWords": 1953,
+      "h2Count": 21
+    },
+    "internalLinks": {
+      "activeInlinks": 12,
+      "crawlDepth": 2
+    }
+  },
+  "currentRegionalHub": {
+    "path": "/orange-county-appliance-pickup/",
+    "liveSearchSample": "Surfaced for the current Orange CA appliance pickup search sample.",
+    "regionalAnchorCountInPriorityAudit": 42
+  },
+  "competitorBenchmark": {
+    "takeMyAppliance": "Uses a dedicated Orange, CA page with a direct city CTA, 3-step process, local details, neighborhoods/ZIPs, appliance categories, FAQ and nearby/local context.",
+    "localJunkCompetitor": "Uses explicit Orange, CA entity wording, physical Orange address/reviews and appliance-removal FAQ."
+  },
+  "postGateDecision": [
+    "Recheck finalized GSC and regular organic search before editing.",
+    "If Orange County hub still surfaces instead of City of Orange, make the city entity explicit in title/H1/intro where appropriate using 'Orange, CA' / 'City of Orange' language without keyword stuffing.",
+    "Reduce the city page from 21 overlapping H2 sections toward a concise city/process/qualification/local-alternative/FAQ/request structure.",
+    "On the Orange County hub, preserve county-wide intent but use a clearly labeled 'City of Orange appliance pickup' link to the city owner so Orange County and City of Orange are distinct entities.",
+    "Preserve 909 phone routing, form, qualification rules, canonical and official City of Orange disposal alternative."
+  ],
+  "guardrail": "Do not make these ranking/intent changes before 2026-10-15 unless a verified technical/factual/contact/indexability/safety issue is found."
+}
