@@ -22,6 +22,6 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Score priority city pages against competitor-gap playbook
         run: python3 scripts/audit-competitor-gap.py
