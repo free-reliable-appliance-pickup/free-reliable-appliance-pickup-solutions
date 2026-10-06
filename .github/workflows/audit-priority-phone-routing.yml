@@ -1,0 +1,101 @@
+name: Audit Priority Phone Routing
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - '**/*-appliance-pickup/index.html'
+      - '**/*-washer-dryer-pickup/index.html'
+      - 'data/market-routing.json'
+      - 'assets/customer-routing.js'
+      - '.github/workflows/audit-priority-phone-routing.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate priority local phone numbers
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, sys
+
+          expected = {
+              # Arizona / Phoenix Metro
+              'phoenix-appliance-pickup':'602-726-7552',
+              'mesa-appliance-pickup':'602-726-7552',
+              'scottsdale-appliance-pickup':'602-726-7552',
+              'chandler-appliance-pickup':'602-726-7552',
+              'tempe-appliance-pickup':'602-726-7552',
+              'glendale-az-appliance-pickup':'602-726-7552',
+
+              # Colorado
+              'denver-appliance-pickup':'720-604-7498',
+              'aurora-appliance-pickup':'720-604-7498',
+
+              # Oregon
+              'portland-appliance-pickup':'503-868-4455',
+              'salem-appliance-pickup':'503-868-4455',
+              'keizer-appliance-pickup':'503-868-4455',
+
+              # California 310 routing
+              'fresno-appliance-pickup':'310-774-4304',
+              'sacramento-appliance-pickup':'310-774-4304',
+              'stockton-appliance-pickup':'310-774-4304',
+
+              # California 909 routing
+              'rancho-cucamonga-appliance-pickup':'909-375-6685',
+              'fontana-appliance-pickup':'909-375-6685',
+              'ontario-appliance-pickup':'909-375-6685',
+              'upland-appliance-pickup':'909-375-6685',
+              'baldwin-park-appliance-pickup':'909-375-6685',
+          }
+
+          known=set(expected.values())
+          errors=[]
+
+          def page_file(slug):
+              return Path(slug)/'index.html'
+
+          for slug,phone in expected.items():
+              p=page_file(slug)
+              if not p.exists():
+                  errors.append(f'MISSING_PRIORITY_PAGE {slug}')
+                  continue
+
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              digits=re.sub(r'\D','',phone)
+              tel_ok=(f'tel:+1{digits}' in raw) or (f'tel:{phone}' in raw)
+              visible_ok=phone in raw
+
+              if not visible_ok:
+                  errors.append(f'EXPECTED_PHONE_MISSING {slug}: {phone}')
+              if not tel_ok:
+                  errors.append(f'EXPECTED_TEL_LINK_MISSING {slug}: {phone}')
+
+              for other in sorted(known-{phone}):
+                  odigits=re.sub(r'\D','',other)
+                  if f'tel:+1{odigits}' in raw or f'tel:{other}' in raw:
+                      errors.append(f'WRONG_PRIORITY_TEL_LINK {slug}: found {other}, expected {phone}')
+
+          routing=Path('data/market-routing.json').read_text(encoding='utf-8')
+          if '"region":"Phoenix Metro"' in routing:
+              if '"phone":"602-726-7552"' not in routing:
+                  errors.append('PHOENIX_ROUTING_PHONE_MISSING data/market-routing.json')
+
+          print('CHECKED_PRIORITY_PHONE_PAGES',len(expected))
+          print('PHONE_ERRORS',len(errors))
+          for e in errors:
+              print(e)
+
+          if errors:
+              sys.exit('Priority phone-routing errors found')
+          print('PASS: priority page phone routing is consistent')
+          PY
