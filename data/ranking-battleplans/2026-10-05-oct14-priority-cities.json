@@ -1,0 +1,252 @@
+{
+  "date": "2026-10-05",
+  "unlock": "2026-10-14",
+  "principle": "At the gate, compare finalized GSC and regular organic results before editing. Preserve pages already near page one; prioritize exact-city ownership, wrong-page cannibalization and over-dense architecture on weaker pages.",
+  "sitewideFinding": {
+    "query": "appliance removal",
+    "current": {
+      "clicks": 0,
+      "impressions": 29,
+      "avgPosition": 28.620689655172413
+    },
+    "competingPageCount": 14,
+    "diagnosis": "Generic removal intent is spread across many city and specialty pages. Do not repeat broad generic language everywhere; each city page should own its local city intent while national/service hubs own broad non-city intent."
+  },
+  "cities": {
+    "Fresno": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 18,
+        "avgPosition": 19
+      },
+      "querySignals": {
+        "appliance recycling fresno": {
+          "impressions": 1,
+          "position": 4
+        },
+        "appliance removal fresno": {
+          "impressions": 1,
+          "position": 19
+        },
+        "appliance pickup for free": {
+          "impressions": 1,
+          "position": 12
+        }
+      },
+      "architecture": {
+        "mainWords": 1638,
+        "h2Count": 14
+      },
+      "diagnosis": "Correct page has some relevance but broad Fresno ownership is weak, and prior live SERP evidence showed Clovis/Sanger/Selma pages surfacing for Fresno. High-priority ownership cleanup after the gate.",
+      "gateDecision": "Recheck query-to-page ownership. If sibling cities still rank for Fresno, narrow sibling Fresno references and simplify the Fresno owner to a concise city/process/qualification/local/FAQ/request structure."
+    },
+    "Sacramento": {
+      "gsc": {
+        "clicks": 1,
+        "impressions": 21,
+        "avgPosition": 16.904761904761905
+      },
+      "querySignals": {
+        "free appliance pick up sacramento": {
+          "impressions": 7,
+          "position": 18.285714285714285
+        },
+        "free appliance pickup": {
+          "impressions": 3,
+          "position": 10
+        },
+        "appliance pick up free": {
+          "impressions": 2,
+          "position": 10
+        }
+      },
+      "architecture": {
+        "mainWords": 1027,
+        "h2Count": 11
+      },
+      "diagnosis": "Exact Sacramento query remains outside page one even though generic free-pickup signals are stronger. Candidate for city-intent concentration, not a large content expansion.",
+      "gateDecision": "If exact Sacramento remains ~18, strengthen exact-city ownership and trim nonessential overlap while preserving existing generic top-10 signals."
+    },
+    "Anaheim": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 34,
+        "avgPosition": 19.11764705882353
+      },
+      "querySignals": {
+        "appliance removal anaheim": {
+          "impressions": 2,
+          "position": 65
+        },
+        "appliance removal orange county": {
+          "impressions": 2,
+          "position": 61.5
+        },
+        "free refrigerator pick up": {
+          "impressions": 1,
+          "position": 6
+        }
+      },
+      "architecture": {
+        "mainWords": 1554,
+        "h2Count": 15
+      },
+      "diagnosis": "Page is dense and ranks far better for generic refrigerator intent than local Anaheim removal. Strong candidate for local-intent concentration after the gate.",
+      "gateDecision": "If local Anaheim terms remain weak, reduce repeated generic/removal sections and retain city-specific process, appliance categories, Anaheim access/utility alternatives, FAQ and request."
+    },
+    "Riverside": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 18,
+        "avgPosition": 12.944444444444445
+      },
+      "querySignals": {
+        "appliance removal riverside": {
+          "impressions": 1,
+          "position": 43
+        },
+        "free appliance pick up": {
+          "impressions": 3,
+          "position": 10.333333333333334
+        },
+        "appliance pick up free": {
+          "impressions": 2,
+          "position": 10
+        }
+      },
+      "architecture": {
+        "mainWords": 1857,
+        "h2Count": 15
+      },
+      "diagnosis": "Overall page is close to page one but local removal intent is weak. Avoid an aggressive rewrite unless post-gate data confirms stalled city ownership.",
+      "gateDecision": "Prefer a surgical ownership cleanup over full rewrite; preserve any top-10 generic free-pickup signals."
+    },
+    "Costa Mesa": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 36,
+        "avgPosition": 17.38888888888889
+      },
+      "querySignals": {
+        "appliance removal costa mesa": {
+          "impressions": 13,
+          "position": 36.38461538461539
+        },
+        "refrigerator pickup free": {
+          "impressions": 3,
+          "position": 5
+        },
+        "pick up old fridge for free near me": {
+          "impressions": 3,
+          "position": 7
+        }
+      },
+      "architecture": {
+        "mainWords": 1276,
+        "h2Count": 14
+      },
+      "diagnosis": "Strong refrigerator/free-pickup signals but weak local Costa Mesa removal ownership. Candidate for city-intent concentration while protecting refrigerator relevance.",
+      "gateDecision": "Reframe local city sections around pickup/removal intent and keep refrigerator-specific strength in the correct specialty/support pathways."
+    },
+    "Irvine": {
+      "gsc": {
+        "clicks": 2,
+        "impressions": 38,
+        "avgPosition": 18.5
+      },
+      "querySignals": {
+        "appliance removal irvine": {
+          "impressions": 6,
+          "position": 30.166666666666668
+        },
+        "appliance removal irvine ca": {
+          "impressions": 2,
+          "position": 49.5
+        },
+        "free appliance pick up orange county": {
+          "impressions": 2,
+          "position": 38.5
+        },
+        "free refrigerator pick up": {
+          "clicks": 1,
+          "impressions": 1,
+          "position": 7
+        }
+      },
+      "architecture": {
+        "mainWords": 1547,
+        "h2Count": 12
+      },
+      "diagnosis": "The page earns clicks and useful generic refrigerator visibility, but local Irvine removal intent is weak. Needs ownership concentration, not broad de-optimization.",
+      "gateDecision": "If local Irvine positions remain 30+, simplify city sections and separate Orange County hub language from Irvine owner intent."
+    },
+    "Huntington Beach": {
+      "gsc": {
+        "clicks": 0,
+        "impressions": 47,
+        "avgPosition": 12.063829787234043
+      },
+      "querySignals": {
+        "appliance removal huntington beach": {
+          "impressions": 4,
+          "position": 48.25
+        },
+        "free appliance recycling near me": {
+          "impressions": 3,
+          "position": 9.666666666666666
+        },
+        "who will pick up old appliances for free near me": {
+          "impressions": 3,
+          "position": 5
+        }
+      },
+      "architecture": {
+        "mainWords": 1264,
+        "h2Count": 13
+      },
+      "diagnosis": "Overall visibility is close to page one with several strong generic/free/recycling terms, but exact local removal is weak. Protect broad wins and make only surgical local-intent changes if still necessary.",
+      "gateDecision": "Avoid full rewrite if overall position holds; focus on local ownership and CTR."
+    },
+    "Portland": {
+      "gsc": {
+        "clicks": 1,
+        "impressions": 12,
+        "avgPosition": 14.666666666666666
+      },
+      "architecture": {
+        "h2Count": 27,
+        "note": "Legacy Portland document has no <main> wrapper; content is otherwise indexable with H1, canonical, form and 27 H2 sections."
+      },
+      "diagnosis": "Legacy structure is unusually dense and semantically old-fashioned. The missing main wrapper is not by itself an indexing failure, so defer markup/body work until the ranking gate unless another audit proves breakage.",
+      "gateDecision": "If ranking remains outside top 10, simplify legacy structure substantially while preserving 503 phone, form, official local alternatives, real images and Portland city ownership."
+    },
+    "Salem": {
+      "gsc": {
+        "clicks": 2,
+        "impressions": 62,
+        "avgPosition": 9.903225806451612
+      },
+      "querySignals": {
+        "free appliance recycling near me": {
+          "impressions": 6,
+          "position": 6.833333333333333
+        },
+        "free appliance removal": {
+          "impressions": 2,
+          "position": 7.5
+        },
+        "where to take old washer and dryer near me": {
+          "impressions": 1,
+          "position": 1
+        }
+      },
+      "architecture": {
+        "mainWords": 2253,
+        "h2Count": 28
+      },
+      "diagnosis": "Despite extremely dense architecture, Salem is already averaging page-one visibility and has clicks. Do not simplify solely because of page length while it is winning.",
+      "gateDecision": "Protect if top-10 performance holds. Prefer CTR and exact-city ownership improvements before structural reduction."
+    }
+  },
+  "measurementRule": "Regular organic only for rank evaluation; keep Images, Maps/local pack and AI surfaces separate."
+}
