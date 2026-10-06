@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-05",
+  "purpose": "Live competitor and municipal-reference prep for weakest protected city pages. No protected ranking-page body edits made.",
+  "markets": {
+    "Mission Viejo": {
+      "unlock": "2026-10-14",
+      "currentGsc": {
+        "clicks": 0,
+        "impressions": 10,
+        "avgPosition": 43
+      },
+      "competitorPatterns": [
+        "TakeMyAppliance: concise form-first city page with 3-step process, trust reasons, appliance categories, FAQ and nearby-market handoff.",
+        "AppliancePickupNow: concise request-first page with 3-step process, appliance categories, gated-community FAQ, ZIPs/neighborhoods and nearby cities."
+      ],
+      "officialAlternative": {
+        "source": "City of Mission Viejo",
+        "facts": "Residents with city trash service can schedule free bulky-item collection; city guidance includes appliances and sets quantity/frequency rules.",
+        "currentUrl": "https://www.missionviejo.gov/departments/public-works/environmental-programs/waste-management"
+      },
+      "technicalRepair": "Updated legacy General Plan citation from cityofmissionviejo.org to current missionviejo.gov URL.",
+      "postGateDecision": "If finalized local removal position remains weak, reduce overlapping generic/removal copy and keep qualification, 3-step request flow, gated/HOA access, official municipal alternative, FAQ and request form."
+    },
+    "Scottsdale": {
+      "unlock": "2026-10-15",
+      "currentGsc": {
+        "clicks": 0,
+        "impressions": 18,
+        "avgPosition": 42.27777777777778
+      },
+      "competitorPatterns": [
+        "TakeMyAppliance: 3-step request process, trust reasons, appliance categories, FAQ and Phoenix handoff.",
+        "AppliancePickupNow: 3-step request process, appliance category cards, simple local positioning and short FAQ."
+      ],
+      "officialAlternative": {
+        "source": "City of Scottsdale",
+        "facts": "City offers scheduled appliance collection to eligible solid-waste customers; refrigerators/freezers have refrigerant handling requirements.",
+        "currentUrl": "https://www.scottsdaleaz.gov/solid-waste/collection-services/appliance-collection"
+      },
+      "postGateDecision": "If exact Scottsdale removal remains ~60-80, simplify around one Scottsdale owner page, retain the official city alternative and 602 phone/form, and remove repeated generic-intent sections."
+    },
+    "Orange": {
+      "unlock": "2026-10-15",
+      "currentGsc": {
+        "clicks": 0,
+        "impressions": 11,
+        "avgPosition": 40.54545454545455
+      },
+      "competitorPatterns": [
+        "TakeMyAppliance Orange: free-to-submit CTA, commercial handoff, 3-step process, trust reasons, concise local details, neighborhoods/ZIPs, appliance categories and FAQ."
+      ],
+      "postGateDecision": "Separate City of Orange intent from Orange County hub intent. If exact Orange remains weak, simplify the 21-H2 page and preserve only local city details, official disposal alternative, qualification, commercial path, FAQ and request."
+    },
+    "Jurupa Valley": {
+      "unlock": "2026-10-14",
+      "currentGsc": null,
+      "currentArchitecture": {
+        "mainWords": 2564,
+        "h2Count": 27
+      },
+      "competitorPatterns": [
+        "TakeMyAppliance Southern California hierarchy includes a dedicated Jurupa Valley city page under its location network."
+      ],
+      "officialAlternative": {
+        "source": "City of Jurupa Valley",
+        "facts": "Burrtec provides curbside bulky-item pickup up to two times per calendar year at no charge, up to six bulky items per request; appliances are included.",
+        "currentUrl": "https://www.jurupavalley.org/354/Residential-Waste-Recycling"
+      },
+      "internalLinkAudit": {
+        "activeInlinks": 11,
+        "crawlDepth": 2,
+        "brokenTargets": 0,
+        "note": "Riverside County hub links to Jurupa Valley; Inland Empire hub currently does not."
+      },
+      "postGateDecision": "First verify index/query visibility. If still no finalized impressions, add the missing natural Inland Empire hub handoff after its freeze, then simplify the 27-H2 page only if visibility remains weak."
+    }
+  },
+  "sitewideTechnicalFindings": {
+    "sitemapUrls": 697,
+    "reachableFromHomepage": 697,
+    "unreachable": 0,
+    "brokenInternalTargets": 0,
+    "priorityInlinkConclusion": "All audited priority cities have at least 4 active inbound links and crawl depth 1-3; crawl discovery is not the primary ranking blocker.",
+    "jsonLdConclusion": "Full active-site JSON-LD audit passes."
+  }
+}
