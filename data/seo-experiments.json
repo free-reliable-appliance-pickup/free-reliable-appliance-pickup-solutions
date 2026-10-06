@@ -6976,6 +6976,14 @@
         "/avondale-appliance-pickup/",
         "/surprise-appliance-pickup/"
       ]
+    },
+    {
+      "date": "2026-10-05",
+      "type": "verified official-reference repair",
+      "reason": "Mission Viejo city page linked its General Plan reference to the legacy cityofmissionviejo.org URL. Updated only that external citation to the current official missionviejo.gov General Plan URL verified in the live City of Mission Viejo site. HTML title, meta description, H1, canonical, visible service copy, form, phone, qualification rules and internal links were unchanged.",
+      "pages": [
+        "/mission-viejo-appliance-pickup/"
+      ]
     }
   ]
 }
