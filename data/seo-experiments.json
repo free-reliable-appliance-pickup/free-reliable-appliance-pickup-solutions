@@ -8189,6 +8189,55 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /san-diego-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-san-diego-laundry-concentration",
+      "market": "San Diego, CA washer/dryer",
+      "hypothesis": "Removing duplicated access/planning blocks and a generic social bridge will make the dedicated San Diego laundry page more concise and easier for Google to understand as the washer/dryer intent owner.",
+      "pagesChanged": [
+        "/san-diego-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/san-diego-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 69,
+          "queries": [
+            {
+              "query": "washer dryer removal san diego",
+              "impressions": 2,
+              "position": 80
+            },
+            {
+              "query": "san diego free laundry pick up",
+              "impressions": 1,
+              "position": 44
+            },
+            {
+              "query": "free appliance removal san diego",
+              "impressions": 1,
+              "position": 72
+            }
+          ]
+        }
+      },
+      "change": "Removed redundant local-access, planning and local-depth sections plus the old generic Facebook bridge. Kept title, meta description, H1, canonical, dedicated laundry scope, testing details, route connections, qualification rules, detailed apartment/condo access guidance, FAQ, real washer/dryer images, request form and 310 contact unchanged.",
+      "successSignals": [
+        "Finalized impressions increase for washer dryer removal San Diego and related laundry pickup queries.",
+        "Average position improves from the current weak baseline while the general San Diego appliance page retains broad appliance intent.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /san-diego-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
