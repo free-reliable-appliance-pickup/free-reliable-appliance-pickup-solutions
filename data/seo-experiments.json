@@ -7404,6 +7404,16 @@
       "pages": [
         "/mission-viejo-appliance-pickup/"
       ]
+    },
+    {
+      "date": "2026-10-05",
+      "type": "routing source-of-truth repair",
+      "reason": "Phoenix Metro market-routing row had phone:null while live Arizona/Phoenix pages use 602-726-7552. customer-routing.js writes the resolved market phone into the hidden Routing Phone form field, so nationwide/homepage Phoenix submissions could carry a blank routing phone. Set the Phoenix Metro regional routing phone to 602-726-7552 and added a validator expectation. Coverage status, territory status and partner logic are unchanged.",
+      "pages": [],
+      "files": [
+        "data/market-routing.json",
+        ".github/workflows/validate-market-routing.yml"
+      ]
     }
   ]
 }
