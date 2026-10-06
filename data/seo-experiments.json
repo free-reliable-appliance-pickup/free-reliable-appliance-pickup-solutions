@@ -8112,6 +8112,19 @@
         "altadena-washer-dryer-pickup/index.html",
         "data/seo-experiments.json"
       ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "duplicate WebPage schema consolidation",
+      "reason": "Verified duplicate WebPage JSON-LD entities with the same #webpage @id on the Ventura/Central Coast template. Consolidated the richer standalone WebPage properties into the existing @graph WebPage node and removed the duplicate entity. Titles, meta descriptions, H1s, canonicals, visible service copy, forms, phones, qualification rules and internal-link intent were unchanged.",
+      "pages": [
+        "/ventura-appliance-pickup/",
+        "/oxnard-appliance-pickup/",
+        "/santa-barbara-appliance-pickup/",
+        "/santa-maria-appliance-pickup/",
+        "/san-luis-obispo-appliance-pickup/",
+        "/ventura-washer-dryer-pickup/"
+      ]
     }
   ]
 }
