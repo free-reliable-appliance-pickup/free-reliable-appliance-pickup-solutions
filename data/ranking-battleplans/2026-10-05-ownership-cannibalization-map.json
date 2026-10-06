@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-05",
+  "sourceRange": {
+    "start": "2026-09-06",
+    "end": "2026-10-03"
+  },
+  "purpose": "Finalized GSC cannibalization map for broad organic ownership. Regular organic only; do not mix with Images, Maps/local pack or AI surfaces.",
+  "queries": {
+    "free appliance pickup upland": {
+      "current": {
+        "clicks": 0,
+        "impressions": 36,
+        "ctr": 0,
+        "avgPosition": 25.055555555555557
+      },
+      "competingPages": 10,
+      "intendedOwner": "/upland-appliance-pickup/",
+      "strongestObservedPages": [
+        {
+          "page": "/upland-washer-dryer-pickup/",
+          "impressions": 11,
+          "position": 11.545454545454545
+        },
+        {
+          "page": "/san-bernardino-county-appliance-pickup/",
+          "impressions": 7,
+          "position": 16
+        },
+        {
+          "page": "/san-bernardino-appliance-pickup/",
+          "impressions": 2,
+          "position": 10.5
+        },
+        {
+          "page": "/san-gabriel-inland-empire-appliance-pickup/",
+          "impressions": 2,
+          "position": 11
+        },
+        {
+          "page": "/highland-appliance-pickup/",
+          "impressions": 1,
+          "position": 35
+        }
+      ],
+      "diagnosis": "Clear wrong-page ownership. Broad Upland query is led by the dedicated washer/dryer page rather than the general Upland owner.",
+      "nextGate": "2026-10-14",
+      "postGateRule": "If the relationship persists, preserve laundry-specific relevance but narrow broad appliance language on specialty/sibling pages and reinforce the general Upland owner."
+    },
+    "free appliance pickup fontana": {
+      "current": {
+        "clicks": 0,
+        "impressions": 28,
+        "ctr": 0,
+        "avgPosition": 13.178571428571429
+      },
+      "competingPages": 5,
+      "intendedOwner": "/fontana-appliance-pickup/",
+      "strongestObservedPages": [
+        {
+          "page": "/fontana-stove-oven-pickup/",
+          "impressions": 12,
+          "position": 19.5
+        },
+        {
+          "page": "/southern-california-appliance-pickup/",
+          "impressions": 8,
+          "position": 5.625
+        },
+        {
+          "page": "/rialto-washer-dryer-pickup/",
+          "impressions": 4,
+          "position": 6.5
+        },
+        {
+          "page": "/fontana-appliance-pickup/",
+          "impressions": 3,
+          "position": 18.666666666666668
+        },
+        {
+          "page": "/",
+          "impressions": 1,
+          "position": 8
+        }
+      ],
+      "diagnosis": "Broad Fontana intent is split across a specialty page, regional hub, neighboring-city laundry page, the correct city owner and homepage.",
+      "nextGate": "2026-10-14",
+      "postGateRule": "If split remains, reduce broad Fontana language outside the correct owner while preserving stove/laundry/regional intent."
+    },
+    "appliance removal": {
+      "current": {
+        "clicks": 0,
+        "impressions": 29,
+        "ctr": 0,
+        "avgPosition": 28.620689655172413
+      },
+      "competingPages": 14,
+      "intendedOwner": "National/service-level page or context-specific city owner depending query modifiers; avoid one generic phrase being repeated as primary intent across every city page.",
+      "samplePages": [
+        {
+          "page": "/santa-clarita-appliance-pickup/",
+          "impressions": 6,
+          "position": 25.333333333333332
+        },
+        {
+          "page": "/los-angeles-appliance-pickup/",
+          "impressions": 5,
+          "position": 27
+        },
+        {
+          "page": "/scottsdale-appliance-pickup/",
+          "impressions": 5,
+          "position": 34
+        },
+        {
+          "page": "/rancho-cucamonga-appliance-pickup/",
+          "impressions": 2,
+          "position": 45
+        },
+        {
+          "page": "/irvine-appliance-pickup/",
+          "impressions": 1,
+          "position": 37
+        },
+        {
+          "page": "/mission-viejo-appliance-pickup/",
+          "impressions": 1,
+          "position": 38
+        },
+        {
+          "page": "/rancho-cucamonga-refrigerator-pickup/",
+          "impressions": 1,
+          "position": 26
+        }
+      ],
+      "diagnosis": "Generic non-city removal intent is diluted across many local pages. This is a sitewide intent-boundary issue, not a need to repeat the phrase more often.",
+      "postGateRule": "Keep city pages focused on city-modified intent; reserve broad non-city removal ownership for the proper national/service hub."
+    }
+  }
+}
