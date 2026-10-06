@@ -1,14 +1,17 @@
 name: Audit Active Metadata Uniqueness
-# Revalidated after the approved-page request-action repair pass.
+# Reports duplicate search metadata and blocks verified canonical/missing-metadata defects.
 
 on:
   push:
+    branches: [main]
     paths:
+      - '**/*.html'
       - 'sitemap.xml'
       - 'data/approved-indexable-locations.txt'
       - '.github/workflows/audit-active-metadata-uniqueness.yml'
   pull_request:
     paths:
+      - '**/*.html'
       - 'sitemap.xml'
       - 'data/approved-indexable-locations.txt'
       - '.github/workflows/audit-active-metadata-uniqueness.yml'
@@ -29,18 +32,16 @@ jobs:
           from pathlib import Path
           from collections import defaultdict
           from html.parser import HTMLParser
-          import html, xml.etree.ElementTree as ET
+          import html, sys, xml.etree.ElementTree as ET
 
           BASE='https://freereliableappliancepickup.com/'
           root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          urls=[e.text.strip() for e in root.findall('.//s:loc',ns) if e.text]
+          urls=[e.text.strip() for e in root.findall('.//s:loc',ns) if e.text and e.text.startswith(BASE)]
 
           def file_for(url):
               if url.rstrip('/')==BASE.rstrip('/'):
                   return Path('index.html')
-              if not url.startswith(BASE):
-                  return None
               rel=url[len(BASE):].strip('/')
               p=Path(rel)
               return p if p.suffix else p/'index.html'
@@ -73,23 +74,32 @@ jobs:
                       self._buf.append(data)
 
           rows=[]
+          errors=[]
           for url in urls:
               p=file_for(url)
               if p is None or not p.exists():
-                  rows.append((url,'','','','MISSING'))
+                  errors.append(f'MISSING_FILE {url} -> {p}')
                   continue
-              parser=MetaParser()
-              parser.feed(p.read_text(encoding='utf-8',errors='ignore'))
-              rows.append((url,html.unescape(parser.title),html.unescape(parser.desc),html.unescape(parser.h1),parser.canonical))
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              if 'noindex' in raw.lower():
+                  continue
+              parser=MetaParser(); parser.feed(raw)
+              title=html.unescape(parser.title).strip()
+              desc=html.unescape(parser.desc).strip()
+              h1=html.unescape(parser.h1).strip()
+              canonical=parser.canonical.strip()
+              rows.append((url,title,desc,h1,canonical))
+              if not title: errors.append(f'MISSING_TITLE {url}')
+              if not desc: errors.append(f'MISSING_DESCRIPTION {url}')
+              if not h1: errors.append(f'MISSING_H1 {url}')
+              if not canonical: errors.append(f'MISSING_CANONICAL {url}')
+              elif canonical.rstrip('/') != url.rstrip('/'):
+                  errors.append(f'CANONICAL_MISMATCH {url} -> {canonical}')
 
           print('ACTIVE_URLS',len(rows))
-          print('MISSING_TITLE',sum(not r[1] for r in rows))
-          print('MISSING_DESCRIPTION',sum(not r[2] for r in rows))
-          print('MISSING_H1',sum(not r[3] for r in rows))
-          print('MISSING_CANONICAL',sum(not r[4] for r in rows))
-          bad=[r for r in rows if r[4] and r[4] != 'MISSING' and r[4].rstrip('/')!=r[0].rstrip('/')]
-          print('CANONICAL_MISMATCH',len(bad))
-          for r in bad: print('BAD_CANONICAL',r[0],'->',r[4])
+          print('TECHNICAL_ERRORS',len(errors))
+          for e in errors[:200]:
+              print(e)
 
           for label,idx in [('TITLE',1),('DESCRIPTION',2),('H1',3)]:
               groups=defaultdict(list)
@@ -98,7 +108,18 @@ jobs:
                   if key: groups[key].append(r[0])
               dups=[(k,v) for k,v in groups.items() if len(v)>1]
               print('\nDUPLICATE_'+label+'_GROUPS',len(dups))
-              for k,v in sorted(dups,key=lambda x:(-len(x[1]),x[0])):
+              for k,v in sorted(dups,key=lambda x:(-len(x[1]),x[0]))[:100]:
                   print(label,len(v),k)
                   for u in v: print(' ',u)
+
+          canon=defaultdict(list)
+          for url,_,_,_,canonical in rows:
+              if canonical: canon[canonical.rstrip('/')].append(url)
+          dup_canon=[(k,v) for k,v in canon.items() if len(v)>1]
+          print('\nDUPLICATE_CANONICAL_GROUPS',len(dup_canon))
+          for k,v in dup_canon[:100]:
+              print('CANONICAL',len(v),k,'|',' ; '.join(v))
+
+          if errors or dup_canon:
+              sys.exit('Active metadata/canonical technical errors found')
           PY
