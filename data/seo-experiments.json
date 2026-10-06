@@ -8425,6 +8425,62 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /carlsbad-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-long-beach-protected-concentration",
+      "market": "Long Beach, CA",
+      "hypothesis": "Removing repeated network/priority/search-facing blocks while preserving the current refrigerator-specific and City Special Collection content will improve exact-city appliance-removal clarity without sacrificing existing page-one refrigerator/free-pickup visibility.",
+      "pagesChanged": [
+        "/long-beach-appliance-pickup/"
+      ],
+      "protectedOwner": "/long-beach-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 22,
+          "ctr": 0,
+          "position": 31.40909090909091,
+          "queries": [
+            {
+              "query": "appliance removal long beach",
+              "impressions": 8,
+              "position": 62.875
+            },
+            {
+              "query": "free fridge pickup",
+              "impressions": 2,
+              "position": 9
+            },
+            {
+              "query": "fridge pickup",
+              "impressions": 1,
+              "position": 12
+            },
+            {
+              "query": "refrigerator removal free",
+              "impressions": 1,
+              "position": 10
+            }
+          ]
+        },
+        "protectSignals": "Refrigerator/free-pickup queries already have page-one or near-page-one visibility. The refrigerator-specific section, title, H1, snippet, official City Special Collection section and core process/access content are preserved.",
+        "officialLocalAlternative": "Current City of Long Beach Special Collection guidance says City-serviced accounts can receive up to 12 Special Collections per calendar year at no additional cost, with appliances among eligible items and separate preparation/special-handling rules."
+      },
+      "change": "Removed the generic no-city handoff, local intent-owner declaration, duplicate free-removal block, thin neighborhood-depth block, generic turbo network block, LA corridor block and priority-expansion block. Preserved title, meta description, H1, canonical, 310 contact, main removal-intent section, direct request process, appliance scope, detailed access, official Long Beach Special Collection section, refrigerator-specific section, ZIP information, FAQ, washer/dryer handoff, request form and neighbor links.",
+      "successSignals": [
+        "Exact-city appliance removal Long Beach visibility improves from the current weak position while refrigerator/free-pickup page-one signals are retained.",
+        "The Long Beach page remains the broad city owner and laundry intent remains on the dedicated washer/dryer page.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /long-beach-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
