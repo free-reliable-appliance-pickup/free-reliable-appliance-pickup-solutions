@@ -136,6 +136,28 @@ jobs:
               await github.rest.issues.create({ owner, repo, title, body });
             }
 
+      - name: Close stale full-site SEO issue when clean
+        if: steps.audit.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = 'Automated full-site SEO alert';
+            const { owner, repo } = context.repo;
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'open', per_page: 100
+            });
+            for (const issue of issues) {
+              if (!issue.pull_request && issue.title === title) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: issue.number,
+                  body: 'Latest automated full-site SEO run is clean. Closing this alert.'
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: issue.number, state: 'closed'
+                });
+              }
+            }
+
       - name: Fail workflow when audit found problems
         if: steps.audit.outcome == 'failure'
         run: exit 1
