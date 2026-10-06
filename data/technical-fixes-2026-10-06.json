@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-06",
+  "issue": 237,
+  "type": "technical-fix",
+  "reason": "Remove duplicate standalone WebPage JSON-LD entities reported by the full-site SEO health monitor. Preserve the richer existing WebPage entity and make no title, meta, H1, visible copy, canonical, internal-link, form, phone, image, or intent-ownership changes.",
+  "pages": [
+    "coachella-valley-appliance-pickup",
+    "san-jose-appliance-pickup",
+    "san-francisco-appliance-pickup",
+    "oakland-appliance-pickup",
+    "san-diego-appliance-pickup",
+    "bakersfield-appliance-pickup",
+    "palm-springs-appliance-pickup",
+    "palm-desert-appliance-pickup",
+    "rancho-mirage-appliance-pickup",
+    "indian-wells-appliance-pickup",
+    "la-quinta-appliance-pickup",
+    "cathedral-city-appliance-pickup",
+    "indio-appliance-pickup",
+    "menifee-appliance-pickup",
+    "murrieta-appliance-pickup",
+    "modesto-appliance-pickup",
+    "south-san-jose-hills-appliance-pickup",
+    "avocado-heights-appliance-pickup",
+    "torrance-washer-dryer-pickup",
+    "santa-clarita-washer-dryer-pickup"
+  ],
+  "alreadyResolvedBeforeBatch": [
+    "whittier-washer-dryer-pickup",
+    "la-habra-washer-dryer-pickup"
+  ],
+  "validation": "Re-run the full-site SEO health monitor and confirm issue #237 auto-closes or reports zero duplicate WebPage @id findings."
+}
