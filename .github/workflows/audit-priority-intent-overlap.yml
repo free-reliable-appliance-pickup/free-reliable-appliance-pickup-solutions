@@ -1,0 +1,81 @@
+name: Audit Priority Intent Overlap
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - '.github/workflows/audit-priority-intent-overlap.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare owner and competing page intent
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, html, math
+          from collections import Counter
+
+          PAIRS = [
+            ('upland-appliance-pickup','upland-washer-dryer-pickup'),
+            ('fontana-appliance-pickup','fontana-stove-oven-pickup'),
+            ('fontana-appliance-pickup','southern-california-appliance-pickup'),
+            ('fontana-appliance-pickup','rialto-washer-dryer-pickup'),
+            ('phoenix-appliance-pickup','phoenix-refrigerator-pickup'),
+            ('phoenix-appliance-pickup','phoenix-metro-appliance-pickup'),
+            ('fresno-appliance-pickup','clovis-appliance-pickup'),
+            ('fresno-appliance-pickup','sanger-appliance-pickup'),
+            ('fresno-appliance-pickup','selma-appliance-pickup'),
+            ('orange-appliance-pickup','orange-county-appliance-pickup'),
+            ('denver-appliance-pickup','denver-washer-dryer-pickup')
+          ]
+
+          STOP=set('the a an and or for of to in on with from by is are this that your our free pickup appliance appliances removal service services page city local can we you it as at be if when how what'.split())
+          tag_re=re.compile(r'<[^>]+>')
+          script_re=re.compile(r'<script[\s\S]*?</script>|<style[\s\S]*?</style>',re.I)
+
+          def load(slug):
+              p=Path(slug)/'index.html'
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              title=html.unescape((re.search(r'<title>(.*?)</title>',raw,re.I|re.S).group(1) if re.search(r'<title>(.*?)</title>',raw,re.I|re.S) else ''))
+              h1m=re.search(r'<h1[^>]*>(.*?)</h1>',raw,re.I|re.S)
+              h1=html.unescape(tag_re.sub(' ',h1m.group(1))) if h1m else ''
+              h2s=[html.unescape(tag_re.sub(' ',m.group(1))) for m in re.finditer(r'<h2[^>]*>(.*?)</h2>',raw,re.I|re.S)]
+              body=script_re.sub(' ',raw)
+              body=html.unescape(tag_re.sub(' ',body))
+              body=' '.join(body.lower().split())
+              tokens=[t for t in re.findall(r'[a-z0-9]+',body) if len(t)>2 and t not in STOP]
+              return {'title':title.strip(),'h1':' '.join(h1.split()),'h2':h2s,'tokens':tokens}
+
+          def jaccard(a,b):
+              A=set(a); B=set(b)
+              return len(A&B)/len(A|B) if A|B else 0
+
+          def cosine(a,b):
+              ca=Counter(a); cb=Counter(b)
+              keys=set(ca)|set(cb)
+              dot=sum(ca[k]*cb[k] for k in keys)
+              na=math.sqrt(sum(v*v for v in ca.values())); nb=math.sqrt(sum(v*v for v in cb.values()))
+              return dot/(na*nb) if na and nb else 0
+
+          for owner,other in PAIRS:
+              a=load(owner); b=load(other)
+              head_a=re.findall(r'[a-z0-9]+',(a['title']+' '+a['h1']+' '+' '.join(a['h2'])).lower())
+              head_b=re.findall(r'[a-z0-9]+',(b['title']+' '+b['h1']+' '+' '.join(b['h2'])).lower())
+              print(f'PAIR {owner} <> {other}')
+              print(f'BODY_COSINE {cosine(a["tokens"],b["tokens"]):.4f}')
+              print(f'BODY_JACCARD {jaccard(a["tokens"],b["tokens"]):.4f}')
+              print(f'HEADING_JACCARD {jaccard(head_a,head_b):.4f}')
+              print('OWNER_TITLE',a['title'])
+              print('OTHER_TITLE',b['title'])
+              print()
+          PY
