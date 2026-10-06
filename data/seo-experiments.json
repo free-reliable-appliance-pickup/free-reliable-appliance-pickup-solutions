@@ -6537,6 +6537,40 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /yorba-linda-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-recurring-priority-market-handoffs",
+      "market": "Recurring / multi-site priority markets",
+      "hypothesis": "Adding clear program-level internal handoffs from the recurring appliance pickup hub to Fresno, Sacramento, Stockton, Phoenix, Denver, Aurora, Portland and Salem will strengthen crawl paths and market relevance without rewriting the protected city pages.",
+      "pagesChanged": [
+        "/recurring-appliance-pickup-program/"
+      ],
+      "protectedOwner": "/recurring-appliance-pickup-program/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "avgPosition": 71,
+          "note": "Finalized Search Console returned no query rows for this page in the effective period."
+        },
+        "changeCommit": "cd7183bb2597a9a64be093b44dd4087a6010839b"
+      },
+      "change": "Added one concise Additional Priority Markets section to the recurring-program hub linking to Fresno, Sacramento, Stockton, Phoenix, Denver, Aurora, Portland and Salem. No target city page, title/meta, schema, canonical, qualification rule, contact number or request form was changed.",
+      "successSignals": [
+        "The recurring-program hub gains additional finalized GSC impressions or clicks.",
+        "Priority market pages receive stronger crawl/internal-link support without losing their intended city-query ownership.",
+        "No new cannibalization or content-quality audit failures appear from this authority handoff."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make speculative title, body, internal-link, schema, canonical or intent-ownership edits to the recurring-program page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
