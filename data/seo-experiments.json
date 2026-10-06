@@ -8020,6 +8020,78 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these three pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-regional-laundry-and-vegas-concentration",
+      "market": "Las Vegas Valley / Portland / Puget Sound",
+      "hypothesis": "Removing search-engine-facing, generic social and repeated network-growth sections from weak or zero-visibility regional owner pages will concentrate each page on real pickup qualification, access, local alternatives and request intent without reopening thin city duplicates.",
+      "pagesChanged": [
+        "/las-vegas-valley-appliance-pickup/",
+        "/las-vegas-valley-washer-dryer-pickup/",
+        "/portland-washer-dryer-pickup/",
+        "/puget-sound-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/las-vegas-valley-appliance-pickup/",
+        "/las-vegas-valley-washer-dryer-pickup/",
+        "/portland-washer-dryer-pickup/",
+        "/puget-sound-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "lasVegasValleyGeneral": {
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "position": 21,
+            "exactQuery": {
+              "query": "las vegas free appliance pick up",
+              "clicks": 0,
+              "impressions": 3,
+              "ctr": 0,
+              "position": 28.333333333333332
+            }
+          },
+          "lasVegasValleyLaundry": {
+            "current": null,
+            "queries": []
+          },
+          "portlandLaundry": {
+            "current": null,
+            "queries": []
+          },
+          "pugetSoundLaundry": {
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 96,
+            "query": {
+              "query": "apartment laundry machines in seattle",
+              "clicks": 0,
+              "impressions": 1,
+              "ctr": 0,
+              "position": 96
+            }
+          }
+        },
+        "architectureNote": "Las Vegas, Seattle and Tacoma city duplicate URLs remain consolidated/noindex by design. This experiment changes only the indexable regional owner pages and Portland's dedicated laundry owner."
+      },
+      "change": "Kept titles, meta descriptions, H1s, canonicals, request forms, qualification rules, local access details and official disposal alternatives unchanged. Removed generic Facebook/network-growth/search-engine-facing sections. Reworded the Las Vegas Valley and Puget Sound laundry coverage introductions around actual service geography, testing details and access instead of lists of target queries.",
+      "successSignals": [
+        "Las Vegas Valley general improves on the exact Las Vegas free appliance pickup query while remaining the regional owner.",
+        "Las Vegas Valley, Portland and Puget Sound laundry pages begin or expand finalized GSC visibility for washer/dryer pickup and removal intent.",
+        "No thin city duplicate is re-indexed and no broad appliance intent shifts incorrectly onto a laundry page.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these four pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
