@@ -8133,6 +8133,62 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /north-hollywood-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-san-diego-people-first-concentration",
+      "market": "San Diego, CA",
+      "hypothesis": "Removing redundant search-engine-facing and generic community-plan sections while preserving useful pickup, access, appliance, official recycling and request information will concentrate the San Diego page on real appliance-removal intent and improve weak exact-city visibility.",
+      "pagesChanged": [
+        "/san-diego-appliance-pickup/"
+      ],
+      "protectedOwner": "/san-diego-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 16,
+          "ctr": 0,
+          "position": 61.625,
+          "sampleQueries": [
+            {
+              "query": "appliance disposal san diego",
+              "impressions": 2,
+              "position": 78.5
+            },
+            {
+              "query": "appliance removal san diego",
+              "impressions": 2,
+              "position": 76
+            },
+            {
+              "query": "refrigerator free pick up",
+              "impressions": 2,
+              "position": 12
+            },
+            {
+              "query": "free appliance recycling san diego",
+              "impressions": 1,
+              "position": 56
+            }
+          ]
+        },
+        "competitorObservation": "Current San Diego competitors use a simpler structure centered on request flow, appliance scope, access/photo details, official local alternatives and FAQ rather than multiple search-facing intent declarations.",
+        "verifiedLocalAlternative": "City of San Diego guidance directs residents to WasteFreeSD for appliance reuse/recycling/disposal options and notes that providers vary by appliance and pickup/drop-off terms."
+      },
+      "change": "Removed the legacy 'local searches such as' intent block, duplicate general-scope statement, thin community-area block and generic planning/community-plan depth block. Kept title, meta description, H1, canonical, 310 contact, form, appliance scope, access guidance, authentic photo, FAQ, San Diego recycling alternatives, nearby county links and laundry handoff.",
+      "successSignals": [
+        "Average position and impressions improve for appliance removal San Diego and related city-modified pickup/disposal queries.",
+        "The San Diego city page remains the owner for general city appliance intent while washer/dryer-specific intent stays on the laundry page.",
+        "Technical, schema, routing, image, content-quality and experiment-guard audits remain green."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /san-diego-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
