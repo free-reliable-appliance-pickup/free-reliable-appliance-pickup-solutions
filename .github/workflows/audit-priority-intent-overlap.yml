@@ -78,4 +78,22 @@ jobs:
               print('OWNER_TITLE',a['title'])
               print('OTHER_TITLE',b['title'])
               print()
+
+          # Network-wide scan: every city with both general appliance and washer/dryer pages.
+          discovered=[]
+          for p in Path('.').glob('*-appliance-pickup/index.html'):
+              slug=p.parent.name[:-len('-appliance-pickup')]
+              laundry=Path(slug+'-washer-dryer-pickup')/'index.html'
+              if not laundry.exists():
+                  continue
+              owner=slug+'-appliance-pickup'
+              other=slug+'-washer-dryer-pickup'
+              a=load(owner); b=load(other)
+              head_a=re.findall(r'[a-z0-9]+',(a['title']+' '+a['h1']+' '+' '.join(a['h2'])).lower())
+              head_b=re.findall(r'[a-z0-9]+',(b['title']+' '+b['h1']+' '+' '.join(b['h2'])).lower())
+              discovered.append((cosine(a['tokens'],b['tokens']),jaccard(a['tokens'],b['tokens']),jaccard(head_a,head_b),owner,other))
+          print('NETWORK_CITY_LAUNDRY_OVERLAP_TOP')
+          for body_cos,body_jac,head_jac,owner,other in sorted(discovered,reverse=True)[:40]:
+              print(f'{owner} <> {other} | BODY_COSINE={body_cos:.4f} BODY_JACCARD={body_jac:.4f} HEADING_JACCARD={head_jac:.4f}')
+          print('NETWORK_CITY_LAUNDRY_PAIR_COUNT',len(discovered))
           PY
