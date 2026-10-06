@@ -7803,6 +7803,59 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to either laundry page before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-zero-visibility-laundry-structure-simplification",
+      "market": "Pasadena / Glendora / Covina / Costa Mesa, CA washer-dryer",
+      "hypothesis": "Removing redundant legacy network, corridor, duplicate-conversion and Facebook sections from zero-impression laundry pages will make each page more concise and locally focused, improving crawl understanding and first-query visibility without changing the search snippet or conversion path.",
+      "pagesChanged": [
+        "/pasadena-washer-dryer-pickup/",
+        "/glendora-washer-dryer-pickup/",
+        "/covina-washer-dryer-pickup/",
+        "/costa-mesa-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/pasadena-washer-dryer-pickup/",
+        "/glendora-washer-dryer-pickup/",
+        "/covina-washer-dryer-pickup/",
+        "/costa-mesa-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pasadena": {
+            "current": null,
+            "queries": []
+          },
+          "glendora": {
+            "current": null,
+            "queries": []
+          },
+          "covina": {
+            "current": null,
+            "queries": []
+          },
+          "costaMesa": {
+            "current": null,
+            "queries": []
+          }
+        },
+        "structuralObservation": "Each page contained multiple legacy network/corridor/authority/Facebook blocks beyond the core local laundry service, access, photo, FAQ and request sections."
+      },
+      "change": "Removed redundant legacy network, corridor, duplicate-conversion, appliance-network and Facebook sections while preserving HTML title, meta description, H1, canonical, primary local laundry content, real photos, FAQ, request form, phone, qualification rules and nearby relevant links.",
+      "successSignals": [
+        "One or more pages begin receiving finalized Search Console impressions for local washer/dryer pickup or laundry removal queries.",
+        "The intended city laundry page becomes the ranking URL for its local laundry intent.",
+        "No increase in general-appliance query leakage or technical audit failures."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these four laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
