@@ -533,6 +533,7 @@
     {
       "id": "2026-10-01-coachella-v2-cluster",
       "market": "Coachella Valley, CA",
+      "lastChanged": "2026-10-01",
       "hypothesis": "Stronger city-specific trust, access/disposal detail and city-to-appliance hub links will increase qualified impressions and improve city/appliance query positions without creating thin city copies.",
       "pagesChanged": [
         "/coachella-valley-appliance-pickup/",
@@ -580,6 +581,7 @@
     {
       "id": "2026-10-01-denver-intent-separation",
       "market": "Denver, CO",
+      "lastChanged": "2026-10-01",
       "hypothesis": "Clear general-vs-laundry intent ownership plus verified local alternatives will concentrate broad Denver appliance queries on the city page while the laundry page owns washer/dryer-only searches.",
       "pagesChanged": [
         "/denver-appliance-pickup/",
@@ -634,6 +636,7 @@
     {
       "id": "2026-10-01-phoenix-city-metro-separation",
       "market": "Phoenix, AZ",
+      "lastChanged": "2026-10-01",
       "hypothesis": "Clear Phoenix city ownership plus separate metro/laundry intent will reduce overlap and improve Phoenix city-query relevance.",
       "pagesChanged": [
         "/phoenix-appliance-pickup/",
