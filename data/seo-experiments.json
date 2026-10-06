@@ -7022,6 +7022,42 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make speculative title/meta/H1/body/internal-link/schema-intent edits to /old-appliance-disposal-options/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-05-how-it-works-snippet-ctr",
+      "market": "National how-appliance-pickup-works informational intent",
+      "hypothesis": "A clearer title/meta that leads with 'Free Appliance Pickup' and explains eligibility plus scheduling will improve CTR on a page already averaging near page one without changing its body or intent architecture.",
+      "pagesChanged": [
+        "/how-appliance-pickup-works/"
+      ],
+      "protectedOwner": "/how-appliance-pickup-works/",
+      "lastChanged": "2026-10-05",
+      "baselinePeriod": {
+        "start": "2026-09-06",
+        "end": "2026-10-03"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 42,
+          "ctr": 0,
+          "avgPosition": 8.119047619047619
+        },
+        "preChangeSnippet": {
+          "title": "How Free Appliance Pickup Works | 3 Steps + Eligibility",
+          "description": "See the 3-step appliance pickup process: submit condition and access details, get eligibility and route availability reviewed, then schedule if accepted."
+        }
+      },
+      "change": "Changed only title/meta/OG/WebPage schema name+description to 'Free Appliance Pickup: How It Works | Eligibility & Scheduling' and a clearer qualification-based description. H1, body, internal links, canonical, form behavior and service rules were not changed.",
+      "successSignals": [
+        "CTR rises above the 0% baseline while average position remains stable or improves.",
+        "Impressions remain at least stable as Google reprocesses the snippet.",
+        "No search-intent, metadata, JSON-LD or final SEO audit regression appears."
+      ],
+      "evaluateNotBefore": "2026-10-15",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /how-appliance-pickup-works/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
