@@ -1,0 +1,100 @@
+name: Audit Active JSON-LD Schema
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - '.github/workflows/audit-active-jsonld-schema.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate active JSON-LD
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import html, json, re, sys
+          import xml.etree.ElementTree as ET
+
+          BASE='https://freereliableappliancepickup.com/'
+          NS={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          SCRIPT_RE=re.compile(r"<script\\b[^>]*type=['\"]application/ld\\+json['\"][^>]*>(.*?)</script>",re.I|re.S)
+
+          def file_for(url):
+              if url == BASE:
+                  return Path('index.html')
+              return Path(url[len(BASE):].strip('/'))/'index.html'
+
+          def types(node):
+              t=node.get('@type')
+              return t if isinstance(t,list) else [t]
+
+          errors=[]
+          checked_pages=0
+          checked_scripts=0
+          urls=[]
+          for sitemap_name in ('sitemap.xml','sitemap-regular-washer-dryer.xml'):
+              p=Path(sitemap_name)
+              if not p.exists():
+                  continue
+              root=ET.parse(p).getroot()
+              urls.extend(x.text.strip() for x in root.findall('.//s:loc',NS) if x.text)
+
+          for url in sorted(set(urls)):
+              if not url.startswith(BASE):
+                  continue
+              p=file_for(url)
+              if not p.exists():
+                  continue
+              raw=p.read_text(encoding='utf-8',errors='ignore')
+              if 'noindex' in raw.lower():
+                  continue
+              checked_pages += 1
+              tm=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
+              title=html.unescape(re.sub(r'\\s+',' ',tm.group(1))).strip() if tm else ''
+
+              matches=list(SCRIPT_RE.finditer(raw))
+              for m in matches:
+                  checked_scripts += 1
+                  try:
+                      data=json.loads(m.group(1))
+                  except Exception as exc:
+                      errors.append(f'JSON-LD PARSE ERROR {p}: {exc}')
+                      continue
+
+                  stack=[data]
+                  while stack:
+                      node=stack.pop()
+                      if isinstance(node,list):
+                          stack.extend(node)
+                          continue
+                      if not isinstance(node,dict):
+                          continue
+
+                      node_types=[str(x).lower() for x in types(node) if x is not None]
+                      if 'service' in node_types and 'telephone' in node:
+                          errors.append(f'INVALID SERVICE TELEPHONE PROPERTY {p}')
+
+                      if 'webpage' in node_types and title and node.get('name'):
+                          schema_name=html.unescape(str(node.get('name'))).strip()
+                          if schema_name != title:
+                              errors.append(f'WEBPAGE NAME/TITLE MISMATCH {p}: {schema_name!r} != {title!r}')
+
+                      stack.extend(node.values())
+
+          if errors:
+              print('\\n'.join(errors))
+              sys.exit(1)
+
+          print(f'PASS: {checked_pages} active pages / {checked_scripts} JSON-LD scripts validated')
+          PY
