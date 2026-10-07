@@ -97,11 +97,14 @@ jobs:
                       depths[v]=depths[u]+1
                       q.append(v)
 
+          def active_inlink_sources(u):
+              return (inlinks.get(u,set()) & active) - {u}
+
           print('SITEMAP_URLS',len(sitemap_urls))
           print('REACHABLE_FROM_HOME',sum(u in depths for u in sitemap_urls))
           print('UNREACHABLE_FROM_HOME',sum(u not in depths for u in sitemap_urls))
           print('BROKEN_INTERNAL_TARGETS',len(set(broken)))
-          print('ZERO_ACTIVE_INLINKS',sum(not (inlinks.get(u,set()) & active) for u in sitemap_urls if u!=BASE))
+          print('ZERO_ACTIVE_INLINKS',sum(not active_inlink_sources(u) for u in sitemap_urls if u!=BASE))
 
           print('\nCRAWL_DEPTH_DISTRIBUTION')
           for d in sorted(set(depths.values())):
@@ -115,7 +118,7 @@ jobs:
           rows=[]
           for u in sitemap_urls:
               if u==BASE: continue
-              count=len(inlinks.get(u,set()) & active)
+              count=len(active_inlink_sources(u))
               rows.append((count,depths.get(u,999),u))
           for count,depth,u in sorted(rows)[:30]:
               print(f'inlinks={count:2d} depth={depth if depth<999 else "NA"} | {u}')
@@ -128,7 +131,7 @@ jobs:
           ]
           for slug in priority_slugs:
               u=BASE+slug+'/'
-              count=len(inlinks.get(u,set()) & active)
+              count=len(active_inlink_sources(u))
               depth=depths.get(u,999)
               print(f'inlinks={count:2d} depth={depth if depth<999 else "NA"} | {u}')
 
@@ -166,7 +169,7 @@ jobs:
                   if d:
                       freeze_dates.append(d)
               effective_gate=max(freeze_dates) if freeze_dates else 'unfrozen'
-              active_sources=sorted(inlinks.get(u,set()) & active)
+              active_sources=sorted(active_inlink_sources(u))
               depth=depths.get(u,999)
               fridge_rows.append((0 if has_direct else 1,effective_gate,slug,direct_active,has_direct,len(active_sources),depth,active_sources))
           for missing,effective_gate,slug,direct_active,has_direct,source_count,depth,active_sources in sorted(fridge_rows, key=lambda r:(-r[0],r[1],r[2])):
