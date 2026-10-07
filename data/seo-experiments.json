@@ -9294,6 +9294,76 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these five laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-sgv-zero-visibility-laundry-cleanup-wave2",
+      "market": "SGV laundry — Monterey Park, Rosemead, Avocado Heights, South San Jose Hills, City of Industry, Irwindale",
+      "hypothesis": "Removing duplicated generic SGV network/review blocks from six zero-visibility laundry pages will reduce template repetition and help the pages establish distinct city-specific washer/dryer intent.",
+      "pagesChanged": [
+        "/monterey-park-washer-dryer-pickup/",
+        "/rosemead-washer-dryer-pickup/",
+        "/avocado-heights-washer-dryer-pickup/",
+        "/south-san-jose-hills-washer-dryer-pickup/",
+        "/city-of-industry-washer-dryer-pickup/",
+        "/irwindale-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/monterey-park-washer-dryer-pickup/",
+        "/rosemead-washer-dryer-pickup/",
+        "/avocado-heights-washer-dryer-pickup/",
+        "/south-san-jose-hills-washer-dryer-pickup/",
+        "/city-of-industry-washer-dryer-pickup/",
+        "/irwindale-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "montereyPark": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "rosemead": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "avocadoHeights": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "southSanJoseHills": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "cityOfIndustry": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "irwindale": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          }
+        }
+      },
+      "change": "Removed turbo-seo-network-v1 from all six pages. Removed sgv-laundry-gold-v4 from Monterey Park, Rosemead, Avocado Heights, South San Jose Hills and City of Industry; removed laundry-priority-v3 from Irwindale. Preserved city access/route content, FAQs, photos, public alternatives where present, forms, titles/meta/H1/canonicals and primary ownership handoffs.",
+      "successSignals": [
+        "One or more pages gain a finalized GSC page row with relevant city washer/dryer impressions.",
+        "No broad-appliance cannibalization appears.",
+        "No canonical, schema, form, image, routing or experiment-guard regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these six laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
