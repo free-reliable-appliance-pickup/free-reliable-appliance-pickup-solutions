@@ -106,6 +106,13 @@
           "date": "2026-10-03",
           "reason": "Post-merge California priority-page audit requires at least two non-logo real/page images. Simplification retained the hero but removed the second real appliance proof image. Restored one existing real refrigerator image only; no ranking copy, title/meta, links, schema intent, or experiment hypothesis changed."
         }
+      ],
+      "observations": [
+        {
+          "date": "2026-10-07",
+          "source": "Keyword.com tracked project 3846568",
+          "note": "Mid-freeze observation only; no page edits. Both tracked 'free appliance pickup west covina' entries are currently outside the top 100; one has prior best rank 20. Hold through the 2026-10-13 gate so the simplified owner page gets a clean observation window."
+        }
       ]
     },
     {
@@ -328,6 +335,13 @@
         {
           "date": "2026-10-04",
           "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
+        }
+      ],
+      "observations": [
+        {
+          "date": "2026-10-07",
+          "source": "Keyword.com tracked project 3846568",
+          "note": "Mid-freeze observation only; no page edits. Rancho: rank 22 on the correct city URL on one tracked entry, second entry outside top 100 (best 2). Fontana: rank 21 on the correct city URL on one entry, second outside top 100 (best 7). Ontario: both entries outside top 100 (one best 29). Upland: both entries outside top 100 and Keyword.com is still surfacing /upland-washer-dryer-pickup/ as the ranking URL. Preserve the experiment through the 2026-10-14 gate because ownership/rank volatility remains high."
         }
       ]
     },
@@ -800,6 +814,13 @@
           "date": "2026-10-04",
           "reason": "Technical audit repair after noindex-alias cleanup: retiring the noindex Claremont freezer specialty URL removed the required live freezer authority path. Added only a link to the existing /freezer-pickup/ authority guide; protected title/meta/H1/canonical, local copy, schema intent and city ownership remain unchanged."
         }
+      ],
+      "observations": [
+        {
+          "date": "2026-10-07",
+          "source": "Keyword.com tracked project 3846568",
+          "note": "Mid-freeze observation only; no page edits. Azusa has one tracked entry at rank 8 on /azusa-appliance-pickup/ while the second is outside the top 100 and has surfaced /service-areas/. Other test pages remain volatile; preserve the 2026-10-14 review gate and use finalized GSC CTR for the actual snippet decision."
+        }
       ]
     },
     {
@@ -868,6 +889,13 @@
         {
           "date": "2026-10-04",
           "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
+        }
+      ],
+      "observations": [
+        {
+          "date": "2026-10-07",
+          "source": "Keyword.com tracked project 3846568",
+          "note": "Mid-freeze observation only; no page edits. Both tracked 'free appliance pickup san dimas' entries are rank 9 and both surface /san-dimas-appliance-pickup/. This is a positive owner-page signal versus the baseline where the SGV hub owned one tracked result. Protect through the 2026-10-14 gate."
         }
       ]
     },
@@ -1042,6 +1070,13 @@
           "date": "2026-10-04",
           "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
         }
+      ],
+      "observations": [
+        {
+          "date": "2026-10-07",
+          "source": "Keyword.com tracked project 3846568",
+          "note": "Mid-freeze observation only; no page edits. The two tracked 'free appliance pickup pomona' entries are ranks 19 and 21, both on /pomona-appliance-pickup/. Exact-city ownership is cleaner than the baseline even though the page is not yet top 10. Protect through the 2026-10-14 gate."
+        }
       ]
     },
     {
@@ -1096,7 +1131,14 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Covina page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Covina page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "observations": [
+        {
+          "date": "2026-10-07",
+          "source": "Keyword.com tracked project 3846568",
+          "note": "Mid-freeze observation only; no page edits. One tracked 'free appliance pickup covina' entry is rank 23 on /covina-appliance-pickup/; the second is outside the top 100 after previously reaching 16. Do not rewrite before the 2026-10-13 gate."
+        }
+      ]
     },
     {
       "id": "2026-10-03-monrovia-city-focus",
