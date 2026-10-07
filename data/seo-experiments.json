@@ -9900,6 +9900,39 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to the Aurora freezer or stove/oven specialty pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-monrovia-laundry-title-intent",
+      "market": "Monrovia, CA washer & dryer pickup",
+      "hypothesis": "Replacing the broad 'Appliance Removal' title ending with 'Laundry Removal' will sharpen washer/dryer intent and reduce overlap with the general Monrovia appliance page.",
+      "pagesChanged": [
+        "/monrovia-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/monrovia-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "position": 18
+        },
+        "liveSerpEvidence": "Current Monrovia results are dominated by junk haulers, retailers, and generic appliance services rather than a strong specialist washer/dryer pickup result."
+      },
+      "change": "Changed only the HTML title and matching WebPage schema name from 'Free Washer & Dryer Pickup in Monrovia, CA | Appliance Removal' to 'Free Washer & Dryer Pickup Monrovia CA | Laundry Removal'. Preserved meta description, H1, canonical, body copy, photos, form, phone, internal links, qualification rules and local corridor content.",
+      "successSignals": [
+        "Monrovia washer/dryer page improves from baseline average position 18.",
+        "Impressions/clicks increase for laundry-specific intent without broad appliance-intent cannibalization.",
+        "No schema, canonical, routing or image regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /monrovia-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
