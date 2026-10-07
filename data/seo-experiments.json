@@ -9637,6 +9637,18 @@
         "scripts/audit-active-page-images.py",
         "data/seo-experiments.json"
       ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "wrong-market routing copy removal",
+      "reason": "Verified /lakewood-washer-dryer-pickup/ is the Lakewood, California owner (CA title/meta/schema/form/phone/canonical), but a generic network block incorrectly described Lakewood as part of the Colorado Front Range and linked to Denver. Removed only that erroneous block. No title/meta/H1/canonical/form/phone or valid California content was changed.",
+      "pages": [
+        "/lakewood-washer-dryer-pickup/"
+      ],
+      "files": [
+        "lakewood-washer-dryer-pickup/index.html",
+        "data/seo-experiments.json"
+      ]
     }
   ]
 }
