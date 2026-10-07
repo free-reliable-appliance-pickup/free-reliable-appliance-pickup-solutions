@@ -8843,6 +8843,23 @@
         "/la-habra-washer-dryer-pickup/",
         "/phoenix-washer-dryer-pickup/"
       ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "sitemap noindex/canonical alias cleanup",
+      "reason": "Verified five San Diego County washer/dryer city aliases were intentionally noindex and canonicalized to the indexed /san-diego-county-washer-dryer-pickup/ owner while still appearing in sitemap.xml. Removed only those alias URLs from the sitemap to eliminate conflicting indexability/canonical signals; page content, canonicals, visible copy and protected experiment owners were unchanged.",
+      "pages": [
+        "/carlsbad-washer-dryer-pickup/",
+        "/chula-vista-washer-dryer-pickup/",
+        "/oceanside-washer-dryer-pickup/",
+        "/poway-washer-dryer-pickup/",
+        "/santee-washer-dryer-pickup/",
+        "/san-diego-county-washer-dryer-pickup/"
+      ],
+      "files": [
+        "sitemap.xml",
+        "data/seo-experiments.json"
+      ]
     }
   ]
 }
