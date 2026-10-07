@@ -9784,6 +9784,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /phoenix-refrigerator-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-phoenix-freezer-intent-narrowing",
+      "market": "Phoenix, AZ freezer pickup",
+      "hypothesis": "Replacing a broad multi-appliance grid with a single handoff to the Phoenix general appliance page will strengthen freezer-specific ownership and improve a page currently averaging position 39.5.",
+      "pagesChanged": [
+        "/phoenix-freezer-pickup/"
+      ],
+      "protectedOwner": "/phoenix-freezer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 39.5
+        }
+      },
+      "change": "Replaced the full Other Phoenix Appliances We Pick Up grid with one short handoff to /phoenix-appliance-pickup/. Preserved title, meta, H1, canonical, 602 phone, form, freezer condition/type/location guidance, City of Phoenix alternative and Facebook entity bridge.",
+      "successSignals": [
+        "Average position improves from 39.5 and freezer-specific impressions grow.",
+        "Broad Phoenix appliance intent remains with the general Phoenix page.",
+        "No canonical, schema, form, image or contact regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /phoenix-freezer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
