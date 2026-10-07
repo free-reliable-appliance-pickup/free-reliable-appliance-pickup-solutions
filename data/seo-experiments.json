@@ -10297,6 +10297,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /bakersfield-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-beaverton-appliance-ctr-snippet",
+      "market": "Beaverton, OR appliance pickup",
+      "hypothesis": "A clearer Beaverton search snippet with the verified 503 call/text route should improve CTR while preserving the page's broad appliance pickup intent.",
+      "pagesChanged": [
+        "/beaverton-appliance-pickup/"
+      ],
+      "protectedOwner": "/beaverton-appliance-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 8
+        }
+      },
+      "change": "Changed only the HTML meta description and matching Open Graph description, and added the same description to WebPage structured data. Preserved title, H1, canonical, visible body content, form, images and internal links.",
+      "successSignals": [
+        "CTR rises above the 0% baseline while average position remains broadly stable or improves.",
+        "Beaverton appliance impressions increase without shifting Portland city intent onto this page.",
+        "No technical or search-appearance regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /beaverton-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
