@@ -9933,6 +9933,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /monrovia-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-san-marino-laundry-concentration-v2",
+      "market": "San Marino, CA washer & dryer pickup",
+      "hypothesis": "Removing repeated template blocks should strengthen the page's San Marino laundry focus.",
+      "pagesChanged": [
+        "/san-marino-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/san-marino-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 13.25
+        }
+      },
+      "change": "Removed three repeated network/review/route sections. Preserved title, meta, H1, canonical, phone, form, real photos, local access content, FAQ and primary network handoff.",
+      "successSignals": [
+        "Average position improves from 13.25.",
+        "Laundry-specific impressions or clicks increase.",
+        "No technical regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative SEO/content changes to /san-marino-washer-dryer-pickup/ before 2026-10-16 except verified technical, factual, contact, indexability or safety fixes."
     }
   ],
   "technicalMaintenance": [
