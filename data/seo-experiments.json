@@ -10094,6 +10094,39 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /phoenix-stove-oven-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-phoenix-metro-laundry-ctr-snippet",
+      "market": "Phoenix Metro, AZ washer & dryer pickup",
+      "hypothesis": "Shortening the overlong Phoenix Metro laundry meta description and adding the verified 602 call/text route should improve search-result clarity and CTR without changing the page's metro laundry intent.",
+      "pagesChanged": [
+        "/phoenix-metro-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/phoenix-metro-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 10
+        },
+        "oldMetaLength": 211
+      },
+      "change": "Shortened only the HTML meta description and synchronized Open Graph and WebPage descriptions. Added the verified Phoenix Metro 602-726-7552 call/text route in the snippet. Preserved title, H1, canonical, visible body copy, form, images and internal links.",
+      "successSignals": [
+        "CTR rises above the 0% baseline while average position remains broadly stable or improves.",
+        "Phoenix Metro laundry impressions grow without shifting broad Phoenix appliance intent to this page.",
+        "No technical or search-appearance regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /phoenix-metro-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
