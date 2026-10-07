@@ -10846,6 +10846,158 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /palm-springs-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-cathedral-city-laundry-gap",
+      "market": "Cathedral City, CA washer & dryer pickup",
+      "hypothesis": "Closing the specific competitor-gap weaknesses with city-specific utility will improve usefulness and ranking eligibility without changing established city ownership or creating a repeated doorway pattern.",
+      "pagesChanged": [
+        "/cathedral-city-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/cathedral-city-washer-dryer-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-10-07",
+        "end": "2026-10-07"
+      },
+      "baseline": {
+        "competitorGapAudit": {
+          "score": "7/10",
+          "missing": [
+            "trust_flow",
+            "washer_intent",
+            "local_fallback"
+          ]
+        },
+        "preChangeStructure": {
+          "approxWords": 690
+        },
+        "localFallbackSource": "City of Cathedral City Bulky Item Collection Program"
+      },
+      "change": "Added review/no-guarantee wording, a washer-cycle section with managed-property access context, and the City of Cathedral City bulky-item backup. Core title/meta/H1/canonical/phone stayed unchanged.",
+      "successSignals": [
+        "Competitor-gap score improves to 10/10 while city copy remains materially distinct.",
+        "The city washer/dryer page remains the intended owner for laundry-specific searches.",
+        "Search visibility improves or remains stable while local fallback and qualification information stay accurate."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /cathedral-city-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-indian-wells-laundry-gap",
+      "market": "Indian Wells, CA washer & dryer pickup",
+      "hypothesis": "Closing the specific competitor-gap weaknesses with city-specific utility will improve usefulness and ranking eligibility without changing established city ownership or creating a repeated doorway pattern.",
+      "pagesChanged": [
+        "/indian-wells-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/indian-wells-washer-dryer-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-10-07",
+        "end": "2026-10-07"
+      },
+      "baseline": {
+        "competitorGapAudit": {
+          "score": "7/10",
+          "missing": [
+            "trust_flow",
+            "washer_intent",
+            "local_fallback"
+          ]
+        },
+        "preChangeStructure": {
+          "approxWords": 682
+        },
+        "localFallbackSource": "City of Indian Wells Waste Disposal & Recycling Services"
+      },
+      "change": "Added qualification transparency, a washer-condition section tailored to private/gated access, and the City of Indian Wells/Burrtec specialty bulky-item fallback. Core title/meta/H1/canonical/phone stayed unchanged.",
+      "successSignals": [
+        "Competitor-gap score improves to 10/10 while city copy remains materially distinct.",
+        "The city washer/dryer page remains the intended owner for laundry-specific searches.",
+        "Search visibility improves or remains stable while local fallback and qualification information stay accurate."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /indian-wells-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-indio-laundry-gap",
+      "market": "Indio, CA washer & dryer pickup",
+      "hypothesis": "Closing the specific competitor-gap weaknesses with city-specific utility will improve usefulness and ranking eligibility without changing established city ownership or creating a repeated doorway pattern.",
+      "pagesChanged": [
+        "/indio-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/indio-washer-dryer-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-10-07",
+        "end": "2026-10-07"
+      },
+      "baseline": {
+        "competitorGapAudit": {
+          "score": "7/10",
+          "missing": [
+            "trust_flow",
+            "washer_intent",
+            "local_fallback"
+          ]
+        },
+        "preChangeStructure": {
+          "approxWords": 642
+        },
+        "localFallbackSource": "City of Indio Solid Waste / Burrtec bulky-item service"
+      },
+      "change": "Added review transparency, a washer-specific cycle section with garage/mobile-home/rental access context, and the City of Indio bulky-item disposal backup. Core title/meta/H1/canonical/phone stayed unchanged.",
+      "successSignals": [
+        "Competitor-gap score improves to 10/10 while city copy remains materially distinct.",
+        "The city washer/dryer page remains the intended owner for laundry-specific searches.",
+        "Search visibility improves or remains stable while local fallback and qualification information stay accurate."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /indio-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-rancho-mirage-laundry-gap",
+      "market": "Rancho Mirage, CA washer & dryer pickup",
+      "hypothesis": "Closing the specific competitor-gap weaknesses with city-specific utility will improve usefulness and ranking eligibility without changing established city ownership or creating a repeated doorway pattern.",
+      "pagesChanged": [
+        "/rancho-mirage-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/rancho-mirage-washer-dryer-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-10-07",
+        "end": "2026-10-07"
+      },
+      "baseline": {
+        "competitorGapAudit": {
+          "score": "7/10",
+          "missing": [
+            "trust_flow",
+            "washer_intent",
+            "local_fallback"
+          ]
+        },
+        "preChangeStructure": {
+          "approxWords": 692
+        },
+        "localFallbackSource": "Burrtec Rancho Mirage service page + City of Rancho Mirage solid-waste planning documents"
+      },
+      "change": "Added qualification transparency, a washer-specific testing section for gated/seasonal/managed properties, and the Rancho Mirage Burrtec waste-service fallback. Core title/meta/H1/canonical/phone stayed unchanged.",
+      "successSignals": [
+        "Competitor-gap score improves to 10/10 while city copy remains materially distinct.",
+        "The city washer/dryer page remains the intended owner for laundry-specific searches.",
+        "Search visibility improves or remains stable while local fallback and qualification information stay accurate."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /rancho-mirage-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
