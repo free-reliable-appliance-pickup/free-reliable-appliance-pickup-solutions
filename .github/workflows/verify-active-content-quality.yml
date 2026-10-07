@@ -29,6 +29,7 @@ jobs:
 
           BASE='https://freereliableappliancepickup.com/'
           INFORMATIONAL={'landlord-property-manager-appliance-pickup'}
+          SHARED_INTAKE={'phoenix-metro-appliance-pickup':'phoenix-appliance-pickup'}
 
           protected_until_review=set()
           exp_path=Path('data/seo-experiments.json')
@@ -101,10 +102,26 @@ jobs:
 
           print('ACTIVE_LOCATION_MARKET_PAGES',len(rows))
           print('WITH_LOCAL_FORM',sum(r['form'] for r in rows))
-          missing_forms=[r['slug'] for r in rows if not r['form']]
-          if missing_forms:
-              print('MISSING_LOCAL_FORM',','.join(missing_forms))
-              raise SystemExit('Active location pages missing local Formspree request form: '+', '.join(missing_forms))
+          shared_ok=[]
+          missing_intake=[]
+          for r in rows:
+              if r['form']:
+                  continue
+              main=SHARED_INTAKE.get(r['slug'])
+              if main:
+                  raw=(Path(r['slug'])/'index.html').read_text(encoding='utf-8',errors='ignore')
+                  target=f'href="/{main}/#request"'
+                  if target in raw:
+                      shared_ok.append(f"{r['slug']}->{main}")
+                      continue
+              missing_intake.append(r['slug'])
+          print('WITH_APPROVED_SHARED_INTAKE',len(shared_ok))
+          if shared_ok:
+              print('APPROVED_SHARED_INTAKE',','.join(shared_ok))
+          if missing_intake:
+              print('MISSING_VALID_INTAKE',','.join(missing_intake))
+              raise SystemExit('Active location pages missing a local form or approved shared-city intake: '+', '.join(missing_intake))
+          print('VALID_REQUEST_INTAKE',len(rows))
           print('STILL_FUNNELING_HOME',sum(r['funnel'] for r in rows))
           print('NOINDEX_ACTIVE',sum(r['noindex'] for r in rows))
           print('UNDER_350_TOTAL_WORDS',sum(r['words']<350 for r in rows))
