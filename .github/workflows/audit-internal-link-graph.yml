@@ -14,7 +14,9 @@ on:
       - '*-refrigerator-pickup/index.html'
       - 'data/seo-experiments.json'
       - 'freezer-pickup/index.html'
+      - '*-freezer-pickup/index.html'
       - 'stove-oven-pickup/index.html'
+      - '*-stove-oven-pickup/index.html'
       - 'washer-dryer-pickup/index.html'
       - 'data/california-priority-gold-city-pages.txt'
       - '.github/workflows/audit-internal-link-graph.yml'
@@ -179,6 +181,40 @@ jobs:
                   source_slugs=[urlparse(x).path.strip('/') or '/' for x in active_sources]
                   print('  current_sources=' + ','.join(source_slugs))
           print('REFRIGERATOR_MISSING_DIRECT_CITY_HANDOFFS',sum(row[0] for row in fridge_rows))
+
+          print('\nFREEZER_STOVE_CITY_HANDOFF_AUDIT')
+          for suffix in ('freezer-pickup','stove-oven-pickup'):
+              specialty_urls=[u for u in sitemap_urls if u.rstrip('/').endswith('-'+suffix)]
+              specialty_rows=[]
+              for u in specialty_urls:
+                  slug=urlparse(u).path.strip('/')
+                  city=slug[:-len('-'+suffix)]
+                  if not city:
+                      continue
+                  general=BASE+city+'-appliance-pickup/'
+                  has_direct=general in inlinks.get(u,set())
+                  direct_active=general in active
+                  general_path='/'+city+'-appliance-pickup/'
+                  specialty_path='/'+slug+'/'
+                  freeze_dates=[]
+                  for exp in touching_running_experiments(general_path)+touching_running_experiments(specialty_path):
+                      d=exp.get('evaluateNotBefore')
+                      if d:
+                          freeze_dates.append(d)
+                  effective_gate=max(freeze_dates) if freeze_dates else 'unfrozen'
+                  active_sources=sorted(active_inlink_sources(u))
+                  depth=depths.get(u,999)
+                  specialty_rows.append((0 if has_direct else 1,effective_gate,slug,direct_active,has_direct,len(active_sources),depth,active_sources))
+              missing_count=sum(row[0] for row in specialty_rows)
+              low_count=sum(1 for row in specialty_rows if row[5] <= 1)
+              print(f'{suffix}: active_pages={len(specialty_rows)} missing_direct_city_handoffs={missing_count} low_meaningful_inlinks={low_count}')
+              for missing,effective_gate,slug,direct_active,has_direct,source_count,depth,active_sources in sorted(specialty_rows, key=lambda r:(-r[0],r[5],r[1],r[2])):
+                  if not missing and source_count > 1:
+                      continue
+                  depth_label=depth if depth<999 else 'NA'
+                  print(f'{slug}: city_owner_active={direct_active} direct_city_handoff={has_direct} active_inlinks={source_count} depth={depth_label} effective_gate={effective_gate}')
+                  source_slugs=[urlparse(x).path.strip('/') or '/' for x in active_sources]
+                  print('  current_sources=' + ','.join(source_slugs))
 
           print('\nBROKEN_INTERNAL_LINKS')
           for src,dest,target in sorted(set(broken))[:100]:
