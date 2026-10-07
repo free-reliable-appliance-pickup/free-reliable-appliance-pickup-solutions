@@ -9585,6 +9585,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /san-gabriel-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-pico-rivera-laundry-concentration",
+      "market": "Pico Rivera, CA washer & dryer pickup",
+      "hypothesis": "Removing the generic Los Angeles County laundry-review block while preserving the more specific Pico Rivera access/route section, public bulky-item alternative, FAQ and request form will reduce duplication and help a zero-visibility page establish local laundry intent.",
+      "pagesChanged": [
+        "/pico-rivera-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/pico-rivera-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        }
+      },
+      "change": "Removed only the la-laundry-gold-v6 section. Preserved title, meta, H1, canonical, phone, form, real laundry photos, Pico Rivera access/route details, City bulky-item alternative and FAQ.",
+      "successSignals": [
+        "A finalized GSC row appears for Pico Rivera washer/dryer pickup.",
+        "Local Pico Rivera laundry impressions grow without broad-appliance cannibalization.",
+        "No canonical, schema, form, image or routing regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /pico-rivera-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
