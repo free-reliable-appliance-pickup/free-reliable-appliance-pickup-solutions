@@ -10188,6 +10188,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /anaheim-hills-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-santa-ana-laundry-official-alternative",
+      "market": "Santa Ana, CA washer & dryer pickup",
+      "hypothesis": "Adding a city-specific bulky-item alternative that explicitly confirms washers and dryers should improve local usefulness and reinforce Santa Ana laundry intent without changing the core pickup offer.",
+      "pagesChanged": [
+        "/santa-ana-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/santa-ana-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 9
+        }
+      },
+      "change": "Added one City of Santa Ana bulky-item alternative section using the city's official solid-waste agreement, which explicitly includes washers and dryers. Preserved title, meta, H1, canonical, form, phone, images and existing internal links.",
+      "successSignals": [
+        "Impressions and/or clicks increase for Santa Ana washer/dryer and appliance-removal queries.",
+        "Average position remains stable or improves from the position 9 baseline.",
+        "No broad Santa Ana appliance cannibalization or technical regression appears."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /santa-ana-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
