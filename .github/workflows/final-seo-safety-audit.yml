@@ -5,8 +5,7 @@ on:
     branches: [main]
     paths:
       - '**/*.html'
-      - 'sitemap.xml'
-      - 'sitemap-regular-washer-dryer.xml'
+      - 'sitemap*.xml'
       - 'robots.txt'
       - 'data/market-routing.json'
       - 'data/approved-indexable-locations.txt'
