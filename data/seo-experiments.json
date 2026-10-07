@@ -8667,6 +8667,39 @@
       "evaluateNotBefore": "2026-10-16",
       "preferredReview": "2026-10-20",
       "status": "running"
+    },
+    {
+      "id": "2026-10-06-fontana-laundry-access-faq",
+      "market": "Fontana, CA washer & dryer pickup",
+      "hypothesis": "Adding two practical high-intent FAQs about connection status and inside/garage pickup will improve relevance and CTR for Fontana washer/dryer removal searches without broadening the page into general appliance intent.",
+      "pagesChanged": [
+        "/fontana-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/fontana-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 10,
+          "ctr": 0,
+          "position": 10.7
+        },
+        "competitorEvidence": "Current Fontana washer/dryer removal competitors prominently answer indoor/curbside access and disconnection questions; our page already covered condition and access but lacked explicit connection-status and inside/garage FAQ answers."
+      },
+      "change": "Added two visible FAQs and matching FAQPage structured-data questions: whether machines should be disconnected and whether inside/garage pickup can be reviewed. Preserved title, meta description, H1, canonical, phone, form, existing qualification rules, city ownership and all other body sections.",
+      "successSignals": [
+        "Fontana washer/dryer page gains clicks or improves average position from baseline 10.7.",
+        "Laundry-specific visibility improves without creating new broad 'free appliance pickup Fontana' cannibalization.",
+        "No schema, canonical, image, routing or experiment-guard regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /fontana-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
