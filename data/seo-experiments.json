@@ -8628,6 +8628,45 @@
       "evaluateNotBefore": "2026-10-16",
       "preferredReview": "2026-10-20",
       "status": "running"
+    },
+    {
+      "id": "2026-10-06-southwest-washington-corridor-depth",
+      "market": "Southwest Washington — Vancouver / Clark County / I-5 corridor",
+      "lastChanged": "2026-10-06",
+      "hypothesis": "Adding one Southwest Washington corridor block to the Washington state owner will improve discovery for Vancouver/Clark County and nearby I-5 requests without reviving the retired Vancouver city alias or competing with the separate Puget Sound owner.",
+      "pagesChanged": [
+        "/washington-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/washington-appliance-pickup/"
+      ],
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "page": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "avgPosition": 5
+        },
+        "competitorEvidence": [
+          "TakeMyAppliance currently exposes a dedicated Vancouver WA city page with neighborhood/ZIP depth, official disposal references, commercial intake and appliance-specific child pages.",
+          "AppliancePickupNow currently exposes a dedicated Vancouver WA availability page with photo-first intake and appliance-category coverage."
+        ],
+        "ownershipNote": "The old /vancouver-appliance-pickup/ page remains noindex and canonicalized away. Seattle/Tacoma/Eastside intent remains owned by /puget-sound-appliance-pickup/ and is not changed by this test."
+      },
+      "change": "Added one Southwest Washington corridor section to the Washington state hub covering Vancouver/Central Clark County, Camas/Washougal, Battle Ground/Ridgefield/North Clark County, and the I-5 route through Woodland/Kalama/Longview/Kelso. Added only WebPage dateModified metadata. Did not create or reindex Vancouver or other city aliases.",
+      "successSignals": [
+        "New finalized impressions for Vancouver, Clark County, Camas, Washougal, Battle Ground, Ridgefield or nearby Southwest Washington queries on /washington-appliance-pickup/",
+        "Washington state hub preserves its existing page-one-level signal",
+        "Puget Sound queries continue to resolve to /puget-sound-appliance-pickup/ rather than shifting to the state hub",
+        "No reindexing of retired Vancouver alias and no doorway/canonical/internal-link regression"
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running"
     }
   ],
   "technicalMaintenance": [
