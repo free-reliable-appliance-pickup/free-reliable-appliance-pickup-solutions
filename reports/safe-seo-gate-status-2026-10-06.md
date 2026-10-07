@@ -4,7 +4,7 @@
 
 Do not force another customer-facing ranking edit today.
 
-The current experiment registry contains **192 running experiments** and **274 distinct protected page paths** when both `pagesChanged` and `protectedOwner(s)` are honored. The remaining unfrozen Search Console candidates have samples too small to justify a speculative rewrite.
+The current experiment registry contains **192 running experiments** and **277 distinct protected page paths** when both `pagesChanged` and `protectedOwner(s)` are honored. The remaining unfrozen Search Console candidates have samples too small to justify a speculative rewrite.
 
 ## Search Console / sitemap health
 
@@ -254,3 +254,30 @@ After excluding every running experiment page:
 A separate finalized query scan found **no meaningful query with >=5 impressions split across 2+ pages where every competing page is currently unfrozen**.
 
 Conclusion: there is no evidence-backed customer-facing ownership rewrite available today that would avoid active experiment contamination.
+
+
+## Late Oct 6 completion update
+
+Google's official GSC planner now reports finalized data through **2026-10-04**.
+
+Finalized protection signals:
+- Rancho Cucamonga general owner: 56 impressions, 2 clicks, avg position 17.21.
+- Fontana general owner: 24 impressions, avg position 9.17; protect the page-level page-one signal.
+- Phoenix general: 48 impressions, 1 click, avg position 27.98.
+- Palm Desert remains avg position 9.92; Indio remains avg position 7.0 with one click.
+- Fresno general: 21 impressions, avg position 20.14; ownership remains mixed.
+
+Additional dependency protection added:
+- `/selma-appliance-pickup/` is now protected by the Fresno sibling-intent experiment through Oct 14 because finalized/fresh evidence shows it can absorb Fresno intent.
+- `/temple-city-washer-dryer-pickup/` is now protected by the Temple City ownership experiment through Oct 13 because it was the known broad-query wrong-page winner.
+
+After these corrections, there are **277 distinct protected paths**.
+
+Finalized Oct 4 opportunity scan across unfrozen pages found only:
+- `/imperial-beach-appliance-pickup/` — 8 impressions, 2 clicks, avg position 14.63, including 2 clicks at avg position 4.5 for `free refrigerator pick up near me`.
+
+Decision: **PROTECT Imperial Beach. No additional ranking rewrite is justified today.**
+
+Automation cleanup:
+- Disabled redundant `All-Tools SEO Watch`; hourly `SEO Priority Watch` already covers the same monitoring scope.
+- Kept distinct active roles: SEO Priority Watch, SEO Alert Inbox, Competitor Attack Engine, and Daily SEO Countermove.
