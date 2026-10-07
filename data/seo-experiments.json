@@ -9490,6 +9490,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /laguna-niguel-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-pomona-laundry-concentration",
+      "market": "Pomona, CA washer & dryer pickup",
+      "hypothesis": "Removing a trailing repetitive route-review block will concentrate the page on the stronger Pomona Valley/access/FAQ/request content and help a currently zero-visibility page establish laundry-specific search visibility.",
+      "pagesChanged": [
+        "/pomona-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/pomona-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        }
+      },
+      "change": "Removed only the trailing pomona-wd-local-depth section, which repeated access requirements and nearby links already present earlier. Preserved title, meta, H1, canonical, phone, form, photos, Pomona Valley positioning, FAQ and appliance-network handoff.",
+      "successSignals": [
+        "A finalized GSC row appears for Pomona washer/dryer pickup.",
+        "Pomona laundry impressions grow without broad-appliance cannibalization.",
+        "No schema, canonical, form, image or routing regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /pomona-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
