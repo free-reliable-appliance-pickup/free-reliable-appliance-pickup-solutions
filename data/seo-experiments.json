@@ -8860,6 +8860,28 @@
         "sitemap.xml",
         "data/seo-experiments.json"
       ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "appliance-page sitemap and image QA hardening",
+      "reason": "Removed confirmed noindex/canonical San Diego laundry aliases from sitemap.xml and strengthened existing audits so every sitemap URL is rejected if it ships with noindex. Added a focused semantic image-alt guard for the four national appliance hubs (refrigerator, freezer, washer/dryer, stove/oven) to prevent future appliance-image mismatches. No protected ranking copy, titles, internal-link intent ownership or experiment variables were changed.",
+      "pages": [
+        "/refrigerator-pickup/",
+        "/freezer-pickup/",
+        "/washer-dryer-pickup/",
+        "/stove-oven-pickup/",
+        "/carlsbad-washer-dryer-pickup/",
+        "/chula-vista-washer-dryer-pickup/",
+        "/oceanside-washer-dryer-pickup/",
+        "/poway-washer-dryer-pickup/",
+        "/santee-washer-dryer-pickup/"
+      ],
+      "files": [
+        "sitemap.xml",
+        ".github/workflows/audit-active-sitemap-pages.yml",
+        "scripts/audit-active-page-images.py",
+        "data/seo-experiments.json"
+      ]
     }
   ]
 }
