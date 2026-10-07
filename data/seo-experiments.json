@@ -9901,6 +9901,21 @@
         "lakewood-washer-dryer-pickup/index.html",
         "data/seo-experiments.json"
       ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "South Orange County laundry phone CTA repair",
+      "reason": "Verified the South Orange County washer/dryer hub, Mission Viejo, Irvine, Dana Point, Newport Beach and Laguna Beach use 909-375-6685, while five related city laundry pages had no visible phone or tel: CTA. Restored the existing South OC phone consistently in hero and footer without changing SEO titles, H1s, canonicals, body ranking copy, qualification rules or experiment intent.",
+      "pages": [
+        "/laguna-niguel-washer-dryer-pickup/",
+        "/laguna-hills-washer-dryer-pickup/",
+        "/aliso-viejo-washer-dryer-pickup/",
+        "/san-juan-capistrano-washer-dryer-pickup/",
+        "/san-clemente-washer-dryer-pickup/"
+      ],
+      "files": [
+        "data/seo-experiments.json"
+      ]
     }
   ]
 }
