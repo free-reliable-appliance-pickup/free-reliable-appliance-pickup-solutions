@@ -9395,6 +9395,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /montebello-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-irvine-refrigerator-prep-faq",
+      "market": "Irvine, CA refrigerator pickup",
+      "hypothesis": "Adding two refrigerator-specific prep FAQs about water-line connections and unplug/defrost timing will close a practical-information gap visible in current competing refrigerator pages and help a zero-visibility page earn refrigerator-specific impressions without changing broad Irvine ownership.",
+      "pagesChanged": [
+        "/irvine-refrigerator-pickup/"
+      ],
+      "protectedOwner": "/irvine-refrigerator-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        },
+        "competitorEvidence": "Current leading Irvine refrigerator page includes detailed water-line/ice-maker, defrost and path-preparation guidance. Our page already covered HOA/condo access, cooling tests and safe sealed-system handling but did not explicitly answer water-line or unplug timing questions."
+      },
+      "change": "Added two visible FAQs and matching FAQPage structured-data questions: water-line/ice-maker connection handling and whether/when to unplug. Advice keeps the unit testable during qualification and tells users not to cut or force water connections. Preserved title/meta/H1/canonical, phone, form, core qualification rules, local access content and disposal fallback.",
+      "successSignals": [
+        "A finalized GSC row appears for Irvine refrigerator pickup.",
+        "Refrigerator-specific Irvine impressions appear without shifting broad appliance intent away from /irvine-appliance-pickup/.",
+        "No schema, canonical, form, image, routing or experiment-guard regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /irvine-refrigerator-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
