@@ -694,6 +694,11 @@
           "date": "2026-10-04",
           "type": "Phoenix Metro contact correction",
           "reason": "Added the current Phoenix Metro call/text number 602-726-7552 to the regional hub and synchronized central Contact/About organization contact information. No title, meta, canonical, body intent ownership or internal city/metro separation wording was changed."
+        },
+        {
+          "date": "2026-10-07",
+          "type": "Phoenix Metro missing local request form",
+          "reason": "Repository-wide active-market quality audit found /phoenix-metro-appliance-pickup/ was the only one of 343 active market pages without the standard Formspree local request form. Added only a regional request intake section and form styling; title, meta description, H1, canonical, phone routing, Phoenix-city ownership handoff and city/metro intent separation were left unchanged."
         }
       ]
     },
