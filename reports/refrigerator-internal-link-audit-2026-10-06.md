@@ -45,6 +45,34 @@ The following existing source pages are intentionally outside the active sitemap
 - `/san-dimas-refrigerator-pickup/`
 - `/upland-refrigerator-pickup/`
 
+## Finalized GSC baseline through 2026-10-04
+
+Measurement window: **2026-09-07 through 2026-10-04**.
+
+### Dedicated refrigerator pages
+
+- `/baldwin-park-refrigerator-pickup/` — no finalized GSC row yet.
+- `/costa-mesa-refrigerator-pickup/` — no finalized GSC row yet.
+- `/huntington-beach-refrigerator-pickup/` — no finalized GSC row yet.
+- `/los-angeles-refrigerator-pickup/` — **13 impressions, 0 clicks, avg position 33.77**.
+  - observed queries include `free refrigerator pick up los angeles` (~42) and `refrigerator removal los angeles` (~55).
+- `/aurora-refrigerator-pickup/` — no finalized GSC row yet.
+- `/bellflower-refrigerator-pickup/` — no finalized GSC row yet.
+
+### Matching general city owners
+
+- `/baldwin-park-appliance-pickup/` — **11 impressions, 0 clicks, avg position 11.73**.
+- `/costa-mesa-appliance-pickup/` — **36 impressions, 0 clicks, avg position 17.39**.
+  - refrigerator-intent signals already exist on the general page: `refrigerator pickup free` ~position 5, `pick up old fridge for free near me` ~7, `broken refrigerator pick up` ~8.
+- `/huntington-beach-appliance-pickup/` — **47 impressions, 0 clicks, avg position 12.06**.
+  - refrigerator-intent signals already exist on the general page: `refrigerator disposal near me` ~position 1 and `free refrigerator pick up near me` ~7.
+- `/los-angeles-appliance-pickup/` — **141 impressions, 4 clicks, 2.84% CTR, avg position 16.38**.
+  - includes a `free fridge haul away` click at position 1 and broader Los Angeles appliance visibility.
+
+### Interpretation
+
+The missing city-owner handoff is **not automatically a defect**. Costa Mesa, Huntington Beach and Los Angeles already show refrigerator-intent visibility on the general owner, while the dedicated refrigerator pages are either immature or weaker. At the effective gate, compare finalized query/page ownership before deciding whether to add a direct handoff. Do not move refrigerator intent away from a working general owner just to normalize architecture.
+
 ## Review rule
 
 At each effective gate:
