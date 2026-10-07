@@ -10062,6 +10062,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /newport-beach-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-phoenix-stove-ctr-snippet",
+      "market": "Phoenix, AZ stove/range/oven pickup",
+      "hypothesis": "A clearer action-oriented search snippet with the verified Phoenix call/text number should improve CTR while preserving the page's existing stove/range/oven ranking target.",
+      "pagesChanged": [
+        "/phoenix-stove-oven-pickup/"
+      ],
+      "protectedOwner": "/phoenix-stove-oven-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 5
+        }
+      },
+      "change": "Changed only the HTML meta description, matching Open Graph description and WebPage structured-data description to emphasize Phoenix stove/range/oven pickup qualification, free submission and the verified 602-726-7552 call/text route. Preserved title, H1, canonical, visible body content, form, images and internal links.",
+      "successSignals": [
+        "CTR rises above the 0% baseline while average position remains broadly stable.",
+        "Clicks or impressions increase without shifting broad Phoenix appliance intent onto this specialty page.",
+        "No technical or search-appearance regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /phoenix-stove-oven-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
