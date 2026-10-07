@@ -9364,6 +9364,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these six laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-montebello-laundry-concentration",
+      "market": "Montebello, CA washer & dryer pickup",
+      "hypothesis": "Removing two generic SGV network/review blocks from a zero-visibility laundry page will reduce template duplication and strengthen Montebello washer/dryer intent while retaining useful local access, disposal, FAQ, form and ownership content.",
+      "pagesChanged": [
+        "/montebello-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/montebello-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        }
+      },
+      "change": "Removed turbo-seo-network-v1 and sgv-laundry-gold-v4 only. Preserved title/meta/H1/canonical, local access detail, public-disposal alternative, FAQ, photos, request form and appliance-network handoff.",
+      "successSignals": [
+        "A finalized GSC page row appears for Montebello laundry.",
+        "Relevant Montebello washer/dryer impressions appear without broad appliance cannibalization.",
+        "No canonical, schema, form, image, routing or experiment-guard regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /montebello-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
