@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'sitemap.xml'
+      - 'sitemap-regular-washer-dryer.xml'
       - 'data/approved-indexable-service-pages.txt'
       - '.github/workflows/audit-active-sitemap-pages.yml'
   workflow_dispatch:
@@ -28,9 +29,14 @@ jobs:
           INFORMATIONAL={'landlord-property-manager-appliance-pickup'}
           SERVICE_PAGES=set(x.strip() for x in Path('data/approved-indexable-service-pages.txt').read_text(encoding='utf-8').splitlines() if x.strip() and not x.lstrip().startswith('#'))
 
-          root=ET.parse('sitemap.xml').getroot()
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          urls=[x.text.strip() for x in root.findall('.//s:loc',ns) if x.text]
+          urls=[]
+          for sitemap_name in ('sitemap.xml','sitemap-regular-washer-dryer.xml'):
+              sitemap_path=Path(sitemap_name)
+              if not sitemap_path.exists():
+                  continue
+              root=ET.parse(sitemap_path).getroot()
+              urls.extend(x.text.strip() for x in root.findall('.//s:loc',ns) if x.text)
           active=[]
           for u in urls:
               if not u.startswith(BASE):
