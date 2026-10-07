@@ -254,3 +254,37 @@ For all future reviews:
 2. Use the **maximum** `evaluateNotBefore` date as the page's effective gate.
 3. If the ranking problem involves a sibling/support page, also respect that sibling page's effective gate.
 4. Do not use an earlier experiment's gate to bypass a later overlapping freeze.
+
+
+## Finalized GSC update — through 2026-10-04
+
+The official GSC planner now reports finalized data through **2026-10-04**.
+
+### Coachella Valley
+No page-level change from the prior snapshot:
+- Coachella Valley hub — 5 impressions, avg position 18.4
+- Palm Desert — 12 impressions, avg position 9.92
+- Indio — 1 click, 3 impressions, avg position 7.0
+
+Decision: continue **PROTECT** for Palm Desert and Indio; no new rewrite signal.
+
+### Denver
+No page-level change from the prior snapshot:
+- Denver general — 18 impressions, avg position 39.83
+- Denver washer/dryer — 6 impressions, avg position 17.33
+
+Decision: no new evidence for a page edit. Broad Denver/Lakewood ownership remains blocked by the Lakewood boundary experiment until Oct 14.
+
+### Phoenix
+Updated finalized page-level signals:
+- Phoenix general — **1 click, 48 impressions, avg position 27.98**
+  - prior snapshot: 47 impressions, avg position 28.45
+- Phoenix washer/dryer — **4 impressions, avg position 46.75**
+  - prior snapshot: 3 impressions, avg position 59
+- Phoenix Metro general hub — still no page-level row
+
+Interpretation:
+- Phoenix general gained one impression and slightly improved average position.
+- Phoenix washer/dryer gained one impression and improved average position materially, but the sample is still tiny.
+- The Phoenix city page remains effectively frozen until Oct 14 due the overlapping commercial-authority experiment.
+- Oct 9 remains observation-only for the city page; metro/laundry can be evaluated but not rewritten without stronger finalized evidence.
