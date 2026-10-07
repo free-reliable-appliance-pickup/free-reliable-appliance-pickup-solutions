@@ -10384,6 +10384,56 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Fresno County page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-north-valley-official-alternative",
+      "market": "Anthem / Cave Creek / Carefree, AZ",
+      "hypothesis": "Adding one concise, official local disposal fallback to each North Valley city page will strengthen local trust and usefulness for non-qualifying requests without changing the core free-pickup offer or city ownership.",
+      "pagesChanged": [
+        "/anthem-appliance-pickup/",
+        "/cave-creek-appliance-pickup/",
+        "/carefree-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/anthem-appliance-pickup/",
+        "/cave-creek-appliance-pickup/",
+        "/carefree-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "gsc": {
+          "anthem": {
+            "clicks": 0,
+            "impressions": 4,
+            "position": 25.5
+          },
+          "caveCreek": {
+            "clicks": 0,
+            "impressions": 5,
+            "position": 25.4
+          },
+          "carefree": {
+            "clicks": 0,
+            "impressions": 4,
+            "position": 41
+          }
+        },
+        "note": "All three pages were indexable, self-canonical, used the assigned Phoenix-metro 602-726-7552 contact and had active request forms, but none linked to a local official disposal/bulk-pickup fallback."
+      },
+      "change": "Added one official local fallback section per page. Anthem now points to Anthem Community Council bulk-trash guidance; Cave Creek points to Town residential services and the 2026 Maricopa County transfer-station sheet; Carefree points to the Town transfer-station notice and the same 2026 fee sheet. Titles, meta descriptions, H1s, canonicals, phone, form, qualification rules and city/metro ownership were unchanged.",
+      "successSignals": [
+        "Finalized GSC impressions and average position improve or remain stable for the three exact-city pages.",
+        "No city-vs-metro ownership leakage is introduced.",
+        "Users whose appliances do not qualify receive a verifiable local next step instead of a dead end."
+      ],
+      "evaluateNotBefore": "2026-10-17",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to these three pages before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
