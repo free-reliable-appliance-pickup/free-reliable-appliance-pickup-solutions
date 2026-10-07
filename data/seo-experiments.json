@@ -9113,6 +9113,56 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these two laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-ie-laundry-template-repetition-batch",
+      "market": "Inland Empire laundry — Colton, Chino, Chino Hills",
+      "hypothesis": "Removing duplicated generic network/final-review blocks from three zero-visibility laundry pages will reduce template repetition and strengthen city-specific washer/dryer relevance without altering core local content or ownership.",
+      "pagesChanged": [
+        "/colton-washer-dryer-pickup/",
+        "/chino-washer-dryer-pickup/",
+        "/chino-hills-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/colton-washer-dryer-pickup/",
+        "/chino-washer-dryer-pickup/",
+        "/chino-hills-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "colton": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "chino": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "chinoHills": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          }
+        },
+        "note": "All three pages were indexable and self-canonical but had no finalized GSC page row and repeated generic network/review blocks already covered by city-specific sections."
+      },
+      "change": "Removed turbo-seo-network-v1 from all three pages; removed laundry-priority-v3 from Colton and ca-final-v6 from Chino and Chino Hills. Preserved title/meta/H1/canonical, local access/route content, FAQs, photos, forms, qualification rules and appliance-network handoffs.",
+      "successSignals": [
+        "A finalized GSC page row appears for one or more pages.",
+        "Relevant city washer/dryer impressions appear without broad appliance cannibalization.",
+        "No canonical, schema, form, image, routing or experiment-guard regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these three laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
