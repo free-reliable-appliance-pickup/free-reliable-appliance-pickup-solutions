@@ -10433,7 +10433,13 @@
       "evaluateNotBefore": "2026-10-17",
       "preferredReview": "2026-10-21",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to these three pages before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to these three pages before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-07",
+          "reason": "Synchronized sitemap.xml lastmod from 2026-09-28 to 2026-10-07 for Anthem, Cave Creek and Carefree after the official-local-fallback content change. No title, meta description, H1, canonical, phone, form, qualification rules, internal-link ownership or visible copy changed."
+        }
+      ]
     },
     {
       "id": "2026-10-07-small-market-winner-protection",
