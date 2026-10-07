@@ -5424,6 +5424,10 @@
         {
           "date": "2026-10-05",
           "reason": "Search-appearance validation found the new appliance-flipping guide missing required WebPage structured data and the #website relationship. Add a WebPage object synchronized to the existing title/meta/canonical only; no guide copy, topic intent, Article schema, hub links or experiment hypothesis changes."
+        },
+        {
+          "date": "2026-10-07",
+          "reason": "Verified technical exception: /appliance-buyers-resellers/ linked publicly to /dealer-network/ and /dealer-network/es/ although both destination pages were intentionally noindex dealer-brand drafts. Removed only those two noindex-alias CTA links in commit fd973bbb2d4cb7a033bc1dbaac9e7a9abca7faff; the original commit lacked the required [technical-fix] prefix and caused SEO Experiment Guard failure. Follow-up bb05eaeda1e480f874dad10a7cfafb0b38d1d11b removed the two noindex dealer URLs from sitemap.xml. Technical indexability/link-leak repair only, not a ranking/content/intent-ownership experiment. Logged after the fact; the earlier guard failure cannot be retroactively cleared by this record."
         }
       ]
     },
