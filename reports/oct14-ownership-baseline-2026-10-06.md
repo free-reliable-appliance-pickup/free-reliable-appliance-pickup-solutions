@@ -154,3 +154,59 @@ The correct sequence is now:
 5. Never modify a sibling/support page merely because it appears for the wrong query while its own experiment is still frozen.
 
 This sequencing prevents one optimization from invalidating another active measurement.
+
+
+## Finalized GSC update — through 2026-10-04
+
+The official GSC planner now reports finalized data through **2026-10-04**.
+
+### Rancho Cucamonga intended owner
+`/rancho-cucamonga-appliance-pickup/`
+- **2 clicks**
+- **56 impressions**
+- **3.57% CTR**
+- **avg position 17.21**
+
+Useful query signals on the intended owner include:
+- `free appliance pickup` — 2 impressions, avg position 11
+- `free appliance recycling` — 2 impressions, avg position 7
+- `free fridge pick up near me` — 2 impressions, avg position 6.5
+- `free refrigerator pickup near me` — 1 impression, position 10
+
+Interpretation:
+- The Rancho general owner now has meaningful page-level visibility and clicks.
+- This is a **PROTECT** signal at the page level even though exact Rancho city ownership still needs later finalized query/page comparison.
+- Do not broad-rewrite the owner page on Oct 14 merely because a wrong page still appears for one city-modified query.
+
+### Fontana intended owner
+`/fontana-appliance-pickup/`
+- 0 clicks
+- **24 impressions**
+- **avg position 9.17**
+- `free appliance pickup fontana` — 3 impressions, avg position 18.67
+
+Interpretation:
+- The Fontana owner page now has a page-one average overall.
+- Treat the page-level signal as **PROTECT**.
+- Exact city-modifier ownership is still weak and must be compared against Southern California / Rialto / specialty pages after their effective gates.
+- Do not broad-rewrite the Fontana page if its overall page-one signal holds.
+
+### Upland intended owner
+`/upland-appliance-pickup/` still has no page-level row in the official GSC planner through Oct 4.
+
+Interpretation: remain DISCOVERY / ownership-review mode; absence is not proof of failure.
+
+### Fresno intended owner
+`/fresno-appliance-pickup/`
+- 0 clicks
+- **21 impressions**
+- **avg position 20.14**
+- `appliance recycling fresno` — 1 impression, position 4
+- `appliance removal fresno` — 1 impression, position 19
+- `free washer and dryer pickup fresno` — 2 impressions, avg position 38.5
+
+Interpretation:
+- Fresno general visibility increased from 18 to 21 impressions, but ownership remains mixed.
+- The general page has at least one strong exact-city recycling signal.
+- Laundry intent is still not cleanly owned by the intended laundry page in the broader evidence.
+- Hold all ownership changes until Oct 14+ finalized comparison.
