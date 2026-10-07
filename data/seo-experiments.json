@@ -9998,6 +9998,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative SEO/content changes to /aliso-viejo-washer-dryer-pickup/ before 2026-10-16 except verified technical, factual, contact, indexability or safety fixes."
+    },
+    {
+      "id": "2026-10-06-irvine-laundry-ctr-snippet",
+      "market": "Irvine, CA washer & dryer pickup",
+      "hypothesis": "A more action-oriented meta description that emphasizes free submission and direct call/text/photo options should improve organic CTR while preserving the page's strong existing ranking position.",
+      "pagesChanged": [
+        "/irvine-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/irvine-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 1.75
+        }
+      },
+      "change": "Changed only the HTML meta description, matching Open Graph description and WebPage structured-data description. Preserved title, H1, canonical, visible body copy, phone, form, qualification rules, images and internal links.",
+      "successSignals": [
+        "Organic clicks begin appearing while average position remains broadly stable.",
+        "CTR rises above the 0% baseline without a material loss of impressions.",
+        "The Irvine laundry page continues to own washer/dryer intent rather than broad Irvine appliance intent."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /irvine-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
