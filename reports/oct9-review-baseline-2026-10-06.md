@@ -288,3 +288,53 @@ Interpretation:
 - Phoenix washer/dryer gained one impression and improved average position materially, but the sample is still tiny.
 - The Phoenix city page remains effectively frozen until Oct 14 due the overlapping commercial-authority experiment.
 - Oct 9 remains observation-only for the city page; metro/laundry can be evaluated but not rewritten without stronger finalized evidence.
+
+
+## Added 2026-10-07: Phoenix / Denver ownership and concentration
+
+### Phoenix
+
+Finalized GSC through 2026-10-04:
+- /phoenix-appliance-pickup/: 1 click, 48 impressions, CTR 2.08%, average position 27.98.
+- Exact Phoenix queries are being assigned to the Phoenix city page, not the Phoenix Metro hub.
+- No Phoenix city-vs-metro cannibalization candidate is currently exposed in the finalized GSC planning rows.
+
+Current structure:
+- ~1,539 words
+- 19 H2 sections
+- 35 internal links / 19 unique destinations
+- repeated ownership/support blocks exist: city-vs-metro appears twice, washer/dryer handoff appears multiple times, and several general pickup/intention blocks overlap.
+
+Gate rule:
+- If post-change evidence improves, HOLD.
+- If exact Phoenix city queries remain weak after the gate, test consolidation only: merge repeated city-vs-metro, laundry-handoff and generic-intent blocks while preserving title/H1/canonical/phone/form and the official City of Phoenix fallback.
+
+### Denver
+
+Finalized GSC through 2026-10-04:
+- /denver-appliance-pickup/: 0 clicks, 18 impressions, average position 39.83.
+- "denver appliance pickup" was surfacing /lakewood-appliance-pickup/ for 5 impressions at position ~10.
+- Lakewood is already under its own 2026-10-04 boundary experiment and is protected until 2026-10-14.
+- Lakewood currently contains only 2 Denver mentions and one link to the Denver page, so do not assume current Lakewood copy is still the cause of the historical wrong-owner row.
+
+Current Denver structure:
+- ~2,892 words
+- 30 H2 sections
+- 76 internal links / ~50 unique destinations
+- multiple overlapping blocks around city ownership, review/availability, removal/recycling, appliance handoffs, city alternatives and commercial/partner coverage.
+
+Gate rule:
+- Do not add more Denver copy or links.
+- If finalized post-change evidence is still weak on or after the 2026-10-09 Denver gate, prefer a concentration test on Denver itself.
+- Do not edit Lakewood before its 2026-10-14 gate unless a verified technical/factual/indexability problem appears.
+
+### Coachella Valley
+
+Finalized GSC through 2026-10-04:
+- Coachella Valley hub: average position ~18.4.
+- Palm Desert: average position ~9.9 on 12 impressions.
+- Indio: average position 7 with 1 click on 3 impressions.
+- Palm Springs has public index visibility but too little finalized GSC data for a content change.
+
+Gate rule:
+- Default HOLD for Coachella Valley unless new finalized evidence shows a technical or ownership regression.
