@@ -8700,6 +8700,39 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /fontana-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-huntington-beach-laundry-concentration",
+      "market": "Huntington Beach, CA washer & dryer pickup",
+      "hypothesis": "Removing two repeated generic Orange County/laundry blocks while preserving the city-specific neighborhood, access, FAQ, photos, request flow and one clear network handoff will reduce templated noise and help the page establish washer/dryer intent.",
+      "pagesChanged": [
+        "/huntington-beach-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/huntington-beach-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        },
+        "liveSerpEvidence": "Current Huntington Beach washer/dryer SERP is occupied mainly by broader California/removal/retailer results. The page was indexable and self-canonical but had no finalized GSC page row.",
+        "preservedLocalDepth": "Kept Huntington Harbour, Sunset Beach, Seacliff, Oak View, Goldenwest and Newland access guidance plus the Republic Services fallback link."
+      },
+      "change": "Removed only the turbo-seo-network-v1 and orange-laundry-priority-v3 sections, which repeated nearby-route, condition, access and broad network language already covered elsewhere. Preserved title, meta description, H1, canonical, phone, form, photos, neighborhood/access section, FAQ, local disposal fallback and the single appliance-page-network handoff.",
+      "successSignals": [
+        "A finalized GSC row appears for the Huntington Beach washer/dryer page.",
+        "New Huntington Beach washer/dryer impressions appear without shifting broad appliance intent away from the general city page.",
+        "No canonical, schema, form, image or internal-link regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /huntington-beach-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
