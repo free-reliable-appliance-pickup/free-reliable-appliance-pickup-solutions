@@ -9659,6 +9659,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /placentia-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-fontana-refrigerator-concentration",
+      "market": "Fontana, CA refrigerator pickup",
+      "hypothesis": "Removing a redundant broad appliance-network block while preserving the refrigerator-specific review, official Fontana disposal alternative, related appliance links, FAQ and request flow will reduce template noise and help a zero-visibility refrigerator page establish search visibility.",
+      "pagesChanged": [
+        "/fontana-refrigerator-pickup/"
+      ],
+      "protectedOwner": "/fontana-refrigerator-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        }
+      },
+      "change": "Removed only the appliance-page-network-20260925 section. Preserved title, meta, H1, canonical, phone/form, refrigerator condition/access/preparation content, official Fontana disposal alternative, related pages and FAQ.",
+      "successSignals": [
+        "A finalized GSC row appears for Fontana refrigerator pickup.",
+        "New refrigerator-specific impressions appear without broad-appliance cannibalization.",
+        "No canonical, schema, form, image or routing regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /fontana-refrigerator-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
