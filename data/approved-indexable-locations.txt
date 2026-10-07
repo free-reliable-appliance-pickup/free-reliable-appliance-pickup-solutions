@@ -468,7 +468,6 @@ santee-appliance-pickup
 scottsdale-appliance-pickup
 seal-beach-appliance-pickup
 seal-beach-washer-dryer-pickup
-service-standards
 sf-bay-area-appliance-pickup
 sf-bay-area-washer-dryer-pickup
 sierra-madre-appliance-pickup
