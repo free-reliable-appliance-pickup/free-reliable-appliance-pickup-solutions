@@ -10265,6 +10265,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /bellflower-refrigerator-pickup/ or /bellflower-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-bakersfield-laundry-ctr-snippet",
+      "market": "Bakersfield, CA washer & dryer pickup",
+      "hypothesis": "A shorter, action-oriented snippet with the verified Bakersfield call/text route should improve CTR while preserving the page's laundry intent.",
+      "pagesChanged": [
+        "/bakersfield-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/bakersfield-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 9
+        }
+      },
+      "change": "Changed only the HTML meta description, matching Open Graph description and WebPage structured-data description. Added the verified 310-774-4304 call/text route. Preserved title, H1, canonical, visible body copy, form, images and internal links.",
+      "successSignals": [
+        "CTR rises above the 0% baseline while average position remains broadly stable or improves.",
+        "Bakersfield laundry impressions increase without pulling broad Bakersfield appliance intent away from the general city page.",
+        "No technical or search-appearance regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /bakersfield-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
