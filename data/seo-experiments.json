@@ -9459,6 +9459,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /antelope-valley-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-laguna-niguel-laundry-concentration",
+      "market": "Laguna Niguel, CA washer & dryer pickup",
+      "hypothesis": "Removing a duplicated trailing South Orange County connection block while preserving the earlier local connection section, hillside/gate access guidance, FAQ and request flow will reduce templated repetition and improve the page's chance to establish local laundry visibility.",
+      "pagesChanged": [
+        "/laguna-niguel-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/laguna-niguel-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        }
+      },
+      "change": "Removed only the trailing laguna-niguel-wd-city-links section that repeated Mission Viejo/Laguna Hills/San Juan Capistrano/South Orange County links already covered earlier. Preserved title, meta, H1, canonical, form, photos, hillside/gated-property access content, FAQ and first South Orange County connections section.",
+      "successSignals": [
+        "A finalized GSC row appears for Laguna Niguel washer/dryer pickup.",
+        "New local laundry impressions appear without broad-appliance cannibalization.",
+        "No canonical, schema, form, image or routing regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /laguna-niguel-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
