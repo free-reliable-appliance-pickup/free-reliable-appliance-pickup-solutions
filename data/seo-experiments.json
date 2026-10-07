@@ -9816,6 +9816,90 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /phoenix-freezer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-denver-specialty-intent-narrowing",
+      "market": "Denver, CO freezer + stove/oven pickup",
+      "hypothesis": "Replacing broad multi-appliance grids with single handoffs to the Denver general appliance page will strengthen specialty intent on zero-visibility freezer and stove/oven pages.",
+      "pagesChanged": [
+        "/denver-freezer-pickup/",
+        "/denver-stove-oven-pickup/"
+      ],
+      "protectedOwners": [
+        "/denver-freezer-pickup/",
+        "/denver-stove-oven-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "/denver-freezer-pickup/": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "/denver-stove-oven-pickup/": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          }
+        }
+      },
+      "change": "Replaced each Other Denver Appliances We Pick Up grid with one short handoff to /denver-appliance-pickup/. Preserved specialty titles, H1s, canonicals, forms, phone/contact, access guidance and Denver disposal backup.",
+      "successSignals": [
+        "A finalized GSC row appears for at least one Denver specialty page.",
+        "New freezer/stove-specific impressions appear without shifting broad Denver appliance intent away from the general page.",
+        "No canonical, schema, form, image or contact regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to the Denver freezer or stove/oven specialty pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-aurora-specialty-intent-narrowing",
+      "market": "Aurora, CO freezer + stove/oven pickup",
+      "hypothesis": "Replacing broad multi-appliance grids with single handoffs to the Aurora general appliance page will strengthen specialty intent on zero-visibility freezer and stove/oven pages.",
+      "pagesChanged": [
+        "/aurora-freezer-pickup/",
+        "/aurora-stove-oven-pickup/"
+      ],
+      "protectedOwners": [
+        "/aurora-freezer-pickup/",
+        "/aurora-stove-oven-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "/aurora-freezer-pickup/": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "/aurora-stove-oven-pickup/": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          }
+        }
+      },
+      "change": "Replaced each Other Aurora Appliances We Pick Up grid with one short handoff to /aurora-appliance-pickup/. Preserved specialty titles, H1s, canonicals, forms, contact details, access guidance and Aurora disposal backup.",
+      "successSignals": [
+        "A finalized GSC row appears for at least one Aurora specialty page.",
+        "New freezer/stove-specific impressions appear without broad-intent crossover.",
+        "No canonical, schema, form, image or contact regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to the Aurora freezer or stove/oven specialty pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
