@@ -1415,6 +1415,13 @@
       ],
       "protectedOwners": [
         "/selma-appliance-pickup/"
+      ],
+      "observations": [
+        {
+          "date": "2026-10-07",
+          "source": "Keyword.com tracked project 3846568",
+          "note": "Keyword.com Fresno-location snapshot: 'free appliance removal' is rank 3 (MSV 1,600) on /selma-appliance-pickup/. This is a valuable live ranking but still a wrong-page ownership signal for the Fresno intent-concentration hypothesis. Do not weaken Selma mid-freeze; preserve the ranking and evaluate ownership with multi-day/finalized data at the 2026-10-14 gate."
+        }
       ]
     },
     {
