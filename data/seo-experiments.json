@@ -9521,6 +9521,70 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /pomona-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-west-covina-laundry-concentration",
+      "market": "West Covina, CA washer & dryer pickup",
+      "hypothesis": "Removing three stacked generic/repetitive network and route-review sections while preserving the unique Central Valley and Central Connector content will improve relevance and help a near-page-one page move into the top 10.",
+      "pagesChanged": [
+        "/west-covina-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/west-covina-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 11.25
+        }
+      },
+      "change": "Removed turbo-seo-network-v1, laundry-priority-corridor-v2 and west-covina-wd-local-depth sections. Preserved title, meta, H1, canonical, phone, form, photos, FAQ, premium-corridor content, Central Valley section, Central Connector section, intent handoff and appliance-network handoff.",
+      "successSignals": [
+        "Average position improves from 11.25 into the top 10.",
+        "West Covina laundry impressions grow without broad-appliance cannibalization.",
+        "No canonical, schema, form, image or routing regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /west-covina-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-san-gabriel-laundry-concentration",
+      "market": "San Gabriel, CA washer & dryer pickup",
+      "hypothesis": "Removing the generic turbo network block while preserving San Gabriel-specific SGV review, local access content, FAQ and appliance handoff will reduce network-template noise and improve a position-18 page.",
+      "pagesChanged": [
+        "/san-gabriel-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/san-gabriel-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 18
+        }
+      },
+      "change": "Removed only the turbo-seo-network-v1 section. Preserved title, meta, H1, canonical, phone, form, photos, FAQ, San Gabriel Valley laundry review, local-access section and appliance-network handoff.",
+      "successSignals": [
+        "Average position improves from 18 while impressions grow.",
+        "San Gabriel laundry intent remains distinct from the broad city appliance page.",
+        "No canonical, schema, form, image or routing regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /san-gabriel-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
