@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -10329,6 +10329,61 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /beaverton-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-07-fresno-county-winner-protection",
+      "market": "Fresno County, CA",
+      "hypothesis": "Protect the currently winning Fresno County page while city/specialty Fresno ownership experiments mature, so a page already ranking strongly for broad appliance-removal intent is not destabilized by speculative edits.",
+      "pagesChanged": [
+        "/fresno-county-appliance-pickup/"
+      ],
+      "protectedOwner": "/fresno-county-appliance-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-10-04",
+        "end": "2026-10-07"
+      },
+      "baseline": {
+        "keywordCom20261007": [
+          {
+            "query": "free appliance removal near me",
+            "rank": 1,
+            "bestRank": 1,
+            "rankingUrl": "/fresno-county-appliance-pickup/",
+            "msv": 2400
+          },
+          {
+            "query": "appliance removal fresno",
+            "rank": 3,
+            "bestRank": 3,
+            "rankingUrl": "/fresno-county-appliance-pickup/",
+            "msv": 10
+          },
+          {
+            "query": "free refrigerator pickup fresno",
+            "rank": 6,
+            "bestRank": 6,
+            "rankingUrl": "/fresno-county-appliance-pickup/"
+          },
+          {
+            "query": "free washer and dryer pickup fresno",
+            "rank": 7,
+            "bestRank": 1,
+            "rankingUrl": "/fresno-county-appliance-pickup/"
+          }
+        ],
+        "reason": "Current owner is outperforming many other tracked pages and is also acting as a broad Fresno-area authority page."
+      },
+      "change": "No page content change. Registry-only protection added to prevent speculative edits while current rankings are observed.",
+      "successSignals": [
+        "Broad Fresno-area rankings remain stable or improve.",
+        "City/specialty Fresno pages can mature without destabilizing the strong county owner.",
+        "Future ownership changes are based on finalized GSC and multi-day SERP evidence rather than a single scrape."
+      ],
+      "evaluateNotBefore": "2026-10-17",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Fresno County page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
