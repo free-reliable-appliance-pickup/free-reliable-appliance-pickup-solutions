@@ -10434,6 +10434,87 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to these three pages before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-small-market-winner-protection",
+      "market": "Encinitas / Imperial Beach / Oregon City / Paramount / Phelan / Santee",
+      "hypothesis": "Protect small-market pages already earning clicks or page-one visibility so broad automated SEO work does not destabilize current winners while higher-priority experiments mature.",
+      "pagesChanged": [
+        "/encinitas-appliance-pickup/",
+        "/imperial-beach-appliance-pickup/",
+        "/oregon-city-appliance-pickup/",
+        "/paramount-appliance-pickup/",
+        "/phelan-appliance-pickup/",
+        "/santee-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/encinitas-appliance-pickup/",
+        "/imperial-beach-appliance-pickup/",
+        "/oregon-city-appliance-pickup/",
+        "/paramount-appliance-pickup/",
+        "/phelan-appliance-pickup/",
+        "/santee-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": [
+          {
+            "page": "/encinitas-appliance-pickup/",
+            "clicks": 2,
+            "impressions": 8,
+            "ctr": 0.25,
+            "position": 8.5
+          },
+          {
+            "page": "/imperial-beach-appliance-pickup/",
+            "clicks": 2,
+            "impressions": 8,
+            "ctr": 0.25,
+            "position": 14.625
+          },
+          {
+            "page": "/oregon-city-appliance-pickup/",
+            "clicks": 1,
+            "impressions": 6,
+            "ctr": 0.1666666667,
+            "position": 9.6666666667
+          },
+          {
+            "page": "/paramount-appliance-pickup/",
+            "clicks": 1,
+            "impressions": 3,
+            "ctr": 0.3333333333,
+            "position": 4
+          },
+          {
+            "page": "/phelan-appliance-pickup/",
+            "clicks": 1,
+            "impressions": 3,
+            "ctr": 0.3333333333,
+            "position": 6.6666666667
+          },
+          {
+            "page": "/santee-appliance-pickup/",
+            "clicks": 1,
+            "impressions": 3,
+            "ctr": 0.3333333333,
+            "position": 6.3333333333
+          }
+        ]
+      },
+      "change": "No page-content change. Registry-only winner protection based on finalized Search Console performance.",
+      "successSignals": [
+        "Existing click and page-one signals remain stable or improve.",
+        "No speculative edits are made before enough additional finalized data is available."
+      ],
+      "evaluateNotBefore": "2026-10-17",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make speculative title, body, internal-link, schema, canonical or intent-ownership edits to these current winners before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
