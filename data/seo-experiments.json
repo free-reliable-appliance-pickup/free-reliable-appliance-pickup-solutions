@@ -9721,6 +9721,37 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /fontana-freezer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-anaheim-refrigerator-prep-faq",
+      "market": "Anaheim, CA refrigerator pickup",
+      "hypothesis": "Adding two practical refrigerator-preparation FAQs about when to unplug/defrost and how to report a connected ice-maker/water line will improve usefulness and relevance for refrigerator-removal searches without broadening into general appliance intent.",
+      "pagesChanged": [
+        "/anaheim-refrigerator-pickup/"
+      ],
+      "protectedOwner": "/anaheim-refrigerator-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        }
+      },
+      "change": "Added two visible refrigerator-preparation FAQs and matching FAQPage structured-data entries. Preserved title, meta, H1, canonical, phone/form, official Anaheim recycling/bulky-item alternatives, existing access guidance and all other refrigerator qualification copy.",
+      "successSignals": [
+        "A finalized GSC row appears for Anaheim refrigerator pickup.",
+        "Refrigerator-specific impressions grow without broad-appliance cannibalization.",
+        "No canonical, schema, form, image or routing regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /anaheim-refrigerator-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
