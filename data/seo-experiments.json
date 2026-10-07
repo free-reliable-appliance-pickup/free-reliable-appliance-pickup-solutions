@@ -9194,6 +9194,106 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /alhambra-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-whittier-laundry-intent-concentration",
+      "market": "Whittier, CA washer & dryer pickup",
+      "hypothesis": "Removing two generic SGV network/review blocks will reduce broad-appliance overlap and help the Whittier laundry page resolve more clearly to washer/dryer intent instead of the current broad free-appliance query.",
+      "pagesChanged": [
+        "/whittier-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/whittier-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "position": 41.2,
+          "query": {
+            "text": "free appliance pickup whittier",
+            "impressions": 4,
+            "position": 39.5
+          }
+        }
+      },
+      "change": "Removed turbo-seo-network-v1 and sgv-laundry-gold-v4 while preserving local laundry service-area context, testing/access guidance, FAQ, route connections, photos, form, title/meta/H1/canonical and one appliance-network handoff.",
+      "successSignals": [
+        "Relevant washer/dryer-specific Whittier impressions grow.",
+        "Broad free-appliance Whittier intent shifts toward the general Whittier owner rather than the laundry page.",
+        "Average position improves from 41.2 without technical regressions."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /whittier-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-sgv-zero-visibility-laundry-simplification",
+      "market": "SGV laundry — Baldwin Park, Rowland Heights, Walnut, Diamond Bar, La Puente",
+      "hypothesis": "Removing repeated generic regional/network review blocks from five zero-visibility laundry pages will reduce template repetition and improve city-specific washer/dryer discovery while keeping useful local route/access content.",
+      "pagesChanged": [
+        "/baldwin-park-washer-dryer-pickup/",
+        "/rowland-heights-washer-dryer-pickup/",
+        "/walnut-washer-dryer-pickup/",
+        "/diamond-bar-washer-dryer-pickup/",
+        "/la-puente-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/baldwin-park-washer-dryer-pickup/",
+        "/rowland-heights-washer-dryer-pickup/",
+        "/walnut-washer-dryer-pickup/",
+        "/diamond-bar-washer-dryer-pickup/",
+        "/la-puente-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "baldwinPark": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "rowlandHeights": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "walnut": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "diamondBar": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "laPuente": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          }
+        }
+      },
+      "change": "Removed turbo-seo-network-v1 from all five pages; removed laundry-priority-v3 from Baldwin Park, Walnut and Diamond Bar; removed ca-final-v6 from Rowland Heights; removed laundry-priority-corridor-v2 from La Puente while preserving its more localized Central Valley review. Preserved local access/route content, FAQs, photos, forms, titles/meta/H1/canonicals and core ownership.",
+      "successSignals": [
+        "One or more pages gain a finalized GSC row with relevant city washer/dryer impressions.",
+        "No broad-appliance cannibalization appears.",
+        "No canonical, schema, form, image, routing or experiment-guard regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these five laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
