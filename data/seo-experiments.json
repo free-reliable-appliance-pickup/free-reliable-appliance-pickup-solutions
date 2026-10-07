@@ -9070,6 +9070,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these three laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-east-ie-laundry-regional-block-cleanup",
+      "market": "East Inland Empire laundry — Loma Linda and Yucaipa",
+      "hypothesis": "Removing one repeated regional review section from two zero-visibility laundry pages will reduce templated duplication while preserving the stronger local access, FAQ, photos, forms and route context already present.",
+      "pagesChanged": [
+        "/loma-linda-washer-dryer-pickup/",
+        "/yucaipa-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/loma-linda-washer-dryer-pickup/",
+        "/yucaipa-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "lomaLinda": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "yucaipa": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          }
+        },
+        "note": "Both pages were indexable/self-canonical with substantial local content but no finalized GSC page row. Each repeated an ie-riverside-laundry-v7 regional qualification section already covered locally."
+      },
+      "change": "Removed only ie-riverside-laundry-v7 from Loma Linda and Yucaipa washer/dryer pages. Preserved title/meta/H1/canonical, phone, forms, photos, FAQs, city access detail, route links and other major-appliance handoff.",
+      "successSignals": [
+        "A finalized GSC page row appears for Loma Linda or Yucaipa laundry.",
+        "Relevant city washer/dryer impressions appear without broad appliance cannibalization.",
+        "No canonical, schema, form, image, routing or experiment-guard regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these two laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
