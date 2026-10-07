@@ -8909,6 +8909,37 @@
         "scripts/audit-active-page-images.py",
         "data/seo-experiments.json"
       ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "appliance specialty technical and conversion repair",
+      "reason": "Verified and consolidated duplicate WebPage JSON-LD entities across Phoenix refrigerator, freezer, stove/oven, metro laundry and multiple Phoenix-area washer/dryer pages; corrected shared freezer/stove image assignments on Fontana/Riverside/San Bernardino appliance pages; strengthened active JSON-LD and image QA guards; and added the verified Phoenix 602-726-7552 call/text CTA to unfrozen Phoenix refrigerator, freezer, stove/oven and metro washer/dryer pages. Titles, canonicals, primary search-intent ownership and protected experiment copy were otherwise preserved.",
+      "pages": [
+        "/phoenix-refrigerator-pickup/",
+        "/phoenix-freezer-pickup/",
+        "/phoenix-stove-oven-pickup/",
+        "/phoenix-metro-washer-dryer-pickup/",
+        "/scottsdale-washer-dryer-pickup/",
+        "/mesa-washer-dryer-pickup/",
+        "/chandler-washer-dryer-pickup/",
+        "/gilbert-washer-dryer-pickup/",
+        "/tempe-washer-dryer-pickup/",
+        "/glendale-az-washer-dryer-pickup/",
+        "/peoria-az-washer-dryer-pickup/",
+        "/goodyear-washer-dryer-pickup/",
+        "/surprise-washer-dryer-pickup/",
+        "/queen-creek-washer-dryer-pickup/",
+        "/fontana-freezer-pickup/",
+        "/riverside-freezer-pickup/",
+        "/riverside-stove-oven-pickup/",
+        "/san-bernardino-freezer-pickup/",
+        "/san-bernardino-stove-oven-pickup/"
+      ],
+      "files": [
+        ".github/workflows/audit-active-jsonld-schema.yml",
+        "scripts/audit-active-page-images.py",
+        "data/seo-experiments.json"
+      ]
     }
   ]
 }
