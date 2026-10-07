@@ -1,0 +1,121 @@
+name: Audit Page Concentration
+
+on:
+  push:
+    paths:
+      - '.github/workflows/audit-page-concentration.yml'
+      - 'sitemap.xml'
+      - 'data/seo-experiments.json'
+      - '**/index.html'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Report oversized active location pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import html, json, re
+          import xml.etree.ElementTree as ET
+          from datetime import date
+
+          BASE='https://freereliableappliancepickup.com/'
+          REVIEW_WORDS=1600
+          REVIEW_H2=18
+          REVIEW_LINKS=55
+          EXTREME_WORDS=2200
+          EXTREME_H2=24
+          EXTREME_LINKS=70
+
+          protected=set()
+          p=Path('data/seo-experiments.json')
+          if p.exists():
+              try:
+                  data=json.loads(p.read_text(encoding='utf-8'))
+                  today=date.today()
+                  for exp in data.get('experiments',[]):
+                      if exp.get('status')!='running' or not exp.get('evaluateNotBefore'):
+                          continue
+                      try:
+                          if today >= date.fromisoformat(exp['evaluateNotBefore']):
+                              continue
+                      except ValueError:
+                          continue
+                      pages=list(exp.get('pagesChanged',[]) or [])
+                      pages += list(exp.get('protectedOwners',[]) or [])
+                      if exp.get('protectedOwner'):
+                          pages.append(exp['protectedOwner'])
+                      for page in pages:
+                          slug=(page or '').strip('/')
+                          if slug:
+                              protected.add(slug)
+              except Exception as exc:
+                  print('EXPERIMENT_GUARD_PARSE_WARNING',exc)
+
+          root=ET.parse('sitemap.xml').getroot()
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          slugs=[]
+          for el in root.findall('.//s:loc',ns):
+              if not el.text:
+                  continue
+              u=el.text.strip()
+              if not u.startswith(BASE):
+                  continue
+              slug=u[len(BASE):].strip('/')
+              if slug and slug.endswith('-appliance-pickup') and (Path(slug)/'index.html').exists():
+                  slugs.append(slug)
+
+          def visible(raw):
+              x=raw
+              for tag in ['script','style','nav','header','footer','form']:
+                  x=re.sub(rf'<{tag}\b[^>]*>.*?</{tag}>',' ',x,flags=re.I|re.S)
+              x=re.sub(r'<!--.*?-->',' ',x,flags=re.S)
+              x=re.sub(r'<[^>]+>',' ',x)
+              x=html.unescape(x)
+              return re.findall(r"[A-Za-z0-9']+",x)
+
+          rows=[]
+          href_re=re.compile(r'href\s*=\s*["\']([^"\']+)["\']',re.I)
+          for slug in slugs:
+              raw=(Path(slug)/'index.html').read_text(encoding='utf-8',errors='ignore')
+              words=len(visible(raw))
+              h2=len(re.findall(r'<h2\b',raw,re.I))
+              hrefs=href_re.findall(raw)
+              internal=[h for h in hrefs if h.startswith('/') or h.startswith('../') or 'freereliableappliancepickup.com' in h]
+              rows.append({
+                  'slug':slug,
+                  'words':words,
+                  'h2':h2,
+                  'links':len(internal),
+                  'unique_links':len(set(internal)),
+                  'protected':slug in protected,
+              })
+
+          review=[r for r in rows if r['words']>REVIEW_WORDS or r['h2']>REVIEW_H2 or r['links']>REVIEW_LINKS]
+          extreme=[r for r in rows if r['words']>EXTREME_WORDS or r['h2']>EXTREME_H2 or r['links']>EXTREME_LINKS]
+
+          print('ACTIVE_LOCATION_PAGES',len(rows))
+          print('REVIEW_CONCENTRATION',len(review))
+          print('EXTREME_CONCENTRATION',len(extreme))
+          print()
+          print('TOP_BY_WORDS')
+          for r in sorted(rows,key=lambda x:x['words'],reverse=True)[:30]:
+              flag='PROTECTED' if r['protected'] else 'OPEN'
+              print(f"{r['words']:4d} words | h2={r['h2']:2d} | links={r['links']:3d} | unique={r['unique_links']:3d} | {flag} | {r['slug']}")
+          print()
+          print('REVIEW_CANDIDATES')
+          for r in sorted(review,key=lambda x:(x['protected'], -x['words'], -x['h2'], -x['links'])):
+              flag='DEFER_PROTECTED_EXPERIMENT' if r['protected'] else 'OPEN_FOR_REVIEW'
+              print(f"{flag} | {r['words']} words | h2={r['h2']} | links={r['links']} | unique={r['unique_links']} | {r['slug']}")
+
+          # Informational by design. Concentration is a diagnostic signal, not
+          # a universal ranking rule. Protected experiments must mature before
+          # page-size changes are considered.
+          PY
