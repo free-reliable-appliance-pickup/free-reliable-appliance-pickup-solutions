@@ -9965,6 +9965,39 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative SEO/content changes to /san-marino-washer-dryer-pickup/ before 2026-10-16 except verified technical, factual, contact, indexability or safety fixes."
+    },
+    {
+      "id": "2026-10-06-aliso-viejo-laundry-title-narrowing",
+      "market": "Aliso Viejo, CA washer & dryer pickup",
+      "hypothesis": "Removing broad 'appliance' wording from the laundry page title should reduce wrong-owner visibility for broad appliance-removal intent and sharpen washer/dryer relevance.",
+      "pagesChanged": [
+        "/aliso-viejo-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/aliso-viejo-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 51,
+          "query": "appliance removal aliso viejo"
+        }
+      },
+      "change": "Changed only the HTML title and matching schema name from 'Free Washer & Dryer Pickup Aliso Viejo, CA | Laundry Appliance Removal' to 'Free Washer & Dryer Pickup Aliso Viejo CA | Laundry Removal'. Preserved meta description, H1, canonical, body, form, phone, images and links.",
+      "successSignals": [
+        "Wrong-owner broad appliance-removal impressions decline on the laundry page.",
+        "Laundry-specific impressions appear or improve.",
+        "The general Aliso Viejo appliance page remains the broad city owner."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative SEO/content changes to /aliso-viejo-washer-dryer-pickup/ before 2026-10-16 except verified technical, factual, contact, indexability or safety fixes."
     }
   ],
   "technicalMaintenance": [
