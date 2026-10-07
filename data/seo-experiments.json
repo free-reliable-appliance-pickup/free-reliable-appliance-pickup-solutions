@@ -10557,6 +10557,44 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make speculative title, meta, H1, body, internal-link, schema, canonical or intent-ownership edits to the High Desert hub before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-los-angeles-county-winner-protection",
+      "market": "Los Angeles County, CA",
+      "hypothesis": "Protect the Los Angeles County hub while it is already earning strong early average position, despite its large size, so concentration work is driven by ranking evidence rather than page-length heuristics.",
+      "pagesChanged": [
+        "/los-angeles-county-appliance-pickup/"
+      ],
+      "protectedOwner": "/los-angeles-county-appliance-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0,
+          "position": 4.75
+        },
+        "structure": {
+          "coreWordsApprox": 2641,
+          "h2": 27,
+          "internalLinksApprox": 174,
+          "uniqueInternalApprox": 144
+        },
+        "note": "Public search also surfaces the canonical Los Angeles County URL. Large structure alone is not sufficient reason to rewrite a page already showing strong early position."
+      },
+      "change": "No page-content change. Registry-only protection against speculative concentration edits.",
+      "successSignals": [
+        "Average position remains strong as impressions grow.",
+        "Exact city pages continue to own city-level queries while the county hub owns county-level routing intent."
+      ],
+      "evaluateNotBefore": "2026-10-17",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make speculative title, meta, H1, body, internal-link, schema, canonical or intent-ownership edits to the Los Angeles County hub before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
