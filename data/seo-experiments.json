@@ -10220,6 +10220,51 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /santa-ana-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-bellflower-refrigerator-intent-split",
+      "market": "Bellflower, CA refrigerator pickup",
+      "hypothesis": "A dedicated Bellflower refrigerator page should capture refrigerator-specific intent currently landing on the general Bellflower appliance page while preserving the general page for broad appliance pickup searches.",
+      "pagesChanged": [
+        "/bellflower-refrigerator-pickup/",
+        "/bellflower-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/bellflower-refrigerator-pickup/",
+        "/bellflower-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "sourcePage": {
+          "page": "/bellflower-appliance-pickup/",
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 8
+        },
+        "sourceQuery": {
+          "query": "refrigerator pick up free",
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 7
+        },
+        "newPage": "No historical GSC row before launch."
+      },
+      "change": "Created a unique Bellflower refrigerator pickup page with Bellflower-specific qualification, access, CR&R fallback, FAQs, real refrigerator image, form and 310-774-4304 contact. Added one contextual link from the Bellflower general page and added the new URL to sitemap.xml.",
+      "successSignals": [
+        "The new refrigerator page begins receiving refrigerator-specific impressions and/or clicks.",
+        "The general Bellflower appliance page retains or improves broad appliance intent while refrigerator-specific impressions shift to the specialty page.",
+        "No cannibalization or technical/indexability regression appears."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /bellflower-refrigerator-pickup/ or /bellflower-appliance-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
