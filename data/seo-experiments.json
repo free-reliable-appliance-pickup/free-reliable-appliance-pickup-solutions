@@ -8878,6 +8878,46 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /anaheim-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-third-wave-zero-visibility-laundry-simplification",
+      "market": "Orange + Yorba Linda, CA washer & dryer pickup",
+      "hypothesis": "Removing repeated generic Orange County/laundry network blocks from these zero-visibility laundry pages will reduce templated repetition while preserving useful city-specific access, qualification and routing information.",
+      "pagesChanged": [
+        "/orange-washer-dryer-pickup/",
+        "/yorba-linda-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/orange-washer-dryer-pickup/",
+        "/yorba-linda-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "orange": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        },
+        "yorbaLinda": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        }
+      },
+      "change": "Removed only turbo-seo-network-v1 and orange-laundry-priority-v3 from both pages. Preserved titles, meta descriptions, H1s, canonicals, phones, forms, real photos, city-specific access/qualification content, FAQs, nearby route links and the single appliance-network handoff.",
+      "successSignals": [
+        "A finalized GSC row appears for either or both pages.",
+        "New city-specific washer/dryer impressions appear without shifting broad appliance intent away from each general city page.",
+        "No schema, canonical, image, form or internal-link regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /orange-washer-dryer-pickup/ or /yorba-linda-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
