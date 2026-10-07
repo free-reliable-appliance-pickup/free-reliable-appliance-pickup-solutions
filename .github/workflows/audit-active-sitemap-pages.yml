@@ -53,11 +53,19 @@ jobs:
               if not p.exists():
                   failures.append(f'MISSING FILE: {slug}/index.html')
                   continue
-              if not slug.endswith('-appliance-pickup') or slug in INFORMATIONAL or slug in SERVICE_PAGES:
-                  continue
 
+              # Every URL submitted in sitemap.xml must be indexable. This
+              # catches retired/noindex aliases (including city x appliance
+              # aliases) even when they are outside the general location-page
+              # and approved specialty-page lists below.
               raw=p.read_text(encoding='utf-8',errors='ignore')
               low=raw.lower()
+              sitemap_noindex=bool(re.search(r"<meta\\b[^>]*\\bname=['\"]robots['\"][^>]*\\bcontent=['\"][^'\"]*noindex",raw,re.I))
+              if sitemap_noindex:
+                  failures.append(f'SITEMAP PAGE IS NOINDEX: {slug}')
+
+              if not slug.endswith('-appliance-pickup') or slug in INFORMATIONAL or slug in SERVICE_PAGES:
+                  continue
               has_form='formspree.io/f/mvzeapzd' in low
               has_request_target='id="request"' in low or "id='request'" in low
               has_request_link=bool(re.search(r'href=["\'][^"\']*#request["\']',raw,re.I))
