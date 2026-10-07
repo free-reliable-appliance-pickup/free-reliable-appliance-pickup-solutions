@@ -8882,6 +8882,33 @@
         "scripts/audit-active-page-images.py",
         "data/seo-experiments.json"
       ]
+    },
+    {
+      "date": "2026-10-06",
+      "type": "appliance-page schema and image consistency cleanup",
+      "reason": "Verified and corrected technical inconsistencies across appliance-specific pages without changing protected ranking copy or intent ownership. Consolidated duplicate WebPage JSON-LD entities on Phoenix refrigerator/freezer/stove and Phoenix Metro laundry pages plus Denver/Aurora freezer and stove pages. Corrected confirmed freezer/stove image asset swaps on Fontana freezer, Los Angeles freezer/stove, Ontario freezer/stove, Pomona freezer/stove and San Bernardino stove. Strengthened the active-page image audit so numbered generic appliance assets must match refrigerator=photo-1, stove/range=photo-2, freezer=photo-3. Audited the remaining freezer/stove family and priority refrigerator pages for canonical, noindex, schema and image alignment.",
+      "pages": [
+        "/phoenix-refrigerator-pickup/",
+        "/phoenix-freezer-pickup/",
+        "/phoenix-stove-oven-pickup/",
+        "/phoenix-metro-washer-dryer-pickup/",
+        "/denver-freezer-pickup/",
+        "/denver-stove-oven-pickup/",
+        "/aurora-freezer-pickup/",
+        "/aurora-stove-oven-pickup/",
+        "/fontana-freezer-pickup/",
+        "/los-angeles-freezer-pickup/",
+        "/los-angeles-stove-oven-pickup/",
+        "/ontario-freezer-pickup/",
+        "/ontario-stove-oven-pickup/",
+        "/pomona-freezer-pickup/",
+        "/pomona-stove-oven-pickup/",
+        "/san-bernardino-stove-oven-pickup/"
+      ],
+      "files": [
+        "scripts/audit-active-page-images.py",
+        "data/seo-experiments.json"
+      ]
     }
   ]
 }
