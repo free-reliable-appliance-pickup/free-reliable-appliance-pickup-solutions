@@ -4,8 +4,7 @@ name: Audit Active Sitemap Pages
 on:
   push:
     paths:
-      - 'sitemap.xml'
-      - 'sitemap-regular-washer-dryer.xml'
+      - 'sitemap*.xml'
       - 'data/approved-indexable-service-pages.txt'
       - '.github/workflows/audit-active-sitemap-pages.yml'
   workflow_dispatch:
@@ -31,12 +30,11 @@ jobs:
 
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           urls=[]
-          for sitemap_name in ('sitemap.xml','sitemap-regular-washer-dryer.xml'):
-              sitemap_path=Path(sitemap_name)
-              if not sitemap_path.exists():
-                  continue
+          sitemap_paths=sorted(Path('.').glob('sitemap*.xml'))
+          for sitemap_path in sitemap_paths:
               root=ET.parse(sitemap_path).getroot()
               urls.extend(x.text.strip() for x in root.findall('.//s:loc',ns) if x.text)
+          print('SITEMAPS_AUDITED',len(sitemap_paths))
           active=[]
           for u in urls:
               if not u.startswith(BASE):
@@ -69,6 +67,9 @@ jobs:
               sitemap_noindex=bool(re.search(r"<meta\\b[^>]*\\bname=['\"]robots['\"][^>]*\\bcontent=['\"][^'\"]*noindex",raw,re.I))
               if sitemap_noindex:
                   failures.append(f'SITEMAP PAGE IS NOINDEX: {slug}')
+              meta_refresh=bool(re.search(r"<meta\\b[^>]*http-equiv\\s*=\\s*['\"]?refresh['\"]?",raw,re.I))
+              if meta_refresh:
+                  failures.append(f'SITEMAP PAGE USES META REFRESH REDIRECT: {slug}')
 
               if not slug.endswith('-appliance-pickup') or slug in INFORMATIONAL or slug in SERVICE_PAGES:
                   continue
