@@ -8918,6 +8918,56 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /orange-washer-dryer-pickup/ or /yorba-linda-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-fourth-wave-zero-visibility-laundry-simplification",
+      "market": "Orange County laundry — Garden Grove, Buena Park, La Habra",
+      "hypothesis": "Removing two repeated generic Orange County laundry/network sections from three indexable zero-visibility city laundry pages will reduce templated duplication and improve city-specific washer/dryer intent without changing titles, H1s, canonicals, forms, photos or local ownership.",
+      "pagesChanged": [
+        "/garden-grove-washer-dryer-pickup/",
+        "/buena-park-washer-dryer-pickup/",
+        "/la-habra-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/garden-grove-washer-dryer-pickup/",
+        "/buena-park-washer-dryer-pickup/",
+        "/la-habra-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "gardenGrove": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "buenaPark": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "laHabra": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          }
+        },
+        "note": "All three pages were indexable/self-canonical but had no finalized GSC page row. Each contained the same turbo-seo-network-v1 and orange-laundry-priority-v3 sections repeating access, condition and nearby-route language already covered elsewhere."
+      },
+      "change": "Removed only turbo-seo-network-v1 and orange-laundry-priority-v3 from Garden Grove, Buena Park and La Habra washer/dryer pages. Preserved city-specific access/route content, FAQs where present, disposal alternatives where present, photos, request forms, phone, main network handoff, title/meta/H1/canonical and qualification rules.",
+      "successSignals": [
+        "A finalized GSC page row appears for one or more of the three pages.",
+        "City-specific washer/dryer impressions appear without broad appliance-intent cannibalization.",
+        "No schema, canonical, routing, form, image or experiment-guard regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these three laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
