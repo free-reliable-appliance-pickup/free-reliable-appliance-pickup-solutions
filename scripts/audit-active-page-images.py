@@ -18,6 +18,12 @@ APPLIANCE_HERO_TERMS = {
     'stove-oven-pickup': ('stove', 'range', 'oven'),
 }
 
+KNOWN_SHARED_APPLIANCE_ASSETS = {
+    'refrigerator': 'major-appliance-pickup-photo-1.jpg',
+    'freezer': 'major-appliance-pickup-photo-3.jpg',
+    'stove-oven': 'major-appliance-pickup-photo-2.jpg',
+}
+
 
 class ImageRefs(HTMLParser):
     def __init__(self):
@@ -54,12 +60,13 @@ def main():
         # shipping refrigerator, freezer, laundry or stove pages with an
         # obviously mismatched hero/content alt signal.
         expected_terms = APPLIANCE_HERO_TERMS.get(slug)
+        content_image = next((
+            attrs for attrs in parser.images
+            if attrs.get('src')
+            and 'logo' not in attrs.get('alt', '').lower()
+        ), None)
+
         if expected_terms:
-            content_image = next((
-                attrs for attrs in parser.images
-                if attrs.get('src')
-                and 'logo' not in attrs.get('alt', '').lower()
-            ), None)
             if content_image is None:
                 problems.append(f'{url}: no non-logo appliance image found')
             else:
@@ -67,6 +74,25 @@ def main():
                 if not any(term in alt for term in expected_terms):
                     problems.append(
                         f'{url}: primary appliance image alt {alt!r} does not match expected terms {expected_terms}'
+                    )
+
+        # When a city/appliance page uses the shared major-appliance asset set,
+        # enforce the established appliance mapping. Bespoke local photos are
+        # allowed and are not forced onto the shared assets.
+        if content_image is not None:
+            src_name = Path(urlparse(urljoin(url, content_image.get('src', ''))).path).name
+            shared_names = set(KNOWN_SHARED_APPLIANCE_ASSETS.values())
+            if src_name in shared_names:
+                expected_asset = None
+                if slug == 'refrigerator-pickup' or slug.endswith('-refrigerator-pickup'):
+                    expected_asset = KNOWN_SHARED_APPLIANCE_ASSETS['refrigerator']
+                elif slug == 'freezer-pickup' or slug.endswith('-freezer-pickup'):
+                    expected_asset = KNOWN_SHARED_APPLIANCE_ASSETS['freezer']
+                elif slug == 'stove-oven-pickup' or slug.endswith('-stove-oven-pickup'):
+                    expected_asset = KNOWN_SHARED_APPLIANCE_ASSETS['stove-oven']
+                if expected_asset and src_name != expected_asset:
+                    problems.append(
+                        f'{url}: shared appliance image {src_name} should be {expected_asset}'
                     )
 
         for attrs in parser.images:
