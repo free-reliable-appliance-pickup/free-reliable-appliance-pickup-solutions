@@ -9616,6 +9616,49 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /pico-rivera-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-placentia-laundry-intent-narrowing",
+      "market": "Placentia, CA washer & dryer pickup",
+      "hypothesis": "Removing the broad appliance-network block from the washer/dryer page while preserving the existing simple handoff to the general Placentia appliance page will reduce broad appliance-removal crossover and strengthen laundry-specific ownership.",
+      "pagesChanged": [
+        "/placentia-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/placentia-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 51
+        },
+        "query": {
+          "query": "appliance removal placentia",
+          "impressions": 1,
+          "position": 51
+        },
+        "generalOwner": {
+          "page": "/placentia-appliance-pickup/",
+          "impressions": 2,
+          "position": 16.5,
+          "protectedThrough": "2026-10-15"
+        }
+      },
+      "change": "Removed only the appliance-page-network-20260925 block from the laundry page. Preserved the local access/route section, which already links users with non-laundry appliances to /placentia-appliance-pickup/. Titles, H1, canonical, phone, form, photos and laundry qualification copy were unchanged.",
+      "successSignals": [
+        "Broad appliance-removal queries shift toward the general Placentia page rather than the laundry page.",
+        "Laundry-specific impressions appear or improve on the washer/dryer page.",
+        "No canonical, schema, form, image or routing regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /placentia-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
