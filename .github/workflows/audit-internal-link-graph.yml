@@ -60,6 +60,7 @@ jobs:
           graph=defaultdict(set)
           inlinks=defaultdict(set)
           broken=[]
+          redirecting_internal=[]
           href_re=re.compile(r'href\s*=\s*["\']([^"\']+)["\']',re.I)
 
           for src in sitemap_urls:
@@ -74,13 +75,29 @@ jobs:
                       continue
                   dest=urljoin(src,href)
                   parsed=urlparse(dest)
-                  if parsed.netloc!=HOST:
+                  if parsed.netloc not in (HOST,'www.'+HOST):
                       continue
-                  clean=parsed._replace(fragment='',query='').geturl()
+
+                  # Record internal hrefs that force an avoidable redirect before
+                  # reaching the site's canonical HTTPS + non-www + trailing-slash URL.
+                  href_path=parsed.path or '/'
+                  rel=href_path.strip('/')
+                  candidate=Path(rel)
+                  redirect_reasons=[]
+                  if parsed.scheme=='http':
+                      redirect_reasons.append('http')
+                  if parsed.netloc=='www.'+HOST:
+                      redirect_reasons.append('www')
+                  if href_path.endswith('/index.html'):
+                      redirect_reasons.append('index.html')
+                  elif rel and not candidate.suffix and (candidate/'index.html').exists() and not href_path.endswith('/'):
+                      redirect_reasons.append('missing-trailing-slash')
+                  if redirect_reasons:
+                      redirecting_internal.append((src,href,','.join(redirect_reasons)))
+
+                  clean=parsed._replace(scheme='https',netloc=HOST,fragment='',query='').geturl()
                   if clean.endswith('/index.html'):
                       clean=clean[:-10]
-                  rel=parsed.path.strip('/')
-                  candidate=Path(rel)
                   if rel and not candidate.suffix and (candidate/'index.html').exists():
                       clean=BASE+rel+'/'
                   elif not rel:
@@ -107,6 +124,7 @@ jobs:
           print('REACHABLE_FROM_HOME',sum(u in depths for u in sitemap_urls))
           print('UNREACHABLE_FROM_HOME',sum(u not in depths for u in sitemap_urls))
           print('BROKEN_INTERNAL_TARGETS',len(set(broken)))
+          print('REDIRECTING_INTERNAL_HREFS',len(set(redirecting_internal)))
           print('ZERO_ACTIVE_INLINKS',sum(not active_inlink_sources(u) for u in sitemap_urls if u!=BASE))
 
           print('\nCRAWL_DEPTH_DISTRIBUTION')
@@ -247,6 +265,10 @@ jobs:
               print(f'{slug}: city_owner_active={direct_active} direct_city_handoff={has_direct} active_inlinks={source_count} depth={depth_label} effective_gate={effective_gate}')
               source_slugs=[urlparse(x).path.strip('/') or '/' for x in active_sources]
               print('  current_sources=' + ','.join(source_slugs))
+
+          print('\nREDIRECTING_INTERNAL_LINKS')
+          for src,href,reasons in sorted(set(redirecting_internal))[:200]:
+              print(src,'->',href,'|',reasons)
 
           print('\nBROKEN_INTERNAL_LINKS')
           for src,dest,target in sorted(set(broken))[:100]:
