@@ -8774,6 +8774,47 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /fountain-valley-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-westminster-ca-laundry-concentration",
+      "market": "Westminster, CA washer & dryer pickup",
+      "hypothesis": "Removing two repeated generic Orange County/laundry blocks while preserving the California-vs-Colorado clarification and broad-query handoff will concentrate the page on Westminster CA laundry intent and improve its weak current visibility.",
+      "pagesChanged": [
+        "/westminster-ca-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/westminster-ca-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 32.66666666666667,
+          "queries": [
+            {
+              "query": "pick up dryer for free",
+              "impressions": 1,
+              "position": 75
+            }
+          ]
+        },
+        "ownershipNote": "The retired /westminster-washer-dryer-pickup/ alias remains noindex and canonicalized to this California owner. /westminster-appliance-pickup/ remains the Colorado general-appliance page."
+      },
+      "change": "Removed only turbo-seo-network-v1 and orange-laundry-priority-v3 sections. Preserved title, meta description, H1, canonical, California/Colorado disambiguation, nationwide broad-query handoff, local neighborhood/access content, FAQ, images, form and single appliance-network handoff.",
+      "successSignals": [
+        "Westminster CA washer/dryer impressions increase or average position improves from 32.7.",
+        "Broad no-city dryer intent does not displace the intended Westminster CA local ownership.",
+        "The retired alias remains noindex/canonicalized correctly and Colorado Westminster ownership remains separate.",
+        "No schema, canonical, image, form or internal-link regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /westminster-ca-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
