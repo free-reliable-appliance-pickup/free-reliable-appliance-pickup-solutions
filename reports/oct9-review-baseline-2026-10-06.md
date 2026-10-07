@@ -338,3 +338,16 @@ Finalized GSC through 2026-10-04:
 
 Gate rule:
 - Default HOLD for Coachella Valley unless new finalized evidence shows a technical or ownership regression.
+
+
+## Effective freeze correction — 2026-10-07
+
+Phoenix has overlapping experiments. The city-vs-metro experiment reaches its first evaluation date on 2026-10-09, but the separate commercial-authority-links experiment includes `/phoenix-appliance-pickup/`, was reset on 2026-10-04, and remains protected until 2026-10-14.
+
+Therefore:
+- **Denver appliance page:** eligible for evidence review on 2026-10-09.
+- **Coachella Valley cluster:** eligible for evidence review on 2026-10-09.
+- **Phoenix Metro hub:** city-vs-metro evidence may be reviewed on 2026-10-09, but do not make changes that indirectly invalidate the still-protected Phoenix city owner.
+- **Phoenix city page:** HOLD content/title/meta/internal-link/schema-intent edits until 2026-10-14 unless a verified technical/factual/contact/indexability/safety issue appears.
+
+This later overlapping gate supersedes any earlier note suggesting the Phoenix city page itself could be edited on October 9.
