@@ -18,6 +18,12 @@ APPLIANCE_HERO_TERMS = {
     'stove-oven-pickup': ('stove', 'range', 'oven'),
 }
 
+GENERIC_APPLIANCE_ASSET = {
+    'refrigerator-pickup': 'major-appliance-pickup-photo-1.jpg',
+    'stove-oven-pickup': 'major-appliance-pickup-photo-2.jpg',
+    'freezer-pickup': 'major-appliance-pickup-photo-3.jpg',
+}
+
 KNOWN_SHARED_APPLIANCE_ASSETS = {
     'refrigerator': 'major-appliance-pickup-photo-1.jpg',
     'freezer': 'major-appliance-pickup-photo-3.jpg',
@@ -97,6 +103,21 @@ def main():
 
         for attrs in parser.images:
             src = attrs.get('src', '')
+
+            # Several city appliance pages reuse the numbered generic
+            # refrigerator/stove/freezer photo set. Enforce the established
+            # mapping whenever one of those generic assets is used so a
+            # template copy cannot silently swap freezer and stove imagery.
+            generic_type = next(
+                (kind for kind in GENERIC_APPLIANCE_ASSET if slug == kind or slug.endswith('-' + kind)),
+                None
+            )
+            if generic_type and 'major-appliance-pickup-photo-' in src:
+                expected_asset = GENERIC_APPLIANCE_ASSET[generic_type]
+                if expected_asset not in src:
+                    problems.append(
+                        f'{url}: generic appliance image {src} does not match expected {expected_asset}'
+                    )
             if not src or src.startswith('data:'):
                 continue
             image_url = urljoin(url, src)
