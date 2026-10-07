@@ -11,6 +11,8 @@ on:
       - 'california-appliance-pickup/index.html'
       - '*-appliance-pickup/index.html'
       - 'refrigerator-pickup/index.html'
+      - '*-refrigerator-pickup/index.html'
+      - 'data/seo-experiments.json'
       - 'freezer-pickup/index.html'
       - 'stove-oven-pickup/index.html'
       - 'washer-dryer-pickup/index.html'
@@ -129,6 +131,45 @@ jobs:
               count=len(inlinks.get(u,set()) & active)
               depth=depths.get(u,999)
               print(f'inlinks={count:2d} depth={depth if depth<999 else "NA"} | {u}')
+
+          print('\nREFRIGERATOR_CITY_HANDOFF_AUDIT')
+          import json
+          exp_data=json.loads(Path('data/seo-experiments.json').read_text(encoding='utf-8'))
+          experiments=exp_data if isinstance(exp_data,list) else exp_data.get('experiments',[])
+          def touching_running_experiments(path):
+              hits=[]
+              for exp in experiments:
+                  if exp.get('status')!='running':
+                      continue
+                  touched=[]
+                  touched.extend(exp.get('pagesChanged') or [])
+                  if exp.get('protectedOwner'):
+                      touched.append(exp.get('protectedOwner'))
+                  touched.extend(exp.get('protectedOwners') or [])
+                  if path in touched:
+                      hits.append(exp)
+              return hits
+
+          fridge_urls=[u for u in sitemap_urls if u.rstrip('/').endswith('-refrigerator-pickup')]
+          fridge_rows=[]
+          for u in fridge_urls:
+              slug=urlparse(u).path.strip('/')
+              city=slug[:-len('-refrigerator-pickup')]
+              general=BASE+city+'-appliance-pickup/'
+              has_direct=general in inlinks.get(u,set())
+              direct_active=general in active
+              general_path='/'+city+'-appliance-pickup/'
+              fridge_path='/'+slug+'/'
+              freeze_dates=[]
+              for exp in touching_running_experiments(general_path)+touching_running_experiments(fridge_path):
+                  d=exp.get('evaluateNotBefore')
+                  if d:
+                      freeze_dates.append(d)
+              effective_gate=max(freeze_dates) if freeze_dates else 'unfrozen'
+              fridge_rows.append((0 if has_direct else 1,effective_gate,slug,direct_active,has_direct))
+          for missing,effective_gate,slug,direct_active,has_direct in sorted(fridge_rows, key=lambda r:(-r[0],r[1],r[2])):
+              print(f'{slug}: city_owner_active={direct_active} direct_city_handoff={has_direct} effective_gate={effective_gate}')
+          print('REFRIGERATOR_MISSING_DIRECT_CITY_HANDOFFS',sum(m for m,_,_,_,_ in fridge_rows))
 
           print('\nBROKEN_INTERNAL_LINKS')
           for src,dest,target in sorted(set(broken))[:100]:
