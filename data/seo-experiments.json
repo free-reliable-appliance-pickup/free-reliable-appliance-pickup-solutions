@@ -8576,6 +8576,58 @@
       "evaluateNotBefore": "2026-10-16",
       "preferredReview": "2026-10-20",
       "status": "running"
+    },
+    {
+      "id": "2026-10-06-oregon-i5-corridor-depth",
+      "market": "Oregon — Portland to Salem I-5 corridor",
+      "lastChanged": "2026-10-06",
+      "hypothesis": "Adding one practical Portland-to-Salem corridor section to the Oregon state owner page will improve discovery for south-metro and Mid-Willamette Valley route queries while preserving the existing city pages that already have page-one signals.",
+      "pagesChanged": [
+        "/oregon-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/oregon-appliance-pickup/"
+      ],
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "page": {
+          "clicks": 1,
+          "impressions": 4,
+          "ctr": 0.25,
+          "avgPosition": 12
+        },
+        "protectedCitySignals": {
+          "hillsboro": {
+            "clicks": 0,
+            "impressions": 8,
+            "avgPosition": 9.625
+          },
+          "oregonCity": {
+            "clicks": 1,
+            "impressions": 6,
+            "avgPosition": 9.6666666667
+          },
+          "beaverton": {
+            "clicks": 0,
+            "impressions": 1,
+            "avgPosition": 8
+          }
+        },
+        "note": "The Oregon state hub is a near-page-one BOOST candidate. Hillsboro, Oregon City and Beaverton already show page-one-level signals, so the experiment changes only the state hub and leaves those city pages untouched."
+      },
+      "change": "Added one corridor section to the Oregon state hub covering west Portland metro, Lake Oswego/Tualatin/Wilsonville, Oregon City/Canby/Woodburn, and Keizer/Salem/West Salem. Preserved title, meta description, H1, canonical, phone, qualification rules and all existing city-page ownership. Added only WebPage dateModified metadata.",
+      "successSignals": [
+        "Oregon state hub gains finalized impressions and/or improves from baseline avg position 12 without losing its existing click signal",
+        "New route/corridor impressions appear for Portland-Salem, Wilsonville, Tualatin, Canby, Woodburn or nearby communities",
+        "Hillsboro, Oregon City and Beaverton retain their existing page-one-level signals",
+        "No new cannibalization between the Oregon hub and Portland, Salem, Keizer or other dedicated city owners"
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running"
     }
   ],
   "technicalMaintenance": [
