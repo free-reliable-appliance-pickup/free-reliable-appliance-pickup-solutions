@@ -9020,6 +9020,56 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these three laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-east-ie-laundry-concentration",
+      "market": "East Inland Empire laundry — Eastvale, Corona, Moreno Valley",
+      "hypothesis": "Removing duplicated generic network/final-review blocks from three zero-visibility laundry pages will reduce template repetition and concentrate city-specific washer/dryer intent while preserving useful local route/access content.",
+      "pagesChanged": [
+        "/eastvale-washer-dryer-pickup/",
+        "/corona-washer-dryer-pickup/",
+        "/moreno-valley-washer-dryer-pickup/"
+      ],
+      "protectedOwners": [
+        "/eastvale-washer-dryer-pickup/",
+        "/corona-washer-dryer-pickup/",
+        "/moreno-valley-washer-dryer-pickup/"
+      ],
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "eastvale": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "corona": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          },
+          "morenoValley": {
+            "pageRow": null,
+            "clicks": 0,
+            "impressions": 0
+          }
+        },
+        "note": "All three pages were indexable/self-canonical but had no finalized GSC page row and repeated network/route-review language already covered by local sections."
+      },
+      "change": "Removed turbo-seo-network-v1 from all three pages; removed ca-final-v6 from Eastvale and Corona; removed ie-riverside-laundry-v7 from Moreno Valley. Preserved title/meta/H1/canonical, forms, local access/ZIP content, photos, qualification language and one clear appliance-network handoff.",
+      "successSignals": [
+        "A finalized GSC row appears for one or more pages.",
+        "Relevant city washer/dryer impressions appear without broad appliance-intent cannibalization.",
+        "No canonical, schema, form, image, routing or experiment-guard regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these three laundry pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
