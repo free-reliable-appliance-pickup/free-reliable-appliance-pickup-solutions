@@ -64,6 +64,7 @@ jobs:
               title=html.unescape(re.sub(r'\\s+',' ',tm.group(1))).strip() if tm else ''
 
               matches=list(SCRIPT_RE.finditer(raw))
+              webpage_count=0
               for m in matches:
                   checked_scripts += 1
                   try:
@@ -85,12 +86,17 @@ jobs:
                       if 'service' in node_types and 'telephone' in node:
                           errors.append(f'INVALID SERVICE TELEPHONE PROPERTY {p}')
 
-                      if 'webpage' in node_types and title and node.get('name'):
-                          schema_name=html.unescape(str(node.get('name'))).strip()
-                          if schema_name != title:
-                              errors.append(f'WEBPAGE NAME/TITLE MISMATCH {p}: {schema_name!r} != {title!r}')
+                      if 'webpage' in node_types:
+                          webpage_count += 1
+                          if title and node.get('name'):
+                              schema_name=html.unescape(str(node.get('name'))).strip()
+                              if schema_name != title:
+                                  errors.append(f'WEBPAGE NAME/TITLE MISMATCH {p}: {schema_name!r} != {title!r}')
 
                       stack.extend(node.values())
+
+              if webpage_count > 1:
+                  errors.append(f'DUPLICATE WEBPAGE ENTITIES {p}: {webpage_count}')
 
           if errors:
               print('\\n'.join(errors))
