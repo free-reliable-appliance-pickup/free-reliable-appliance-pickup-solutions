@@ -10160,6 +10160,34 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /sacramento-metro-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-anaheim-hills-laundry-official-alternative",
+      "market": "Anaheim Hills, CA washer & dryer pickup",
+      "hypothesis": "Adding a current City of Anaheim bulky-item alternative should strengthen local usefulness and trust for nonqualifying laundry appliances without changing the page's primary reuse-focused washer/dryer intent.",
+      "pagesChanged": [
+        "/anaheim-hills-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/anaheim-hills-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": null,
+        "note": "GSC returned no current row for this page in the finalized comparison window."
+      },
+      "change": "Added one local-authority section linking to the City of Anaheim solid waste/bulky-item information for addresses within the city service area. Preserved title, meta, H1, canonical, form, phone, images and existing internal links.",
+      "successSignals": [
+        "The page begins receiving impressions for Anaheim Hills washer/dryer or appliance-removal searches.",
+        "No broad Anaheim appliance cannibalization appears.",
+        "No technical or search-appearance regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /anaheim-hills-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
