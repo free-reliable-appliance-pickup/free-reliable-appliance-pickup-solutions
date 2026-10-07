@@ -1453,7 +1453,14 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative edits to these two supporting pages or the protected San Bernardino owner page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative edits to these two supporting pages or the protected San Bernardino owner page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "observations": [
+        {
+          "date": "2026-10-07",
+          "source": "Keyword.com project 3846568 + repository structure audit",
+          "note": "Keyword.com Fresno-location snapshot: generic 'appliance removal' (MSV 5,400) and 'appliance removal near me' (MSV 2,900) are outside the top 100 for our domain on 2026-10-07. /appliance-removal/ is ~1,959 words with 20 H2s and multiple city/market sections. Current SERPs are led by TakeMyAppliance plus local appliance/junk operators, Facebook/Yelp and national removal brands. Do not edit before the 2026-10-13 gate; at review, evaluate whether the broad authority page should be concentrated around non-city removal utility while local pages own geography."
+        }
+      ]
     },
     {
       "id": "2026-10-03-fontana-stove-support-page-handoff",
