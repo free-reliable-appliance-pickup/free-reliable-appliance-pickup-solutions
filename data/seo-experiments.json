@@ -973,7 +973,11 @@
       "evaluateNotBefore": "2026-10-13",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Temple City general page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+      "freezeRule": "No speculative title, body, internal-link, schema, canonical or intent-ownership edits to the Temple City general page before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged.",
+      "protectedOwners": [
+        "/temple-city-appliance-pickup/",
+        "/temple-city-washer-dryer-pickup/"
+      ]
     },
     {
       "id": "2026-10-03-pomona-city-focus",
@@ -1366,6 +1370,9 @@
           "date": "2026-10-04",
           "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
         }
+      ],
+      "protectedOwners": [
+        "/selma-appliance-pickup/"
       ]
     },
     {
