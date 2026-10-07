@@ -10030,6 +10030,38 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /irvine-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-newport-beach-laundry-official-alternative",
+      "market": "Newport Beach, CA washer & dryer pickup",
+      "hypothesis": "Adding one concise, verified Newport Beach municipal bulky-item alternative should improve local usefulness and topical trust without changing the page's laundry intent, search snippet, title or internal ownership.",
+      "pagesChanged": [
+        "/newport-beach-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/newport-beach-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 5
+        }
+      },
+      "change": "Added one local official-alternative section citing the City of Newport Beach bulky-item program for covered residential CR&R customers, including the current allowance of up to five free bulky pickups per year and up to five items per collection. Preserved title, meta description, H1, canonical, existing local service copy, phone, form, photos and internal links.",
+      "successSignals": [
+        "Newport Beach laundry impressions grow while average position remains competitive or improves.",
+        "The page continues to rank for washer/dryer intent rather than broad appliance intent.",
+        "No technical or search-appearance regression appears."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /newport-beach-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
