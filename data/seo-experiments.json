@@ -10733,6 +10733,119 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /glendale-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-palm-desert-laundry-gap",
+      "market": "Palm Desert, CA washer & dryer pickup",
+      "hypothesis": "Closing the specific competitor-gap weaknesses with truthful city-specific utility will improve usefulness and ranking eligibility without changing the established local owner or creating duplicate city intent.",
+      "pagesChanged": [
+        "/palm-desert-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/palm-desert-washer-dryer-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-10-07",
+        "end": "2026-10-07"
+      },
+      "baseline": {
+        "competitorGapAudit": {
+          "score": "7/10",
+          "missing": [
+            "trust_flow",
+            "washer_intent",
+            "local_fallback"
+          ]
+        },
+        "preChangeStructure": {
+          "approxWords": 798
+        },
+        "localFallbackSource": "City of Palm Desert Waste & Recycling — bulky-item pickup through Burrtec"
+      },
+      "change": "Kept title/meta/H1/canonical/phone intact. Added explicit qualification/confirmation wording, a Palm Desert washer-cycle section, and a current City of Palm Desert bulky-item fallback.",
+      "successSignals": [
+        "Competitor-gap score improves to 10/10 without introducing template-like city duplication.",
+        "The intended city washer/dryer page remains the ranking owner for laundry-specific searches.",
+        "Impressions/rankings improve or remain stable while qualification and local fallback information remain accurate."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /palm-desert-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-la-quinta-laundry-gap",
+      "market": "La Quinta, CA washer & dryer pickup",
+      "hypothesis": "Closing the specific competitor-gap weaknesses with truthful city-specific utility will improve usefulness and ranking eligibility without changing the established local owner or creating duplicate city intent.",
+      "pagesChanged": [
+        "/la-quinta-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/la-quinta-washer-dryer-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-10-07",
+        "end": "2026-10-07"
+      },
+      "baseline": {
+        "competitorGapAudit": {
+          "score": "7/10",
+          "missing": [
+            "trust_flow",
+            "washer_intent",
+            "local_fallback"
+          ]
+        },
+        "preChangeStructure": {
+          "approxWords": 701
+        },
+        "localFallbackSource": "City of La Quinta Residential Services — Burrtec bulky-item pickup"
+      },
+      "change": "Kept title/meta/H1/canonical/phone intact. Added clear review/no-guarantee wording, a washer-cycle section with gated-community access context, and the current City of La Quinta bulky-item fallback.",
+      "successSignals": [
+        "Competitor-gap score improves to 10/10 without introducing template-like city duplication.",
+        "The intended city washer/dryer page remains the ranking owner for laundry-specific searches.",
+        "Impressions/rankings improve or remain stable while qualification and local fallback information remain accurate."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /la-quinta-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-palm-springs-laundry-gap",
+      "market": "Palm Springs, CA washer & dryer pickup",
+      "hypothesis": "Closing the specific competitor-gap weaknesses with truthful city-specific utility will improve usefulness and ranking eligibility without changing the established local owner or creating duplicate city intent.",
+      "pagesChanged": [
+        "/palm-springs-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/palm-springs-washer-dryer-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-10-07",
+        "end": "2026-10-07"
+      },
+      "baseline": {
+        "competitorGapAudit": {
+          "score": "8/10",
+          "missing": [
+            "washer_intent",
+            "local_fallback"
+          ]
+        },
+        "preChangeStructure": {
+          "approxWords": 805
+        },
+        "localFallbackSource": "City of Palm Springs Special Collection Services — Palm Springs Disposal Services bulky-item pickup"
+      },
+      "change": "Kept title/meta/H1/canonical/phone intact. Added a washer testing section tailored to condo/rental/seasonal-home access and the current City of Palm Springs appliance/bulky-item fallback.",
+      "successSignals": [
+        "Competitor-gap score improves to 10/10 without introducing template-like city duplication.",
+        "The intended city washer/dryer page remains the ranking owner for laundry-specific searches.",
+        "Impressions/rankings improve or remain stable while qualification and local fallback information remain accurate."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /palm-springs-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
