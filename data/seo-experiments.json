@@ -8815,6 +8815,69 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /westminster-ca-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-fullerton-laundry-concentration",
+      "market": "Fullerton, CA washer & dryer pickup",
+      "hypothesis": "Removing repeated generic Orange County/laundry blocks while preserving the useful Fullerton access, testing, FAQ, photos and city-network handoff will reduce templated noise and improve weak local laundry visibility.",
+      "pagesChanged": [
+        "/fullerton-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/fullerton-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 90
+        }
+      },
+      "change": "Removed only turbo-seo-network-v1 and orange-laundry-priority-v3. Preserved title, meta description, H1, canonical, phone, form, real laundry photos, Fullerton access/testing content, FAQ, nearby city links and the single appliance-network handoff.",
+      "successSignals": [
+        "Fullerton washer/dryer impressions increase and/or average position improves from 90.",
+        "New washer/dryer-specific queries appear without broad appliance-intent leakage.",
+        "No schema, canonical, image, form or internal-link regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /fullerton-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-anaheim-laundry-structure-simplification",
+      "market": "Anaheim, CA washer & dryer pickup",
+      "hypothesis": "Removing one duplicate conversion section plus two repeated generic Orange County/laundry blocks will reduce page-template repetition while preserving the dedicated Anaheim laundry-intent owner and useful access/testing content.",
+      "pagesChanged": [
+        "/anaheim-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/anaheim-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "pageRow": null,
+          "clicks": 0,
+          "impressions": 0
+        }
+      },
+      "change": "Removed the generic direct-request-conversion-20260920 section because it duplicated the existing laundry-specific pickup review, plus turbo-seo-network-v1 and orange-laundry-priority-v3. Preserved the local-intent declaration, washer/dryer-specific review, testing/access sections, FAQ, images, title/meta/H1/canonical, phone, form and appliance-network handoff.",
+      "successSignals": [
+        "A finalized GSC row appears for Anaheim washer/dryer pickup.",
+        "Anaheim laundry-specific impressions emerge without weakening the broader Anaheim appliance owner.",
+        "No schema, canonical, image, form or internal-link regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /anaheim-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
