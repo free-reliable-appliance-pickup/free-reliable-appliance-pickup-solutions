@@ -11,6 +11,13 @@ BASE = 'https://freereliableappliancepickup.com/'
 MIN_HERO_WIDTH = 500  # Catch thumbnail-sized hero derivatives, not portrait originals.
 MAX_HERO_BYTES = 1_500_000  # Protect LCP/mobile delivery while preserving sharp originals elsewhere.
 
+APPLIANCE_HERO_TERMS = {
+    'refrigerator-pickup': ('refrigerator', 'fridge'),
+    'freezer-pickup': ('freezer',),
+    'washer-dryer-pickup': ('washer', 'dryer', 'laundry'),
+    'stove-oven-pickup': ('stove', 'range', 'oven'),
+}
+
 
 class ImageRefs(HTMLParser):
     def __init__(self):
@@ -41,6 +48,27 @@ def main():
         checked_pages += 1
         parser = ImageRefs()
         parser.feed(page.read_text(encoding='utf-8', errors='replace'))
+
+        # Keep the four national appliance hubs semantically aligned with
+        # their primary content image. This prevents a future image swap from
+        # shipping refrigerator, freezer, laundry or stove pages with an
+        # obviously mismatched hero/content alt signal.
+        expected_terms = APPLIANCE_HERO_TERMS.get(slug)
+        if expected_terms:
+            content_image = next((
+                attrs for attrs in parser.images
+                if attrs.get('src')
+                and 'logo' not in attrs.get('alt', '').lower()
+            ), None)
+            if content_image is None:
+                problems.append(f'{url}: no non-logo appliance image found')
+            else:
+                alt = content_image.get('alt', '').strip().lower()
+                if not any(term in alt for term in expected_terms):
+                    problems.append(
+                        f'{url}: primary appliance image alt {alt!r} does not match expected terms {expected_terms}'
+                    )
+
         for attrs in parser.images:
             src = attrs.get('src', '')
             if not src or src.startswith('data:'):
