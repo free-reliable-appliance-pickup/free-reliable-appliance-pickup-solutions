@@ -8733,6 +8733,47 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /huntington-beach-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+    },
+    {
+      "id": "2026-10-06-fountain-valley-laundry-concentration",
+      "market": "Fountain Valley, CA washer & dryer pickup",
+      "hypothesis": "Removing two repeated generic Orange County/laundry network blocks while preserving the dedicated laundry-intent owner section will reduce broad appliance-removal leakage and help this page establish washer/dryer-specific relevance.",
+      "pagesChanged": [
+        "/fountain-valley-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/fountain-valley-washer-dryer-pickup/",
+      "lastChanged": "2026-10-06",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "finalizedGsc": {
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 64,
+          "queries": [
+            {
+              "query": "appliance removal fountain valley",
+              "impressions": 2,
+              "position": 64
+            }
+          ]
+        },
+        "ownershipNote": "The general Fountain Valley appliance page is already under a separate active experiment through 2026-10-15. This laundry-page test does not change the general-page owner."
+      },
+      "change": "Removed only turbo-seo-network-v1 and orange-laundry-priority-v3 sections. Preserved title, meta description, H1, canonical, phone, form, photos, testing/access content, local route links, laundry-specific intent-owner section and one appliance-network handoff.",
+      "successSignals": [
+        "Washer/dryer-specific impressions appear or improve for Fountain Valley.",
+        "Broad 'appliance removal Fountain Valley' stops resolving primarily to the laundry page.",
+        "The general Fountain Valley page remains the broad appliance-intent owner.",
+        "No schema, canonical, image, form or internal-link regression."
+      ],
+      "evaluateNotBefore": "2026-10-16",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /fountain-valley-washer-dryer-pickup/ before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
     }
   ],
   "technicalMaintenance": [
