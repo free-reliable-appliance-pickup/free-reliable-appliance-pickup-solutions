@@ -37,6 +37,7 @@ banning-washer-dryer-pickup
 beaumont-washer-dryer-pickup
 bell-gardens-washer-dryer-pickup
 bell-washer-dryer-pickup
+bellflower-refrigerator-pickup
 bellflower-washer-dryer-pickup
 berkeley-washer-dryer-pickup
 bermuda-dunes-washer-dryer-pickup
