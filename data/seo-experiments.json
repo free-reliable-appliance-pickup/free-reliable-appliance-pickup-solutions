@@ -10693,6 +10693,46 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make further speculative title, meta, H1, body, internal-link, schema, canonical or intent-ownership edits to Murrieta before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-glendale-laundry-competitor-gap",
+      "market": "Glendale, CA washer & dryer pickup",
+      "hypothesis": "Closing the specific competitor-gap weaknesses on the Glendale laundry page—review transparency, explicit washer testing, useful FAQs and an official local fallback—will improve usefulness and ranking eligibility without changing the page's core city ownership.",
+      "pagesChanged": [
+        "/glendale-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/glendale-washer-dryer-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-10-07",
+        "end": "2026-10-07"
+      },
+      "baseline": {
+        "competitorGapAudit": {
+          "score": "6/10",
+          "missing": [
+            "trust_flow",
+            "washer_intent",
+            "faq",
+            "local_fallback"
+          ]
+        },
+        "preChangeStructure": {
+          "approxWords": 458,
+          "h2Count": 9
+        },
+        "localFallbackSource": "City of Glendale, CA — Public Works Integrated Waste bulky-item pickup service directory"
+      },
+      "change": "Kept the existing title, meta description, H1, canonical, phone routing and Glendale ownership. Added explicit review/no-guarantee wording, a dedicated washer testing section, a current City of Glendale bulky-item fallback, three useful laundry FAQs and matching FAQPage structured data.",
+      "successSignals": [
+        "Competitor-gap audit rises from 6/10 without introducing city-intent overlap.",
+        "The Glendale washer/dryer page remains the intended owner for Glendale laundry-specific searches.",
+        "Search visibility/impressions improve or remain stable while form and phone conversion paths stay intact."
+      ],
+      "evaluateNotBefore": "2026-10-14",
+      "preferredReview": "2026-10-20",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /glendale-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
