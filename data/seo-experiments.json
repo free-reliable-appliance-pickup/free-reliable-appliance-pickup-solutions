@@ -10595,6 +10595,43 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make speculative title, meta, H1, body, internal-link, schema, canonical or intent-ownership edits to the Los Angeles County hub before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-murrieta-concentration-test",
+      "market": "Murrieta, CA",
+      "hypothesis": "Reducing repeated routing, property, laundry and network sections while preserving local facts, qualification, appliance types, official bulky-item fallback and request conversion will make the Murrieta city owner more focused and easier for search engines and users to interpret.",
+      "pagesChanged": [
+        "/murrieta-appliance-pickup/"
+      ],
+      "protectedOwner": "/murrieta-appliance-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 0
+        },
+        "structure": {
+          "coreWordsApprox": 1423,
+          "h2": 20,
+          "internalLinksApprox": 54,
+          "uniqueInternalApprox": 34
+        },
+        "publicSearch": "Canonical Murrieta page is indexed, but a current generic 'free appliance pickup Murrieta CA' search surfaced the City and a paid removal competitor ahead of our page."
+      },
+      "change": "Removed six redundant H2 sections (duplicate removal/local alternative, route review, premium/property repeat, standalone laundry bridge, duplicate access block and duplicate south-county network block). Kept qualification, process, appliance types, FAQ, official local alternative, commercial/recurring, local access, nearby routes, appliance guides, form and Facebook entity bridge. Updated the retained Murrieta Waste Management contact to the current City-published 866-909-4458.",
+      "successSignals": [
+        "Murrieta begins earning finalized GSC impressions and improves visibility for exact-city appliance pickup/removal queries.",
+        "The dedicated Murrieta washer/dryer page continues to own laundry-only intent.",
+        "No loss of request form, phone routing, canonical or local official-resource accuracy."
+      ],
+      "evaluateNotBefore": "2026-10-17",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make further speculative title, meta, H1, body, internal-link, schema, canonical or intent-ownership edits to Murrieta before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
