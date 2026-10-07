@@ -97,3 +97,35 @@ Interpretation:
 4. For wrong-owner cases, change one ownership variable at a time.
 5. For correct-owner but weak-rank cases, prefer concentration/structure over adding more content.
 6. Record the new baseline and reset the observation window after any material ranking change.
+
+
+## Structural concentration evidence — 2026-10-07
+
+Current Keyword.com winners and repository structure were compared before any protected-page edit.
+
+### Current Top-10 city/page examples
+
+Across eight currently strong owners (Fresno County, Clovis, Sanger, Selma, Montclair, Rowland Heights, Azusa and San Dimas), the average structure is approximately:
+- 1,087 words
+- 11.8 H2 sections
+- 30.9 internal links
+- 21.9 unique internal destinations
+
+### Current rank 11-30 city/page examples
+
+Across La Puente, Rialto, Claremont, Pomona, Walnut, Chino Hills, Whittier, Fontana, Rancho Cucamonga, Covina, San Bernardino and Pasadena, the average structure is approximately:
+- 1,464 words
+- 14 H2 sections
+- 42.3 internal links
+- 26.5 unique internal destinations
+
+This is correlation, not proof of causation, but it supports concentration rather than further expansion.
+
+Notable heavy pages:
+- Rialto: ~2,415 words, 28 H2s, 85 internal links. Multiple qualification/review/type/route sections overlap strongly.
+- Rancho Cucamonga: ~2,146 words, 14 H2s, 40 internal links. Large FAQ and removal/recycling/disposal blocks repeat qualification/process themes.
+- Claremont: ~1,856 words, 15 H2s, 45 internal links. Review/process/access/premium-replacement sections partially overlap.
+- Phoenix: ~1,539 words, 19 H2s. Multiple city-vs-metro and laundry/intention blocks overlap.
+- Denver: ~2,892 words, 30 H2s, 76 internal links. Multiple city-owner, availability, removal/recycling, utility/city-alternative and commercial blocks overlap.
+
+Prepared gate rule: do not add more content to these pages. If post-change ranking evidence remains weak after the freeze, merge or remove repeated intent/route/support blocks while preserving one clear qualification section, one process section, one local/access section, appliance handoffs, verified official fallback, FAQ and request form.
