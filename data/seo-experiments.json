@@ -10521,6 +10521,42 @@
       "preferredReview": "2026-10-21",
       "status": "running",
       "freezeRule": "Do not make speculative title, body, internal-link, schema, canonical or intent-ownership edits to these current winners before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-07-high-desert-official-fallback",
+      "market": "High Desert / Victor Valley, CA",
+      "hypothesis": "A concise official regional disposal fallback will improve usefulness and local trust for non-qualifying High Desert requests without changing the hub's core pickup intent.",
+      "pagesChanged": [
+        "/high-desert-appliance-pickup/"
+      ],
+      "protectedOwner": "/high-desert-appliance-pickup/",
+      "lastChanged": "2026-10-07",
+      "baselinePeriod": {
+        "start": "2026-09-07",
+        "end": "2026-10-04"
+      },
+      "baseline": {
+        "gsc": {
+          "clicks": 0,
+          "impressions": 0
+        },
+        "structure": {
+          "coreWordsApprox": 1114,
+          "h2": 17,
+          "internalLinksApprox": 62
+        },
+        "note": "No finalized GSC impressions and no official external fallback link before this change."
+      },
+      "change": "Added one official Recycle Alley / Victor Valley MRF fallback section for appliances that do not qualify. Title, meta description, H1, canonical, phone, qualification rules, city routing and request form were unchanged.",
+      "successSignals": [
+        "The regional hub begins earning finalized GSC impressions without creating city-owner leakage.",
+        "Victorville/Hesperia/Apple Valley city pages remain the preferred owners for their exact-city queries.",
+        "Users with non-qualifying appliances have a verifiable regional next step."
+      ],
+      "evaluateNotBefore": "2026-10-17",
+      "preferredReview": "2026-10-21",
+      "status": "running",
+      "freezeRule": "Do not make speculative title, meta, H1, body, internal-link, schema, canonical or intent-ownership edits to the High Desert hub before evaluateNotBefore. Only verified technical/factual/contact/indexability/safety fixes may interrupt the freeze and must be logged."
     }
   ],
   "technicalMaintenance": [
