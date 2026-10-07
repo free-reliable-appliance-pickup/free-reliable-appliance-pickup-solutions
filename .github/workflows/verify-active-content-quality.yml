@@ -104,6 +104,7 @@ jobs:
           missing_forms=[r['slug'] for r in rows if not r['form']]
           if missing_forms:
               print('MISSING_LOCAL_FORM',','.join(missing_forms))
+              raise SystemExit('Active location pages missing local Formspree request form: '+', '.join(missing_forms))
           print('STILL_FUNNELING_HOME',sum(r['funnel'] for r in rows))
           print('NOINDEX_ACTIVE',sum(r['noindex'] for r in rows))
           print('UNDER_350_TOTAL_WORDS',sum(r['words']<350 for r in rows))
