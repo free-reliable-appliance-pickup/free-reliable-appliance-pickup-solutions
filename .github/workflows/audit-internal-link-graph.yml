@@ -273,4 +273,10 @@ jobs:
           print('\nBROKEN_INTERNAL_LINKS')
           for src,dest,target in sorted(set(broken))[:100]:
               print(src,'->',dest,'| missing',target)
+
+          if broken or redirecting_internal:
+              raise SystemExit(
+                  f'Internal-link audit failed: broken={len(set(broken))}, '
+                  f'redirecting={len(set(redirecting_internal))}'
+              )
           PY
