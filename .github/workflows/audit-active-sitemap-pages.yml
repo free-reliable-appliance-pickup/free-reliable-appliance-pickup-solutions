@@ -64,16 +64,16 @@ jobs:
               # and approved specialty-page lists below.
               raw=p.read_text(encoding='utf-8',errors='ignore')
               low=raw.lower()
-              sitemap_noindex=bool(re.search(r"<meta\\b[^>]*\\bname=['\"]robots['\"][^>]*\\bcontent=['\"][^'\"]*noindex",raw,re.I))
+              sitemap_noindex=bool(re.search(r"<meta\b[^>]*\bname=['\"]robots['\"][^>]*\bcontent=['\"][^'\"]*noindex",raw,re.I))
               if sitemap_noindex:
                   failures.append(f'SITEMAP PAGE IS NOINDEX: {slug}')
-              meta_refresh=bool(re.search(r"<meta\\b[^>]*http-equiv\\s*=\\s*['\"]?refresh['\"]?",raw,re.I))
+              meta_refresh=bool(re.search(r"<meta\b[^>]*http-equiv\s*=\s*['\"]?refresh['\"]?",raw,re.I))
               if meta_refresh:
                   failures.append(f'SITEMAP PAGE USES META REFRESH REDIRECT: {slug}')
               expected_canonical=BASE+slug+'/'
-              cm_all=re.search(r"<link\\b[^>]*\\brel=['\"]canonical['\"][^>]*\\bhref=['\"]([^'\"]+)['\"]",raw,re.I)
+              cm_all=re.search(r"<link\b[^>]*\brel=['\"]canonical['\"][^>]*\bhref=['\"]([^'\"]+)['\"]",raw,re.I)
               if not cm_all:
-                  cm_all=re.search(r"<link\\b[^>]*\\bhref=['\"]([^'\"]+)['\"][^>]*\\brel=['\"]canonical['\"]",raw,re.I)
+                  cm_all=re.search(r"<link\b[^>]*\bhref=['\"]([^'\"]+)['\"][^>]*\brel=['\"]canonical['\"]",raw,re.I)
               canonical_all=cm_all.group(1).strip() if cm_all else ''
               if canonical_all != expected_canonical:
                   failures.append(f'SITEMAP PAGE CANONICAL MISMATCH: {slug} -> {canonical_all or "MISSING"}')
