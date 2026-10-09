@@ -222,6 +222,8 @@ function initLeadAnalytics(){
   document.addEventListener('submit',function(event){
     const form=event.target;
     if(!form||!form.matches||!form.matches('form[action*="formspree.io"]'))return;
+    // Routing intercepts and replays the first valid submit. Count only the routed replay.
+    if(form.dataset.customerRoutingWired==='1'&&form.dataset.customerRoutingQualified!=='1')return;
     gaEvent('pickup_form_submit',{
       form_id:form.id||'pickup_form',
       transport_type:'beacon'
