@@ -28,7 +28,7 @@ jobs:
 
           BASE='https://freereliableappliancepickup.com/'
           NS={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          SCRIPT_RE=re.compile(r"<script\\b[^>]*type=['\"]application/ld\\+json['\"][^>]*>(.*?)</script>",re.I|re.S)
+          SCRIPT_RE=re.compile(r"<script\b[^>]*type\s*=\s*['\"]application/ld\+json['\"][^>]*>(.*?)</script\s*>",re.I|re.S)
 
           def file_for(url):
               if url == BASE:
@@ -61,7 +61,7 @@ jobs:
                   continue
               checked_pages += 1
               tm=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
-              title=html.unescape(re.sub(r'\\s+',' ',tm.group(1))).strip() if tm else ''
+              title=html.unescape(re.sub(r'\s+',' ',tm.group(1))).strip() if tm else ''
 
               matches=list(SCRIPT_RE.finditer(raw))
               webpage_count=0
@@ -97,6 +97,9 @@ jobs:
 
               if webpage_count > 1:
                   errors.append(f'DUPLICATE WEBPAGE ENTITIES {p}: {webpage_count}')
+
+          if checked_scripts == 0:
+              errors.append('NO JSON-LD SCRIPTS DETECTED: audit validated zero structured-data blocks')
 
           if errors:
               print('\\n'.join(errors))
