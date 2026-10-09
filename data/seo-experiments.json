@@ -11338,6 +11338,16 @@
         "assets/customer-routing.js",
         "data/seo-experiments.json"
       ]
+    },
+    {
+      "date": "2026-10-09",
+      "type": "GA4 lead-form duplicate event guard",
+      "reason": "Verified shared assets/customer-routing.js interrupts the initial valid form submit, awaits routing, then calls requestSubmit() to replay a classified Formspree submission. A document-level capturing listener was counting both the prevented first submit and the replay as pickup_form_submit. Added a guard to count the routed replay only for wired forms, while retaining one event for unmodified forms. This fixes duplicate analytics events without claiming successful Formspree delivery or changing any page text, SEO metadata, event name, form endpoint, phone routing, or active ranking experiment. JavaScript syntax check passed. Commit 022d82fce9975b2cc087e7c1dca9a0efb7e46451.",
+      "pages": [],
+      "files": [
+        "assets/customer-routing.js",
+        "data/seo-experiments.json"
+      ]
     }
   ]
 }
