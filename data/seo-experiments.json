@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-07",
+  "updated": "2026-10-09",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -11305,6 +11305,18 @@
         "/san-clemente-washer-dryer-pickup/"
       ],
       "files": [
+        "data/seo-experiments.json"
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "type": "homepage LCP preload alignment (technical, experiment-safe)",
+      "reason": "Verified source mismatch: desktop head preloaded /IMG-20240921-WA0120.jpg while the actual homepage hero picture displays /assets/home/home-mobile-appliance-hero.jpg on desktop and mobile. Unified the preload to the actual displayed hero image, avoiding unnecessary desktop preload bytes; did not change title, meta description, canonical, H1, body text, service claims, links, schema, routing, or homepage CTR test. Commit 5b2f9fcfc79bb806e00c393ee69824faa18633a6. Two speculative link edits on the frozen Los Angeles and Clovis owner pages were immediately fully reverted at commits 681cc3466fd7ccdd9670d0aa8ad6840a6005caa3 and 8cc6c839bffe9e68430fcd8d57215bd9b8609efb, restoring their original baseline; defer any future ranking-link edits until effective October 14/16 gates and finalized GSC review.",
+      "pages": [
+        "/"
+      ],
+      "files": [
+        "index.html",
         "data/seo-experiments.json"
       ]
     }
