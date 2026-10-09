@@ -92,7 +92,11 @@ function pagePhone(){
   return null;
 }
 function ensurePriorityMobileCta(){
-  if(document.querySelector('.priority-mobile-cta'))return;
+  // Pages with a pre-rendered sticky bar also need bottom clearance on small screens.
+  if(document.querySelector('.priority-mobile-cta')){
+    document.body.classList.add('has-priority-mobile-cta');
+    return;
+  }
   const request=document.querySelector('#request, form[action*="formspree.io"]');
   const phone=pagePhone();
   if(!request||!phone)return;
