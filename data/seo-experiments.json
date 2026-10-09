@@ -11319,6 +11319,25 @@
         "index.html",
         "data/seo-experiments.json"
       ]
+    },
+    {
+      "date": "2026-10-09",
+      "type": "City lead-routing metadata repair — four form pages and retry behavior",
+      "reason": "Verified four live-intake Formspree forms on Fresno, Stockton, Sacramento and San Diego general appliance pages were missing the named city field, causing isCustomerPickupForm() to skip wiring route classification and routing metadata; added hidden city values matching their existing city pages without changing their visible copy, page intent, title, H1, canonical, phone, action, qualification rules or URL. Verified shared customer-routing.js used a sticky customerRoutingQualified flag, which could leave city/phone/region lead tags stale after an unsuccessful first submit followed by a corrected retry; it now re-runs qualify(form) on replay/repeat submit. All four forms re-fetched with exactly one expected city field, CA state, unchanged Formspree destination and self-canonical; shared JS passed syntax compilation. Protected SEO experiments unchanged; technical-only exception to Oct 14 gates. No test submission with private customer details or Formspree delivery claim. Commits 36f2c6ce1a3f84d5ea3522e44191e522d2dce50e, f953fc22977fe0f38030af53b024bd8c982dfec8, b031a8c400de333a695c27c6fb5aaf8e602f1dd9, 10e2e6bda66a3ec5d183cce3a912e8eb43413bc9, 066f8a3a50ad181a5b41f9d8807e8789b166899e.",
+      "pages": [
+        "/fresno-appliance-pickup/",
+        "/stockton-appliance-pickup/",
+        "/sacramento-appliance-pickup/",
+        "/san-diego-appliance-pickup/"
+      ],
+      "files": [
+        "fresno-appliance-pickup/index.html",
+        "stockton-appliance-pickup/index.html",
+        "sacramento-appliance-pickup/index.html",
+        "san-diego-appliance-pickup/index.html",
+        "assets/customer-routing.js",
+        "data/seo-experiments.json"
+      ]
     }
   ]
 }
