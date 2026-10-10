@@ -104,3 +104,32 @@ Primary page begins receiving impressions for its exact city generic query; comp
 **Observed root ranking constraints (not all proven causal):** 698 sitemap URLs within a newly visible domain, substantial city-template overlap, incorrect winning landing page for some exact city search terms, small city-query GSC impression samples, competitor authority and maturity advantage. Primary tests remain Google Search Console URL Inspection for Upland general city, Rancho, Fontana, Ontario, and Montclair; exact-city / device query-page selection after the next settled GSC window; real, verified local partners and external citations. Google's page-indexing inspection is not provided by SMEPost GSC SEO Content Planner; GSC Wizard's connected tool rejected inspection due to ended subscription. Do not call this a discovered manual action or index exclusion.
 
 **Later same-day deployment verification:** Fresh cache-busted page requests returned HTTP 200 with the **corrected FAQ schema live** for Pasadena, West Covina, Arcadia, and La Verne. This confirms the site can deploy the latest correction, though it is not yet evidence that Google has re-crawled those URLs, all other twelve corrected FAQ pages are live, or search rankings improved.
+
+
+## October 10 actual execution: lead-form, routing and schema repairs
+
+The following are **changes committed to GitHub main**, not claims about Google rankings or a verified live form submission. Eight customer forms were technically corrected to eliminate unnecessary mandatory address/access questions (existing source_page, Formspree destination, phone, routing, and required six fields preserved):
+
+- `/claremont-appliance-pickup/` (9 → 6 required)
+- `/la-verne-appliance-pickup/` (9 → 6 required)
+- `/san-dimas-appliance-pickup/` (9 → 6 required)
+- `/chino-appliance-pickup/` (8 → 6 required)
+- `/chino-hills-appliance-pickup/` (8 → 6 required)
+- `/covina-appliance-pickup/` (8 → 6 required)
+- `/west-covina-appliance-pickup/` (8 → 6 required)
+- `/el-monte-appliance-pickup/` (7 → 6 required)
+
+The customer still needs to provide exact address, stairs/access and photos as necessary before any scheduling confirmation. **This is a verified form-friction/technical usability improvement; not proof of SEO ranking benefit.** Even if an existing SEO experiment includes one of these paths, the objective of this intervention is the documented six-field request standard, not a speculative title/intent change. No manual live Formspree submission was sent.
+
+Priority-routing correction: `assets/customer-routing.js` had **Chino Hills absent from the CA 909 high-priority override** even though `data/cities.json` lists Chino Hills as an Inland Empire priority-1 market. It formerly matched a priority-2 Inland Empire regional rule; Chino Hills now explicitly maps to the intended 909 priority-1 intake in code. This does not establish that an individual pickup operator is available.
+
+Customer-facing clarity repair: corrected technical-sounding or search-engine-targeting copy in Chino Hills, Covina and El Monte appliance-category introductions without changing internal URLs, forms, title or self-canonical. These are small usefulness improvements; evaluate organic results only after stable data.
+
+Automated **Audit Active JSON-LD Schema** failed on an actual technical defect: `WebPage.name` did not equal HTML `<title>` on Fontana, Montclair and Upland main city pages. Corrected **only** the mismatching structured-data names, retained existing HTML titles and other schema, and validated the JSON parses. Commits used the required `[technical-fix]` prefix because they repair a reproducible audit error on protected owner pages. This cannot be claimed as a confirmed ranking boost.
+
+The first run of the **SEO Experiment Guard** flagged El Monte changes because this city's freeze runs until October 13; this exception is documented here rather than disabling the guard. The El Monte changes were limited to the initial-request usability correction and customer-facing wording; there was no query-owner/title/canonical/intent-target rewiring. No further speculative El Monte edits before its gate.
+
+Local source and source-control QA: a 12-page sample including homepage, priority city pages, and Southern California/Inland Empire/San Bernardino County/San Gabriel Valley hubs was checked against the current GitHub tree — **1,091 local page/image/navigation links checked, zero missing target files or in-page anchors in that sample**. Sixteen city-general pages had FAQPage question labels compared to actual visible page questions; zero sampled mismatches. These are code-level checks, not browser/site-wide external URL validation.
+
+Follow-up validation still required: await Actions statuses for the most recent commits, verify deployed mobile form behavior and real Formspree delivery using a clearly marked test request, and observe settled GSC/Keyword.com at October 14-20 ranking gates. Repeated code edits before those gates would make ranking attribution unreliable.
+
