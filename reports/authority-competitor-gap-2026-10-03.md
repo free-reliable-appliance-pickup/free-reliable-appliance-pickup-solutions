@@ -50,7 +50,7 @@ That is a legitimate contextual partner mention linking the pickup network to an
 The Rancho Cucamonga Chamber's ShopRC page states that businesses can register for ShopRC for free and that participation includes increased visibility and inclusion in its business directory:
 https://www.ranchochamber.org/shop-rc/
 
-An eligibility inquiry was already sent on 2026-10-02 because Free Reliable Appliance Pickup is a service-area business and must not invent a Rancho storefront or physical address. Do not submit false address information while the eligibility question is unresolved.
+**Correction verified October 10, 2026:** An eligibility inquiry was prepared on October 2 but remains in Gmail as an **unsent draft** (`DRAFT` label). A separate search of sent mail to `info@ranchochamber.org` found no sent message. Do **not** label this outreach contacted/sent or expect a reply until it has actually been sent. ShopRC advertises free registration and directory visibility, but service-area eligibility remains unconfirmed; do not invent a Rancho storefront or street address.
 
 ## Active experiment freezes
 
@@ -77,3 +77,13 @@ Current PageSpeed audit on 2026-10-03 is not the primary bottleneck:
 - Desktop LCP: 988 ms
 
 The audit did identify redirect overhead, but current performance is strong enough that authority and query ownership are higher-priority ranking work.
+
+
+## October 10, 2026 authority verification and action ledger
+
+- **Current Ubersuggest snapshots:** Free Reliable Appliance Pickup: DA 5, 26 backlinks, 20 referring domains; TakeMyAppliance: DA 7, 58 backlinks, 31 referring domains. These are third-party estimates and may change; do not treat DA as a Google ranking factor.
+- **Direct competitor link independently verified:** https://cobarruvias.com/takemyappliance/ is a first-party partner announcement that links to TakeMyAppliance. https://cobarruvias.com/partner-with-cobarruvias/ also lists Take My Appliance among its partners. Treat partnership as independently supported; don't copy or impersonate their relationship.
+- **Free directory opportunity:** https://www.ranchochamber.org/shop-rc/ promotes ShopRC free business registration/directory inclusion; ask whether a service-area-only operator without a public Rancho storefront qualifies before registration. Existing Gmail draft is **not contacted**. Once approved, use the business's real name, current site, and proper service-area phone; do not invent a physical office.
+- **Outreach ledger:** ShopRC status **draft only / eligibility unconfirmed / not sent**. Actual legitimate appliance resellers, repair shops, local pickup partners, and property managers remain candidates for earned mentions only after a real relationship is verified. No outreach, backlinks, or new registrations are claimed by this October 10 update.
+- **Execution guard:** Rancho/Fontana/Upland city-owner experiments protected through October 14 and preferably assessed October 20. Pursue truthful off-site authority and technical defects now; do not impulsively rewrite their SEO-intent pages.
+- **Measurement:** compare referring-domain changes and referral form/call leads with GSC exact-city page/query ownership after finalized reporting. New backlinks and rankings are not guaranteed.
