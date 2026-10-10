@@ -147,6 +147,50 @@ function enhancePhotoFirstIntake(){
   });
 }
 
+/* Keep condition intake consistent on Formspree pickup pages that load this shared file.
+   Existing HTML fields remain useful when JavaScript is unavailable. */
+function enhanceApplianceConditionIntake(){
+  const choices=[
+    ['','Select actual condition'],
+    ['Fully Working','Fully working — all functions tested, no known problems'],
+    ['Working With Issues','Works, but has problems (explain below)'],
+    ['Needs Repair','Needs repair — not fully working'],
+    ['Not Working','Not working'],
+    ['Unknown','Unknown / not tested'],
+    ['Mixed Load - Mixed Conditions','Multiple appliances — describe each condition']
+  ];
+  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
+    const select=form.querySelector('select[name="condition"]');
+    if(!select)return;
+    const alreadyClear=Array.from(select.options).some(option=>option.value==='Working With Issues');
+    const oldValue=String(select.value||'').trim();
+    if(!alreadyClear){
+      while(select.firstChild)select.removeChild(select.firstChild);
+      choices.forEach(([value,label])=>{
+        const option=document.createElement('option');
+        option.value=value;
+        option.textContent=label;
+        select.appendChild(option);
+      });
+      const aliases={'fully working':'Fully Working','needs minor repair':'Needs Repair','needs repair':'Needs Repair','not working':'Not Working','unknown':'Unknown','mixed load - majority working':'Mixed Load - Mixed Conditions'};
+      select.value=choices.some(([value])=>value===oldValue)?oldValue:(aliases[oldValue.toLowerCase()]||'');
+    }
+    if(form.querySelector('[name="condition_details"]'))return;
+    const label=document.createElement('label');
+    label.className='site-condition-details';
+    label.style.cssText='display:block;margin:12px 0;font-weight:600';
+    label.textContent='What works and what does not? (please explain any issues)';
+    const details=document.createElement('textarea');
+    details.name='condition_details';
+    details.rows=3;
+    details.placeholder='Example: washer spins but leaks; dryer runs but no heat; refrigerator powers on but does not cool. For several appliances, list each condition.';
+    details.style.cssText='display:block;width:100%;box-sizing:border-box;margin-top:6px;font-weight:400';
+    label.appendChild(details);
+    const holder=select.closest('label')||select.closest('.field')||select;
+    holder.insertAdjacentElement('afterend',label);
+  });
+}
+
 function enhanceRequestNextSteps(){
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
     const host=form.closest('section')||form.parentElement;
@@ -233,7 +277,7 @@ function initLeadAnalytics(){
 
 initLeadAnalytics();
 load();
-document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();/* Avoid injecting identical keyword-heavy sections across city laundry pages; preserve the original useful page content. */document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
+document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();/* Avoid injecting identical keyword-heavy sections across city laundry pages; preserve the original useful page content. */document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
 /* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 /* Load the final sharp individual-photo override on every premium washer/dryer page. */
