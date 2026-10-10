@@ -73,3 +73,80 @@ This complements the earlier automated feature-presence scorecard. "PROTECT" in 
 **Priority order:** (1) verify our mobile phone and SMS buttons and customer-form conversions, (2) protect accurate condition/intake and authentic images, (3) use verified official city alternatives only, (4) earn local partner mentions/referring domains, (5) at October 14–20 experiment review evaluate which city URL ranks and revise only measured issues. No speculative modification to protected city-owner pages during the active observation window.
 
 **Immediate engineering observation:** The Upland general city page currently offers national refrigerator/freezer/stove guides next to its local washer-dryer guide. Separate Upland-specific category pages exist, but this is a usability/internal-discovery improvement candidate, **not a broken link**; defer any ranking-sensitive internal-link modification until its active experiment gate opens. Do not equate it with the competitor's weakness.
+
+## October 10, 2026 — Google-rank causal investigation (evidence vs hypotheses)
+
+**Research question:** Why does Google's sampled organic result prefer TakeMyAppliance's exact-city URL to Free Reliable Appliance Pickup's exact-city URL? Google's ranking algorithms are proprietary; no third-party tool exposes the actual feature weight for a single search. Distinguish *observations*, *plausible ranking mechanisms*, and *unknowns*. **This is organic web-search analysis, not Google Maps local-pack analysis.**
+
+### Primary Google documentation
+
+1. Google ranking systems: https://developers.google.com/search/docs/appearance/ranking-systems-guide — page-level and site-wide signals, link analysis and relevancy, multiple systems.
+2. Google's best practices: https://developers.google.com/search/docs/essentials — people-first content, natural prominent query terms, crawlable contextual links, visibility outside the website.
+3. Google link best practices: https://developers.google.com/search/docs/crawling-indexing/links-crawlable — external/internal links help Google understand relevance and discover pages; every important page should be linked within the site.
+4. Spam policies: https://developers.google.com/search/docs/essentials/spam-policies — substantially similar city/region doorway pages and low-value scaled production are risks, but **no verified penalty here**.
+5. Google page experience: https://developers.google.com/search/docs/appearance/page-experience — Core Web Vitals are used but fast pages do not guarantee #1.
+6. Crawl delay and indexing: https://developers.google.com/search/docs/crawling-indexing/troubleshoot-crawling-errors — changed pages may take days or longer to be crawled. Search Console finalized data cannot measure October 10 edits yet.
+7. How Search works: https://developers.google.com/search/docs/fundamentals/how-search-works/ — relevant page, source quality, location/device, no guaranteed indexing.
+8. Local Maps/Business Profiles (separate rankings): https://support.google.com/business/answer/7091 — local-pack prominence/relevance/distance should not be conflated with organic page rank.
+
+### Actual primary data — 2026-09-10 to 2026-10-07 finalized GSC via SMEPost GSC Page Insights on October 10
+
+Each row below means an exact query was reported with a particular **page** in GSC, not that all results appeared together in the same user's SERP; Google may vary by location and time.
+
+| Exact query | Landing URL (path) | Query impressions | Average position |
+|---|---|---:|---:|
+| free appliance pickup fontana | /fontana-appliance-pickup/ | 7 | 21.57 |
+| free appliance pickup fontana | /fontana-stove-oven-pickup/ | 13 | 18.69 |
+| free appliance pickup fontana | /southern-california-appliance-pickup/ | 11 | 6.18 |
+| free appliance pickup upland | /upland-appliance-pickup/ | no page rows returned | — |
+| free appliance pickup upland | /upland-washer-dryer-pickup/ | 14 | 10.93 |
+| free appliance pickup upland | /san-bernardino-county-appliance-pickup/ | 11 | 12.09 |
+| free appliance pickup upland | /san-bernardino-appliance-pickup/ | 4 | 13.25 |
+| free appliance pickup upland | /southern-california-appliance-pickup/ | 3 | 41.67 |
+| free appliance pickup rancho cucamonga | /rancho-cucamonga-appliance-pickup/ | 1 | 23 |
+| free appliance pickup rancho cucamonga | /san-bernardino-appliance-pickup/ | 5 | 4.80 |
+| free appliance pickup rancho cucamonga | /fontana-appliance-pickup/ | 1 | 11 |
+| free appliance pickup montclair | /montclair-appliance-pickup/ | 9 | 8.56 |
+| free appliance pickup la verne | /san-gabriel-valley-appliance-pickup/ | 2 | 3.50 |
+| free appliance pickup ontario | /ontario-appliance-pickup/ | 2 | 31 |
+| free appliance pickup pomona | /pomona-appliance-pickup/ | 6 | 17.5 |
+| free appliance pickup chino hills | /chino-hills-appliance-pickup/ | 4 | 21.25 |
+
+**Confirmed issue:** Multiple Free Reliable URLs receive impressions for the same *generic exact-city* query, and some non-owner region/category pages have better historical positions than the intended owner URL. This is **ranking-URL/intent overlap evidence**, not proof of a Google policy penalty or that one site page is mechanically 'stealing' score from another. Evaluate corrections made October 4–10 against **later** settled data; no additional protected-page rewrite today.
+
+### Sampled exact-query rank tracker (Keyword.com project 3846568, October 10)
+
+- TakeMyAppliance exact-city URL #1 for Rancho Cucamonga, Fontana, Upland, Montclair, and La Verne in sampled top-25 SERPs (tracker only).
+- Ours Fontana **#20** on one tracked entry, Montclair **#6** on both; Rancho and Upland **not detected** in those tracked ranges. Do not interpret not detected as no Google indexing.
+- Tracker sometimes reports a different **ranking URL** than the page we intend, especially Upland washer/dryer for broad Upland. This is a measurable owner-selection problem.
+
+### Authority evidence and competitor's genuine broader distribution
+
+- Ubersuggest domain overview snapshot October 10: us **DA 5 / 26 backlinks / 20 referring domains**; TakeMyAppliance **DA 7 / 58 backlinks / 31 referring domains**. These are vendor estimates, not Google's ranking inputs or proof of quality/causality.
+- Live 2026-05-15 partner announcement from Cobarruvias Appliance: https://cobarruvias.com/takemyappliance/ (independent link/brand mention with relevant sector context).
+- LinkedIn professional property manager mentions TakeMyAppliance at https://www.linkedin.com/posts/david-holland-cpm_free-appliance-removal-pickup-takemyappliance-activity-7475518145345073152-USMB (actual testimonial-style independent public mention; do not assert direct linking equity without HTML verification).
+- Public appliance-business community: https://www.skool.com/take-my-appliance-1739 — community and partner discussion exist; member count and activity are dynamic; no claim of direct Google ranking influence.
+- Third-party domain-history records put takemyappliance.com registration on **2025-07-28**, not 2023: https://www.scamadviser.com/check-website/takemyappliance.com (independently repeated at other domain-info sources). Our own 2026-09-12 public Search Central forum post confirms that Google initially didn't know our URL: https://support.google.com/webmasters/thread/466831504/new-site-not-indexed-%E2%80%93-google-does-not-recognize-url?hl=en . Do **not** claim domain age itself is a Google ranking factor, and do not conflate a third-party keyword-history tool's start dates with domain registration.
+- Competitor exact-city pages often have city ZIPs, official/local disposal provider details, neighborhood access conditions and coherent hierarchy (examples: https://www.takemyappliance.com/locations/southern-california/rancho-cucamonga , https://www.takemyappliance.com/locations/southern-california/fontana). Some details are unnecessary for pickup-intent, but helpful local utility should be matched through genuinely accurate local content rather than copied.
+- Our stronger differentiation: direct regional phone/text, real owner photos, transparent conditional qualification and exact-access intake. Preserve these, but they cannot by themselves force Google #1.
+- The site's own October 10 report says around **698 sitemap URLs**; this does NOT mean 698 Google-indexed pages. Newly publishing hundreds of similar pages without genuine independent usefulness risks scaled-content/doorway quality concerns; no current GSC manual action has been proven.
+- Our last measured mobile PageSpeed was already good (prior repository report LCP 2.0s/CLS 0); no evidence this is primary bottleneck. Recheck if layout changes.
+- Upland source currently links to national refrigerator/freezer/stove guides from its generic city page while dedicated Upland-specific guides also exist. This is a **testable link-context hypothesis**, not a broken link; hold speculative owner page changes until relevant gate.
+
+### Ranked causal hypotheses and tests
+
+1. **HIGH confidence as observed gap: search-intent / correct-URL selection.** Exact-city generic searches appear on multiple wrong sibling/regional URLs. Test whether intended page takes the majority of query impressions after October 14/20. Keep specific pages if useful; do not mass-canonical/noindex.
+2. **HIGH confidence as measured gap, MEDIUM confidence on effect size: off-site authority.** Competitor has more referring domains and publicly evidenced industry mentions. Earn legitimate, local, contextually relevant endorsements from actual partner appliance stores, reuse groups, property managers and chambers. Never pay for artificial links or fabricate locations.
+3. **MEDIUM confidence: useful localized search experience vs generic repeat footprint.** Competitor has practical location data, and our historical pages share blocks across many cities. Focus on demonstrably unique condition and local logistics where we genuinely serve, not word counts, invented anecdotes or keyword boilerplate.
+4. **MEDIUM confidence: maturity/discovery delay.** Our Google presence is first documented September 2026 and major changes shipped in October; check Indexing/URL Inspection and settled data before calling the October 10 changes failures.
+5. **LOW confidence as top blocker: page speed, schema, HTML titles.** 16 priority pages code-audited October 10 passed one H1, expected canonical, parseable JSON-LD and source-attributed forms; not evidence of Google index state but removes several simple technical explanations.
+
+**External-data limitations:** GSC Wizard is trial-blocked; Ahrefs referring-domain API reports insufficient plan; Semrush MCP reports insufficient API units; Ubersuggest individual backlinks and link-intersect exceed today's free report quota. No detailed page-level inbound-link count, algorithm weights, or Google manual action was fabricated. SMEPost GSC Page Insights and Keyword.com do work, supporting the primary findings.
+
+### Authorized safe next actions and evaluation
+
+- Do not make speculative ranking changes in the protected Rancho/Fontana/Upland/IE pages before the existing **October 14** experiment evaluation minimum (preferred October 20), especially after October 10 changes.
+- Audit unpaid local partner outreach status. ShopRC inquiry remains **unsent Gmail draft**, not actual contacted lead. Confirm service-area directory eligibility and real business info before submitting.
+- At gate: Query > Pages in GSC for exact city phrases (mobile and desktop) + Keyword.com ranking URL; choose **one city general owner**, narrow service pages for narrow searches; fix only verified conflicting navigation/links/intent. Protect direct phone, forms and real photos.
+- Track contact form completions, SMS/calls and referral sources as well as organic rank; backlinks mean nothing commercially unless qualified opportunities increase.
+- Pilot any resulting *successful* change in a small number of cities before nationwide rollout. Avoid bulk doorway expansion.
