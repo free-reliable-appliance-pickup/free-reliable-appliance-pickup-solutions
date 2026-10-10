@@ -189,6 +189,10 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
     if(z.length!==5) return null;
     var p3=parseInt(z.slice(0,3),10);
 
+    // Selected Pasadena, SGV foothill and La Crescenta ZIPs use the 909 intake line.
+    // Do not route every 910xx or 912xx ZIP as SGV: nearby areas can differ.
+    var sgvFoothills=['91001','91006','91007','91008','91010','91011','91016','91020','91024','91030','91214'];
+    if(p3===911 || sgvFoothills.indexOf(z)!==-1) return {region:'Pasadena / San Gabriel Valley foothills',phone:'909-375-6685',tel:'+19093756685',href:'/san-gabriel-inland-empire-appliance-pickup/'};
     if(p3===917 || p3===918) return {region:'San Gabriel Valley / Inland Empire',phone:'909-375-6685',tel:'+19093756685',href:'/san-gabriel-inland-empire-appliance-pickup/'};
     if(p3===922) return {region:'Coachella Valley',phone:'909-375-6685',tel:'+19093756685',href:'/coachella-valley-appliance-pickup/'};
     if(p3===923 || p3===924) return {region:'Inland Empire / San Bernardino County / High Desert',phone:'909-375-6685',tel:'+19093756685',href:'/inland-empire-appliance-pickup/'};
