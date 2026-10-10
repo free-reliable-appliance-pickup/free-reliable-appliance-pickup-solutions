@@ -75,8 +75,8 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
 </section>
 
 <section class="homepage-intent-owners-20261004"><div class="wrap">
-<h2 class="section-title">Free Appliance Pickup Near Me: Choose the Right Guide</h2>
-<p class="section-intro">This homepage is the main nationwide page for <strong>free appliance pickup near me</strong>. Use the specialized guide that matches what you are actually trying to do so each search has one clear destination.</p>
+<h2 class="section-title">Find the Right Appliance Pickup Option</h2>
+<p class="section-intro">Have a washer, dryer, refrigerator, stove or freezer to remove? Check local pickup availability, see what may qualify for free pickup, or compare other responsible removal and recycling options below.</p>
 <div class="cards">
 <div class="card"><h3><a href="/appliance-removal/">Free Appliance Removal Near Me</a></h3><p>Pickup and carry-out guidance for qualifying major appliances, including access, stairs, apartments and route review.</p></div>
 <div class="card"><h3><a href="/appliance-recycling/">Appliance Recycling Near Me</a></h3><p>Reuse-first recycling guidance plus municipal, retailer, utility and responsible end-of-life options.</p></div>
@@ -218,14 +218,18 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
     var route=routeForZip(zip);
     if(result){
       if(route){
-        result.innerHTML='<strong>'+route.region+' pickup route</strong><br><a href="tel:'+route.tel+'">Call '+route.phone+'</a> · <a href="sms:'+route.tel+'">Text appliance photos</a> · <a href="'+route.href+'">Open local service hub</a><br><small>Pickup still depends on appliance condition, access and current route availability.</small>';
+        result.innerHTML='<strong>'+route.region+' pickup contact</strong><br><a href="tel:'+route.tel+'">Call '+route.phone+'</a> · <a href="sms:'+route.tel+'">Text appliance photos</a> · <a href="'+route.href+'">See local pickup information</a> · <a href="#request">Send pickup request</a><br><small>Pickup still depends on appliance condition, access and current route availability.</small>';
       }else{
         result.innerHTML='<strong>Request review available</strong><br>We could not match this ZIP to a dedicated regional line yet. Continue with the request form below and we will review local coverage.';
       }
       result.classList.add('active');
     }
 
-    if(request) setTimeout(function(){request.scrollIntoView({behavior:'smooth',block:'start'});},900);
+    if(route && result){
+      result.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }else if(request){
+      request.scrollIntoView({behavior:'smooth',block:'start'});
+    }
   });
 })();
 </script>
