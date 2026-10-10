@@ -247,6 +247,21 @@ function enhanceLaundryConditionCheck(){
       ['Not tested','Not tested / unsure']
     ]);
 
+    const honestyLabel=document.createElement('label');
+    honestyLabel.style.cssText='display:block;margin:12px 0;font-weight:600';
+    const attestation=document.createElement('input');
+    attestation.type='checkbox';
+    attestation.name='laundry_condition_attestation';
+    attestation.value='Confirmed all known condition and noise issues disclosed';
+    attestation.style.cssText='width:auto;display:inline-block;margin-right:8px';
+    honestyLabel.appendChild(attestation);
+    honestyLabel.appendChild(document.createTextNode('I have reported any unusual noise, heavy shaking, leaks, cycle problems or other known faults to the best of my knowledge.'));
+    fieldset.appendChild(honestyLabel);
+    const videoNote=document.createElement('p');
+    videoNote.style.cssText='font-size:13px;margin:6px 0';
+    videoNote.textContent='Before a partner makes a long trip, we may request a short video of the washer spinning or the dryer running, plus appliance photos. Do not run an appliance that seems unsafe.';
+    fieldset.appendChild(videoNote);
+
     const warning=document.createElement('p');
     warning.setAttribute('role','status');
     warning.style.cssText='font-size:14px;margin:10px 0 0;color:#784200';
@@ -263,7 +278,9 @@ function enhanceLaundryConditionCheck(){
       noise.disabled=!isLaundry;
       cycle.required=isLaundry;
       noise.required=isLaundry;
-      if(!isLaundry){cycle.value='';noise.value='';}
+      attestation.required=isLaundry;
+      attestation.disabled=!isLaundry;
+      if(!isLaundry){cycle.value='';noise.value='';attestation.checked=false;}
 
       const isIssue=['Working With Issues','Needs Repair','Not Working','Mixed Load - Mixed Conditions'].includes(condition.value);
       if(conditionDetails)conditionDetails.required=isIssue;
