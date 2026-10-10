@@ -37,7 +37,7 @@ function classify(city,state){const sc=stateCode(state),cn=n(city),priority=prio
 function routingDecision(info){const status=String(info&&info.status||FALLBACK.status),territory=String(info&&info.territory_status||FALLBACK.territory_status);if(status==='direct')return {decision:'DIRECT_OPERATION',tier:'direct-operations',action:'Review qualification and dispatch through the established company market.'};if(status==='partner-supported'||territory==='assigned')return {decision:'PARTNER_NETWORK',tier:'assigned-partner',action:'Review qualification and route to the assigned approved partner.'};if(status==='partner-recruiting')return {decision:'RECRUITING_QUEUE',tier:'partner-recruiting',action:'Keep as an intake lead while local partner coverage is being recruited; do not promise pickup.'};return {decision:'NATIONAL_INTAKE',tier:'request-only',action:'Accept for review only; confirm local coverage before offering or scheduling pickup.'};}
 function findField(form,names){for(const name of names){const el=form.querySelector(`[name="${name}"]`)||form.querySelector('#'+name);if(el)return el;}return null;}
 function hidden(form,name,value){let el=form.querySelector(`input[type="hidden"][name="${name}"]`);if(!el){el=document.createElement('input');el.type='hidden';el.name=name;form.appendChild(el);}el.value=value==null?'':String(value);return el;}
-function qualify(form){const city=findField(form,['city','City','pickup_city','Primary City']),state=findField(form,['state','State','pickup_state','Primary State']);if(!city||!state)return;const info=classify(city.value,state.value),route=routingDecision(info);hidden(form,'Routing City',city.value.trim());hidden(form,'Routing State Code',stateCode(state.value));hidden(form,'Routing Region',info.region||FALLBACK.region);hidden(form,'Routing Resolution Level',info.resolution_level||'fallback');hidden(form,'Routing Market Status',info.status||FALLBACK.status);hidden(form,'Routing Territory Status',info.territory_status||FALLBACK.territory_status);hidden(form,'Routing Priority',info.lead_priority||FALLBACK.lead_priority);hidden(form,'Routing Phone',info.phone||'');hidden(form,'Routing Partner ID',info.partner_id||'');hidden(form,'Routing Backup Partner ID',info.backup_partner_id||'');hidden(form,'Routing Decision',route.decision);hidden(form,'Routing Network Tier',route.tier);hidden(form,'Routing Next Action',route.action);hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed');hidden(form,'Routing Source',info.resolution_level==='priority-california-city'?'Priority California customer-routing override':'Canonical market-routing.json');hidden(form,'SEO Page Creation','Disabled');const condition=findField(form,['condition','Condition','Appliance Condition']),appliance=findField(form,['appliance','Appliance','Appliance Type']),stairs=findField(form,['stairs','Stairs']),access=findField(form,['access','Access','Access Notes']);hidden(form,'Qualification Snapshot',[appliance&&appliance.value,condition&&condition.value,stairs&&stairs.value,access&&access.value].filter(Boolean).join(' | '));}
+function qualify(form){const city=findField(form,['city','City','pickup_city','Primary City']),state=findField(form,['state','State','pickup_state','Primary State']);if(!city||!state)return;const info=classify(city.value,state.value),route=routingDecision(info);hidden(form,'Routing City',city.value.trim());hidden(form,'Routing State Code',stateCode(state.value));hidden(form,'Routing Region',info.region||FALLBACK.region);hidden(form,'Routing Resolution Level',info.resolution_level||'fallback');hidden(form,'Routing Market Status',info.status||FALLBACK.status);hidden(form,'Routing Territory Status',info.territory_status||FALLBACK.territory_status);hidden(form,'Routing Priority',info.lead_priority||FALLBACK.lead_priority);hidden(form,'Routing Phone',info.phone||'');hidden(form,'Routing Partner ID',info.partner_id||'');hidden(form,'Routing Backup Partner ID',info.backup_partner_id||'');hidden(form,'Routing Decision',route.decision);hidden(form,'Routing Network Tier',route.tier);hidden(form,'Routing Next Action',route.action);hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed');hidden(form,'Routing Source',info.resolution_level==='priority-california-city'?'Priority California customer-routing override':'Canonical market-routing.json');hidden(form,'SEO Page Creation','Disabled');const condition=findField(form,['condition','Condition','Appliance Condition']),appliance=findField(form,['appliance','Appliance','Appliance Type']),stairs=findField(form,['stairs','Stairs']),access=findField(form,['access','Access','Access Notes']);hidden(form,'Qualification Snapshot',[appliance&&appliance.value,condition&&condition.value,stairs&&stairs.value,access&&access.value].filter(Boolean).join(' | '));const cycleTest=findField(form,['laundry_cycle_test']),unusualNoise=findField(form,['laundry_unusual_noise']),faultDetails=findField(form,['condition_details']);const conditionValue=String(condition&&condition.value||''),cycleValue=String(cycleTest&&cycleTest.value||''),noiseValue=String(unusualNoise&&unusualNoise.value||'');const mechanicalRisk=['Working With Issues','Needs Repair','Not Working','Unknown','Mixed Load - Mixed Conditions'].includes(conditionValue)||['Cycle has problems','Failed cycle','Power only','Not tested'].includes(cycleValue)||['Loud unusual noise','Not tested'].includes(noiseValue);hidden(form,'Customer Laundry Cycle Test',cycleValue);hidden(form,'Customer Reported Unusual Noise',noiseValue);hidden(form,'Customer Defect Explanation',faultDetails&&faultDetails.value||'');hidden(form,'Dispatch Condition Gate',mechanicalRisk?'HOLD FOR MANUAL CONDITION REVIEW - do not send a partner without verifying faults, photos/testing and explicit partner acceptance':'MANUAL VERIFY BEFORE DISPATCH - customer selection alone does not confirm fully working');}
 function load(){if(loadPromise)return loadPromise;loadPromise=Promise.all([fetch(siteUrl('data/market-routing.json'),{cache:'no-store'}),fetch(siteUrl('data/cities.json'),{cache:'no-store'})]).then(async([r,c])=>{if(r.ok)routing=await r.json();if(c.ok)cities=await c.json();}).catch(()=>{});return loadPromise;}
 function wireForm(form){if(form.dataset.customerRoutingWired==='1')return;form.dataset.customerRoutingWired='1';form.addEventListener('submit',async function(event){if(form.dataset.customerRoutingQualified==='1'){qualify(form);return;}event.preventDefault();await load();qualify(form);form.dataset.customerRoutingQualified='1';if(typeof form.requestSubmit==='function')form.requestSubmit(event.submitter||undefined);else form.submit();},true);}
 function isCustomerPickupForm(form){return !!(findField(form,['city','City','pickup_city'])&&findField(form,['state','State','pickup_state'])&&findField(form,['appliance','Appliance','Appliance Type']));}
@@ -191,6 +191,101 @@ function enhanceApplianceConditionIntake(){
   });
 }
 
+
+/* Pre-dispatch laundry screening: a noisy washer is NOT fully working merely
+   because the motor starts. Customer reports are never a dispatch guarantee. */
+function enhanceLaundryConditionCheck(){
+  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
+    const appliance=form.querySelector('select[name="appliance"]');
+    const condition=form.querySelector('select[name="condition"]');
+    if(!appliance||!condition||form.querySelector('[name="laundry_cycle_test"]'))return;
+
+    const fieldset=document.createElement('fieldset');
+    fieldset.className='site-laundry-condition-screen';
+    fieldset.style.cssText='border:1px solid #b8d4c1;border-radius:9px;padding:12px 14px;margin:12px 0';
+    const legend=document.createElement('legend');
+    legend.textContent='Washer / dryer condition check';
+    legend.style.cssText='font-weight:700;color:#075c34';
+    fieldset.appendChild(legend);
+
+    const note=document.createElement('p');
+    note.style.cssText='margin:4px 0 12px';
+    note.textContent='Powering on or spinning does not mean fully working. Loud rumbling, grinding, banging, heavy shaking, leaking or a failed cycle can mean it needs repair. Please answer accurately so no pickup partner makes a wasted trip.';
+    fieldset.appendChild(note);
+
+    function question(name,prompt,choices){
+      const label=document.createElement('label');
+      label.style.cssText='display:block;margin:10px 0;font-weight:600';
+      label.textContent=prompt;
+      const select=document.createElement('select');
+      select.name=name;
+      select.style.cssText='display:block;width:100%;max-width:100%;margin-top:6px';
+      const empty=document.createElement('option');
+      empty.value='';
+      empty.textContent='Choose one';
+      select.appendChild(empty);
+      choices.forEach(([value,text])=>{
+        const option=document.createElement('option');
+        option.value=value;
+        option.textContent=text;
+        select.appendChild(option);
+      });
+      label.appendChild(select);
+      fieldset.appendChild(label);
+      return select;
+    }
+    const cycle=question('laundry_cycle_test','Was a full wash/spin or dry/heat cycle tested?',[
+      ['Full cycle passed','Yes — full cycle finished normally'],
+      ['Cycle has problems','Runs, but cycle has problems'],
+      ['Power only','Only turned on / did not test full cycle'],
+      ['Failed cycle','Will not finish or fails the cycle'],
+      ['Not tested','Not tested / unsure']
+    ]);
+    const noise=question('laundry_unusual_noise','Does it grind, rumble, bang, squeal or shake unusually during use?',[
+      ['No unusual noise','No — tested, sounds normal'],
+      ['Loud unusual noise','Yes — loud / grinding / rumbling / banging / shaking'],
+      ['Not tested','Not tested / unsure']
+    ]);
+
+    const warning=document.createElement('p');
+    warning.setAttribute('role','status');
+    warning.style.cssText='font-size:14px;margin:10px 0 0;color:#784200';
+    fieldset.appendChild(warning);
+
+    const conditionDetails=form.querySelector('[name="condition_details"]');
+    const anchor=(conditionDetails&&conditionDetails.closest('label'))||condition.closest('label')||condition.closest('.field')||condition;
+    anchor.insertAdjacentElement('afterend',fieldset);
+
+    function refresh(){
+      const isLaundry=/washer|dryer|laundry/i.test(appliance.value||'');
+      fieldset.hidden=!isLaundry;
+      cycle.disabled=!isLaundry;
+      noise.disabled=!isLaundry;
+      cycle.required=isLaundry;
+      noise.required=isLaundry;
+      if(!isLaundry){cycle.value='';noise.value='';}
+
+      const isIssue=['Working With Issues','Needs Repair','Not Working','Mixed Load - Mixed Conditions'].includes(condition.value);
+      if(conditionDetails)conditionDetails.required=isIssue;
+      if(conditionDetails)conditionDetails.setAttribute('aria-required',String(isIssue));
+
+      const full=condition.value==='Fully Working';
+      const conflict=isLaundry&&full&&
+        ((cycle.value&&cycle.value!=='Full cycle passed')||
+         (noise.value&&noise.value!=='No unusual noise'));
+      condition.setCustomValidity(conflict?'This washer/dryer cannot be marked fully working when its full cycle was not tested successfully or it makes unusual noise. Select Works, but has problems, Needs repair, or Unknown.':'');
+      if(!isLaundry)warning.textContent='';
+      else if(noise.value==='Loud unusual noise'||cycle.value==='Cycle has problems'||cycle.value==='Failed cycle')
+        warning.textContent='Mechanical problem reported. Free pickup is not confirmed. We must review details and obtain partner acceptance before any trip.';
+      else if(cycle.value==='Power only'||cycle.value==='Not tested'||noise.value==='Not tested')
+        warning.textContent='Not fully verified. Please do not select Fully working. The request requires condition review before any trip.';
+      else warning.textContent='Even if tested, pickup and partner dispatch require confirmation after reviewing condition, photos and access.';
+    }
+    [appliance,condition,cycle,noise].forEach(input=>input.addEventListener('change',refresh));
+    refresh();
+  });
+}
+
 function enhanceRequestNextSteps(){
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
     const host=form.closest('section')||form.parentElement;
@@ -277,7 +372,7 @@ function initLeadAnalytics(){
 
 initLeadAnalytics();
 load();
-document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();/* Avoid injecting identical keyword-heavy sections across city laundry pages; preserve the original useful page content. */document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
+document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();enhanceLaundryConditionCheck();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();/* Avoid injecting identical keyword-heavy sections across city laundry pages; preserve the original useful page content. */document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
 /* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 /* Load the final sharp individual-photo override on every premium washer/dryer page. */
