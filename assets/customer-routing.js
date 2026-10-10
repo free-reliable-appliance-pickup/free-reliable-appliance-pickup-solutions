@@ -142,7 +142,7 @@ function enhancePhotoFirstIntake(){
       input.autocomplete='url';
       wrap.appendChild(input);
       const submit=form.querySelector('button[type="submit"],input[type="submit"]');
-      if(submit)form.insertBefore(wrap,submit);else form.appendChild(wrap);
+      if(submit&&submit.parentNode)submit.parentNode.insertBefore(wrap,submit);else form.appendChild(wrap);
     }
   });
 }
