@@ -181,6 +181,47 @@ for slug, city in LAUNDRY_CITY_FORMS.items():
     if 'src="/assets/customer-routing.js"' not in html:
         errors.append(f"{slug} laundry: routing script missing")
 
+# Source-level attribution for nine priority California laundry intake pages.
+# These cities already have visible, customer-editable city fields; preserve them.
+PRIORITY_LAUNDRY_SOURCE_CITIES = {
+    "pasadena": "Pasadena",
+    "san-gabriel": "San Gabriel",
+    "claremont": "Claremont",
+    "azusa": "Azusa",
+    "duarte": "Duarte",
+    "la-verne": "La Verne",
+    "san-dimas": "San Dimas",
+    "covina": "Covina",
+    "monrovia": "Monrovia",
+}
+for slug, city in PRIORITY_LAUNDRY_SOURCE_CITIES.items():
+    path = Path(f"{slug}-washer-dryer-pickup") / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug} laundry: missing page")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    forms = form_for(html)
+    if len(forms) != 1:
+        errors.append(f"{slug} laundry: expected one Formspree intake form")
+        continue
+    form = forms[0]
+    for name, value in (("city", city), ("state", "California"),
+                        ("source_page", f"{slug}-washer-dryer-pickup")):
+        tag = field(form, name)
+        if not tag or f'value="{value}"' not in tag:
+            errors.append(f"{slug} laundry: missing/misrouted {name}")
+    if form.count('name="source_page"') != 1:
+        errors.append(f"{slug} laundry: source page must appear exactly once")
+    phone = field(form, "phone")
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if hint not in phone:
+            errors.append(f"{slug} laundry: phone missing {hint}")
+    for name in ("appliance", "condition"):
+        if not field(form, name):
+            errors.append(f"{slug} laundry: missing {name}")
+    if 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug} laundry: shared routing script missing")
+
 diagnostic = []
 for path in sorted(Path(".").glob("*-appliance-pickup/index.html")):
     html = path.read_text(encoding="utf-8", errors="replace")
@@ -195,6 +236,7 @@ for path in sorted(Path(".").glob("*-appliance-pickup/index.html")):
 
 print("REPAIRED_CITY_FORMS_TESTED", len(REPAIRED))
 print("LAUNDRY_CITY_FORMS_TESTED", len(LAUNDRY_CITY_FORMS))
+print("PRIORITY_LAUNDRY_SOURCE_PAGES_TESTED", len(PRIORITY_LAUNDRY_SOURCE_CITIES))
 print("STRICT_ERRORS", len(errors))
 for error in errors:
     print("ERROR", error)
