@@ -8,6 +8,7 @@ on:
       - 'data/cities.json'
       - 'data/market-routing.json'
       - 'data/seo-experiments.json'
+      - '**/index.html'
       - 'scripts/audit-one-gold-model.py'
       - '.github/workflows/audit-one-gold-model.yml'
   push:
@@ -17,6 +18,7 @@ on:
       - 'data/cities.json'
       - 'data/market-routing.json'
       - 'data/seo-experiments.json'
+      - '**/index.html'
       - 'scripts/audit-one-gold-model.py'
       - '.github/workflows/audit-one-gold-model.yml'
 
