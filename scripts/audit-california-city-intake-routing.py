@@ -145,6 +145,42 @@ else:
         if 'src="/assets/customer-routing.js"' not in county_html:
             errors.append("fresno-county: customer routing script not loaded")
 
+# Two priority laundry forms must retain location and source attribution even
+# when browser JavaScript fails or is disabled. Do not hardcode cities on hubs.
+LAUNDRY_CITY_FORMS = {
+    "alhambra": "Alhambra",
+    "baldwin-park": "Baldwin Park",
+}
+for slug, city in LAUNDRY_CITY_FORMS.items():
+    path = Path(f"{slug}-washer-dryer-pickup") / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug} laundry: missing source HTML")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    forms = form_for(html)
+    if len(forms) != 1:
+        errors.append(f"{slug} laundry: expected exactly one pickup request form")
+        continue
+    form = forms[0]
+    for key, value in (("city", city), ("state", "California"),
+                       ("source_page", f"{slug}-washer-dryer-pickup")):
+        tag = field(form, key)
+        if not tag or f'value="{value}"' not in tag:
+            errors.append(f"{slug} laundry: missing or incorrect {key} attribution")
+    if 'type="hidden"' not in field(form, "city"):
+        errors.append(f"{slug} laundry: source city must be an explicit hidden input")
+    if form.count('name="city"') != 1:
+        errors.append(f"{slug} laundry: expected exactly one explicit city field")
+    for key in ("phone", "appliance", "condition"):
+        if not field(form, key):
+            errors.append(f"{slug} laundry: missing {key}")
+    phone = field(form, "phone")
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if hint not in phone:
+            errors.append(f"{slug} laundry: phone missing {hint}")
+    if 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug} laundry: routing script missing")
+
 diagnostic = []
 for path in sorted(Path(".").glob("*-appliance-pickup/index.html")):
     html = path.read_text(encoding="utf-8", errors="replace")
@@ -158,6 +194,7 @@ for path in sorted(Path(".").glob("*-appliance-pickup/index.html")):
         diagnostic.append(path.parent.name)
 
 print("REPAIRED_CITY_FORMS_TESTED", len(REPAIRED))
+print("LAUNDRY_CITY_FORMS_TESTED", len(LAUNDRY_CITY_FORMS))
 print("STRICT_ERRORS", len(errors))
 for error in errors:
     print("ERROR", error)
