@@ -1,0 +1,23 @@
+name: Audit California Existing City Intake Routing
+on:
+  pull_request:
+    paths:
+      - '*-appliance-pickup/index.html'
+      - 'scripts/audit-california-city-intake-routing.py'
+      - '.github/workflows/audit-california-city-intake-routing.yml'
+  push:
+    branches: [main]
+    paths:
+      - '*-appliance-pickup/index.html'
+      - 'scripts/audit-california-city-intake-routing.py'
+      - '.github/workflows/audit-california-city-intake-routing.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate existing California pickup forms and inventory other gaps
+        run: python3 scripts/audit-california-city-intake-routing.py
