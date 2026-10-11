@@ -17,6 +17,73 @@ REPAIRED = (
     "beverly-hills", "malibu", "el-segundo", "culver-city",
     "santa-monica", "manhattan-beach", "redondo-beach", "calabasas",
     "west-hollywood",
+    "bakersfield",
+    "banning",
+    "berkeley",
+    "calimesa",
+    "carlsbad",
+    "cathedral-city",
+    "chula-vista",
+    "coachella",
+    "concord",
+    "coronado",
+    "cypress",
+    "del-mar",
+    "desert-hot-springs",
+    "el-cajon",
+    "encinitas",
+    "escondido",
+    "fremont",
+    "hawaiian-gardens",
+    "hayward",
+    "hermosa-beach",
+    "imperial-beach",
+    "indian-wells",
+    "indio",
+    "la-habra",
+    "la-habra-heights",
+    "la-mesa",
+    "la-palma",
+    "la-quinta",
+    "lakewood-ca",
+    "lemon-grove",
+    "loma-linda",
+    "lomita",
+    "los-alamitos",
+    "menifee",
+    "murrieta",
+    "muscoy",
+    "national-city",
+    "oakland",
+    "oceanside",
+    "oxnard",
+    "palm-desert",
+    "palm-springs",
+    "palo-alto",
+    "perris",
+    "poway",
+    "rancho-mirage",
+    "richmond",
+    "san-fernando",
+    "san-francisco",
+    "san-jose",
+    "san-luis-obispo",
+    "san-marcos",
+    "santa-barbara",
+    "santa-clara",
+    "santa-maria",
+    "santee",
+    "seal-beach",
+    "solana-beach",
+    "south-el-monte",
+    "stanton",
+    "sunnyvale",
+    "ventura",
+    "villa-park",
+    "visalia",
+    "vista",
+    "walnut-creek",
+    "wildomar",
 )
 FORM_ENDPOINT = "https://formspree.io/f/mvzeapzd"
 errors = []
@@ -42,7 +109,7 @@ for slug in REPAIRED:
         errors.append(f"{slug}: expected exactly 1 Formspree form, got {len(forms)}")
         continue
     form = forms[0]
-    city = " ".join(p.title() for p in slug.split("-"))
+    city = "Lakewood" if slug == "lakewood-ca" else " ".join(p.title() for p in slug.split("-"))
     for name in ("city", "state", "source_page", "phone", "appliance", "condition"):
         if not field(form, name):
             errors.append(f"{slug}: missing field {name}")
@@ -58,6 +125,25 @@ for slug in REPAIRED:
         errors.append(f"{slug}: customer routing script not loaded")
     if len(re.findall(r"<h1\b", html, re.I)) != 1:
         errors.append(f"{slug}: H1 count is not exactly 1")
+
+# A county-wide form cannot silently assert a particular city.
+county_path = Path("fresno-county-appliance-pickup") / "index.html"
+if not county_path.exists():
+    errors.append("fresno-county: page missing")
+else:
+    county_html = county_path.read_text(encoding="utf-8", errors="replace")
+    county_forms = form_for(county_html)
+    if len(county_forms) != 1:
+        errors.append("fresno-county: expected exactly one pickup form")
+    else:
+        county_form = county_forms[0]
+        county_city = field(county_form, "city")
+        if 'type="text"' not in county_city or "required" not in county_city or 'type="hidden"' in county_city:
+            errors.append("fresno-county: pickup city must be an explicitly required customer input")
+        if not field(county_form, "state") or not field(county_form, "source_page"):
+            errors.append("fresno-county: missing source/state attribution")
+        if 'src="/assets/customer-routing.js"' not in county_html:
+            errors.append("fresno-county: customer routing script not loaded")
 
 diagnostic = []
 for path in sorted(Path(".").glob("*-appliance-pickup/index.html")):
@@ -76,6 +162,8 @@ print("STRICT_ERRORS", len(errors))
 for error in errors:
     print("ERROR", error)
 print("READ_ONLY_OTHER_CA_APPLIANCE_PAGES_MISSING_CITY", len(diagnostic))
+if diagnostic:
+    errors.append(f"{len(diagnostic)} California page forms still missing city attribution")
 print("NOTE: inventory includes regional hubs and does not prove every such page needs a fixed city.")
 for slug in diagnostic[:70]:
     print("READ_ONLY_MISSING_CITY", slug)
