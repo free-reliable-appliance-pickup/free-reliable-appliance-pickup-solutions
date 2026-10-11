@@ -1,5 +1,7 @@
 # Priority Corridor Organic Rank Baseline — October 10, 2026
 
+> **IMPORTANT: “Not found” is a Keyword.com ranking result, not a Google indexing failure.** In this dataset, **59 of 100 tracking records** showed rank 0, but **52 of those 59** also reported positive Google Search Console impressions. All **38 tracked landing URLs** had a sitemap entry, correct self-canonical and no `noindex` directive in the live repository audit. Do **not** interpret the table below as 59 broken pages. See the [verified Google Search Console diagnostic and city-page ownership findings](./gsc-not-found-and-city-intent-diagnostic-2026-10-10.md).
+
 **Source:** Connected Keyword.com project 3846568, `freereliableappliancepickup.com`; 100 tracked keyword records read on October 10, 2026. Rank data comes from location/device-specific tracking, not a universal Google position; the API response did not expose a reliable device label in this list, so the two entries per query are displayed as recorded rather than falsely called mobile vs desktop.
 
 **Important:** Rank 0 is shown as **not found** in the tracked results (do not treat it as rank #0). Rows can be volatile or reflect a specific search-location/device configuration. Recorded `ranking_url` does not prove that a page is currently ranking when rank is 0. Compare identical configurations after a completed experiment observation window, and cross-check finalized GSC data.
