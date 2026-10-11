@@ -57,7 +57,7 @@ for slug in SLUGS:
     for attr in ('inputmode="numeric"', 'autocomplete="postal-code"'):
         if attr not in zip_input:
             errors.append(f"{slug}: ZIP input missing {attr}")
-    if 'src="/assets/customer-routing.js"' not in html:
+    if 'src="/assets/customer-routing.js"' not in html and 'src="../assets/customer-routing.js"' not in html:
         errors.append(f"{slug}: routing script not loaded")
     if PHONE_LINK not in html:
         errors.append(f"{slug}: missing published authorized 310 contact link")
@@ -95,7 +95,7 @@ for slug, original_city in NEARBY_CITY_PAGES.items():
     for name in ("state", "source_page", "appliance", "condition", "phone", "zip"):
         if f'name="{name}"' not in form:
             errors.append(f"{slug}: lead attribution field {name} missing")
-    if 'src="/assets/customer-routing.js"' not in html:
+    if 'src="/assets/customer-routing.js"' not in html and 'src="../assets/customer-routing.js"' not in html:
         errors.append(f"{slug}: missing customer routing script")
     if PHONE_LINK not in html:
         errors.append(f"{slug}: wrong contact line")
@@ -124,7 +124,7 @@ else:
         for name in ("state", "source_page", "appliance", "condition"):
             if f'name="{name}"' not in form:
                 errors.append(f"Fresno County: attribution field {name} missing")
-        if 'src="/assets/customer-routing.js"' not in html:
+        if 'src="/assets/customer-routing.js"' not in html and 'src="../assets/customer-routing.js"' not in html:
             errors.append("Fresno County: customer routing script missing")
         if PHONE_LINK not in html:
             errors.append("Fresno County: incorrect 310 area contact link")
