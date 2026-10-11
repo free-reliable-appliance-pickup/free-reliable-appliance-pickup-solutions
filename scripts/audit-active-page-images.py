@@ -31,6 +31,41 @@ KNOWN_SHARED_APPLIANCE_ASSETS = {
 }
 
 
+IMAGE_LAYOUT_PRIORITY_SLUGS = {
+    'fontana-appliance-pickup',
+    'upland-appliance-pickup',
+    'montclair-appliance-pickup',
+    'claremont-appliance-pickup',
+    'la-verne-appliance-pickup',
+    'san-dimas-appliance-pickup',
+    'fresno-appliance-pickup',
+    'west-covina-appliance-pickup',
+    'san-gabriel-appliance-pickup',
+    'el-monte-appliance-pickup',
+    'azusa-appliance-pickup',
+    'duarte-appliance-pickup',
+    'monterey-park-appliance-pickup',
+    'rosemead-appliance-pickup',
+    'diamond-bar-appliance-pickup',
+    'rowland-heights-appliance-pickup',
+    'hacienda-heights-appliance-pickup',
+    'chino-hills-appliance-pickup',
+    'corona-appliance-pickup',
+    'eastvale-appliance-pickup',
+    'rialto-appliance-pickup',
+    'san-bernardino-appliance-pickup',
+    'redlands-appliance-pickup',
+    'highland-appliance-pickup',
+    'yucaipa-appliance-pickup',
+    'anaheim-appliance-pickup',
+    'irvine-appliance-pickup',
+    'tustin-appliance-pickup',
+    'sacramento-appliance-pickup',
+    'stockton-appliance-pickup',
+    'grand-terrace-appliance-pickup',
+    'bloomington-appliance-pickup'
+}
+
 class ImageRefs(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -49,6 +84,7 @@ def main():
     checked_pages = 0
     checked_images = 0
     inspected_assets = {}
+    layout_findings = []
     for url in urls:
         if not url.startswith(BASE):
             continue
@@ -137,12 +173,23 @@ def main():
                     except (OSError, ValueError):
                         inspected_assets[asset] = None
                 size = inspected_assets[asset]
+                if size is not None and slug in IMAGE_LAYOUT_PRIORITY_SLUGS:
+                    declared_width = attrs.get('width')
+                    declared_height = attrs.get('height')
+                    if declared_width != str(size[0]) or declared_height != str(size[1]):
+                        layout_findings.append(
+                            f'{slug} | {src} | declared={declared_width}x{declared_height} '
+                            f'actual={size[0]}x{size[1]}'
+                        )
                 if size is None:
                     problems.append(f'{url}: unreadable image {src}')
                 elif attrs.get('fetchpriority') == 'high' and size[0] < MIN_HERO_WIDTH:
                     problems.append(f'{url}: hero {src} only {size[0]}px wide')
                 elif attrs.get('fetchpriority') == 'high' and asset.stat().st_size > MAX_HERO_BYTES:
                     problems.append(f'{url}: hero {src} is {asset.stat().st_size / 1_000_000:.2f} MB; use an optimized derivative under {MAX_HERO_BYTES / 1_000_000:.1f} MB')
+    print(f'IMAGE_LAYOUT_PRIORITY_MISMATCHES {len(layout_findings)}')
+    for finding in layout_findings:
+        print('IMAGE_LAYOUT_REVIEW', finding)
     print(f'ACTIVE_PAGES={checked_pages} LOCAL_IMAGE_REFERENCES={checked_images} PROBLEMS={len(problems)}')
     for problem in problems:
         print(problem)
