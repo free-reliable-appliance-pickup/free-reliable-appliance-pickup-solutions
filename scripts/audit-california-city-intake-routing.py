@@ -22,12 +22,12 @@ FORM_ENDPOINT = "https://formspree.io/f/mvzeapzd"
 errors = []
 
 def field(form, name):
-    pattern = r"<(?:input|select|textarea)\\b[^>]*\\bname=[\\\"']" + re.escape(name) + r"[\\\"'][^>]*>"
+    pattern = r"<(?:input|select|textarea)\b[^>]*\bname=[\\"']" + re.escape(name) + r"[\\"'][^>]*>"
     match = re.search(pattern, form, re.I | re.S)
     return match.group(0) if match else ""
 
 def form_for(html):
-    forms = re.findall(r"<form\\b[^>]*>[\\s\\S]*?</form>", html, re.I)
+    forms = re.findall(r"<form\b[^>]*>[\s\S]*?</form>", html, re.I)
     forms = [x for x in forms if FORM_ENDPOINT in x]
     return forms
 
@@ -56,7 +56,7 @@ for slug in REPAIRED:
             errors.append(f"{slug}: phone missing {hint}")
     if 'src="/assets/customer-routing.js"' not in html:
         errors.append(f"{slug}: customer routing script not loaded")
-    if len(re.findall(r"<h1\\b", html, re.I)) != 1:
+    if len(re.findall(r"<h1\b", html, re.I)) != 1:
         errors.append(f"{slug}: H1 count is not exactly 1")
 
 diagnostic = []
