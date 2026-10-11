@@ -4,6 +4,9 @@
 ## Why this file exists
 Protect genuine ranking wins and ensure future automated edits don't misinterpret `rank 0` as a broken Google page. The 38 tracked landing pages were reported to have correct sitemap/self-canonical/noindex checks, but those checks alone do **not** establish that Google indexed every URL. The true per-page indexing/Google-selected canonical status requires first-party URL Inspection or Page Indexing reports.
 
+## Data quality warning
+On October 11, Keyword.com reported Clovis #1 for 'stove pickup fresno' and #3 for 'washer dryer pickup fresno', but the same-day organic result lists for those keyword IDs did not include our domain among 49 and 52 returned URLs, respectively. Treat these top-three figures as unverified tracker readings pending a provider Spyglass check. Montclair #6 and Pomona #20 did match their organic result lists. Feedback reference: 6abc8113-adfd-4ba5-b81f-2b686a15241b.
+
 ## October 10 vs October 11 observation
 - October 10 historical export provided by the operator: **100 tracking records, 55 unique queries; 59 rank 0, 52 of those 59 with positive GSC impressions.** Five unique queries had at least one top-3 result, nine unique queries had their best result at positions 4–10, five at 11–20, 28 not found across all tracked variants.
 - Provider location/device configuration **must not be assumed** from the two records per query. Keyword.com's `get_keyword` describes the type as `se` or `sem`, which this report does not decode as desktop/mobile.
