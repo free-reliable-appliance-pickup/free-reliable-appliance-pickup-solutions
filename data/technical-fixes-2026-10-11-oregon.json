@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-11",
+  "category": "verified technical-only lead attribution",
+  "purpose": "Make Oregon phone/form-source reporting distinguish the actual customer landing page. No ranking content or customer-facing promises changed.",
+  "approvedTechnicalOverride": "Hidden input name=source_page, a non-visual attribute only.",
+  "seoFreezeRespect": "Experiment content, title, description, H1, canonical, schema, navigation, photography and service promise unchanged.",
+  "affected": [
+    {
+      "path": "/beaverton-appliance-pickup/",
+      "value": "beaverton-appliance-pickup",
+      "experiment": "2026-10-06-beaverton-appliance-ctr-snippet",
+      "review": "2026-10-16"
+    },
+    {
+      "path": "/gresham-appliance-pickup/",
+      "value": "gresham-appliance-pickup",
+      "experiment": "2026-10-05-gresham-title-ctr-test",
+      "review": "2026-10-15"
+    },
+    {
+      "path": "/keizer-appliance-pickup/",
+      "value": "keizer-appliance-pickup",
+      "experiment": "2026-10-05-keizer-city-boundary",
+      "review": "2026-10-15"
+    },
+    {
+      "path": "/oregon-city-appliance-pickup/",
+      "value": "oregon-city-appliance-pickup",
+      "experiment": "2026-10-07-small-market-winner-protection",
+      "review": "2026-10-17"
+    },
+    {
+      "path": "/portland-washer-dryer-pickup/",
+      "value": "portland-washer-dryer-pickup",
+      "experiment": "2026-10-06-regional-laundry-and-vegas-concentration",
+      "review": "2026-10-16"
+    },
+    {
+      "path": "/salem-washer-dryer-pickup/",
+      "value": "salem-washer-dryer-pickup",
+      "experiment": "2026-10-05-salem-laundry-intent-cleanup",
+      "review": "2026-10-15"
+    }
+  ],
+  "validation": "Compare exact HTML diff and run existing priority pickup form audit, SEO Experiment Guard and One Gold Model audit. Formspree delivery is not proven until a real authorized form submission is received.",
+  "notes": "All newly added source_page values match their page paths. No business hours, contact numbers, qualifications, page copy or client JS changed."
+}
