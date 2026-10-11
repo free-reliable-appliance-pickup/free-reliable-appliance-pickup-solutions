@@ -95,10 +95,10 @@
           "location",
           "stairs",
           "property_type",
-          "testable",
           "photos_available",
           "preferred_window",
-          "message"
+          "message",
+          "condition_details"
         ]
       },
       "child_requirements": {
@@ -154,9 +154,9 @@
         ]
       },
       "free_claim_guardrails": [
-        "Free to submit. No account required.",
-        "not a guaranteed appointment until pickup is confirmed",
-        "Free pickup is confirmed only after the request qualifies"
+        "Free to submit",
+        "No account required",
+        "Pickup is confirmed only after qualification and current route review"
       ],
       "business_intent_terms": [
         "Business & Recurring Appliance Pickup in Rancho Cucamonga",
@@ -235,11 +235,10 @@
       },
       "faq_schema_visible_sync": true,
       "overview_trust_terms": [
-        "Request Free Appliance Pickup in Rancho Cucamonga",
-        "Free to request",
-        "Photos first",
-        "Reuse-focused qualification",
-        "Clear alternatives when it does not qualify"
+        "Free Appliance Pickup in Rancho Cucamonga",
+        "Send photos first",
+        "Get a clear answer",
+        "Direct local call and text review"
       ],
       "benchmark_homepage_child_links": [],
       "replacement_day_terms": [
