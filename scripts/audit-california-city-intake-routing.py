@@ -22,7 +22,7 @@ FORM_ENDPOINT = "https://formspree.io/f/mvzeapzd"
 errors = []
 
 def field(form, name):
-    pattern = r"<(?:input|select|textarea)\b[^>]*\bname=[\\"']" + re.escape(name) + r"[\\"'][^>]*>"
+    pattern = r"<(?:input|select|textarea)\b[^>]*\bname=[" + chr(34) + chr(39) + "]" + re.escape(name) + "[" + chr(34) + chr(39) + r"][^>]*>"
     match = re.search(pattern, form, re.I | re.S)
     return match.group(0) if match else ""
 
