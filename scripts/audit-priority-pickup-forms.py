@@ -111,7 +111,7 @@ for city in ("la-crescenta", "montrose"):
         if href not in html:
             errors.append(f"{city}: missing expected 909 contact action {href}")
     if city == "la-crescenta":
-        forms = re.findall(r'<form\\b[^>]*>.*?</form>', html, re.I | re.S)
+        forms = re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
         form = next((v for v in forms if "formspree.io/f/mvzeapzd" in v), None)
         if not form:
             errors.append(f"{city}: missing expected Formspree intake")
