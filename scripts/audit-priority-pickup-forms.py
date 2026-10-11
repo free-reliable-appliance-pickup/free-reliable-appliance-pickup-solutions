@@ -105,7 +105,7 @@ for foothill_city in ("la-crescenta", "montrose"):
         errors.append(f"{foothill_city}: missing foothill page")
         continue
     html = path.read_text(encoding="utf-8", errors="replace")
-    forms = re.findall(r'<form\\b[^>]*>.*?</form>', html, re.I | re.S)
+    forms = re.findall(r'<form[^>]*>.*?</form>', html, re.I | re.S)
     form = next((v for v in forms if "formspree.io/f/mvzeapzd" in v), None)
     if not form:
         errors.append(f"{foothill_city}: missing pickup form")
