@@ -16,6 +16,10 @@ diamond-bar rowland-heights whittier pico-rivera montebello irwindale
 azusa arcadia monrovia bradbury sierra-madre la-canada-flintridge
 la-crescenta rosemead fresno sacramento stockton phoenix denver
 aurora portland salem
+rialto bloomington colton highland grand-terrace redlands yucaipa
+moreno-valley jurupa-valley eastvale corona norco walnut
+hacienda-heights avocado-heights south-san-jose-hills san-gabriel
+monterey-park city-of-industry
 """.split()
 
 REQUIRED_FIELDS = {
