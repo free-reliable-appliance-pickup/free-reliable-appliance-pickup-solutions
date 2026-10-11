@@ -97,6 +97,28 @@ for city in CITIES:
         if not select_ok(form, name):
             errors.append(f"{city}: {name} must be required with a blank first option")
 
+# Protected foothill pages: technical contact/access corrections only.
+# These source checks must not modify live form data or ranking content.
+for foothill_city in ("la-crescenta", "montrose"):
+    path = Path(f"{foothill_city}-appliance-pickup") / "index.html"
+    if not path.is_file():
+        errors.append(f"{foothill_city}: missing foothill page")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    forms = re.findall(r'<form[^>]*>.*?</form>', html, re.I | re.S)
+    form = next((v for v in forms if "formspree.io/f/mvzeapzd" in v), None)
+    if not form:
+        errors.append(f"{foothill_city}: missing pickup form")
+        continue
+    for field_name in ("location", "stairs"):
+        if not select_ok(form, field_name):
+            errors.append(f"{foothill_city}: {field_name} must have a blank required prompt")
+    if "call or text 310-774-4304 with photos" in html:
+        errors.append(f"{foothill_city}: contradictory 310 scheduling contact")
+    if "call or text 909-375-6685 with photos" not in html:
+        errors.append(f"{foothill_city}: missing approved 909 scheduling contact")
+
+print("FOOTHILL_CONTACT_ACCESS_PAGES_TESTED 2")
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
 print(f"PRIORITY_INTAKE_ERRORS {len(errors)}")
 for error in errors:
