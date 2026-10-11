@@ -20,6 +20,7 @@ appliance-installer-remodeler-pickup
 appliance-recycling
 appliance-removal
 appliance-removal-cost
+appliance-replacement-referral-guide
 appliances
 arcadia-refrigerator-pickup
 arcadia-washer-dryer-pickup
