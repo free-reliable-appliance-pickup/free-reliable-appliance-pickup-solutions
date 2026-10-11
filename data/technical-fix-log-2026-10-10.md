@@ -32,3 +32,9 @@ Montclair, San Bernardino, Chino, Chino Hills, La Verne, San Dimas, Pomona, Upla
 Source checks verified the forms and required fields on the edited pages. A fresh public, CSS-scoped form read on 2026-10-10 confirmed Rosemead's new fields were deployed and separately confirmed Fresno's photo-availability question. A submitted lead was **not** sent, so form delivery remains untested. The new `scripts/audit-priority-pickup-forms.py` with its workflow should help prevent future regressions; confirm its GitHub Actions run separately.
 
 This change log records technical exceptions for the protected pages without changing the content experiment hypotheses or review dates.
+
+## Additional form-audit remediation
+- Initial GitHub Actions intake audit run #38102955357 checked 42 pages and found two missing `source_page` fields (Duarte and Altadena).
+- Added Duarte `source_page` attribution in commit `b06110197a27fcf641d079a95b5e5c01b54f2eb4`.
+- Added Altadena `source_page` attribution in commit `d0eca7f493ffa804472e8d3fbcff6e1f6adefac2`.
+- These are attribution/technical corrections only. A subsequent CI result must be checked independently before marking the automated audit as passed.
