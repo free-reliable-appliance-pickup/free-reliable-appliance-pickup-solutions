@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-09",
+  "updated": "2026-10-10",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -189,6 +189,13 @@
           "date": "2026-10-03",
           "reason": "Restored the protected Pasadena title/meta/WebPage snippet baseline after an unintended post-experiment snippet edit triggered the SEO Experiment Guard. This restoration preserves the original 2026-10-03 experiment variables for clean measurement through the October 13 review gate."
         }
+      ],
+      "observations": [
+        {
+          "date": "2026-10-10",
+          "source": "Google Search Console via connected GSC SEO & Content Planner; domain property; finalized 2026-09-11 to 2026-10-08, all devices unless noted",
+          "note": "2026-10-10 finalized GSC: /pasadena-appliance-pickup/ received 23 impressions, 0 clicks, overall avg position 9.87; for exact 'free appliance pickup pasadena', 5 impressions at pos 26.4; for broader 'appliance pick up free', 3 impressions at pos 8.33. Broader generic query results must not be mistaken for strong exact-city placement. Hold title/body/internal-link intent edits through 2026-10-13 review."
+        }
       ]
     },
     {
@@ -342,6 +349,11 @@
           "date": "2026-10-07",
           "source": "Keyword.com tracked project 3846568",
           "note": "Mid-freeze observation only; no page edits. Rancho: rank 22 on the correct city URL on one tracked entry, second entry outside top 100 (best 2). Fontana: rank 21 on the correct city URL on one entry, second outside top 100 (best 7). Ontario: both entries outside top 100 (one best 29). Upland: both entries outside top 100 and Keyword.com is still surfacing /upland-washer-dryer-pickup/ as the ranking URL. Preserve the experiment through the 2026-10-14 gate because ownership/rank volatility remains high."
+        },
+        {
+          "date": "2026-10-10",
+          "source": "Google Search Console via connected GSC SEO & Content Planner; domain property; finalized 2026-09-11 to 2026-10-08, all devices unless noted",
+          "note": "2026-10-10 finalized GSC observation: exact query 'free appliance pickup fontana' was shown on /southern-california-appliance-pickup/ (11 impressions, avg position 6.18), /fontana-stove-oven-pickup/ (13, pos 18.69), and the intended /fontana-appliance-pickup/ (7, pos 21.57). For 'free appliance pickup upland', /upland-washer-dryer-pickup/ received 14 impressions (pos 10.93) and /san-bernardino-county-appliance-pickup/ 12 (pos 11.25); /upland-appliance-pickup/ returned no page-level metrics for this period. /rancho-cucamonga-appliance-pickup/ had 64 page impressions, 2 clicks, average position 16.86 overall and 2 exact-city impressions at pos 23. These are query/page averages, not same-SERP head-to-head comparisons; hold all protected page/anchor/title content until Oct 14 review."
         }
       ]
     },
@@ -1431,6 +1443,11 @@
           "date": "2026-10-07",
           "source": "Keyword.com 7-day entered-top-10/recovered movers",
           "note": "Keyword.com 7-day movers snapshot on 2026-10-07 shows strong Fresno-area visibility but continued wrong-page ownership: 'stove pickup fresno' ranks #1 on /clovis-appliance-pickup/ (two tracked variants); 'refrigerator pickup fresno' ranks #2 on /sanger-appliance-pickup/; 'free freezer pickup fresno' ranks #2 on /sanger-appliance-pickup/; 'free washer pickup fresno' ranks #2 on /sanger-washer-dryer-pickup/; and 'free dryer pickup fresno' ranks #2 on /clovis-appliance-pickup/. Preserve these gains through the 2026-10-14 gate; review should focus on ownership consolidation rather than broad content expansion."
+        },
+        {
+          "date": "2026-10-10",
+          "source": "Google Search Console via connected GSC SEO & Content Planner; domain property; finalized 2026-09-11 to 2026-10-08, all devices unless noted",
+          "note": "2026-10-10 finalized GSC: /clovis-appliance-pickup/ showed for 'stove pickup fresno' (14 impressions, avg position 2.64), 'washer dryer pickup fresno' (25, pos 4.76) and 'refrigerator pickup fresno' (5, pos 4.6), with 0 clicks and 87 page impressions overall. /fresno-appliance-pickup/ had 29 impressions, 0 clicks, overall avg position 25.93; /fresno-washer-dryer-pickup/ had 4 impressions and 0 clicks overall. Overlap demonstrates wrong-city/intent landing-page appearance, but not necessarily lost leads or same-SERP competition. Preserve current Clovis/Sanger ranking gains and existing protected page ownership experiments until 2026-10-14."
         }
       ]
     },
@@ -1506,6 +1523,13 @@
         {
           "date": "2026-10-04",
           "reason": "User-directed competitor-source audit led to people-first simplification and/or cannibalization cleanup on an affected owner/supporting page. Previous short-window ranking movement is no longer a clean test of the earlier version; restart measurement from 2026-10-04 and wait for finalized GSC data."
+        }
+      ],
+      "observations": [
+        {
+          "date": "2026-10-10",
+          "source": "Google Search Console via connected GSC SEO & Content Planner; domain property; finalized 2026-09-11 to 2026-10-08, all devices unless noted",
+          "note": "2026-10-10 finalized GSC: /fontana-stove-oven-pickup/ appeared for broad 'free appliance pickup fontana' (13 impressions, avg position 18.69; 0 clicks for this query), while the page overall recorded 23 impressions and 4 clicks. Broad city-query appearances can overlap legitimately with specialty intents; review whether canonical city ownership strengthens after the protected 2026-10-14 gate without harming stove-related qualified clicks."
         }
       ]
     },
@@ -1683,6 +1707,13 @@
           "date": "2026-10-04",
           "type": "homepage contact-routing correction",
           "reason": "Removed a national form-note instruction that sent every visitor to the 909 California text line and added Phoenix Metro ZIP routing to 602-726-7552. The homepage title/meta CTR test itself was not changed."
+        }
+      ],
+      "observations": [
+        {
+          "date": "2026-10-10",
+          "source": "Google Search Console via connected GSC SEO & Content Planner; domain property; finalized 2026-09-11 to 2026-10-08, all devices unless noted",
+          "note": "2026-10-10 finalized GSC opportunity report across all devices found homepage 161 impressions, 0 clicks, 0% CTR and average position 6.03 during 2026-09-11–10-08. This is a page-level aggregate across many queries; without detailed query breakdown it is not evidence that our homepage ranks #6 for 'free appliance pickup near me'. Hold existing homepage snippet test until its 2026-10-14 gate and evaluate actual query mix first."
         }
       ]
     },
