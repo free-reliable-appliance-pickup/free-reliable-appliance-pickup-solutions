@@ -46,6 +46,19 @@ The same-city structure comparisons against TakeMyAppliance in `data/competitor-
 **October 15 (Rialto, Redlands, Grand Terrace)**
 - Review long, overlapping main-content sections against the 5-city matched competitor evidence. Where unique local facts are preserved, test one concise content simplification; do not treat fewer sections as a ranking factor.
 
+## Mobile versus desktop — verified GSC totals
+
+| Device | Clicks | Impressions | CTR | Average position |
+|---|---:|---:|---:|---:|
+| Mobile | **37** | **1,520** | **2.43%** | **14.30** |
+| Desktop | **8** | **1,445** | **0.55%** | **23.29** |
+| Other / tablet remainder | 0 | 12 | — | — |
+| **Sitewide** | **45** | **2,977** | **1.51%** | **18.66** |
+
+Mobile generated **82.2%** of organic clicks in this period even though mobile/desktop impression totals were relatively close. The aggregate ranks are *not* direct performance equivalents across devices, and query/page samples vary by device. The right test is exact **city + appliance + device** ownership, not merely overall average position.
+
+**Device-specific priority evidence:** for exact `free appliance pickup fontana`, desktop GSC shows the Southern California hub (10 impressions, avg position 6.4), Fontana stove/oven page (11, pos 14.9), and the Fontana general page (2, pos 24). For exact `free appliance pickup upland`, desktop shows the county hub (7, pos 9.0), Upland washer/dryer page (7, pos 8.14), and San Bernardino general page (4, pos 15.75). Mobile overlap is also present: Upland washer/dryer (7, pos 13.71) and the county hub (5, pos 14.4). These are small samples; wait for the protected 2026-10-14/15 review windows and use new finalized observations before content changes.
+
 ## Practical constraints
 - The connected third-party GSC trial response reports access through **2026-10-11T21:02:17Z**; native Google Search Console is free and should remain the system of record. A connected-plugin trial ending does not mean the website or Google's own console stops.
 - No live form POST was sent, no paid backlinks/citations were bought, and no Google rank improvements are yet attributable to the current technical changes.
