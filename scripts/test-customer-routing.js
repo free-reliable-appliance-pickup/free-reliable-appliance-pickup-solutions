@@ -66,6 +66,37 @@ async function main(){
   const denverDecision=api.routingDecision(api.classify('Denver Metro','CO'));
   assertEqual(denverDecision.decision,'DIRECT_OPERATION','Denver Metro decision');
 
+  // California legacy forms may contain plural "appliances" instead of singular "appliance".
+  // Confirm these still obtain routing metadata and page attribution without changing existing values.
+  global.document.createElement=tag=>({tagName:tag,type:'',name:'',value:''});
+  function mockForm(fields){
+    const nodes={};
+    for(const [name,value] of Object.entries(fields)) nodes[name]={name,value,type:name==='source_page'?'hidden':'text'};
+    return {
+      nodes,
+      querySelector(selector){
+        const m=String(selector).match(/\[name="([^"]+)"\]/);
+        if(m) return this.nodes[m[1]]||null;
+        if(String(selector).startsWith('#')) return this.nodes[String(selector).slice(1)]||null;
+        return null;
+      },
+      appendChild(node){this.nodes[node.name]=node;return node;}
+    };
+  }
+  global.location.pathname='/victorville-appliance-pickup/';
+  const legacy=mockForm({city:'Victorville',state:'California',appliances:'Washer and dryer',condition:'Fully Working'});
+  api.qualify(legacy);
+  assertEqual(legacy.nodes.source_page.value,'victorville-appliance-pickup','Legacy form gains page source');
+  assertEqual(legacy.nodes['Routing Region'].value,'Victorville Valley','Legacy California region');
+  assertEqual(legacy.nodes['Routing Phone'].value,'909-375-6685','Legacy California phone');
+  assertEqual(legacy.nodes['Routing Decision'].value,'RECRUITING_QUEUE','Legacy request never promises service');
+  assertEqual(legacy.nodes['Qualification Snapshot'].value,'Washer and dryer | Fully Working','Legacy plural appliances captured');
+  global.location.pathname='/fontana-appliance-pickup/';
+  const existing=mockForm({city:'Fontana',state:'California',appliance:'Refrigerator',condition:'Fully Working',source_page:'original-campaign-source'});
+  api.qualify(existing);
+  assertEqual(existing.nodes.source_page.value,'original-campaign-source','Existing page source preserved');
+  console.log('PASS: legacy form alias, page attribution, confirmed route metadata and preexisting attribution');
+
   console.log(`PASS: ${tests.length} customer routing regression cases, including regional-form labels`);
 }
 
