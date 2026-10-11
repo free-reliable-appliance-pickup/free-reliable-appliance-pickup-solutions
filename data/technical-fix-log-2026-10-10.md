@@ -42,3 +42,8 @@ This change log records technical exceptions for the protected pages without cha
 ## Final automated verification
 - Audit Priority Pickup Forms workflow run [#38103074005](https://github.com/free-reliable-appliance-pickup/free-reliable-appliance-pickup-solutions/actions/runs/38103074005) **PASSED** after the Duarte and Altadena attribution corrections: `PRIORITY_INTAKE_FORMS_CHECKED 42`, `PRIORITY_INTAKE_ERRORS 0`.
 - This verifies repository-source form structure and required fields; it is not a live customer form submission test or Google ranking measurement.
+
+## Next Inland Empire / San Gabriel Valley intake batch
+On 2026-10-10, fixed confirmed request-form technical defects in Rialto, Bloomington, Colton, Highland, Grand Terrace, Redlands, Yucaipa, Moreno Valley, Jurupa Valley, Eastvale, Corona, Norco, Walnut, Hacienda Heights, Avocado Heights, South San Jose Hills, San Gabriel, Monterey Park and City of Industry. Added missing `condition_details`, `location`, `stairs`, `property_type`, `photos_available`, `city` and `source_page` fields as applicable; corrected nonblank auto-selections where found. These updates are customer-accuracy/lead-routing repairs, **not speculative title, main content, internal-link or schema experiments**. The 909 regional numbers and Formspree endpoint were preserved.
+
+The audit script now covers 61 city pages. The related same-city, head-to-head competitor observations and dated ranking-experiment gates are recorded in `data/competitor-parity-2026-10-10-rialto-redlands-sgv.md`. Review its evidence before changing any protected page's substantive SEO structure. The 61-city GitHub Actions result must be checked independently and should not be described as passed until confirmed.
