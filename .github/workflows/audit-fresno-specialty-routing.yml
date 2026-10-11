@@ -8,6 +8,11 @@ on:
       - 'fresno-stove-oven-pickup/index.html'
       - 'fresno-freezer-pickup/index.html'
       - 'fresno-refrigerator-pickup/index.html'
+      - 'clovis-appliance-pickup/index.html'
+      - 'sanger-appliance-pickup/index.html'
+      - 'selma-appliance-pickup/index.html'
+      - 'fowler-appliance-pickup/index.html'
+      - 'fresno-county-appliance-pickup/index.html'
       - 'scripts/audit-fresno-specialty-routing.py'
       - '.github/workflows/audit-fresno-specialty-routing.yml'
   pull_request:
@@ -16,6 +21,11 @@ on:
       - 'fresno-stove-oven-pickup/index.html'
       - 'fresno-freezer-pickup/index.html'
       - 'fresno-refrigerator-pickup/index.html'
+      - 'clovis-appliance-pickup/index.html'
+      - 'sanger-appliance-pickup/index.html'
+      - 'selma-appliance-pickup/index.html'
+      - 'fowler-appliance-pickup/index.html'
+      - 'fresno-county-appliance-pickup/index.html'
       - 'scripts/audit-fresno-specialty-routing.py'
       - '.github/workflows/audit-fresno-specialty-routing.yml'
   workflow_dispatch:
