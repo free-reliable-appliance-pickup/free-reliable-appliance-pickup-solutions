@@ -1,14 +1,9 @@
 name: Turbo Priority SEO Batch
 
+# Manual-only: prevent automated mass city/page rewrites on normal commits.
+# Require review of operational coverage, genuine content quality, and experiments.
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'data/turbo-seo-network.json'
-      - 'scripts/turbo-seo-batch.py'
-      - 'scripts/turbo-final-audit.py'
-      - '.github/workflows/turbo-california-seo-batch.yml'
 
 permissions:
   contents: write
