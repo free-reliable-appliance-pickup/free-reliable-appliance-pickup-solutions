@@ -512,7 +512,7 @@ Call or text (503) 868-4455 or complete the request form below.
 
 <h2>Request Free Appliance Pickup in Portland OR</h2>
 
-<form action="https://formspree.io/f/mvzeapzd" method="POST">
+<form action="https://formspree.io/f/mvzeapzd" method="POST"><input type="hidden" name="source_page" value="portland-appliance-pickup">
 
 <input type="hidden" name="_subject" value="Portland Free Appliance Pickup Request">
 
@@ -528,7 +528,7 @@ Call or text (503) 868-4455 or complete the request form below.
 
 
 <label for="pickup-address">Pickup Address</label>
-<input id="pickup-address" type="text" name="address" placeholder="Pickup Address" required autocomplete="street-address">
+<input id="pickup-address" type="text" name="address" placeholder="Pickup Address" autocomplete="street-address">
 
 <label for="pickup-city">City</label>
 <input id="pickup-city" type="text" name="city" placeholder="City" required autocomplete="address-level2">
@@ -555,15 +555,7 @@ Call or text (503) 868-4455 or complete the request form below.
 
 
 <label for="pickup-condition">Appliance Condition</label>
-<select id="pickup-condition" name="condition" required>
-
-<option value="">Appliance Condition</option>
-<option>Fully Working</option>
-<option>Not Working</option>
-<option>Needs Repair</option>
-<option>Unknown</option>
-
-</select>
+<select id="pickup-condition" name="condition" required><option value="">Select condition</option><option value="Fully Working">Fully working</option><option value="Working With Issues">Working, but has a problem (explain below)</option><option value="Needs Repair">Needs repair</option><option value="Not Working">Not working</option><option value="Unknown">Unknown / not sure</option></select><label for="condition-details">Please explain any problem with the appliance</label><textarea id="condition-details" name="condition_details" rows="3" placeholder="Example: washing machine works but makes a loud noise. Explain any known problem."></textarea>
 
 
 <label for="pickup-message">Additional Information</label>
@@ -572,18 +564,18 @@ Call or text (503) 868-4455 or complete the request form below.
 
 <input type="hidden" name="state" value="Oregon">
 <label for="pickup-floor">Appliance Location</label>
-<select id="pickup-floor" name="location" required>
+<select id="pickup-floor" name="location">
 <option value="">Select Location</option><option>First floor</option><option>Second floor</option><option>Third floor or higher</option><option>Basement</option><option>Garage</option><option>Outside</option><option>Other</option>
 </select>
 <label for="pickup-stairs">Stairs</label>
-<select id="pickup-stairs" name="stairs" required>
+<select id="pickup-stairs" name="stairs">
 <option value="">Select Stairs</option><option>No stairs</option><option>1 flight</option><option>2 flights</option><option>3+ flights</option><option>Unknown</option>
 </select>
 <label for="pickup-access-notes">Pickup Access Notes</label>
 <textarea id="pickup-access-notes" name="access" placeholder="Parking, narrow doors, gates, elevators or other access details."></textarea>
 <label for="photo-information">Photo Link or Photo Information (optional)</label>
 <input id="photo-information" name="photo_information" type="text" placeholder="Paste a photo link, or tell us you can provide photos.">
-<button type="submit">
+<details style="margin:12px 0;padding:12px;border:1px solid #c9dacf;border-radius:10px"><summary style="cursor:pointer;font-weight:700">Property and pickup access details (optional)</summary><label>Property Type (optional)<select name="property_type"><option value="">Select property type</option><option>House</option><option>Apartment / Condo</option><option>Mobile / Manufactured Home</option><option>Rental / Property Management</option><option>Business / Commercial</option><option>Other</option></select></label></details><button type="submit">
 Request My Free Pickup
 </button>
 
