@@ -1,0 +1,26 @@
+name: Audit Priority Pickup Forms
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*-appliance-pickup/index.html'
+      - 'scripts/audit-priority-pickup-forms.py'
+      - '.github/workflows/audit-priority-pickup-forms.yml'
+  pull_request:
+    paths:
+      - '**/*-appliance-pickup/index.html'
+      - 'scripts/audit-priority-pickup-forms.py'
+      - '.github/workflows/audit-priority-pickup-forms.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-priority-intake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Validate condition and access intake
+        run: python3 scripts/audit-priority-pickup-forms.py
