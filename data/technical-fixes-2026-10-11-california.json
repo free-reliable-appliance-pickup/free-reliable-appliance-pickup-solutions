@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-11",
+  "changeKind": "Verified factual and conversion-routing technical fixes only; no speculative SEO copy rewrite",
+  "basis": "The site customer-routing.js relies on form name=state, name=city, and name=appliance. Hidden source_page distinguishes which city generated a lead.",
+  "protection": "Running SEO experiments are intentionally left in place with the original observation gates. Only conversion attribution, field compatibility and correcting Lancaster's factual 310 regional phone are changed. Search snippet phone may change where inaccurate.",
+  "before": "12 California forms lacked source_page; Hesperia/Victorville field name=appliances was incompatible with routing; Lancaster lacked state/appliance/condition and displayed 909 despite configured Antelope Valley 310.",
+  "after": "All twelve gain source_page; Hesperia and Victorville are compatible with routing; Lancaster now collects state, appliance and condition and advertises 310-774-4304. Form submissions have not been simulated; no false claims of lead delivery.",
+  "affected": [
+    {
+      "page": "/costa-mesa-appliance-pickup/",
+      "activeExperiment": "2026-10-04-california-anti-template-cleanup",
+      "evaluateNotBefore": "2026-10-14",
+      "changes": [
+        "hidden source_page attribution"
+      ]
+    },
+    {
+      "page": "/fountain-valley-appliance-pickup/",
+      "activeExperiment": "2026-10-05-fountain-valley-structure-concentration",
+      "evaluateNotBefore": "2026-10-15",
+      "changes": [
+        "hidden source_page attribution"
+      ]
+    },
+    {
+      "page": "/hesperia-appliance-pickup/",
+      "activeExperiment": "2026-10-05-hesperia-structure-concentration",
+      "evaluateNotBefore": "2026-10-15",
+      "changes": [
+        "hidden source_page attribution",
+        "rename plural appliance field to field expected by existing routing script"
+      ]
+    },
+    {
+      "page": "/huntington-beach-appliance-pickup/",
+      "activeExperiment": "2026-10-04-california-anti-template-cleanup",
+      "evaluateNotBefore": "2026-10-14",
+      "changes": [
+        "hidden source_page attribution"
+      ]
+    },
+    {
+      "page": "/irvine-appliance-pickup/",
+      "activeExperiment": "2026-10-04-california-anti-template-cleanup",
+      "evaluateNotBefore": "2026-10-14",
+      "changes": [
+        "hidden source_page attribution"
+      ]
+    },
+    {
+      "page": "/lake-forest-appliance-pickup/",
+      "activeExperiment": "2026-10-05-lake-forest-ctr-snippet",
+      "evaluateNotBefore": "2026-10-15",
+      "changes": [
+        "hidden source_page attribution"
+      ]
+    },
+    {
+      "page": "/lancaster-appliance-pickup/",
+      "activeExperiment": "2026-10-06-lancaster-people-first-concentration",
+      "evaluateNotBefore": "2026-10-16",
+      "changes": [
+        "hidden source_page attribution",
+        "add required structured California/appliance/condition fields",
+        "correct published Antelope Valley 310 phone consistently in links and metadata"
+      ]
+    },
+    {
+      "page": "/long-beach-appliance-pickup/",
+      "activeExperiment": "2026-10-06-long-beach-protected-concentration",
+      "evaluateNotBefore": "2026-10-16",
+      "changes": [
+        "hidden source_page attribution"
+      ]
+    },
+    {
+      "page": "/mission-viejo-appliance-pickup/",
+      "activeExperiment": "2026-10-04-california-anti-template-cleanup",
+      "evaluateNotBefore": "2026-10-14",
+      "changes": [
+        "hidden source_page attribution"
+      ]
+    },
+    {
+      "page": "/newport-beach-appliance-pickup/",
+      "activeExperiment": "2026-10-04-newport-beach-owner-page-cleanup",
+      "evaluateNotBefore": "2026-10-14",
+      "changes": [
+        "hidden source_page attribution"
+      ]
+    },
+    {
+      "page": "/temecula-appliance-pickup/",
+      "activeExperiment": "2026-10-04-temecula-riverside-boundary",
+      "evaluateNotBefore": "2026-10-14",
+      "changes": [
+        "hidden source_page attribution"
+      ]
+    },
+    {
+      "page": "/victorville-appliance-pickup/",
+      "activeExperiment": "2026-10-05-victorville-structure-concentration",
+      "evaluateNotBefore": "2026-10-15",
+      "changes": [
+        "hidden source_page attribution",
+        "rename plural appliance field to field expected by existing routing script"
+      ]
+    }
+  ],
+  "validation": "Review pull-request diff, SEO Experiment Guard, routing/form/phone audits and GitHub Pages deploy. Follow up separately on any failures.",
+  "notChanged": [
+    "canonical",
+    "H1",
+    "SEO narrative",
+    "FAQ answers",
+    "internal linking targets",
+    "schema intents",
+    "image selections",
+    "eligibility promises",
+    "city service status"
+  ]
+}
