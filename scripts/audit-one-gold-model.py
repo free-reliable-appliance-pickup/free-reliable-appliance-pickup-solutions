@@ -30,6 +30,12 @@ def inspect_city_page(slug, state_code, experiments, today):
         return {"citySlug": slug, "url": route, "exists": False, "status": "regional-request-review-only"}
     html = path.read_text(encoding="utf-8")
     head = html.split("</head>", 1)[0]
+    robots = re.findall(r"<meta\b[^>]*>", head, flags=re.IGNORECASE)
+    intentional_noindex = any(
+        html_attrs(tag).get("name", "").lower() == "robots"
+        and "noindex" in html_attrs(tag).get("content", "").lower()
+        for tag in robots
+    )
     tags = re.findall(r"<link\b[^>]*>", head, flags=re.IGNORECASE)
     canonicals = [html_attrs(tag).get("href") for tag in tags if html_attrs(tag).get("rel", "").lower() == "canonical"]
     h1_count = len(re.findall(r"<h1\b", html, flags=re.IGNORECASE))
@@ -67,7 +73,8 @@ def inspect_city_page(slug, state_code, experiments, today):
     return {
         "citySlug": slug, "url": route, "exists": True, "stateCode": state_code,
         "titlePresent": bool(re.search(r"<title>\s*[^<]+\s*</title>", head, flags=re.IGNORECASE)),
-        "canonicalMatches": canonicals == [DOMAIN + route],
+        "indexable": not intentional_noindex,
+        "canonicalMatches": None if intentional_noindex else canonicals == [DOMAIN + route],
         "h1Count": h1_count,
         "hasRequestForm": bool(request_forms),
         "formHasCityStateCondition": {"city", "state", "condition"}.issubset(input_names),
@@ -95,6 +102,7 @@ def main():
             selected = [c for c in cities if c.get("state_code") == code]
             all_pages = [inspect_city_page(slugify(c["city"]), code, experiments, today) for c in selected]
             existing = sum(p["exists"] for p in all_pages)
+            indexable = sum(p["exists"] and p.get("indexable") for p in all_pages)
             metro = {}
             for c, page in zip(selected, all_pages):
                 bucket = metro.setdefault(c.get("region") or "Other", {"registeredCities": [], "existingCityPages": [], "intakeOnly": []})
@@ -102,6 +110,7 @@ def main():
                 bucket["existingCityPages" if page["exists"] else "intakeOnly"].append(c["city"])
             phases.append({
                 "id": phase["id"], "state": code, "registeredCities": len(selected), "existingGeneralCityPages": existing,
+                "indexableGeneralCityPages": indexable, "consolidatedNoindexAliases": existing - indexable,
                 "missingCityPagesAreNotAutomaticWork": True,
                 "regionalCoverageRegistry": metro,
                 "priorityPageAudits": [inspect_city_page(slug, code, experiments, today) for slug in phase["priorityGeneralPages"]],
@@ -116,7 +125,8 @@ def main():
     ]
     issues = {
         "missingFormSource": [p["url"] for p in scanned if p["exists"] and p.get("hasRequestForm") and not p.get("formHasSourcePage")],
-        "canonicalMismatch": [p["url"] for p in scanned if p["exists"] and not p.get("canonicalMatches")],
+        "canonicalMismatch": [p["url"] for p in scanned if p["exists"] and p.get("canonicalMatches") is False],
+        "missingStructuredRoutingFields": [p["url"] for p in scanned if p["exists"] and p.get("hasRequestForm") and not p.get("formHasCityStateCondition")],
         "multipleOrMissingH1": [p["url"] for p in scanned if p["exists"] and p.get("h1Count") != 1],
         "brokenInternalReferences": [{"url": p["url"], "paths": p["localBrokenLinks"]} for p in scanned if p["exists"] and p.get("localBrokenLinks")],
     }
@@ -132,7 +142,7 @@ def main():
     out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     for phase in phases:
         if "state" in phase:
-            print(f"{phase['id']}: {phase['existingGeneralCityPages']} existing city pages / {phase['registeredCities']} registry cities")
+            print(f"{phase['id']}: {phase['existingGeneralCityPages']} city files ({phase['indexableGeneralCityPages']} indexable) / {phase['registeredCities']} registry cities")
             for name, bucket in phase["regionalCoverageRegistry"].items():
                 print(f"  {name}: {len(bucket['existingCityPages'])} existing, {len(bucket['intakeOnly'])} regional-intake-only")
     print("Protected experiments:", report["activeProtectedExperiments"])
