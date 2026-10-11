@@ -1,26 +1,25 @@
-# Partner dispatch: prevent wasted appliance pickup trips
-Updated: October 10, 2026. Owner: Free Reliable Appliance Pickup.
-Operational checklist; this does **not** imply any automated dispatch hold exists in Formspree or that a machine was independently inspected.
+# Appliance condition and partner pickup verification
+Updated October 10, 2026 — simplified at the owner's request.
 
-## Why this exists
-A customer may call a washing machine "working" because the motor turns or it spins, while loud rumbling/grinding indicates a likely mechanical problem (e.g., bearing). If a partner drives a long distance expecting a fully operational appliance, everybody loses time and fuel. Never equate "powers on" with "fully working."
+## Customer-facing form: keep it simple
+One required **Condition** dropdown:
+- Fully working
+- Working, but has a problem (explain below)
+- Needs repair
+- Not working
+- Unknown / not sure
 
-## Required checks before asking a partner to travel
-1. Read all submitted fields: `condition`, `condition_details`, `laundry_cycle_test`, `laundry_unusual_noise`, `laundry_condition_attestation`, `Dispatch Condition Gate`, `appliance`, and access details. An omitted field means not verified, not a pass.
-2. For **washer**: ask whether a complete wash and spin cycle finished normally, whether loud rumbling/grinding/banging/shaking occurred, whether it leaks, and whether error codes appear. For **dryer**: ask whether a complete drying/heating cycle worked normally, with no loud noises or overheating. For **refrigerator**: verify *actual cooling*, not merely power/lights. For **stove/range**: verify burners and oven operation safely, without asking a customer to perform hazardous tests.
-3. If the customer selected "Fully Working" but says loud noise, unusual vibration, leaks, no heat/cooling, or incomplete cycle: **correct the condition to "Works, but has problems" or "Needs repair"** before offering the lead. Do not promise free pickup for an individual broken machine. Mixed loads may be reviewed when about 80% of the major appliances are working.
-4. For distant trips or uncertain washing-machine reports, request recent clear photos and (if safe and practical) a brief operating/spin-cycle video. Never ask a customer to run an appliance that may be unsafe. Photos/videos reduce risk but do not prove a hidden mechanical issue is absent.
-5. Tell the pickup partner the reported condition and any noise/leaks **before** they accept the trip. Get explicit partner acceptance and communicate any qualification/coverage limits to the customer. Record the operator's acceptance and agreed plan; do not silently relabel damaged appliances as working.
-6. Verify the actual address, floor, stairs, gates, access, distance and appliance type before dispatch. Confirm time with both customer and partner. No pickup is guaranteed until the customer qualification and local coverage review are complete.
-7. If the pickup turns out materially different from the customer's description: stop, review options with the partner and customer, and do not pressure the partner into accepting it for free.
+One nearby text box: **What works and what does not? (please explain any issues)**.
+Example: "Washing machine works but makes a loud noise." When a customer reports a problem or a need for repair, the explanation is required; otherwise it can be left blank. This is intended for **all major appliances**, not just washers. No extra testing questionnaire, checkbox, or mandatory video is part of the form.
 
-## New online Formspree intake
-The shared `assets/customer-routing.js` inserts two **required** laundry answers ("full cycle tested?" and "unusual grinding/rumbling/banging/shaking?") plus a condition-disclosure attestation when the selected appliance includes a washer/dryer. It prevents contradictory "Fully Working" answers with browser validation, and requires the written problem explanation for known issues. The form request includes `Dispatch Condition Gate`, `Customer Laundry Cycle Test`, `Customer Reported Unusual Noise`, and `Customer Defect Explanation` as plain metadata.
+The shared `assets/customer-routing.js` provides the simple choices and description field on other Formspree intake pages as well, preserving the existing form action and routing metadata.
 
-**Important:** This is a review flag in a submitted form, not an integrated dispatch stop or independent verification. A person handling partner assignments **must inspect it before offering a trip**. The answers can still be mistaken or dishonest. An untested unit is not "fully working" merely because it starts.
+## Internal partner process — not extra questions on the website
+- Read `condition`, `condition_details`, `Customer Defect Explanation` and `Dispatch Condition Gate` on submitted inquiries. A reported problem is a **manual review flag**; it is not an integrated dispatch blocker.
+- A customer describing "works but makes a loud noise" is **not promising a fully working washer**. Disclose the report accurately to the pickup partner before they agree to drive.
+- The partner decides whether the appliance and trip make sense. Obtain explicit acceptance before a distant dispatch and confirm appointment access/address.
+- Free pickup remains conditional on qualifying appliances and partner/route availability; an individual broken appliance does not qualify automatically. Mixed multi-item loads may be reviewed when roughly 80% of the major appliances work.
+- Only follow up about actual testing, photos or video **if needed** for a particular case; do not make customers complete a testing process in the online form or ask them to operate unsafe appliances.
+- Record any mismatches at pickup and use them to improve intake quality, without presuming customers are deliberately dishonest.
 
-## Customer confirmation questions (phone/text)
-"Before we send someone, did the washer complete a full wash and spin cycle, without loud rumbling, grinding, banging, strong shaking or leaking? If it makes any unusual noise, please tell us now. Does it have any error codes? A machine that just turns on is not the same as fully working. Photos or a short safe spin video would help us review it."
-
-## Metrics to track
-Capture wasted trips caused by inaccurate condition, travel miles/time, category, failure reason, whether cycle/noise questions were answered, and whether the customer submitted media. Compare rate of mismatched-condition trips after this change. Don't equate more submissions with better-quality leads.
+This documentation replaces the superseded cycle-test, noise-question and attestation checklist from earlier October 10 edits.
