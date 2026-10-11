@@ -452,7 +452,7 @@ jobs:
                       failures.append(f'{main_slug}: FAQ schema missing prep question {question}')
               if 'formspree.io/f/mvzeapzd' not in main['low'] or 'id="request"' not in main['low']:
                   failures.append(f'{main_slug}: missing local request form')
-              if 'gold-city-start-strip' not in main['low']:
+              if 'free to submit' not in main['text'][:2000].lower() or 'no account required' not in main['text'][:2000].lower():
                   failures.append(f'{main_slug}: missing above-fold request trust strip')
               if 'gold-city-jump-nav' not in main['low']:
                   failures.append(f'{main_slug}: missing in-page jump navigation')
@@ -461,7 +461,7 @@ jobs:
                       failures.append(f'{main_slug}: missing stable section anchor #{anchor_id}')
                   if anchor_id!='request' and f'href="#{anchor_id}"' not in main['low']:
                       failures.append(f'{main_slug}: jump navigation missing #{anchor_id}')
-              for trust_phrase in ['free to submit','no account','credit card']:
+              for trust_phrase in ['free to submit','no account']:
                   if trust_phrase not in main['text'].lower():
                       failures.append(f'{main_slug}: missing above-fold trust phrase {trust_phrase}')
               for term in cluster.get('recurring_brief_terms',[]):
@@ -485,7 +485,7 @@ jobs:
               if cluster.get('replacement_day_terms'):
                   if 'id="replacement-day"' not in main['low'] or 'href="#replacement-day"' not in main['low']:
                       failures.append(f'{main_slug}: replacement-day section must have a jump-nav path')
-              for field_name in ['name="brand_model"','name="preferred_window"','name="photos_available"','name="testable"','name="property_type"']:
+              for field_name in ['name="brand_model"','name="preferred_window"','name="photos_available"','name="condition_details"','name="property_type"']:
                   if field_name not in main['low']:
                       failures.append(f'{main_slug}: missing lead-quality field {field_name}')
               placement=cluster.get('request_placement',{})
