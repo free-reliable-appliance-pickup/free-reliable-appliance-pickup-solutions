@@ -97,6 +97,29 @@ for city in CITIES:
         if not select_ok(form, name):
             errors.append(f"{city}: {name} must be required with a blank first option")
 
+# Guard against silent preselection of removal-access answers and cross-market
+# mobile contact routing on the two western foothill pickup pages.
+for city in ("la-crescenta", "montrose"):
+    path = Path(city + "-appliance-pickup") / "index.html"
+    if not path.is_file():
+        errors.append(f"{city}: missing foothill page")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    if "310-774-4304" in html or "+13107744304" in html:
+        errors.append(f"{city}: mismatched 310 mobile contact on 909 routing page")
+    for href in ('href="tel:+19093756685"', 'href="sms:+19093756685"'):
+        if href not in html:
+            errors.append(f"{city}: missing expected 909 contact action {href}")
+    if city == "la-crescenta":
+        forms = re.findall(r'<form\\b[^>]*>.*?</form>', html, re.I | re.S)
+        form = next((v for v in forms if "formspree.io/f/mvzeapzd" in v), None)
+        if not form:
+            errors.append(f"{city}: missing expected Formspree intake")
+        else:
+            for name in ("location", "stairs"):
+                if not select_ok(form, name):
+                    errors.append(f"{city}: {name} must be required with a blank first option")
+
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
 print(f"PRIORITY_INTAKE_ERRORS {len(errors)}")
 for error in errors:
