@@ -169,6 +169,8 @@ for slug, city in LAUNDRY_CITY_FORMS.items():
             errors.append(f"{slug} laundry: missing or incorrect {key} attribution")
     if 'type="hidden"' not in field(form, "city"):
         errors.append(f"{slug} laundry: source city must be an explicit hidden input")
+    if len(re.findall(r'\\bname="city"', form)) != 1:
+        errors.append(f"{slug} laundry: expected exactly one explicit city field")
     for key in ("phone", "appliance", "condition"):
         if not field(form, key):
             errors.append(f"{slug} laundry: missing {key}")
