@@ -1,0 +1,32 @@
+name: Audit Fresno Specialty Lead Routing
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'fresno-washer-dryer-pickup/index.html'
+      - 'fresno-stove-oven-pickup/index.html'
+      - 'fresno-freezer-pickup/index.html'
+      - 'fresno-refrigerator-pickup/index.html'
+      - 'scripts/audit-fresno-specialty-routing.py'
+      - '.github/workflows/audit-fresno-specialty-routing.yml'
+  pull_request:
+    paths:
+      - 'fresno-washer-dryer-pickup/index.html'
+      - 'fresno-stove-oven-pickup/index.html'
+      - 'fresno-freezer-pickup/index.html'
+      - 'fresno-refrigerator-pickup/index.html'
+      - 'scripts/audit-fresno-specialty-routing.py'
+      - '.github/workflows/audit-fresno-specialty-routing.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Fresno service form routing fields and mobile inputs
+        run: python3 scripts/audit-fresno-specialty-routing.py
