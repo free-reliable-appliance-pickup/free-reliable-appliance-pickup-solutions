@@ -1,10 +1,8 @@
 name: Promote California Demand Batch
 
+# Manual-only: bulk city/service content must never publish from a routine push.
+# Verify real service coverage and protected SEO experiments before dispatch.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/promote-california-demand-batch.yml'
   workflow_dispatch:
 
 permissions:
