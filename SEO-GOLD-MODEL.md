@@ -1,6 +1,42 @@
-# SEO Gold Model — Free Reliable Appliance Pickup
+# The One Gold Model — California → Portland/Salem → Nationwide
 
-Last updated: 2026-09-29
+Last updated: 2026-10-11
+
+The California Gold Standard, the verified practical video tactics and the nationwide dealer/pickup network all operate under this **one evidence-led, free-first model**. California determines the page-quality bar; established Oregon operations are the next deployment; later states inherit the quality bar only with verified coverage and differentiated local information.
+
+## Execution order
+
+1. **California first.** Validate the intended ranking owner, canonical, mobile calls and form, real image relevance, load qualification, links, local relevance, Search Console data and competitor gaps for Rancho Cucamonga → Upland → Claremont → La Verne → San Dimas → Pomona, then Fontana, Ontario, Montclair, SGV, LA County, Orange County, Riverside and Central Valley. Do not overwrite active SEO experiments: most protected California owners have evidence-review gates on 2026-10-13 to 2026-10-16.
+2. **Portland and Salem next.** Prioritize the existing metro hubs and 9 general city pages: Portland, Beaverton, Hillsboro, Gresham, Tigard, Happy Valley, Oregon City, Salem and Keizer. Portland/Salem general and laundry pages, Keizer, Beaverton, Gresham and Oregon City include protected experiments with review gates through 2026-10-17. Keep those variables frozen until reviewed.
+3. **Nearby Oregon cities, without doorway expansion.** The city registry contains 33 Portland/Salem metro names, of which 9 currently have general pages. The other 24 remain regional request-review opportunities, **not automatically approved, independently served, or new indexable page targets**. Priority-area discovery includes Lake Oswego, Milwaukie, Sherwood, Tualatin, Wilsonville, Troutdale and Clackamas near Portland; and Albany, Brooks, Corvallis, Dallas, Gervais, Hubbard, Independence, Jefferson, McMinnville, Monmouth, Mt. Angel, Newberg, Silverton, Stayton, Sublimity, Turner and Woodburn in the Salem regional registry. Determine actual route availability and unique customer value before creating any new page.
+4. **Nationwide only after validation.** Apply this architecture to established Denver/Aurora, Phoenix when partner coverage is confirmed, Washington, Nevada, Idaho, Utah, and others. Request-only / partner-recruiting regions can use a truthful hub or request intake, never fictitious local branches.
+
+## One-page gold acceptance checklist
+
+For every **eligible, indexable** city page: one H1; one self-canonical; title/description matched to that city's actual request intent; accurate phone or form-only intake; reachable fast mobile request; appliance condition and access questions; real, correct appliance images; useful unique local removal/disposal information with official references; honest qualification and routing; links to parent state/region and relevant supporting service pages; no repetitive keyword lists. The general city page owns broad pickup; laundry/service pages own only their distinct appliance intent.
+
+Measure finalized Search Console query × page × device data, live city-query visibility, form/phone leads, eligibility, completed pickups and legitimate referring domains. Rank #1 is the ambition, not a guarantee. **Do not** count research as deployment, drafts as outreach, or outreach as earned backlinks.
+
+## Practical lessons consolidated from videos
+
+- **GSC:** Improve high-impression/low-CTR pages and relevant queries at positions 7–20; diagnose the exact query's ranking URL before changing it.
+- **Competitors:** Compare actual content and search intent, reviews/FAQs, relevant published backlinks and honest Google Business categories with public competitors. PlePer/GMB Spy may help GBP research, but categories must accurately describe the business; do not change profiles just to mimic competitors.
+- **Technical first:** Diagnose 404s, duplicate/cross-city intent, canonicals, schema, image quality and broken internal links before expansion. Avoid mass noindex/rewrite actions without measured evidence.
+- **Authority:** Earn real relevant business, supplier, landlord, retailer, reuse/recycling and referral mentions. Avoid low-quality bulk directories, paid ranking links and fake listings.
+- **Conversion and trust:** Accurate free-pickup qualification, mobile call/text, accessible forms, real pictures, service alternatives and genuine business experience matter more than vanity page counts.
+- **Network:** Appliance Deal Flow USA recruits and verifies partner/operators; customer-facing Free Reliable Appliance Pickup content remains separate and reflects verified service capacity.
+
+## Controlled rollout tooling
+
+- Configuration: `data/one-gold-model-rollout.json`.
+- Factual QA command: `python3 scripts/audit-one-gold-model.py`, with JSON report `reports/one-gold-model-audit.json`.
+- GitHub Actions: `Audit One Gold Model rollout` generates a report on request, relevant pull requests or relevant changes to main. This audit is read-only: it does **not** publish a page, confirm live ranking, or promise coverage.
+- Frozen-page guard: `data/seo-experiments.json` + `scripts/seo-experiment-guard.py`. Honor evaluateNotBefore and finalized GSC before making another ranking-variable change.
+- Operational truth: `data/market-routing.json`. Regional intake must not be described as independently confirmed service for every nearby city.
+
+---
+
+## Original California quality architecture (retained)
 
 ## Primary scoreboard
 

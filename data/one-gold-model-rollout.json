@@ -1,0 +1,101 @@
+{
+  "version": "2026-10-11",
+  "name": "The One Gold Model",
+  "purpose": "Evidence-led, mobile-first, qualification-based, California-quality rollout to established Oregon metros and later markets without scaled doorway pages.",
+  "guardrails": {
+    "doNotAutomaticallyCreateOrIndexCityPages": true,
+    "obeySeoExperimentFreeze": true,
+    "neverPromiseUnconfirmedPickup": true,
+    "noFictionalStorefrontsOrReviews": true,
+    "noMassLowValueLinks": true,
+    "needCitySpecificEvidenceAndConfirmedCoverage": true,
+    "onlyUseAuthorizedBusinessContacts": true
+  },
+  "dataSources": {
+    "cityRegistry": "data/cities.json",
+    "operationalRouting": "data/market-routing.json",
+    "protectedExperiments": "data/seo-experiments.json",
+    "ownerIntent": "data/search-intent-owners.json",
+    "existingGoldModel": "SEO-GOLD-MODEL.md"
+  },
+  "rollout": [
+    {
+      "id": "phase-1-california",
+      "stateCode": "CA",
+      "order": 1,
+      "focus": "Validate and refine already published priority pages after protected experiments reach their evidence-review gates.",
+      "priorityGeneralPages": [
+        "rancho-cucamonga",
+        "upland",
+        "claremont",
+        "la-verne",
+        "san-dimas",
+        "pomona",
+        "fontana",
+        "ontario",
+        "montclair",
+        "pasadena",
+        "covina",
+        "west-covina",
+        "anaheim",
+        "irvine",
+        "riverside",
+        "fresno",
+        "sacramento",
+        "stockton"
+      ],
+      "rule": "Review indexability, canonical, forms, titles, image appropriateness, internal intent ownership and finalized GSC query/page evidence. Do not overwrite protected experiment variables."
+    },
+    {
+      "id": "phase-2-portland-salem",
+      "stateCode": "OR",
+      "order": 2,
+      "focus": "Bring established Portland and Salem metro customer experience up to the same quality bar; prioritize existing useful city pages, not new city-name swaps.",
+      "priorityGeneralPages": [
+        "portland",
+        "salem",
+        "keizer",
+        "beaverton",
+        "hillsboro",
+        "gresham",
+        "tigard",
+        "happy-valley",
+        "oregon-city"
+      ],
+      "regionalCitySource": "Use Oregon Portland Metro and Salem Metro records from data/cities.json; nearby cities without dedicated pages remain request-review through the appropriate hub until city-specific coverage and useful original content are verified.",
+      "rule": "Keep each city's actual access, qualified pickup process, local government alternatives and correct nearby-page links distinct. Only create additional indexable pages with verified capacity and differentiated information."
+    },
+    {
+      "id": "phase-3-nationwide",
+      "order": 3,
+      "focus": "Apply the proven model only to real direct/approved-partner markets, using state hubs and national request intake elsewhere.",
+      "priorityRegions": [
+        "Denver Metro",
+        "Phoenix Metro",
+        "Puget Sound",
+        "Las Vegas Valley",
+        "Sacramento Metro",
+        "Central Valley",
+        "Oregon Coast",
+        "Treasure Valley",
+        "Wasatch Front"
+      ],
+      "rule": "Audit routing eligibility and business facts first; do not present partner-recruiting areas as established direct branches."
+    }
+  ],
+  "scorecard": [
+    "correct search owner and canonical",
+    "eligible city coverage",
+    "mobile call and request path",
+    "accurate contact/phone",
+    "form source and condition capture",
+    "real category-matched photos",
+    "local alternative references",
+    "natural useful internal links",
+    "legitimate authority signals",
+    "GSC finalized query/click evidence",
+    "qualified calls and forms",
+    "completed pickups"
+  ],
+  "auditScope": "Repository configuration and pages. Does not itself measure live Google rank, publish new city pages, or change service capacity."
+}

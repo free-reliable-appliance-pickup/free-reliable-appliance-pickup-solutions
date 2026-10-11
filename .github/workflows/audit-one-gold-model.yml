@@ -1,0 +1,36 @@
+name: Audit One Gold Model rollout
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/one-gold-model-rollout.json'
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - 'data/seo-experiments.json'
+      - 'scripts/audit-one-gold-model.py'
+      - '.github/workflows/audit-one-gold-model.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/one-gold-model-rollout.json'
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - 'data/seo-experiments.json'
+      - 'scripts/audit-one-gold-model.py'
+      - '.github/workflows/audit-one-gold-model.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate factual rollout and coverage report
+        run: python3 scripts/audit-one-gold-model.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: one-gold-model-rollout-report
+          path: reports/one-gold-model-audit.json
