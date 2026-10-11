@@ -1,0 +1,209 @@
+{
+  "version": "2026-10-11.1",
+  "project": "ONE GOLD MODEL V1",
+  "market": "California",
+  "source": "GSC SEO & Content Planner connection; finalized Google Search Console data",
+  "property": "sc-domain:freereliableappliancepickup.com",
+  "window": {
+    "start": "2026-09-11",
+    "end": "2026-10-08"
+  },
+  "captured": "2026-10-11",
+  "purpose": "Evidence-based California prioritization without speculative rewrites or accidental changes during active experiment freezes.",
+  "caution": [
+    "GSC average position combines multiple impressions and contexts; not a universal live rank.",
+    "Site/page-level CTR entries are not attached to a known query and must be filtered by exact search intent before editing.",
+    "Multiple URLs returned for the same query signal potential ownership confusion; they are not proof that every page has a technical canonical issue.",
+    "Do not deploy content-intent changes before the page's evaluateNotBefore date and finalized data review."
+  ],
+  "problems": [
+    {
+      "id": "ca-upland-exact-city-ownership",
+      "priority": 1,
+      "query": "free appliance pickup upland",
+      "impressions": 53,
+      "clicks": 0,
+      "averagePosition": 22.06,
+      "observedPages": 11,
+      "targetOwner": "/upland-appliance-pickup/",
+      "misalignedResults": [
+        {
+          "page": "/upland-washer-dryer-pickup/",
+          "impressions": 14,
+          "position": 10.93
+        },
+        {
+          "page": "/san-bernardino-county-appliance-pickup/",
+          "impressions": 12,
+          "position": 11.25
+        },
+        {
+          "page": "/san-bernardino-appliance-pickup/",
+          "impressions": 6,
+          "position": 13.83
+        }
+      ],
+      "protectedThrough": "2026-10-14",
+      "nextAction": "Compare exact-query page ownership by finalized GSC query × page × device. Following freeze review, make ONE targeted intent handoff from laundry/region support toward Upland city general if warranted; retain distinct laundry value."
+    },
+    {
+      "id": "ca-fontana-exact-city-ownership",
+      "priority": 1,
+      "query": "free appliance pickup fontana",
+      "impressions": 40,
+      "clicks": 0,
+      "averagePosition": 14.3,
+      "observedPages": 6,
+      "targetOwner": "/fontana-appliance-pickup/",
+      "misalignedResults": [
+        {
+          "page": "/fontana-stove-oven-pickup/",
+          "impressions": 13,
+          "position": 18.69
+        },
+        {
+          "page": "/southern-california-appliance-pickup/",
+          "impressions": 11,
+          "position": 6.18
+        },
+        {
+          "page": "/fontana-appliance-pickup/",
+          "impressions": 7,
+          "position": 21.57
+        }
+      ],
+      "protectedThrough": "2026-10-14",
+      "nextAction": "After experiment review, check whether specialty stove and regional pages reinforce instead of compete with the exact-city general intent, and ensure stove imagery remains appliance-correct."
+    },
+    {
+      "id": "ca-fresno-dryer-ownership",
+      "priority": 1,
+      "query": "free dryer pickup fresno",
+      "impressions": 41,
+      "clicks": 0,
+      "averagePosition": 14.2,
+      "observedPages": 9,
+      "targetOwnerCandidate": "/fresno-washer-dryer-pickup/",
+      "misalignedResults": [
+        {
+          "page": "/sanger-appliance-pickup/",
+          "impressions": 9,
+          "position": 8.67
+        },
+        {
+          "page": "/clovis-appliance-pickup/",
+          "impressions": 7,
+          "position": 3.14
+        },
+        {
+          "page": "/visalia-appliance-pickup/",
+          "impressions": 6,
+          "position": 22.67
+        }
+      ],
+      "protectedThrough": "2026-10-14",
+      "nextAction": "Validate which actual Fresno laundry page owns dryer searches; strengthen distinct Fresno-specific usefulness and avoid location-swapped cross-city keyword links after gate."
+    },
+    {
+      "id": "ca-clovis-ctr-review",
+      "priority": 2,
+      "page": "/clovis-appliance-pickup/",
+      "impressions": 99,
+      "clicks": 0,
+      "averagePosition": 7.79,
+      "protectedThrough": "2026-10-14",
+      "nextAction": "Filter to exact Clovis city-intent queries first; don't change title just from 99 site-level impressions."
+    },
+    {
+      "id": "ca-homepage-ctr-review",
+      "priority": 2,
+      "page": "/",
+      "impressions": 161,
+      "clicks": 0,
+      "averagePosition": 6.03,
+      "protectedThrough": "2026-10-14",
+      "nextAction": "Review query and mobile mix, remove overlap with local city intent only if real evidence supports."
+    },
+    {
+      "id": "ca-los-angeles-refrigerator",
+      "priority": 2,
+      "query": "free refrigerator pick up",
+      "page": "/los-angeles-appliance-pickup/",
+      "impressions": 17,
+      "clicks": 1,
+      "averagePosition": 6.24,
+      "protectedThrough": "2026-10-14",
+      "nextAction": "Compare generic refrigerator intent against the national refrigerator owner; preserve Los Angeles city general intent."
+    },
+    {
+      "id": "ca-pasadena-query-review",
+      "priority": 2,
+      "query": "appliance pick up free",
+      "page": "/pasadena-appliance-pickup/",
+      "impressions": 16,
+      "clicks": 0,
+      "averagePosition": 9.3,
+      "protectedThrough": "2026-10-14",
+      "nextAction": "Review exact Pasadena query separately. This broad generic query does not establish Pasadena city rank; protect experiment through its gate."
+    },
+    {
+      "id": "ca-about-ctr-review",
+      "priority": 3,
+      "page": "/about/",
+      "impressions": 41,
+      "clicks": 0,
+      "averagePosition": 5.37,
+      "protectedThrough": "2026-10-14",
+      "nextAction": "Inspect actual queries and branded vs nonbranded source before making any meta edits."
+    }
+  ],
+  "executionRules": {
+    "freezeRespect": true,
+    "technicalSafetyFixesAllowedWithLog": true,
+    "changeOneMajorRankingVariableAtOnce": true,
+    "reviewFinalizedGSC": true,
+    "reviewDate": "2026-10-14",
+    "noAutoRewrites": true,
+    "noAutomatedNewCityPages": true,
+    "applyCaliforniaQualityToOregonAfterEvidence": true
+  },
+  "pageInsights": {
+    "uplandCityGeneral": {
+      "url": "/upland-appliance-pickup/",
+      "returnedPagePerformance": null,
+      "note": "GSC page-insights endpoint returned no current page row in the selected period; this does not prove the page is unindexed."
+    },
+    "uplandLaundry": {
+      "url": "/upland-washer-dryer-pickup/",
+      "impressions": 39,
+      "clicks": 0,
+      "averagePosition": 8.54,
+      "exactGeneralQueryImpressions": 14,
+      "exactGeneralQueryPosition": 10.93
+    },
+    "fontanaCityGeneral": {
+      "url": "/fontana-appliance-pickup/",
+      "impressions": 31,
+      "clicks": 0,
+      "averagePosition": 11.45,
+      "exactGeneralQueryImpressions": 7,
+      "exactGeneralQueryPosition": 21.57
+    },
+    "fontanaStove": {
+      "url": "/fontana-stove-oven-pickup/",
+      "impressions": 23,
+      "clicks": 4,
+      "averagePosition": 12.87,
+      "exactGeneralQueryImpressions": 13,
+      "exactGeneralQueryPosition": 18.69,
+      "protection": "Page already earns clicks on other queries. Do not redirect, remove, canonicalize away, or noindex this page without evidence. Preserve stove intent and correct general-query overlap only after the experiment gate."
+    },
+    "fresnoLaundry": {
+      "url": "/fresno-washer-dryer-pickup/",
+      "impressions": 4,
+      "clicks": 0,
+      "averagePosition": 12.25,
+      "note": "Low impression sample. Do not assume this is the winning Fresno dryer page without query-page verification."
+    }
+  }
+}
