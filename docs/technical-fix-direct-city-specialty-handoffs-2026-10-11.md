@@ -1,6 +1,6 @@
 # Verified specialty handoff link correction — October 11, 2026
 
-Technical correction prompted by passing GitHub Internal Link Graph audit run 38112603276 (job 114391090648) reporting **0 broken links** but **7 missing direct handoffs** from active main city or regional pages to already-existing appliance-specific pages.
+Technical correction prompted by passing GitHub Internal Link Graph audit run 38112603276 (job 114391090648) reporting **0 broken links** but **8 missing direct handoffs** from active main city or regional pages to already-existing appliance-specific pages.
 
 Fixes:
 - Baldwin Park, Costa Mesa and Huntington Beach main pages: use the local refrigerator page instead of a generic refrigerator guide.
