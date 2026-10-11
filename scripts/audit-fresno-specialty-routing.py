@@ -66,9 +66,9 @@ for slug in SLUGS:
     if not re.search(r'<button\b[^>]*\btype="submit"', form, re.I):
         errors.append(f"{slug}: missing explicit submit button")
 
-# Searchers can land on Clovis/Sanger/Selma/Fowler pages while their actual
-# appliance pickup address is in Fresno. The city must be customer-editable,
-# not a hidden hard-coded value, for customer-routing.js to classify correctly.
+# Searchers may land on Clovis, Sanger, Selma and Fowler when their
+# appliance pickup address is actually in Fresno. Preserve a visible,
+# editable city field to let customer-routing.js classify the address.
 NEARBY_CITY_PAGES = {
     "clovis-appliance-pickup": "Clovis",
     "sanger-appliance-pickup": "Sanger",
@@ -82,7 +82,7 @@ for slug, original_city in NEARBY_CITY_PAGES.items():
         errors.append(f"{slug}: missing nearby-city page")
         continue
     html = path.read_text(encoding="utf-8", errors="replace")
-    forms = [f for f in re.findall(r"<form\\b[^>]*>.*?</form>", html, re.I | re.S) if FORM_ENDPOINT in f]
+    forms = [item for item in re.findall(r"<form\b[^>]*>.*?</form>", html, re.I | re.S) if FORM_ENDPOINT in item]
     if len(forms) != 1:
         errors.append(f"{slug}: expected one approved nearby-city pickup form")
         continue
@@ -93,22 +93,22 @@ for slug, original_city in NEARBY_CITY_PAGES.items():
     if f'value="{original_city}"' not in city:
         errors.append(f"{slug}: prefilled city no longer matches page's local city")
     for name in ("state", "source_page", "appliance", "condition", "phone", "zip"):
-        if not re.search(r'\\bname=["\\']' + re.escape(name) + r'["\\']', form, re.I):
-            errors.append(f"{slug}: required lead attribution field {name} missing")
+        if f'name="{name}"' not in form:
+            errors.append(f"{slug}: lead attribution field {name} missing")
     if 'src="/assets/customer-routing.js"' not in html:
         errors.append(f"{slug}: missing customer routing script")
     if PHONE_LINK not in html:
         errors.append(f"{slug}: wrong contact line")
 
-# A county-wide page cannot accurately assign the routing city from a
-# combined free-text "City & ZIP" field. Collect city and ZIP separately.
+# A county-wide page must collect the actual city and ZIP separately;
+# a combined city_zip field cannot be classified by customer-routing.js.
 county_slug = "fresno-county-appliance-pickup"
 county_path = Path(county_slug) / "index.html"
 if not county_path.exists():
     errors.append("Fresno County pickup page missing")
 else:
     html = county_path.read_text(encoding="utf-8", errors="replace")
-    forms = [f for f in re.findall(r"<form\\b[^>]*>.*?</form>", html, re.I | re.S) if FORM_ENDPOINT in f]
+    forms = [item for item in re.findall(r"<form\b[^>]*>.*?</form>", html, re.I | re.S) if FORM_ENDPOINT in item]
     if len(forms) != 1:
         errors.append("Fresno County page: expected exactly one pickup form")
     else:
@@ -119,10 +119,10 @@ else:
             errors.append("Fresno County: actual city must be required and blank for entry")
         if not zip_input or 'required' not in zip_input:
             errors.append("Fresno County: ZIP must be a separate required field")
-        if re.search(r'\\bname=["\\']city_zip["\\']', form):
+        if 'name="city_zip"' in form:
             errors.append("Fresno County: ambiguous combined city_zip field remains")
         for name in ("state", "source_page", "appliance", "condition"):
-            if not re.search(r'\\bname=["\\']' + re.escape(name) + r'["\\']', form, re.I):
+            if f'name="{name}"' not in form:
                 errors.append(f"Fresno County: attribution field {name} missing")
         if 'src="/assets/customer-routing.js"' not in html:
             errors.append("Fresno County: customer routing script missing")
