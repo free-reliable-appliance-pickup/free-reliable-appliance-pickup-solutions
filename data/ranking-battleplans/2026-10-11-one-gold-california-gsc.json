@@ -166,5 +166,44 @@
     "noAutoRewrites": true,
     "noAutomatedNewCityPages": true,
     "applyCaliforniaQualityToOregonAfterEvidence": true
+  },
+  "pageInsights": {
+    "uplandCityGeneral": {
+      "url": "/upland-appliance-pickup/",
+      "returnedPagePerformance": null,
+      "note": "GSC page-insights endpoint returned no current page row in the selected period; this does not prove the page is unindexed."
+    },
+    "uplandLaundry": {
+      "url": "/upland-washer-dryer-pickup/",
+      "impressions": 39,
+      "clicks": 0,
+      "averagePosition": 8.54,
+      "exactGeneralQueryImpressions": 14,
+      "exactGeneralQueryPosition": 10.93
+    },
+    "fontanaCityGeneral": {
+      "url": "/fontana-appliance-pickup/",
+      "impressions": 31,
+      "clicks": 0,
+      "averagePosition": 11.45,
+      "exactGeneralQueryImpressions": 7,
+      "exactGeneralQueryPosition": 21.57
+    },
+    "fontanaStove": {
+      "url": "/fontana-stove-oven-pickup/",
+      "impressions": 23,
+      "clicks": 4,
+      "averagePosition": 12.87,
+      "exactGeneralQueryImpressions": 13,
+      "exactGeneralQueryPosition": 18.69,
+      "protection": "Page already earns clicks on other queries. Do not redirect, remove, canonicalize away, or noindex this page without evidence. Preserve stove intent and correct general-query overlap only after the experiment gate."
+    },
+    "fresnoLaundry": {
+      "url": "/fresno-washer-dryer-pickup/",
+      "impressions": 4,
+      "clicks": 0,
+      "averagePosition": 12.25,
+      "note": "Low impression sample. Do not assume this is the winning Fresno dryer page without query-page verification."
+    }
   }
 }
