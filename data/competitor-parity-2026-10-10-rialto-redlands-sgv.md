@@ -39,3 +39,41 @@ Fixed machine condition details, city/source attribution, access stairs/location
 For each same-city exact search in Google Search Console, export finalized 28-day impressions, clicks, CTR, position and **the ranking landing URL**, with mobile/desktop split; separately measure completed valid forms and verified phone-click leads. Compare each to its experiment baseline. Record a keep/revise/revert decision; changes without verified data should stay on hold.
 
 Reference: Google Search Central people-first content guidance — https://developers.google.com/search/docs/fundamentals/creating-helpful-content
+
+## Expanded matched-market audit: all 19 repaired cities
+
+Live main-content H2 counts were collected from both domains on 2026-10-10; the competitor counts apply to verified public URLs. The two sites do not necessarily have comparable headings or section objectives. Use the difference to triage *possible* content bloat, not as a ranking formula.
+
+| City | Our H2 | TakeMyAppliance H2 | Matched competitor city URL / observation | Review priority |
+|---|---:|---:|---|---|
+| Rialto | 28 | 7 | [Rialto](https://www.takemyappliance.com/locations/southern-california/rialto) | High — repeated local and appliance-category introductions |
+| Bloomington | 9 | — | No same-city Southern California page at `/bloomington` (404); the Indiana Bloomington page is **not** an appropriate comparison | Keep current concise layout; audit regional hub links |
+| Colton | 9 | 6 | [Colton](https://www.takemyappliance.com/locations/southern-california/colton) | Maintain / control comparison |
+| Highland | 26 | 6 | [Highland](https://www.takemyappliance.com/locations/southern-california/highland) | High — repeated local and service-category sections |
+| Grand Terrace | 18 | 6 | [Grand Terrace](https://www.takemyappliance.com/locations/southern-california/grand-terrace) | Medium — consider duplicate-section consolidation after review |
+| Redlands | 26 | 7 | [Redlands](https://www.takemyappliance.com/locations/southern-california/redlands) | High — keep genuine access/disposal facts and simplify duplicate intros |
+| Yucaipa | 9 | 5 | [Yucaipa](https://www.takemyappliance.com/locations/southern-california/yucaipa) | Maintain / control comparison |
+| Moreno Valley | 26 | 7 | [Moreno Valley](https://www.takemyappliance.com/locations/southern-california/moreno-valley) | High — check for redundant city/page intent |
+| Jurupa Valley | 26 | 6 | [Jurupa Valley](https://www.takemyappliance.com/locations/southern-california/jurupa-valley) | High — check for redundant city/page intent |
+| Eastvale | 13 | 6 | [Eastvale](https://www.takemyappliance.com/locations/southern-california/eastvale) | Medium — protect substantive access details |
+| Corona | 25 | 7 | [Corona](https://www.takemyappliance.com/locations/southern-california/corona) | High — potential multi-section overlap |
+| Norco | 18 | 6 | [Norco](https://www.takemyappliance.com/locations/southern-california/norco) | Medium — local ranch/rural removal path needs genuine relevance |
+| Walnut | 12 | 5 | [Walnut](https://www.takemyappliance.com/locations/southern-california/walnut) | Maintain / control comparison |
+| Hacienda Heights | 11 | 5 | [Hacienda Heights CDP](https://www.takemyappliance.com/locations/southern-california/hacienda-heights-cdp) — different actual slug | Maintain; do **not** misclassify competitor as absent |
+| Avocado Heights | 12 | — | No matched public page at `/avocado-heights` (404) | Validate actual searches and county hub; do not infer rankings |
+| South San Jose Hills | 12 | — | No matched public page at `/south-san-jose-hills` (404) | Validate actual searches and county hub; do not infer rankings |
+| San Gabriel | 13 | 6 | [San Gabriel](https://www.takemyappliance.com/locations/southern-california/san-gabriel) | Medium — assess GSC intent ownership |
+| Monterey Park | 12 | 6 | [Monterey Park](https://www.takemyappliance.com/locations/southern-california/monterey-park) | Maintain / control comparison |
+| City of Industry | 12 | — | No matched public page at `/city-of-industry` (404), but other slug/coverage could exist | Validate commercial lead intent; avoid invented competitor absence claims |
+
+**Note:** A 404 at one guessed URL does not establish the absence of all competitor coverage or organic visibility. For any unconfirmed slug, inspect their current directory and the actual Google result before drawing that conclusion.
+
+### Action order and existing protection
+
+1. **After Oct. 14:** assess the finalized, protected SEO experiments for Highland, Moreno Valley, Jurupa Valley, Corona, Colton, Norco and Monterey Park. If GSC supports revision, simplify truly redundant material in *one controlled city test at a time*.
+2. **After Oct. 15:** apply the same evidence-driven decision to Rialto, Redlands and Grand Terrace; do not change title or main content before their observation gates.
+3. **Keep controls:** Bloomington, Colton, Yucaipa, Walnut, Hacienda Heights and Monterey Park have materially tighter page structures. Do not rewrite them to hit an arbitrary section count.
+4. **Link/authority work:** independently verify exact query/page ownership, city-specific SERPs, non-branded mentions, quality local citations, mobile performance and actual qualified contact conversions. Heading counts do not answer those questions.
+5. **Do not mirror competitor guarantees** of free removal of every broken appliance. Our existing eligibility rules, 80% mixed load threshold, qualifying dishwasher/microwave limitations, route confirmation and accurate phone mapping remain non-negotiable.
+
+**Deployment verification:** All 19 newly fixed pages were subsequently fetched at their normal live URLs. Their intake fields and Formspree destination were confirmed published. The repo's 61-page automated source-form audit passed with zero errors; this is not a verified Google ranking change.
