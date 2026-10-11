@@ -1,0 +1,28 @@
+name: Audit Whole-Site SEO Recovery
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/audit-sitewide-recovery.py'
+      - '.github/workflows/audit-sitewide-recovery.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/audit-sitewide-recovery.py'
+      - '.github/workflows/audit-sitewide-recovery.yml'
+permissions:
+  contents: read
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Analyze all existing page files without changing them
+        run: python3 scripts/audit-sitewide-recovery.py
+      - name: Keep complete audit as downloadable job artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sitewide-seo-recovery-inventory
+          path: reports/sitewide-recovery-audit.json
+          retention-days: 30
