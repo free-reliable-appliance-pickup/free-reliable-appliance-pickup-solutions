@@ -151,20 +151,18 @@ function enhancePhotoFirstIntake(){
    Existing HTML fields remain useful when JavaScript is unavailable. */
 function enhanceApplianceConditionIntake(){
   const choices=[
-    ['','Select actual condition'],
+    ['','Select condition'],
     ['Fully Working','Fully working'],
     ['Working With Issues','Working, but has a problem (explain below)'],
-    ['Needs Repair','Needs repair — not fully working'],
+    ['Needs Repair','Needs repair'],
     ['Not Working','Not working'],
-    ['Unknown','Unknown / not tested'],
-    ['Mixed Load - Mixed Conditions','Multiple appliances — describe each condition']
+    ['Unknown','Unknown / not sure']
   ];
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
     const select=form.querySelector('select[name="condition"]');
     if(!select)return;
-    const alreadyClear=Array.from(select.options).some(option=>option.value==='Working With Issues');
     const oldValue=String(select.value||'').trim();
-    if(!alreadyClear){
+    if(!Array.from(select.options).some(option=>option.value==='Working With Issues')){
       while(select.firstChild)select.removeChild(select.firstChild);
       choices.forEach(([value,label])=>{
         const option=document.createElement('option');
@@ -172,25 +170,33 @@ function enhanceApplianceConditionIntake(){
         option.textContent=label;
         select.appendChild(option);
       });
-      const aliases={'fully working':'Fully Working','needs minor repair':'Needs Repair','needs repair':'Needs Repair','not working':'Not Working','unknown':'Unknown','mixed load - majority working':'Mixed Load - Mixed Conditions'};
+      const aliases={'fully working':'Fully Working','needs minor repair':'Needs Repair','needs repair':'Needs Repair','not working':'Not Working','unknown':'Unknown','mixed load - majority working':'Unknown'};
       select.value=choices.some(([value])=>value===oldValue)?oldValue:(aliases[oldValue.toLowerCase()]||'');
     }
-    if(form.querySelector('[name="condition_details"]'))return;
-    const label=document.createElement('label');
-    label.className='site-condition-details';
-    label.style.cssText='display:block;margin:12px 0;font-weight:600';
-    label.textContent='What works and what does not? (please explain any issues)';
-    const details=document.createElement('textarea');
-    details.name='condition_details';
-    details.rows=3;
-    details.placeholder='Example: washer spins but leaks; dryer runs but no heat; refrigerator powers on but does not cool. For several appliances, list each condition.';
-    details.style.cssText='display:block;width:100%;box-sizing:border-box;margin-top:6px;font-weight:400';
-    label.appendChild(details);
-    const holder=select.closest('label')||select.closest('.field')||select;
-    holder.insertAdjacentElement('afterend',label);
+    let details=form.querySelector('[name="condition_details"]');
+    if(!details){
+      const label=document.createElement('label');
+      label.className='site-condition-details';
+      label.style.cssText='display:block;margin:12px 0;font-weight:600';
+      label.textContent='Please explain any problem with the appliance';
+      details=document.createElement('textarea');
+      details.name='condition_details';
+      details.rows=3;
+      details.placeholder='Example: washing machine works but makes a loud noise.';
+      details.style.cssText='display:block;width:100%;box-sizing:border-box;margin-top:6px;font-weight:400';
+      label.appendChild(details);
+      const holder=select.closest('label')||select.closest('.field')||select;
+      holder.insertAdjacentElement('afterend',label);
+    }
+    const update=()=>{
+      const hasProblem=['Working With Issues','Needs Repair','Not Working'].includes(select.value);
+      details.required=hasProblem;
+      details.setAttribute('aria-required',String(hasProblem));
+    };
+    select.addEventListener('change',update);
+    update();
   });
 }
-
 
 function enhanceRequestNextSteps(){
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
