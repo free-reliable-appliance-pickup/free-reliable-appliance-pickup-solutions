@@ -87,6 +87,29 @@ async function main(){
       appendChild(node){this.nodes[node.name]=node;return node;}
     };
   }
+  // Forms across markets submit different labels for non-fully-working appliances.
+  // Every reported problem must receive the explicit partner-review gate.
+  const conditionCases=[
+    ['Fully Working',false],
+    ['Working With Issues',true],
+    ['Working, but has a problem (explain below)',true],
+    ['Needs Repair',true],
+    ['Needs minor repair',true],
+    ['Not Working',true],
+    ['Unknown',true],
+    ['Mixed Load',true],
+    ['Mixed Load - Mixed Conditions',true],
+    ['Broken',true]
+  ];
+  for(const [condition,review] of conditionCases){
+    const form=mockForm({city:'Pico Rivera',state:'California',appliance:'Washer',condition});
+    api.qualify(form);
+    const expected=review?'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH':'CONFIRM CONDITION AND AVAILABILITY BEFORE DISPATCH';
+    assertEqual(form.nodes['Dispatch Condition Gate'].value,expected,'Condition review gate: '+condition);
+    assertEqual(form.nodes['Routing Phone'].value,'909-375-6685','Condition fix preserves customer routing');
+  }
+  console.log('PASS: '+conditionCases.length+' actual appliance-condition dispatch labels');
+
   global.location.pathname='/victorville-appliance-pickup/';
   const legacy=mockForm({city:'Victorville',state:'California',appliances:'Washer and dryer',condition:'Fully Working'});
   api.qualify(legacy);
