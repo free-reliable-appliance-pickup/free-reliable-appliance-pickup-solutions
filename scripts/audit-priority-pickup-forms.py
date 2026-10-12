@@ -393,6 +393,44 @@ for slug, (city, appliance) in CENTRAL_VALLEY_SPECIALTY_FORMS.items():
     if '310-774-4304' not in html:
         errors.append(f"{slug}: original Central Valley 310 contact missing")
 
+
+# Existing indexable California specialty forms keep static campaign source,
+# original city/state/appliance/condition and mobile keypad, even without JS.
+CALIFORNIA_SPECIALTY_ATTRIBUTION = (
+    "anaheim-refrigerator-pickup", "costa-mesa-refrigerator-pickup",
+    "fontana-freezer-pickup", "fontana-refrigerator-pickup",
+    "huntington-beach-refrigerator-pickup", "irvine-refrigerator-pickup",
+    "ontario-freezer-pickup", "ontario-refrigerator-pickup",
+    "ontario-stove-oven-pickup", "pomona-freezer-pickup",
+    "pomona-refrigerator-pickup", "pomona-stove-oven-pickup",
+    "riverside-freezer-pickup", "riverside-refrigerator-pickup",
+    "riverside-stove-oven-pickup", "san-bernardino-freezer-pickup",
+    "san-bernardino-refrigerator-pickup", "san-bernardino-stove-oven-pickup",
+    "santa-ana-refrigerator-pickup",
+)
+for slug in CALIFORNIA_SPECIALTY_ATTRIBUTION:
+    page = Path(slug) / "index.html"
+    if not page.is_file():
+        errors.append(f"{slug}: missing specialty request page")
+        continue
+    html = page.read_text(encoding="utf-8", errors="replace")
+    form = next((f for f in re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+                 if 'formspree.io/f/mvzeapzd' in f), "")
+    if not form:
+        errors.append(f"{slug}: no pickup form")
+        continue
+    if form.count('name="source_page"') != 1 or f'name="source_page" value="{slug}"' not in form:
+        errors.append(f"{slug}: missing or duplicate static provenance")
+    for name in ("city", "state", "condition", "appliance"):
+        if f'name="{name}"' not in form:
+            errors.append(f"{slug}: missing original routing field {name}")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if not phone or hint not in phone.group(0):
+            errors.append(f"{slug}: phone missing {hint}")
+    if 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug}: original customer routing script missing")
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
