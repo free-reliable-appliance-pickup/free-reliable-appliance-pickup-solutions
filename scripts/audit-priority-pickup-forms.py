@@ -284,6 +284,57 @@ else:
         'rel="canonical" href="https://freereliableappliancepickup.com/high-desert-rv-appliance-pickup/"' not in rv_html:
         errors.append("high-desert RV hub: canonical or indexability altered")
 
+
+# Specialty forms must include enough fields for customer-routing.js to wire
+# submissions and preserve the intended Colorado/California market.
+SPECIALTY_ROUTE_FIELDS = {
+    "aurora-freezer-pickup": ("Colorado", "Aurora", "Freezer"),
+    "aurora-refrigerator-pickup": ("Colorado", "Aurora", "Refrigerator"),
+    "aurora-stove-oven-pickup": ("Colorado", "Aurora", "Stove / Range / Oven"),
+    "denver-freezer-pickup": ("Colorado", "Denver", "Freezer"),
+    "denver-refrigerator-pickup": ("Colorado", "Denver", "Refrigerator"),
+    "denver-stove-oven-pickup": ("Colorado", "Denver", "Stove / Range / Oven"),
+}
+for slug, (state, city, appliance) in SPECIALTY_ROUTE_FIELDS.items():
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing specialty page")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    forms = re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+    form = next((f for f in forms if 'formspree.io/f/mvzeapzd' in f), "")
+    if not form:
+        errors.append(f"{slug}: missing pickup form")
+        continue
+    for name, value in (("state", state), ("city", city),
+                        ("appliance", appliance), ("source_page", slug)):
+        if f'name="{name}" value="{value}"' not in form:
+            errors.append(f"{slug}: missing or mismatched {name}")
+    if 'name="condition"' not in form or 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug}: missing condition or customer router")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if not phone or hint not in phone.group(0):
+            errors.append(f"{slug}: missing phone hint {hint}")
+
+slug = "coachella-valley-refrigerator-pickup"
+path = Path(slug) / "index.html"
+if not path.is_file():
+    errors.append(f"{slug}: missing regional refrigerator page")
+else:
+    html = path.read_text(encoding="utf-8", errors="replace")
+    form = next((f for f in re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+                 if 'formspree.io/f/mvzeapzd' in f), "")
+    for name in ("state", "source_page", "city", "appliance", "condition"):
+        if f'name="{name}"' not in form:
+            errors.append(f"{slug}: missing {name}")
+    if 'name="state" value="California"' not in form or 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug}: regional routing not wired")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if not phone or hint not in phone.group(0):
+            errors.append(f"{slug}: missing phone hint {hint}")
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
