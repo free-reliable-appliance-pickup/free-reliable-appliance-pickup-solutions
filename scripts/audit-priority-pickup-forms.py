@@ -232,6 +232,58 @@ for community in HIGH_DESERT_INTAKE_SLUGS:
         if '909-375-6685' not in html or 'src="/assets/customer-routing.js"' not in html:
             errors.append(f"{slug}: missing correct High Desert contact or routing script")
 
+
+# Existing noindex RV city pages still receive requests; make sure their
+# original equipment field is retained while customer-routing metadata works.
+HIGH_DESERT_RV_CITIES = ("victorville", "hesperia", "apple-valley",
+                        "adelanto", "phelan", "el-mirage")
+for town in HIGH_DESERT_RV_CITIES:
+    slug = town + "-rv-appliance-pickup"
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing RV intake page")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    forms = re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+    intake = [form for form in forms if 'formspree.io/f/mvzeapzd' in form]
+    if len(intake) != 1:
+        errors.append(f"{slug}: expected one RV intake form")
+        continue
+    form = intake[0]
+    for name, value in (("source_page", slug),
+                        ("state", "California"),
+                        ("appliance", "RV Appliance / Equipment")):
+        if f'name="{name}" value="{value}"' not in form:
+            errors.append(f"{slug}: missing {name} routing metadata")
+    for name in ("city", "rv_equipment", "condition", "phone"):
+        if f'name="{name}"' not in form:
+            errors.append(f"{slug}: missing original RV request field {name}")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if not phone or hint not in phone.group(0):
+            errors.append(f"{slug}: phone missing mobile hint {hint}")
+    if 'content="noindex, follow' not in html or \
+        'rel="canonical" href="https://freereliableappliancepickup.com/high-desert-rv-appliance-pickup/"' not in html:
+        errors.append(f"{slug}: protected RV consolidation metadata altered")
+    if '909-375-6685' not in html or 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug}: missing routing script or known High Desert phone")
+
+rv_hub = Path("high-desert-rv-appliance-pickup/index.html")
+if not rv_hub.is_file():
+    errors.append("high-desert RV hub missing")
+else:
+    rv_html = rv_hub.read_text(encoding="utf-8", errors="replace")
+    rv_form = next((form for form in re.findall(r'<form\b[^>]*>.*?</form>', rv_html, re.I | re.S)
+                    if 'formspree.io/f/mvzeapzd' in form), "")
+    for name in ("source_page", "state", "city", "appliance", "condition"):
+        if f'name="{name}"' not in rv_form:
+            errors.append(f"high-desert RV hub: missing routing field {name}")
+    if '<input type="tel" name="phone" required autocomplete="tel" inputmode="tel">' not in rv_form:
+        errors.append("high-desert RV hub: phone lacks mobile inputmode")
+    if 'name="robots" content="index, follow' not in rv_html or \
+        'rel="canonical" href="https://freereliableappliancepickup.com/high-desert-rv-appliance-pickup/"' not in rv_html:
+        errors.append("high-desert RV hub: canonical or indexability altered")
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
