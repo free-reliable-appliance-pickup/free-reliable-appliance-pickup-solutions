@@ -119,6 +119,44 @@ for foothill_city in ("la-crescenta", "montrose"):
         errors.append(f"{foothill_city}: missing approved 909 scheduling contact")
 
 print("FOOTHILL_CONTACT_ACCESS_PAGES_TESTED 2")
+# Real High Desert city forms must preserve exact lead provenance without JS.
+HIGH_DESERT_FORMS = {
+    "adelanto": "Adelanto",
+    "victorville": "Victorville",
+    "hesperia": "Hesperia",
+    "apple-valley": "Apple Valley",
+    "phelan": "Phelan",
+}
+for slug, city in HIGH_DESERT_FORMS.items():
+    path = Path(slug + "-appliance-pickup") / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing High Desert city page")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    forms = re.findall(r'<form[^>]*>.*?</form>', html, re.I | re.S)
+    intake = [f for f in forms if 'formspree.io/f/mvzeapzd' in f]
+    if len(intake) != 1:
+        errors.append(f"{slug}: expected one major appliance pickup form")
+        continue
+    form = intake[0]
+    for name, value in (("city", city), ("state", "California"),
+                        ("source_page", slug + "-appliance-pickup")):
+        if f'name="{name}"' not in form or f'value="{value}"' not in form:
+            errors.append(f"{slug}: missing {name} attribution")
+    if form.count('name="source_page"') != 1:
+        errors.append(f"{slug}: source page attribution is not unique")
+    for name in ("appliance", "condition"):
+        if f'name="{name}"' not in form and not (name == "appliance" and 'name="appliances"' in form):
+            errors.append(f"{slug}: missing {name} request field")
+    phone = re.search(r'<input[^>]*name="phone"[^>]*>', form, re.I)
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if not phone or hint not in phone.group(0):
+            errors.append(f"{slug}: customer phone missing {hint}")
+    if '909-375-6685' not in html:
+        errors.append(f"{slug}: known High Desert 909 contact missing")
+    if 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug}: client routing script missing")
+
 # Keep real Oregon / Portland-Salem city request forms mobile-friendly.
 # Source-level checks must work without JavaScript or remote network access.
 OREGON_MOBILE_PAGES = (
@@ -158,6 +196,7 @@ for slug in OREGON_MOBILE_PAGES:
     if '503-868-4455' not in html:
         errors.append(f"{slug}: current Oregon contact missing")
 
+print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
 print(f"PRIORITY_INTAKE_ERRORS {len(errors)}")
