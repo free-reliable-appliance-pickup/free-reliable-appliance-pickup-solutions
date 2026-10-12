@@ -196,6 +196,42 @@ for slug in OREGON_MOBILE_PAGES:
     if '503-868-4455' not in html:
         errors.append(f"{slug}: current Oregon contact missing")
 
+
+# All fourteen High Desert appliance and laundry forms must route without
+# relying on JavaScript to invent page provenance or core intake fields.
+# Technical-only checks: leave SEO experiment copy and ranking variables untouched.
+HIGH_DESERT_INTAKE_SLUGS = (
+    "victorville", "hesperia", "apple-valley",
+    "adelanto", "phelan", "el-mirage", "high-desert",
+)
+for community in HIGH_DESERT_INTAKE_SLUGS:
+    for service in ("appliance-pickup", "washer-dryer-pickup"):
+        slug = f"{community}-{service}"
+        path = Path(slug) / "index.html"
+        if not path.is_file():
+            errors.append(f"{slug}: missing High Desert intake page")
+            continue
+        html = path.read_text(encoding="utf-8", errors="replace")
+        forms = re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+        intake = [f for f in forms if 'formspree.io/f/mvzeapzd' in f]
+        if len(intake) != 1:
+            errors.append(f"{slug}: expected exactly one pickup intake form")
+            continue
+        form = intake[0]
+        if form.count('name="source_page"') != 1 or f'name="source_page" value="{slug}"' not in form:
+            errors.append(f"{slug}: missing or incorrect static page provenance")
+        if 'name="state" value="California"' not in form:
+            errors.append(f"{slug}: missing California state")
+        for name in ("city", "appliance", "condition"):
+            if f'name="{name}"' not in form and not (name == "appliance" and 'name="appliances"' in form):
+                errors.append(f"{slug}: missing routing/qualification field {name}")
+        phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+        for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+            if not phone or hint not in phone.group(0):
+                errors.append(f"{slug}: phone missing mobile hint {hint}")
+        if '909-375-6685' not in html or 'src="/assets/customer-routing.js"' not in html:
+            errors.append(f"{slug}: missing correct High Desert contact or routing script")
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
