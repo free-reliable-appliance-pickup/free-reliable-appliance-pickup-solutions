@@ -212,7 +212,7 @@ for community in HIGH_DESERT_INTAKE_SLUGS:
             errors.append(f"{slug}: missing High Desert intake page")
             continue
         html = path.read_text(encoding="utf-8", errors="replace")
-        forms = re.findall(r'<form\\b[^>]*>.*?</form>', html, re.I | re.S)
+        forms = re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
         intake = [f for f in forms if 'formspree.io/f/mvzeapzd' in f]
         if len(intake) != 1:
             errors.append(f"{slug}: expected exactly one pickup intake form")
@@ -225,7 +225,7 @@ for community in HIGH_DESERT_INTAKE_SLUGS:
         for name in ("city", "appliance", "condition"):
             if f'name="{name}"' not in form and not (name == "appliance" and 'name="appliances"' in form):
                 errors.append(f"{slug}: missing routing/qualification field {name}")
-        phone = re.search(r'<input\\b[^>]*name="phone"[^>]*>', form, re.I)
+        phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
         for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
             if not phone or hint not in phone.group(0):
                 errors.append(f"{slug}: phone missing mobile hint {hint}")
