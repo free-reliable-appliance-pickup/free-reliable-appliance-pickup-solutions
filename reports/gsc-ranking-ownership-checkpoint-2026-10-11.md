@@ -44,4 +44,20 @@ Read current `main` sources for Rowland Heights general, Fresno County general, 
 6. **Indexing/coverage blockers:** GSC planner does not expose actual Page Indexing, Manual Actions, Security Issues or Google-selected canonical inspection here. Do not claim those are cleared. Independently confirm approved California operator/partner pickup capacity; current configuration marks priority CA cities partner-recruiting.
 7. **Measurement of success:** qualified phone calls and Formspree leads first, then completed pickups; measure finalized GSC clicks/CTR/query owner and manual matched-location Google organic results. No promised #1 ranking.
 
+## Independent organic SERP cross-check — Keyword.com (scraped October 11, 2026)
+**Source:** connected Keyword.com project `3846568`, read-only `search_keywords` and `get_serp(days=1, result_limit=30)`. These are *provider location/device-specific organic result snapshots*; they are not live Google searches by the owner and are not the same time/window or metric as the finalized Google Search Console October 7–9 impressions.
+
+| Exact query / tracked region | Device | Provider rank | Our exact URL confirmed in returned organic list? | Observation |
+|---|---|---:|---|---|
+| `free appliance pickup rowland heights` — Rowland Heights CA | MOBILE | **6** | **Yes, position 6** `/rowland-heights-appliance-pickup/` | Top-10 tracked city landing-page result; **protect** |
+| Same exact query / region | DESKTOP | **5** | **Yes, position 5** same URL | Independent tracked comparison; not evidence of any uplift |
+| `free appliance pickup fontana` — Fontana CA | MOBILE | **20** | **Yes, position 20** `/fontana-appliance-pickup/` | Target city URL present but weak |
+| `free appliance pickup rancho cucamonga` — Rancho CA | MOBILE | **0 / not found** | **No instance of our domain in 30 returned listings** | Not found here does not mean deindexed in Google; first listing was TakeMyAppliance's Rancho page |
+| `stove pickup fresno` — Fresno CA | DESKTOP | **1** | **No instance of our domain in 30 returned listings** | **INCONSISTENT PROVIDER RANK:** do **not** assert our business is #1. First organic listing was TakeMyAppliance Fresno |
+| `washer dryer pickup fresno` — Fresno CA | MOBILE | **3** | **No instance of our domain in 30 returned listings** | **INCONSISTENT PROVIDER RANK:** do **not** assert #3. First organic listing was AppliancePickupNow Fresno |
+
+Keyword IDs: Rowland MOBILE `295761403`, DESKTOP `295761404`; Fontana MOBILE `295761381`; Rancho MOBILE `295761379`; Fresno stove DESKTOP `295761164`; Fresno laundry MOBILE `295761151`. Date read: **October 11**, not any earlier historical dashboard. `rank=0` reflects tracker not-found status. The two Fresno mismatches are potential provider/data-coherence problems, not valid verified organic ranks. Keyword.com ranked URL metadata can be stale or inconsistent with the returned same-day organic list; match actual URL in organic listings before claiming positions.
+
+**Practical next experiment:** preserve Rowland Heights's verified top-10 positions while seeking genuine local referrals and measuring clicks; Rancho should receive post-gate evidence-driven exact-city intent work, not blind new doorway pages. In Fresno, preserve established competitor and sibling signals while strengthening the genuine Fresno appliance-specific landing pages only after their effective protection dates and with more GSC data. A targeted first-party URL Inspection and same-location manual Google spot check remain unperformed.
+
 **No claim:** a three-day GSC sample, a green CI run, and a self-canonical in source HTML do not by themselves show Google has indexed, ranked or recommended the page. No new indexable URL, fabricated review, partner, backlink or service-area promise is authorized by this checkpoint.
