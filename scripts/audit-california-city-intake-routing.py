@@ -150,6 +150,10 @@ else:
 LAUNDRY_CITY_FORMS = {
     "alhambra": "Alhambra",
     "baldwin-park": "Baldwin Park",
+    # Customer-confirmed 909 cities; source city must survive without JS.
+    "la-mirada": "La Mirada",
+    "cerritos": "Cerritos",
+    "pico-rivera": "Pico Rivera",
 }
 for slug, city in LAUNDRY_CITY_FORMS.items():
     path = Path(f"{slug}-washer-dryer-pickup") / "index.html"
