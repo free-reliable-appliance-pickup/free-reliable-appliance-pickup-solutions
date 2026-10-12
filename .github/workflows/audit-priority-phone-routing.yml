@@ -56,6 +56,13 @@ jobs:
               'ontario-appliance-pickup':'909-375-6685',
               'upland-appliance-pickup':'909-375-6685',
               'baldwin-park-appliance-pickup':'909-375-6685',
+              # Customer-confirmed 909 exceptions inside the wider LA County 310 region.
+              'la-mirada-appliance-pickup':'909-375-6685',
+              'la-mirada-washer-dryer-pickup':'909-375-6685',
+              'cerritos-appliance-pickup':'909-375-6685',
+              'cerritos-washer-dryer-pickup':'909-375-6685',
+              'pico-rivera-appliance-pickup':'909-375-6685',
+              'pico-rivera-washer-dryer-pickup':'909-375-6685',
           }
 
           known=set(expected.values())
