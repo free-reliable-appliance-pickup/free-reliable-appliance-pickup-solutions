@@ -43,7 +43,11 @@ async function main(){
     ['Palm Desert','CA','partner-recruiting','Coachella Valley','priority-california-city','909-375-6685'],
     ['Alhambra','CA','partner-recruiting','San Gabriel Valley','priority-california-city','909-375-6685'],
     ['Santa Ana','CA','partner-recruiting','Orange County','priority-california-city','909-375-6685'],
-    ['Cerritos','CA','partner-recruiting','Los Angeles County','priority-california-city','310-774-4304'],
+    // Customer-confirmed Oct 11: these three cities use 909 even though the county hub remains 310.
+    ['La Mirada','CA','partner-recruiting','Los Angeles County','priority-california-city','909-375-6685'],
+    ['Cerritos','CA','partner-recruiting','Los Angeles County','priority-california-city','909-375-6685'],
+    ['Pico Rivera','CA','partner-recruiting','Los Angeles County','priority-california-city','909-375-6685'],
+    ['Bell','CA','partner-recruiting','Los Angeles County','priority-california-city','310-774-4304'],
     ['Palmdale','CA','partner-recruiting','Antelope Valley','priority-california-city','310-774-4304'],
     ['San Diego','CA','partner-recruiting','San Diego County','priority-california-city','310-774-4304'],
     ['San Francisco','CA','partner-recruiting','San Francisco Bay Area','priority-california-city','310-774-4304'],
@@ -113,6 +117,18 @@ async function main(){
   assertEqual(bell.nodes.city.value,'Bell','Southeast LA pickup city inferred');
   api.qualify(bell);
   assertEqual(bell.nodes['Routing Phone'].value,'310-774-4304','Bell regional contact mapping');
+
+  // Keep city-specific 909 dispatch even for older laundry HTML that omits city.
+  for(const [slug,city] of [['la-mirada','La Mirada'],['cerritos','Cerritos'],['pico-rivera','Pico Rivera']]){
+    global.location.pathname='/'+slug+'-washer-dryer-pickup/';
+    const form=mockForm({state:'California',appliance:'Washer and Dryer Set',condition:'Fully Working'});
+    api.ensureRequestAttribution(form);
+    assertEqual(form.nodes.city.value,city,city+' laundry inferred verified city');
+    api.qualify(form);
+    assertEqual(form.nodes['Routing Phone'].value,'909-375-6685',city+' laundry request routes to 909');
+    assertEqual(form.nodes.source_page.value,slug+'-washer-dryer-pickup',city+' original source preserved');
+    assertEqual(form.nodes['Routing Decision'].value,'RECRUITING_QUEUE',city+' does not promise pickup');
+  }
 
   global.location.pathname='/denver-refrigerator-pickup/';
   const denver=mockForm({state:'Colorado',appliance:'Refrigerator'});
