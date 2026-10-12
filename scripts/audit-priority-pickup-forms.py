@@ -364,6 +364,35 @@ for slug, appliance in PHOENIX_SPECIALTY_APPLIANCES.items():
     if '602-726-7552' not in html:
         errors.append(f"{slug}: Phoenix telephone was changed")
 
+
+# Central Valley specialty pages previously had static classification but no
+# city or shared router script, so leads could not acquire routing metadata.
+CENTRAL_VALLEY_SPECIALTY_FORMS = {
+    "sacramento-refrigerator-pickup": ("Sacramento", "Refrigerator"),
+    "stockton-refrigerator-pickup": ("Stockton", "Refrigerator"),
+    "stockton-stove-oven-pickup": ("Stockton", "Stove / Range / Oven"),
+}
+for slug, (city, appliance) in CENTRAL_VALLEY_SPECIALTY_FORMS.items():
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing specialty page")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    forms = re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+    form = next((f for f in forms if 'formspree.io/f/mvzeapzd' in f), "")
+    for name, value in (("state", "California"), ("city", city),
+                        ("appliance", appliance), ("source_page", slug)):
+        if f'name="{name}" value="{value}"' not in form:
+            errors.append(f"{slug}: incorrect or missing {name} routing metadata")
+    if 'name="condition"' not in form or html.count('src="/assets/customer-routing.js"') != 1:
+        errors.append(f"{slug}: condition or one shared routing script missing")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if not phone or hint not in phone.group(0):
+            errors.append(f"{slug}: missing phone mobile hint {hint}")
+    if '310-774-4304' not in html:
+        errors.append(f"{slug}: original Central Valley 310 contact missing")
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
