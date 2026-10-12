@@ -119,6 +119,46 @@ for foothill_city in ("la-crescenta", "montrose"):
         errors.append(f"{foothill_city}: missing approved 909 scheduling contact")
 
 print("FOOTHILL_CONTACT_ACCESS_PAGES_TESTED 2")
+# Keep real Oregon / Portland-Salem city request forms mobile-friendly.
+# Source-level checks must work without JavaScript or remote network access.
+OREGON_MOBILE_PAGES = (
+    "portland-appliance-pickup", "salem-appliance-pickup",
+    "keizer-appliance-pickup", "beaverton-appliance-pickup",
+    "hillsboro-appliance-pickup", "gresham-appliance-pickup",
+    "tigard-appliance-pickup", "happy-valley-appliance-pickup",
+    "oregon-city-appliance-pickup", "portland-washer-dryer-pickup",
+    "salem-washer-dryer-pickup",
+)
+for slug in OREGON_MOBILE_PAGES:
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing Oregon request page")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    forms = re.findall(r'<form[^>]*>.*?</form>', html, re.I | re.S)
+    intake = [f for f in forms if 'formspree.io/f/mvzeapzd' in f]
+    if len(intake) != 1:
+        errors.append(f"{slug}: expected one pickup intake form")
+        continue
+    form = intake[0]
+    if 'name="state" value="Oregon"' not in form:
+        errors.append(f"{slug}: incorrect Oregon form state")
+    for field_name in ("city", "source_page", "appliance", "condition"):
+        if f'name="{field_name}"' not in form:
+            errors.append(f"{slug}: missing {field_name} field")
+    phone = re.search(r'<input[^>]*name="phone"[^>]*>', form, re.I)
+    if not phone:
+        errors.append(f"{slug}: phone input missing")
+    else:
+        for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+            if hint not in phone.group(0):
+                errors.append(f"{slug}: phone missing {hint}")
+    if 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug}: shared customer routing script missing")
+    if '503-868-4455' not in html:
+        errors.append(f"{slug}: current Oregon contact missing")
+
+print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
 print(f"PRIORITY_INTAKE_ERRORS {len(errors)}")
 for error in errors:
