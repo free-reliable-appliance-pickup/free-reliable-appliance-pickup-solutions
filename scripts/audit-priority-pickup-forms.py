@@ -335,6 +335,35 @@ else:
         if not phone or hint not in phone.group(0):
             errors.append(f"{slug}: missing phone hint {hint}")
 
+
+# Phoenix category forms need a real appliance field, not only page context,
+# so the shared customer-router can attach classification and condition review.
+PHOENIX_SPECIALTY_APPLIANCES = {
+    "phoenix-freezer-pickup": "Freezer",
+    "phoenix-refrigerator-pickup": "Refrigerator",
+    "phoenix-stove-oven-pickup": "Stove / Range / Oven",
+}
+for slug, appliance in PHOENIX_SPECIALTY_APPLIANCES.items():
+    page = Path(slug) / "index.html"
+    if not page.is_file():
+        errors.append(f"{slug}: missing Phoenix category page")
+        continue
+    html = page.read_text(encoding="utf-8", errors="replace")
+    form = next((f for f in re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+                 if 'formspree.io/f/mvzeapzd' in f), "")
+    for name, value in (("appliance", appliance), ("state", "Arizona"),
+                        ("city", "Phoenix"), ("source_page", slug)):
+        if f'name="{name}" value="{value}"' not in form:
+            errors.append(f"{slug}: missing or incorrect {name}")
+    if 'name="condition"' not in form or 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug}: routing fields or script absent")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if not phone or hint not in phone.group(0):
+            errors.append(f"{slug}: missing phone {hint}")
+    if '602-726-7552' not in html:
+        errors.append(f"{slug}: Phoenix telephone was changed")
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
