@@ -431,6 +431,39 @@ for slug in CALIFORNIA_SPECIALTY_ATTRIBUTION:
     if 'src="/assets/customer-routing.js"' not in html:
         errors.append(f"{slug}: original customer routing script missing")
 
+
+# Legacy noindex foothill specialty pages still accept customer requests.
+# Preserve original city-specific provenance while leaving SEO consolidation alone.
+FOOTHILL_NOINDEX_SPECIALTY_SLUGS = (
+    "claremont-freezer-pickup", "claremont-refrigerator-pickup",
+    "claremont-stove-oven-pickup", "la-verne-freezer-pickup",
+    "la-verne-refrigerator-pickup", "la-verne-stove-oven-pickup",
+    "san-dimas-freezer-pickup", "san-dimas-refrigerator-pickup",
+    "san-dimas-stove-oven-pickup", "upland-freezer-pickup",
+    "upland-refrigerator-pickup", "upland-stove-oven-pickup",
+)
+for slug in FOOTHILL_NOINDEX_SPECIALTY_SLUGS:
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: page missing")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    form = next((x for x in re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+                 if 'formspree.io/f/mvzeapzd' in x), "")
+    if not form or form.count('name="source_page"') != 1 or f'name="source_page" value="{slug}"' not in form:
+        errors.append(f"{slug}: static source missing or incorrect")
+    for name in ("city", "state", "appliance", "condition"):
+        if f'name="{name}"' not in form:
+            errors.append(f"{slug}: missing required existing {name}")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    for hint in ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"'):
+        if not phone or hint not in phone.group(0):
+            errors.append(f"{slug}: phone missing {hint}")
+    if 'name="robots" content="noindex, follow' not in html:
+        errors.append(f"{slug}: protected noindex status changed")
+    if 'src="/assets/customer-routing.js"' not in html:
+        errors.append(f"{slug}: missing customer router")
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
