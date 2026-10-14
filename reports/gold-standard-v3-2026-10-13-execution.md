@@ -21,3 +21,6 @@ Sources: https://www.takemyappliance.com/locations/southern-california/rancho-cu
 2. Fontana general hero is 1,969,900-byte PNG without width/height; preserve approved image, add correct intrinsic dimensions and evaluate responsive compression separately.
 3. Review same-query/device GSC after experiment gates, preserving Fresno County through October 17. No broad city-copy rewrites based on tiny samples.
 4. Reconcile outreach against sent email and existing ledger before sending. No outreach sent or backlinks published this session.
+
+## Fontana technical correction
+Same approved hero compressed to WebP at unchanged 1586×992 dimensions: 114,184 bytes versus 1,969,900 (94.2% smaller). Original PNG retained. Added intrinsic width/height to reserve its aspect ratio. This performance/layout fix uses the documented technical exception; no city copy, metadata, phone or form changes. Existing unrelated people-first audit failures remain Corona/Highland >2,200 words; no audit thresholds weakened.
