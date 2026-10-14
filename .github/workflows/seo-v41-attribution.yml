@@ -1,0 +1,23 @@
+name: V4.1 Lead Attribution Audit
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 6 * * 1'
+  pull_request:
+    paths:
+      - 'scripts/seo-v41-attribution.py'
+      - '.github/workflows/seo-v41-attribution.yml'
+permissions:
+  contents: read
+jobs:
+  attribution:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect sitemap lead forms (report-only during migration)
+        run: python3 scripts/seo-v41-attribution.py --output seo-v41-attribution.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: seo-v41-attribution
+          path: seo-v41-attribution.json

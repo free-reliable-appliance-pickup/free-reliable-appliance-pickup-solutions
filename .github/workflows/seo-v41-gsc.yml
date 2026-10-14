@@ -1,0 +1,26 @@
+name: V4.1 Search Console Priority Snapshot
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 7 * * 1'
+permissions:
+  contents: read
+jobs:
+  gsc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Google authentication dependency
+        run: python3 -m pip install --disable-pip-version-check 'google-auth==2.38.0' 'requests==2.32.3'
+      - name: Export Search Console data when authorized
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+        run: python3 scripts/seo-v41-gsc.py
+      - name: Upload private report artifact
+        if: ${{ hashFiles('gsc-priority-28d.csv') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: gsc-priority-28d
+          path: gsc-priority-28d.csv
+          retention-days: 14
