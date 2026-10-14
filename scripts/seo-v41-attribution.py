@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 import argparse, json, re, sys, xml.etree.ElementTree as ET
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 class Forms(HTMLParser):
     def __init__(self):
         super().__init__()
