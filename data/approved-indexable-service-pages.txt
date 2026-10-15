@@ -329,6 +329,8 @@ south-orange-county-washer-dryer-pickup
 south-pasadena-washer-dryer-pickup
 south-san-jose-hills-washer-dryer-pickup
 southern-california-washer-dryer-pickup
+spokane-stove-pickup
+spokane-washer-dryer-pickup
 stanton-washer-dryer-pickup
 stockton-refrigerator-pickup
 stockton-stove-oven-pickup
@@ -357,6 +359,8 @@ vista-washer-dryer-pickup
 waddell-washer-dryer-pickup
 walnut-creek-washer-dryer-pickup
 walnut-washer-dryer-pickup
+washington-stove-pickup
+washington-washer-dryer-pickup
 west-covina-refrigerator-pickup
 west-covina-washer-dryer-pickup
 west-hollywood-washer-dryer-pickup
