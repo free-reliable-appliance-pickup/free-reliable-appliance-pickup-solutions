@@ -199,6 +199,13 @@ footer { background:#063f70; }
  form { padding:20px; }
 }
 
+
+/* Portland mobile CTA viewport-height repair */
+@media(max-width:760px){
+ body.site-branded .priority-mobile-cta{position:fixed!important;top:auto!important;bottom:0!important;left:0!important;right:0!important;width:100%!important;height:64px!important;min-height:0!important;max-height:64px!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:stretch!important;overflow:hidden!important;z-index:9999!important;padding:0!important;margin:0!important}
+ body.site-branded .priority-mobile-cta a{height:64px!important;min-height:0!important;max-height:64px!important;padding:8px 4px!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:13px!important;line-height:1.2!important}
+ body.site-branded{padding-bottom:72px!important}
+}
 </style>
 
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
