@@ -520,6 +520,7 @@ upland-appliance-pickup
 upland-washer-dryer-pickup
 utah-appliance-pickup
 van-nuys-appliance-pickup
+vancouver-appliance-pickup
 ventura-appliance-pickup
 ventura-washer-dryer-pickup
 vernon-appliance-pickup
