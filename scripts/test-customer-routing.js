@@ -110,6 +110,62 @@ async function main(){
   }
   console.log('PASS: '+conditionCases.length+' actual appliance-condition dispatch labels');
 
+  // Regression: a real Washington intake option ("Mixed load - majority working")
+  // was previously rewritten to Unknown when the shared browser enhancement ran.
+  // Exercise the enhancement itself using a minimal browser form mock.
+  const conditionEnhancementStart=source.indexOf('function enhanceApplianceConditionIntake()');
+  const conditionEnhancementEnd=source.indexOf('\nfunction enhanceRequestNextSteps()',conditionEnhancementStart);
+  if(conditionEnhancementStart<0||conditionEnhancementEnd<=conditionEnhancementStart){
+    throw new Error('Unable to find shared condition enhancement for regression test');
+  }
+  const conditionEnhancer=new Function('document',source.slice(conditionEnhancementStart,conditionEnhancementEnd)+'\nreturn enhanceApplianceConditionIntake;');
+  function checkConditionPreservation(initialOptions,selectedValue,expectedOptionCount){
+    const listener={};
+    const select={
+      value:selectedValue,
+      options:initialOptions.map(value=>({value})),
+      appendChild(option){this.options.push(option);},
+      addEventListener(type,callback){listener[type]=callback;},
+      closest(){return null;},
+      insertAdjacentElement(_position,label){this.detailsLabel=label;}
+    };
+    const documentMock={
+      querySelectorAll:()=>[{
+        querySelector(selector){
+          if(selector==='select[name="condition"]')return select;
+          if(selector==='[name="condition_details"]')return null;
+          return null;
+        }
+      }],
+      createElement(tag){
+        return {
+          tagName:tag,
+          style:{},
+          appendChild(child){this.child=child;},
+          setAttribute(key,value){this[key]=value;}
+        };
+      }
+    };
+    conditionEnhancer(documentMock)();
+    assertEqual(select.value,selectedValue,'Preserve actual selected condition');
+    assertEqual(select.options.length,expectedOptionCount,'Do not replace/delete original condition options');
+    assertEqual(select.options.some(x=>x.value.toLowerCase()==='mixed load - majority working'),true,'Mixed load remains available');
+    assertEqual(select.options.some(x=>x.value==='Working With Issues'),true,'Working-with-issues choice available');
+    assertEqual(select.detailsLabel.child.required,true,'Mixed load requires item-by-item details');
+    select.value='Fully working';
+    listener.change();
+    assertEqual(select.detailsLabel.child.required,false,'Fully working does not require fault details');
+    select.value='Needs minor repair';
+    listener.change();
+    assertEqual(select.detailsLabel.child.required,true,'Repair condition requires fault details');
+  }
+  checkConditionPreservation(
+    ['', 'Fully working','Needs minor repair','Not working','Unknown','Mixed load - majority working'],
+    'Mixed load - majority working',7
+  );
+  console.log('PASS: mixed appliance load preserved in the live form enhancement');
+
+
   global.location.pathname='/victorville-appliance-pickup/';
   const legacy=mockForm({city:'Victorville',state:'California',appliances:'Washer and dryer',condition:'Fully Working'});
   api.qualify(legacy);
