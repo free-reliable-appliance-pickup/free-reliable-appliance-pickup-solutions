@@ -1664,6 +1664,11 @@
         {
           "date": "2026-10-04",
           "reason": "Technical audit repair after noindex-alias cleanup: retiring the noindex Claremont freezer specialty URL removed the required live freezer authority path. Added only a link to the existing /freezer-pickup/ authority guide; protected title/meta/H1/canonical, local copy, schema intent and city ownership remain unchanged."
+        },
+        {
+          "date": "2026-10-15",
+          "reason": "Verified photo-category correction: Irvine broad appliance pickup hero showed only washer/dryer set and claimed unverified Irvine provenance. Replaced hero and matching OG/Twitter/structured image references with existing four-category group photo, accurate neutral alt text and matching aspect ratio; no ranking copy, titles, canonical, navigation, or forms changed.",
+          "commit": "b29d1113164e34ee8b7503f64e37d9bd0b95348e"
         }
       ]
     },
