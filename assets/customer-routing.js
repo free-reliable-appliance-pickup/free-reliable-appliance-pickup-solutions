@@ -172,29 +172,24 @@ function enhancePhotoFirstIntake(){
 /* Keep condition intake consistent on Formspree pickup pages that load this shared file.
    Existing HTML fields remain useful when JavaScript is unavailable. */
 function enhanceApplianceConditionIntake(){
-  const choices=[
-    ['','Select condition'],
-    ['Fully Working','Fully working'],
+  /* Keep each page's condition options, especially mixed qualifying loads.
+     Add missing choices without replacing existing values or selected answers. */
+  const additions=[
     ['Working With Issues','Working, but has a problem (explain below)'],
-    ['Needs Repair','Needs repair'],
-    ['Not Working','Not working'],
-    ['Unknown','Unknown / not sure']
+    ['Mixed Load - Majority Working','Mixed load (about 80% of major appliances working)']
   ];
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
     const select=form.querySelector('select[name="condition"]');
     if(!select)return;
-    const oldValue=String(select.value||'').trim();
-    if(!Array.from(select.options).some(option=>option.value==='Working With Issues')){
-      while(select.firstChild)select.removeChild(select.firstChild);
-      choices.forEach(([value,label])=>{
-        const option=document.createElement('option');
-        option.value=value;
-        option.textContent=label;
-        select.appendChild(option);
-      });
-      const aliases={'fully working':'Fully Working','needs minor repair':'Needs Repair','needs repair':'Needs Repair','not working':'Not Working','unknown':'Unknown','mixed load - majority working':'Unknown'};
-      select.value=choices.some(([value])=>value===oldValue)?oldValue:(aliases[oldValue.toLowerCase()]||'');
-    }
+    const existing=new Set(Array.from(select.options,option=>String(option.value||'').trim().toLowerCase()));
+    additions.forEach(([value,label])=>{
+      if(existing.has(value.toLowerCase()))return;
+      const option=document.createElement('option');
+      option.value=value;
+      option.textContent=label;
+      select.appendChild(option);
+      existing.add(value.toLowerCase());
+    });
     let details=form.querySelector('[name="condition_details"]');
     if(!details){
       const label=document.createElement('label');
@@ -211,7 +206,7 @@ function enhanceApplianceConditionIntake(){
       holder.insertAdjacentElement('afterend',label);
     }
     const update=()=>{
-      const hasProblem=['Working With Issues','Needs Repair','Not Working'].includes(select.value);
+      const hasProblem=/^(?:working with issues|needs(?: minor)? repair|not working|mixed load)/i.test(String(select.value||'').trim());
       details.required=hasProblem;
       details.setAttribute('aria-required',String(hasProblem));
     };
