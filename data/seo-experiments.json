@@ -2456,7 +2456,14 @@
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to the Anaheim city page before 2026-10-14. Only verified technical, factual, contact, indexability or safety corrections may interrupt the freeze."
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to the Anaheim city page before 2026-10-14. Only verified technical, factual, contact, indexability or safety corrections may interrupt the freeze.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-15",
+          "reason": "Factual/photo-correctness exception: Anaheim general appliance pickup hero displayed a single washer and claimed unverified Anaheim pickup origin. Replaced hero and corresponding social/structured image references with the already-published multi-appliance garage photograph, updated descriptive alt text and aspect ratio. Kept title, meta description, H1, body, form, calls, links and ranking experiment unchanged.",
+          "commit": "1cad9c3235117bacc5b2cf1ed729bf9d353ba4aa"
+        }
+      ]
     },
     {
       "id": "2026-10-04-fresno-specialty-request-parity",
