@@ -2477,6 +2477,11 @@
           "date": "2026-10-15",
           "reason": "Factual/photo-correctness exception: Anaheim general appliance pickup hero displayed a single washer and claimed unverified Anaheim pickup origin. Replaced hero and corresponding social/structured image references with the already-published multi-appliance garage photograph, updated descriptive alt text and aspect ratio. Kept title, meta description, H1, body, form, calls, links and ranking experiment unchanged.",
           "commit": "1cad9c3235117bacc5b2cf1ed729bf9d353ba4aa"
+        },
+        {
+          "date": "2026-10-15",
+          "reason": "Verified intrinsic size of reused grouped Anaheim WebP is 1586x992 pixels; corrected hero HTML width/height declarations from mismatched 768x512 to avoid incorrect aspect-ratio reservation on mobile. No new image, content, links, metadata, or form changes.",
+          "commit": "fa5de8033f8c7ecf3c1eb91ac32572fa1c1caa7f"
         }
       ]
     },
