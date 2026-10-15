@@ -206,6 +206,16 @@ footer { background:#063f70; }
  body.site-branded .priority-mobile-cta a{height:64px!important;min-height:0!important;max-height:64px!important;padding:8px 4px!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:13px!important;line-height:1.2!important}
  body.site-branded{padding-bottom:72px!important}
 }
+
+/* Portland mobile screenshot repair: remove obstructing full-height call/text overlay */
+@media (max-width: 850px) {
+ .priority-mobile-cta, .mobile-cta, .sticky-mobile-cta, .floating-mobile-cta, #mobile-cta, #sticky-cta { display:none!important; visibility:hidden!important; height:0!important; min-height:0!important; }
+ body.site-branded {padding-bottom:0!important;}
+ .portland-hero .hero-grid {display:flex!important;flex-direction:column!important;gap:16px!important;}
+ .portland-hero .site-hero-art {display:block!important;position:relative!important;width:100%!important;min-height:180px!important;opacity:1!important;visibility:visible!important;}
+ .portland-hero .site-hero-art img {display:block!important;width:100%!important;height:auto!important;max-height:none!important;visibility:visible!important;opacity:1!important;}
+ .portland-hero .button {display:inline-block!important;width:auto!important;max-width:100%!important;height:auto!important;min-height:0!important;padding:12px 18px!important;margin:5px!important;}
+}
 </style>
 
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
