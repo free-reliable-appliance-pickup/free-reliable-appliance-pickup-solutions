@@ -1669,6 +1669,16 @@
           "date": "2026-10-15",
           "reason": "Verified photo-category correction: Irvine broad appliance pickup hero showed only washer/dryer set and claimed unverified Irvine provenance. Replaced hero and matching OG/Twitter/structured image references with existing four-category group photo, accurate neutral alt text and matching aspect ratio; no ranking copy, titles, canonical, navigation, or forms changed.",
           "commit": "b29d1113164e34ee8b7503f64e37d9bd0b95348e"
+        },
+        {
+          "date": "2026-10-15",
+          "reason": "Verified photo-category factual correction: huntington-beach general appliance pickup hero showed only laundry equipment, falsely suggesting narrow service imagery, and claimed unverified local photo origin. Replaced hero, social-sharing images and structured primary image with an already-owned multi-appliance group photograph; corrected descriptive alt and aspect ratio. No title, meta description, body text, canonical, links, phone, or form changed.",
+          "commit": "2f9798f29137ea5f85c398d8e313e07f671d04c8"
+        },
+        {
+          "date": "2026-10-15",
+          "reason": "Verified photo-category factual correction: costa-mesa general appliance pickup hero showed only laundry equipment, falsely suggesting narrow service imagery, and claimed unverified local photo origin. Replaced hero, social-sharing images and structured primary image with an already-owned multi-appliance group photograph; corrected descriptive alt and aspect ratio. No title, meta description, body text, canonical, links, phone, or form changed.",
+          "commit": "f96679a50f683c15b6fb1dd3bd9728ec99d280cd"
         }
       ]
     },
@@ -3215,7 +3225,14 @@
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /santa-ana-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /santa-ana-appliance-pickup/ before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-15",
+          "reason": "Verified photo-category factual correction: santa-ana general appliance pickup hero showed only laundry equipment, falsely suggesting narrow service imagery, and claimed unverified local photo origin. Replaced hero, social-sharing images and structured primary image with an already-owned multi-appliance group photograph; corrected descriptive alt and aspect ratio. No title, meta description, body text, canonical, links, phone, or form changed.",
+          "commit": "4085eb9163676ae9a8deac0d98746569e7cc5d71"
+        }
+      ]
     },
     {
       "id": "2026-10-04-laguna-beach-removal-ctr-test",
@@ -5263,7 +5280,14 @@
       "evaluateNotBefore": "2026-10-15",
       "preferredReview": "2026-10-21",
       "status": "running",
-      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /fullerton-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+      "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to /fullerton-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-15",
+          "reason": "Verified photo-category factual correction: fullerton general appliance pickup hero showed only laundry equipment, falsely suggesting narrow service imagery, and claimed unverified local photo origin. Replaced hero, social-sharing images and structured primary image with an already-owned multi-appliance group photograph; corrected descriptive alt and aspect ratio. No title, meta description, body text, canonical, links, phone, or form changed.",
+          "commit": "11aa236765d144039dc91fd098202fbde0510bbb"
+        }
+      ]
     },
     {
       "id": "2026-10-05-south-oc-laundry-support-handoff",
