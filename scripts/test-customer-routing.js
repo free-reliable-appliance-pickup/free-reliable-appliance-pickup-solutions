@@ -209,6 +209,32 @@ async function main(){
     assertEqual(form.nodes['Routing Decision'].value,'RECRUITING_QUEUE',city+' does not promise pickup');
   }
 
+  // Vancouver's live request form must expose the fields required for
+  // customer-routing enrichment; city+ZIP combined text cannot be classified.
+  const vancouverHtml=fs.readFileSync('vancouver-appliance-pickup/index.html','utf8');
+  const vancouverForm=(vancouverHtml.match(/<form\b[\s\S]*?<\/form>/i)||[])[0]||'';
+  if(!vancouverForm.includes('action="https://formspree.io/f/mvzeapzd"')){
+    throw new Error('Vancouver request form is missing its approved Formspree action');
+  }
+  for(const fieldName of ['state','city','zip','appliance','condition','phone','source_page']){
+    if(!vancouverForm.includes('name="'+fieldName+'"')){
+      throw new Error('Vancouver request form cannot route without '+fieldName);
+    }
+  }
+  global.location.pathname='/vancouver-appliance-pickup/';
+  const vancouver=mockForm({
+    city:'Vancouver',state:'Washington',zip:'98682',
+    appliance:'Multiple Major Appliances',condition:'Mixed load - majority working'
+  });
+  assertEqual(api.isCustomerPickupForm(vancouver),true,'Vancouver form is eligible for customer routing');
+  api.qualify(vancouver);
+  assertEqual(vancouver.nodes['Routing Region'].value,'Clark County','Vancouver route uses Clark County');
+  assertEqual(vancouver.nodes['Routing Phone'].value,'503-868-4455','Vancouver route uses Washington contact');
+  assertEqual(vancouver.nodes['Routing Decision'].value,'RECRUITING_QUEUE','Do not promise assigned partner before verification');
+  assertEqual(vancouver.nodes.source_page.value,'vancouver-appliance-pickup','Vancouver request attribution');
+  assertEqual(vancouver.nodes['Dispatch Condition Gate'].value,'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH','Mixed Vancouver load needs review');
+  console.log('PASS: Vancouver form fields, Clark County routing and mixed-load gate');
+
   global.location.pathname='/denver-refrigerator-pickup/';
   const denver=mockForm({state:'Colorado',appliance:'Refrigerator'});
   api.ensureRequestAttribution(denver);
