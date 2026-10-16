@@ -6655,7 +6655,14 @@
       "evaluateNotBefore": "2026-10-15",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /garden-grove-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage."
+      "freezeRule": "After activation, do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to /garden-grove-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-15",
+          "reason": "Verified factual/photo UX defect: Garden Grove general-appliance page displayed the same single-washer photo twice, including as its broad-service hero, and labeled it as unverified Garden Grove pickup work. Replaced only hero, OG/Twitter/structured primary-image references and inaccurate provenance alt with previously inspected multi-appliance group asset, retained separate original washer proof photo and unchanged form, phone, title, body, page links and ranking experiment.",
+          "commit": "97235cbc46ea8d861c6874d1fe7e604147d70c0c"
+        }
+      ]
     },
     {
       "id": "2026-10-05-buena-park-structure-concentration",
