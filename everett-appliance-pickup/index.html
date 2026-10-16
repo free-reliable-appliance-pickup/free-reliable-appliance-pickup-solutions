@@ -14,11 +14,18 @@
 <section id="request"><h2>Submit an Everett appliance pickup request</h2><p class="notice">Please include condition and access details. This is a request for review, not an appointment confirmation.</p>
 <form action="https://formspree.io/f/mvzeapzd" method="POST">
 <input type="hidden" name="source_page" value="everett-appliance-pickup">
+<input type="hidden" name="state" value="Washington">
+<input type="hidden" name="service" value="General major appliance pickup">
 <label for="name">Name</label><input id="name" name="name" autocomplete="name" required>
-<label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required>
-<label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required>
-<label for="zip">Everett ZIP code</label><input id="zip" name="zip" inputmode="numeric" required>
-<label for="appliances">Appliances, working condition, stairs and access</label><textarea id="appliances" name="appliances_access_condition" rows="6" required></textarea>
+<label for="email">Email (optional)</label><input id="email" name="email" type="email" autocomplete="email">
+<label for="phone">Phone (required)</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+<label for="city">Pickup city</label><input id="city" name="city" value="Everett" autocomplete="address-level2" required>
+<label for="zip">Pickup ZIP code</label><input id="zip" name="zip" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" title="Enter a five-digit ZIP code" required>
+<label for="appliance">Main appliance type</label><select id="appliance" name="appliance" required><option value="">Choose appliance type</option><option>Washer</option><option>Dryer</option><option>Washer &amp; Dryer Set</option><option>Refrigerator</option><option>Freezer</option><option>Stove / Range</option><option>Oven</option><option>Multiple Major Appliances</option><option>Dishwasher with 2+ other major working appliances</option></select>
+<label for="condition">Overall condition</label><select id="condition" name="condition" required><option value="">Select condition</option><option>Fully working</option><option>Needs repair</option><option>Not working</option><option>Unknown</option><option>Mixed load - majority working</option></select>
+<label for="property_type">Property type</label><select id="property_type" name="property_type"><option value="">Choose property type (optional)</option><option>House</option><option>Apartment / Condo</option><option>Mobile home</option><option>Commercial property</option><option>Other</option></select>
+<label for="photos_available">Appliance photos</label><select id="photos_available" name="photos_available"><option value="">Select photo availability (optional)</option><option>I can send photos by text</option><option>I can send photos by email</option><option>I do not have photos yet</option></select>
+<label for="appliances">Appliances, working condition, stairs and access</label><textarea id="appliances" name="appliances_access_condition" rows="6" required placeholder="List each appliance, what works, floor level, stairs and access restrictions."></textarea>
 <label for="availability">Preferred pickup days (optional)</label><input id="availability" name="preferred_days">
 <p><button type="submit">Send pickup request</button></p></form></section>
 <section><h2>Other Washington pickup guides</h2><p><a href="/puget-sound-appliance-pickup/">Puget Sound appliance pickup overview</a> · <a href="/seattle-appliance-pickup/">Seattle appliance pickup</a> · <a href="/tacoma-appliance-pickup/">Tacoma appliance pickup</a> · <a href="/washington-appliance-pickup/">Washington service regions</a> · <a href="/free-pickup-qualification/">Pickup qualifications</a></p></section></main>

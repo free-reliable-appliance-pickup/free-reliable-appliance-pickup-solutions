@@ -464,6 +464,43 @@ for slug in FOOTHILL_NOINDEX_SPECIALTY_SLUGS:
     if 'src="/assets/customer-routing.js"' not in html:
         errors.append(f"{slug}: missing customer router")
 
+# Protect priority lead attribution and Everett's explicit condition selection.
+# Operational checks only: do not change city pages' indexing or SEO experiments.
+ATTRIBUTION_PAGES = (
+    "rancho-cucamonga", "upland", "fontana", "portland", "salem",
+    "denver", "aurora", "claremont", "la-verne", "san-dimas", "pomona",
+    "ontario", "montclair", "west-covina", "keizer", "lakewood",
+    "everett", "seattle", "tacoma",
+)
+for city in ATTRIBUTION_PAGES:
+    slug = city + "-appliance-pickup"
+    source = Path(slug) / "index.html"
+    if not source.is_file():
+        errors.append(f"{slug}: missing priority pickup page")
+        continue
+    raw = source.read_text(encoding="utf-8", errors="replace")
+    form = next((v for v in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+                 if 'formspree.io/f/mvzeapzd' in v), "")
+    if not form:
+        errors.append(f"{slug}: missing Formspree request form")
+        continue
+    if form.count('name="source_page"') != 1 or f'name="source_page" value="{slug}"' not in form:
+        errors.append(f"{slug}: incorrect source page attribution")
+    if form.count('name="service"') != 1 or 'name="service" value="General major appliance pickup"' not in form:
+        errors.append(f"{slug}: incorrect service attribution")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    if not phone or not re.search(r'\brequired\b', phone.group(0), re.I):
+        errors.append(f"{slug}: phone must be required")
+    condition = re.search(r'<select\b[^>]*name="condition"[^>]*>.*?</select>', form, re.I | re.S)
+    if not condition or not re.search(r'<select\b[^>]*\brequired\b', condition.group(0), re.I):
+        errors.append(f"{slug}: explicit required condition selection missing")
+    if city == "everett":
+        if 'name="robots" content="noindex, follow' not in raw:
+            errors.append("everett: noindex policy changed")
+        for field in ("city", "state", "appliance", "appliances_access_condition", "property_type", "photos_available"):
+            if f'name="{field}"' not in form:
+                errors.append(f"everett: missing {field} field")
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
