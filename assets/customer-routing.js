@@ -301,6 +301,6 @@ document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enha
 /* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 /* Load the final sharp individual-photo override on every premium washer/dryer page. */
-if(typeof document!=='undefined'&&!document.querySelector('script[data-premium-sharp-hero]')){const sharp=document.createElement('script');sharp.src=siteUrl('assets/premium-sharp-hero-fix.js')+'?v=20260916h2';sharp.async=true;sharp.dataset.premiumSharpHero='1';document.head.appendChild(sharp);}
+if(typeof document!=='undefined'&&!document.querySelector('script[data-premium-sharp-hero]')){const sharp=document.createElement('script');sharp.src=siteUrl('assets/premium-sharp-hero-fix.js')+'?v=20261016-pair-only';sharp.async=true;sharp.dataset.premiumSharpHero='1';document.head.appendChild(sharp);}
 window.FreeReliableCustomerRouting={classify,qualify,ensureRequestAttribution,isCustomerPickupForm,load,siteBase,routingDecision,preferLocalRequestForm,enhanceWasherDryerPhotos,enhanceCityLaundrySearchTerms,replaceCompressedLaundryPhotos,priority909};
 })();
