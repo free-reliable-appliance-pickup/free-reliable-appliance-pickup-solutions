@@ -2,11 +2,11 @@
 (function(){
 'use strict';
 const fallbackPhotos=[
-'real-laundry-pickup-1.jpg',
-'real-laundry-pickup-2.jpg',
-'real-laundry-pickup-3.jpg',
-'real-laundry-pickup-4.jpg',
-'real-laundry-pickup-5.jpg'
+'front-load-laundry-set.jpg',
+'laundry-pair.jpg',
+'original-user-heroes/IMG-20240921-WA0122.jpg',
+'original-user-heroes/IMG-20240412-WA0010.jpg',
+'original-user-heroes/IMG-20240921-WA0120.jpg'
 ];
 function base(){const h=(location.hostname||'').toLowerCase();if(h.endsWith('.github.io')){const p=(location.pathname||'/').split('/').filter(Boolean)[0];return p?'/'+p+'/':'/';}return '/';}
 function pagePath(){let p=location.pathname||'/',b=base();if(b!=='/'&&p.startsWith(b.slice(0,-1)))p=p.slice(b.length-1)||'/';if(!p.startsWith('/'))p='/'+p;if(!p.endsWith('/'))p+='/';return p;}
