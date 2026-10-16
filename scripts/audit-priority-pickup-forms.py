@@ -501,6 +501,25 @@ for city in ATTRIBUTION_PAGES:
             if f'name="{field}"' not in form:
                 errors.append(f"everett: missing {field} field")
 
+# Keep Spokane requests usable without changing its coverage-dependent noindex policy.
+spokane_source = Path("spokane-appliance-pickup/index.html")
+if not spokane_source.is_file():
+    errors.append("spokane: missing request page")
+else:
+    spokane_html = spokane_source.read_text(encoding="utf-8", errors="replace")
+    if 'name="robots" content="noindex, follow' not in spokane_html or 'href="https://freereliableappliancepickup.com/service-areas/"' not in spokane_html:
+        errors.append("spokane: protected consolidation metadata changed")
+    spokane_form = next((f for f in re.findall(r'<form\b[^>]*>.*?</form>', spokane_html, re.I | re.S) if 'formspree.io/f/mvzeapzd' in f), "")
+    if not spokane_form:
+        errors.append("spokane: missing direct customer request")
+    else:
+        for key in ("source_page", "service", "state", "city", "zip", "appliance", "condition", "phone"):
+            if f'name="{key}"' not in spokane_form:
+                errors.append(f"spokane: missing {key}")
+        for key in ("appliance", "condition"):
+            if not select_ok(spokane_form, key):
+                errors.append(f"spokane: {key} selection must be required with blank prompt")
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
