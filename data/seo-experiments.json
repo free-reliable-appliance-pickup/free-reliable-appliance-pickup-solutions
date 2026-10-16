@@ -5674,7 +5674,14 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "After activation, do not make further speculative title/meta/body/internal-link/schema-intent edits to /la-habra-appliance-pickup/ before 2026-10-15 unless there is verified technical, factual, contact, indexability or safety breakage.",
-      "launchCommit": "d0c50b1dbae80502720f718eb0e859dc4b2d9f0f"
+      "launchCommit": "d0c50b1dbae80502720f718eb0e859dc4b2d9f0f",
+      "technicalFixes": [
+        {
+          "date": "2026-10-15",
+          "reason": "Verified customer-intake accuracy defect: required condition select defaulted to 'Fully Working,' so a customer could submit without actively indicating condition. Added a required empty disabled selected 'Select appliance condition' prompt; retained all condition values, routing fields, phone, form action, page copy and experiment parameters.",
+          "commit": "cd5b1615fd61a823ddf9cf99b8639949e636b429"
+        }
+      ]
     },
     {
       "id": "2026-10-05-redlands-ctr-snippet",
