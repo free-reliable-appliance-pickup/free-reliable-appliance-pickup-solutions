@@ -82,11 +82,11 @@ jobs:
                   skipped.append((path, "file not found"))
                   continue
               markup = source.read_text(encoding="utf-8", errors="replace")
-              head = re.split(r"</head\\s*>", markup, maxsplit=1, flags=re.I)[0]
-              meta_tags = re.findall(r"<meta\\b[^>]*>", head, re.I)
+              head = re.split(r"</head\s*>", markup, maxsplit=1, flags=re.I)[0]
+              meta_tags = re.findall(r"<meta\b[^>]*>", head, re.I)
               if any(
-                  re.search(r'\\bname\\s*=\\s*["\\\'](?:robots|googlebot)["\\\']', tag, re.I)
-                  and re.search(r"\\bnoindex\\b", tag, re.I)
+                  re.search(r"""\bname\s*=\s*['"](?:robots|googlebot)['"]""", tag, re.I)
+                  and re.search(r"\bnoindex\b", tag, re.I)
                   for tag in meta_tags
               ):
                   skipped.append((path, "noindex"))
@@ -99,11 +99,11 @@ jobs:
                   url = base + "/" + path
 
               canonical_tags = [
-                  tag for tag in re.findall(r"<link\\b[^>]*>", head, re.I)
-                  if re.search(r'\\brel\\s*=\\s*["\\\']canonical["\\\']', tag, re.I)
+                  tag for tag in re.findall(r"<link\b[^>]*>", head, re.I)
+                  if re.search(r"""\brel\s*=\s*['"]canonical['"]""", tag, re.I)
               ]
               if canonical_tags:
-                  href = re.search(r'\\bhref\\s*=\\s*["\\\']([^"\\\']+)["\\\']', canonical_tags[0], re.I)
+                  href = re.search(r"""\bhref\s*=\s*['"]([^'"]+)['"]""", canonical_tags[0], re.I)
                   if href and href.group(1).rstrip("/") != url.rstrip("/"):
                       skipped.append((path, "canonical belongs to a different URL"))
                       continue
