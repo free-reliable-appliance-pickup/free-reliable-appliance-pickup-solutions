@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-10",
+  "updated": "2026-10-15",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -900,6 +900,11 @@
         {
           "date": "2026-10-03",
           "reason": "Post-change California audits required a second non-logo real/page image, the established local-ranking-depth marker, the exact city pickup-timing FAQ pattern, post-pickup outcome guidance, and explicit network transparency. Added only these technical/structural requirements; title, meta, canonical, H1 and experiment hypothesis were unchanged."
+        },
+        {
+          "date": "2026-10-15",
+          "reason": "Verified technical photo metadata inconsistency: San Dimas displayed a washer/dryer hero but OG, Twitter and WebPage primaryImageOfPage pointed to stove. Aligned all image references to existing verified hero and changed unsupported local-provenance OG alt to neutral description. Left hero, SEO headings/text, intent, form and telephone routing unchanged.",
+          "commit": "101dfc2c9ac09b363fbfc3ea20b6e01d184a7a79"
         }
       ],
       "measurementResets": [
@@ -1679,6 +1684,11 @@
           "date": "2026-10-15",
           "reason": "Verified photo-category factual correction: costa-mesa general appliance pickup hero showed only laundry equipment, falsely suggesting narrow service imagery, and claimed unverified local photo origin. Replaced hero, social-sharing images and structured primary image with an already-owned multi-appliance group photograph; corrected descriptive alt and aspect ratio. No title, meta description, body text, canonical, links, phone, or form changed.",
           "commit": "f96679a50f683c15b6fb1dd3bd9728ec99d280cd"
+        },
+        {
+          "date": "2026-10-15",
+          "reason": "Verified technical photo metadata inconsistency: San Dimas displayed a washer/dryer hero but OG, Twitter and WebPage primaryImageOfPage pointed to stove. Aligned all image references to existing verified hero and changed unsupported local-provenance OG alt to neutral description. Left hero, SEO headings/text, intent, form and telephone routing unchanged.",
+          "commit": "101dfc2c9ac09b363fbfc3ea20b6e01d184a7a79"
         }
       ]
     },
@@ -1764,7 +1774,14 @@
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not make speculative content/title/internal-link/schema-intent changes to /salem-appliance-pickup/ before 2026-10-14. Only verified technical breakage, factual/contact error, indexability failure or safety issue may interrupt the freeze."
+      "freezeRule": "Do not make speculative content/title/internal-link/schema-intent changes to /salem-appliance-pickup/ before 2026-10-14. Only verified technical breakage, factual/contact error, indexability failure or safety issue may interrupt the freeze.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-15",
+          "reason": "Verified factual/UX defect: same group-appliance image displayed twice consecutively at top of Salem page. Removed only redundant figure and aligned WebPage primaryImageOfPage with existing hero/OG image. Preserved remaining real photo evidence, customer form, contact links, content and experiment.",
+          "commit": "7fc37308ff350a8f369a1d1285d29c190cd0d34e"
+        }
+      ]
     },
     {
       "id": "2026-10-04-service-areas-title-ctr-test",
@@ -1831,7 +1848,14 @@
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /portland-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue."
+      "freezeRule": "Do not make speculative SEO/content/title/internal-link/schema-intent changes to /portland-appliance-pickup/ before 2026-10-14 unless there is verified technical breakage, factual/contact error, indexability failure or safety issue.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-15",
+          "reason": "Verified metadata mismatch: Portland WebPage primaryImageOfPage pointed to a different image from the visible approved group hero and OG image. Matched structured primary image to displayed group photograph; no hero, content, title, links or form change.",
+          "commit": "3d6e96924cfe7d0e10b8882a5dfee2fa8b72fc6f"
+        }
+      ]
     },
     {
       "id": "2026-10-04-nonfrozen-faq-schema-cleanup",
@@ -5394,7 +5418,14 @@
       "evaluateNotBefore": "2026-10-15",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Salem washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction."
+      "freezeRule": "After launch, do not make further speculative ranking/content/title/internal-link/schema-intent edits to the Salem washer/dryer page before the review gate unless a verified technical, factual, contact, indexability or safety issue requires correction.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-15",
+          "reason": "Verified duplicate same washer/dryer photograph within Salem laundry hero and gallery. Removed duplicate gallery copy, updated adjacent sentence to singular, and aligned OG, Twitter and structured primary image references to existing hero. Protected titles, FAQ, forms, phone, intent and links unchanged.",
+          "commit": "df4cf5c455d6c33ed608077ec27e6645aa1be983"
+        }
+      ]
     },
     {
       "id": "2026-10-05-escondido-laundry-support-handoff",
@@ -8243,7 +8274,14 @@
       "evaluateNotBefore": "2026-10-16",
       "preferredReview": "2026-10-21",
       "status": "running",
-      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these four pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage."
+      "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent edits to these four pages before 2026-10-16 unless there is verified technical, factual, contact, indexability or safety breakage.",
+      "technicalFixes": [
+        {
+          "date": "2026-10-15",
+          "reason": "Verified social and structured primary image referenced a different asset from displayed original washer/dryer hero. Aligned OG/Twitter/WebPage metadata to existing hero; customer controls and SEO copy unchanged.",
+          "commit": "f4f74d8e16af1466326316bf82d77e23e8362862"
+        }
+      ]
     },
     {
       "id": "2026-10-06-north-hollywood-local-authority",
