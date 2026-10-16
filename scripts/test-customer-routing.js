@@ -51,7 +51,7 @@ async function main(){
     ['Palmdale','CA','partner-recruiting','Antelope Valley','priority-california-city','310-774-4304'],
     ['San Diego','CA','partner-recruiting','San Diego County','priority-california-city','310-774-4304'],
     ['San Francisco','CA','partner-recruiting','San Francisco Bay Area','priority-california-city','310-774-4304'],
-    ['Fresno','CA','partner-recruiting','Central Valley','priority-california-city','310-774-4304'],
+    ['Fresno','CA','buyer-review','Central Valley','priority-california-city','310-774-4304'],
     ['Phoenix Metro','AZ','partner-recruiting','Phoenix Metro','regional','602-726-7552'],
     ['Las Vegas Valley','NV','partner-recruiting','Las Vegas Valley','regional',null],
     ['Columbus','OH','request-only','Ohio statewide intake','statewide',null]
@@ -69,6 +69,9 @@ async function main(){
   assertEqual(laDecision.decision,'RECRUITING_QUEUE','Los Angeles County decision');
   const denverDecision=api.routingDecision(api.classify('Denver Metro','CO'));
   assertEqual(denverDecision.decision,'DIRECT_OPERATION','Denver Metro decision');
+  const fresnoDecision=api.routingDecision(api.classify('Fresno','CA'));
+  assertEqual(fresnoDecision.decision,'BUYER_REVIEW','Fresno buyer-review intake rather than partner recruiting');
+  assertEqual(fresnoDecision.action.includes('Do not promise pickup'),true,'Fresno availability remains conditional');
 
   // California legacy forms may contain plural "appliances" instead of singular "appliance".
   // Confirm these still obtain routing metadata and page attribution without changing existing values.
