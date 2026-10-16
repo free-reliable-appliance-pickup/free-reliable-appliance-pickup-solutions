@@ -11472,6 +11472,23 @@
         "assets/customer-routing.js",
         "data/seo-experiments.json"
       ]
+    },
+    {
+      "date": "2026-10-16",
+      "type": "Customer intake condition default repair (technical/factual exception)",
+      "reason": "Verified four California washer/dryer forms defaulted to Fully Working without customer confirmation. Replaced the implicit default with a disabled empty placeholder and required condition selection, preserving the four existing condition choices, form destinations, city routing, phone, titles, canonicals, visible ranking content, and active experiment ownership. Re-fetched all four source files after commits and confirmed required selection markup. No claim of live deployment, successful Formspree delivery, or improved rankings. Commits: cfb515a857ab12fd60fe361968cefdeabf75c787, ccc72523d7f650b835027c9eb27aa3b81eb47623, c5ffe81b5bd830639cf497f8fc60f0e97abffbeb, 4bea7165e05b9aca9b7b189b03dcf4bad36b3946.",
+      "pages": [
+        "/la-habra-washer-dryer-pickup/",
+        "/whittier-washer-dryer-pickup/",
+        "/montebello-washer-dryer-pickup/",
+        "/alhambra-washer-dryer-pickup/"
+      ],
+      "files": [
+        "la-habra-washer-dryer-pickup/index.html",
+        "whittier-washer-dryer-pickup/index.html",
+        "montebello-washer-dryer-pickup/index.html",
+        "alhambra-washer-dryer-pickup/index.html"
+      ]
     }
   ]
 }
