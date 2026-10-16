@@ -69,13 +69,9 @@ function pagePath(){let p=location.pathname||'/',base=siteBase();if(base!=='/'&&
 const COMPLETE_SET_HEROES=[
 'front-load-laundry-set.jpg',
 'laundry-pair.jpg',
-'washer-dryer-set.jpg',
-'washer-dryer-set-sharp.jpg',
-'heroes/la-canada-premium-set.webp',
-'heroes/pasadena-premium-set.webp',
-'heroes/ontario-premium-set.webp',
-'heroes/rancho-cucamonga-premium-set.webp',
-'heroes/san-bernardino-premium-set.webp'
+'original-user-heroes/IMG-20240921-WA0122.jpg',
+'original-user-heroes/IMG-20240412-WA0010.jpg',
+'original-user-heroes/IMG-20240921-WA0120.jpg'
 ];
 
 const PREMIUM_WD_SLUGS=[
