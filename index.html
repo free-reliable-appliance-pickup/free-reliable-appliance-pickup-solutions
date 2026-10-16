@@ -196,6 +196,26 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
     var fresnoCityZips=['93701','93702','93703','93704','93705','93706','93710','93711','93720','93721','93722','93723','93725','93726','93727','93728','93730'];
     if(fresnoCityZips.indexOf(z)!==-1) return {region:'Fresno, CA (request review)',phone:'310-774-4304',tel:'+13107744304',href:'/fresno-appliance-pickup/'};
 
+    // Exact city ZIP intake paths from the corresponding city pages.
+    // These routes identify where to request a review, never confirmed pickup coverage.
+    var cityZipRoutes=[
+      {name:'Rancho Cucamonga, CA',zip:['91701','91730','91737','91739'],phone:'909-375-6685',tel:'+19093756685',href:'/rancho-cucamonga-appliance-pickup/'},
+      {name:'Fontana, CA',zip:['92335','92336','92337'],phone:'909-375-6685',tel:'+19093756685',href:'/fontana-appliance-pickup/'},
+      {name:'Upland, CA',zip:['91784','91786'],phone:'909-375-6685',tel:'+19093756685',href:'/upland-appliance-pickup/'},
+      {name:'Ontario, CA',zip:['91761','91762','91764'],phone:'909-375-6685',tel:'+19093756685',href:'/ontario-appliance-pickup/'},
+      {name:'La Verne, CA',zip:['91750'],phone:'909-375-6685',tel:'+19093756685',href:'/la-verne-appliance-pickup/'},
+      {name:'Claremont, CA',zip:['91711'],phone:'909-375-6685',tel:'+19093756685',href:'/claremont-appliance-pickup/'},
+      {name:'Pomona, CA',zip:['91766','91767','91768'],phone:'909-375-6685',tel:'+19093756685',href:'/pomona-appliance-pickup/'},
+      {name:'Stockton, CA',zip:['95202','95203','95204','95205','95206','95207','95209','95210','95212','95219'],phone:'310-774-4304',tel:'+13107744304',href:'/stockton-appliance-pickup/'},
+      {name:'Portland, OR',zip:['97201','97202','97203','97204','97205','97206','97209','97210','97211','97212','97213','97214','97215','97216','97217','97219','97220','97221','97227','97230','97232','97233','97236','97239','97266'],phone:'503-868-4455',tel:'+15038684455',href:'/portland-appliance-pickup/'},
+      {name:'Salem, OR',zip:['97301','97302','97304','97305','97306','97317'],phone:'503-868-4455',tel:'+15038684455',href:'/salem-appliance-pickup/'},
+      {name:'Phoenix, AZ',zip:['85003','85004','85006','85008','85012','85013','85014','85016','85018','85020','85021','85022','85024','85027','85028','85029','85031','85032','85033','85034','85035','85037','85040','85041','85042','85043','85044','85048','85050','85051','85053','85054','85083','85085','85086'],phone:'602-726-7552',tel:'+16027267552',href:'/phoenix-appliance-pickup/'}
+    ];
+    for(var i=0;i<cityZipRoutes.length;i++){
+      var cityRoute=cityZipRoutes[i];
+      if(cityRoute.zip.indexOf(z)!==-1) return {region:cityRoute.name+' (request review)',phone:cityRoute.phone,tel:cityRoute.tel,href:cityRoute.href};
+    }
+
     // Selected Pasadena, SGV foothill and La Crescenta ZIPs use the 909 intake line.
     // Do not route every 910xx or 912xx ZIP as SGV: nearby areas can differ.
     var sgvFoothills=['91001','91006','91007','91008','91010','91011','91016','91020','91024','91030','91214'];
