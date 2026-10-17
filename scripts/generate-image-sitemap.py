@@ -38,6 +38,10 @@ extra = [
     "rancho-cucamonga-refrigerator-pickup",
     "rancho-cucamonga-freezer-pickup",
     "rancho-cucamonga-stove-oven-pickup",
+    # Indexable Fresno specialty pages were omitted from the image sitemap.
+    "fresno-refrigerator-pickup",
+    "fresno-freezer-pickup",
+    "fresno-stove-oven-pickup",
 ]
 
 slugs = []
