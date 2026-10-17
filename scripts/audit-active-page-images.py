@@ -240,9 +240,9 @@ def main():
     # displayed washing machines. Pin only visually verified original photo
     # references until each replacement has had a real category review.
     rancho_verified_hero_paths = {
-        'rancho-cucamonga-stove-oven-pickup': '/assets/california/real-appliances/IMG-20241203-WA0002.jpg',
-        'rancho-cucamonga-refrigerator-pickup': '/IMG-20241123-WA0058.jpg',
-        'rancho-cucamonga-freezer-pickup': '/IMG-20240222-WA0005.jpg',
+        'rancho-cucamonga-stove-oven-pickup': '/assets/rancho-cucamonga/rancho-cucamonga-stove-oven-real-stainless-range-20261016.jpg',
+        'rancho-cucamonga-refrigerator-pickup': '/assets/rancho-cucamonga/rancho-cucamonga-refrigerator-real-french-door-20261016.jpg',
+        'rancho-cucamonga-freezer-pickup': '/assets/rancho-cucamonga/rancho-cucamonga-freezer-real-upright-20261016.jpg',
     }
     for slug, expected_src in sorted(rancho_verified_hero_paths.items()):
         page = Path(slug) / 'index.html'
@@ -268,7 +268,7 @@ def main():
     rancho_general_page = Path('rancho-cucamonga-appliance-pickup/index.html')
     if rancho_general_page.is_file():
         html = rancho_general_page.read_text(encoding='utf-8', errors='replace')
-        for verified_gallery_src in ('/IMG-20230805-WA0003.jpg', '/IMG-20240222-WA0006.jpg'):
+        for verified_gallery_src in ('/IMG-20241201-WA0066.jpg', '/IMG-20240222-WA0006.jpg'):
             if f'src="{verified_gallery_src}"' not in html:
                 problems.append(f'Rancho city gallery missing verified photo {verified_gallery_src}')
         for invalid_src in ('/assets/california/real-appliances/real-refrigerator.jpg',
