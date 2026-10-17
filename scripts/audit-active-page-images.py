@@ -275,6 +275,48 @@ def main():
                             '/assets/california/real-appliances/real-freezer.jpg'):
             if f'src="{invalid_src}"' in html:
                 problems.append(f'Rancho city gallery uses mislabeled washer {invalid_src}')
+
+    # The legacy "real-refrigerator.jpg" and "real-freezer.jpg" files
+    # visually show washing machines. Keep these 17 California pages and the
+    # image sitemap free of those misleading asset references.
+    reviewed_california_photo_slugs = (
+        'los-angeles-appliance-pickup',
+        'orange-county-appliance-pickup',
+        'inland-empire-appliance-pickup',
+        'irvine-appliance-pickup',
+        'fontana-appliance-pickup',
+        'mission-viejo-appliance-pickup',
+        'west-covina-appliance-pickup',
+        'monrovia-appliance-pickup',
+        'claremont-appliance-pickup',
+        'san-dimas-appliance-pickup',
+        'whittier-appliance-pickup',
+        'diamond-bar-appliance-pickup',
+        'el-monte-appliance-pickup',
+        'temple-city-appliance-pickup',
+        'san-gabriel-appliance-pickup',
+        'san-marino-appliance-pickup',
+        'yorba-linda-appliance-pickup',
+    )
+    misleading_photo_urls = (
+        '/assets/california/real-appliances/real-refrigerator.jpg',
+        '/assets/california/real-appliances/real-freezer.jpg',
+    )
+    for slug in reviewed_california_photo_slugs:
+        path = Path(slug) / 'index.html'
+        if not path.is_file():
+            problems.append(f'{slug}: missing reviewed California photo page')
+            continue
+        raw = path.read_text(encoding='utf-8', errors='replace')
+        for misleading_url in misleading_photo_urls:
+            if misleading_url in raw:
+                problems.append(f'{slug}: mislabeled washing-machine photo {misleading_url}')
+    image_sitemap = Path('sitemap-images.xml')
+    if image_sitemap.is_file():
+        index = image_sitemap.read_text(encoding='utf-8', errors='replace')
+        for misleading_url in misleading_photo_urls:
+            if misleading_url in index:
+                problems.append(f'image sitemap contains misleading refrigerator/freezer photo {misleading_url}')
     print(f'IMAGE_LAYOUT_PRIORITY_MISMATCHES {len(layout_findings)}')
     for finding in layout_findings:
         print('IMAGE_LAYOUT_REVIEW', finding)
