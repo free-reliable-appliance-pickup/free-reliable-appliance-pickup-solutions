@@ -559,6 +559,48 @@ for slug, service in CENTRAL_VALLEY_SERVICE_TAGS.items():
 
 print("CENTRAL_VALLEY_SERVICE_TAG_FORMS_CHECKED", len(CENTRAL_VALLEY_SERVICE_TAGS))
 
+
+# Washington request pages: maintain the established noindex policy on city
+# partner-review pages, and keep local lead provenance reliable without JS.
+WASHINGTON_REQUEST_FORMS = {
+    "seattle-appliance-pickup": ("Seattle", True),
+    "tacoma-appliance-pickup": ("Tacoma", True),
+    "olympia-appliance-pickup": ("Olympia", True),
+    "puget-sound-appliance-pickup": (None, False),
+    "washington-appliance-pickup": (None, False),
+}
+for slug, (city, intentionally_noindex) in WASHINGTON_REQUEST_FORMS.items():
+    path = Path(slug) / "index.html"
+    if not path.exists():
+        errors.append(f"{slug}: missing Washington pickup page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    form = next((v for v in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+                 if "formspree.io/f/mvzeapzd" in v), "")
+    if not form:
+        errors.append(f"{slug}: expected established Formspree request form")
+        continue
+    for name, value in (("source_page", slug), ("state", "Washington"),
+                        ("service", "General major appliance pickup")):
+        if form.count(f'name="{name}"') != 1 or f'name="{name}" value="{value}"' not in form:
+            errors.append(f"{slug}: incorrect or duplicated {name}")
+    if city and f'name="city"' not in form:
+        errors.append(f"{slug}: pickup city missing")
+    for name in ("appliance", "condition"):
+        if not select_ok(form, name):
+            errors.append(f"{slug}: required {name} choice is missing or has no blank prompt")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    if not phone or not re.search(r'\brequired\b', phone.group(0), re.I):
+        errors.append(f"{slug}: required phone input missing")
+    elif 'type="tel"' not in phone.group(0):
+        errors.append(f"{slug}: phone must show phone keypad on mobile")
+    if intentionally_noindex:
+        if not re.search(r'<meta[^>]+name="robots"[^>]+content="noindex', raw, re.I):
+            errors.append(f"{slug}: protected noindex setting missing")
+        if re.search(r'<meta[^>]+name="googlebot"[^>]+content="index', raw, re.I):
+            errors.append(f"{slug}: conflicting googlebot index instruction")
+print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
