@@ -599,6 +599,40 @@ for slug, (city, intentionally_noindex) in WASHINGTON_REQUEST_FORMS.items():
             errors.append(f"{slug}: protected noindex setting missing")
         if re.search(r'<meta[^>]+name="googlebot"[^>]+content="index', raw, re.I):
             errors.append(f"{slug}: conflicting googlebot index instruction")
+
+# Verify request provenance and service classification on the seven
+# previously missed city forms. This verifies static Formspree payloads
+# even when JavaScript is disabled; it does not submit customer data.
+PENDING_FORM_ATTRIBUTION_FIXES = {
+    "altadena-washer-dryer-pickup": "Washer and dryer pickup",
+    "anaheim-hills-washer-dryer-pickup": "Washer and dryer pickup",
+    "arcadia-washer-dryer-pickup": "Washer and dryer pickup",
+    "aliso-viejo-washer-dryer-pickup": "Washer and dryer pickup",
+    "arvada-appliance-pickup": "General major appliance pickup",
+    "banning-washer-dryer-pickup": "Washer and dryer pickup",
+    "beaumont-washer-dryer-pickup": "Washer and dryer pickup",
+}
+for slug, service in PENDING_FORM_ATTRIBUTION_FIXES.items():
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing attribution-protected pickup page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    intake = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+              if 'action="https://formspree.io/f/mvzeapzd"' in f]
+    if len(intake) != 1:
+        errors.append(f"{slug}: expected one existing Formspree request form")
+        continue
+    form = intake[0]
+    for field, value in (("source_page", slug), ("service", service)):
+        expected = f'name="{field}" value="{value}"'
+        if form.count(f'name="{field}"') != 1 or expected not in form:
+            errors.append(f"{slug}: missing, duplicated or incorrect static {field}")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    if not phone or not re.search(r'\brequired\b', phone.group(0), re.I):
+        errors.append(f"{slug}: required phone field missing")
+print("ATTRIBUTION_CLASSIFICATION_FORMS_CHECKED", len(PENDING_FORM_ATTRIBUTION_FIXES))
+
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
 
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
