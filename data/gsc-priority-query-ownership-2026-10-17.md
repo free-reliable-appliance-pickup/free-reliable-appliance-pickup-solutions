@@ -43,3 +43,27 @@ These three-day page aggregates alone do not justify changing titles or redirect
 - `olympia-appliance-pickup/index.html`: added visually inspected existing garage multi-appliance photo; preserved `noindex`, local-partner notice, form and canonical. Commit `4096b2e5203c4eee4589f578e7e8e7d3935bd131`.
 - `everett-appliance-pickup/index.html`: added a different visually inspected existing multi-appliance photo; preserved `noindex`, local-partner notice, form and canonical. Commit `4a6e280a6cd615de2954823b28602d61342e16eb`.
 - Images are representative appliance examples, **not** photographs of completed jobs in these Washington cities.
+
+## Additional priority-market landing-page checks (same finalized Oct 12–14 window)
+
+These are page-insights returns, not exhaustive organic rankings or Google URL Inspection.
+
+| Page | Impressions | Clicks | Average position | Interpretation |
+| --- | ---: | ---: | ---: | --- |
+| `/arcadia-appliance-pickup/` | 2 | 0 | 24.50 | Both returned page-query impressions were for `free appliance pickup arcadia`. |
+| `/arcadia-refrigerator-pickup/` | 12 | 0 | 8.42 | Eleven query impressions were for the *general* `free appliance pickup arcadia` term (query avg 9.09); specialized page is presently winning on that broad term in this sample. |
+| `/upland-appliance-pickup/` | No returned row | — | — | Do not infer unindexed from missing three-day data. |
+| `/upland-washer-dryer-pickup/` | 3 | 0 | 28.33 | All three impressions were for `free appliance pickup upland`, a *general* query. |
+| `/san-bernardino-county-appliance-pickup/` | 8 | 0 | 21.25 | Seven impressions were for `free appliance pickup san bernardino` (avg 23.29). |
+| `/fontana-stove-oven-pickup/` | No returned row | — | — | No three-day performance observation; do not discard historical clicks. |
+| `/portland-appliance-pickup/` | 9 | 0 | 14.67 | Some generic and near-me term impressions, no verified qualified lead. |
+| `/salem-appliance-pickup/` | 13 | 0 | 8.00 | Mixed phrases, including `free appliance pickup near me` (one impression, pos 5); not proof the city's core exact query ranks #8. |
+| `/denver-appliance-pickup/` | No returned row | — | — | Three days only; not proof of noindex. |
+| `/aurora-appliance-pickup/` | 1 | 0 | 18.00 | Single impression, no identified query row. |
+
+### Oct 17, 2026 customer-first Arcadia correction
+
+- Commit `b75e08792b87794a426e856d485971d1b7d2fd12` replaced one paragraph in `/arcadia-appliance-pickup/` that described routing *searches* with actual condition details a resident can supply.
+- No title, meta description, H1, canonical, phone, schema, form or internal link changes were made.
+- The existing Oct 4 Arcadia/Altadena snippet experiment in `data/seo-experiments.json` now explicitly marks the **Arcadia body-copy measurement reset on Oct 17**. Do not compare Arcadia post-Oct-17 observations with the original snippet-only experiment as if there were only one changing variable; Altadena received no content change.
+- No indexing/ranking improvement is claimed until later finalized GSC data is available.
