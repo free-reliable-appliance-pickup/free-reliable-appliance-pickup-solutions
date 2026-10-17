@@ -1,0 +1,94 @@
+query,page,device,clicks,impressions,position
+free appliance pickup fontana,/fontana-stove-oven-pickup/,DESKTOP,0,11,14.9091
+free appliance pickup fontana,/southern-california-appliance-pickup/,DESKTOP,0,10,6.4
+free appliance pickup fontana,/fontana-appliance-pickup/,MOBILE,0,8,21
+free appliance pickup fontana,/rialto-washer-dryer-pickup/,DESKTOP,0,4,3.25
+free appliance pickup fontana,/fontana-appliance-pickup/,DESKTOP,0,3,23.3333
+free appliance pickup fontana,/fontana-stove-oven-pickup/,MOBILE,0,2,39.5
+free appliance pickup fontana,/southern-california-refrigerator-pickup/,MOBILE,0,2,24.5
+free appliance pickup fontana,/,DESKTOP,0,1,8
+free appliance pickup fontana,/southern-california-refrigerator-pickup/,DESKTOP,0,1,25
+free appliance pickup fontana,/rialto-washer-dryer-pickup/,MOBILE,0,1,15
+free appliance pickup fontana,/southern-california-appliance-pickup/,MOBILE,0,1,4
+free appliance pickup fresno,/clovis-appliance-pickup/,DESKTOP,0,5,11
+free appliance pickup fresno,/fresno-county-appliance-pickup/,DESKTOP,0,4,23.5
+free appliance pickup fresno,/fresno-freezer-pickup/,MOBILE,0,4,17.5
+free appliance pickup fresno,/fresno-freezer-pickup/,DESKTOP,0,3,2
+free appliance pickup fresno,/fresno-refrigerator-pickup/,DESKTOP,0,3,11.6667
+free appliance pickup fresno,/sanger-appliance-pickup/,DESKTOP,0,3,19.6667
+free appliance pickup fresno,/visalia-appliance-pickup/,DESKTOP,0,3,30
+free appliance pickup fresno,/fresno-county-appliance-pickup/,MOBILE,0,3,15.3333
+free appliance pickup fresno,/appliance-recycling/,DESKTOP,0,2,31
+free appliance pickup fresno,/fowler-appliance-pickup/,DESKTOP,0,2,10.5
+free appliance pickup fresno,/selma-appliance-pickup/,DESKTOP,0,2,20
+free appliance pickup fresno,/fresno-refrigerator-pickup/,MOBILE,0,1,10
+free appliance pickup fresno,/sanger-appliance-pickup/,MOBILE,0,1,25
+free appliance pickup fresno,/visalia-appliance-pickup/,MOBILE,0,1,35
+free appliance pickup rancho cucamonga,/rancho-cucamonga-appliance-pickup/,DESKTOP,0,6,28.8333
+free appliance pickup rancho cucamonga,/rancho-cucamonga-refrigerator-pickup/,MOBILE,0,6,35.1667
+free appliance pickup rancho cucamonga,/southern-california-refrigerator-pickup/,DESKTOP,0,5,11.8
+free appliance pickup rancho cucamonga,/san-bernardino-appliance-pickup/,MOBILE,0,4,4.75
+free appliance pickup rancho cucamonga,/southern-california-refrigerator-pickup/,MOBILE,0,3,20
+free appliance pickup rancho cucamonga,/rancho-cucamonga-refrigerator-pickup/,DESKTOP,0,2,35
+free appliance pickup rancho cucamonga,/appliances/,DESKTOP,0,1,19
+free appliance pickup rancho cucamonga,/rancho-cucamonga-freezer-pickup/,DESKTOP,0,1,33
+free appliance pickup rancho cucamonga,/san-bernardino-appliance-pickup/,DESKTOP,0,1,5
+free appliance pickup rancho cucamonga,/san-gabriel-inland-empire-appliance-pickup/,DESKTOP,0,1,12
+free appliance pickup rancho cucamonga,/appliances/,MOBILE,0,1,19
+free appliance pickup rancho cucamonga,/fontana-appliance-pickup/,MOBILE,0,1,11
+free appliance pickup rancho cucamonga,/rancho-cucamonga-appliance-pickup/,MOBILE,0,1,23
+free appliance pickup rancho cucamonga,/rancho-cucamonga-freezer-pickup/,MOBILE,0,1,17
+free appliance pickup rancho cucamonga,/southern-california-appliance-pickup/,MOBILE,0,1,10
+free appliance pickup rancho cucamonga,/southern-california-freezer-pickup/,MOBILE,0,1,14
+free appliance pickup rancho cucamonga,/upland-washer-dryer-pickup/,MOBILE,0,1,28
+free appliance pickup upland,/upland-washer-dryer-pickup/,MOBILE,0,8,16.125
+free appliance pickup upland,/san-bernardino-county-appliance-pickup/,DESKTOP,0,7,9
+free appliance pickup upland,/upland-washer-dryer-pickup/,DESKTOP,0,7,8.1429
+free appliance pickup upland,/highland-appliance-pickup/,MOBILE,0,5,36.4
+free appliance pickup upland,/san-bernardino-county-appliance-pickup/,MOBILE,0,5,14.4
+free appliance pickup upland,/san-bernardino-appliance-pickup/,DESKTOP,0,4,15.75
+free appliance pickup upland,/highland-appliance-pickup/,DESKTOP,0,3,40.3333
+free appliance pickup upland,/hermosa-beach-appliance-pickup/,MOBILE,0,3,45.6667
+free appliance pickup upland,/la-mesa-appliance-pickup/,MOBILE,0,3,48.6667
+free appliance pickup upland,/pico-rivera-appliance-pickup/,MOBILE,0,3,44.3333
+free appliance pickup upland,/southern-california-appliance-pickup/,MOBILE,0,3,41.6667
+free appliance pickup upland,/san-bernardino-appliance-pickup/,MOBILE,0,2,10
+free appliance pickup upland,/san-gabriel-inland-empire-appliance-pickup/,MOBILE,0,2,11.5
+free appliance pickup upland,/,DESKTOP,0,1,46
+free appliance pickup upland,/rancho-cucamonga-appliance-pickup/,DESKTOP,0,1,35
+free appliance pickup upland,/san-gabriel-inland-empire-appliance-pickup/,DESKTOP,0,1,11
+free appliance pickup upland,/hawaiian-gardens-appliance-pickup/,MOBILE,0,1,44
+free appliance pickup upland,/service-areas/,MOBILE,0,1,24
+free freezer pickup fresno,/fresno-county-appliance-pickup/,DESKTOP,0,14,16.9286
+free freezer pickup fresno,/fresno-county-appliance-pickup/,MOBILE,0,8,15.125
+free freezer pickup fresno,/fresno-freezer-pickup/,MOBILE,0,8,41.25
+free freezer pickup fresno,/fresno-freezer-pickup/,DESKTOP,0,6,45.3333
+free freezer pickup fresno,/sanger-appliance-pickup/,DESKTOP,0,5,4.2
+free freezer pickup fresno,/selma-appliance-pickup/,DESKTOP,0,5,8.6
+free freezer pickup fresno,/sanger-appliance-pickup/,MOBILE,0,4,3.75
+free freezer pickup fresno,/selma-appliance-pickup/,MOBILE,0,4,8.5
+free freezer pickup fresno,/fresno-refrigerator-pickup/,MOBILE,0,3,43
+free freezer pickup fresno,/fresno-refrigerator-pickup/,DESKTOP,0,1,50
+free freezer pickup fresno,/visalia-appliance-pickup/,MOBILE,0,1,31
+free stove pickup fresno,/fresno-county-appliance-pickup/,MOBILE,0,9,17.7778
+free stove pickup fresno,/fresno-stove-oven-pickup/,MOBILE,0,7,42
+free stove pickup fresno,/fresno-stove-oven-pickup/,DESKTOP,0,5,34.4
+free stove pickup fresno,/fresno-freezer-pickup/,MOBILE,0,5,9.4
+free stove pickup fresno,/fresno-county-appliance-pickup/,DESKTOP,0,2,16
+free stove pickup fresno,/fresno-refrigerator-pickup/,DESKTOP,0,2,27
+free stove pickup fresno,/fresno-appliance-pickup/,MOBILE,0,1,50
+free stove pickup fresno,/fresno-refrigerator-pickup/,MOBILE,0,1,50
+washer dryer pickup fresno,/clovis-appliance-pickup/,MOBILE,0,14,4.8571
+washer dryer pickup fresno,/fresno-county-appliance-pickup/,DESKTOP,0,13,38.8462
+washer dryer pickup fresno,/clovis-appliance-pickup/,DESKTOP,0,11,4.6364
+washer dryer pickup fresno,/sanger-washer-dryer-pickup/,MOBILE,0,11,10.8182
+washer dryer pickup fresno,/sanger-washer-dryer-pickup/,DESKTOP,0,7,10.2857
+washer dryer pickup fresno,/fresno-county-appliance-pickup/,MOBILE,0,4,37.75
+washer dryer pickup fresno,/fowler-washer-dryer-pickup/,DESKTOP,0,3,13
+washer dryer pickup fresno,/fowler-washer-dryer-pickup/,MOBILE,0,3,12
+washer dryer pickup fresno,/clovis-washer-dryer-pickup/,DESKTOP,0,2,3
+washer dryer pickup fresno,/sanger-appliance-pickup/,DESKTOP,0,2,25
+washer dryer pickup fresno,/clovis-washer-dryer-pickup/,MOBILE,0,2,3.5
+washer dryer pickup fresno,/fowler-appliance-pickup/,MOBILE,0,2,15
+washer dryer pickup fresno,/fowler-appliance-pickup/,DESKTOP,0,1,19
+washer dryer pickup fresno,/selma-appliance-pickup/,MOBILE,0,1,26
