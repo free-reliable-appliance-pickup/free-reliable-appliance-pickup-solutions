@@ -6,12 +6,18 @@ on:
     paths:
       - '**/*-appliance-pickup/index.html'
       - '**/*-washer-dryer-pickup/index.html'
+      - '**/*-refrigerator-pickup/index.html'
+      - '**/*-freezer-pickup/index.html'
+      - '**/*-stove-oven-pickup/index.html'
       - 'scripts/audit-priority-pickup-forms.py'
       - '.github/workflows/audit-priority-pickup-forms.yml'
   pull_request:
     paths:
       - '**/*-appliance-pickup/index.html'
       - '**/*-washer-dryer-pickup/index.html'
+      - '**/*-refrigerator-pickup/index.html'
+      - '**/*-freezer-pickup/index.html'
+      - '**/*-stove-oven-pickup/index.html'
       - 'scripts/audit-priority-pickup-forms.py'
       - '.github/workflows/audit-priority-pickup-forms.yml'
   workflow_dispatch:
