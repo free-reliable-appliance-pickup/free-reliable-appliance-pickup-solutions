@@ -187,6 +187,52 @@ def main():
                     problems.append(f'{url}: hero {src} only {size[0]}px wide')
                 elif attrs.get('fetchpriority') == 'high' and asset.stat().st_size > MAX_HERO_BYTES:
                     problems.append(f'{url}: hero {src} is {asset.stat().st_size / 1_000_000:.2f} MB; use an optimized derivative under {MAX_HERO_BYTES / 1_000_000:.1f} MB')
+
+    # Check group-hero layout on key Northwest pages, including intentionally
+    # noindex request pages that are excluded from the public XML sitemap.
+    # The group photo must retain its actual intrinsic aspect ratio to avoid
+    # layout shift on mobile. Never assume a generated photo's dimensions.
+    northwest_group_pages = {
+        'seattle-appliance-pickup',
+        'tacoma-appliance-pickup',
+        'spokane-appliance-pickup',
+        'vancouver-appliance-pickup',
+        'salem-appliance-pickup',
+        'portland-appliance-pickup',
+        'washington-appliance-pickup',
+    }
+    for slug in sorted(northwest_group_pages):
+        page = Path(slug) / 'index.html'
+        if not page.is_file():
+            problems.append(f'{slug}: missing Northwest city page')
+            continue
+        parser = ImageRefs()
+        parser.feed(page.read_text(encoding='utf-8', errors='replace'))
+        hero_images = [
+            attrs for attrs in parser.images
+            if 'group-appliances.webp' in urlparse(attrs.get('src', '')).path
+        ]
+        if not hero_images:
+            problems.append(f'{slug}: no major-appliance group photo')
+            continue
+        for attrs in hero_images:
+            src = attrs['src']
+            asset = Path(urlparse(urljoin(BASE, src)).path.lstrip('/'))
+            if not asset.is_file():
+                problems.append(f'{slug}: missing group hero {src}')
+                continue
+            try:
+                with Image.open(asset) as photo:
+                    actual_width, actual_height = photo.size
+            except (OSError, ValueError):
+                problems.append(f'{slug}: unreadable group hero {src}')
+                continue
+            if (attrs.get('width'), attrs.get('height')) != (str(actual_width), str(actual_height)):
+                problems.append(
+                    f'{slug}: group hero {src} dimensions '
+                    f'{attrs.get("width")}x{attrs.get("height")} '
+                    f'do not match file {actual_width}x{actual_height}'
+                )
     print(f'IMAGE_LAYOUT_PRIORITY_MISMATCHES {len(layout_findings)}')
     for finding in layout_findings:
         print('IMAGE_LAYOUT_REVIEW', finding)
