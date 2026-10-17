@@ -18,17 +18,9 @@ APPLIANCE_HERO_TERMS = {
     'stove-oven-pickup': ('stove', 'range', 'oven'),
 }
 
-GENERIC_APPLIANCE_ASSET = {
-    'refrigerator-pickup': 'major-appliance-pickup-photo-1.jpg',
-    'stove-oven-pickup': 'major-appliance-pickup-photo-2.jpg',
-    'freezer-pickup': 'major-appliance-pickup-photo-3.jpg',
-}
-
-KNOWN_SHARED_APPLIANCE_ASSETS = {
-    'refrigerator': 'major-appliance-pickup-photo-1.jpg',
-    'freezer': 'major-appliance-pickup-photo-3.jpg',
-    'stove-oven': 'major-appliance-pickup-photo-2.jpg',
-}
+# Visually inspected: generic numbered major-appliance photo files 1/2/3
+# are washing-machine photographs, NOT fridge, freezer, and stove. The
+# category-page safety audit below rejects this historical false mapping.
 
 
 IMAGE_LAYOUT_PRIORITY_SLUGS = {
@@ -118,42 +110,9 @@ def main():
                         f'{url}: primary appliance image alt {alt!r} does not match expected terms {expected_terms}'
                     )
 
-        # When a city/appliance page uses the shared major-appliance asset set,
-        # enforce the established appliance mapping. Bespoke local photos are
-        # allowed and are not forced onto the shared assets.
-        if content_image is not None:
-            src_name = Path(urlparse(urljoin(url, content_image.get('src', ''))).path).name
-            shared_names = set(KNOWN_SHARED_APPLIANCE_ASSETS.values())
-            if src_name in shared_names:
-                expected_asset = None
-                if slug == 'refrigerator-pickup' or slug.endswith('-refrigerator-pickup'):
-                    expected_asset = KNOWN_SHARED_APPLIANCE_ASSETS['refrigerator']
-                elif slug == 'freezer-pickup' or slug.endswith('-freezer-pickup'):
-                    expected_asset = KNOWN_SHARED_APPLIANCE_ASSETS['freezer']
-                elif slug == 'stove-oven-pickup' or slug.endswith('-stove-oven-pickup'):
-                    expected_asset = KNOWN_SHARED_APPLIANCE_ASSETS['stove-oven']
-                if expected_asset and src_name != expected_asset:
-                    problems.append(
-                        f'{url}: shared appliance image {src_name} should be {expected_asset}'
-                    )
-
         for attrs in parser.images:
             src = attrs.get('src', '')
 
-            # Several city appliance pages reuse the numbered generic
-            # refrigerator/stove/freezer photo set. Enforce the established
-            # mapping whenever one of those generic assets is used so a
-            # template copy cannot silently swap freezer and stove imagery.
-            generic_type = next(
-                (kind for kind in GENERIC_APPLIANCE_ASSET if slug == kind or slug.endswith('-' + kind)),
-                None
-            )
-            if generic_type and 'major-appliance-pickup-photo-' in src:
-                expected_asset = GENERIC_APPLIANCE_ASSET[generic_type]
-                if expected_asset not in src:
-                    problems.append(
-                        f'{url}: generic appliance image {src} does not match expected {expected_asset}'
-                    )
             if not src or src.startswith('data:'):
                 continue
             image_url = urljoin(url, src)
@@ -317,6 +276,99 @@ def main():
         for misleading_url in misleading_photo_urls:
             if misleading_url in index:
                 problems.append(f'image sitemap contains misleading refrigerator/freezer photo {misleading_url}')
+
+    # Visual review found that several misleading category filenames, and
+    # all three legacy "major-appliance" numbered JPGs, actually show washers.
+    # Check both indexable and intentionally noindex specialty intake pages.
+    VISUALLY_WRONG_CATEGORY_IMAGES = {
+        '/assets/major-appliance-pickup-photo-1.jpg',
+        '/assets/major-appliance-pickup-photo-2.jpg',
+        '/assets/major-appliance-pickup-photo-3.jpg',
+        '/assets/california/real-appliances/real-refrigerator.jpg',
+        '/assets/california/real-appliances/real-freezer.jpg',
+        '/assets/rancho-cucamonga/rancho-cucamonga-freezer-pickup-real-freezer.jpg',
+        '/assets/rancho-cucamonga/rancho-cucamonga-stove-range-oven-pickup-real-stove.jpg',
+        '/IMG-20240320-WA0108.jpg',
+    }
+    verified_photo_dimensions = {
+        '/IMG-20241123-WA0058.jpg': (1200, 1600),
+        '/IMG-20241201-WA0066.jpg': (1200, 1600),
+        '/IMG-20240701-WA0026.jpg': (1200, 1600),
+        '/IMG-20240222-WA0005.jpg': (1200, 1600),
+        '/IMG-20240916-WA0063.jpg': (1200, 1600),
+        '/IMG-20240531-WA0017.jpg': (900, 1600),
+        '/assets/california/real-appliances/IMG-20231115-WA0042.jpg': (1200, 1600),
+        '/IMG-20240920-WA0084.jpg': (1536, 2048),
+        '/assets/california/real-appliances/IMG-20241203-WA0002.jpg': (1536, 2048),
+    }
+    specialty_category_pages_checked = 0
+    for category in ('refrigerator', 'freezer', 'stove-oven'):
+        targets = sorted(Path('.').glob(f'*-{category}-pickup/index.html'))
+        national = Path(f'{category}-pickup/index.html')
+        if national.is_file():
+            targets.append(national)
+        for page in targets:
+            specialty_category_pages_checked += 1
+            parser = ImageRefs()
+            parser.feed(page.read_text(encoding='utf-8', errors='replace'))
+            photos = [attrs for attrs in parser.images
+                      if attrs.get('src') and 'logo' not in attrs.get('alt', '').lower()]
+            if not photos:
+                continue  # A page without an image is not evidence of a misclassified one.
+            for attrs in photos:
+                src = urlparse(urljoin(BASE, attrs['src'])).path
+                if src in VISUALLY_WRONG_CATEGORY_IMAGES:
+                    problems.append(f'{page}: visually incorrect appliance photo {src}')
+                if category == 'refrigerator' and src == '/IMG-20240916-WA0063.jpg':
+                    problems.append(f'{page}: upright freezer photo shown as a refrigerator')
+                if src in verified_photo_dimensions:
+                    expected = tuple(map(str, verified_photo_dimensions[src]))
+                    declared = (attrs.get('width'), attrs.get('height'))
+                    if declared != expected:
+                        problems.append(f'{page}: image dimensions {declared} differ from {expected}')
+    print(f'SPECIALTY_CATEGORY_PHOTO_PAGES_CHECKED {specialty_category_pages_checked}')
+
+    # These three existing Fresno specialty URLs are indexable and were
+    # omitted from the image sitemap despite appearing in sitemap.xml.
+    # Preserve independently verified real category photos and metadata.
+    fresno_specialty_photos = {
+        'fresno-refrigerator-pickup': '/IMG-20240701-WA0026.jpg',
+        'fresno-freezer-pickup': '/IMG-20240916-WA0063.jpg',
+        'fresno-stove-oven-pickup': '/IMG-20240920-WA0084.jpg',
+    }
+    image_sitemap_raw = Path('sitemap-images.xml').read_text(encoding='utf-8', errors='replace')
+    for slug, expected_image in fresno_specialty_photos.items():
+        page = Path(slug) / 'index.html'
+        if not page.is_file():
+            problems.append(f'{slug}: missing Fresno specialty page')
+            continue
+        raw = page.read_text(encoding='utf-8', errors='replace')
+        if f'src="{expected_image}"' not in raw:
+            problems.append(f'{slug}: wrong category image substituted')
+        full_url = BASE.rstrip('/') + expected_image
+        if f'<meta property="og:image" content="{full_url}">' not in raw:
+            problems.append(f'{slug}: social image disagrees with inspected photo')
+        if f'<meta name="twitter:image" content="{full_url}">' not in raw:
+            problems.append(f'{slug}: Twitter image disagrees with inspected photo')
+        if f'"url":"{full_url}"' not in raw:
+            problems.append(f'{slug}: JSON-LD primary image disagrees with inspected photo')
+        marker = f'<loc>{BASE}{slug}/</loc>'
+        offset = image_sitemap_raw.find(marker)
+        if offset < 0:
+            problems.append(f'{slug}: photo omitted from image sitemap')
+        else:
+            end = image_sitemap_raw.find('</url>', offset)
+            if end < 0 or f'<image:loc>{full_url}</image:loc>' not in image_sitemap_raw[offset:end]:
+                problems.append(f'{slug}: image sitemap does not contain category-correct photo')
+
+    fresno_general_page = Path('fresno-appliance-pickup/index.html')
+    if fresno_general_page.is_file():
+        parser = ImageRefs()
+        parser.feed(fresno_general_page.read_text(encoding='utf-8', errors='replace'))
+        for attrs in parser.images:
+            if 'fontana-multi-appliance.webp' in attrs.get('src', ''):
+                if (attrs.get('width'), attrs.get('height')) != ('1586', '992'):
+                    problems.append('fresno general group hero must use intrinsic dimensions 1586x992')
     print(f'IMAGE_LAYOUT_PRIORITY_MISMATCHES {len(layout_findings)}')
     for finding in layout_findings:
         print('IMAGE_LAYOUT_REVIEW', finding)
