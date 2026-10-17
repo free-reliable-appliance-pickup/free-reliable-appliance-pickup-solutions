@@ -520,6 +520,45 @@ else:
             if not select_ok(spokane_form, key):
                 errors.append(f"spokane: {key} selection must be required with blank prompt")
 
+
+# Prevent Central Valley lead-classification regressions. Each of these
+# existing city forms must submit its precise service without JavaScript.
+CENTRAL_VALLEY_SERVICE_TAGS = {
+    "fresno-appliance-pickup": "General major appliance pickup",
+    "fresno-washer-dryer-pickup": "Washer and dryer pickup",
+    "fresno-refrigerator-pickup": "Refrigerator pickup",
+    "fresno-freezer-pickup": "Freezer pickup",
+    "fresno-stove-oven-pickup": "Stove range and oven pickup",
+    "stockton-appliance-pickup": "General major appliance pickup",
+    "stockton-washer-dryer-pickup": "Washer and dryer pickup",
+    "sacramento-appliance-pickup": "General major appliance pickup",
+    "sacramento-washer-dryer-pickup": "Washer and dryer pickup",
+}
+for slug, service in CENTRAL_VALLEY_SERVICE_TAGS.items():
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing Central Valley form page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    forms = re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+    intake = [f for f in forms if "formspree.io/f/mvzeapzd" in f]
+    if len(intake) != 1:
+        errors.append(f"{slug}: expected one Formspree pickup form")
+        continue
+    form = intake[0]
+    if form.count('name="service"') != 1 or f'name="service" value="{service}"' not in form:
+        errors.append(f"{slug}: missing or incorrect service classification")
+    if form.count('name="source_page"') != 1 or f'name="source_page" value="{slug}"' not in form:
+        errors.append(f"{slug}: missing or incorrect source page")
+    phone = re.search(r'<input\b[^>]*name="phone"[^>]*>', form, re.I)
+    condition = re.search(r'<select\b[^>]*name="condition"[^>]*>', form, re.I)
+    if not phone or not re.search(r'\brequired\b', phone.group(0), re.I):
+        errors.append(f"{slug}: required phone missing")
+    if not condition or not re.search(r'\brequired\b', condition.group(0), re.I):
+        errors.append(f"{slug}: required condition missing")
+
+print("CENTRAL_VALLEY_SERVICE_TAG_FORMS_CHECKED", len(CENTRAL_VALLEY_SERVICE_TAGS))
+
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
 print("OREGON_MOBILE_FORMS_CHECKED",len(OREGON_MOBILE_PAGES))
 print(f"PRIORITY_INTAKE_FORMS_CHECKED {len(CITIES)}")
