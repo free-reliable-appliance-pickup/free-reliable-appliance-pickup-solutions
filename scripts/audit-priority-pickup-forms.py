@@ -611,6 +611,10 @@ PENDING_FORM_ATTRIBUTION_FIXES = {
     "arvada-appliance-pickup": "General major appliance pickup",
     "banning-washer-dryer-pickup": "Washer and dryer pickup",
     "beaumont-washer-dryer-pickup": "Washer and dryer pickup",
+    "pasadena-appliance-pickup": "General major appliance pickup",
+    "arcadia-appliance-pickup": "General major appliance pickup",
+    "los-angeles-appliance-pickup": "General major appliance pickup",
+    "fresno-county-appliance-pickup": "General major appliance pickup",
 }
 for slug, service in PENDING_FORM_ATTRIBUTION_FIXES.items():
     path = Path(slug) / "index.html"
