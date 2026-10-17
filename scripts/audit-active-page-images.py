@@ -233,6 +233,48 @@ def main():
                     f'{attrs.get("width")}x{attrs.get("height")} '
                     f'do not match file {actual_width}x{actual_height}'
                 )
+
+    # Image filenames and alt text alone are not proof of the appliance shown:
+    # 2026-10-16 visual review found three Rancho specialty heroes whose
+    # filenames/alt tags said "stove", "refrigerator", or "freezer" but all
+    # displayed washing machines. Pin only visually verified original photo
+    # references until each replacement has had a real category review.
+    rancho_verified_hero_paths = {
+        'rancho-cucamonga-stove-oven-pickup': '/assets/california/real-appliances/IMG-20241203-WA0002.jpg',
+        'rancho-cucamonga-refrigerator-pickup': '/IMG-20241123-WA0058.jpg',
+        'rancho-cucamonga-freezer-pickup': '/IMG-20240222-WA0005.jpg',
+    }
+    for slug, expected_src in sorted(rancho_verified_hero_paths.items()):
+        page = Path(slug) / 'index.html'
+        if not page.is_file():
+            problems.append(f'{slug}: missing verified specialty page')
+            continue
+        html = page.read_text(encoding='utf-8', errors='replace')
+        parser = ImageRefs()
+        parser.feed(html)
+        real_images = [
+            attrs for attrs in parser.images
+            if attrs.get('src') and 'logo' not in attrs.get('alt', '').lower()
+        ]
+        if not real_images or urlparse(real_images[0]['src']).path != expected_src:
+            problems.append(f'{slug}: hero not approved visual category photo {expected_src}')
+        full_url = BASE.rstrip('/') + expected_src
+        if f'<meta property="og:image" content="{full_url}">' not in html:
+            problems.append(f'{slug}: social image not aligned with verified category hero')
+        if f'<meta name="twitter:image" content="{full_url}">' not in html:
+            problems.append(f'{slug}: Twitter image not aligned with verified category hero')
+        if f'"url":"{full_url}"' not in html:
+            problems.append(f'{slug}: JSON-LD primary image not aligned with verified hero')
+    rancho_general_page = Path('rancho-cucamonga-appliance-pickup/index.html')
+    if rancho_general_page.is_file():
+        html = rancho_general_page.read_text(encoding='utf-8', errors='replace')
+        for verified_gallery_src in ('/IMG-20230805-WA0003.jpg', '/IMG-20240222-WA0006.jpg'):
+            if f'src="{verified_gallery_src}"' not in html:
+                problems.append(f'Rancho city gallery missing verified photo {verified_gallery_src}')
+        for invalid_src in ('/assets/california/real-appliances/real-refrigerator.jpg',
+                            '/assets/california/real-appliances/real-freezer.jpg'):
+            if f'src="{invalid_src}"' in html:
+                problems.append(f'Rancho city gallery uses mislabeled washer {invalid_src}')
     print(f'IMAGE_LAYOUT_PRIORITY_MISMATCHES {len(layout_findings)}')
     for finding in layout_findings:
         print('IMAGE_LAYOUT_REVIEW', finding)
