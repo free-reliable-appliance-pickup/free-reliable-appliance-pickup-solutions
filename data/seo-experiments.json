@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-15",
+  "updated": "2026-10-17",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -2428,7 +2428,16 @@
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
       "status": "running",
-      "freezeRule": "Do not change Arcadia or Altadena title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
+      "freezeRule": "Do not change Arcadia or Altadena title/meta/body/internal-link/schema-intent variables again before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage.",
+      "measurementResets": [
+        {
+          "date": "2026-10-17",
+          "page": "/arcadia-appliance-pickup/",
+          "reason": "After the Oct 14 earliest review gate, replaced one customer-facing SEO-jargon sentence with appliance condition guidance. Did not change title, meta/OG descriptions, canonical, links, phone or forms. This body-copy change makes subsequent Arcadia CTR/position observations a separate post-change period; Altadena remained unchanged.",
+          "gscCheckpoint": "data/gsc-priority-query-ownership-2026-10-17.md",
+          "commit": "b75e08792b87794a426e856d485971d1b7d2fd12"
+        }
+      ]
     },
     {
       "id": "2026-10-04-compton-snippet-authority-test",
