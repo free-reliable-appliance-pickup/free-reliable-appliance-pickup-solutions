@@ -7,8 +7,11 @@ on:
       - '.github/scripts/test_seo_safe_repair.py'
       - '.github/workflows/seo-safe-repair.yml'
   schedule:
-    # 7 AM PDT / 6 AM PST; GitHub cron uses UTC and does not switch DST.
-    - cron: '0 14 * * *'
+    # 6 AM Pacific: 13:00 UTC during daylight saving time, 14:00 UTC in standard time.
+    # GitHub cron is UTC-only; the two entries use month windows as an approximation.
+    # Exact DST transitions need a timezone-aware guard if strict 6 AM is required.
+    - cron: '0 13 * 4-10 *'
+    - cron: '0 14 * 11-3 *'
 permissions:
   contents: write
   pull-requests: write
