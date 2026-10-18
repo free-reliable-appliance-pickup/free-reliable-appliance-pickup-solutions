@@ -372,3 +372,12 @@ wildomar-washer-dryer-pickup
 yorba-linda-washer-dryer-pickup
 youngtown-washer-dryer-pickup
 yucaipa-washer-dryer-pickup
+columbus-appliance-pickup
+columbus-freezer-pickup
+columbus-refrigerator-pickup
+columbus-stove-pickup
+columbus-washer-dryer-pickup
+nationwide-refrigerator-freezer-pickup
+nationwide-stove-pickup
+salem-refrigerator-freezer-pickup
+salem-stove-pickup
