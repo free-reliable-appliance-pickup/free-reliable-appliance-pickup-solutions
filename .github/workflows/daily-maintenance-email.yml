@@ -1,0 +1,97 @@
+name: Daily Maintenance Email Reports
+on:
+  schedule:
+    - cron: '30 14 * * *'
+    - cron: '30 15 * * *'
+    - cron: '30 1 * * *'
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Select Pacific report window
+        id: window
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          import os
+          hour = datetime.now(ZoneInfo("America/Los_Angeles")).hour
+          kind = "morning" if hour == 7 else "evening" if hour == 19 else ""
+          if os.environ["EVENT_NAME"] == "workflow_dispatch":
+              kind = "manual"
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"kind={kind}\n")
+          PY
+      - name: Prepare recent workflow summary
+        if: steps.window.outputs.kind != ''
+        id: summary
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}
+          REPORT_KIND: ${{ steps.window.outputs.kind }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          from datetime import datetime, timedelta, timezone
+          kind = os.environ["REPORT_KIND"]
+          workflows = ["seo-safe-repair.yml", "seo-health-monitor.yml"]
+          lines = [f"Free Reliable Appliance Pickup — {kind.title()} Maintenance Report", ""]
+          for workflow in workflows:
+              url = f"https://api.github.com/repos/{os.environ['GH_REPOSITORY']}/actions/workflows/{workflow}/runs?per_page=15"
+              req = urllib.request.Request(url, headers={"Authorization": f"Bearer {os.environ['GH_TOKEN']}", "Accept": "application/vnd.github+json", "User-Agent": "FRAP-maintenance-report"})
+              try:
+                  with urllib.request.urlopen(req, timeout=20) as response:
+                      runs = json.load(response).get("workflow_runs", [])
+                  cutoff = datetime.now(timezone.utc) - timedelta(hours=26)
+                  recent = [r for r in runs if datetime.fromisoformat(r["created_at"].replace("Z", "+00:00")) >= cutoff]
+                  lines.append(f"{workflow}:")
+                  if not recent:
+                      lines.append("  No runs found in the last 26 hours.")
+                  for r in recent[:6]:
+                      lines.append(f"  {r['created_at']} | {r['event']} | {r['status']} | {r.get('conclusion') or 'pending'} | {r['html_url']}")
+              except Exception as exc:
+                  lines.append(f"{workflow}: Could not retrieve runs: {exc}")
+              lines.append("")
+          lines.append("A successful workflow does not prove that repairs were applied. Open run logs and pull requests to confirm changes.")
+          with open("report.txt", "w") as f:
+              f.write("\n".join(lines) + "\n")
+          PY
+      - name: Email maintenance summary
+        if: steps.window.outputs.kind != ''
+        env:
+          SMTP_HOST: ${{ secrets.MAINTENANCE_SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.MAINTENANCE_SMTP_PORT }}
+          SMTP_USER: ${{ secrets.MAINTENANCE_SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.MAINTENANCE_SMTP_PASSWORD }}
+          REPORT_TO: ${{ secrets.MAINTENANCE_REPORT_TO }}
+        run: |
+          python - <<'PY'
+          import os, smtplib, ssl
+          from email.message import EmailMessage
+          keys = ["SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD", "REPORT_TO"]
+          missing = [k for k in keys if not os.environ.get(k)]
+          if missing:
+              raise SystemExit("Email not configured: missing " + ", ".join(missing) + ". Add repository Actions secrets before enabling.")
+          message = EmailMessage()
+          message["Subject"] = "Free Reliable Appliance Pickup — Maintenance Report"
+          message["From"] = os.environ["SMTP_USER"]
+          message["To"] = os.environ["REPORT_TO"]
+          message.set_content(open("report.txt").read())
+          port = int(os.environ.get("SMTP_PORT") or "465")
+          if port == 465:
+              with smtplib.SMTP_SSL(os.environ["SMTP_HOST"], port, context=ssl.create_default_context(), timeout=30) as smtp:
+                  smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
+                  smtp.send_message(message)
+          else:
+              with smtplib.SMTP(os.environ["SMTP_HOST"], port, timeout=30) as smtp:
+                  smtp.starttls(context=ssl.create_default_context())
+                  smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
+                  smtp.send_message(message)
+          PY
