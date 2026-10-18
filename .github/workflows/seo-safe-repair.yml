@@ -7,11 +7,9 @@ on:
       - '.github/scripts/test_seo_safe_repair.py'
       - '.github/workflows/seo-safe-repair.yml'
   schedule:
-    # 6 AM Pacific: 13:00 UTC during daylight saving time, 14:00 UTC in standard time.
-    # GitHub cron is UTC-only; the two entries use month windows as an approximation.
-    # Exact DST transitions need a timezone-aware guard if strict 6 AM is required.
-    - cron: '0 13 * 4-10 *'
-    - cron: '0 14 * 11-3 *'
+    # Two UTC slots cover 6 AM Pacific year-round; timezone guard selects one.
+    - cron: '0 13 * * *'
+    - cron: '0 14 * * *'
 permissions:
   contents: write
   pull-requests: write
@@ -20,24 +18,39 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - name: Check 6 AM Pacific schedule
+        id: pacific_time
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          import os
+          allowed = os.environ["EVENT_NAME"] != "schedule" or datetime.now(ZoneInfo("America/Los_Angeles")).hour == 6
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"run_repair={str(allowed).lower()}\n")
+          PY
       - uses: actions/checkout@v4
+        if: steps.pacific_time.outputs.run_repair == 'true'
       - name: Verify repair script and regression tests
+        if: steps.pacific_time.outputs.run_repair == 'true'
         run: |
           python -m py_compile .github/scripts/seo_safe_repair.py .github/scripts/test_seo_safe_repair.py
           python -m unittest discover -s .github/scripts -p 'test_seo_safe_repair.py'
       - name: Stop before writes on pull requests
-        if: github.event_name == 'pull_request'
+        if: steps.pacific_time.outputs.run_repair == 'true' && github.event_name == 'pull_request'
         run: echo 'Tests complete; repair writes are disabled on pull requests.'
       - name: Repair only unambiguous broken HTML links
-        if: github.event_name != 'pull_request'
+        if: steps.pacific_time.outputs.run_repair == 'true' && github.event_name != 'pull_request'
         run: python .github/scripts/seo_safe_repair.py --apply
       - name: Confirm repeatability
-        if: github.event_name != 'pull_request'
+        if: steps.pacific_time.outputs.run_repair == 'true' && github.event_name != 'pull_request'
         run: |
           python .github/scripts/seo_safe_repair.py --apply
           git diff --check
       - name: Create reviewable repair PR
-        if: github.event_name != 'pull_request'
+        if: steps.pacific_time.outputs.run_repair == 'true' && github.event_name != 'pull_request'
         uses: peter-evans/create-pull-request@v7
         with:
           branch: automation/seo-safe-link-repairs
