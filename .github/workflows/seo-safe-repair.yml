@@ -7,7 +7,7 @@ on:
       - '.github/scripts/test_seo_safe_repair.py'
       - '.github/workflows/seo-safe-repair.yml'
   schedule:
-    # 7 AM PDT / 8 AM PST; GitHub cron uses UTC and does not switch DST.
+    # 7 AM PDT / 6 AM PST; GitHub cron uses UTC and does not switch DST.
     - cron: '0 14 * * *'
 permissions:
   contents: write
