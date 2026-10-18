@@ -32,6 +32,9 @@ jobs:
         if: steps.time.outputs.run_audit == 'true'
         continue-on-error: true
         run: python .github/scripts/seo_autopilot_v4.py --report morning-seo-report.md
+      - name: Publish report in GitHub Actions summary
+        if: steps.time.outputs.run_audit == 'true'
+        run: cat morning-seo-report.md >> "$GITHUB_STEP_SUMMARY"
       - name: Save daily report
         if: steps.time.outputs.run_audit == 'true'
         uses: actions/upload-artifact@v4
