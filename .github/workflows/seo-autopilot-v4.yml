@@ -1,0 +1,64 @@
+name: Free SEO Autopilot V4 - Link and Lead Audit
+on:
+  schedule:
+    # Two UTC slots cover 6 PM Pacific year-round; the timezone guard selects one.
+    - cron: "0 1 * * *"
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/scripts/seo_autopilot_v4.py"
+      - ".github/workflows/seo-autopilot-v4.yml"
+permissions:
+  contents: read
+  issues: write
+jobs:
+  inspect-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check 6 PM Pacific schedule
+        id: pacific_time
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          import os
+          allowed = os.environ["EVENT_NAME"] != "schedule" or datetime.now(ZoneInfo("America/Los_Angeles")).hour == 18
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"run_audit={str(allowed).lower()}\n")
+          PY
+      - uses: actions/checkout@v5
+        if: steps.pacific_time.outputs.run_audit == 'true'
+      - name: Inspect internal links and lead surfaces
+        if: steps.pacific_time.outputs.run_audit == 'true'
+        id: audit
+        continue-on-error: true
+        run: python .github/scripts/seo_autopilot_v4.py --report seo-autopilot-v4-report.md
+      - name: Upload findings
+        if: steps.pacific_time.outputs.run_audit == 'true'
+        uses: actions/upload-artifact@v6
+        with:
+          name: seo-autopilot-v4-link-lead-report
+          path: seo-autopilot-v4-report.md
+          retention-days: 14
+      - name: Open or update audit alert
+        if: steps.audit.outcome == 'failure'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require('fs');
+            const title = 'SEO Autopilot V4: internal link audit findings';
+            const body = fs.readFileSync('seo-autopilot-v4-report.md', 'utf8');
+            const {owner, repo} = context.repo;
+            const items = await github.paginate(github.rest.issues.listForRepo, {owner,repo,state:'open',per_page:100});
+            const existing = items.find(x => !x.pull_request && x.title === title);
+            if (existing) await github.rest.issues.update({owner,repo,issue_number:existing.number,body});
+            else await github.rest.issues.create({owner,repo,title,body});
+      - name: Mark audit failure
+        if: steps.audit.outcome == 'failure'
+        run: exit 1
