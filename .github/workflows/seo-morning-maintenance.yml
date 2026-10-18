@@ -1,0 +1,57 @@
+name: SEO Morning Maintenance - 6 AM Pacific
+on:
+  schedule:
+    - cron: '0 13 * * *'
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  morning-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check Pacific morning window
+        id: time
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          import os
+          ok = os.environ['EVENT_NAME'] != 'schedule' or datetime.now(ZoneInfo('America/Los_Angeles')).hour == 6
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f'run_audit={str(ok).lower()}\n')
+          PY
+      - uses: actions/checkout@v4
+        if: steps.time.outputs.run_audit == 'true'
+      - name: Audit internal links and lead pages
+        id: audit
+        if: steps.time.outputs.run_audit == 'true'
+        continue-on-error: true
+        run: python .github/scripts/seo_autopilot_v4.py --report morning-seo-report.md
+      - name: Save daily report
+        if: steps.time.outputs.run_audit == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: morning-seo-report
+          path: morning-seo-report.md
+          retention-days: 30
+      - name: Create or update alert on failure
+        if: steps.audit.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const title = 'Morning SEO maintenance: issues require review';
+            const body = fs.readFileSync('morning-seo-report.md', 'utf8');
+            const {owner, repo} = context.repo;
+            const issues = await github.paginate(github.rest.issues.listForRepo, {owner,repo,state:'open',per_page:100});
+            const existing = issues.find(x => !x.pull_request && x.title === title);
+            if (existing) await github.rest.issues.update({owner,repo,issue_number:existing.number,body});
+            else await github.rest.issues.create({owner,repo,title,body});
+      - name: Fail on audit findings
+        if: steps.audit.outcome == 'failure'
+        run: exit 1
