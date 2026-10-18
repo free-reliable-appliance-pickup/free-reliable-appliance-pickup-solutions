@@ -70,7 +70,7 @@ jobs:
           SMTP_PORT: ${{ secrets.MAINTENANCE_SMTP_PORT }}
           SMTP_USER: ${{ secrets.MAINTENANCE_SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.MAINTENANCE_SMTP_PASSWORD }}
-          REPORT_TO: ${{ secrets.MAINTENANCE_REPORT_TO }}
+          REPORT_TO: enriquegerardo82@gmail.com
         run: |
           python - <<'PY'
           import os, smtplib, ssl
