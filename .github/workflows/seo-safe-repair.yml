@@ -1,0 +1,30 @@
+name: SEO Autopilot - Safe Repairs
+on:
+  workflow_dispatch:
+  schedule:
+    # 7 AM PDT / 8 AM PST; GitHub cron uses UTC and does not switch DST.
+    - cron: '0 14 * * *'
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repair only unambiguous broken HTML links
+        run: python .github/scripts/seo_safe_repair.py --apply
+      - name: Confirm repeatability
+        run: |
+          python .github/scripts/seo_safe_repair.py --apply
+          git diff --check
+      - name: Create reviewable repair PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/seo-safe-link-repairs
+          delete-branch: true
+          commit-message: "fix: repair unambiguous broken internal HTML links"
+          title: "SEO Autopilot: safe internal link repairs"
+          body: "Automated conservative fixes only. Please review before merging. No phone numbers, forms, copy, images, or canonical tags are changed."
+          add-paths: '**/*.html'
