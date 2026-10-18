@@ -1,6 +1,11 @@
 name: SEO Autopilot - Safe Repairs
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/scripts/seo_safe_repair.py'
+      - '.github/scripts/test_seo_safe_repair.py'
+      - '.github/workflows/seo-safe-repair.yml'
   schedule:
     # 7 AM PDT / 8 AM PST; GitHub cron uses UTC and does not switch DST.
     - cron: '0 14 * * *'
@@ -13,13 +18,23 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Verify repair script and regression tests
+        run: |
+          python -m py_compile .github/scripts/seo_safe_repair.py .github/scripts/test_seo_safe_repair.py
+          python -m unittest discover -s .github/scripts -p 'test_seo_safe_repair.py'
+      - name: Stop before writes on pull requests
+        if: github.event_name == 'pull_request'
+        run: echo 'Tests complete; repair writes are disabled on pull requests.'
       - name: Repair only unambiguous broken HTML links
+        if: github.event_name != 'pull_request'
         run: python .github/scripts/seo_safe_repair.py --apply
       - name: Confirm repeatability
+        if: github.event_name != 'pull_request'
         run: |
           python .github/scripts/seo_safe_repair.py --apply
           git diff --check
       - name: Create reviewable repair PR
+        if: github.event_name != 'pull_request'
         uses: peter-evans/create-pull-request@v7
         with:
           branch: automation/seo-safe-link-repairs
