@@ -562,3 +562,4 @@ sanger-washer-dryer-pickup
 selma-appliance-pickup
 selma-washer-dryer-pickup
 san-joaquin-county-appliance-pickup
+columbus-appliance-pickup
