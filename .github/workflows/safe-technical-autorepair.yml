@@ -30,6 +30,25 @@ jobs:
         if: steps.pacific.outputs.run == 'true'
         run: |
           python3 scripts/audit-priority-pickup-forms.py
+      - name: Write daily maintenance report
+        if: always() && steps.pacific.outputs.run == 'true'
+        run: |
+          mkdir -p maintenance-reports
+          {
+            echo '# Daily website maintenance report'
+            echo "Date (Pacific): $(TZ=America/Los_Angeles date +%F)"
+            echo "Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo "Status of repair checks: ${{ job.status }}"
+            echo 'Automated changes require PR review; no SEO-sensitive changes are auto-merged.'
+          } > maintenance-reports/daily-report.md
+          cat maintenance-reports/daily-report.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload daily report
+        if: always() && steps.pacific.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-maintenance-report
+          path: maintenance-reports/daily-report.md
+          retention-days: 30
       - name: Open or update a reviewable repair PR
         if: steps.pacific.outputs.run == 'true'
         uses: peter-evans/create-pull-request@v7
