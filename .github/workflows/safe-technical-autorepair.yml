@@ -2,6 +2,7 @@ name: Safe Technical Auto Repair
 on:
   schedule:
     - cron: '0 13 * * *'
+    - cron: '0 14 * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -14,15 +15,42 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - name: Check Pacific maintenance hour
+        id: pacific
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(TZ=America/Los_Angeles date +%H)" = "06" ]; then echo 'run=true' >> "$GITHUB_OUTPUT"; else echo 'run=false' >> "$GITHUB_OUTPUT"; fi
       - uses: actions/checkout@v4
       - name: Apply allowlisted non-content fixes
+        if: steps.pacific.outputs.run == 'true'
         run: python3 scripts/safe-technical-autorepair.py
       - name: Validate fixer is idempotent
+        if: steps.pacific.outputs.run == 'true'
         run: python3 scripts/safe-technical-autorepair.py --check
       - name: Run available SEO and routing safety checks
+        if: steps.pacific.outputs.run == 'true'
         run: |
           python3 scripts/audit-priority-pickup-forms.py
+      - name: Write daily maintenance report
+        if: always() && steps.pacific.outputs.run == 'true'
+        run: |
+          mkdir -p maintenance-reports
+          {
+            echo '# Daily website maintenance report'
+            echo "Date (Pacific): $(TZ=America/Los_Angeles date +%F)"
+            echo "Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo "Status of repair checks: ${{ job.status }}"
+            echo 'Automated changes require PR review; no SEO-sensitive changes are auto-merged.'
+          } > maintenance-reports/daily-report.md
+          cat maintenance-reports/daily-report.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload daily report
+        if: always() && steps.pacific.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-maintenance-report
+          path: maintenance-reports/daily-report.md
+          retention-days: 30
       - name: Open or update a reviewable repair PR
+        if: steps.pacific.outputs.run == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
