@@ -15,10 +15,36 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Check Pacific maintenance hour
+      - name: Check intended 6 AM Pacific maintenance slot
         id: pacific
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE_CRON: ${{ github.event.schedule }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(TZ=America/Los_Angeles date +%H)" = "06" ]; then echo 'run=true' >> "$GITHUB_OUTPUT"; else echo 'run=false' >> "$GITHUB_OUTPUT"; fi
+          python3 - <<'PY'
+          from datetime import datetime, timezone
+          from zoneinfo import ZoneInfo
+          import os
+
+          if os.environ.get('EVENT_NAME') != 'schedule':
+              allowed = True
+          else:
+              cron = os.environ.get('SCHEDULE_CRON', '')
+              parts = cron.split()
+              if len(parts) != 5 or not parts[0].isdigit() or not parts[1].isdigit():
+                  raise SystemExit('Missing scheduled cron slot; refusing unverified maintenance')
+              minute, hour = int(parts[0]), int(parts[1])
+              if not (0 <= minute <= 59 and 0 <= hour <= 23):
+                  raise SystemExit('Invalid scheduled cron slot')
+              nominal = datetime.now(timezone.utc).replace(
+                  hour=hour, minute=minute, second=0, microsecond=0)
+              local = nominal.astimezone(ZoneInfo('America/Los_Angeles'))
+              allowed = (local.hour, local.minute) == (6, 0)
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f"run={str(allowed).lower()}\n")
+          print(f"Scheduled cron: {os.environ.get('SCHEDULE_CRON')}; run safe maintenance: {allowed}")
+          PY
       - uses: actions/checkout@v4
       - name: Apply allowlisted non-content fixes
         if: steps.pacific.outputs.run == 'true'
