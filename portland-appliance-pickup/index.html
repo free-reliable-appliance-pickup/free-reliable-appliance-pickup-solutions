@@ -292,7 +292,7 @@ footer { background:#063f70; }
 <input id="pickup-city" type="text" name="city" placeholder="City" required autocomplete="address-level2">
 
 <label for="pickup-zip">ZIP Code</label>
-<input id="pickup-zip" type="text" name="zip" placeholder="ZIP Code" required autocomplete="postal-code" inputmode="numeric">
+<input id="pickup-zip" type="text" name="zip" placeholder="ZIP Code" required autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" title="Enter a five-digit ZIP code">
 
 
 <label for="pickup-appliance">Appliance Type</label>
