@@ -633,6 +633,32 @@ for slug, service in PENDING_FORM_ATTRIBUTION_FIXES.items():
         errors.append(f"{slug}: required phone field missing")
 print("ATTRIBUTION_CLASSIFICATION_FORMS_CHECKED", len(PENDING_FORM_ATTRIBUTION_FIXES))
 
+# Protect source and service attribution on four existing general pickup forms.
+# This static validation never submits a live customer request.
+GENERAL_FORM_ATTRIBUTION = (
+    "arcadia-appliance-pickup",
+    "fresno-county-appliance-pickup",
+    "los-angeles-appliance-pickup",
+    "pasadena-appliance-pickup",
+)
+for slug in GENERAL_FORM_ATTRIBUTION:
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing general pickup page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    intake = [f for f in re.findall(r'<form\\b[^>]*>.*?</form>', raw, re.I | re.S)
+              if 'action="https://formspree.io/f/mvzeapzd"' in f]
+    if len(intake) != 1:
+        errors.append(f"{slug}: missing or duplicated Formspree form")
+        continue
+    form = intake[0]
+    for field, value in (("source_page", slug), ("service", "General major appliance pickup")):
+        expected = f'name="{field}" value="{value}"'
+        if form.count(f'name="{field}"') != 1 or expected not in form:
+            errors.append(f"{slug}: missing, duplicated, or wrong static {field}")
+print("GENERAL_FORM_ATTRIBUTION_CHECKED", len(GENERAL_FORM_ATTRIBUTION))
+
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
 
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
