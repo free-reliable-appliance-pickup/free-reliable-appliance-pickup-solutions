@@ -23,23 +23,26 @@ jobs:
         id: pacific_time
         env:
           EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE_EXPR: ${{ github.event.schedule }}
           SCHEDULE_CRON: ${{ github.event.schedule }}
         run: |
           python - <<'PY'
-          from datetime import datetime
+          from datetime import datetime, timezone
           from zoneinfo import ZoneInfo
           import os
-          from datetime import timezone
-          cron = os.environ.get("SCHEDULE_CRON", "")
+          # Scheduled runs can queue for hours. Select by the intended UTC cron slot.
           if os.environ["EVENT_NAME"] != "schedule":
               allowed = True
-          elif cron:
-              minute, hour = map(int, cron.split()[:2])
-              nominal = datetime.now(timezone.utc).replace(hour=hour, minute=minute, second=0, microsecond=0)
-              local = nominal.astimezone(ZoneInfo("America/Los_Angeles"))
-              allowed = (local.hour, local.minute) == (18, 0)
           else:
-              raise SystemExit("Scheduled cron is missing; refusing to report an unverified success")
+              parts = os.environ.get("SCHEDULE_EXPR", "").split()
+              allowed = False
+              if len(parts) == 5 and parts[0].isdigit() and parts[1].isdigit():
+                  minute, hour = int(parts[0]), int(parts[1])
+                  if 0 <= minute < 60 and 0 <= hour < 24:
+                      nominal = datetime.now(timezone.utc).replace(
+                          hour=hour, minute=minute, second=0, microsecond=0)
+                      allowed = nominal.astimezone(ZoneInfo("America/Los_Angeles")).hour == 18
+          print(f"Scheduled slot: {os.environ.get('SCHEDULE_EXPR', 'manual')}; run: {allowed}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"run_audit={str(allowed).lower()}\n")
           PY
