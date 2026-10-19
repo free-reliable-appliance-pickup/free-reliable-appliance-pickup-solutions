@@ -647,7 +647,7 @@ for slug in GENERAL_FORM_ATTRIBUTION:
         errors.append(f"{slug}: missing general pickup page")
         continue
     raw = path.read_text(encoding="utf-8", errors="replace")
-    intake = [f for f in re.findall(r'<form\\b[^>]*>.*?</form>', raw, re.I | re.S)
+    intake = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
               if 'action="https://formspree.io/f/mvzeapzd"' in f]
     if len(intake) != 1:
         errors.append(f"{slug}: missing or duplicated Formspree form")
