@@ -17,15 +17,23 @@ jobs:
         id: window
         env:
           EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE_CRON: ${{ github.event.schedule }}
         run: |
           python - <<'PY'
           from datetime import datetime
           from zoneinfo import ZoneInfo
           import os
-          hour = datetime.now(ZoneInfo("America/Los_Angeles")).hour
-          kind = "morning" if hour == 7 else "evening" if hour == 19 else ""
+          from datetime import timezone
+          cron = os.environ.get("SCHEDULE_CRON", "")
           if os.environ["EVENT_NAME"] == "workflow_dispatch":
               kind = "manual"
+          elif cron:
+              minute, hour = map(int, cron.split()[:2])
+              nominal = datetime.now(timezone.utc).replace(hour=hour, minute=minute, second=0, microsecond=0)
+              local = nominal.astimezone(ZoneInfo("America/Los_Angeles"))
+              kind = "morning" if (local.hour, local.minute) == (7, 30) else "evening" if (local.hour, local.minute) == (19, 30) else ""
+          else:
+              raise SystemExit("Scheduled cron is missing; refusing to report an unverified success")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"kind={kind}\n")
           PY
