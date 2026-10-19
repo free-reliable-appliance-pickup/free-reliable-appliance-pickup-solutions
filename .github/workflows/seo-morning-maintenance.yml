@@ -16,12 +16,23 @@ jobs:
         id: time
         env:
           EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE_CRON: ${{ github.event.schedule }}
         run: |
           python - <<'PY'
           from datetime import datetime
           from zoneinfo import ZoneInfo
           import os
-          ok = os.environ['EVENT_NAME'] != 'schedule' or datetime.now(ZoneInfo('America/Los_Angeles')).hour == 6
+          from datetime import timezone
+          cron = os.environ.get('SCHEDULE_CRON', '')
+          if os.environ['EVENT_NAME'] != 'schedule':
+              ok = True
+          elif cron:
+              minute, hour = map(int, cron.split()[:2])
+              nominal = datetime.now(timezone.utc).replace(hour=hour, minute=minute, second=0, microsecond=0)
+              local = nominal.astimezone(ZoneInfo('America/Los_Angeles'))
+              ok = (local.hour, local.minute) == (6, 0)
+          else:
+              raise SystemExit('Scheduled cron is missing; refusing to report an unverified success')
           with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
               f.write(f'run_audit={str(ok).lower()}\n')
           PY
