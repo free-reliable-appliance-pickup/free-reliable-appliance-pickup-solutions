@@ -97,9 +97,10 @@ claremont-washer-dryer-pickup
 clovis-appliance-pickup
 coachella-appliance-pickup
 coachella-valley-appliance-pickup
-coachella-valley-pickup-partner-interest
 coachella-washer-dryer-pickup
 colorado-appliance-pickup
+columbus-appliance-pickup
+
 colton-appliance-pickup
 colton-washer-dryer-pickup
 commerce-appliance-pickup
