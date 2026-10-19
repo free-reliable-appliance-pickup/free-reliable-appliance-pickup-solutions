@@ -1,10 +1,10 @@
 name: Daily Maintenance Email Reports
 on:
   schedule:
-    - cron: '30 14 * * *'
-    - cron: '30 15 * * *'
-    - cron: '30 1 * * *'
-    - cron: '30 2 * * *'
+    - cron: '0 14 * * *'
+    - cron: '0 15 * * *'
+    - cron: '0 1 * * *'
+    - cron: '0 2 * * *'
   workflow_dispatch:
 permissions:
   actions: read
@@ -17,23 +17,26 @@ jobs:
         id: window
         env:
           EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE_EXPR: ${{ github.event.schedule }}
           SCHEDULE_CRON: ${{ github.event.schedule }}
         run: |
           python - <<'PY'
-          from datetime import datetime
+          from datetime import datetime, timezone
           from zoneinfo import ZoneInfo
           import os
-          from datetime import timezone
-          cron = os.environ.get("SCHEDULE_CRON", "")
+          kind = ""
           if os.environ["EVENT_NAME"] == "workflow_dispatch":
               kind = "manual"
-          elif cron:
-              minute, hour = map(int, cron.split()[:2])
-              nominal = datetime.now(timezone.utc).replace(hour=hour, minute=minute, second=0, microsecond=0)
-              local = nominal.astimezone(ZoneInfo("America/Los_Angeles"))
-              kind = "morning" if (local.hour, local.minute) == (7, 30) else "evening" if (local.hour, local.minute) == (19, 30) else ""
-          else:
-              raise SystemExit("Scheduled cron is missing; refusing to report an unverified success")
+          elif os.environ["EVENT_NAME"] == "schedule":
+              parts = os.environ.get("SCHEDULE_EXPR", "").split()
+              if len(parts) == 5 and parts[0].isdigit() and parts[1].isdigit():
+                  minute, hour = int(parts[0]), int(parts[1])
+                  if 0 <= minute < 60 and 0 <= hour < 24:
+                      nominal = datetime.now(timezone.utc).replace(
+                          hour=hour, minute=minute, second=0, microsecond=0)
+                      slot = nominal.astimezone(ZoneInfo("America/Los_Angeles"))
+                      kind = "morning" if slot.hour == 7 else "evening" if slot.hour == 18 else ""
+          print(f"Report slot: {os.environ.get('SCHEDULE_EXPR', 'manual')}; kind: {kind or 'skipped'}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"kind={kind}\n")
           PY
