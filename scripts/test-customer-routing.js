@@ -291,6 +291,36 @@ async function main(){
 
   console.log('PASS: legacy form alias, page attribution, confirmed route metadata and preexisting attribution');
 
+  // Original user-selected laundry heroes must not be replaced by the generic
+  // five-photo rotation; duplicate gallery injection must also be skipped.
+  // This regression covers the actual shared helper, not just static markup.
+  const savedQuerySelector=global.document.querySelector;
+  const savedPath=global.location.pathname;
+  try {
+    for(const [slug,imgSrc] of [
+      ['rancho-cucamonga','/assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg'],
+      ['fontana','/assets/laundry/original-user-heroes/IMG-20230603-WA0032-2.jpg'],
+      ['claremont','/assets/laundry/original-user-heroes/1000274700(10).jpg'],
+      ['pomona','/assets/laundry/original-user-heroes/IMG-20230715-WA0046-2.jpg']
+    ]) {
+      global.location.pathname='/'+slug+'-washer-dryer-pickup/';
+      const img={src:imgSrc,getAttribute(name){return name==='src'?this.src:null;}};
+      let galleryQueries=0;
+      global.document.querySelector=(selector)=>{
+        if(selector==='.site-hero-art img')return img;
+        if(selector==='.site-laundry-photo-showcase')galleryQueries++;
+        return null;
+      };
+      api.enhanceWasherDryerPhotos();
+      assertEqual(img.src,imgSrc,slug+' preserves the approved original washer/dryer hero');
+      assertEqual(galleryQueries,0,slug+' does not inject generic rotating photo gallery');
+    }
+  } finally {
+    global.location.pathname=savedPath;
+    global.document.querySelector=savedQuerySelector;
+  }
+  console.log('PASS: original city laundry heroes do not rotate or gain generic galleries');
+
   console.log(`PASS: ${tests.length} customer routing regression cases, including regional-form labels`);
 }
 
