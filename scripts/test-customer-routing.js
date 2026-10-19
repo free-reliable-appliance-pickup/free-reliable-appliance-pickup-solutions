@@ -65,6 +65,32 @@ async function main(){
     assertEqual(result.phone??null,phone,`${city}, ${state} phone`);
   }
 
+  // Synthetic fixture only: this does NOT add an actual California partner or
+  // change production route records. It verifies future verified assignments.
+  const ranchoDefault=api.classify('Rancho Cucamonga','CA');
+  assertEqual(ranchoDefault.status,'partner-recruiting','Unconfirmed Rancho still recruiting');
+  assertEqual(ranchoDefault.phone,'909-375-6685','Default Rancho public number');
+  const approvedFixture={
+    state:'California',state_code:'CA',region:'Inland Empire',city:'Rancho Cucamonga',
+    status:'partner-supported',territory_status:'assigned',
+    partner_id:'SYNTHETIC-TEST-ONLY',backup_partner_id:null,
+    phone:'555-000-0000',lead_priority:1
+  };
+  routing.markets.push(approvedFixture);
+  try{
+    const approved=api.classify('Rancho Cucamonga','California');
+    assertEqual(approved.status,'partner-supported','Explicit approved market status honored');
+    assertEqual(approved.partner_id,'SYNTHETIC-TEST-ONLY','Explicit partner identity honored');
+    assertEqual(approved.resolution_level,'exact-city','Verified exact-city status takes precedence');
+    assertEqual(approved.phone,'909-375-6685','Priority customer-facing 909 number remains unchanged');
+    assertEqual(api.routingDecision(approved).decision,'PARTNER_NETWORK','Approved route uses partner network');
+    assertEqual(api.classify('Fontana','CA').status,'partner-recruiting','Unapproved neighbor remains recruiting');
+  } finally {
+    routing.markets.pop();
+  }
+  assertEqual(api.classify('Rancho Cucamonga','CA').status,'partner-recruiting','Test fixture leaves existing state unchanged');
+  console.log('PASS: synthetic California city assignment cannot be shadowed by priority fallback');
+
   const laDecision=api.routingDecision(api.classify('Los Angeles County','CA'));
   assertEqual(laDecision.decision,'RECRUITING_QUEUE','Los Angeles County decision');
   const denverDecision=api.routingDecision(api.classify('Denver Metro','CO'));
