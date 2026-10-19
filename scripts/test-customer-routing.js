@@ -30,6 +30,35 @@ async function main(){
   if(!api) throw new Error('Customer routing API was not exposed');
   await api.load();
 
+  // Regression: the common laundry enhancer must not override actual
+  // city-specific originals or inject generic three-photo city galleries.
+  const originalSrc='/assets/laundry/original-user-heroes/IMG-20240921-WA0120.jpg';
+  const originalHero={
+    src:originalSrc,
+    dataset:{},
+    getAttribute(name){return name==='src'?this.src:null;},
+    removeAttribute(){throw new Error('Original hero dimensions must be preserved');},
+    style:{}
+  };
+  const previousQuerySelector=global.document.querySelector;
+  const previousPathname=global.location.pathname;
+  try {
+    global.location.pathname='/rancho-cucamonga-washer-dryer-pickup/';
+    global.document.querySelector=selector=>selector==='.site-hero-art img'
+      ?originalHero:previousQuerySelector(selector);
+    api.enhanceWasherDryerPhotos();
+    assertEqual(originalHero.src,originalSrc,'Original Rancho laundry hero is preserved');
+    const enhancer=source.slice(source.indexOf('function enhanceWasherDryerPhotos()'),
+      source.indexOf('\\nfunction enhanceCityLaundrySearchTerms()'));
+    assertEqual(enhancer.includes('buildLaundryGallery(path)'),false,
+      'Shared enhancer does not inject repetitive three-image galleries');
+  } finally {
+    global.document.querySelector=previousQuerySelector;
+    global.location.pathname=previousPathname;
+  }
+  console.log('PASS: original washer/dryer heroes and no repeated galleries');
+
+
   const tests=[
     ['Portland','OR','direct','Portland Metro','exact-city','503-868-4455'],
     ['Beaverton','OR','direct','Portland Metro','regional','503-868-4455'],
