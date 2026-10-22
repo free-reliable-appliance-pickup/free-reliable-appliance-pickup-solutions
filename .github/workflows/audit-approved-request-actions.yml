@@ -11,6 +11,7 @@ on:
       - 'data/approved-indexable-locations.txt'
       - 'data/california-city-gold-standard-clusters.json'
       - '**/index.html'
+      - 'scripts/audit-priority-intake-contract.py'
       - '.github/workflows/audit-approved-request-actions.yml'
   pull_request:
     paths:
@@ -19,6 +20,7 @@ on:
       - 'data/approved-indexable-locations.txt'
       - 'data/california-city-gold-standard-clusters.json'
       - '**/index.html'
+      - 'scripts/audit-priority-intake-contract.py'
       - '.github/workflows/audit-approved-request-actions.yml'
   workflow_dispatch:
 
@@ -114,3 +116,9 @@ jobs:
               sys.exit(1)
 
           print('All approved pages use the correct request architecture: local forms where required and configured single-city intake redirects for benchmark specialty pages.')
+
+      - name: Verify VGM priority intake attribution and negative fixtures
+        shell: bash
+        run: |
+          python3 scripts/audit-priority-intake-contract.py --self-test
+          python3 scripts/audit-priority-intake-contract.py
