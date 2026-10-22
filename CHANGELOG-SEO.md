@@ -74,3 +74,14 @@ Next action / no-revisit-before:
 - **Change:** Defined VGM command, baseline fields, competitor SERP comparison, GSC query/page/device measures, qualified-lead outcome, experiment gate and reporting standard; connected it to `SEO-CHANGE-CONTROL.md`. No ranking performance improvement is claimed.
 - **Safety:** Preserves `data/seo-experiments.json` as the only experiment calendar and `data/market-routing.json` as operational market truth; prevents changes based on missing evidence.
 - **Review:** [PR #389](https://github.com/free-reliable-appliance-pickup/free-reliable-appliance-pickup-solutions/pull/389). This is a documentation-only change; verify its current merge state in GitHub. No CI check was triggered on the documentation-only PR at initial inspection.
+
+
+## 2026-10-22 — VGM priority customer form regression gate
+- **Type / evidence:** Verified missing CI assertion, not a confirmed form-delivery failure. The existing `Audit Approved Request Actions` workflow checked for a Formspree endpoint and same-page request links, but did not assert a required customer phone or consistent `source_page` and `service` tracking fields on the homepage/priority city forms. The homepage source/service omission was repaired in PR #388; this check is designed to prevent recurrence.
+- **Scope:** Add `scripts/audit-priority-intake-contract.py` (root home and 23 existing priority general city pages) and invoke its one positive plus seven negative fixtures and read-only source audit in the existing approved-actions PR workflow. Preserve original customer HTML, scripts, business routing, images, titles, metadata, and experiment registry.
+- **Baseline observations:** The reviewed priority forms contain static source/service fields and required phone inputs. Phoenix has the existing label `Phoenix city page` and Columbus has lowercase `general appliance pickup`; this audit respects those established values rather than altering customer-facing forms as part of a CI change.
+- **Acceptance:** CI must report 24 inspected HTML pages with zero failures; test fixtures must demonstrate that a missing/wrong attribution, unrequired phone, wrong method/endpoint and duplicate customer form are rejected. Record actual PR checks, not just test presence.
+- **Scope limits:** The test checks repository HTML; it is not evidence of GitHub Pages deployment, Google indexing, organic positions, call tracking, or successful receipt by Formspree.
+- **Vancouver routing:** Existing issue #378 already records a distinct unresolved mismatch between the public partner-supported description and `data/market-routing.json` recruiting status. Do not infer approved partner forwarding or override market truth in this CI change.
+- **Rollback:** Revert the added script and workflow step; no production content to undo.
+- **Status:** Review branch `ci/vgm-priority-intake-regression-20261022`; merge and check outcomes are separate verification steps.
