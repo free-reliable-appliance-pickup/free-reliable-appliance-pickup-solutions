@@ -7,6 +7,10 @@ Do not substitute work activity for business results. A code commit, passing CI,
 
 **No discretionary bulk SEO rewrites or new location pages** until indexing and search performance baselines, market capacity, and page intent have been reviewed. Fix verified customer-harm, security, false business claims, broken lead routing and critical indexability defects promptly using their own scoped incident procedure.
 
+## VGM organic and competitor measurement requirement
+
+For discretionary rankings or search-intent changes, follow the mandatory market/query scoreboard in `SEO-GOLD-MODEL.md` under **Verified Gold Model (VGM)**. Document contemporaneous *organic* competitor ranking URLs/positions with exact query, location and device when observable; use finalized Search Console query × page × device performance for the site's own baseline; separately identify Maps, images, AI, paid placements, tracker data and qualified organic leads. Missing or inconclusive ranking data is an explicit **blocker for speculative rewrites**, never a reason to guess. Operational and lead-delivery corrections may proceed with the documented exception. Do not overwrite `data/seo-experiments.json` or invent a second experiment registry.
+
 ## Before proposing a change
 1. Read the current target HTML, `SEO-GOLD-MODEL.md`, related previous PRs, `CHANGELOG-SEO.md`, `data/seo-experiments.json`, and `data/market-routing.json`. Do not repeat previous work or disturb a running experiment.
 2. Identify affected URLs, shared components and dependencies, current main commit, and what will **not** change.
