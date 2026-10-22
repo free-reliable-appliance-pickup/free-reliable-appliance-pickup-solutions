@@ -54,3 +54,15 @@ Next action / no-revisit-before:
 - **Risk/verification:** One additive hidden input; existing endpoint, visible fields, phones, content and indexability unchanged. Exact removal of the new line restores the original file. Review PR checks before merge; verify public HTML after deployment. No test submission or inbox receipt has been verified.
 - **Baseline exception:** Operational field consistency does not require a search-ranking baseline; no SEO experiment variables changed.
 - **Status:** Committed to branch; deployment and business impact pending. Rollback: remove the single added input. Review after deployment.
+
+
+## 2026-10-22 — VGM homepage static form attribution
+- **Type:** Verified operational intake attribution inconsistency; not an SEO experiment.
+- **URL:** https://freereliableappliancepickup.com/#request
+- **Evidence:** The homepage Formspree form in main contained no static `source_page` or `service` input. Shared customer-routing.js supplies `source_page` only when its submission handler runs, and does not supply `service`. Other priority city forms have both inputs. This does not prove failed delivery or missing leads.
+- **Prior work / experiment check:** PRs #384 and #387 standardized the same inputs on city pages. `data/seo-experiments.json` includes an ongoing homepage title/meta CTR test with an evaluation gate of 2026-10-14; no title/meta, internal links, canonical, or indexability settings are changed here.
+- **Change:** Add two static hidden homepage pickup-form fields: `source_page=home` and `service=General major appliance pickup`. Preserve the existing Formspree endpoint, visible inputs, required phone, ZIP, state, city, qualification, routing JavaScript and all customer-facing content.
+- **Pre-merge source tests:** Exact-one-form-anchor check; positive assertions for both fields; baseline negative fixture without both fields; exact diff reconstruction confirms no other homepage changes. Tests passed locally in the connected GitHub read/write session, not an end-to-end submission.
+- **Risk / rollback:** Narrow medium-risk operational attribution fix. Rollback is removal of the two added hidden input elements.
+- **Status:** Committed to review branch `fix/vgm-homepage-intake-attribution-20261022`. PR/CI, merge, actual public HTML, Google effects and Formspree inbox receipt are not yet verified at the time of this record.
+- **Follow-up:** Review PR checks; verify deployed public HTML and complete an authorized controlled inbox receipt test. Do not treat missing lead attribution as proof of lost leads.
