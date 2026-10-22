@@ -1,12 +1,22 @@
 name: Audit Page Concentration
 
+# Run the existing read-only concentration report before merging page edits.
 on:
-  push:
+  pull_request:
     paths:
       - '.github/workflows/audit-page-concentration.yml'
       - 'sitemap.xml'
       - 'data/seo-experiments.json'
       - '**/index.html'
+      - 'index.html'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-page-concentration.yml'
+      - 'sitemap.xml'
+      - 'data/seo-experiments.json'
+      - '**/index.html'
+      - 'index.html'
   workflow_dispatch:
 
 permissions:

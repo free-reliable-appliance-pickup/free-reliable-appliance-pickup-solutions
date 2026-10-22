@@ -1,10 +1,21 @@
 name: Audit Content Uniqueness Fast
 
+# Report content similarity on page edits BEFORE merge, not only on sitemap edits.
 on:
-  push:
+  pull_request:
     paths:
-      - '.github/workflows/audit-content-uniqueness-fast.yml'
+      - '**/index.html'
+      - 'index.html'
       - 'sitemap.xml'
+      - '.github/workflows/audit-content-uniqueness-fast.yml'
+  push:
+    branches: [main]
+    paths:
+      - '**/index.html'
+      - 'index.html'
+      - 'sitemap.xml'
+      - '.github/workflows/audit-content-uniqueness-fast.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
