@@ -44,3 +44,13 @@ Observation window and review date:
 Verdict (pending/improved/unchanged/regressed/inconclusive):
 Next action / no-revisit-before:
 ```
+
+## 2026-10-22 — Phoenix general form service classification
+- **Type:** Verified operational attribution inconsistency; not a ranking experiment.
+- **URL:** https://freereliableappliancepickup.com/phoenix-appliance-pickup/
+- **Evidence:** Live HTML and main source lack a static service field; customer-routing.js does not add one. Existing city, state and source_page fields remain present. This does not establish failed delivery.
+- **Change:** Add one hidden service=General major appliance pickup field on branch fix/phoenix-form-service-20261022. Base main: 9c8a791181d55a0f21ead95454e4e995f0311abe.
+- **Prior work:** PR #384 applied the same classification to 26 California forms; all 26 live pages were checked on October 22 and contain the expected service and source fields and required phone input.
+- **Risk/verification:** One additive hidden input; existing endpoint, visible fields, phones, content and indexability unchanged. Exact removal of the new line restores the original file. Review PR checks before merge; verify public HTML after deployment. No test submission or inbox receipt has been verified.
+- **Baseline exception:** Operational field consistency does not require a search-ranking baseline; no SEO experiment variables changed.
+- **Status:** Committed to branch; deployment and business impact pending. Rollback: remove the single added input. Review after deployment.
