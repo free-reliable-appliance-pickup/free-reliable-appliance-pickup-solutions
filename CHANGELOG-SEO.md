@@ -66,3 +66,11 @@ Next action / no-revisit-before:
 - **Risk / rollback:** Narrow medium-risk operational attribution fix. Rollback is removal of the two added hidden input elements.
 - **Status:** Committed to review branch `fix/vgm-homepage-intake-attribution-20261022`. PR/CI, merge, actual public HTML, Google effects and Formspree inbox receipt are not yet verified at the time of this record.
 - **Follow-up:** Review PR checks; verify deployed public HTML and complete an authorized controlled inbox receipt test. Do not treat missing lead attribution as proof of lost leads.
+
+
+## 2026-10-22 — VGM organic ranking and competitor scoreboard codified
+- **Type:** Documentation and repeatable verification method; no live page, form, phone, schema, canonical, link or routing modification.
+- **Evidence:** The existing `SEO-GOLD-MODEL.md` already advised SERP and competitor analysis but had no single mandatory per-market/per-query scoreboard defining comparability, missing-rank notation and decision gates. Owner requested that organic search and competitor rankings become mandatory parts of "Use VGM."
+- **Change:** Defined VGM command, baseline fields, competitor SERP comparison, GSC query/page/device measures, qualified-lead outcome, experiment gate and reporting standard; connected it to `SEO-CHANGE-CONTROL.md`. No ranking performance improvement is claimed.
+- **Safety:** Preserves `data/seo-experiments.json` as the only experiment calendar and `data/market-routing.json` as operational market truth; prevents changes based on missing evidence.
+- **Review:** [PR #389](https://github.com/free-reliable-appliance-pickup/free-reliable-appliance-pickup-solutions/pull/389). This is a documentation-only change; verify its current merge state in GitHub. No CI check was triggered on the documentation-only PR at initial inspection.

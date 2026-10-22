@@ -17,6 +17,42 @@ For every **eligible, indexable** city page: one H1; one self-canonical; title/d
 
 Measure finalized Search Console query × page × device data, live city-query visibility, form/phone leads, eligibility, completed pickups and legitimate referring domains. Rank #1 is the ambition, not a guarantee. **Do not** count research as deployment, drafts as outreach, or outreach as earned backlinks.
 
+## Verified Gold Model (VGM): mandatory organic + competitor ranking evidence
+
+**Reusable instruction:** "Use VGM" means **verify current state → measure our organic visibility and actual competitors → diagnose the page/query problem → make one evidence-gated change → test source and customer paths → verify production separately → measure organic outcomes and qualified leads → report proof and open limitations**.
+
+This **extends** the California Gold Model; it does not replace established market truth, the SEO experiment registry, or the change-control policy. Competitor intelligence and organic search performance are **required inputs to every discretionary ranking decision**. Operational corrections that protect customers, lead routing, accurate facts or security may proceed without an organic baseline, with the reason documented.
+
+### Mandatory priority-market scoreboard
+
+Record separately for each market and search intent:
+
+| Field | Required evidence |
+|---|---|
+| Market and page owner | Actual city/state, intended canonical URL, target service (general appliance vs washer/dryer etc.), verified operational coverage |
+| Query and search context | Exact search phrase; date; mobile/desktop; search engine; target city or geolocation when supported; organic results distinguished from Maps/local pack, AI, paid and image results |
+| Our ranking visibility | Rank and **actual ranking URL** from repeatable SERP tracking, or `not found to measured depth` / `not measured` (never invent a rank or treat "not found" as position zero) |
+| Competitor landscape | The actual competing domains, **ranking URLs**, positions and relevant useful page differences on the same query, device and location; include TakeMyAppliance, Appliance Pickup Now and Fast Free Appliance Removal *when present*, not by assumption |
+| Finalized Google Search Console | Query × page × device clicks, impressions, CTR, average position and comparison period, with exported source and end date; position is an impression-weighted search metric, not a guaranteed live rank |
+| Search intent / page ownership | General-city vs specialty URL matches; cross-city or own-page cannibalization **supported by actual query/URL evidence**; no duplicate-page diagnosis from URL patterns alone |
+| Customer outcomes | Qualified organic forms, attributed phone calls, partner acceptance and completed pickups when instrumentation supports it; mark unknown attribution explicitly |
+| Decision and follow-up | Confirmed defect vs hypothesis; one permitted action, previous experiment/PR, baseline, owner approval when required, rollback, observation date and post-change verdict |
+
+**Minimum query set for primary cities:** "free appliance pickup [city]", "appliance pickup [city]", "appliance recycling [city]", "free washer and dryer pickup [city]" (on the relevant laundry owner page). For "near me" queries, measure **only** with a supported fixed search location and clearly report that location; never publish one supposedly universal near-me rank.
+
+**Priority order:** Rancho Cucamonga → Upland → Claremont → La Verne → San Dimas → Pomona; then Fontana and adjacent Inland Empire and San Gabriel Valley owners; Portland → Salem → Vancouver, WA; Seattle/Tacoma; Denver/Aurora; other established markets as coverage and data allow. This is workflow priority, **not** a statement of their current Google positions.
+
+### Evidence and decision gates
+
+1. **Baseline before ranking experiments:** Capture the latest available 28 *complete, finalized* GSC days per query/page/device, preferably 90 days for sparse data, plus a comparable current dated SERP/competitor snapshot. State sample sizes, scope and lag. If GSC is inaccessible or there are too few observations, mark the evidence **unavailable/inconclusive** and do **not** perform a discretionary SEO ranking rewrite.
+2. **Compare like with like:** Competitor position snapshots must use the same query, date, region/location, device and result category as our own observations. Separate paid/Maps/AI/image visibility from traditional organic ranking. Keyword.com tracked ranks are not interchangeable with GSC average position or third-party estimated traffic.
+3. **Diagnose rather than guess:** Inspect the winning *page* and the intended owner page, query intent, title/snippet, actual helpful content, valid local/service claims, mobile contact experience, reputable linking and relevant technical signals. A competitor ranking above us is **evidence of a gap to investigate**, not proof that copying its layout, changing a title or adding pages will improve rankings.
+4. **One bounded change:** Check `data/seo-experiments.json` and historical PRs, record baseline and rollback, then change only a necessary variable family. No speculative city-page proliferation, wholesale rewrites or cannibalization redirects.
+5. **Independent verification:** Differentiate source commit, CI, merge, public deployment, Google indexing, organic ranking trend and genuinely received qualified leads. Require tests on changed code and a public-page check. Test form *receipt* with authorization rather than inferring delivery from a click.
+6. **Measure after an observation window:** Respect the active experiment registry and finalized GSC delay; compare the same query/page/device before versus after (and an unchanged comparable market if possible). Record `improved`, `unchanged`, `regressed` or `inconclusive`, with counts and alternate explanations. Do not promise a top-1/2 position or treat volatile SERP snapshots as proof of causality.
+
+**Report format every time:** (a) exact URLs/queries and date, (b) observed facts and original evidence source, (c) competitors outranking us **only if observed**, (d) what changed with PR/commit or **no change**, (e) what was tested and live-verified, (f) organic GSC/tracker measurements if available, (g) lead impact if attributable, (h) unknowns, rollback and next review date.
+
 ## Practical lessons consolidated from videos
 
 - **GSC:** Improve high-impression/low-CTR pages and relevant queries at positions 7–20; diagnose the exact query's ranking URL before changing it.
