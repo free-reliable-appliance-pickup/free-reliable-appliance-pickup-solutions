@@ -17,12 +17,17 @@ def sh(*args):
         return ""
 
 def changed_files():
+    # A missing Git ref must not silently become "zero changed pages" and pass.
     base=os.environ.get("GITHUB_BASE_REF","").strip()
-    if base:
-        out=sh("git","diff","--name-only",f"origin/{base}...HEAD")
-    else:
-        out=sh("git","diff","--name-only","HEAD^","HEAD")
-    return {x.strip() for x in out.splitlines() if x.strip()}
+    command=("git","diff","--name-only",f"origin/{base}...HEAD") if base else ("git","diff","--name-only","HEAD^","HEAD")
+    try:
+        out=subprocess.check_output(command,text=True,stderr=subprocess.PIPE)
+    except (subprocess.CalledProcessError,FileNotFoundError) as exc:
+        raise SystemExit(f"SEO_EXPERIMENT_GUARD_COVERAGE_ERROR: cannot inspect changed files: {exc}")
+    files={x.strip() for x in out.splitlines() if x.strip()}
+    if not files and os.environ.get("GITHUB_EVENT_NAME") in {"pull_request","push"}:
+        raise SystemExit("SEO_EXPERIMENT_GUARD_COVERAGE_ERROR: changed-file list unexpectedly empty")
+    return files
 
 def page_file(path):
     slug=(path or "").strip("/")
@@ -98,6 +103,7 @@ if integrity_errors:
 
 running=0
 blocked=[]
+technical_override_pages=set()
 for e in data.get("experiments",[]):
     if e.get("status")!="running":
         continue
@@ -110,6 +116,8 @@ for e in data.get("experiments",[]):
     pages.update(e.get("protectedOwners",[]))
     page_files={page_file(p) for p in pages if p}
     touched=sorted(changed & page_files)
+    if technical_override:
+        technical_override_pages.update(touched)
 
     if gate:
         gate_date=date.fromisoformat(gate)
@@ -122,13 +130,21 @@ for e in data.get("experiments",[]):
                     blocked.append((e["id"],gate,touched))
         else:
             print(f"::notice title=SEO experiment review due::{e['id']} — compare finalized GSC against baseline before more edits. Pages: {', '.join(sorted(pages))}")
+            # A review date passing is NOT a review verdict. Prevent a second
+            # speculative rewrite until the experiment is explicitly resolved.
+            if touched and not technical_override:
+                blocked.append((e["id"],f"review overdue since {gate}",touched))
     else:
         print(f"::warning title=SEO experiment missing gate::{e['id']} — running experiment has no evaluateNotBefore date. Pages: {', '.join(sorted(pages))}")
 
 print("RUNNING_EXPERIMENTS",running)
+if technical_override_pages and "CHANGELOG-SEO.md" not in changed:
+    print("SEO_EXPERIMENT_GUARD_OVERRIDE_BLOCK: protected-page [technical-fix] must include CHANGELOG-SEO.md with reason and test evidence")
+    print("OVERRIDE_PAGES",", ".join(sorted(technical_override_pages)))
+    sys.exit(1)
 if blocked:
     print("\nSEO_EXPERIMENT_GUARD_BLOCK")
     for exp,gate,files in blocked:
-        print(f"- {exp}: protected until {gate}; touched: {', '.join(files)}")
-    print("Use a separate PR and wait for the observation window. Only verified technical/factual/contact/indexability/safety fixes may bypass with a commit message beginning [technical-fix], and the reason must be recorded.")
+        print(f"- {exp}: protected or awaiting documented verdict ({gate}); touched: {', '.join(files)}")
+    print("Do not rewrite a running experiment even after its review date: first record its evidence-backed verdict and close it in data/seo-experiments.json. Urgent technical/factual/contact/indexability/safety fixes require a separate [technical-fix] PR and a CHANGELOG-SEO.md entry.")
     sys.exit(1)
