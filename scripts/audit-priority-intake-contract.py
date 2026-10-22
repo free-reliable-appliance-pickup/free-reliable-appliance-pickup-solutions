@@ -11,6 +11,9 @@ import sys
 
 FORM_ACTION = "https://formspree.io/f/mvzeapzd"
 SERVICE = "General major appliance pickup"
+# Preserve existing meaningful form labels; do not rewrite customer pages as part of a test.
+SOURCE_OVERRIDES = {"phoenix-appliance-pickup": "Phoenix city page"}
+SERVICE_OVERRIDES = {"columbus-appliance-pickup": "general appliance pickup"}
 
 # Existing general-market pages only. Do not invent or publish new city URLs.
 CITIES = (
@@ -63,8 +66,8 @@ def inspect(page_html, page_label):
             fields.setdefault(name, []).append((tag, attrs))
 
     for name, expected in (
-        ("source_page", page_label),
-        ("service", SERVICE),
+        ("source_page", SOURCE_OVERRIDES.get(page_label, page_label)),
+        ("service", SERVICE_OVERRIDES.get(page_label, SERVICE)),
     ):
         values = fields.get(name, [])
         if len(values) != 1:
