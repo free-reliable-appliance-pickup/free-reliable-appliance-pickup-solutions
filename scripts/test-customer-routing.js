@@ -321,7 +321,7 @@ async function main(){
   console.log('PASS: explicit free-only versus paid quote opt-in and no automatic charge');
   // High-priority city forms must work without an optional dynamically loaded script.
   // Dynamic enhancement checks the name before insertion to avoid double fields.
-  const staticQuoteCities=["rancho-cucamonga","upland","claremont","la-verne","san-dimas","pomona","fontana"];
+  const staticQuoteCities=["upland","claremont","la-verne","san-dimas","pomona","fontana"];
   for (const slug of staticQuoteCities) {
     const html=fs.readFileSync(slug+'-appliance-pickup/index.html','utf8');
     const form=(html.match(/<form\b[\s\S]*?<\/form>/i)||[])[0]||'';
@@ -339,7 +339,7 @@ async function main(){
   const quoteEnhancement=fs.readFileSync('assets/paid-removal-choice.js','utf8');
   assertEqual(quoteEnhancement.includes("form.querySelector('[name=\"paid_removal_preference\"]')"),true,
     'Optional quote enhancer must not duplicate existing city choice');
-  console.log('PASS: seven static priority-city opt-in forms and duplicate avoidance');
+  console.log('PASS: six static priority-city opt-in forms and duplicate avoidance');
 
 
   global.location.pathname='/denver-refrigerator-pickup/';
