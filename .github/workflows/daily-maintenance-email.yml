@@ -74,7 +74,26 @@ jobs:
           with open("report.txt", "w") as f:
               f.write("\n".join(lines) + "\n")
           PY
-      - name: Email maintenance summary
+      - name: Publish maintenance report in Actions summary
+        if: steps.window.outputs.kind != ''
+        run: |
+          {
+            echo '## Free Reliable Appliance Pickup — maintenance report'
+            echo
+            echo 'Read-only workflow status summary. Passing runs do not prove search ranking or lead delivery.'
+            echo
+            echo '\`\`\`text'
+            cat report.txt
+            echo '\`\`\`'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Save maintenance report artifact
+        if: steps.window.outputs.kind != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: maintenance-report-${{ steps.window.outputs.kind }}-${{ github.run_id }}
+          path: report.txt
+          retention-days: 14
+      - name: Email maintenance summary (only when configured)
         if: steps.window.outputs.kind != ''
         env:
           SMTP_HOST: ${{ secrets.MAINTENANCE_SMTP_HOST }}
@@ -89,7 +108,10 @@ jobs:
           keys = ["SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD", "REPORT_TO"]
           missing = [k for k in keys if not os.environ.get(k)]
           if missing:
-              raise SystemExit("Email not configured: missing " + ", ".join(missing) + ". Add repository Actions secrets before enabling.")
+              print("SMTP not configured: " + ", ".join(missing) + "; no email sent. GitHub Actions report artifact and run summary remain available.")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+                  summary.write("\\n**Email status:** skipped — SMTP credentials not configured; no email sent.\\n")
+              raise SystemExit(0)
           message = EmailMessage()
           message["Subject"] = "Free Reliable Appliance Pickup — Maintenance Report"
           message["From"] = os.environ["SMTP_USER"]
@@ -105,4 +127,7 @@ jobs:
                   smtp.starttls(context=ssl.create_default_context())
                   smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
                   smtp.send_message(message)
+          print("SMTP accepted the report for sending; inbox receipt not verified.")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write("\\n**Email status:** handed to SMTP; inbox receipt not verified.\\n")
           PY
