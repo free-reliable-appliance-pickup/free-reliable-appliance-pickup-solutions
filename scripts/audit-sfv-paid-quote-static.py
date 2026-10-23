@@ -34,9 +34,10 @@ class Forms(HTMLParser):
             self.forms.append(self.active)
         elif self.active is not None:
             if tag == "input": self.active["inputs"].append(attrs)
-            if tag == "select": self.active["selects"].append({"attrs": attrs, "options": []})
+            if tag == "select": self.active["selects"].append({"attrs": attrs, "options": [], "option_attrs": []})
             if tag == "option" and self.active["selects"]:
                 self.active["selects"][-1]["options"].append(attrs.get("value"))
+                self.active["selects"][-1]["option_attrs"].append(attrs)
     def handle_endtag(self, tag):
         if tag == "form": self.active = None
 
@@ -61,6 +62,8 @@ def inspect(label, html):
         if "required" in s["attrs"]: problems.append(f"{label}: paid quote selector must be optional")
         if s["options"] != ["", "free_only", "quote_ok"]:
             problems.append(f"{label}: default / free-only / quote-only consent values changed")
+        if any("selected" in a for a in s["option_attrs"][1:]):
+            problems.append(f"{label}: paid quote or free-only must not be preselected")
     return problems
 
 def fixture_checks():
@@ -81,6 +84,7 @@ def fixture_checks():
         good.replace('type="tel" required', 'type="tel"'),
         good.replace('name="source_page"', 'name="other_page"'),
         good.replace(ENDPOINT, "https://example.org/unauthorized"),
+        good.replace('<option value="quote_ok"></option>', '<option value="quote_ok" selected></option>'),
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
