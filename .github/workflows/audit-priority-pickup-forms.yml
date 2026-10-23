@@ -11,6 +11,7 @@ on:
       - '**/*-stove-oven-pickup/index.html'
       - 'scripts/audit-priority-pickup-forms.py'
       - 'scripts/audit-priority-intake-contract.py'
+      - 'scripts/audit-sfv-paid-quote-static.py'
       - '.github/workflows/audit-priority-pickup-forms.yml'
   pull_request:
     paths:
@@ -21,6 +22,7 @@ on:
       - '**/*-stove-oven-pickup/index.html'
       - 'scripts/audit-priority-pickup-forms.py'
       - 'scripts/audit-priority-intake-contract.py'
+      - 'scripts/audit-sfv-paid-quote-static.py'
       - '.github/workflows/audit-priority-pickup-forms.yml'
   workflow_dispatch:
 
@@ -38,3 +40,5 @@ jobs:
         run: python3 scripts/audit-priority-intake-contract.py --self-test
       - name: Validate general pickup form attribution contract
         run: python3 scripts/audit-priority-intake-contract.py
+      - name: Validate Valley static paid-quote fallback
+        run: python3 scripts/audit-sfv-paid-quote-static.py
