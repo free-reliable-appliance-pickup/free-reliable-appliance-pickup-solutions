@@ -2,6 +2,14 @@
 
 Use `SEO-CHANGE-CONTROL.md` for process rules. This public record contains no customer details. Existing experiment histories remain in `data/seo-experiments.json`; do **not** duplicate or overwrite them.
 
+## 2026-10-23 — Five California customer-form service classifications (technical exception)
+- **Evidence:** Main at `66d607ed` has one Formspree POST customer form with a required `type=tel` phone input and `source_page`, but no static `service` field, on Norwalk, Long Beach, South El Monte, San Fernando and Sylmar general-appliance pages. No customer submission failure is established.
+- **Change:** Add only `service=General major appliance pickup` after the existing `source_page` input on these five forms; extend the already-running priority intake contract audit to 43 pages including homepage.
+- **Experiment coordination:** Long Beach's content experiment remains marked running (evaluate-not-before Oct 16). This technical intake attribution correction changes no title, body copy, schema, canonical, internal links, images, phone routing, service eligibility or ranking variables; all other experiments remain untouched.
+- **Verification:** Require source contract audit, negative fixture self-tests, PR checks, exact branch diff, merge and live HTML confirmation separately. No fake test leads or paid actions. Passing checks cannot prove actual Formspree delivery or improved rankings.
+- **Rollback:** Revert the bounded PR if the new attribution field interferes with intake.
+- **Status:** Proposed on isolated repair branch; deployment and Formspree receipt not yet verified.
+
 ## 2026-10-23 — Enforce existing priority intake contract in CI
 - **Verified gap:** The existing `scripts/audit-priority-intake-contract.py` was expanded to 38 pages, but the `Audit Priority Pickup Forms` workflow only ran `scripts/audit-priority-pickup-forms.py`. Its green 61-form audit did not independently demonstrate the 38-page guard or negative fixtures executed.
 - **Change:** Add the existing contract script to both workflow path triggers and run its positive/negative fixture self-test and full source contract check as separate CI steps. No public page, form destination, routing, content, indexability or SEO experiment changed.
