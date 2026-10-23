@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""VGM: inspect source-only San Fernando Valley static paid quote fallback."""
+"""VGM: inspect source-only California static paid quote fallback."""
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -14,6 +14,11 @@ PAGES = {
     "northridge-appliance-pickup": "northridge-appliance-pickup/index.html",
     "mission-hills-appliance-pickup": "mission-hills-appliance-pickup/index.html",
     "sylmar-appliance-pickup": "sylmar-appliance-pickup/index.html",
+    # Other verified California customer forms: same owner-approved no-JS fallback.
+    "burbank-appliance-pickup": "burbank-appliance-pickup/index.html",
+    "glendale-appliance-pickup": "glendale-appliance-pickup/index.html",
+    "calabasas-appliance-pickup": "calabasas-appliance-pickup/index.html",
+    "fresno-appliance-pickup": "fresno-appliance-pickup/index.html",
 }
 ENDPOINT = "https://formspree.io/f/mvzeapzd"
 
@@ -89,6 +94,7 @@ if __name__ == "__main__":
     first = Path(next(iter(PAGES.values()))).read_text(encoding="utf-8")
     assert "quote_ok" in first and 'value=""' in first
     print(f"SFV_STATIC_PAID_QUOTE_PAGES {len(PAGES)}")
+    print(f"CALIFORNIA_STATIC_PAID_QUOTE_PAGES {len(PAGES)}")
     print(f"SFV_STATIC_PAID_QUOTE_ERRORS {len(errors)}")
     for error in errors: print("FAIL:", error)
     raise SystemExit(1 if errors else 0)
