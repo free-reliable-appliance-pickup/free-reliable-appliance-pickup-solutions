@@ -25,6 +25,7 @@ CITIES = (
     "san-bernardino", "bloomington", "monterey-park",
     "whittier", "montebello", "rialto",
     "palm-springs", "la-canada-flintridge", "altadena", "san-marino",
+    "la-mirada", "cerritos", "pico-rivera", "downey",
 )
 
 
