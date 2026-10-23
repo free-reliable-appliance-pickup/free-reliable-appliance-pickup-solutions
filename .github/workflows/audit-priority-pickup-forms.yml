@@ -12,6 +12,7 @@ on:
       - 'scripts/audit-priority-pickup-forms.py'
       - 'scripts/audit-priority-intake-contract.py'
       - 'scripts/audit-sfv-paid-quote-static.py'
+      - 'scripts/audit-coastal-paid-quote-static.py'
       - '.github/workflows/audit-priority-pickup-forms.yml'
   pull_request:
     paths:
@@ -23,6 +24,7 @@ on:
       - 'scripts/audit-priority-pickup-forms.py'
       - 'scripts/audit-priority-intake-contract.py'
       - 'scripts/audit-sfv-paid-quote-static.py'
+      - 'scripts/audit-coastal-paid-quote-static.py'
       - '.github/workflows/audit-priority-pickup-forms.yml'
   workflow_dispatch:
 
@@ -42,3 +44,5 @@ jobs:
         run: python3 scripts/audit-priority-intake-contract.py
       - name: Validate Valley static paid-quote fallback
         run: python3 scripts/audit-sfv-paid-quote-static.py
+      - name: Validate coastal static paid-quote fallback
+        run: python3 scripts/audit-coastal-paid-quote-static.py
