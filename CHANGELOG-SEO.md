@@ -1,5 +1,10 @@
 # SEO change and decision register
 
+## 2026-10-23 — Customer-form service attribution repair (South Pasadena, Glendale, Burbank)
+- **Verified source defect:** Each existing general-appliance request form had a required telephone field and correct Formspree destination/source page, but omitted the hidden `service` classification used by the priority intake contract.
+- **Bounded technical exception:** Add exactly one `service=General major appliance pickup` hidden field to each form and extend the existing read-only regression guard from 73 to 76 existing pages. South Pasadena city-boundary and Glendale/Burbank anti-template SEO experiments remain frozen for speculative changes; no titles, body, links, photos, canonicals, phones, acceptance rules, or routing changed.
+- **Verification gate:** Run `python3 scripts/audit-priority-intake-contract.py --self-test` and `python3 scripts/audit-priority-intake-contract.py` in CI; verify branch diff, checks and deployment independently. Passing source tests does not prove Formspree receipt.
+
 ## 2026-10-23 — San Fernando Valley static paid quote fallback (3 existing forms)
 - **Verified source gap:** San Fernando general appliance, San Fernando washer/dryer, and North Hollywood forms had no built-in paid-removal quote preference; existing site JavaScript provides the choice dynamically, but the important customer preference is invisible if that enhancement fails or is blocked. No production script failure or customer delivery loss has been established.
 - **Minimal operational improvement:** Add one optional, blank-by-default consent choice to each existing Formspree form: free pickup only or consider a separate paid removal quote if free pickup cannot be offered. Review of a future price is not a booking, automatic charge, consent to release contact details to another business, or promise of availability. Dynamic enhancer skips forms already containing this field.

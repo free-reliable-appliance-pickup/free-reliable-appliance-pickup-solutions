@@ -34,6 +34,7 @@ CITIES = (
     "chino", "chino-hills", "west-covina", "covina",
     "glendora", "monrovia", "duarte", "san-gabriel",
     "el-monte", "azusa", "rosemead", "temple-city",
+    "south-pasadena", "glendale", "burbank",
 )
 
 
