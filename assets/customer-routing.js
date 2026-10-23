@@ -72,7 +72,7 @@ function ensureRequestAttribution(form){
   if(!knownCA&&!listed&&!direct)return;
   hidden(form,'city',listed&&listed.city||direct&&direct.city||cityName.replace(/\b\w/g,ch=>ch.toUpperCase()));
 }
-function qualify(form){const city=findField(form,['city','City','pickup_city','Primary City']),state=findField(form,['state','State','pickup_state','Primary State']);if(!city||!state)return;if(!findField(form,['source_page']))hidden(form,'source_page',pagePath().replace(/^\/+|\/+$/g,'')||'home');const info=classify(city.value,state.value),route=routingDecision(info);hidden(form,'Routing City',city.value.trim());hidden(form,'Routing State Code',stateCode(state.value));hidden(form,'Routing Region',info.region||FALLBACK.region);hidden(form,'Routing Resolution Level',info.resolution_level||'fallback');hidden(form,'Routing Market Status',info.status||FALLBACK.status);hidden(form,'Routing Territory Status',info.territory_status||FALLBACK.territory_status);hidden(form,'Routing Priority',info.lead_priority||FALLBACK.lead_priority);hidden(form,'Routing Phone',info.phone||'');hidden(form,'Routing Partner ID',info.partner_id||'');hidden(form,'Routing Backup Partner ID',info.backup_partner_id||'');hidden(form,'Routing Decision',route.decision);hidden(form,'Routing Network Tier',route.tier);hidden(form,'Routing Next Action',route.action);hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed');hidden(form,'Routing Source',info.resolution_level==='priority-california-city'?'Priority California customer-routing override':'Canonical market-routing.json');hidden(form,'SEO Page Creation','Disabled');const condition=findField(form,['condition','Condition','Appliance Condition']),appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']),stairs=findField(form,['stairs','Stairs']),access=findField(form,['access','Access','Access Notes']);hidden(form,'Qualification Snapshot',[appliance&&appliance.value,condition&&condition.value,stairs&&stairs.value,access&&access.value].filter(Boolean).join(' | '));const faultDetails=findField(form,['condition_details']);const conditionValue=String(condition&&condition.value||'');const requiresReview=/(?:\b(?:issues?|problems?|repairs?|broken|damaged|unknown|mixed|faulty)\b|not[\s-]+working)/i.test(conditionValue);hidden(form,'Customer Defect Explanation',faultDetails&&faultDetails.value||'');hidden(form,'Dispatch Condition Gate',requiresReview?'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH':'CONFIRM CONDITION AND AVAILABILITY BEFORE DISPATCH');}
+function qualify(form){recordPaidRemovalPreference(form);const city=findField(form,['city','City','pickup_city','Primary City']),state=findField(form,['state','State','pickup_state','Primary State']);if(!city||!state)return;if(!findField(form,['source_page']))hidden(form,'source_page',pagePath().replace(/^\/+|\/+$/g,'')||'home');const info=classify(city.value,state.value),route=routingDecision(info);hidden(form,'Routing City',city.value.trim());hidden(form,'Routing State Code',stateCode(state.value));hidden(form,'Routing Region',info.region||FALLBACK.region);hidden(form,'Routing Resolution Level',info.resolution_level||'fallback');hidden(form,'Routing Market Status',info.status||FALLBACK.status);hidden(form,'Routing Territory Status',info.territory_status||FALLBACK.territory_status);hidden(form,'Routing Priority',info.lead_priority||FALLBACK.lead_priority);hidden(form,'Routing Phone',info.phone||'');hidden(form,'Routing Partner ID',info.partner_id||'');hidden(form,'Routing Backup Partner ID',info.backup_partner_id||'');hidden(form,'Routing Decision',route.decision);hidden(form,'Routing Network Tier',route.tier);hidden(form,'Routing Next Action',route.action);hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed');hidden(form,'Routing Source',info.resolution_level==='priority-california-city'?'Priority California customer-routing override':'Canonical market-routing.json');hidden(form,'SEO Page Creation','Disabled');const condition=findField(form,['condition','Condition','Appliance Condition']),appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']),stairs=findField(form,['stairs','Stairs']),access=findField(form,['access','Access','Access Notes']);hidden(form,'Qualification Snapshot',[appliance&&appliance.value,condition&&condition.value,stairs&&stairs.value,access&&access.value].filter(Boolean).join(' | '));const faultDetails=findField(form,['condition_details']);const conditionValue=String(condition&&condition.value||'');const requiresReview=/(?:\b(?:issues?|problems?|repairs?|broken|damaged|unknown|mixed|faulty)\b|not[\s-]+working)/i.test(conditionValue);hidden(form,'Customer Defect Explanation',faultDetails&&faultDetails.value||'');hidden(form,'Dispatch Condition Gate',requiresReview?'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH':'CONFIRM CONDITION AND AVAILABILITY BEFORE DISPATCH');}
 function load(){if(loadPromise)return loadPromise;loadPromise=Promise.all([fetch(siteUrl('data/market-routing.json'),{cache:'no-store'}),fetch(siteUrl('data/cities.json'),{cache:'no-store'})]).then(async([r,c])=>{if(r.ok)routing=await r.json();if(c.ok)cities=await c.json();}).catch(()=>{});return loadPromise;}
 function wireForm(form){if(form.dataset.customerRoutingWired==='1')return;form.dataset.customerRoutingWired='1';form.addEventListener('submit',async function(event){if(form.dataset.customerRoutingQualified==='1'){qualify(form);return;}event.preventDefault();/* Do not leave customer requests waiting indefinitely for optional routing data. */await Promise.race([load(),new Promise(resolve=>setTimeout(resolve,2000))]);ensureRequestAttribution(form);qualify(form);form.dataset.customerRoutingQualified='1';if(typeof form.requestSubmit==='function')form.requestSubmit(event.submitter||undefined);else form.submit();},true);}
 function isCustomerPickupForm(form){const state=findField(form,['state','State','pickup_state','Primary State']),appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']);if(!state||!appliance)return false;if(findField(form,['city','City','pickup_city','Primary City']))return true;return /^\/[a-z0-9-]+-(?:appliance|washer-dryer|refrigerator|stove-oven|freezer)-pickup\/$/.test(pagePath());}
@@ -251,6 +251,46 @@ function enhanceApplianceConditionIntake(){
   });
 }
 
+/* Shared opt-in choice: customers must explicitly allow a quote.
+   This never authorizes payment, booking, or changing a free-only request. */
+function enhancePaidRemovalChoice(){
+  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
+    ensureRegionalState(form);
+    if(!isCustomerPickupForm(form)||findField(form,['paid_removal_preference']))return;
+    const submit=form.querySelector('button[type="submit"],input[type="submit"]');
+    if(!submit)return;
+    const holder=document.createElement('div');
+    holder.className='site-paid-removal-choice';
+    holder.style.cssText='display:block;width:100%;box-sizing:border-box;margin:16px 0;padding:14px;border:1px solid #cbded2;border-radius:10px;background:#f6fbf7;color:#17324a;clear:both';
+    const label=document.createElement('label');
+    label.style.cssText='display:block;font-weight:700;margin-bottom:6px';
+    label.textContent='If free pickup is unavailable, would you consider a paid removal quote?';
+    const select=document.createElement('select');
+    select.name='paid_removal_preference';
+    select.required=true;
+    select.style.cssText='display:block;box-sizing:border-box;width:100%;max-width:100%;padding:12px;margin-top:8px;border:1px solid #a5b7ac;border-radius:7px;font:inherit;background:#fff;color:#17324a';
+    [['','Please choose an option'],['free_only','Free pickup only — do not offer paid removal'],['quote_ok','Yes — I am open to reviewing a paid removal quote']].forEach(([value,title])=>{
+      const option=document.createElement('option');
+      option.value=value;
+      option.textContent=title;
+      select.appendChild(option);
+    });
+    label.appendChild(select);
+    const note=document.createElement('p');
+    note.style.cssText='font-size:14px;line-height:1.5;margin:8px 0 0';
+    note.textContent='Free pickup is reviewed first. Upstairs, two-person, difficult-access, or nonqualifying appliance removal may require a separate quote. No booking or charge without your approval.';
+    holder.appendChild(label);
+    holder.appendChild(note);
+    submit.parentNode.insertBefore(holder,submit);
+  });
+}
+function recordPaidRemovalPreference(form){
+  const control=findField(form,['paid_removal_preference']);
+  const choice=control&&control.value==='quote_ok'?'QUOTE_REVIEW_ONLY':control&&control.value==='free_only'?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
+  hidden(form,'Paid Removal Quote Gate',choice);
+  hidden(form,'Paid Removal Next Step',choice==='QUOTE_REVIEW_ONLY'?'Offer a separate quote only if free pickup is unavailable, subject to approved local capacity and explicit customer price acceptance. Do not charge or book automatically.':'Do not offer paid removal without new explicit customer permission.');
+}
+
 function enhanceRequestNextSteps(){
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
     const host=form.closest('section')||form.parentElement;
@@ -337,7 +377,7 @@ function initLeadAnalytics(){
 
 initLeadAnalytics();
 load();
-document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();/* Avoid injecting identical keyword-heavy sections across city laundry pages; preserve the original useful page content. */document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
+document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();enhancePaidRemovalChoice();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();/* Avoid injecting identical keyword-heavy sections across city laundry pages; preserve the original useful page content. */document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
 /* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 /* Load the final sharp individual-photo override on every premium washer/dryer page. */
