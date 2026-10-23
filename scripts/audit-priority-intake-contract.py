@@ -100,6 +100,14 @@ def inspect(page_html, page_label):
     elif phones[0][0] != "input" or phones[0][1].get("type", "").lower() != "tel" or "required" not in phones[0][1]:
         errors.append(f"{page_label}: phone must be a required telephone input")
 
+    # Fresno-only mobile keypad hints; do not change form validation or routing.
+    if page_label == "fresno-appliance-pickup":
+        if len(phones) == 1 and phones[0][1].get("inputmode") != "tel":
+            errors.append(f"{page_label}: phone must hint telephone keypad")
+        zips = fields.get("zip", [])
+        if len(zips) != 1 or zips[0][0] != "input" or zips[0][1].get("inputmode") != "numeric":
+            errors.append(f"{page_label}: ZIP must hint numeric keypad")
+
     return errors
 
 
