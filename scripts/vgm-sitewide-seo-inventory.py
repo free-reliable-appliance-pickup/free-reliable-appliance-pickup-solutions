@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Read-only SEO source inventory of every URL in sitemap.xml.
-It does not measure Google's index, organic SERP ranking, or customer leads.
+"""Read-only source inventory of sitemap URLs AND extra on-disk HTML pages.
+Not a Google indexing/ranking/lead delivery measurement or deployment audit.
 """
 import argparse
 from collections import Counter, defaultdict
@@ -72,10 +72,30 @@ def inspect():
             h1=len(re.findall(r'<h1\b[^>]*>',html,re.I)),
             words=len(clean(body).split()),
             paragraphs=paragraphs,category=category(path)))
-    return urls,pages,missing
+    # Pages outside the sitemap can still be public, intentionally excluded, or
+    # noindex. Scan their HTML source without assuming the files are deployed.
+    sitemap_paths={slug(u) for u in urls if urlsplit(u).hostname=='freereliableappliancepickup.com'}
+    omitted=[]
+    for file in sorted(ROOT.rglob('index.html')):
+        relative=file.relative_to(ROOT)
+        if any(part.startswith('.') or part in ('node_modules','vendor','dist','build','tmp','test-fixtures')
+               for part in relative.parts[:-1]):
+            continue
+        candidate='/' if relative.as_posix()=='index.html' else '/'+relative.parent.as_posix()+'/'
+        if candidate in sitemap_paths:
+            continue
+        html=file.read_text(encoding='utf-8',errors='replace')
+        robots=attr_tag(html,'meta','name','robots','content').lower()
+        canonical=attr_tag(html,'link','rel','canonical','href')
+        omitted.append(dict(path=candidate,robots=robots,canonical=canonical,
+                            noindex=bool(re.search(r'\\bnoindex\\b',robots)),
+                            h1=len(re.findall(r'<h1\\b[^>]*>',html,re.I)),
+                            words=len(clean(content(html)).split()),
+                            pickup_form='formspree.io/' in html))
+    return urls,pages,missing,omitted
 
 def write_report():
-    urls,pages,missing=inspect()
+    urls,pages,missing,omitted=inspect()
     for p in pages:p['noindex']='noindex' in p['robots']
     active=[p for p in pages if not p['noindex']]
     noindex=[p for p in pages if p['noindex']]
@@ -100,6 +120,9 @@ def write_report():
     lines=['# VGM sitemap-wide source quality inventory','',
        'SOURCE ONLY: this report does not establish live Google indexing, organic keyword positions, a spam penalty or lead delivery.','',
        '- Sitemap URLs: **%d**'%len(urls),
+       '- Extra on-disk index.html pages absent from sitemap: **%d**'%len(omitted),
+       '- Extra pages with source noindex: **%d**, without source noindex: **%d**'%(
+            sum(p['noindex'] for p in omitted),sum(not p['noindex'] for p in omitted)),
        '- HTML files resolved: **%d**, missing: **%d**'%(len(pages),len(missing)),
        '- Source indexable: **%d**, sitemap noindex: **%d**'%(len(active),len(noindex)),
        '- Canonical target different URL: **%d**, canonical missing: **%d**'%(len(crosscanon),len(missingcanon)),
@@ -116,11 +139,21 @@ def write_report():
        '| URL | Robots | Canonical | H1 | Approx. words | Shared long paragraphs |',
        '|---|---|---|---:|---:|---:|'])
     paths={p['path']:p for p in pages}
+    omitted_paths={p['path']:p for p in omitted}
     for city in IMPORTANT:
         path='/'+city+'-appliance-pickup/'
         p=paths.get(path)
         if not p:
-            lines.append('| %s | missing from sitemap | - | - | - | - |'%path);continue
+            extra=omitted_paths.get(path)
+            if extra:
+                canon=('self' if extra['canonical'] and slug(extra['canonical'])==path
+                       else extra['canonical'] or 'missing')
+                lines.append('| %s | %s (off sitemap) | %s | %d | %d | not scored |'%(
+                    path,'noindex' if extra['noindex'] else 'no noindex',
+                    canon,extra['h1'],extra['words']))
+            else:
+                lines.append('| %s | no index.html found | - | - | - | - |'%path)
+            continue
         n=len(p['paragraphs']);k=sum(freq[t]>=12 for t in p['paragraphs'])
         canon='self' if p['canonical'] and slug(p['canonical'])==p['path'] else (p['canonical'] or 'missing')
         lines.append('| %s | %s | %s | %d | %d | %d/%d |'%(
@@ -130,6 +163,12 @@ def write_report():
         lines.extend('- '+str(x) for x in items[:limit])
         if len(items)>limit:lines.append('- And %d more'% (len(items)-limit))
         if not items:lines.append('None found.')
+    section('On-disk pages excluded from sitemap',[
+        '%s | %s | canonical %s | form %s'%(p['path'],
+            'noindex' if p['noindex'] else 'no source noindex',
+            p['canonical'] or 'missing',
+            'yes' if p['pickup_form'] else 'no')
+        for p in omitted],100)
     section('Unresolved sitemap URLs',['%s: %s'%(p,why) for p,why in missing])
     section('Sitemap noindex pages',[p['path'] for p in noindex],50)
     section('Non-self canonical',[p['path']+' -> '+p['canonical'] for p in crosscanon])
