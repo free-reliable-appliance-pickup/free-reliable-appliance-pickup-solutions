@@ -1,5 +1,13 @@
 # SEO change and decision register
 
+## 2026-10-23 — Four California customer-form attribution/mobile corrections (technical exception)
+- **Evidence:** Current main `c9740811` contains existing Formspree POST pickup forms on Walnut, Rowland Heights and La Crescenta with `source_page` and a required phone field but no static hidden `service` classification. La Crescenta and Sierra Madre have required phone inputs lacking `type="tel"`; Sierra Madre already has the correct service classification. These are source-level intake/mobile inconsistencies, not evidence of failed submissions.
+- **Minimal scope:** Add `service=General major appliance pickup` to the three existing forms; add `type="tel"` and `autocomplete="tel"` to La Crescenta and Sierra Madre phone inputs; extend `scripts/audit-priority-intake-contract.py` from 57 to 61 existing pages including homepage and Idaho. No changes to Formspree endpoint, requiredness, phone routing, service eligibility, customer copy, photos, SEO titles/meta, canonical, indexability, or experiment registry.
+- **Coordination:** Preserve Walnut, Rowland Heights and Sierra Madre running SEO experiments. This is a documented factual/technical intake exception, not a ranking test. Diamond Bar is excluded because open PR #328 also edits that page; Westminster without `-ca` is Colorado and excluded from this California batch. Website Technical Repair retains emergency work.
+- **Acceptance:** Require exact-head GitHub Actions checks, positive/negative fixture self-test, 61-page intake contract audit, and branch diff review before merge; verify public HTML separately. No real Formspree submission, dispatch or organic ranking improvement is claimed. Revert scoped PR on regression.
+- **Status:** Proposed on isolated repair branch; deployment and real lead receipt unverified. Review 2026-10-24.
+
+
 Use `SEO-CHANGE-CONTROL.md` for process rules. This public record contains no customer details. Existing experiment histories remain in `data/seo-experiments.json`; do **not** duplicate or overwrite them.
 
 
