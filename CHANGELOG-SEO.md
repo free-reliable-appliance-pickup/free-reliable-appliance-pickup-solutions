@@ -1,5 +1,10 @@
 # SEO change and decision register
 
+## 2026-10-23 — Customer-form service attribution repair (South Pasadena, Glendale, Burbank)
+- **Verified source defect:** Each existing general-appliance request form had a required telephone field and correct Formspree destination/source page, but omitted the hidden `service` classification used by the priority intake contract.
+- **Bounded technical exception:** Add exactly one `service=General major appliance pickup` hidden field to each form and extend the existing read-only regression guard from 73 to 76 existing pages. South Pasadena city-boundary and Glendale/Burbank anti-template SEO experiments remain frozen for speculative changes; no titles, body, links, photos, canonicals, phones, acceptance rules, or routing changed.
+- **Verification gate:** Run `python3 scripts/audit-priority-intake-contract.py --self-test` and `python3 scripts/audit-priority-intake-contract.py` in CI; verify branch diff, checks and deployment independently. Passing source tests does not prove Formspree receipt.
+
 ## 2026-10-23 — San Fernando Valley real appliance hero pilot (7 existing pages)
 - **Verified issue:** Van Nuys, Granada Hills, Pacoima, Northridge, Mission Hills, Sylmar and the San Fernando Valley hub had only the brand logo in rendered source and logo-only social previews. Seven already-owned, visually inspected multi-appliance group photos exist in the repository; one different existing image is assigned to each page. Images are examples from the appliance photo collection, **not** claims that a job was done in the named neighborhood.
 - **Baseline:** SMEPost GSC free three-day finalized window **2026-10-18 to 2026-10-20**: Granada Hills one impression, zero clicks (one-impression average position 1); the other six pages have no page-performance row in this limited window. Zero rows are not proof that Google has never shown those pages. No historical comparison available. Live/source pages inspected Oct 23. Current search competition exists: AppliancePickupNow Van Nuys and Woodland Hills, PickupMyAppliance Pacoima.
