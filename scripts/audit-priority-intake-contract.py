@@ -35,6 +35,7 @@ CITIES = (
     "glendora", "monrovia", "duarte", "san-gabriel",
     "el-monte", "azusa", "rosemead", "temple-city",
     "south-pasadena", "glendale", "burbank",
+    "ventura", "oxnard", "malibu",
 )
 
 
