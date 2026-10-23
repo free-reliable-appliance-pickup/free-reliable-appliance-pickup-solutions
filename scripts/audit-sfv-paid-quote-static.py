@@ -4,6 +4,9 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 PAGES = {
+    # SGV source-only fallback: no JavaScript needed for customer quote preference.
+    "pasadena-appliance-pickup": "pasadena-appliance-pickup/index.html",
+    "arcadia-appliance-pickup": "arcadia-appliance-pickup/index.html",
     "san-fernando-appliance-pickup": "san-fernando-appliance-pickup/index.html",
     "san-fernando-washer-dryer-pickup": "san-fernando-washer-dryer-pickup/index.html",
     "north-hollywood-appliance-pickup": "north-hollywood-appliance-pickup/index.html",
