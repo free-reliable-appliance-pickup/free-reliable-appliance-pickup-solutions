@@ -31,6 +31,9 @@ CITIES = (
     "loma-linda", "banning", "beaumont", "hemet",
     "hesperia", "apple-valley", "adelanto", "phelan", "el-mirage",
     "walnut", "rowland-heights", "la-crescenta", "sierra-madre",
+    "chino", "chino-hills", "west-covina", "covina",
+    "glendora", "monrovia", "duarte", "san-gabriel",
+    "el-monte", "azusa", "rosemead", "temple-city",
 )
 
 
