@@ -251,15 +251,7 @@ function enhanceApplianceConditionIntake(){
   });
 }
 
-/* Request-quote choice is loaded separately so customer-routing stays within the audited performance budget. */
-function loadPaidRemovalChoice(){
-  if(document.querySelector('script[data-paid-removal-choice]'))return;
-  const tag=document.createElement('script');
-  tag.src=siteUrl('assets/paid-removal-choice.js');
-  tag.defer=true;
-  tag.dataset.paidRemovalChoice='1';
-  document.head.appendChild(tag);
-}
+function loadPaidRemovalChoice(){if(document.querySelector('script[data-paid-removal-choice]'))return;const t=document.createElement('script');t.src=siteUrl('assets/paid-removal-choice.js');t.defer=true;t.dataset.paidRemovalChoice='1';document.head.appendChild(t);}
 function recordPaidRemovalPreference(form){
   const control=findField(form,['paid_removal_preference']);
   const choice=control&&control.value==='quote_ok'?'QUOTE_REVIEW_ONLY':control&&control.value==='free_only'?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
