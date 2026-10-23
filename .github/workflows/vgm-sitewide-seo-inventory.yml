@@ -1,0 +1,26 @@
+name: VGM Sitewide SEO Inventory (read only)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect sitemap URL indexability and content repetition
+        run: |
+          python3 scripts/vgm-sitewide-seo-inventory.py --output vgm-sitewide-inventory.md
+          cat vgm-sitewide-inventory.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload report for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: vgm-sitewide-seo-inventory
+          path: vgm-sitewide-inventory.md
+          retention-days: 14
