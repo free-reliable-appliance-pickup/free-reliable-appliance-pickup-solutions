@@ -36,6 +36,8 @@ CITIES = (
     "el-monte", "azusa", "rosemead", "temple-city",
     "south-pasadena", "glendale", "burbank",
     "ventura", "oxnard", "malibu",
+    "santa-monica", "calabasas", "west-hollywood",
+    "north-hollywood", "santa-clarita",
 )
 
 
