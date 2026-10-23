@@ -2,6 +2,13 @@
 
 Use `SEO-CHANGE-CONTROL.md` for process rules. This public record contains no customer details. Existing experiment histories remain in `data/seo-experiments.json`; do **not** duplicate or overwrite them.
 
+
+## 2026-10-23 — Five High Desert California intake classifications (technical exception)
+- **Evidence:** At main `24004ceb`, Hesperia, Apple Valley, Adelanto, Phelan and El Mirage existing general-appliance Formspree POST forms each have a city-specific `source_page` and a required `type=tel` phone input but no static hidden `service` classification. This is an attribution inconsistency, **not** evidence of failed submissions or lost leads.
+- **Minimal fix:** Add exactly one `service=General major appliance pickup` hidden input after `source_page` on each of five existing forms. Extend the existing priority intake contract guard from 51 to 56 pages including homepage. Preserve all endpoints, phone numbers, routing, acceptance policy, customer-visible text, photos, metadata, schema, links, canonicals and indexing.
+- **Experiment protection:** Reviewed `data/seo-experiments.json`: Hesperia, Adelanto and Phelan have protected ranking experiments. This verified form-metadata defect is a logged technical exception, not a ranking/content experiment; no experiment or emergency-repair ownership is modified.
+- **Acceptance and limits:** Require exact-head PR checks, positive/negative fixtures and `PRIORITY_INTAKE_PAGES_INSPECTED 56` with zero failures before merging. Verify public HTML after deployment separately. Do not claim Formspree receipt, partner dispatch or ranking impact. Revert the scoped PR if regression occurs.
+
 ## 2026-10-23 — Four Inland/Pass California customer form classifications (technical exception)
 - **Source evidence:** Main `a2d917f6` has existing Formspree POST pickup forms on Loma Linda, Banning, Beaumont and Hemet general-appliance pages, each with exactly one city-specific hidden `source_page`, a required `type=tel` phone input, and no hidden `service` field. The shared routing script does not supply that service classification. This is an attribution consistency gap, **not evidence of lost leads or failed submission**.
 - **Narrow change:** Add one hidden `service=General major appliance pickup` input immediately after `source_page` on each existing form; expand `scripts/audit-priority-intake-contract.py` from 47 to 51 pages including homepage. Existing endpoint, phone numbers, customer fields, pickup qualifications, quotes/consent, routing, copy, photos, links, canonical, robots, sitemap and SEO experiment registry remain unchanged.

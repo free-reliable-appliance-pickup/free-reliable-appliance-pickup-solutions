@@ -29,6 +29,7 @@ CITIES = (
     "norwalk", "long-beach", "south-el-monte", "san-fernando", "sylmar",
     "temecula", "murrieta", "victorville", "palm-desert",
     "loma-linda", "banning", "beaumont", "hemet",
+    "hesperia", "apple-valley", "adelanto", "phelan", "el-mirage",
 )
 
 
