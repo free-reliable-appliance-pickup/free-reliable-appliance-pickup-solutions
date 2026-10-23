@@ -2,6 +2,13 @@
 
 Use `SEO-CHANGE-CONTROL.md` for process rules. This public record contains no customer details. Existing experiment histories remain in `data/seo-experiments.json`; do **not** duplicate or overwrite them.
 
+## 2026-10-23 — Four Inland/Pass California customer form classifications (technical exception)
+- **Source evidence:** Main `a2d917f6` has existing Formspree POST pickup forms on Loma Linda, Banning, Beaumont and Hemet general-appliance pages, each with exactly one city-specific hidden `source_page`, a required `type=tel` phone input, and no hidden `service` field. The shared routing script does not supply that service classification. This is an attribution consistency gap, **not evidence of lost leads or failed submission**.
+- **Narrow change:** Add one hidden `service=General major appliance pickup` input immediately after `source_page` on each existing form; expand `scripts/audit-priority-intake-contract.py` from 47 to 51 pages including homepage. Existing endpoint, phone numbers, customer fields, pickup qualifications, quotes/consent, routing, copy, photos, links, canonical, robots, sitemap and SEO experiment registry remain unchanged.
+- **Change control:** Existing California SEO experiments remain protected; this is a documented operational technical exception, not a ranking experiment. Website Technical Repair retains emergency ownership and Daily SEO Ranking Countermove retains ranking/content experiments.
+- **Required evidence:** Review exact six-file diff, run contract negative fixtures and 51-page source checks, verify PR CI before merge, then verify main, GitHub Pages and public HTML separately. No paid action, fake customer submission or claimed Formspree inbox receipt.
+- **Rollback/status:** Revert the scoped PR if intake regresses. Proposed on isolated branch; merge, live deployment, delivery and ranking effect not yet verified at the time of entry.
+
 ## 2026-10-23 — Five California customer-form service classifications (technical exception)
 - **Evidence:** Main at `66d607ed` has one Formspree POST customer form with a required `type=tel` phone input and `source_page`, but no static `service` field, on Norwalk, Long Beach, South El Monte, San Fernando and Sylmar general-appliance pages. No customer submission failure is established.
 - **Change:** Add only `service=General major appliance pickup` after the existing `source_page` input on these five forms; extend the already-running priority intake contract audit to 43 pages including homepage.
