@@ -11140,6 +11140,51 @@
       "preferredReview": "2026-10-20",
       "status": "running",
       "freezeRule": "Do not make further speculative title/meta/H1/body/internal-link/schema-intent changes to /rancho-mirage-washer-dryer-pickup/ before 2026-10-14. Only verified technical, factual, contact, indexability or safety fixes may interrupt the freeze and must be logged."
+    },
+    {
+      "id": "2026-10-23-sfv-seven-hero-photo-pilot",
+      "market": "San Fernando Valley, Los Angeles County, CA",
+      "hypothesis": "A distinct real appliance group hero and matching social-image preview on existing city owner pages may improve trust and click-through without changing keyword targeting. It does not guarantee increased search rank.",
+      "pagesChanged": [
+        "/van-nuys-appliance-pickup/",
+        "/granada-hills-appliance-pickup/",
+        "/pacoima-appliance-pickup/",
+        "/northridge-appliance-pickup/",
+        "/mission-hills-appliance-pickup/",
+        "/sylmar-appliance-pickup/",
+        "/san-fernando-valley-appliance-pickup/"
+      ],
+      "protectedOwner": "/san-fernando-valley-appliance-pickup/",
+      "lastChanged": "2026-10-23",
+      "baselinePeriod": {
+        "start": "2026-10-18",
+        "end": "2026-10-20"
+      },
+      "baseline": {
+        "source": "GSC SEO Content Planner, three finalized days only, no comparison",
+        "cityPageSignals": {
+          "van-nuys": "0 reported impressions",
+          "granada-hills": "1 impression, 0 clicks (average position 1 from a single impression)",
+          "pacoima": "0 reported impressions",
+          "northridge": "0 reported impressions",
+          "mission-hills": "0 reported impressions",
+          "sylmar": "0 reported impressions",
+          "san-fernando-valley": "0 reported impressions"
+        },
+        "sourceAudit": "Seven existing owner pages currently have a logo-only hero/social image; each has one existing Formspree POST and the 310 Los Angeles contact line",
+        "competitors": "AppliancePickupNow has Van Nuys/Woodland Hills pages; PickupMyAppliance has a Pacoima page."
+      },
+      "change": "One different existing appliance group photo per page and matching og/twitter image metadata; no content, title, phone, routing, form, canonical, schema or indexability edits.",
+      "successSignals": [
+        "Proper image is visible in live mobile/desktop hero and social image after deployment.",
+        "Nonzero finalized city query impressions and click-through improve versus suitable future comparison where meaningful sample exists, without harming existing pages.",
+        "Main city pages retain city query ownership; regional hub retains region-level intent."
+      ],
+      "evaluateNotBefore": "2026-11-06",
+      "preferredReview": "2026-11-09",
+      "status": "running",
+      "freezeRule": "No further speculative title/body/link/schema/canonical/hero changes to the seven pages before observation gate, except verified technical/factual/customer-safety fixes that are documented.",
+      "technicalFixes": []
     }
   ],
   "technicalMaintenance": [
