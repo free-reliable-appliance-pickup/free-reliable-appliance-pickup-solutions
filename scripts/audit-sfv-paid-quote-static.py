@@ -7,6 +7,13 @@ PAGES = {
     "san-fernando-appliance-pickup": "san-fernando-appliance-pickup/index.html",
     "san-fernando-washer-dryer-pickup": "san-fernando-washer-dryer-pickup/index.html",
     "north-hollywood-appliance-pickup": "north-hollywood-appliance-pickup/index.html",
+    "san-fernando-valley-appliance-pickup": "san-fernando-valley-appliance-pickup/index.html",
+    "van-nuys-appliance-pickup": "van-nuys-appliance-pickup/index.html",
+    "granada-hills-appliance-pickup": "granada-hills-appliance-pickup/index.html",
+    "pacoima-appliance-pickup": "pacoima-appliance-pickup/index.html",
+    "northridge-appliance-pickup": "northridge-appliance-pickup/index.html",
+    "mission-hills-appliance-pickup": "mission-hills-appliance-pickup/index.html",
+    "sylmar-appliance-pickup": "sylmar-appliance-pickup/index.html",
 }
 ENDPOINT = "https://formspree.io/f/mvzeapzd"
 
@@ -51,7 +58,30 @@ def inspect(label, html):
             problems.append(f"{label}: default / free-only / quote-only consent values changed")
     return problems
 
+def fixture_checks():
+    label = "san-fernando-valley-appliance-pickup"
+    good = (
+        f'<form action="{ENDPOINT}" method="POST">'
+        f'<input type="hidden" name="source_page" value="{label}">'
+        '<input name="phone" type="tel" required>'
+        '<select name="paid_removal_preference">'
+        '<option value=""></option><option value="free_only"></option>'
+        '<option value="quote_ok"></option></select></form>'
+    )
+    assert inspect(label, good) == [], "valid optional quote preference rejected"
+    unsafe = (
+        good.replace('<option value=""></option>', '<option value="quote_ok"></option>'),
+        good.replace('<select name="paid_removal_preference">', '<select required name="paid_removal_preference">'),
+        good.replace('name="paid_removal_preference"', 'name="unknown"'),
+        good.replace('type="tel" required', 'type="tel"'),
+        good.replace('name="source_page"', 'name="other_page"'),
+        good.replace(ENDPOINT, "https://example.org/unauthorized"),
+    )
+    for tampered in unsafe:
+        assert inspect(label, tampered), "unsafe fixture went undetected"
+
 if __name__ == "__main__":
+    fixture_checks()
     errors = []
     for label, path in PAGES.items():
         errors.extend(inspect(label, Path(path).read_text(encoding="utf-8")))
