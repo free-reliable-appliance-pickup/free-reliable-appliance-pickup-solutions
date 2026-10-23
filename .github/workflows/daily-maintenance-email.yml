@@ -82,9 +82,9 @@ jobs:
             echo
             echo 'Read-only workflow status summary. Passing runs do not prove search ranking or lead delivery.'
             echo
-            echo '\`\`\`text'
+            echo '```text'
             cat report.txt
-            echo '\`\`\`'
+            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Save maintenance report artifact
         if: steps.window.outputs.kind != ''
@@ -110,7 +110,7 @@ jobs:
           if missing:
               print("SMTP not configured: " + ", ".join(missing) + "; no email sent. GitHub Actions report artifact and run summary remain available.")
               with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
-                  summary.write("\\n**Email status:** skipped — SMTP credentials not configured; no email sent.\\n")
+                  summary.write("\n**Email status:** skipped — SMTP credentials not configured; no email sent.\n")
               raise SystemExit(0)
           message = EmailMessage()
           message["Subject"] = "Free Reliable Appliance Pickup — Maintenance Report"
@@ -129,5 +129,5 @@ jobs:
                   smtp.send_message(message)
           print("SMTP accepted the report for sending; inbox receipt not verified.")
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
-              summary.write("\\n**Email status:** handed to SMTP; inbox receipt not verified.\\n")
+              summary.write("\n**Email status:** handed to SMTP; inbox receipt not verified.\n")
           PY
