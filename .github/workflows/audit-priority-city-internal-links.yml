@@ -9,6 +9,7 @@ on:
       - 'sitemap.xml'
       - '.github/workflows/audit-priority-city-internal-links.yml'
       - 'scripts/audit-valley-coast-directory.py'
+      - 'scripts/audit-socal-hub-valley-coast-links.py'
   workflow_dispatch:
 
 permissions:
@@ -21,6 +22,8 @@ jobs:
       - uses: actions/checkout@v5
       - name: Verify Valley and Coast directory links
         run: python3 scripts/audit-valley-coast-directory.py
+      - name: Verify SoCal Valley and Ventura Coast owner links
+        run: python3 scripts/audit-socal-hub-valley-coast-links.py
       - name: Analyze priority city crawl paths
         shell: bash
         run: |
