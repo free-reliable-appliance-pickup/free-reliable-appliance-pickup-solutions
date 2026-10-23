@@ -27,6 +27,7 @@ CITIES = (
     "palm-springs", "la-canada-flintridge", "altadena", "san-marino",
     "la-mirada", "cerritos", "pico-rivera", "downey",
     "norwalk", "long-beach", "south-el-monte", "san-fernando", "sylmar",
+    "temecula", "murrieta", "victorville", "palm-desert",
 )
 
 
