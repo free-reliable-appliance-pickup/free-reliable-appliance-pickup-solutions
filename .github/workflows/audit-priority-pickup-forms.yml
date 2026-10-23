@@ -10,6 +10,7 @@ on:
       - '**/*-freezer-pickup/index.html'
       - '**/*-stove-oven-pickup/index.html'
       - 'scripts/audit-priority-pickup-forms.py'
+      - 'scripts/audit-priority-intake-contract.py'
       - '.github/workflows/audit-priority-pickup-forms.yml'
   pull_request:
     paths:
@@ -19,6 +20,7 @@ on:
       - '**/*-freezer-pickup/index.html'
       - '**/*-stove-oven-pickup/index.html'
       - 'scripts/audit-priority-pickup-forms.py'
+      - 'scripts/audit-priority-intake-contract.py'
       - '.github/workflows/audit-priority-pickup-forms.yml'
   workflow_dispatch:
 
@@ -32,3 +34,7 @@ jobs:
       - uses: actions/checkout@v5
       - name: Validate condition and access intake
         run: python3 scripts/audit-priority-pickup-forms.py
+      - name: Self-test general pickup form contract guard
+        run: python3 scripts/audit-priority-intake-contract.py --self-test
+      - name: Validate general pickup form attribution contract
+        run: python3 scripts/audit-priority-intake-contract.py
