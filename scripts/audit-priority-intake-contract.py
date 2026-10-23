@@ -38,6 +38,8 @@ CITIES = (
     "ventura", "oxnard", "malibu",
     "santa-monica", "calabasas", "west-hollywood",
     "north-hollywood", "santa-clarita",
+    "anaheim", "irvine", "huntington-beach", "santa-ana",
+    "garden-grove", "fullerton", "yorba-linda",
 )
 
 

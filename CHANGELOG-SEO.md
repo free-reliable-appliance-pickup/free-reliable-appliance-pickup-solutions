@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-23 — Extend priority California customer-form regression to seven Orange County cities (test-only)
+- **Verified main-source contracts:** Existing Anaheim, Irvine, Huntington Beach, Santa Ana, Garden Grove, Fullerton and Yorba Linda general-appliance pages each contain one Formspree POST to the established customer endpoint, the correct city-specific `source_page`, `service=General major appliance pickup`, and a required telephone field. The pages are already published; this check does not imply successful real submissions or deliveries.
+- **Bounded change:** Register those seven existing city pages in the established read-only `scripts/audit-priority-intake-contract.py` guard, expanding its expected page inventory from 84 to 91. No page HTML, phones, eligibility, Formspree endpoint, photographs, rankings, SEO text, canonicals, or active experiment assets are changed.
+- **Validation and rollback:** Require existing positive/negative self-test, all 91 source contract checks, exact-head GitHub Actions and clean PR diff. Revert this test-only PR if the added guard has an unexpected regression. Source tests cannot prove live Formspree delivery or search rankings.
+
+
 ## 2026-10-23 — Restore Valley and Ventura coast navigation from Service Areas directory
 - **Verified gap:** `/service-areas/` contains ~453 links, but its source has no direct links to 16 verified, already published Valley/Coast request URLs, including existing San Fernando, Van Nuys, North Hollywood, Ventura, Malibu and Oxnard pages. The visible city finder builds its choices from `main a[href]` already present on this page; without those links, exact city searches cannot return those destinations. Direct GitHub fetch confirmed all 16 targets exist. This is navigational/source-level evidence, **not** evidence of zero Google indexing.
 - **Bounded repair:** Add one small descriptive section just beneath the existing directory search with eight San Fernando Valley and eight coastal links; explicitly state pickup qualification and route availability. Link to established city/intent owners only, no new indexable pages, no unsupported local partner claims. Keep all original location search logic, directory title/meta, canonical, schema, existing sitewide links and target pages unchanged, including the frozen SFV photo experiment.
