@@ -40,6 +40,7 @@ CITIES = (
     "north-hollywood", "santa-clarita",
     "anaheim", "irvine", "huntington-beach", "santa-ana",
     "garden-grove", "fullerton", "yorba-linda",
+    "van-nuys", "granada-hills", "pacoima", "northridge", "mission-hills",
 )
 
 
@@ -135,6 +136,8 @@ def main():
 
     pages = [("home", Path("index.html"))]
     pages.extend((f"{city}-appliance-pickup", Path(city + "-appliance-pickup") / "index.html") for city in CITIES)
+    # Existing Valley regional hub uses the same customer request contract.
+    pages.append(("san-fernando-valley-appliance-pickup", Path("san-fernando-valley-appliance-pickup/index.html")))
     # Existing request-only state hub; same Formspree intake contract, no coverage expansion.
     pages.append(("idaho-appliance-pickup", Path("idaho-appliance-pickup/index.html")))
     failures = []
