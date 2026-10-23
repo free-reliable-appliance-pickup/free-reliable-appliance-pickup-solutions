@@ -2,6 +2,12 @@
 
 Use `SEO-CHANGE-CONTROL.md` for process rules. This public record contains no customer details. Existing experiment histories remain in `data/seo-experiments.json`; do **not** duplicate or overwrite them.
 
+## 2026-10-23 — Enforce existing priority intake contract in CI
+- **Verified gap:** The existing `scripts/audit-priority-intake-contract.py` was expanded to 38 pages, but the `Audit Priority Pickup Forms` workflow only ran `scripts/audit-priority-pickup-forms.py`. Its green 61-form audit did not independently demonstrate the 38-page guard or negative fixtures executed.
+- **Change:** Add the existing contract script to both workflow path triggers and run its positive/negative fixture self-test and full source contract check as separate CI steps. No public page, form destination, routing, content, indexability or SEO experiment changed.
+- **Verification/rollback:** PR must show both new steps succeeded and `PRIORITY_INTAKE_PAGES_INSPECTED 38`, `PRIORITY_INTAKE_FAILURES 0`, plus fixture results before merge. Revert this workflow-only change if it creates false positives. CI source checks do not prove live form receipt.
+- **Status:** Branch proposal pending exact-head CI and merge at time of entry.
+
 ## 2026-10-23 — Southeast California Formspree service-attribution corrections (operational exception)
 - **Classification:** Verified source-level customer intake metadata inconsistency, not a ranking experiment or reported delivery failure.
 - **Pages:** `/la-mirada-appliance-pickup/`, `/cerritos-appliance-pickup/`, `/pico-rivera-appliance-pickup/`, `/downey-appliance-pickup/`.
