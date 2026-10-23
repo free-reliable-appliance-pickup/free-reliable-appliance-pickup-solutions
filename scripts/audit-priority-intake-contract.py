@@ -28,6 +28,7 @@ CITIES = (
     "la-mirada", "cerritos", "pico-rivera", "downey",
     "norwalk", "long-beach", "south-el-monte", "san-fernando", "sylmar",
     "temecula", "murrieta", "victorville", "palm-desert",
+    "loma-linda", "banning", "beaumont", "hemet",
 )
 
 
