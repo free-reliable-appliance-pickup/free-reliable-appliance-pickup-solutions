@@ -22,6 +22,8 @@ CITIES = (
     "riverside", "portland", "salem", "vancouver", "seattle",
     "tacoma", "spokane", "denver", "aurora", "phoenix",
     "columbus", "fresno", "ontario", "montclair",
+    "san-bernardino", "bloomington", "monterey-park",
+    "whittier", "montebello", "rialto",
 )
 
 
