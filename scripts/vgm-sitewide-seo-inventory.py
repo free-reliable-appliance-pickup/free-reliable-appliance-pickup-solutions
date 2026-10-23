@@ -88,8 +88,8 @@ def inspect():
         robots=attr_tag(html,'meta','name','robots','content').lower()
         canonical=attr_tag(html,'link','rel','canonical','href')
         omitted.append(dict(path=candidate,robots=robots,canonical=canonical,
-                            noindex=bool(re.search(r'\\bnoindex\\b',robots)),
-                            h1=len(re.findall(r'<h1\\b[^>]*>',html,re.I)),
+                            noindex=bool(re.search(r'\bnoindex\b',robots)),
+                            h1=len(re.findall(r'<h1\b[^>]*>',html,re.I)),
                             words=len(clean(content(html)).split()),
                             pickup_form='formspree.io/' in html))
     return urls,pages,missing,omitted
