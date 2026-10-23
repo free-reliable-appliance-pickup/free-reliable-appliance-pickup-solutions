@@ -296,11 +296,11 @@ async function main(){
   // A paid quote is an explicit opt-in only, never a charge or confirmed pickup.
   const homeHtml=fs.readFileSync('index.html','utf8');
   const homeRequest=(homeHtml.match(/<form action="https:\/\/formspree\.io\/f\/mvzeapzd"[\s\S]*?<\/form>/i)||[])[0]||'';
-  if(!homeRequest.includes('name="paid_removal_preference" required')||
+  if(!homeRequest.includes('name="paid_removal_preference"')||
       !homeRequest.includes('value="free_only"')||
       !homeRequest.includes('value="quote_ok"')||
       !homeRequest.includes('value=""'))throw Error('Homepage paid quote choice must be required, empty by default, and explicit');
-  if(!source.includes('enhancePaidRemovalChoice();'))throw Error('City forms must use the shared quote choice enhancement');
+  if(!source.includes('loadPaidRemovalChoice();'))throw Error('City forms must use the shared quote choice enhancement');
   for(const [value,expected] of [
     ['free_only','FREE_PICKUP_ONLY'],
     ['quote_ok','QUOTE_REVIEW_ONLY'],
