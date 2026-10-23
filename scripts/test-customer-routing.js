@@ -293,6 +293,33 @@ async function main(){
   assertEqual(vancouver.nodes['Dispatch Condition Gate'].value,'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH','Mixed Vancouver load needs review');
   console.log('PASS: Vancouver form fields, Clark County routing and mixed-load gate');
 
+  // A paid quote is an explicit opt-in only, never a charge or confirmed pickup.
+  const homeHtml=fs.readFileSync('index.html','utf8');
+  const homeRequest=(homeHtml.match(/<form action="https:\/\/formspree\.io\/f\/mvzeapzd"[\s\S]*?<\/form>/i)||[])[0]||'';
+  if(!homeRequest.includes('name="paid_removal_preference" required')||
+      !homeRequest.includes('value="free_only"')||
+      !homeRequest.includes('value="quote_ok"')||
+      !homeRequest.includes('value=""'))throw Error('Homepage paid quote choice must be required, empty by default, and explicit');
+  if(!source.includes('enhancePaidRemovalChoice();'))throw Error('City forms must use the shared quote choice enhancement');
+  for(const [value,expected] of [
+    ['free_only','FREE_PICKUP_ONLY'],
+    ['quote_ok','QUOTE_REVIEW_ONLY'],
+    ['', 'NO_PAID_QUOTE_AUTHORIZATION']
+  ]){
+    const request=mockForm({
+      city:'Rancho Cucamonga',state:'CA',appliance:'Washer and Dryer Set',
+      condition:'Fully Working',paid_removal_preference:value
+    });
+    api.qualify(request);
+    assertEqual(request.nodes['Paid Removal Quote Gate'].value,expected,
+      'Explicit paid quote preference '+(value||'empty'));
+    assertEqual(request.nodes['Routing Phone'].value,'909-375-6685',
+      'Paid quote preference must not alter established routing');
+    assertEqual(request.nodes['Paid Removal Next Step'].value.includes('Do not charge or book automatically.'),value==='quote_ok',
+      'Quote interest never authorizes a charge and free-only must stay free-only');
+  }
+  console.log('PASS: explicit free-only versus paid quote opt-in and no automatic charge');
+
   global.location.pathname='/denver-refrigerator-pickup/';
   const denver=mockForm({state:'Colorado',appliance:'Refrigerator'});
   api.ensureRequestAttribution(denver);
