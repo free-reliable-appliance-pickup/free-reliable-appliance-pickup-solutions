@@ -2,6 +2,18 @@
 
 Use `SEO-CHANGE-CONTROL.md` for process rules. This public record contains no customer details. Existing experiment histories remain in `data/seo-experiments.json`; do **not** duplicate or overwrite them.
 
+## 2026-10-23 — Four California intake source and mobile input repairs (operational exception)
+- **Classification:** Verified source-level customer-form attribution/mobile usability defects, not an SEO experiment or an emergency incident.
+- **Pages:** `/palm-springs-appliance-pickup/`, `/la-canada-flintridge-appliance-pickup/`, `/altadena-appliance-pickup/`, `/san-marino-appliance-pickup/`.
+- **Evidence:** Current `main` source on Oct 23 had one Formspree POST form on each page with required contact fields and `source_page` but no static hidden `service`. La Cañada Flintridge, Altadena and San Marino also had a required `phone` field without `type="tel"`. Shared `assets/customer-routing.js` does not automatically supply missing `service` fields. **No form-delivery failure is established.**
+- **Existing controls:** Related merged PR #393 fixed the same class on other cities. The authoritative `data/seo-experiments.json` lists protected Coachella, Altadena, La Cañada Flintridge and San Marino experiments (evaluate-not-before dates Oct 9–15). This is a documented **technical exception**, not a ranking/content change. No registry values or experiment variables were changed.
+- **Change:** Add exactly one static `service=General major appliance pickup` field to each existing form; add `type="tel"` to the three required phone inputs; extend `scripts/audit-priority-intake-contract.py` to include all four pages.
+- **Unchanged:** Formspree action/method, customer field requiredness, customer text, pickup eligibility, paid-quote preference, telephone numbers, market/partner routing, images, SEO title/meta/body, canonical, robots, sitemap and internal links.
+- **Risk and rollback:** Medium-risk customer-form source change; revert the bounded PR if validation finds a regression. No paid action or live test submission authorized.
+- **Baseline:** Connected GSC free finalized Oct 18–20, 2026 window; Palm Springs page insight returned no page-level data. GSC is not a prerequisite for verified operational input corrections and no ranking effect is claimed.
+- **Tests and deployment:** Branch source assertions passed for changed fields; expanded regression guard pending CI. PR merge, GitHub Pages deployment, public form rendering and actual Formspree receipt must be verified separately.
+- **Status:** Committed to feature branch; **not yet merged/live verified** at time of entry. Review after CI/PR inspection; no speculative ranking experiment launched.
+
 ## 2026-10-22 — Process audit: quality checks were not triggered for ordinary HTML PRs
 - **Finding:** `audit-content-uniqueness-fast.yml` only ran on sitemap/workflow changes; `audit-page-concentration.yml` ran on push but not PR. The quality reports therefore did not reliably appear **before merging city-page content edits**.
 - **Evidence:** workflow trigger definitions read in GitHub on 2026-10-22.
