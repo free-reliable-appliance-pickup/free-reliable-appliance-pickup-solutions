@@ -3,6 +3,12 @@
 Use `SEO-CHANGE-CONTROL.md` for process rules. This public record contains no customer details. Existing experiment histories remain in `data/seo-experiments.json`; do **not** duplicate or overwrite them.
 
 
+## 2026-10-23 — Idaho state request-form service attribution (technical exception)
+- **Evidence:** Existing Idaho Treasure Valley/request-review page has a working-configuration Formspree POST form with `source_page=idaho-appliance-pickup` and required telephone input, but lacks a static `service` classification. This is a lead categorization inconsistency, not evidence of lost submissions.
+- **Scope:** Add only `service=General major appliance pickup` after the existing source marker. Extend the existing intake contract audit to cover this existing state hub (57 inspected pages including homepage). No new cities, coverage claims, phone numbers, copy, photos, endpoints, canonicals, indexing directives or SEO experiments are changed. `data/market-routing.json` labels Idaho/Treasure Valley partner-recruiting; no active partner is claimed.
+- **Safety:** Verified no Idaho-specific experiment in the registry; this technical intake correction is not a ranking experiment. Require positive/negative audit fixtures and exact PR-head CI before merge. Check deployed HTML separately; do not infer Formspree receipt or ranking changes from CI. Roll back this scoped PR if attribution or routing regresses.
+- **Status:** Proposed branch/PR pending exact-head checks and deployment verification; review 2026-10-24.
+
 ## 2026-10-23 — Five High Desert California intake classifications (technical exception)
 - **Evidence:** At main `24004ceb`, Hesperia, Apple Valley, Adelanto, Phelan and El Mirage existing general-appliance Formspree POST forms each have a city-specific `source_page` and a required `type=tel` phone input but no static hidden `service` classification. This is an attribution inconsistency, **not** evidence of failed submissions or lost leads.
 - **Minimal fix:** Add exactly one `service=General major appliance pickup` hidden input after `source_page` on each of five existing forms. Extend the existing priority intake contract guard from 51 to 56 pages including homepage. Preserve all endpoints, phone numbers, routing, acceptance policy, customer-visible text, photos, metadata, schema, links, canonicals and indexing.
