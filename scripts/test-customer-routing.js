@@ -319,6 +319,28 @@ async function main(){
       'Quote interest never authorizes a charge and free-only must stay free-only');
   }
   console.log('PASS: explicit free-only versus paid quote opt-in and no automatic charge');
+  // High-priority city forms must work without an optional dynamically loaded script.
+  // Dynamic enhancement checks the name before insertion to avoid double fields.
+  const staticQuoteCities=["upland","claremont","la-verne","san-dimas","pomona","fontana"];
+  for (const slug of staticQuoteCities) {
+    const html=fs.readFileSync(slug+'-appliance-pickup/index.html','utf8');
+    const form=(html.match(/<form\b[\s\S]*?<\/form>/i)||[])[0]||'';
+    const fields=form.match(/name="paid_removal_preference"/g)||[];
+    assertEqual(fields.length,1,slug+' static paid removal question once');
+    for(const value of ['','free_only','quote_ok']){
+      assertEqual(form.includes('option value="'+value+'"'),true,slug+' explicit '+(value||'blank')+' choice');
+    }
+    assertEqual(/<select[^>]*name="paid_removal_preference"[^>]*\brequired\b/i.test(form),false,
+      slug+' quote consent is not required');
+    assertEqual(form.includes('action="https://formspree.io/f/mvzeapzd"'),true,
+      slug+' approved Formspree action retained');
+    assertEqual(form.includes('name="source_page"'),true,slug+' attribution retained');
+  }
+  const quoteEnhancement=fs.readFileSync('assets/paid-removal-choice.js','utf8');
+  assertEqual(quoteEnhancement.includes("form.querySelector('[name=\"paid_removal_preference\"]')"),true,
+    'Optional quote enhancer must not duplicate existing city choice');
+  console.log('PASS: six static priority-city opt-in forms and duplicate avoidance');
+
 
   global.location.pathname='/denver-refrigerator-pickup/';
   const denver=mockForm({state:'Colorado',appliance:'Refrigerator'});
