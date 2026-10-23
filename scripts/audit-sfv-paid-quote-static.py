@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""VGM: inspect source-only San Fernando Valley static paid quote fallback."""
+"""VGM: inspect source-only California static paid quote fallback."""
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -14,6 +14,11 @@ PAGES = {
     "northridge-appliance-pickup": "northridge-appliance-pickup/index.html",
     "mission-hills-appliance-pickup": "mission-hills-appliance-pickup/index.html",
     "sylmar-appliance-pickup": "sylmar-appliance-pickup/index.html",
+    # Other verified California customer forms: same owner-approved no-JS fallback.
+    "burbank-appliance-pickup": "burbank-appliance-pickup/index.html",
+    "glendale-appliance-pickup": "glendale-appliance-pickup/index.html",
+    "calabasas-appliance-pickup": "calabasas-appliance-pickup/index.html",
+    "fresno-appliance-pickup": "fresno-appliance-pickup/index.html",
 }
 ENDPOINT = "https://formspree.io/f/mvzeapzd"
 
@@ -29,9 +34,10 @@ class Forms(HTMLParser):
             self.forms.append(self.active)
         elif self.active is not None:
             if tag == "input": self.active["inputs"].append(attrs)
-            if tag == "select": self.active["selects"].append({"attrs": attrs, "options": []})
+            if tag == "select": self.active["selects"].append({"attrs": attrs, "options": [], "option_attrs": []})
             if tag == "option" and self.active["selects"]:
                 self.active["selects"][-1]["options"].append(attrs.get("value"))
+                self.active["selects"][-1]["option_attrs"].append(attrs)
     def handle_endtag(self, tag):
         if tag == "form": self.active = None
 
@@ -56,6 +62,8 @@ def inspect(label, html):
         if "required" in s["attrs"]: problems.append(f"{label}: paid quote selector must be optional")
         if s["options"] != ["", "free_only", "quote_ok"]:
             problems.append(f"{label}: default / free-only / quote-only consent values changed")
+        if any("selected" in a for a in s["option_attrs"][1:]):
+            problems.append(f"{label}: paid quote or free-only must not be preselected")
     return problems
 
 def fixture_checks():
@@ -76,6 +84,7 @@ def fixture_checks():
         good.replace('type="tel" required', 'type="tel"'),
         good.replace('name="source_page"', 'name="other_page"'),
         good.replace(ENDPOINT, "https://example.org/unauthorized"),
+        good.replace('<option value="quote_ok"></option>', '<option value="quote_ok" selected></option>'),
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
@@ -89,6 +98,7 @@ if __name__ == "__main__":
     first = Path(next(iter(PAGES.values()))).read_text(encoding="utf-8")
     assert "quote_ok" in first and 'value=""' in first
     print(f"SFV_STATIC_PAID_QUOTE_PAGES {len(PAGES)}")
+    print(f"CALIFORNIA_STATIC_PAID_QUOTE_PAGES {len(PAGES)}")
     print(f"SFV_STATIC_PAID_QUOTE_ERRORS {len(errors)}")
     for error in errors: print("FAIL:", error)
     raise SystemExit(1 if errors else 0)
