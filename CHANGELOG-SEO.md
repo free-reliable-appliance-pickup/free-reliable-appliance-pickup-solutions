@@ -2,6 +2,17 @@
 
 Use `SEO-CHANGE-CONTROL.md` for process rules. This public record contains no customer details. Existing experiment histories remain in `data/seo-experiments.json`; do **not** duplicate or overwrite them.
 
+## 2026-10-23 — Southeast California Formspree service-attribution corrections (operational exception)
+- **Classification:** Verified source-level customer intake metadata inconsistency, not a ranking experiment or reported delivery failure.
+- **Pages:** `/la-mirada-appliance-pickup/`, `/cerritos-appliance-pickup/`, `/pico-rivera-appliance-pickup/`, `/downey-appliance-pickup/`.
+- **Evidence:** Current main source had exactly one Formspree POST customer form on each page, with required telephone input and source-page attribution, but no static hidden `service` field. Each retains the established `https://formspree.io/f/mvzeapzd` destination. This does **not** prove any submission was lost.
+- **Technical exception:** `data/seo-experiments.json` contains running Downey and Pico Rivera SEO tests (evaluate-not-before Oct 14). This change does not touch title, meta, body copy, schema, canonical, navigation, imagery, indexability or ranking variables; it only supplies the existing service classification consistently with PR #400. No ranking experiment was initiated.
+- **Change:** Add exactly one hidden `service=General major appliance pickup` field after each existing `source_page` field; extend `scripts/audit-priority-intake-contract.py` by four existing pages (38 total including homepage).
+- **Preserved:** Form action/method, mandatory contact fields, phone numbers and routing, optional customer fields, appliance eligibility, pickup claims, partner status, quote preferences and current SEO experiments.
+- **Risk/rollback:** Medium-risk customer-form metadata update; review CI and branch diff before merge, revert the bounded PR on regression. No paid action, fake test lead, or end-to-end submission is authorized. Source assertions alone cannot verify actual receipt.
+- **GSC context:** Connected SMEPost finalized Oct 18–20 only (three days, no comparisons). Too little for an SEO impact claim; operational field correction does not require a ranking hypothesis.
+- **Status:** Feature-branch commits pending PR CI and merge; production deployment and real Formspree receipt unverified at time of entry.
+
 ## 2026-10-23 — Four California intake source and mobile input repairs (operational exception)
 - **Classification:** Verified source-level customer-form attribution/mobile usability defects, not an SEO experiment or an emergency incident.
 - **Pages:** `/palm-springs-appliance-pickup/`, `/la-canada-flintridge-appliance-pickup/`, `/altadena-appliance-pickup/`, `/san-marino-appliance-pickup/`.
