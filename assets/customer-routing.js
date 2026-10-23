@@ -251,38 +251,14 @@ function enhanceApplianceConditionIntake(){
   });
 }
 
-/* Shared opt-in choice: customers must explicitly allow a quote.
-   This never authorizes payment, booking, or changing a free-only request. */
-function enhancePaidRemovalChoice(){
-  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
-    ensureRegionalState(form);
-    if(!isCustomerPickupForm(form)||findField(form,['paid_removal_preference']))return;
-    const submit=form.querySelector('button[type="submit"],input[type="submit"]');
-    if(!submit)return;
-    const holder=document.createElement('div');
-    holder.className='site-paid-removal-choice';
-    holder.style.cssText='display:block;width:100%;box-sizing:border-box;margin:16px 0;padding:14px;border:1px solid #cbded2;border-radius:10px;background:#f6fbf7;color:#17324a;clear:both';
-    const label=document.createElement('label');
-    label.style.cssText='display:block;font-weight:700;margin-bottom:6px';
-    label.textContent='If free pickup is unavailable, would you consider a paid removal quote?';
-    const select=document.createElement('select');
-    select.name='paid_removal_preference';
-    select.required=true;
-    select.style.cssText='display:block;box-sizing:border-box;width:100%;max-width:100%;padding:12px;margin-top:8px;border:1px solid #a5b7ac;border-radius:7px;font:inherit;background:#fff;color:#17324a';
-    [['','Please choose an option'],['free_only','Free pickup only — do not offer paid removal'],['quote_ok','Yes — I am open to reviewing a paid removal quote']].forEach(([value,title])=>{
-      const option=document.createElement('option');
-      option.value=value;
-      option.textContent=title;
-      select.appendChild(option);
-    });
-    label.appendChild(select);
-    const note=document.createElement('p');
-    note.style.cssText='font-size:14px;line-height:1.5;margin:8px 0 0';
-    note.textContent='Free pickup is reviewed first. Upstairs, two-person, difficult-access, or nonqualifying appliance removal may require a separate quote. No booking or charge without your approval.';
-    holder.appendChild(label);
-    holder.appendChild(note);
-    submit.parentNode.insertBefore(holder,submit);
-  });
+/* Request-quote choice is loaded separately so customer-routing stays within the audited performance budget. */
+function loadPaidRemovalChoice(){
+  if(document.querySelector('script[data-paid-removal-choice]'))return;
+  const tag=document.createElement('script');
+  tag.src=siteUrl('assets/paid-removal-choice.js');
+  tag.defer=true;
+  tag.dataset.paidRemovalChoice='1';
+  document.head.appendChild(tag);
 }
 function recordPaidRemovalPreference(form){
   const control=findField(form,['paid_removal_preference']);
@@ -377,7 +353,7 @@ function initLeadAnalytics(){
 
 initLeadAnalytics();
 load();
-document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();enhancePaidRemovalChoice();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();/* Avoid injecting identical keyword-heavy sections across city laundry pages; preserve the original useful page content. */document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
+document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();loadPaidRemovalChoice();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();/* Avoid injecting identical keyword-heavy sections across city laundry pages; preserve the original useful page content. */document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
 /* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 /* Load the final sharp individual-photo override on every premium washer/dryer page. */
