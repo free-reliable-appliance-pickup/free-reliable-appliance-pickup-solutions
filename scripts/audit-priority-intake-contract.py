@@ -125,6 +125,8 @@ def main():
 
     pages = [("home", Path("index.html"))]
     pages.extend((f"{city}-appliance-pickup", Path(city + "-appliance-pickup") / "index.html") for city in CITIES)
+    # Existing request-only state hub; same Formspree intake contract, no coverage expansion.
+    pages.append(("idaho-appliance-pickup", Path("idaho-appliance-pickup/index.html")))
     failures = []
     inspected = 0
     for label, path in pages:
