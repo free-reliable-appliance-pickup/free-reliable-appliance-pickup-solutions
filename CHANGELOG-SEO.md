@@ -122,3 +122,11 @@ Next action / no-revisit-before:
 - **Vancouver routing:** Existing issue #378 already records a distinct unresolved mismatch between the public partner-supported description and `data/market-routing.json` recruiting status. Do not infer approved partner forwarding or override market truth in this CI change.
 - **Rollback:** Revert the added script and workflow step; no production content to undo.
 - **Status:** Review branch `ci/vgm-priority-intake-regression-20261022`; merge and check outcomes are separate verification steps.
+
+
+## 2026-10-23 — VGM four-city California intake attribution technical exception
+- **Source evidence:** Current main at `a3fb49140090c35274a48160caaef1f9d9f6df6f` had one existing Formspree POST pickup form, a correct `source_page`, and a required `type=tel` phone on Temecula, Murrieta, Victorville and Palm Desert general-appliance pages, but no hidden `service` classification. Missing classification is not proof of a failed submission or lost lead.
+- **Technical-only repair:** Add exactly one hidden `service=General major appliance pickup` field to each of those four existing forms. Extend `scripts/audit-priority-intake-contract.py` from 43 to 47 existing pages including homepage. No customer-visible content, phone routing, Formspree destination, condition eligibility, canonical, schema, internal links, photo, market routing or SEO experiment change.
+- **Freeze/ownership:** Reviewed `data/seo-experiments.json`; Temecula, Murrieta, Victorville and Palm Desert have ranking experiments. This is the permitted verified technical-attribution exception, not a speculative SEO change; leave the Daily SEO Ranking Countermove and emergency Website Technical Repair work untouched.
+- **Acceptance:** Exact six-file branch diff; required-phone/source/service assertions and positive/negative fixture tests; 47-page priority intake audit with zero failures; passing relevant GitHub Actions on exact PR head before any merge. Verify deployment separately. No real Formspree receipt, organic ranking gain or new local service capability is claimed.
+- **Rollback:** Revert the scoped pull request if regression occurs.
