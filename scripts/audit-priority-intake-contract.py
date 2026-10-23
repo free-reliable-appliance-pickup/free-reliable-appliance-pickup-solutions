@@ -24,6 +24,7 @@ CITIES = (
     "columbus", "fresno", "ontario", "montclair",
     "san-bernardino", "bloomington", "monterey-park",
     "whittier", "montebello", "rialto",
+    "palm-springs", "la-canada-flintridge", "altadena", "san-marino",
 )
 
 
