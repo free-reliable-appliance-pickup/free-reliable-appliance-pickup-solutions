@@ -20,6 +20,13 @@ PAGES = {
     "calabasas-appliance-pickup": "calabasas-appliance-pickup/index.html",
     "fresno-appliance-pickup": "fresno-appliance-pickup/index.html",
 }
+# Same owner-approved fallback on four existing Oregon request forms.
+OREGON_PAGES = {
+    "portland-appliance-pickup": "portland-appliance-pickup/index.html",
+    "salem-appliance-pickup": "salem-appliance-pickup/index.html",
+    "portland-washer-dryer-pickup": "portland-washer-dryer-pickup/index.html",
+    "salem-washer-dryer-pickup": "salem-washer-dryer-pickup/index.html",
+}
 ENDPOINT = "https://formspree.io/f/mvzeapzd"
 
 class Forms(HTMLParser):
@@ -92,13 +99,15 @@ def fixture_checks():
 if __name__ == "__main__":
     fixture_checks()
     errors = []
-    for label, path in PAGES.items():
+    for label, path in {**PAGES, **OREGON_PAGES}.items():
         errors.extend(inspect(label, Path(path).read_text(encoding="utf-8")))
     # Guard against silently accepting automatic paid consent.
     first = Path(next(iter(PAGES.values()))).read_text(encoding="utf-8")
     assert "quote_ok" in first and 'value=""' in first
     print(f"SFV_STATIC_PAID_QUOTE_PAGES {len(PAGES)}")
     print(f"CALIFORNIA_STATIC_PAID_QUOTE_PAGES {len(PAGES)}")
+    print(f"OREGON_STATIC_PAID_QUOTE_PAGES {len(OREGON_PAGES)}")
+    print(f"TOTAL_STATIC_PAID_QUOTE_PAGES {len(PAGES) + len(OREGON_PAGES)}")
     print(f"SFV_STATIC_PAID_QUOTE_ERRORS {len(errors)}")
     for error in errors: print("FAIL:", error)
     raise SystemExit(1 if errors else 0)
