@@ -11214,6 +11214,42 @@
       "preferredReview": "2026-11-07",
       "status": "running",
       "freezeRule": "No speculative additional hero, page content, title/meta, canonical, link-intent or schema changes to Glendora owner before November 1. Recheck actual finalized Search Console performance November 7. Emergency factual, image404, phone/form/indexability safety fixes are separately allowed and must be logged."
+    },
+    {
+      "id": "2026-10-24-bloomington-redlands-photo-reuse-fix",
+      "market": "Bloomington + Redlands, Inland Empire CA — general major appliance pickup",
+      "hypothesis": "Giving two existing general-service city pages separate authentic appliance-loaded pickup truck photographs rather than borrowing Salem and Portland city hero assets improves clarity and city-page presentation. It is not a promise of Google ranking gains or independently sourced geographic photo proof.",
+      "pagesChanged": [
+        "/bloomington-appliance-pickup/",
+        "/redlands-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/bloomington-appliance-pickup/",
+        "/redlands-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-24",
+      "baselinePeriod": {
+        "start": "2026-10-19",
+        "end": "2026-10-21"
+      },
+      "baseline": {
+        "source": "Google Search Console Content Planner, finalized free 3-day view",
+        "bloomington": "No reportable page/query row, not evidence of deindexing",
+        "redlands": "No reportable page/query row, not evidence of deindexing",
+        "sourcePhotos": "Bloomington's hero was /salem-group-appliances.webp, also hero for Salem. Redlands's hero was /portland-group-appliances.webp, also hero for Portland. Both photographs are preserved on their approved Pacific Northwest pages.",
+        "selection": "Visually inspected current authentic FRAP photo library (existing photos; no stock or generated images): Bloomington gets pickup truck with multiple used kitchen appliances /assets/optimized/20250804_103926-1600.jpg; Redlands gets pickup truck with refrigerator and laundry appliances /assets/optimized/20250923_151633-1600.jpg. Neither picture claims a documented city-of-capture."
+      },
+      "change": "Swapped only two general-city hero image sources and accurate descriptive alt attributes; synchronized Open Graph, Twitter and structured WebPage primary image URLs, adding missing Twitter image for Bloomington. Existing exact-city titles, meta descriptions, local details, canonical, 909 phone, Formspree and qualification left unchanged. Added regression checks to scripts/audit-active-page-images.py.",
+      "successSignals": [
+        "Both distinct existing images load on the public pages and match image URLs used in OG/Twitter/structured Page data.",
+        "The photos of Salem and Portland are no longer borrowed as the primary image on Bloomington and Redlands respectively; existing PNW originals unchanged.",
+        "Intake contracts and canonical/phones stay unchanged, all CI checks green and GitHub Pages deployed.",
+        "Assess finalized GSC page/query impressions, clicks and leads when sufficient post-deployment data becomes available, not sooner."
+      ],
+      "evaluateNotBefore": "2026-11-01",
+      "preferredReview": "2026-11-07",
+      "status": "running",
+      "freezeRule": "Preserve these hero and ranking variable changes until at least Nov 1, and inspect fuller finalized post-change GSC data Nov 7. No repeat photo/content/title/schema edits during gate except verified factual or technical defects separately documented."
     }
   ],
   "technicalMaintenance": [
