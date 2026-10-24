@@ -18,6 +18,15 @@ PAGES = [
     ("/rancho-cucamonga-appliance-pickup/", "Rancho Cucamonga"),
     ("/fontana-appliance-pickup/", "Fontana"),
     ("/san-fernando-appliance-pickup/", "San Fernando"),
+    ("/van-nuys-appliance-pickup/", "Van Nuys"),
+    ("/granada-hills-appliance-pickup/", "Granada Hills"),
+    ("/mission-hills-appliance-pickup/", "Mission Hills"),
+    ("/northridge-appliance-pickup/", "Northridge"),
+    ("/sylmar-appliance-pickup/", "Sylmar"),
+    ("/pacoima-appliance-pickup/", "Pacoima"),
+    ("/north-hollywood-appliance-pickup/", "North Hollywood"),
+    ("/burbank-appliance-pickup/", "Burbank"),
+    ("/san-fernando-valley-appliance-pickup/", "San Fernando Valley hub"),
 ]
 VIEWPORTS = [
     ("desktop", {"width": 1365, "height": 900}),
@@ -58,9 +67,9 @@ def run():
                                     raise AssertionError("pickup request form is missing")
                                 if not page.locator("form[action*='formspree.io']").count():
                                     raise AssertionError("no Formspree form action found")
-                                # Decode the actual above-the-fold appliance image, not only its HTML src.
+                                # Decode the hero appliance photo (which may precede <main>), not only its HTML src.
                                 # This detects missing, corrupt or unreachable local image files.
-                                hero_image = page.locator("main img").first
+                                hero_image = page.locator(".site-hero-art img, main img").first
                                 if hero_image.count() == 0:
                                     raise AssertionError("no main appliance image found")
                                 hero_image.scroll_into_view_if_needed(timeout=10000)
