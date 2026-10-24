@@ -67,9 +67,9 @@ def run():
                                     raise AssertionError("pickup request form is missing")
                                 if not page.locator("form[action*='formspree.io']").count():
                                     raise AssertionError("no Formspree form action found")
-                                # Decode the actual above-the-fold appliance image, not only its HTML src.
+                                # Decode the hero appliance photo (which may precede <main>), not only its HTML src.
                                 # This detects missing, corrupt or unreachable local image files.
-                                hero_image = page.locator("main img").first
+                                hero_image = page.locator(".site-hero-art img, main img").first
                                 if hero_image.count() == 0:
                                     raise AssertionError("no main appliance image found")
                                 hero_image.scroll_into_view_if_needed(timeout=10000)
