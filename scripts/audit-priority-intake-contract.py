@@ -24,6 +24,9 @@ MOBILE_HINT_PAGES = {
     "highland-appliance-pickup",
     "pasadena-appliance-pickup", "arcadia-appliance-pickup",
     "san-dimas-appliance-pickup", "la-verne-appliance-pickup",
+    # Verified Long Beach / Bellflower / Compton / South Gate mobile intake hints.
+    "long-beach-appliance-pickup", "bellflower-appliance-pickup",
+    "compton-appliance-pickup", "south-gate-appliance-pickup",
     # Verified Southeast Los Angeles County mobile form input repairs.
     "pico-rivera-appliance-pickup",
     "norwalk-appliance-pickup",
@@ -57,7 +60,8 @@ CITIES = (
     "whittier", "montebello", "rialto",
     "palm-springs", "la-canada-flintridge", "altadena", "san-marino",
     "la-mirada", "cerritos", "pico-rivera", "downey",
-    "norwalk", "long-beach", "south-el-monte", "san-fernando", "sylmar",
+    "norwalk", "long-beach", "bellflower", "compton", "south-gate",
+    "south-el-monte", "san-fernando", "sylmar",
     "temecula", "murrieta", "victorville", "palm-desert",
     "loma-linda", "banning", "beaumont", "hemet",
     "hesperia", "apple-valley", "adelanto", "phelan", "el-mirage",
