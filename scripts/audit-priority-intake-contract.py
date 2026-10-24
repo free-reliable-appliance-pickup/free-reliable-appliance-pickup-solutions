@@ -50,6 +50,10 @@ MOBILE_HINT_PAGES = {
     "monterey-park-appliance-pickup",
     "san-gabriel-appliance-pickup",
     "alhambra-appliance-pickup",
+    # Verified Chino, Chino Hills, Pomona, Claremont and Redlands keypad hints.
+    "chino-appliance-pickup", "chino-hills-appliance-pickup",
+    "pomona-appliance-pickup", "claremont-appliance-pickup",
+    "redlands-appliance-pickup",
     # Verified five-city California telephone/ZIP mobile input hints.
     "riverside-appliance-pickup", "anaheim-appliance-pickup",
     "ontario-appliance-pickup", "rancho-cucamonga-appliance-pickup",
@@ -204,7 +208,10 @@ def self_test():
     ie5_good = oc_good.replace("orange-appliance-pickup", "fontana-appliance-pickup")
     assert not inspect(ie5_good, "fontana-appliance-pickup"), "valid CA telephone fixture rejected"
     assert inspect(ie5_good.replace('inputmode="tel"', 'inputmode="text"'), "fontana-appliance-pickup"), "missing CA phone keypad passed"
-    print(f"FIXTURE_TESTS_PASSED 6 positive + {len(negative) + 8} negative")
+    ie6_good = oc_good.replace("orange-appliance-pickup", "chino-appliance-pickup")
+    assert not inspect(ie6_good, "chino-appliance-pickup"), "valid Chino mobile fixture rejected"
+    assert inspect(ie6_good.replace('inputmode="tel"', 'inputmode="text"'), "chino-appliance-pickup"), "bad Chino phone keypad passed"
+    print(f"FIXTURE_TESTS_PASSED 7 positive + {len(negative) + 9} negative")
 
 
 def main():
