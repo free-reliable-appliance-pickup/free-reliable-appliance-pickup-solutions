@@ -1140,7 +1140,7 @@
   <url>
     <loc>https://freereliableappliancepickup.com/burbank-appliance-pickup/</loc>
     <image:image>
-      <image:loc>https://freereliableappliancepickup.com/IMG-20230604-WA0038.jpg</image:loc>
+      <image:loc>https://freereliableappliancepickup.com/assets/california/city-heroes/fontana-multi-appliance.webp</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://freereliableappliancepickup.com/assets/optimized/20240417_112815-1-1600.jpg</image:loc>
@@ -1230,7 +1230,7 @@
   <url>
     <loc>https://freereliableappliancepickup.com/san-fernando-appliance-pickup/</loc>
     <image:image>
-      <image:loc>https://freereliableappliancepickup.com/IMG-20240523-WA0022.jpg</image:loc>
+      <image:loc>https://freereliableappliancepickup.com/home-six-appliance-garage.webp</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://freereliableappliancepickup.com/IMG-20231121-WA0007.jpg</image:loc>
@@ -4810,6 +4810,12 @@
     </image:image>
     <image:image>
       <image:loc>https://freereliableappliancepickup.com/assets/laundry/stacked-laundry-center.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://freereliableappliancepickup.com/north-hollywood-appliance-pickup/</loc>
+    <image:image>
+      <image:loc>https://freereliableappliancepickup.com/assets/rancho-cucamonga/rancho-cucamonga-multi-appliance-group.webp</image:loc>
     </image:image>
   </url>
   <url>
