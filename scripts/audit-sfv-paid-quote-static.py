@@ -35,6 +35,9 @@ PAGES = {
     "colton-appliance-pickup": "colton-appliance-pickup/index.html",
     "bloomington-appliance-pickup": "bloomington-appliance-pickup/index.html",
     "highland-appliance-pickup": "highland-appliance-pickup/index.html",
+    # Verified Azusa and Irwindale no-JS quote consent gaps (2026-10-24).
+    "azusa-appliance-pickup": "azusa-appliance-pickup/index.html",
+    "irwindale-appliance-pickup": "irwindale-appliance-pickup/index.html",
     # Verified San Gabriel Valley no-JS customer quote gaps (2026-10-24).
     "duarte-appliance-pickup": "duarte-appliance-pickup/index.html",
     "monrovia-appliance-pickup": "monrovia-appliance-pickup/index.html",
