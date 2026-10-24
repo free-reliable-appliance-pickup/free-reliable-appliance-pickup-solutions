@@ -148,6 +148,46 @@ def main():
                 elif attrs.get('fetchpriority') == 'high' and asset.stat().st_size > MAX_HERO_BYTES:
                     problems.append(f'{url}: hero {src} is {asset.stat().st_size / 1_000_000:.2f} MB; use an optimized derivative under {MAX_HERO_BYTES / 1_000_000:.1f} MB')
 
+    # National rollout: make existing state-hub URLs discoverable from the
+    # homepage without creating near-identical state/city landing pages.
+    home_html = Path('index.html').read_text(encoding='utf-8', errors='replace')
+    state_entrypoints = {
+        '/washington-appliance-pickup/',
+        '/nevada-appliance-pickup/',
+        '/texas-appliance-pickup/',
+        '/florida-appliance-pickup/',
+        '/idaho-appliance-pickup/',
+        '/columbus-appliance-pickup/',
+    }
+    for entry in sorted(state_entrypoints):
+        if f'href="{entry}"' not in home_html:
+            problems.append(f'homepage missing national state/market entrypoint {entry}')
+        elif not (Path(entry.strip('/')) / 'index.html').is_file():
+            problems.append(f'homepage national hub not published locally {entry}')
+
+    # The Texas and Florida request-first hubs previously showed only
+    # a company-logo hero. Require distinct, repository-backed appliance
+    # examples, without claiming the photo is a completed local pickup.
+    state_photo_contract = {
+        'texas-appliance-pickup': '/assets/california/city-heroes/fontana-multi-appliance.webp',
+        'florida-appliance-pickup': '/home-six-appliance-garage.webp',
+    }
+    for state_slug, approved_src in state_photo_contract.items():
+        page = Path(state_slug) / 'index.html'
+        if not page.is_file():
+            problems.append(f'{state_slug}: missing national request hub')
+            continue
+        parser = ImageRefs()
+        parser.feed(page.read_text(encoding='utf-8', errors='replace'))
+        content_images = [
+            img for img in parser.images
+            if img.get('src') and 'logo' not in img.get('alt', '').lower()
+        ]
+        if not content_images or content_images[0].get('src') != approved_src:
+            problems.append(f'{state_slug}: expected visually reviewed representative appliance hero {approved_src}')
+        elif not content_images[0].get('alt', '').lower().startswith('example garage'):
+            problems.append(f'{state_slug}: hero alt must disclose representative example, not assert a local pickup')
+
     # Read-only inventory of *exact URL* reuse among priority general-city
     # hero photos. The same file on two city pages is a photo-rotation review
     # finding, not proof of a Google penalty or proof of the photo's origin.
