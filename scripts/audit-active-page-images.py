@@ -216,6 +216,43 @@ def main():
             f'{slug}: {photo}' for slug, photo in sorted(uses)
         ))
 
+    # 2026-10-24 VGM Chino single-variable pickup-truck photo pilot.
+    # No unsupported city-origin claim; category and source were visually
+    # checked. Synchronize the real photo with all SEO/social references.
+    chino_page = Path('chino-appliance-pickup/index.html')
+    chino_expected = '/assets/optimized/20241112_145206-1600.jpg'
+    if not chino_page.is_file():
+        problems.append('chino-appliance-pickup: verified owner page missing')
+    else:
+        chino_html = chino_page.read_text(encoding='utf-8', errors='replace')
+        chino_parser = ImageRefs()
+        chino_parser.feed(chino_html)
+        chino_photos = [im for im in chino_parser.images
+                        if im.get('src') and 'logo' not in im.get('alt', '').lower()]
+        chino_hero = next((im for im in chino_photos
+                           if im.get('fetchpriority') == 'high'),
+                          chino_photos[0] if chino_photos else {})
+        if chino_hero.get('src') != chino_expected:
+            problems.append('chino-appliance-pickup: expected verified real pickup-load hero')
+        if (chino_hero.get('width'), chino_hero.get('height')) != ('1600', '2133'):
+            problems.append('chino-appliance-pickup: unexpected pickup-load JPEG dimensions')
+        if 'pickup truck' not in chino_hero.get('alt', '').lower():
+            problems.append('chino-appliance-pickup: real pickup-truck context absent from alt')
+        absolute = BASE.rstrip('/') + chino_expected
+        for fragment in (
+            f'<meta property="og:image" content="{absolute}">',
+            f'<meta name="twitter:image" content="{absolute}">',
+            f'"primaryImageOfPage":{{"@type":"ImageObject","url":"{absolute}"}}',
+            '<link rel="canonical" href="https://freereliableappliancepickup.com/chino-appliance-pickup/">',
+            'tel:+19093756685',
+            'action="https://formspree.io/f/mvzeapzd"',
+            'name="paid_removal_preference"',
+        ):
+            if fragment not in chino_html:
+                problems.append('chino-appliance-pickup: missing protected metadata/form/photo contract: ' + fragment)
+        if not Path(chino_expected.lstrip('/')).is_file():
+            problems.append('chino-appliance-pickup: verified pickup hero file missing')
+
     # 2026-10-24 VGM two-city photo rotation: inspect and preserve distinct
     # real customer-owned pickup-load photographs in two IE general city heroes.
     # These are pickup examples, not claims that each image was taken in the city.
