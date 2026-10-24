@@ -216,6 +216,64 @@ def main():
             f'{slug}: {photo}' for slug, photo in sorted(uses)
         ))
 
+    # 2026-10-23 SFV seven-page Gold Model photo pilot: these photos, URLs,
+    # and low-friction intake paths were independently verified on live public
+    # HTML on 2026-10-24. Protect the single-variable photo observation window
+    # through 2026-11-06 without blocking unrelated California photo work.
+    # When changing the pilot after the review, update this approved mapping.
+    sfv_seven_pilot = {
+        'van-nuys-appliance-pickup': '/home-six-appliance-garage.webp',
+        'granada-hills-appliance-pickup': '/salem-group-appliances.webp',
+        'pacoima-appliance-pickup': '/seattle-group-appliances.webp',
+        'northridge-appliance-pickup': '/portland-group-appliances.webp',
+        'mission-hills-appliance-pickup': '/spokane-group-appliances.webp',
+        'sylmar-appliance-pickup': '/tacoma-group-appliances.webp',
+        'san-fernando-valley-appliance-pickup': '/assets/california/city-heroes/fontana-multi-appliance.webp',
+    }
+    sfv_actual_heroes = []
+    for slug, approved in sfv_seven_pilot.items():
+        page = Path(slug) / 'index.html'
+        if not page.is_file():
+            problems.append(f'{slug}: protected SFV pilot page missing')
+            continue
+        raw = page.read_text(encoding='utf-8', errors='replace')
+        parser = ImageRefs()
+        parser.feed(raw)
+        content_images = [
+            attrs for attrs in parser.images
+            if attrs.get('src') and 'logo' not in attrs.get('alt', '').lower()
+        ]
+        priority = next(
+            (attrs for attrs in content_images if attrs.get('fetchpriority') == 'high'),
+            content_images[0] if content_images else {},
+        )
+        hero = urlparse(urljoin(BASE, priority.get('src', ''))).path
+        sfv_actual_heroes.append(hero)
+        if hero != approved:
+            problems.append(f'{slug}: protected SFV group hero {hero} should be {approved}')
+        if not priority.get('alt', '').strip():
+            problems.append(f'{slug}: protected SFV group hero missing meaningful alt')
+        if not Path(approved.lstrip('/')).is_file():
+            problems.append(f'{slug}: protected SFV hero file missing: {approved}')
+        absolute = BASE.rstrip('/') + approved
+        for metadata in (
+            f'<meta property="og:image" content="{absolute}">',
+            f'<meta name="twitter:image" content="{absolute}">',
+            f'<link rel="canonical" href="{BASE}{slug}/">',
+        ):
+            if metadata not in raw:
+                problems.append(f'{slug}: missing protected SFV metadata {metadata}')
+        for contract in (
+            'tel:+13107744304',
+            'action="https://formspree.io/f/mvzeapzd"',
+            'name="paid_removal_preference"',
+        ):
+            if contract not in raw:
+                problems.append(f'{slug}: missing protected SFV customer intake {contract}')
+    if len(set(sfv_actual_heroes)) != len(sfv_seven_pilot):
+        problems.append('SFV seven-page photo pilot must keep distinct hero files within the pilot')
+    print(f'SFV_SEVEN_GOLD_MODEL_PHOTO_FORM_GUARD {len(sfv_seven_pilot)}')
+
     # Check group-hero layout on key Northwest pages, including intentionally
     # noindex request pages that are excluded from the public XML sitemap.
     # The group photo must retain its actual intrinsic aspect ratio to avoid
