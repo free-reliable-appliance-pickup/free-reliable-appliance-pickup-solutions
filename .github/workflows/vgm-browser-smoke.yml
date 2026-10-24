@@ -1,0 +1,33 @@
+name: VGM Read-Only Browser Smoke (Playwright)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/vgm-browser-smoke.yml'
+      - 'scripts/vgm_browser_smoke.py'
+      - 'index.html'
+      - 'los-angeles-appliance-pickup/index.html'
+      - 'rancho-cucamonga-appliance-pickup/index.html'
+      - 'fontana-appliance-pickup/index.html'
+      - 'san-fernando-appliance-pickup/index.html'
+      - 'assets/customer-routing.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install free Playwright browser test tool
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Test priority pages and forms on desktop and mobile
+        run: python scripts/vgm_browser_smoke.py
