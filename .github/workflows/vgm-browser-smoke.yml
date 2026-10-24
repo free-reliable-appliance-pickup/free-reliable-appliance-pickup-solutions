@@ -19,6 +19,10 @@ on:
       - 'north-hollywood-appliance-pickup/index.html'
       - 'burbank-appliance-pickup/index.html'
       - 'san-fernando-valley-appliance-pickup/index.html'
+      - 'columbus-appliance-pickup/index.html'
+      - 'columbus-washer-dryer-pickup/index.html'
+      - 'columbus-refrigerator-pickup/index.html'
+      - 'columbus-freezer-pickup/index.html'
       - 'assets/customer-routing.js'
   workflow_dispatch:
 
