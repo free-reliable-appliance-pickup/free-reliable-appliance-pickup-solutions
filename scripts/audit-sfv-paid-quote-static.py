@@ -35,6 +35,10 @@ PAGES = {
     "colton-appliance-pickup": "colton-appliance-pickup/index.html",
     "bloomington-appliance-pickup": "bloomington-appliance-pickup/index.html",
     "highland-appliance-pickup": "highland-appliance-pickup/index.html",
+    # Verified Riverside County and San Bernardino city no-JS consent gaps (2026-10-24).
+    "corona-appliance-pickup": "corona-appliance-pickup/index.html",
+    "moreno-valley-appliance-pickup": "moreno-valley-appliance-pickup/index.html",
+    "san-bernardino-appliance-pickup": "san-bernardino-appliance-pickup/index.html",
     # Verified Azusa and Irwindale no-JS quote consent gaps (2026-10-24).
     "azusa-appliance-pickup": "azusa-appliance-pickup/index.html",
     "irwindale-appliance-pickup": "irwindale-appliance-pickup/index.html",
