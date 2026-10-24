@@ -30,6 +30,13 @@ PAGES = {
     "chino-hills-appliance-pickup": "chino-hills-appliance-pickup/index.html",
     "redlands-appliance-pickup": "redlands-appliance-pickup/index.html",
 }
+# Existing Los Angeles appliance-category forms use descriptive source-page attribution.
+# Validate the no-JavaScript quote choice without changing the source identifiers.
+LA_SPECIALTY_SOURCE = {
+    "los-angeles-refrigerator-pickup": "Los Angeles refrigerator page",
+    "los-angeles-freezer-pickup": "Los Angeles freezer page",
+    "los-angeles-stove-oven-pickup": "Los Angeles stove oven page",
+}
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
     "portland-appliance-pickup": "portland-appliance-pickup/index.html",
@@ -58,7 +65,7 @@ class Forms(HTMLParser):
     def handle_endtag(self, tag):
         if tag == "form": self.active = None
 
-def inspect(label, html):
+def inspect(label, html, expected_source=None):
     parser = Forms(); parser.feed(html)
     problems = []
     forms = [f for f in parser.forms if f["attrs"].get("action") == ENDPOINT]
@@ -67,7 +74,7 @@ def inspect(label, html):
     form = forms[0]
     if form["attrs"].get("method", "").lower() != "post": problems.append(f"{label}: must POST")
     inputs = form["inputs"]
-    if len([a for a in inputs if a.get("name") == "source_page" and a.get("value") == label]) != 1:
+    if len([a for a in inputs if a.get("name") == "source_page" and a.get("value") == (expected_source or label)]) != 1:
         problems.append(f"{label}: missing source_page attribution")
     if len([a for a in inputs if a.get("name") == "phone" and a.get("type") == "tel" and "required" in a]) != 1:
         problems.append(f"{label}: required telephone missing")
@@ -105,19 +112,26 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
+    special = good.replace(f'value="{label}"', 'value="Los Angeles refrigerator page"')
+    assert not inspect("los-angeles-refrigerator-pickup", special, "Los Angeles refrigerator page")
+    assert inspect("los-angeles-refrigerator-pickup", special, "wrong attribution")
 
 if __name__ == "__main__":
     fixture_checks()
     errors = []
     for label, path in {**PAGES, **OREGON_PAGES}.items():
         errors.extend(inspect(label, Path(path).read_text(encoding="utf-8")))
+    for label, source in LA_SPECIALTY_SOURCE.items():
+        path = Path(label) / "index.html"
+        errors.extend(inspect(label, path.read_text(encoding="utf-8"), source))
     # Guard against silently accepting automatic paid consent.
     first = Path(next(iter(PAGES.values()))).read_text(encoding="utf-8")
     assert "quote_ok" in first and 'value=""' in first
     print(f"SFV_STATIC_PAID_QUOTE_PAGES {len(PAGES)}")
     print(f"CALIFORNIA_STATIC_PAID_QUOTE_PAGES {len(PAGES)}")
     print(f"OREGON_STATIC_PAID_QUOTE_PAGES {len(OREGON_PAGES)}")
-    print(f"TOTAL_STATIC_PAID_QUOTE_PAGES {len(PAGES) + len(OREGON_PAGES)}")
+    print(f"LA_SPECIALTY_STATIC_PAID_QUOTE_PAGES {len(LA_SPECIALTY_SOURCE)}")
+    print(f"TOTAL_STATIC_PAID_QUOTE_PAGES {len(PAGES) + len(OREGON_PAGES) + len(LA_SPECIALTY_SOURCE)}")
     print(f"SFV_STATIC_PAID_QUOTE_ERRORS {len(errors)}")
     for error in errors: print("FAIL:", error)
     raise SystemExit(1 if errors else 0)
