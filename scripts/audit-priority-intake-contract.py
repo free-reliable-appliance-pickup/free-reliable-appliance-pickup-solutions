@@ -24,6 +24,9 @@ MOBILE_HINT_PAGES = {
     "highland-appliance-pickup",
     "pasadena-appliance-pickup", "arcadia-appliance-pickup",
     "san-dimas-appliance-pickup", "la-verne-appliance-pickup",
+    # Verified Whittier, Montebello and Rialto phone/ZIP input repairs.
+    "whittier-appliance-pickup", "montebello-appliance-pickup",
+    "rialto-appliance-pickup",
     # Existing SGV forms repaired for mobile keyboard and autofill.
     "covina-appliance-pickup",
     "west-covina-appliance-pickup",
