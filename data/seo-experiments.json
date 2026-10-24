@@ -11250,6 +11250,35 @@
       "preferredReview": "2026-11-07",
       "status": "running",
       "freezeRule": "Preserve these hero and ranking variable changes until at least Nov 1, and inspect fuller finalized post-change GSC data Nov 7. No repeat photo/content/title/schema edits during gate except verified factual or technical defects separately documented."
+    },
+    {
+      "id": "2026-10-24-chino-real-pickup-load-photo",
+      "market": "Chino CA all-appliance pickup",
+      "hypothesis": "Replacing a repeatedly used Spokane appliance lineup illustration on the Chino general page with an authentic existing photograph of a loaded appliance pickup truck provides distinct, relevant pickup-service proof; it may aid customer understanding but is not assumed to improve Google rank.",
+      "pagesChanged": [
+        "/chino-appliance-pickup/"
+      ],
+      "protectedOwner": "/chino-appliance-pickup/",
+      "lastChanged": "2026-10-24",
+      "baselinePeriod": {
+        "start": "2026-10-19",
+        "end": "2026-10-21"
+      },
+      "baseline": {
+        "photoSource": "Previously /spokane-group-appliances.webp, also Spokane and SFV Mission Hills pages; actual reused binary confirmed by exact path.",
+        "replacementAsset": "/assets/optimized/20241112_145206-1600.jpg — original real appliance-loaded pickup photo, verified visually from connected GitHub file, JPEG 1600 x 2133; file already belongs to company photo inventory.",
+        "organic": "No sufficient finalized 28-day Google Search Console query/page data for Chino to establish before/after ranking. Do not infer a ranking boost from photo rotation."
+      },
+      "change": "Only Chino general-page hero src, original intrinsic dimensions, neutral descriptive alt and matching og:image/twitter:image/JSON-LD WebPage primaryImageOfPage. Keep existing content, primary city owner, phone 909-375-6685, paid quote choice, lead form, metadata title/description, canonical and other photos unchanged.",
+      "successSignals": [
+        "Fresh live Chino page displays truthful real multi-appliance pickup-load photo distinct from Spokane original staged hero.",
+        "Chino OG, Twitter and JSON-LD primary image references match displayed hero; mandatory phone/form and city canonical remain intact.",
+        "After Nov 7 compare GSC page impressions, clicks and relevant queries with a meaningful finalized period when available; no ranking claims based only on green CI."
+      ],
+      "evaluateNotBefore": "2026-11-01",
+      "preferredReview": "2026-11-07",
+      "status": "running",
+      "freezeRule": "Freeze further speculative Chino hero/copy/title/meta/internal link/canonical edits through Nov 1, prefer Nov 7 review; verified urgent errors may be separately documented and fixed."
     }
   ],
   "technicalMaintenance": [
