@@ -81,6 +81,17 @@ class MultiAITests(unittest.TestCase):
         _, state = review.report_markdown(1, statuses, [], False, True)
         self.assertIn("NEEDS HUMAN REVIEW", state)
 
+    def test_skipped_files_cannot_be_marked_complete(self):
+        """Reviewing only part of a PR must never look like complete coverage."""
+        statuses = {label: {"model": model, "status": "reviewed", "findings": []}
+                    for label, model in review.REVIEWERS.items()}
+        markdown, state = review.report_markdown(
+            1, statuses, ["data/lead-events.json"], False, True
+        )
+        self.assertIn("INCOMPLETE", state)
+        self.assertIn("omitted", state)
+        self.assertIn("data/lead-events.json", markdown)
+
     def test_truncated_review_is_incomplete(self):
         statuses = {label: {"model": model, "status": "reviewed", "findings": []} for label, model in review.REVIEWERS.items()}
         _, state = review.report_markdown(1, statuses, ["too many"], True, True)
