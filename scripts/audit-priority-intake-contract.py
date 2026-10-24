@@ -22,6 +22,8 @@ MOBILE_HINT_PAGES = {
     "laguna-niguel-appliance-pickup",
     "bloomington-appliance-pickup", "colton-appliance-pickup",
     "highland-appliance-pickup",
+    "pasadena-appliance-pickup", "arcadia-appliance-pickup",
+    "san-dimas-appliance-pickup", "la-verne-appliance-pickup",
 }
 
 # Existing general-market pages only. Do not invent or publish new city URLs.
@@ -161,7 +163,11 @@ def self_test():
     assert not inspect(ie_good, "colton-appliance-pickup"), "valid IE mobile fixture rejected"
     assert inspect(ie_good.replace('inputmode="numeric"', 'inputmode="text"'), "colton-appliance-pickup"), "bad IE ZIP keypad passed"
     assert inspect(ie_good.replace('autocomplete="tel"', 'autocomplete="off"'), "colton-appliance-pickup"), "bad IE phone autofill passed"
-    print(f"FIXTURE_TESTS_PASSED 3 positive + {len(negative) + 4} negative")
+    sgv_good = oc_good.replace("orange-appliance-pickup", "arcadia-appliance-pickup")
+    assert not inspect(sgv_good, "arcadia-appliance-pickup"), "valid SGV mobile fixture rejected"
+    assert inspect(sgv_good.replace('inputmode="tel"', 'inputmode="text"'), "arcadia-appliance-pickup"), "bad SGV phone keypad passed"
+    assert inspect(sgv_good.replace('autocomplete="postal-code"', 'autocomplete="off"'), "arcadia-appliance-pickup"), "bad SGV ZIP autofill passed"
+    print(f"FIXTURE_TESTS_PASSED 4 positive + {len(negative) + 6} negative")
 
 
 def main():

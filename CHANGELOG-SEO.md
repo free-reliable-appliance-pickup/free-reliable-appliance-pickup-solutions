@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-24 — SGV four-city mobile phone/ZIP input hints (technical exception)
+- **Verified gap:** Source inspection of Pasadena, Arcadia, San Dimas and La Verne general-appliance pickup forms found missing mobile keyboard/autofill hints (phone `inputmode=tel` on all four; phone `autocomplete=tel` on Arcadia; ZIP `autocomplete=postal-code` on all four). No lost lead or broken form is inferred.
+- **Scoped correction:** Add only missing HTML input hints to those four existing forms and extend `scripts/audit-priority-intake-contract.py` with four-city regression coverage and positive/negative fixtures. Details: `docs/technical-fix-sgv-mobile-intake-2026-10-24.md`.
+- **Preserved:** Formspree action, required inputs, phone/tel routing, paid quote choice, eligibility, photographs, SEO text, metadata, schema, links, canonicals, robots, and market routing. Running SEO experiments remain owned by Daily SEO Ranking Countermove; Website Technical Repair owns emergency breakage.
+- **Status and acceptance:** Scoped branch/PR awaiting GitHub checks, merge, deployment and independent live verification. A green source test does not prove Formspree receipt or organic improvement. Revert this PR if customer intake regresses.
+
 ## 2026-10-23 — Montclair, Chino, Chino Hills and Redlands: optional quote preference without JavaScript
 - **Source-verified usability gap:** Each existing general appliance pickup form has one approved Formspree POST, required phone, source/service attribution, and customer condition/access fields, but no static `paid_removal_preference` selector. The shared JS normally adds this optional choice; without JS, customers cannot specify free pickup only versus interest in a separately approved paid quote. This does **not** establish any lost lead or JS outage.
 - **Narrow technical exception:** Add one blank-default, non-required `free_only` / `quote_ok` selector immediately before each existing submit button. The existing JS skips a form that already has this field. All four page owners have SEO experiment records (Chino and Redlands direct; Montclair/Chino Hills broader anti-template), with earliest evaluation gates Oct 13–15 now passed; no SEO variable is changed. Daily SEO Ranking Countermove retains ranking experiments; Website Technical Repair retains emergency breakage.
