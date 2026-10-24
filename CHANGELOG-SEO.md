@@ -1,5 +1,13 @@
 # SEO change and decision register
 
+## 2026-10-24 — Duarte, Monrovia and Glendora optional quote choice (technical exception)
+- **Verified gap:** Current main source at `35016c06aa52` has one Formspree POST customer form on each existing general-appliance page, with required telephone and source/service attribution, but no static `paid_removal_preference` control and no `paid-removal-choice.js` script reference. The approved separate paid-quote interest option therefore was absent in the inspected HTML. This is not evidence of lost leads, failed Formspree delivery, or ranking change.
+- **Narrow customer-intake fix:** Add exactly one optional blank-default selector with `free_only` and `quote_ok` values immediately before the existing submit button on each page. A quote is not a booking, charge, or guarantee. Extend `scripts/audit-sfv-paid-quote-static.py` to assert one correctly attributed Formspree form, required phone and exactly one non-required blank-default quote choice on these three pages; existing positive/negative fixtures still apply.
+- **Protected:** No title, description, canonical, schema, links, ranking copy, local service claims, phone/tel routing, required fields, Formspree endpoint, images, eligibility, experiment registry or market routing changed. The three city pages have running ranking experiments; this is the documented technical/factual customer-intake exception. Daily SEO Ranking Countermove retains ranking tests; Website Technical Repair retains emergency breakage.
+- **Acceptance:** Relevant PR checks including the static-quote audit, priority intake audit and SEO experiment guard must pass on the final head SHA. Independently confirm merge, Pages deployment and production HTML where available. No real customer form is submitted. Revert this scoped PR if the optional selector interferes with intake.
+- **Status:** Proposed in a reviewable feature branch; live deployment, GSC and Formspree receipt are not established by source checks.
+
+
 ## 2026-10-24 — SGV four-city mobile phone/ZIP input hints (technical exception)
 - **Verified gap:** Source inspection of Pasadena, Arcadia, San Dimas and La Verne general-appliance pickup forms found missing mobile keyboard/autofill hints (phone `inputmode=tel` on all four; phone `autocomplete=tel` on Arcadia; ZIP `autocomplete=postal-code` on all four). No lost lead or broken form is inferred.
 - **Scoped correction:** Add only missing HTML input hints to those four existing forms and extend `scripts/audit-priority-intake-contract.py` with four-city regression coverage and positive/negative fixtures. Details: `docs/technical-fix-sgv-mobile-intake-2026-10-24.md`.
