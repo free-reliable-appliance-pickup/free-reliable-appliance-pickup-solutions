@@ -58,6 +58,9 @@ MOBILE_HINT_PAGES = {
     "riverside-appliance-pickup", "anaheim-appliance-pickup",
     "ontario-appliance-pickup", "rancho-cucamonga-appliance-pickup",
     "fontana-appliance-pickup",
+    # Verified Upland, Montclair and Huntington Beach phone keypad hints.
+    "upland-appliance-pickup", "montclair-appliance-pickup",
+    "huntington-beach-appliance-pickup",
 }
 
 # Existing general-market pages only. Do not invent or publish new city URLs.
@@ -211,7 +214,10 @@ def self_test():
     ie6_good = oc_good.replace("orange-appliance-pickup", "chino-appliance-pickup")
     assert not inspect(ie6_good, "chino-appliance-pickup"), "valid Chino mobile fixture rejected"
     assert inspect(ie6_good.replace('inputmode="tel"', 'inputmode="text"'), "chino-appliance-pickup"), "bad Chino phone keypad passed"
-    print(f"FIXTURE_TESTS_PASSED 7 positive + {len(negative) + 9} negative")
+    upland_good = oc_good.replace("orange-appliance-pickup", "upland-appliance-pickup")
+    assert not inspect(upland_good, "upland-appliance-pickup"), "valid Upland mobile fixture rejected"
+    assert inspect(upland_good.replace('inputmode="tel"', 'inputmode="text"'), "upland-appliance-pickup"), "bad Upland phone keypad passed"
+    print(f"FIXTURE_TESTS_PASSED 8 positive + {len(negative) + 10} negative")
 
 
 def main():
