@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-10-24 — Southeast Los Angeles County five-city quote preference and mobile form hints (technical exception)
+- **Verified source gap:** Pico Rivera, Norwalk, Downey, La Mirada and Cerritos existing general-appliance forms each had one approved Formspree POST, required phone/ZIP and source/service attribution, but no optional static paid-removal-quote preference or JavaScript equivalent. Mobile telephone and/or ZIP keypad/autofill hints were missing. This is a customer-intake issue, not a ranking experiment.
+- **Bounded repair:** Add one blank-default optional `free_only` / `quote_ok` selector before each existing submit button, plus only missing telephone/ZIP input hints. No payment, price, booking, pickup promise, form endpoint change, phone routing change, eligibility change, new page, photograph replacement, metadata or editorial rewrite.
+- **Experiment ownership:** Inspected `data/seo-experiments.json` updated 2026-10-17. Pico Rivera and Downey owner-page review gates were October 14; no protected future-dated gate applies to these five pages as of October 24. Do not modify the SFV pilot protected through November 6. Daily SEO Ranking Countermove owns speculative ranking tests; Website Technical Repair owns emergencies.
+- **Verification and rollback:** Extend static quote and priority intake source guards; require all applicable CI including SEO Experiment Guard, phone routing, browser smoke and image audit. Confirm deployment and live HTML separately. No Formspree delivery or ranking impact claimed. Revert this PR if customer intake regresses.
+
+
 ## 2026-10-24 — Whittier, Montebello and Rialto optional quote consent and mobile input hints (technical exception)
 - **Verified gap:** Main-branch source and public page text show one approved Formspree POST customer form per existing city page, required phone, ZIP and source/service attribution, but no static `paid_removal_preference` choice and no dynamic quote fallback. Phone telephone-keypad and ZIP numeric-keypad hints are absent or incomplete.
 - **Scoped repair:** Add a blank-default, optional `free_only` / `quote_ok` selector directly before each existing submit button and missing telephone/ZIP mobile autofill/keypad hints. No automatic quote, price, booking, charge or pickup guarantee. Preserve required fields, Formspree endpoint, telephone links, eligibility, photos, page copy, navigation, canonical, robots and schema.
