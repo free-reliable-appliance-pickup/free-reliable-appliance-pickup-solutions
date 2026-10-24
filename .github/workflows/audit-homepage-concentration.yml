@@ -32,10 +32,12 @@ jobs:
           hrefs=re.findall(r'<a\b[^>]*href=["\']/([^"\'#?]+)',s,re.I)
           unique=set(x.rstrip('/') for x in hrefs)
           print('HOMEPAGE_UNIQUE_INTERNAL_ANCHOR_DESTINATIONS',len(unique))
-          # The 2026-10-16 intake update intentionally added direct navigation to
-          # two existing, indexable priority regional hubs: Sacramento Metro and
-          # Las Vegas Valley. Preserve authority concentration with a 62-link cap.
-          MAX_PRIORITY_DESTINATIONS=62
+          # The original 62 unique-destination cap protected California concentration.
+          # 2026-10-24: intentionally allow exactly six further *existing*, sitemapped
+          # state hub destinations for nationwide request discovery (WA, NV, TX, FL,
+          # ID and UT). Keep all previously required CA/market links, retain a
+          # strict 68-destination cap, and fail if any approved state link vanishes.
+          MAX_PRIORITY_DESTINATIONS=68
           if len(unique)>MAX_PRIORITY_DESTINATIONS:
               failures.append(f'homepage has {len(unique)} unique internal anchor destinations; keep at or below {MAX_PRIORITY_DESTINATIONS}')
 
@@ -69,6 +71,14 @@ jobs:
             'arizona-appliance-pickup',
             'oregon-appliance-pickup',
             'colorado-appliance-pickup',
+            # Approved existing nationwide state hubs; expansion markets remain
+            # explicitly qualified in the homepage copy (not promised service).
+            'washington-appliance-pickup',
+            'nevada-appliance-pickup',
+            'texas-appliance-pickup',
+            'florida-appliance-pickup',
+            'idaho-appliance-pickup',
+            'utah-appliance-pickup',
             'los-angeles-county-appliance-pickup',
             'san-gabriel-valley-appliance-pickup',
             'inland-empire-appliance-pickup',
