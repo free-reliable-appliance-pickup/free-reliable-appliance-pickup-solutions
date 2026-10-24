@@ -105,7 +105,7 @@ def call_free_model(key, model, prompt):
     return parse_review(output)
 
 def report_markdown(pr_number, results, skipped, truncated, diff_present):
-    ready = bool(diff_present and not truncated and len(results) == 2 and
+    ready = bool(diff_present and not truncated and not skipped and len(results) == 2 and
                  all(v.get("status") == "reviewed" for v in results.values()))
     high = any(f["severity"] in ("critical", "high") for v in results.values()
                for f in v.get("findings", []))
@@ -113,6 +113,8 @@ def report_markdown(pr_number, results, skipped, truncated, diff_present):
         status = "INCOMPLETE — no eligible text patch"
     elif truncated:
         status = "INCOMPLETE — diff exceeds limits"
+    elif skipped:
+        status = "INCOMPLETE — some changed files were omitted from AI review"
     elif not ready:
         status = "INCOMPLETE — two independent AI reviews not available"
     elif high:
