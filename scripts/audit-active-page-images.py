@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check the images on the canonical pages in sitemap.xml before a market rollout."""
 from html.parser import HTMLParser
+from hashlib import sha256
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 import xml.etree.ElementTree as ET
@@ -154,6 +155,7 @@ def main():
     # branding images. This does not change or block page publishing.
     priority_general_city_heroes = {
         'upland-appliance-pickup',
+        'rancho-cucamonga-appliance-pickup',
         'bloomington-appliance-pickup',
         'highland-appliance-pickup',
         'redlands-appliance-pickup',
@@ -169,6 +171,7 @@ def main():
         'spokane-appliance-pickup',
     }
     city_hero_uses = {}
+    city_hero_fingerprints = {}
     for slug in sorted(priority_general_city_heroes):
         page = Path(slug) / 'index.html'
         if not page.is_file():
@@ -189,6 +192,10 @@ def main():
         if photo_url.netloc != urlparse(BASE).netloc:
             continue
         city_hero_uses.setdefault(photo_url.path, []).append(slug)
+        local_asset = Path(photo_url.path.lstrip('/'))
+        if local_asset.is_file():
+            digest = sha256(local_asset.read_bytes()).hexdigest()
+            city_hero_fingerprints.setdefault(digest, []).append((slug, photo_url.path))
     reused_heroes = {
         photo: slugs for photo, slugs in city_hero_uses.items()
         if len(slugs) > 1
@@ -196,6 +203,18 @@ def main():
     print(f'PRIORITY_CITY_HERO_REUSE_REVIEW {len(reused_heroes)}')
     for photo, slugs in sorted(reused_heroes.items()):
         print(f'CITY_HERO_REUSE_REVIEW {photo} | {", ".join(sorted(slugs))}')
+    # Different filenames can still be identical image bytes. Only warn for
+    # cross-city reuse with *different* paths to avoid duplicate notices.
+    identical_bytes = [
+        uses for uses in city_hero_fingerprints.values()
+        if len({slug for slug, _ in uses}) > 1
+        and len({photo for _, photo in uses}) > 1
+    ]
+    print(f'PRIORITY_CITY_HERO_IDENTICAL_BYTES_REVIEW {len(identical_bytes)}')
+    for uses in identical_bytes:
+        print('CITY_HERO_IDENTICAL_BYTES_REVIEW ' + ' | '.join(
+            f'{slug}: {photo}' for slug, photo in sorted(uses)
+        ))
 
     # Check group-hero layout on key Northwest pages, including intentionally
     # noindex request pages that are excluded from the public XML sitemap.
