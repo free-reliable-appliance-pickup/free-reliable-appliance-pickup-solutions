@@ -263,6 +263,7 @@ def main():
         'redlands-appliance-pickup': '/assets/optimized/20250923_151633-1600.jpg',
         'colton-appliance-pickup': '/assets/optimized/20230206_101140-1-1600.jpg',
         'highland-appliance-pickup': '/assets/optimized/20240806_153155-1600.jpg',
+        'chino-hills-appliance-pickup': '/inland-empire-free-appliance-pickup.webp',
     }
     for slug, expected in ie_photo_pilot.items():
         page = Path(slug) / 'index.html'
@@ -285,6 +286,11 @@ def main():
             problems.append(f'{slug}: wrong verified multi-appliance pickup hero {got}; expected {expected}')
         if not any(term in hero.get('alt', '').lower() for term in ('appliance', 'refrigerator', 'laundry')):
             problems.append(f'{slug}: non-descriptive pickup hero alt text')
+        if slug == 'chino-hills-appliance-pickup':
+            if (hero.get('width'), hero.get('height')) != ('1000', '800'):
+                problems.append('chino-hills-appliance-pickup: garage hero intrinsic dimensions must be 1000x800')
+            if not any(term in hero.get('alt', '').lower() for term in ('garage', 'refrigerator', 'stove')):
+                problems.append('chino-hills-appliance-pickup: missing truthful broad-appliance garage hero description')
         if slug in ('colton-appliance-pickup', 'highland-appliance-pickup'):
             if (hero.get('width'), hero.get('height')) != ('1600', '2133'):
                 problems.append(f'{slug}: incorrect 1600x2133 pickup JPEG dimensions')
