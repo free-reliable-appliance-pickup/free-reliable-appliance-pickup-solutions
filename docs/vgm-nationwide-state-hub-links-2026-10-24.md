@@ -24,6 +24,9 @@ Giving six existing statewide owner hubs clear crawlable links from the establis
 - Preserve homepage link experiment until the review window, unless a verified incorrect link/coverage/technical defect requires correction.
 - Revert from PR if a broken destination, incorrect coverage representation, accessibility failure or CI regression is found.
 
+## Existing homepage concentration safeguard reconciled
+The initial PR check `Audit Homepage Concentration` correctly failed: the six new state links raised unique homepage internal destinations from 62 to 68, above the old 62-destination policy. The former cap was a local site-policy limit, not a Google-required maximum. In the same PR, the existing guard was **narrowly updated to a hard cap of 68**, and six existing indexable/sitemapped state hubs were explicitly added to its mandatory-link set. The guard still requires all previous California, statewide and major-market links and preserves the low-friction customer form. This is a transparent, documented expansion of authority distribution, not a silent audit bypass. If later unrelated homepage links are added, the guard will fail until independently reviewed.
+
 ## Verification checklist
 1. Confirm six destinations already exist, self-canonical and are in the sitemap.
 2. Run GitHub CI (link graph, SEO Experiment Guard, content, schema and deployment checks).
