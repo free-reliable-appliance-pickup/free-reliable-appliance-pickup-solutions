@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-17",
+  "updated": "2026-10-24",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -11185,6 +11185,35 @@
       "status": "running",
       "freezeRule": "No further speculative title/body/link/schema/canonical/hero changes to the seven pages before observation gate, except verified technical/factual/customer-safety fixes that are documented.",
       "technicalFixes": []
+    },
+    {
+      "id": "2026-10-24-glendora-general-category-photo-match",
+      "market": "Glendora, CA — general appliance pickup",
+      "hypothesis": "Replacing an off-category, repeated washer/dryer-only hero on the general appliance pickup owner page with an already-owned six-appliance garage group photo improves truthful category match and user understanding, without changing ranking intent or requiring new pages.",
+      "pagesChanged": [
+        "/glendora-appliance-pickup/"
+      ],
+      "protectedOwner": "/glendora-appliance-pickup/",
+      "lastChanged": "2026-10-24",
+      "baselinePeriod": {
+        "start": "2026-10-19",
+        "end": "2026-10-21"
+      },
+      "baseline": {
+        "gsc": "No reportable impressions or queries in the free finalized three-day Search Console view. Cannot use this to infer deindexing or a meaningful ranking baseline.",
+        "visual": "General all-appliance page displayed an existing Pasadena-named single washer/dryer set photo as hero, duplicated as its secondary image and OG/Twitter/WebPage main photo; the hero did not show kitchen/cooling appliance categories.",
+        "assetVerification": "The existing /home-six-appliance-garage.webp asset was fetched from the verified connected GitHub repo and visually inspected: original-format real appliance group indoors, washer, dryer, electric stove/range, two refrigerators and stacked laundry unit. Source is already used by homepage."
+      },
+      "change": "Use existing genuine six-major-appliance garage photo for Glendora general-appliance hero; synchronize OG/Twitter/WebPage primary image and descriptive alt while leaving the real washer/dryer gallery photo as distinct supplementary image. Keep all other local copy, contact/phone, service intent, original FAQ, canonical, title/description, CTA, and Formspree untouched.",
+      "successSignals": [
+        "Public hero and social preview display a group of appliances matching Glendora general-service intent, and no broken image URLs or schema mismatches.",
+        "Existing supportive washer/dryer photo remains, so two different images appear on the page.",
+        "Evaluate finalized Search Console page/target-query clicks, impressions, and CTR when sufficient data accumulates; no ranking uplift claim from imagery alone."
+      ],
+      "evaluateNotBefore": "2026-11-01",
+      "preferredReview": "2026-11-07",
+      "status": "running",
+      "freezeRule": "No speculative additional hero, page content, title/meta, canonical, link-intent or schema changes to Glendora owner before November 1. Recheck actual finalized Search Console performance November 7. Emergency factual, image404, phone/form/indexability safety fixes are separately allowed and must be logged."
     }
   ],
   "technicalMaintenance": [
