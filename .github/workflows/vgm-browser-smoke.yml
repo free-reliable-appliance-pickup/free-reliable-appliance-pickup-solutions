@@ -10,6 +10,15 @@ on:
       - 'rancho-cucamonga-appliance-pickup/index.html'
       - 'fontana-appliance-pickup/index.html'
       - 'san-fernando-appliance-pickup/index.html'
+      - 'van-nuys-appliance-pickup/index.html'
+      - 'granada-hills-appliance-pickup/index.html'
+      - 'mission-hills-appliance-pickup/index.html'
+      - 'northridge-appliance-pickup/index.html'
+      - 'sylmar-appliance-pickup/index.html'
+      - 'pacoima-appliance-pickup/index.html'
+      - 'north-hollywood-appliance-pickup/index.html'
+      - 'burbank-appliance-pickup/index.html'
+      - 'san-fernando-valley-appliance-pickup/index.html'
       - 'assets/customer-routing.js'
   workflow_dispatch:
 
