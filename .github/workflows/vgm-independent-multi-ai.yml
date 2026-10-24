@@ -1,0 +1,55 @@
+name: VGM Independent Multi-AI Review (Free Models)
+
+# Read-only. Executes only the trusted default-branch reviewer code, NEVER PR code.
+# Automatic for new/updated PRs after this workflow is merged and a key is configured.
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "PR number to review from the same repository"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: vgm-multi-ai-${{ github.event.pull_request.number || inputs.pr_number }}
+  cancel-in-progress: true
+
+jobs:
+  independent-review:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout TRUSTED default branch (never check out pull request)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - name: Python setup
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test multi-AI review safeguards
+        run: python -m unittest discover -s tests -p 'test_vgm_multi_ai_review.py' -v
+      - name: Independent reviews — Cohere and Qwen FREE models only
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          REVIEW_PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+        run: python scripts/vgm_multi_ai_review.py
+      - name: Archive review and explicit completeness status
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vgm-multi-ai-advisory-${{ github.run_id }}
+          path: |
+            vgm-multi-ai-review.md
+            vgm-multi-ai-review.json
+          if-no-files-found: ignore
+          retention-days: 14
