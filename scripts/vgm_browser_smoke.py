@@ -58,6 +58,31 @@ def run():
                                     raise AssertionError("pickup request form is missing")
                                 if not page.locator("form[action*='formspree.io']").count():
                                     raise AssertionError("no Formspree form action found")
+                                # Decode the actual above-the-fold appliance image, not only its HTML src.
+                                # This detects missing, corrupt or unreachable local image files.
+                                hero_image = page.locator("main img").first
+                                if hero_image.count() == 0:
+                                    raise AssertionError("no main appliance image found")
+                                hero_image.scroll_into_view_if_needed(timeout=10000)
+                                decoded_width = hero_image.evaluate(
+                                    "(img) => img.decode().then(() => img.naturalWidth).catch(() => 0)"
+                                )
+                                if decoded_width < 100:
+                                    raise AssertionError(
+                                        "main appliance image failed to load: "
+                                        + str(hero_image.get_attribute("src"))
+                                    )
+                                # Browser-interact with both paid-quote preference options.
+                                # This never clicks the submit button and never transmits lead data.
+                                quote_choice = page.locator("#request select[name='paid_removal_preference']")
+                                if quote_choice.count() != 1:
+                                    raise AssertionError("paid removal preference is missing or ambiguous")
+                                quote_choice.select_option("quote_ok")
+                                if quote_choice.input_value() != "quote_ok":
+                                    raise AssertionError("paid removal quote choice did not persist")
+                                quote_choice.select_option("free_only")
+                                if quote_choice.input_value() != "free_only":
+                                    raise AssertionError("free-only preference did not persist")
                                 # We deliberately do not submit any form or use customer data.
                                 if path == "/":
                                     zip_input = page.locator("#hero-zip")
@@ -73,7 +98,7 @@ def run():
                                         "REVIEW: horizontal overflow on",
                                         label, viewport_name, dimensions,
                                     )
-                                print("PASS:", label, viewport_name, "HTTP 200, heading, request form")
+                                print("PASS:", label, viewport_name, "HTTP 200, heading, form, image, quote selection")
                             except Exception as exc:
                                 failures.append(label + " / " + viewport_name + ": " + str(exc))
                                 print("FAIL:", failures[-1])
