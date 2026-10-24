@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-10-24 — Upland, Montclair and Huntington Beach telephone keypad hints (technical exception)
+- **Verified source defect:** At main `a2ae8f97`, each existing city general-appliance Formspree POST had one required phone input with `type="tel"` and `autocomplete="tel"`, but no `inputmode="tel"`. ZIP already used `autocomplete="postal-code" inputmode="numeric"`; static optional paid-removal quote consent and service/source attribution already existed.
+- **Scope:** Add only `inputmode="tel"` to those three phone inputs. Guard all three in `scripts/audit-priority-intake-contract.py` and add positive/negative Upland fixtures. No changes to required fields, phone links, routing, endpoints, qualification, consent, photo, page content, metadata, schema, canonical, or internal links.
+- **Experiment boundary:** Reviewed `data/seo-experiments.json` updated 2026-10-17; Upland, Montclair and Huntington Beach have running SEO observations with review dates no later than October 14. This is a documented browser-usability technical exception, not a speculative ranking experiment. Do not modify the protected San Fernando Valley pilot. Daily SEO Ranking Countermove and Website Technical Repair retain their own responsibilities.
+- **Verification:** Require all applicable PR checks including SEO Experiment Guard, phone routing, customer intake and Pages publishing; inspect production HTML separately. No live Formspree delivery or ranking improvement claimed. Revert isolated PR if a customer regression is found.
+
+
 ## 2026-10-24 — Southeast Los Angeles County five-city quote preference and mobile form hints (technical exception)
 - **Verified source gap:** Pico Rivera, Norwalk, Downey, La Mirada and Cerritos existing general-appliance forms each had one approved Formspree POST, required phone/ZIP and source/service attribution, but no optional static paid-removal-quote preference or JavaScript equivalent. Mobile telephone and/or ZIP keypad/autofill hints were missing. This is a customer-intake issue, not a ranking experiment.
 - **Bounded repair:** Add one blank-default optional `free_only` / `quote_ok` selector before each existing submit button, plus only missing telephone/ZIP input hints. No payment, price, booking, pickup promise, form endpoint change, phone routing change, eligibility change, new page, photograph replacement, metadata or editorial rewrite.
