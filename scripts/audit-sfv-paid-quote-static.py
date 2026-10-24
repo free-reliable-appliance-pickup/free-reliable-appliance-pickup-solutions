@@ -22,6 +22,8 @@ PAGES = {
     "glendale-appliance-pickup": "glendale-appliance-pickup/index.html",
     "calabasas-appliance-pickup": "calabasas-appliance-pickup/index.html",
     "fresno-appliance-pickup": "fresno-appliance-pickup/index.html",
+    "orange-county-appliance-pickup": "orange-county-appliance-pickup/index.html",
+    "ontario-appliance-pickup": "ontario-appliance-pickup/index.html",
 }
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
