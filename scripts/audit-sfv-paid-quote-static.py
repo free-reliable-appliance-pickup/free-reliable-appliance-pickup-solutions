@@ -31,6 +31,10 @@ PAGES = {
     "chino-appliance-pickup": "chino-appliance-pickup/index.html",
     "chino-hills-appliance-pickup": "chino-hills-appliance-pickup/index.html",
     "redlands-appliance-pickup": "redlands-appliance-pickup/index.html",
+    # Verified IE intake gaps: static quote preference also works without JavaScript.
+    "colton-appliance-pickup": "colton-appliance-pickup/index.html",
+    "bloomington-appliance-pickup": "bloomington-appliance-pickup/index.html",
+    "highland-appliance-pickup": "highland-appliance-pickup/index.html",
 }
 # Existing Los Angeles appliance-category forms use descriptive source-page attribution.
 # Validate the no-JavaScript quote choice without changing the source identifiers.
