@@ -57,6 +57,12 @@ PAGES = {
     "whittier-appliance-pickup": "whittier-appliance-pickup/index.html",
     "montebello-appliance-pickup": "montebello-appliance-pickup/index.html",
     "rialto-appliance-pickup": "rialto-appliance-pickup/index.html",
+    # Verified Southeast Los Angeles County optional quote consent (2026-10-24).
+    "pico-rivera-appliance-pickup": "pico-rivera-appliance-pickup/index.html",
+    "norwalk-appliance-pickup": "norwalk-appliance-pickup/index.html",
+    "downey-appliance-pickup": "downey-appliance-pickup/index.html",
+    "la-mirada-appliance-pickup": "la-mirada-appliance-pickup/index.html",
+    "cerritos-appliance-pickup": "cerritos-appliance-pickup/index.html",
     # Verified coastal Orange County static quote consent gaps (2026-10-24).
     "huntington-beach-appliance-pickup": "huntington-beach-appliance-pickup/index.html",
     "costa-mesa-appliance-pickup": "costa-mesa-appliance-pickup/index.html",

@@ -24,6 +24,12 @@ MOBILE_HINT_PAGES = {
     "highland-appliance-pickup",
     "pasadena-appliance-pickup", "arcadia-appliance-pickup",
     "san-dimas-appliance-pickup", "la-verne-appliance-pickup",
+    # Verified Southeast Los Angeles County mobile form input repairs.
+    "pico-rivera-appliance-pickup",
+    "norwalk-appliance-pickup",
+    "downey-appliance-pickup",
+    "la-mirada-appliance-pickup",
+    "cerritos-appliance-pickup",
     # Verified Whittier, Montebello and Rialto phone/ZIP input repairs.
     "whittier-appliance-pickup", "montebello-appliance-pickup",
     "rialto-appliance-pickup",
