@@ -18,6 +18,15 @@ PAGES = [
     ("/rancho-cucamonga-appliance-pickup/", "Rancho Cucamonga"),
     ("/fontana-appliance-pickup/", "Fontana"),
     ("/san-fernando-appliance-pickup/", "San Fernando"),
+    ("/van-nuys-appliance-pickup/", "Van Nuys"),
+    ("/granada-hills-appliance-pickup/", "Granada Hills"),
+    ("/mission-hills-appliance-pickup/", "Mission Hills"),
+    ("/northridge-appliance-pickup/", "Northridge"),
+    ("/sylmar-appliance-pickup/", "Sylmar"),
+    ("/pacoima-appliance-pickup/", "Pacoima"),
+    ("/north-hollywood-appliance-pickup/", "North Hollywood"),
+    ("/burbank-appliance-pickup/", "Burbank"),
+    ("/san-fernando-valley-appliance-pickup/", "San Fernando Valley hub"),
 ]
 VIEWPORTS = [
     ("desktop", {"width": 1365, "height": 900}),
