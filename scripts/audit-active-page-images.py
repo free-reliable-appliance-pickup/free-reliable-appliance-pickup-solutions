@@ -147,6 +147,56 @@ def main():
                 elif attrs.get('fetchpriority') == 'high' and asset.stat().st_size > MAX_HERO_BYTES:
                     problems.append(f'{url}: hero {src} is {asset.stat().st_size / 1_000_000:.2f} MB; use an optimized derivative under {MAX_HERO_BYTES / 1_000_000:.1f} MB')
 
+    # Read-only inventory of *exact URL* reuse among priority general-city
+    # hero photos. The same file on two city pages is a photo-rotation review
+    # finding, not proof of a Google penalty or proof of the photo's origin.
+    # Scope is deliberately narrow: no logos, specialty guides, or shared
+    # branding images. This does not change or block page publishing.
+    priority_general_city_heroes = {
+        'upland-appliance-pickup',
+        'bloomington-appliance-pickup',
+        'highland-appliance-pickup',
+        'redlands-appliance-pickup',
+        'chino-hills-appliance-pickup',
+        'colton-appliance-pickup',
+        'chino-appliance-pickup',
+        'fontana-appliance-pickup',
+        'seattle-appliance-pickup',
+        'salem-appliance-pickup',
+        'tacoma-appliance-pickup',
+        'portland-appliance-pickup',
+        'vancouver-appliance-pickup',
+        'spokane-appliance-pickup',
+    }
+    city_hero_uses = {}
+    for slug in sorted(priority_general_city_heroes):
+        page = Path(slug) / 'index.html'
+        if not page.is_file():
+            continue  # The normal sitemap/page checks own missing-page errors.
+        parser = ImageRefs()
+        parser.feed(page.read_text(encoding='utf-8', errors='replace'))
+        content_photos = [
+            attrs for attrs in parser.images
+            if attrs.get('src') and 'logo' not in attrs.get('alt', '').lower()
+        ]
+        hero = next(
+            (attrs for attrs in content_photos if attrs.get('fetchpriority') == 'high'),
+            content_photos[0] if content_photos else None,
+        )
+        if hero is None:
+            continue
+        photo_url = urlparse(urljoin(BASE, hero['src']))
+        if photo_url.netloc != urlparse(BASE).netloc:
+            continue
+        city_hero_uses.setdefault(photo_url.path, []).append(slug)
+    reused_heroes = {
+        photo: slugs for photo, slugs in city_hero_uses.items()
+        if len(slugs) > 1
+    }
+    print(f'PRIORITY_CITY_HERO_REUSE_REVIEW {len(reused_heroes)}')
+    for photo, slugs in sorted(reused_heroes.items()):
+        print(f'CITY_HERO_REUSE_REVIEW {photo} | {", ".join(sorted(slugs))}')
+
     # Check group-hero layout on key Northwest pages, including intentionally
     # noindex request pages that are excluded from the public XML sitemap.
     # The group photo must retain its actual intrinsic aspect ratio to avoid
