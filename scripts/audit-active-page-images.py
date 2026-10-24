@@ -216,6 +216,48 @@ def main():
             f'{slug}: {photo}' for slug, photo in sorted(uses)
         ))
 
+    # 2026-10-24 VGM two-city photo rotation: inspect and preserve distinct
+    # real customer-owned pickup-load photographs in two IE general city heroes.
+    # These are pickup examples, not claims that each image was taken in the city.
+    # Source was confirmed in the existing appliance photo inventory; rank impact
+    # is not implied by passing this guard.
+    ie_photo_pilot = {
+        'bloomington-appliance-pickup': '/assets/optimized/20250804_103926-1600.jpg',
+        'redlands-appliance-pickup': '/assets/optimized/20250923_151633-1600.jpg',
+    }
+    for slug, expected in ie_photo_pilot.items():
+        page = Path(slug) / 'index.html'
+        if not page.is_file():
+            problems.append(f'{slug}: protected IE photo page missing')
+            continue
+        source = page.read_text(encoding='utf-8', errors='replace')
+        parser = ImageRefs()
+        parser.feed(source)
+        photos = [
+            attrs for attrs in parser.images
+            if attrs.get('src') and 'logo' not in attrs.get('alt', '').lower()
+        ]
+        hero = next(
+            (attrs for attrs in photos if attrs.get('fetchpriority') == 'high'),
+            photos[0] if photos else {},
+        )
+        got = urlparse(urljoin(BASE, hero.get('src', ''))).path
+        if got != expected:
+            problems.append(f'{slug}: wrong verified multi-appliance pickup hero {got}; expected {expected}')
+        if not any(term in hero.get('alt', '').lower() for term in ('appliance', 'refrigerator', 'laundry')):
+            problems.append(f'{slug}: non-descriptive pickup hero alt text')
+        absolute = BASE.rstrip('/') + expected
+        if f'<meta property="og:image" content="{absolute}">' not in source:
+            problems.append(f'{slug}: OG image not synchronized with pickup hero')
+        if f'<meta name="twitter:image" content="{absolute}">' not in source:
+            problems.append(f'{slug}: Twitter image not synchronized with pickup hero')
+        if f'"primaryImageOfPage":{{"@type":"ImageObject","url":"{absolute}"}}' not in source:
+            problems.append(f'{slug}: WebPage primary image not synchronized with pickup hero')
+        if 'https://formspree.io/f/mvzeapzd' not in source or 'tel:+19093756685' not in source:
+            problems.append(f'{slug}: customer form or approved 909 phone has been changed')
+    if len(set(ie_photo_pilot.values())) != len(ie_photo_pilot):
+        problems.append('IE photo pilot must use two different hero assets')
+
     # 2026-10-23 SFV seven-page Gold Model photo pilot: these photos, URLs,
     # and low-friction intake paths were independently verified on live public
     # HTML on 2026-10-24. Protect the single-variable photo observation window
