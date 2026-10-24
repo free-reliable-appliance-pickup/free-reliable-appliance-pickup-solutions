@@ -23,6 +23,8 @@ PAGES = {
     "calabasas-appliance-pickup": "calabasas-appliance-pickup/index.html",
     "fresno-appliance-pickup": "fresno-appliance-pickup/index.html",
     "orange-county-appliance-pickup": "orange-county-appliance-pickup/index.html",
+    "anaheim-appliance-pickup": "anaheim-appliance-pickup/index.html",
+    "irvine-appliance-pickup": "irvine-appliance-pickup/index.html",
     "ontario-appliance-pickup": "ontario-appliance-pickup/index.html",
     # Existing Inland Empire request forms: approved quote choice works without JS.
     "montclair-appliance-pickup": "montclair-appliance-pickup/index.html",
