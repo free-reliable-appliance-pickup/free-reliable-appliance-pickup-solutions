@@ -83,6 +83,12 @@ PAGES = {
     "costa-mesa-appliance-pickup": "costa-mesa-appliance-pickup/index.html",
     "newport-beach-appliance-pickup": "newport-beach-appliance-pickup/index.html",
     "laguna-niguel-appliance-pickup": "laguna-niguel-appliance-pickup/index.html",
+    # Verified SGV and OC customer no-JS quote choices (2026-10-24).
+    "san-marino-appliance-pickup": "san-marino-appliance-pickup/index.html",
+    "sierra-madre-appliance-pickup": "sierra-madre-appliance-pickup/index.html",
+    "buena-park-appliance-pickup": "buena-park-appliance-pickup/index.html",
+    "yorba-linda-appliance-pickup": "yorba-linda-appliance-pickup/index.html",
+    "mission-viejo-appliance-pickup": "mission-viejo-appliance-pickup/index.html",
 }
 # Existing Los Angeles appliance-category forms use descriptive source-page attribution.
 # Validate the no-JavaScript quote choice without changing the source identifiers.
