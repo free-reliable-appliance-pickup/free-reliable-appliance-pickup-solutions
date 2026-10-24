@@ -63,6 +63,9 @@ MOBILE_HINT_PAGES = {
     # Verified Upland, Montclair and Huntington Beach phone keypad hints.
     "upland-appliance-pickup", "montclair-appliance-pickup",
     "huntington-beach-appliance-pickup",
+    # Verified Orange County intake mobile hints (2026-10-24).
+    "santa-ana-appliance-pickup", "lake-forest-appliance-pickup",
+    "fullerton-appliance-pickup", "irvine-appliance-pickup",
 }
 
 OPTIONAL_ACCESS_MESSAGE_PAGES = {"san-gabriel-valley-appliance-pickup"}

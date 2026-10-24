@@ -28,6 +28,9 @@ PAGES = {
     "orange-county-appliance-pickup": "orange-county-appliance-pickup/index.html",
     "anaheim-appliance-pickup": "anaheim-appliance-pickup/index.html",
     "irvine-appliance-pickup": "irvine-appliance-pickup/index.html",
+    # Verified existing OC no-JS quote fallback repairs (2026-10-24).
+    "santa-ana-appliance-pickup": "santa-ana-appliance-pickup/index.html",
+    "lake-forest-appliance-pickup": "lake-forest-appliance-pickup/index.html",
     "ontario-appliance-pickup": "ontario-appliance-pickup/index.html",
     # Existing Inland Empire request forms: approved quote choice works without JS.
     "montclair-appliance-pickup": "montclair-appliance-pickup/index.html",
