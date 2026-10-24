@@ -14,6 +14,12 @@ SERVICE = "General major appliance pickup"
 # Preserve existing meaningful form labels; do not rewrite customer pages as part of a test.
 SOURCE_OVERRIDES = {"phoenix-appliance-pickup": "Phoenix city page"}
 SERVICE_OVERRIDES = {"columbus-appliance-pickup": "general appliance pickup"}
+# Targeted mobile input-hint regression checks for verified OC form repairs.
+OC_MOBILE_HINT_PAGES = {
+    "orange-appliance-pickup", "laguna-hills-appliance-pickup",
+    "mission-viejo-appliance-pickup", "san-clemente-appliance-pickup",
+    "placentia-appliance-pickup",
+}
 
 # Existing general-market pages only. Do not invent or publish new city URLs.
 CITIES = (
@@ -39,6 +45,7 @@ CITIES = (
     "santa-monica", "calabasas", "west-hollywood",
     "north-hollywood", "santa-clarita",
     "anaheim", "irvine", "huntington-beach", "santa-ana",
+    "orange", "laguna-hills", "mission-viejo", "san-clemente", "placentia",
     "garden-grove", "fullerton", "yorba-linda",
     "van-nuys", "granada-hills", "pacoima", "northridge", "mission-hills",
 )
@@ -108,6 +115,13 @@ def inspect(page_html, page_label):
         if len(zips) != 1 or zips[0][0] != "input" or zips[0][1].get("inputmode") != "numeric":
             errors.append(f"{page_label}: ZIP must hint numeric keypad")
 
+    if page_label in OC_MOBILE_HINT_PAGES:
+        if len(phones) != 1 or phones[0][1].get("autocomplete") != "tel" or phones[0][1].get("inputmode") != "tel":
+            errors.append(f"{page_label}: phone must provide telephone autofill and keypad hints")
+        zips = fields.get("zip", [])
+        if len(zips) != 1 or zips[0][0] != "input" or zips[0][1].get("autocomplete") != "postal-code" or zips[0][1].get("inputmode") != "numeric":
+            errors.append(f"{page_label}: ZIP must provide postal-code autofill and numeric keypad hints")
+
     return errors
 
 
@@ -131,7 +145,15 @@ def self_test():
     }
     for name, test in negative.items():
         assert inspect(test, "home"), f"negative fixture passed incorrectly: {name}"
-    print(f"FIXTURE_TESTS_PASSED 1 positive + {len(negative)} negative")
+    oc_good = good.replace('value="home"', 'value="orange-appliance-pickup"').replace(
+        '<input type="tel" name="phone" required>',
+        '<input type="tel" name="phone" required autocomplete="tel" inputmode="tel">'
+        '<input name="zip" autocomplete="postal-code" inputmode="numeric">',
+    )
+    assert not inspect(oc_good, "orange-appliance-pickup"), "valid OC mobile fixture rejected"
+    assert inspect(oc_good.replace('inputmode="tel"', 'inputmode="text"'), "orange-appliance-pickup"), "bad phone keypad passed"
+    assert inspect(oc_good.replace('autocomplete="postal-code"', 'autocomplete="off"'), "orange-appliance-pickup"), "bad ZIP autofill passed"
+    print(f"FIXTURE_TESTS_PASSED 2 positive + {len(negative) + 2} negative")
 
 
 def main():
