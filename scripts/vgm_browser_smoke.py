@@ -27,6 +27,10 @@ PAGES = [
     ("/north-hollywood-appliance-pickup/", "North Hollywood"),
     ("/burbank-appliance-pickup/", "Burbank"),
     ("/san-fernando-valley-appliance-pickup/", "San Fernando Valley hub"),
+    ("/columbus-appliance-pickup/", "columbus appliance pickup"),
+    ("/columbus-washer-dryer-pickup/", "columbus washer dryer pickup"),
+    ("/columbus-refrigerator-pickup/", "columbus refrigerator pickup"),
+    ("/columbus-freezer-pickup/", "columbus freezer pickup"),
 ]
 VIEWPORTS = [
     ("desktop", {"width": 1365, "height": 900}),
