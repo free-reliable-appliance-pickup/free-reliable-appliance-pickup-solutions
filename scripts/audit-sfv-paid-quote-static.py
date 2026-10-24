@@ -24,6 +24,11 @@ PAGES = {
     "fresno-appliance-pickup": "fresno-appliance-pickup/index.html",
     "orange-county-appliance-pickup": "orange-county-appliance-pickup/index.html",
     "ontario-appliance-pickup": "ontario-appliance-pickup/index.html",
+    # Existing Inland Empire request forms: approved quote choice works without JS.
+    "montclair-appliance-pickup": "montclair-appliance-pickup/index.html",
+    "chino-appliance-pickup": "chino-appliance-pickup/index.html",
+    "chino-hills-appliance-pickup": "chino-hills-appliance-pickup/index.html",
+    "redlands-appliance-pickup": "redlands-appliance-pickup/index.html",
 }
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
