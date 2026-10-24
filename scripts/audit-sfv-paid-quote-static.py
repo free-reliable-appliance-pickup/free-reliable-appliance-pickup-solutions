@@ -4,6 +4,9 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 PAGES = {
+    # California regional forms must preserve optional consent without JavaScript.
+    "inland-empire-appliance-pickup": "inland-empire-appliance-pickup/index.html",
+    "san-gabriel-valley-appliance-pickup": "san-gabriel-valley-appliance-pickup/index.html",
     # SGV source-only fallback: no JavaScript needed for customer quote preference.
     "pasadena-appliance-pickup": "pasadena-appliance-pickup/index.html",
     "arcadia-appliance-pickup": "arcadia-appliance-pickup/index.html",
