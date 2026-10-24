@@ -22,6 +22,9 @@ MOBILE_HINT_PAGES = {
     "laguna-niguel-appliance-pickup",
     "bloomington-appliance-pickup", "colton-appliance-pickup",
     "highland-appliance-pickup",
+    # Verified Corona, Moreno Valley and San Bernardino customer mobile hints.
+    "corona-appliance-pickup", "moreno-valley-appliance-pickup",
+    "san-bernardino-appliance-pickup",
     "pasadena-appliance-pickup", "arcadia-appliance-pickup",
     "san-dimas-appliance-pickup", "la-verne-appliance-pickup",
     # Verified Long Beach / Bellflower / Compton / South Gate mobile intake hints.
@@ -56,7 +59,7 @@ CITIES = (
     "riverside", "portland", "salem", "vancouver", "seattle",
     "tacoma", "spokane", "denver", "aurora", "phoenix",
     "columbus", "fresno", "ontario", "montclair",
-    "san-bernardino", "bloomington", "colton", "highland", "monterey-park",
+    "san-bernardino", "corona", "moreno-valley", "bloomington", "colton", "highland", "monterey-park",
     "whittier", "montebello", "rialto",
     "palm-springs", "la-canada-flintridge", "altadena", "san-marino",
     "la-mirada", "cerritos", "pico-rivera", "downey",
