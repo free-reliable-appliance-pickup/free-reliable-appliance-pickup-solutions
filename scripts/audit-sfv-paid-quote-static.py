@@ -35,6 +35,11 @@ PAGES = {
     "colton-appliance-pickup": "colton-appliance-pickup/index.html",
     "bloomington-appliance-pickup": "bloomington-appliance-pickup/index.html",
     "highland-appliance-pickup": "highland-appliance-pickup/index.html",
+    # Verified coastal Orange County static quote consent gaps (2026-10-24).
+    "huntington-beach-appliance-pickup": "huntington-beach-appliance-pickup/index.html",
+    "costa-mesa-appliance-pickup": "costa-mesa-appliance-pickup/index.html",
+    "newport-beach-appliance-pickup": "newport-beach-appliance-pickup/index.html",
+    "laguna-niguel-appliance-pickup": "laguna-niguel-appliance-pickup/index.html",
 }
 # Existing Los Angeles appliance-category forms use descriptive source-page attribution.
 # Validate the no-JavaScript quote choice without changing the source identifiers.

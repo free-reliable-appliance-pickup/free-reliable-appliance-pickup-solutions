@@ -19,6 +19,7 @@ OC_MOBILE_HINT_PAGES = {
     "orange-appliance-pickup", "laguna-hills-appliance-pickup",
     "mission-viejo-appliance-pickup", "san-clemente-appliance-pickup",
     "placentia-appliance-pickup",
+    "laguna-niguel-appliance-pickup",
 }
 
 # Existing general-market pages only. Do not invent or publish new city URLs.
@@ -47,6 +48,7 @@ CITIES = (
     "anaheim", "irvine", "huntington-beach", "santa-ana",
     "orange", "laguna-hills", "mission-viejo", "san-clemente", "placentia",
     "garden-grove", "fullerton", "yorba-linda",
+    "costa-mesa", "newport-beach", "laguna-niguel",
     "van-nuys", "granada-hills", "pacoima", "northridge", "mission-hills",
 )
 
