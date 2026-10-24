@@ -50,6 +50,10 @@ MOBILE_HINT_PAGES = {
     "monterey-park-appliance-pickup",
     "san-gabriel-appliance-pickup",
     "alhambra-appliance-pickup",
+    # Verified five-city California telephone/ZIP mobile input hints.
+    "riverside-appliance-pickup", "anaheim-appliance-pickup",
+    "ontario-appliance-pickup", "rancho-cucamonga-appliance-pickup",
+    "fontana-appliance-pickup",
 }
 
 # Existing general-market pages only. Do not invent or publish new city URLs.
@@ -194,7 +198,13 @@ def self_test():
     assert not inspect(sgv_good, "arcadia-appliance-pickup"), "valid SGV mobile fixture rejected"
     assert inspect(sgv_good.replace('inputmode="tel"', 'inputmode="text"'), "arcadia-appliance-pickup"), "bad SGV phone keypad passed"
     assert inspect(sgv_good.replace('autocomplete="postal-code"', 'autocomplete="off"'), "arcadia-appliance-pickup"), "bad SGV ZIP autofill passed"
-    print(f"FIXTURE_TESTS_PASSED 4 positive + {len(negative) + 6} negative")
+    ca_good = oc_good.replace("orange-appliance-pickup", "riverside-appliance-pickup")
+    assert not inspect(ca_good, "riverside-appliance-pickup"), "valid CA ZIP fixture rejected"
+    assert inspect(ca_good.replace('autocomplete="postal-code"', 'autocomplete="off"'), "riverside-appliance-pickup"), "missing CA ZIP autofill passed"
+    ie5_good = oc_good.replace("orange-appliance-pickup", "fontana-appliance-pickup")
+    assert not inspect(ie5_good, "fontana-appliance-pickup"), "valid CA telephone fixture rejected"
+    assert inspect(ie5_good.replace('inputmode="tel"', 'inputmode="text"'), "fontana-appliance-pickup"), "missing CA phone keypad passed"
+    print(f"FIXTURE_TESTS_PASSED 6 positive + {len(negative) + 8} negative")
 
 
 def main():
