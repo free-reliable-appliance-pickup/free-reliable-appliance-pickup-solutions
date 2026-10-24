@@ -253,14 +253,16 @@ def main():
         if not Path(chino_expected.lstrip('/')).is_file():
             problems.append('chino-appliance-pickup: verified pickup hero file missing')
 
-    # 2026-10-24 VGM two-city photo rotation: inspect and preserve distinct
-    # real customer-owned pickup-load photographs in two IE general city heroes.
+    # 2026-10-24 VGM four-city photo rotation: inspect and preserve distinct
+    # real customer-owned pickup-load photographs in four IE general city heroes.
     # These are pickup examples, not claims that each image was taken in the city.
     # Source was confirmed in the existing appliance photo inventory; rank impact
     # is not implied by passing this guard.
     ie_photo_pilot = {
         'bloomington-appliance-pickup': '/assets/optimized/20250804_103926-1600.jpg',
         'redlands-appliance-pickup': '/assets/optimized/20250923_151633-1600.jpg',
+        'colton-appliance-pickup': '/assets/optimized/20230206_101140-1-1600.jpg',
+        'highland-appliance-pickup': '/assets/optimized/20240806_153155-1600.jpg',
     }
     for slug, expected in ie_photo_pilot.items():
         page = Path(slug) / 'index.html'
@@ -283,6 +285,9 @@ def main():
             problems.append(f'{slug}: wrong verified multi-appliance pickup hero {got}; expected {expected}')
         if not any(term in hero.get('alt', '').lower() for term in ('appliance', 'refrigerator', 'laundry')):
             problems.append(f'{slug}: non-descriptive pickup hero alt text')
+        if slug in ('colton-appliance-pickup', 'highland-appliance-pickup'):
+            if (hero.get('width'), hero.get('height')) != ('1600', '2133'):
+                problems.append(f'{slug}: incorrect 1600x2133 pickup JPEG dimensions')
         absolute = BASE.rstrip('/') + expected
         if f'<meta property="og:image" content="{absolute}">' not in source:
             problems.append(f'{slug}: OG image not synchronized with pickup hero')
