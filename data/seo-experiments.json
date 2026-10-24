@@ -11279,6 +11279,40 @@
       "preferredReview": "2026-11-07",
       "status": "running",
       "freezeRule": "Freeze further speculative Chino hero/copy/title/meta/internal link/canonical edits through Nov 1, prefer Nov 7 review; verified urgent errors may be separately documented and fixed."
+    },
+    {
+      "id": "2026-10-24-sgv-duarte-azusa-general-appliance-photo-match",
+      "market": "Duarte and Azusa, San Gabriel Valley, CA",
+      "hypothesis": "Matching the main general-appliance city page image and structured/social primary photo to the actual major-appliance categories provides a clearer and more trustworthy visual first impression than showing only a laundry pair (Duarte) or a single dryer (Azusa). Ranking benefits are not claimed.",
+      "pagesChanged": [
+        "/duarte-appliance-pickup/",
+        "/azusa-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/duarte-appliance-pickup/",
+        "/azusa-appliance-pickup/"
+      ],
+      "lastChanged": "2026-10-24",
+      "baselinePeriod": {
+        "start": "2026-10-19",
+        "end": "2026-10-21"
+      },
+      "baseline": {
+        "source": "Connected Google Search Console finalized free three-day window only; no reported page metrics on either city general page. Not a deindexing claim or a ranking baseline.",
+        "observedDuarte": "General page hero was a visually inspected white washer/dryer set also repeated as in-page photo; despite general copy for washers, dryers, refrigerators, freezers and stoves.",
+        "observedAzusa": "General page hero was a visually inspected single white dryer; despite broad major-appliance service offer.",
+        "sourcePhotos": "Existing repository-owned four-appliance group photos /salem-group-appliances.webp and /seattle-group-appliances.webp visually inspected before assignment; file names denote library assets and are not statements of a local origin."
+      },
+      "change": "Duarte now uses existing all-appliance group /salem-group-appliances.webp as primary hero. Azusa uses distinct existing all-appliance group /seattle-group-appliances.webp. Aligned page hero/alt/intrinsic 1280x960 dimensions and og:image, og:image:alt, twitter:image, WebPage.primaryImageOfPage. Existing individual laundry supporting images remain. No changes to title, description, text/body, schema other than image reference, canonical, link intent, local phone, qualification or customer form.",
+      "successSignals": [
+        "Live Duarte and Azusa heroes visibly depict washer, dryer, stove/range and refrigerator categories and still load in mobile layouts.",
+        "Canonical, user-facing text, call/text links and working Formspree action unchanged; separate supporting images remain.",
+        "Observe finalized Search Console impressions, clicks, CTR and target query/page ownership after reasonable indexing window; do not assert a rank gain from photo change alone."
+      ],
+      "evaluateNotBefore": "2026-11-01",
+      "preferredReview": "2026-11-07",
+      "status": "running",
+      "freezeRule": "Do not make additional speculative photo/content/canonical/meta/link ownership edits on these pages until first observation date November 1; prefer November 7 finalization review. Technical breakage, factual inaccuracies and contact/indexability issues may be separately logged."
     }
   ],
   "technicalMaintenance": [
