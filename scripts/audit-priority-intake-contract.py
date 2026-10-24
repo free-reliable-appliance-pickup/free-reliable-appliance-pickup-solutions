@@ -16,6 +16,8 @@ SOURCE_OVERRIDES = {"phoenix-appliance-pickup": "Phoenix city page"}
 SERVICE_OVERRIDES = {"columbus-appliance-pickup": "general appliance pickup"}
 # Targeted mobile input-hint regression checks for verified OC and IE form repairs.
 MOBILE_HINT_PAGES = {
+    # Existing California regional hubs (mobile input hints).
+    "inland-empire-appliance-pickup", "san-gabriel-valley-appliance-pickup",
     "orange-appliance-pickup", "laguna-hills-appliance-pickup",
     "mission-viejo-appliance-pickup", "san-clemente-appliance-pickup",
     "placentia-appliance-pickup",
@@ -62,6 +64,8 @@ MOBILE_HINT_PAGES = {
     "upland-appliance-pickup", "montclair-appliance-pickup",
     "huntington-beach-appliance-pickup",
 }
+
+OPTIONAL_ACCESS_MESSAGE_PAGES = {"san-gabriel-valley-appliance-pickup"}
 
 # Existing general-market pages only. Do not invent or publish new city URLs.
 CITIES = (
@@ -166,6 +170,11 @@ def inspect(page_html, page_label):
         if len(zips) != 1 or zips[0][0] != "input" or zips[0][1].get("autocomplete") != "postal-code" or zips[0][1].get("inputmode") != "numeric":
             errors.append(f"{page_label}: ZIP must provide postal-code autofill and numeric keypad hints")
 
+    if page_label in OPTIONAL_ACCESS_MESSAGE_PAGES:
+        messages = fields.get("message", [])
+        if len(messages) != 1 or messages[0][0] != "textarea" or "required" in messages[0][1]:
+            errors.append(f"{page_label}: long access-details message must remain optional")
+
     return errors
 
 
@@ -197,6 +206,9 @@ def self_test():
     assert not inspect(oc_good, "orange-appliance-pickup"), "valid OC mobile fixture rejected"
     assert inspect(oc_good.replace('inputmode="tel"', 'inputmode="text"'), "orange-appliance-pickup"), "bad phone keypad passed"
     assert inspect(oc_good.replace('autocomplete="postal-code"', 'autocomplete="off"'), "orange-appliance-pickup"), "bad ZIP autofill passed"
+    sgv_hub_good = oc_good.replace("orange-appliance-pickup", "san-gabriel-valley-appliance-pickup").replace("</form>", '<textarea name="message"></textarea></form>')
+    assert not inspect(sgv_hub_good, "san-gabriel-valley-appliance-pickup"), "SGV regional minimal valid request rejected"
+    assert inspect(sgv_hub_good.replace('<textarea name="message">', '<textarea name="message" required>'), "san-gabriel-valley-appliance-pickup"), "mandatory SGV access essay slipped through"
     ie_good = oc_good.replace("orange-appliance-pickup", "colton-appliance-pickup")
     assert not inspect(ie_good, "colton-appliance-pickup"), "valid IE mobile fixture rejected"
     assert inspect(ie_good.replace('inputmode="numeric"', 'inputmode="text"'), "colton-appliance-pickup"), "bad IE ZIP keypad passed"
@@ -230,6 +242,9 @@ def main():
 
     pages = [("home", Path("index.html"))]
     pages.extend((f"{city}-appliance-pickup", Path(city + "-appliance-pickup") / "index.html") for city in CITIES)
+    # Existing California regional hubs also use this request contract.
+    for hub in ("inland-empire-appliance-pickup", "san-gabriel-valley-appliance-pickup"):
+        pages.append((hub, Path(hub) / "index.html"))
     # Existing Valley regional hub uses the same customer request contract.
     pages.append(("san-fernando-valley-appliance-pickup", Path("san-fernando-valley-appliance-pickup/index.html")))
     # Existing request-only state hub; same Formspree intake contract, no coverage expansion.
