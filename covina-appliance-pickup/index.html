@@ -103,7 +103,7 @@
 <form action="https://formspree.io/f/mvzeapzd" method="POST">
 <input type="hidden" name="_subject" value="Covina California Appliance Pickup Request"><input type="hidden" name="state" value="California"><input type="hidden" name="source_page" value="covina-appliance-pickup"><input type="hidden" name="service" value="General major appliance pickup">
 <label>Full Name<input type="text" name="name" required autocomplete="name"></label>
-<label>Phone Number<input type="tel" name="phone" required autocomplete="tel"></label>
+<label>Phone Number<input type="tel" name="phone" required autocomplete="tel" inputmode="tel"></label>
 <label>Pickup Address (optional until scheduling)<input type="text" name="address" autocomplete="street-address"></label>
 <label>City<input type="text" name="city" value="Covina" required autocomplete="address-level2"></label>
 <label>ZIP Code<input type="text" name="zip" required autocomplete="postal-code" inputmode="numeric"></label>
@@ -114,6 +114,7 @@
 <label>Brand / Model (optional)<input type="text" name="brand_model"></label>
 <label>Preferred Pickup Window (optional)<input type="text" name="preferred_window" placeholder="Example: weekday morning"></label>
 <label>Property Type (optional)<select name="property_type"><option value="">Select property type</option><option>House</option><option>Apartment / Condo</option><option>Senior / 55+ Community</option><option>Rental / Property Management</option><option>Business / Commercial</option><option>Mobile / Manufactured Home</option><option>Other</option></select></label><label>Photos Available? (optional)<select name="photos_available"><option value="">Select</option><option>Yes - I can text photos</option><option>Yes - already sent by text</option><option>No photos yet</option></select></label><label>Access Notes / Photo Information<textarea name="message" rows="5" placeholder="Working condition, stairs, gates, doors, parking and photo information."></textarea></label>
+<label class="site-paid-removal-choice" style="display:block;clear:both;margin:14px 0;padding:12px;border:1px solid #cbded2;border-radius:8px">If free pickup is unavailable, would you consider a paid removal quote?<select name="paid_removal_preference" style="display:block;width:100%;max-width:100%;margin-top:8px"><option value="">Choose an option (optional)</option><option value="free_only">Free pickup only — do not offer paid removal</option><option value="quote_ok">Yes — I may consider a separate paid removal quote</option></select></label>
 <button type="submit">Submit Covina Pickup Request</button>
 </form>
 <p><small>Request contact: submitting this form allows us or an available pickup professional to contact you about this pickup request. See our <a href="/privacy/">Privacy Policy</a> and <a href="/terms/">Terms</a>.</small></p>

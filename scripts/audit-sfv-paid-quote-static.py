@@ -38,6 +38,17 @@ PAGES = {
     # Verified Azusa and Irwindale no-JS quote consent gaps (2026-10-24).
     "azusa-appliance-pickup": "azusa-appliance-pickup/index.html",
     "irwindale-appliance-pickup": "irwindale-appliance-pickup/index.html",
+    # Verified existing SGV city form no-JS quote gaps (2026-10-24).
+    "covina-appliance-pickup": "covina-appliance-pickup/index.html",
+    "west-covina-appliance-pickup": "west-covina-appliance-pickup/index.html",
+    "el-monte-appliance-pickup": "el-monte-appliance-pickup/index.html",
+    "la-puente-appliance-pickup": "la-puente-appliance-pickup/index.html",
+    "baldwin-park-appliance-pickup": "baldwin-park-appliance-pickup/index.html",
+    "temple-city-appliance-pickup": "temple-city-appliance-pickup/index.html",
+    "rosemead-appliance-pickup": "rosemead-appliance-pickup/index.html",
+    "monterey-park-appliance-pickup": "monterey-park-appliance-pickup/index.html",
+    "san-gabriel-appliance-pickup": "san-gabriel-appliance-pickup/index.html",
+    "alhambra-appliance-pickup": "alhambra-appliance-pickup/index.html",
     # Verified San Gabriel Valley no-JS customer quote gaps (2026-10-24).
     "duarte-appliance-pickup": "duarte-appliance-pickup/index.html",
     "monrovia-appliance-pickup": "monrovia-appliance-pickup/index.html",

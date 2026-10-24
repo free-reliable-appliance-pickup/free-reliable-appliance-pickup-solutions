@@ -24,6 +24,17 @@ MOBILE_HINT_PAGES = {
     "highland-appliance-pickup",
     "pasadena-appliance-pickup", "arcadia-appliance-pickup",
     "san-dimas-appliance-pickup", "la-verne-appliance-pickup",
+    # Existing SGV forms repaired for mobile keyboard and autofill.
+    "covina-appliance-pickup",
+    "west-covina-appliance-pickup",
+    "el-monte-appliance-pickup",
+    "la-puente-appliance-pickup",
+    "baldwin-park-appliance-pickup",
+    "temple-city-appliance-pickup",
+    "rosemead-appliance-pickup",
+    "monterey-park-appliance-pickup",
+    "san-gabriel-appliance-pickup",
+    "alhambra-appliance-pickup",
 }
 
 # Existing general-market pages only. Do not invent or publish new city URLs.
