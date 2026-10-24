@@ -63,6 +63,11 @@ PAGES = {
     "downey-appliance-pickup": "downey-appliance-pickup/index.html",
     "la-mirada-appliance-pickup": "la-mirada-appliance-pickup/index.html",
     "cerritos-appliance-pickup": "cerritos-appliance-pickup/index.html",
+    # Verified Southeast LA customer consent: static no-JS fallback (2026-10-24).
+    "long-beach-appliance-pickup": "long-beach-appliance-pickup/index.html",
+    "bellflower-appliance-pickup": "bellflower-appliance-pickup/index.html",
+    "compton-appliance-pickup": "compton-appliance-pickup/index.html",
+    "south-gate-appliance-pickup": "south-gate-appliance-pickup/index.html",
     # Verified coastal Orange County static quote consent gaps (2026-10-24).
     "huntington-beach-appliance-pickup": "huntington-beach-appliance-pickup/index.html",
     "costa-mesa-appliance-pickup": "costa-mesa-appliance-pickup/index.html",
