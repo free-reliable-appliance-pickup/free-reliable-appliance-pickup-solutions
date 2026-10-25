@@ -147,6 +147,10 @@ PAGES = {
     "claremont-washer-dryer-pickup": "claremont-washer-dryer-pickup/index.html",
     "san-dimas-washer-dryer-pickup": "san-dimas-washer-dryer-pickup/index.html",
     "la-verne-washer-dryer-pickup": "la-verne-washer-dryer-pickup/index.html",
+    # Three existing CA laundry request forms: optional quote and complete routing (2026-10-25).
+    "san-bernardino-washer-dryer-pickup": "san-bernardino-washer-dryer-pickup/index.html",
+    "moreno-valley-washer-dryer-pickup": "moreno-valley-washer-dryer-pickup/index.html",
+    "downey-washer-dryer-pickup": "downey-washer-dryer-pickup/index.html",
     # Fontana specialty request forms: verified no-JS optional quote selection (2026-10-24).
     "fontana-stove-oven-pickup": "fontana-stove-oven-pickup/index.html",
     "fontana-refrigerator-pickup": "fontana-refrigerator-pickup/index.html",
@@ -172,6 +176,13 @@ IE_SPECIALTY_INTAKE = {
     "corona-washer-dryer-pickup": ("Corona", "Washer and dryer pickup"),
     "upland-freezer-pickup": ("Upland", "Freezer pickup"),
     "upland-stove-oven-pickup": ("Upland", "Stove, range and oven pickup"),
+}
+# City/service attribution, required condition and mobile hints for three existing CA forms.
+# San Bernardino city is a required visible input; other two keep a hidden city.
+NEXT_WAVE_LAUNDRY_INTAKE = {
+    "san-bernardino-washer-dryer-pickup": "San Bernardino",
+    "moreno-valley-washer-dryer-pickup": "Moreno Valley",
+    "downey-washer-dryer-pickup": "Downey",
 }
 # Source-only intake contract for six existing Southern California laundry forms.
 SOCAL_LAUNDRY_INTAKE = {
@@ -274,6 +285,22 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: mobile phone hints missing")
             if len(zip_inputs) != 1 or zip_inputs[0].get("autocomplete") != "postal-code" or zip_inputs[0].get("inputmode") != "numeric":
                 problems.append(f"{label}: mobile ZIP hints missing")
+    if label in NEXT_WAVE_LAUNDRY_INTAKE:
+        expected_city = NEXT_WAVE_LAUNDRY_INTAKE[label]
+        for key, expected in (("city", expected_city), ("state", "California"), ("service", "Washer and dryer pickup")):
+            matches = [a for a in inputs if a.get("name") == key and a.get("value") == expected]
+            if len(matches) != 1 or (key != "city" and matches[0].get("type") != "hidden"):
+                problems.append(f"{label}: missing or incorrect {key} attribution")
+        for key, required_mode, auto in (("phone", "tel", "tel"), ("zip", "numeric", "postal-code")):
+            matches = [a for a in inputs if a.get("name") == key]
+            if len(matches) != 1 or "required" not in matches[0] or matches[0].get("inputmode") != required_mode or matches[0].get("autocomplete") != auto:
+                problems.append(f"{label}: missing required mobile {key} input")
+        for key in ("condition", "appliance"):
+            matches = [x for x in form["selects"] if x["attrs"].get("name") == key]
+            if len(matches) != 1 or "required" not in matches[0]["attrs"] or matches[0]["options"][0] != "":
+                problems.append(f"{label}: {key} must require explicit customer choice")
+            elif any("selected" in item for item in matches[0]["option_attrs"][1:]):
+                problems.append(f"{label}: {key} must not preselect an appliance/condition")
     if label in SOCAL_LAUNDRY_INTAKE:
         expected_city = SOCAL_LAUNDRY_INTAKE[label]
         for field, expected in (("city", expected_city), ("state", "California"), ("service", "Washer and dryer pickup")):
@@ -408,6 +435,31 @@ def fixture_checks():
     assert inspect(sgv_label, sgv_good.replace('value="Monterey Park"', 'value="Pasadena"')), "wrong SGV city not caught"
     assert inspect(sgv_label, sgv_good.replace('name="condition" required', 'name="condition"')), "missing required condition not caught"
     assert inspect(sgv_label, sgv_good.replace('<option value=""></option><option value="Fully Working"', '<option value="Fully Working"></option><option value=""')), "preselected working condition not caught"
+    # Positive/negative static fixtures for the 2026-10-25 customer-intake batch.
+    new_label = "moreno-valley-washer-dryer-pickup"
+    new_good = (
+        f'<form action="{ENDPOINT}" method="POST">'
+        f'<input type="hidden" name="source_page" value="{new_label}">'
+        '<input type="hidden" name="city" value="Moreno Valley">'
+        '<input type="hidden" name="state" value="California">'
+        '<input type="hidden" name="service" value="Washer and dryer pickup">'
+        '<input type="tel" name="phone" required autocomplete="tel" inputmode="tel">'
+        '<input name="zip" required autocomplete="postal-code" inputmode="numeric">'
+        '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+        '<select name="condition" required><option value=""></option><option>Fully Working</option></select>'
+        '<select name="paid_removal_preference"><option value=""></option>'
+        '<option value="free_only"></option><option value="quote_ok"></option></select>'
+        '</form>'
+    )
+    assert not inspect(new_label, new_good), "valid new CA laundry form rejected"
+    for old, new in (
+        ('value="Moreno Valley"', 'value="Fontana"'),
+        ('name="service"', 'name="untracked_service"'),
+        ('inputmode="tel"', 'inputmode="numeric"'),
+        ('name="paid_removal_preference"', 'name="no_consent"'),
+        ('name="condition" required', 'name="condition"'),
+    ):
+        assert inspect(new_label, new_good.replace(old, new)), f"new CA laundry defect undetected: {old}"
     # Prevent regression of a real no-JavaScript Inland Empire city/service gap.
     ie_good = good.replace(f'value="{label}"', 'value="upland-freezer-pickup"').replace(
         '<input name="phone" type="tel" required>',
