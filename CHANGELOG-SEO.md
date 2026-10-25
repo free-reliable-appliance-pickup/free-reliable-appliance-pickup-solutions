@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-10-25 — Los Angeles, Pomona and Santa Ana laundry condition truth (VGM factual technical exception)
+- **Source-verified defect:** The existing washer/dryer forms on all three city pages required appliance condition but offered only Fully Working / Needs Repair / Not Working / Unknown. A machine that runs with a known issue could not be reported accurately. Pomona's existing form also omitted static laundry-service attribution on no-JavaScript POST.
+- **Minimal reversible repair:** Add a non-preselected `Working With Issues` choice to each existing required condition selector; add hidden `service=Washer and dryer pickup` to Pomona only. Keep all existing form fields, local phone routes, Formspree action, paid-quote consent, city/state/source attribution, photographs, eligibility language, URLs, canonicals, SEO copy and schema unchanged.
+- **Regression:** Enroll these three existing forms in the California source-only condition and attribution guard, with positive/negative fixtures for all protected cities. The Pomona and Santa Ana ranking-content experiment review gates were 2026-10-16; this change does not alter their SEO variables. No overlap with emergency repair ownership.
+- **Verification boundary:** Require passing CI, including SEO Experiment Guard, before merging. Confirm the merged main and public HTML separately. Source/CI checks do not prove Formspree delivery or search-ranking improvement.
+
+
 ## 2026-10-25 — Los Angeles / Orange County hub truthful customer intake (VGM technical exception)
 - **Verified main-branch defects:** Los Angeles County general pickup form lacked a static `service` field and an explicit choice for appliances that run with a known issue. Both Los Angeles County and Orange County countywide forms lacked that working-with-issues condition and mobile phone/ZIP autofill hints.
 - **Narrow reversible fix:** Preserve existing approved Formspree action, phone numbers, required customer-entered city and appliance/condition, free-first optional paid quote choice, photos, qualification, URLs, schema, SEO copy and indexability. Add missing `service=General major appliance pickup` only on Los Angeles County; add blank-default `Working With Issues` choice and mobile `tel`/`postal-code` hints to both.
