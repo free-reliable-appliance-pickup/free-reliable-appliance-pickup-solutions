@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-10-25 — Fresno washer/dryer optional quote intake parity (VGM technical exception)
+- **Verified:** The existing Fresno laundry Formspree form on `main` required phone, explicit appliance/condition and pickup access, but lacked the approved static optional paid-removal quote preference. The Fresno general-appliance form and Portland/Salem general and laundry forms already provide this choice.
+- **Change:** Add only a blank-default `paid_removal_preference` selector (`free_only` / `quote_ok`) with clear no-charge/no-booking language to the Fresno washer/dryer request form. Preserve existing 310 telephone links, Formspree action, city/state/service/source, required condition and access, images, titles, canonical, SEO copy and eligibility. Extend the no-JavaScript consent guard with Fresno city/service/mobile/required-choice assertions and negative fixtures.
+- **Freeze:** Fresno owner/sibling experiments in `data/seo-experiments.json` have latest listed evaluate-not-before 2026-10-14; no ranking variables are changed. This is a narrow verified customer-intake technical correction, not a ranking experiment.
+- **Verification:** Require green CI, independent main-branch inspection and fresh production HTML verification after deployment. Actual Formspree inbox delivery, indexing, organic rankings and lead results remain unverified.
+- **Rollback:** Revert this small isolated PR if intake regression occurs.
+
 ## 2026-10-25 — Five Inland Empire washer/dryer intake repairs (VGM technical exception)
 - **Verified:** Highland, Redlands, Eastvale, Colton and Jurupa Valley existing Formspree laundry forms lacked the approved optional no-JavaScript paid-removal quote preference. Highland also lacked static source attribution; all five lacked static service tags and complete mobile hints; four lacked city tags. All already required phone and explicit appliance/condition choice.
 - **Change:** Preserve one original Formspree POST, 909 call links, required fields, qualification and coverage. Add blank-default optional `paid_removal_preference` (`free_only` / `quote_ok`), accurate city/source/service attribution and phone/ZIP mobile hints. No charge, booking or guaranteed pickup is implied. No SEO title, content, canonical, images, schema or indexability changed.
