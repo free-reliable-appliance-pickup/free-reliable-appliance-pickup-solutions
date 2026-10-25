@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-25 — High Desert / Antelope Valley customer opt-in form integrity (VGM technical exception)
+- **Confirmed:** Existing Victorville, Hesperia, Adelanto, Apple Valley, Palmdale and Lancaster general pickup Formspree forms lacked a static optional paid-removal quote choice. Palmdale/Lancaster also lacked static general-service lead attribution, although each form already required customer condition, appliance, city, ZIP and phone.
+- **Limited repair:** Preserve free qualification as first choice, add blank-default optional `paid_removal_preference` with `free_only` / `quote_ok` and no-charge/no-booking disclaimer; improve ZIP mobile hints (all six) and phone hints (Palmdale/Lancaster); add static general-service attribution to those two existing forms.
+- **Scope control:** Preserve existing phone numbers (High Desert 909 / Antelope 310), Formspree action, location/qualification language, city/source fields, appliance requirements, SEO text, images, structured data, titles and canonical URLs. High Desert and Lancaster owner SEO experiment evaluation gates ended Oct 15/16. No SEO content experiment reset.
+- **Verification:** Add these pages to source-only `scripts/audit-sfv-paid-quote-static.py` with negative-case fixtures; require PR CI, successful deployment and independent public HTML verification. No end-to-end form delivery, new backlink or organic ranking improvement claimed.
+
 ## 2026-10-25 — La Cañada Flintridge / South Pasadena customer quote fallback (VGM verified intake exception)
 - **Confirmed:** Existing Formspree general-appliance city forms had required telephone, city/state/service attribution and explicit appliance/condition selectors but lacked the static, opt-in `paid_removal_preference` choice available on neighboring California pages.
 - **Correction:** Add an optional, unselected `free_only` / `quote_ok` selector and no-charge/no-booking disclosure; add telephone and postal-code mobile keyboard/autocomplete hints. Preserve city names, user-visible pickup policy, service area, Formspree endpoint, working phones, canonicals, titles, structured data, approved photos and all ranking copy.
