@@ -270,6 +270,12 @@ OC_LAUNDRY_INTAKE = {
     "laguna-niguel-washer-dryer-pickup": "Laguna Niguel",
     "san-clemente-washer-dryer-pickup": "San Clemente",
 }
+# Protect truthful condition and no-JS service attribution on three existing CA laundry forms.
+CA_LAUNDRY_WORKING_ISSUES = {
+    "riverside-washer-dryer-pickup": "Riverside",
+    "ontario-washer-dryer-pickup": "Ontario",
+    "anaheim-washer-dryer-pickup": "Anaheim",
+}
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
     "portland-appliance-pickup": "portland-appliance-pickup/index.html",
@@ -377,6 +383,29 @@ def inspect(label, html, expected_source=None):
             problems.append(f"{label}: incorrect Los Angeles city attribution")
         if len([a for a in inputs if a.get("name") == "state" and a.get("value") == "California"]) != 1:
             problems.append(f"{label}: incorrect California state attribution")
+    # A running machine with a known issue is not necessarily fully working or broken.
+    # Keep the truthful nondefault condition and service tag on these existing forms.
+    if label in CA_LAUNDRY_WORKING_ISSUES:
+        expected_city = CA_LAUNDRY_WORKING_ISSUES[label]
+        for field, expected in (("state", "California"), ("service", "Washer and dryer pickup")):
+            matches = [a for a in inputs if a.get("name") == field and a.get("type") == "hidden" and a.get("value") == expected]
+            if len(matches) != 1:
+                problems.append(f"{label}: missing or incorrect static {field} attribution")
+        cities = [a for a in inputs if a.get("name") == "city" and a.get("value") == expected_city and "required" in a]
+        if len(cities) != 1:
+            problems.append(f"{label}: required city attribution changed")
+        for field, mode, auto in (("phone", "tel", "tel"), ("zip", "numeric", "postal-code")):
+            matches = [a for a in inputs if a.get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0] or matches[0].get("inputmode") != mode or matches[0].get("autocomplete") != auto:
+                problems.append(f"{label}: required mobile {field} input changed")
+        for field in ("appliance", "condition"):
+            matches = [a for a in form["selects"] if a["attrs"].get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0]["attrs"] or not matches[0]["options"] or matches[0]["options"][0] != "":
+                problems.append(f"{label}: {field} must require an explicit choice")
+            elif any("selected" in attrs for attrs in matches[0]["option_attrs"][1:]):
+                problems.append(f"{label}: {field} must not preselect a condition or appliance")
+            elif field == "condition" and matches[0]["options"].count("Working With Issues") != 1:
+                problems.append(f"{label}: working-with-issues choice missing or duplicated")
     # Oregon laundry customers need a truthful explicit option for a machine
     # that runs but has a known issue; do not preselect any condition.
     if label in ("portland-washer-dryer-pickup", "salem-washer-dryer-pickup"):
@@ -533,6 +562,35 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
+    # California laundry source/condition regression, including negative fixtures.
+    ca_label = "riverside-washer-dryer-pickup"
+    ca_good = (
+        f'<form action="{ENDPOINT}" method="POST">'
+        f'<input type="hidden" name="source_page" value="{ca_label}">'
+        '<input type="hidden" name="state" value="California">'
+        '<input type="hidden" name="service" value="Washer and dryer pickup">'
+        '<input name="city" value="Riverside" required>'
+        '<input name="phone" type="tel" required autocomplete="tel" inputmode="tel">'
+        '<input name="zip" required autocomplete="postal-code" inputmode="numeric">'
+        '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+        '<select name="condition" required><option value=""></option><option>Fully Working</option>'
+        '<option value="Working With Issues"></option><option>Needs Repair</option></select>'
+        '<select name="paid_removal_preference"><option value=""></option>'
+        '<option value="free_only"></option><option value="quote_ok"></option></select></form>'
+    )
+    for city in CA_LAUNDRY_WORKING_ISSUES.values():
+        label = city.lower().replace(" ", "-") + "-washer-dryer-pickup"
+        example = ca_good.replace(ca_label, label).replace('value="Riverside"', f'value="{city}"')
+        assert not inspect(label, example), f"valid California laundry fixture rejected: {city}"
+    for old, new in (
+        ('name="service"', 'name="other_service"'),
+        ('value="Riverside"', 'value="Other City"'),
+        ('value="Working With Issues"', 'value="Fully Working"'),
+        ('<option value="Working With Issues"></option>', '<option value="Working With Issues" selected></option>'),
+        ('name="condition" required', 'name="condition"'),
+        ('inputmode="numeric"', 'inputmode="text"'),
+    ):
+        assert inspect(ca_label, ca_good.replace(old, new)), f"CA laundry defect undetected: {old}"
     # Coachella Valley working-condition and paid-quote consent must remain explicit.
     valley_label = "la-quinta-appliance-pickup"
     valley_good = (
