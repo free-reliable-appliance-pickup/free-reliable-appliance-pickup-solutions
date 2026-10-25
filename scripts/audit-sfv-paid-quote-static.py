@@ -113,6 +113,11 @@ PAGES = {
     # Verified Arcadia/Glendora laundry static consent and attribution (2026-10-24).
     "arcadia-washer-dryer-pickup": "arcadia-washer-dryer-pickup/index.html",
     "glendora-washer-dryer-pickup": "glendora-washer-dryer-pickup/index.html",
+    # Verified Pasadena/Alhambra/La Puente/Baldwin Park laundry no-JS quote consent (2026-10-24).
+    "alhambra-washer-dryer-pickup": "alhambra-washer-dryer-pickup/index.html",
+    "pasadena-washer-dryer-pickup": "pasadena-washer-dryer-pickup/index.html",
+    "la-puente-washer-dryer-pickup": "la-puente-washer-dryer-pickup/index.html",
+    "baldwin-park-washer-dryer-pickup": "baldwin-park-washer-dryer-pickup/index.html",
     # Existing SGV/Pomona Valley specialty request forms: optional customer quote consent (2026-10-24).
     "pasadena-refrigerator-pickup": "pasadena-refrigerator-pickup/index.html",
     "claremont-washer-dryer-pickup": "claremont-washer-dryer-pickup/index.html",
