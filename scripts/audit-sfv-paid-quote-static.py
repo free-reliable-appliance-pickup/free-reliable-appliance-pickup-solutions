@@ -7,6 +7,9 @@ PAGES = {
     # California regional forms must preserve optional consent without JavaScript.
     "inland-empire-appliance-pickup": "inland-empire-appliance-pickup/index.html",
     "san-gabriel-valley-appliance-pickup": "san-gabriel-valley-appliance-pickup/index.html",
+    "riverside-county-appliance-pickup": "riverside-county-appliance-pickup/index.html",
+    "san-bernardino-county-appliance-pickup": "san-bernardino-county-appliance-pickup/index.html",
+    "san-diego-county-appliance-pickup": "san-diego-county-appliance-pickup/index.html",
     "la-canada-flintridge-appliance-pickup": "la-canada-flintridge-appliance-pickup/index.html",
     "south-pasadena-appliance-pickup": "south-pasadena-appliance-pickup/index.html",
     "victorville-appliance-pickup": "victorville-appliance-pickup/index.html",
@@ -286,6 +289,13 @@ SGV_SIX_LAUNDRY_INTAKE = {
     "san-dimas-washer-dryer-pickup": "San Dimas",
 }
 
+# Three priority countywide forms: preserve free-first consent and truthful attribution.
+CA_THREE_COUNTY_INTAKE = {
+    "riverside-county-appliance-pickup",
+    "san-bernardino-county-appliance-pickup",
+    "san-diego-county-appliance-pickup",
+}
+
 # Protect truthful condition and no-JS service attribution on three existing CA laundry forms.
 CA_LAUNDRY_WORKING_ISSUES = {
     "riverside-washer-dryer-pickup": "Riverside",
@@ -359,6 +369,30 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: {field} requires explicit customer choice")
             elif any("selected" in a for a in matches[0]["option_attrs"][1:]):
                 problems.append(f"{label}: {field} silently preselects an appliance/condition")
+    # Customer forms on three county hubs must not silently lose city,
+    # service attribution, phone, optional paid quote or appliance truth.
+    if label in CA_THREE_COUNTY_INTAKE:
+        for name, value in (("state", "California"), ("service", "General major appliance pickup")):
+            matches = [a for a in inputs if a.get("name") == name and a.get("type") == "hidden" and a.get("value") == value]
+            if len(matches) != 1:
+                problems.append(f"{label}: missing or incorrect static {name} attribution")
+        cities = [a for a in inputs if a.get("name") == "city"]
+        if len(cities) != 1 or "required" not in cities[0] or cities[0].get("type") == "hidden" or cities[0].get("value"):
+            problems.append(f"{label}: customer must enter actual pickup city")
+        for name, mode, auto in (("phone", "tel", "tel"), ("zip", "numeric", "postal-code")):
+            matches = [a for a in inputs if a.get("name") == name]
+            if len(matches) != 1 or "required" not in matches[0] or matches[0].get("inputmode") != mode or matches[0].get("autocomplete") != auto:
+                problems.append(f"{label}: mobile {name} input contract changed")
+            elif name == "phone" and matches[0].get("type") != "tel":
+                problems.append(f"{label}: telephone type must stay tel")
+        for name in ("appliance", "condition"):
+            matches = [a for a in form["selects"] if a["attrs"].get("name") == name]
+            if len(matches) != 1 or "required" not in matches[0]["attrs"] or not matches[0]["options"] or matches[0]["options"][0] != "":
+                problems.append(f"{label}: {name} must require explicit selection")
+            elif any("selected" in a for a in matches[0]["option_attrs"][1:]):
+                problems.append(f"{label}: {name} cannot be preselected")
+            elif name == "condition" and matches[0]["options"].count("Working With Issues") != 1:
+                problems.append(f"{label}: working-with-issues option missing or duplicated")
     if label in HIGH_DESERT_ANTELOPE_GENERAL:
         expected_city = HIGH_DESERT_ANTELOPE_GENERAL[label]
         for key, expected in (("city", expected_city), ("state", "California"), ("service", "General major appliance pickup")):
@@ -624,6 +658,35 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
+    # Three countywide request forms: positive fixture plus intentional regressions.
+    for county_label in sorted(CA_THREE_COUNTY_INTAKE):
+        county_good = (
+            f'<form action="{ENDPOINT}" method="POST">'
+            f'<input type="hidden" name="source_page" value="{county_label}">'
+            '<input type="hidden" name="state" value="California">'
+            '<input type="hidden" name="service" value="General major appliance pickup">'
+            '<input type="text" name="city" required>'
+            '<input type="tel" name="phone" required autocomplete="tel" inputmode="tel">'
+            '<input name="zip" required autocomplete="postal-code" inputmode="numeric">'
+            '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+            '<select name="condition" required><option value=""></option><option>Fully Working</option>'
+            '<option value="Working With Issues"></option><option>Needs Repair</option></select>'
+            '<select name="paid_removal_preference"><option value=""></option>'
+            '<option value="free_only"></option><option value="quote_ok"></option></select></form>'
+        )
+        assert not inspect(county_label, county_good), f"valid county intake rejected: {county_label}"
+        for old, new in (
+            ('name="service"', 'name="lost_service"'),
+            ('name="source_page"', 'name="lost_source"'),
+            ('name="city" required', 'name="city"'),
+            ('type="text" name="city"', 'type="hidden" name="city"'),
+            ('value="Working With Issues"', 'value="Needs Repair"'),
+            ('name="condition" required', 'name="condition"'),
+            ('inputmode="numeric"', 'inputmode="text"'),
+            ('autocomplete="tel"', 'autocomplete="off"'),
+            ('name="paid_removal_preference"', 'name="no_paid_quote"'),
+        ):
+            assert inspect(county_label, county_good.replace(old, new)), f"county intake defect not caught: {county_label}: {old}"
     # California laundry source/condition regression, including negative fixtures.
     ca_label = "riverside-washer-dryer-pickup"
     ca_good = (
