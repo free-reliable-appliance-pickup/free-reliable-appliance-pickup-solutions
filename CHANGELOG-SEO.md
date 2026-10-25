@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-10-25 — Five Inland Empire washer/dryer intake repairs (VGM technical exception)
+- **Verified:** Highland, Redlands, Eastvale, Colton and Jurupa Valley existing Formspree laundry forms lacked the approved optional no-JavaScript paid-removal quote preference. Highland also lacked static source attribution; all five lacked static service tags and complete mobile hints; four lacked city tags. All already required phone and explicit appliance/condition choice.
+- **Change:** Preserve one original Formspree POST, 909 call links, required fields, qualification and coverage. Add blank-default optional `paid_removal_preference` (`free_only` / `quote_ok`), accurate city/source/service attribution and phone/ZIP mobile hints. No charge, booking or guaranteed pickup is implied. No SEO title, content, canonical, images, schema or indexability changed.
+- **Experiment:** Running Redlands/Highland, Eastvale and Colton laundry experiments are untouched; separate Redlands general photo test through Nov 1 is untouched. This is a documented technical/customer-intake exception only.
+- **Verification:** Five pages registered in static consent audit; positive/negative fixtures test city/service, mobile input, condition and consent. CI and independent live deployment verification are separate gates. Formspree inbox delivery, organic rankings and lead impact are unverified.
+- **Rollback:** Revert this isolated PR if a regression is demonstrated.
+
 ## 2026-10-25 — San Bernardino, Moreno Valley and Downey washer/dryer lead-intake parity (VGM technical exception)
 - **Evidence:** On `main` `86c7939`, these three existing California washer/dryer Formspree forms collected required phone and appliance condition, but did not include the previously approved optional paid-removal quote selector. San Bernardino used a customer-editable required city, while Moreno Valley and Downey did not include a city field; all three lacked a static service field, complete phone/ZIP mobile hints, and guard coverage.
 - **Narrow scope:** In exactly these three existing `*-washer-dryer-pickup/index.html` forms, insert a blank-default optional `paid_removal_preference` (`free_only` / `quote_ok`); preserve a valid no-JS Formspree POST and existing required fields; add correct service attribution, static city fields only where missing, and telephone/ZIP input hints. Existing page titles, snippets, H1, ranking copy, hero images, phone links, canonicals, schema, service regions, and prices remain unchanged.
