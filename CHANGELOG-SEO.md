@@ -1,5 +1,10 @@
 # SEO change and decision register
 
+## 2026-10-25 — Pasadena multi-appliance OG alt factual mismatch (VGM technical exception)
+- **Source-confirmed:** Pasadena general pickup's OG image and visible hero both use the existing Rancho multi-appliance group photograph (washer, dryer, stove, refrigerator), but its `og:image:alt` described only a washer/dryer set. This was inaccurate social-preview metadata; not evidence of an organic ranking problem.
+- **Correction:** Align only the OG image alt text with the existing truthful visible hero alt. Preserve actual image, preload, dimensions, form/phone routing, acceptance policy, schema, canonical, copy and SEO experiment variables. Add a small regression guard to the existing active-image audit.
+- **Experiment / verification:** Pasadena's city-parity gate was October 13 and anti-template gate October 14; this is a narrow factual metadata exception. Validate CI and public HTML after deployment before claiming live completion. No form submission, ranking or backlink claim.
+
 ## 2026-10-25 — Portland/Salem laundry working-with-issues condition choice (VGM intake exception)
 - **Verified source gap:** The existing Portland and Salem washer/dryer forms required a condition choice but offered only Fully Working, Needs Repair, Not Working and Unknown. Their general city forms already distinguish a machine that works with a known issue. The laundry-page text asks customers to describe such problems, but the laundry selector lacked that accurate option.
 - **Bounded correction:** Add a nondefault `Working With Issues` option to each existing laundry condition selector; retain all original choices and the required blank first option. Extend the existing source-only Oregon form guard and positive/negative fixtures. No change to phone 503-868-4455, Formspree POST, optional paid-quote consent, other customer fields, photographs, free-pickup eligibility, SEO text, canonical, schema or links.
