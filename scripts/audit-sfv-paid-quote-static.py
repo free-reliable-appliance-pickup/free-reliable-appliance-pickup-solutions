@@ -304,6 +304,9 @@ CA_LAUNDRY_WORKING_ISSUES = {
     "riverside-washer-dryer-pickup": "Riverside",
     "ontario-washer-dryer-pickup": "Ontario",
     "anaheim-washer-dryer-pickup": "Anaheim",
+    "los-angeles-washer-dryer-pickup": "Los Angeles",
+    "pomona-washer-dryer-pickup": "Pomona",
+    "santa-ana-washer-dryer-pickup": "Santa Ana",
 }
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
@@ -710,6 +713,15 @@ def fixture_checks():
         ca_case_label = city.lower().replace(" ", "-") + "-washer-dryer-pickup"
         example = ca_good.replace(ca_label, ca_case_label).replace('value="Riverside"', f'value="{city}"')
         assert not inspect(ca_case_label, example), f"valid California laundry fixture rejected: {city}"
+        for old, new in (
+            ('value="Working With Issues"', 'value="Needs Repair"'),
+            ('name="service"', 'name="lost_service"'),
+            ('name="condition" required', 'name="condition"'),
+            ('name="appliance" required', 'name="appliance"'),
+            ('autocomplete="tel"', 'autocomplete="off"'),
+            ('inputmode="numeric"', 'inputmode="text"'),
+        ):
+            assert inspect(ca_case_label, example.replace(old, new)), f"California laundry defect not caught: {city}: {old}"
     for old, new in (
         ('name="service"', 'name="other_service"'),
         ('value="Riverside"', 'value="Other City"'),
