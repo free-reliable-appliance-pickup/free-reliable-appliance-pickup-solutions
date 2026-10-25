@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-25 — La Cañada Flintridge / South Pasadena customer quote fallback (VGM verified intake exception)
+- **Confirmed:** Existing Formspree general-appliance city forms had required telephone, city/state/service attribution and explicit appliance/condition selectors but lacked the static, opt-in `paid_removal_preference` choice available on neighboring California pages.
+- **Correction:** Add an optional, unselected `free_only` / `quote_ok` selector and no-charge/no-booking disclosure; add telephone and postal-code mobile keyboard/autocomplete hints. Preserve city names, user-visible pickup policy, service area, Formspree endpoint, working phones, canonicals, titles, structured data, approved photos and all ranking copy.
+- **Quality gate:** Add the two existing forms to `scripts/audit-sfv-paid-quote-static.py` with city/service/mobile/explicit-selection checks plus positive/negative fixture. La Cañada city-parity review date was 2026-10-14; South Pasadena city-boundary review date was 2026-10-15. This is a narrow customer intake correction, **not an SEO content experiment reset**.
+- **Evidence limitation:** Only source and automated checks are established at PR stage. Require successful merged deploy and fresh public form inspection before claiming production live; no test lead receipt, backlink or ranking improvement claimed.
+
 ## 2026-10-25 — Bloomington duplicate social-photo metadata (VGM factual technical exception)
 - **Source-confirmed defect:** The general Bloomington page carried two `og:image:alt` tags with contradictory descriptions and two duplicate `twitter:image` tags after its Oct 24 photo change. The second OG alt described a washer/dryer/stove/refrigerator group while the current real photo/visible alt describes appliances, including refrigerators and an electric range, already secured in a pickup truck.
 - **Minimal repair:** Keep the existing real photo, single OG image and Twitter image URL, but use exactly one `og:image:alt` matching the existing truthful visible hero alt and one `twitter:image` tag. Add a narrow regression guard in the existing image audit. No photo swap, image dimensions, ranking copy, canonical, schema, phone 909-375-6685, Formspree or eligibility changes.
