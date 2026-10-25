@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-24 — Riverside, Anaheim and Pomona specialty quote consent (VGM technical exception)
+- **Source:** `main` `0bc5c15f`. Existing Riverside washer/dryer and refrigerator, Anaheim washer/dryer, and Pomona washer/dryer forms lacked a static optional paid-removal quote selector; three laundry forms also lacked mobile telephone keypad and ZIP autofill hints. Existing required phone, approved Formspree POST, and source attribution were present.
+- **Scoped change:** Add exactly one blank-default optional selector (`free_only` / `quote_ok`) per existing form; add mobile input hints to three laundry forms; register all four in the static consent regression guard. No phone routing, Formspree action, fee/eligibility promise, imagery, schema, canonical, title, navigation or protected ranking content changed. Choosing a quote does not authorize charges or booking.
+- **Freeze:** Narrow verified customer-intake technical exception; four running registry experiments remain untouched. See `docs/vgm-ca-four-specialty-quote-consent-2026-10-24.md`.
+- **Verification gate:** Relevant CI checks on PR SHA, source regression guard and positive/negative fixtures, GitHub Pages rollout and uncached public HTML separately. No real inbox receipt or ranking gain claimed. Revert PR on verified regression.
+
 ## 2026-10-24 — Upland, Ontario and Montclair specialty quote choice (VGM technical exception)
 - **Source evidence:** The existing Upland washer/dryer, Upland refrigerator, Ontario washer/dryer and Montclair washer/dryer forms had one approved Formspree POST and required phone but lacked the owner-approved *optional static* paid-removal quote preference. Montclair washer/dryer also lacked a static `source_page` field; three laundry forms lacked mobile telephone keypad hints.
 - **Change scope:** Add blank-default, no-JavaScript `paid_removal_preference` choices (`free_only` / `quote_ok`) to these four existing forms; add Montclair source attribution and telephone input hints. No change to fees, eligibility, local partners, Formspree action, phone links, images, canonical, indexability or ranking copy. No customer is booked or charged by this selection.
