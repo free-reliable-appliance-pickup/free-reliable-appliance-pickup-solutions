@@ -1,5 +1,10 @@
 # SEO change and decision register
 
+## 2026-10-25 — Fresno laundry rendered escape cleanup (VGM technical exception)
+- **Verified defect:** `fresno-washer-dryer-pickup/index.html` contained one literal `\\n` text token between the second real laundry-set photo section and the request form. HTML would render the backslash and letter `n` as visible stray characters, not a line break.
+- **Narrow correction:** Replace that exact two-character token with a real source newline. No rendered wording, link, Formspree field/action, telephone, image, schema, canonical, service policy or ranking experiment changes.
+- **Verification/rollback:** Assert a one-character net reduction, no remaining literal `\\n` in this page, and run the existing PR audits before merge; verify deployment independently. Revert this isolated commit on regression.
+
 ## 2026-10-25 — Fresno washer/dryer optional quote intake parity (VGM technical exception)
 - **Verified:** The existing Fresno laundry Formspree form on `main` required phone, explicit appliance/condition and pickup access, but lacked the approved static optional paid-removal quote preference. The Fresno general-appliance form and Portland/Salem general and laundry forms already provide this choice.
 - **Change:** Add only a blank-default `paid_removal_preference` selector (`free_only` / `quote_ok`) with clear no-charge/no-booking language to the Fresno washer/dryer request form. Preserve existing 310 telephone links, Formspree action, city/state/service/source, required condition and access, images, titles, canonical, SEO copy and eligibility. Extend the no-JavaScript consent guard with Fresno city/service/mobile/required-choice assertions and negative fixtures.
