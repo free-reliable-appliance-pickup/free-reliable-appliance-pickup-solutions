@@ -131,6 +131,13 @@ LA_SPECIALTY_SOURCE = {
     "los-angeles-freezer-pickup": "Los Angeles freezer page",
     "los-angeles-stove-oven-pickup": "Los Angeles stove oven page",
 }
+# Regress the three existing Los Angeles appliance specialty forms' no-JS
+# service attribution without changing historical source_page labels.
+LA_SPECIALTY_SERVICE = {
+    "los-angeles-refrigerator-pickup": "Refrigerator pickup",
+    "los-angeles-freezer-pickup": "Freezer pickup",
+    "los-angeles-stove-oven-pickup": "Stove, range and oven pickup",
+}
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
     "portland-appliance-pickup": "portland-appliance-pickup/index.html",
@@ -182,6 +189,15 @@ def inspect(label, html, expected_source=None):
             problems.append(f"{label}: default / free-only / quote-only consent values changed")
         if any("selected" in a for a in s["option_attrs"][1:]):
             problems.append(f"{label}: paid quote or free-only must not be preselected")
+    if label in LA_SPECIALTY_SERVICE:
+        expected_service = LA_SPECIALTY_SERVICE[label]
+        service_inputs = [a for a in inputs if a.get("name") == "service"]
+        if len(service_inputs) != 1 or service_inputs[0].get("type") != "hidden" or service_inputs[0].get("value") != expected_service:
+            problems.append(f"{label}: missing or incorrect static service attribution")
+        if len([a for a in inputs if a.get("name") == "city" and a.get("value") == "Los Angeles"]) != 1:
+            problems.append(f"{label}: incorrect Los Angeles city attribution")
+        if len([a for a in inputs if a.get("name") == "state" and a.get("value") == "California"]) != 1:
+            problems.append(f"{label}: incorrect California state attribution")
     # Two LA County washer/dryer pages must submit complete city/service
     # attribution even when customer-routing.js fails or is disabled.
     if label in ("san-fernando-washer-dryer-pickup", "los-angeles-washer-dryer-pickup"):
@@ -223,9 +239,17 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
-    special = good.replace(f'value="{label}"', 'value="Los Angeles refrigerator page"')
+    special = good.replace(
+        f'<input type="hidden" name="source_page" value="{label}">',
+        '<input type="hidden" name="source_page" value="Los Angeles refrigerator page">'
+        '<input type="hidden" name="city" value="Los Angeles">'
+        '<input type="hidden" name="state" value="California">'
+        '<input type="hidden" name="service" value="Refrigerator pickup">'
+    )
     assert not inspect("los-angeles-refrigerator-pickup", special, "Los Angeles refrigerator page")
     assert inspect("los-angeles-refrigerator-pickup", special, "wrong attribution")
+    assert inspect("los-angeles-refrigerator-pickup", special.replace('value="Refrigerator pickup"', 'value="Freezer pickup"'), "Los Angeles refrigerator page")
+
 
 if __name__ == "__main__":
     fixture_checks()
