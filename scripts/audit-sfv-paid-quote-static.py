@@ -270,6 +270,12 @@ OC_LAUNDRY_INTAKE = {
     "laguna-niguel-washer-dryer-pickup": "Laguna Niguel",
     "san-clemente-washer-dryer-pickup": "San Clemente",
 }
+# Preserve truthful condition and legacy no-JS service attribution on three Foothill laundry forms.
+FOOTHILL_LAUNDRY_INTAKE = {
+    "fontana-washer-dryer-pickup": "Fontana",
+    "upland-washer-dryer-pickup": "Upland",
+    "claremont-washer-dryer-pickup": "Claremont",
+}
 # Protect truthful condition and no-JS service attribution on three existing CA laundry forms.
 CA_LAUNDRY_WORKING_ISSUES = {
     "riverside-washer-dryer-pickup": "Riverside",
@@ -404,6 +410,29 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: {field} must require an explicit choice")
             elif any("selected" in attrs for attrs in matches[0]["option_attrs"][1:]):
                 problems.append(f"{label}: {field} must not preselect a condition or appliance")
+            elif field == "condition" and matches[0]["options"].count("Working With Issues") != 1:
+                problems.append(f"{label}: working-with-issues choice missing or duplicated")
+    # Existing Foothill laundry forms must distinguish working-with-issues,
+    # retain their original service tag, and provide usable mobile input.
+    if label in FOOTHILL_LAUNDRY_INTAKE:
+        expected_city = FOOTHILL_LAUNDRY_INTAKE[label]
+        for field, expected in (("state", "California"), ("service", "Washer Dryer Pickup")):
+            matches = [a for a in inputs if a.get("name") == field and a.get("type") == "hidden" and a.get("value") == expected]
+            if len(matches) != 1:
+                problems.append(f"{label}: missing or incorrect static {field} attribution")
+        cities = [a for a in inputs if a.get("name") == "city" and a.get("value") == expected_city and "required" in a]
+        if len(cities) != 1:
+            problems.append(f"{label}: required city attribution changed")
+        for field, mode, auto in (("phone", "tel", "tel"), ("zip", "numeric", "postal-code")):
+            matches = [a for a in inputs if a.get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0] or matches[0].get("inputmode") != mode or matches[0].get("autocomplete") != auto:
+                problems.append(f"{label}: required mobile {field} input changed")
+        for field in ("appliance", "condition"):
+            matches = [a for a in form["selects"] if a["attrs"].get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0]["attrs"] or not matches[0]["options"] or matches[0]["options"][0] != "":
+                problems.append(f"{label}: {field} must require an explicit choice")
+            elif any("selected" in attrs for attrs in matches[0]["option_attrs"][1:]):
+                problems.append(f"{label}: {field} must not preselect an appliance/condition")
             elif field == "condition" and matches[0]["options"].count("Working With Issues") != 1:
                 problems.append(f"{label}: working-with-issues choice missing or duplicated")
     # Oregon laundry customers need a truthful explicit option for a machine
@@ -591,6 +620,32 @@ def fixture_checks():
         ('inputmode="numeric"', 'inputmode="text"'),
     ):
         assert inspect(ca_label, ca_good.replace(old, new)), f"CA laundry defect undetected: {old}"
+    # Foothill city laundry intake: keep legacy service attribution, truthful condition and mobile inputs.
+    for foothill_label, foothill_city in FOOTHILL_LAUNDRY_INTAKE.items():
+        foothill_good = (
+            f'<form action="{ENDPOINT}" method="POST">'
+            f'<input type="hidden" name="source_page" value="{foothill_label}">'
+            '<input type="hidden" name="state" value="California">'
+            '<input type="hidden" name="service" value="Washer Dryer Pickup">'
+            f'<input name="city" value="{foothill_city}" required>'
+            '<input type="tel" name="phone" required autocomplete="tel" inputmode="tel">'
+            '<input name="zip" required autocomplete="postal-code" inputmode="numeric">'
+            '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+            '<select name="condition" required><option value=""></option><option>Fully Working</option>'
+            '<option value="Working With Issues"></option><option>Needs Repair</option></select>'
+            '<select name="paid_removal_preference"><option value=""></option>'
+            '<option value="free_only"></option><option value="quote_ok"></option></select></form>'
+        )
+        assert not inspect(foothill_label, foothill_good), f"valid Foothill laundry fixture rejected: {foothill_city}"
+        for old, new in (
+            ('name="service"', 'name="other_service"'),
+            (f'value="{foothill_city}"', 'value="Other City"'),
+            ('value="Working With Issues"', 'value="Fully Working"'),
+            ('<option value="Working With Issues"></option>', '<option value="Working With Issues" selected></option>'),
+            ('name="condition" required', 'name="condition"'),
+            ('inputmode="numeric"', 'inputmode="text"'),
+        ):
+            assert inspect(foothill_label, foothill_good.replace(old, new)), f"Foothill laundry defect undetected: {old}"
     # Coachella Valley working-condition and paid-quote consent must remain explicit.
     valley_label = "la-quinta-appliance-pickup"
     valley_good = (
