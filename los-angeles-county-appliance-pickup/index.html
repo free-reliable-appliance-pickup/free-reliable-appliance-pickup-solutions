@@ -83,13 +83,14 @@
 <input type="hidden" name="_subject" value="Los Angeles County California Appliance Pickup Request">
 <input type="hidden" name="state" value="California">
 <input type="hidden" name="source_page" value="los-angeles-county-appliance-pickup">
+<input type="hidden" name="service" value="General major appliance pickup">
 <label>Full Name<input type="text" name="name" required style="width:100%;padding:12px;margin-top:6px"></label>
-<label>Phone Number<input type="tel" name="phone" required style="width:100%;padding:12px;margin-top:6px"></label>
+<label>Phone Number<input type="tel" name="phone" required autocomplete="tel" inputmode="tel" style="width:100%;padding:12px;margin-top:6px"></label>
 <label>Pickup Address<input type="text" name="address" required style="width:100%;padding:12px;margin-top:6px"></label>
 <label>City<input type="text" name="city" required placeholder="Your Los Angeles County city" style="width:100%;padding:12px;margin-top:6px"></label>
-<label>ZIP Code<input type="text" name="zip" required style="width:100%;padding:12px;margin-top:6px"></label>
+<label>ZIP Code<input type="text" name="zip" required autocomplete="postal-code" inputmode="numeric" style="width:100%;padding:12px;margin-top:6px"></label>
 <label>Appliance Type<select name="appliance" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select appliance</option><option>Washer</option><option>Dryer</option><option>Washer and Dryer</option><option>Refrigerator</option><option>Freezer</option><option>Stove / Range / Oven</option><option>Multiple Major Appliances</option><option>Other Major Appliance</option></select></label>
-<label>Condition<select name="condition" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select condition</option><option>Fully Working</option><option>Needs Repair</option><option>Not Working</option><option>Unknown</option></select></label>
+<label>Condition<select name="condition" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select condition</option><option>Fully Working</option><option value="Working With Issues">Working, but has a problem (explain below)</option><option>Needs Repair</option><option>Not Working</option><option>Unknown</option></select></label>
 <label>Appliance Location<select name="location" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select location</option><option>First Floor</option><option>Second Floor</option><option>Third Floor or Higher</option><option>Basement</option><option>Garage</option><option>Outside</option><option>Other</option></select></label>
 <label>Stairs<select name="stairs" required style="width:100%;padding:12px;margin-top:6px"><option value="">Select stairs</option><option>No Stairs</option><option>1 Flight</option><option>2 Flights</option><option>3+ Flights</option><option>Unknown</option></select></label>
 <label>Access Notes / Photo Information<textarea name="message" rows="5" placeholder="Brand, model, working condition, stairs, elevators, gates, narrow doors, parking, and whether photos are available." style="width:100%;padding:12px;margin-top:6px"></textarea></label>
