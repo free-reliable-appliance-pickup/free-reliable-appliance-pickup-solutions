@@ -48,6 +48,7 @@ PAGES = {
     "fresno-freezer-pickup": "fresno-freezer-pickup/index.html",
     "fresno-stove-oven-pickup": "fresno-stove-oven-pickup/index.html",
     "orange-county-appliance-pickup": "orange-county-appliance-pickup/index.html",
+    "los-angeles-county-appliance-pickup": "los-angeles-county-appliance-pickup/index.html",
     "anaheim-appliance-pickup": "anaheim-appliance-pickup/index.html",
     "irvine-appliance-pickup": "irvine-appliance-pickup/index.html",
     # Verified existing OC no-JS quote fallback repairs (2026-10-24).
@@ -289,8 +290,10 @@ SGV_SIX_LAUNDRY_INTAKE = {
     "san-dimas-washer-dryer-pickup": "San Dimas",
 }
 
-# Three priority countywide forms: preserve free-first consent and truthful attribution.
-CA_THREE_COUNTY_INTAKE = {
+# Five priority countywide forms: preserve free-first consent and truthful attribution.
+CA_FIVE_COUNTY_INTAKE = {
+    "los-angeles-county-appliance-pickup",
+    "orange-county-appliance-pickup",
     "riverside-county-appliance-pickup",
     "san-bernardino-county-appliance-pickup",
     "san-diego-county-appliance-pickup",
@@ -371,7 +374,7 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: {field} silently preselects an appliance/condition")
     # Customer forms on three county hubs must not silently lose city,
     # service attribution, phone, optional paid quote or appliance truth.
-    if label in CA_THREE_COUNTY_INTAKE:
+    if label in CA_FIVE_COUNTY_INTAKE:
         for name, value in (("state", "California"), ("service", "General major appliance pickup")):
             matches = [a for a in inputs if a.get("name") == name and a.get("type") == "hidden" and a.get("value") == value]
             if len(matches) != 1:
@@ -658,8 +661,8 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
-    # Three countywide request forms: positive fixture plus intentional regressions.
-    for county_label in sorted(CA_THREE_COUNTY_INTAKE):
+    # Five countywide request forms: positive fixture plus intentional regressions.
+    for county_label in sorted(CA_FIVE_COUNTY_INTAKE):
         county_good = (
             f'<form action="{ENDPOINT}" method="POST">'
             f'<input type="hidden" name="source_page" value="{county_label}">'
