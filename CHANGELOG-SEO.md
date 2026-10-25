@@ -1,5 +1,13 @@
 # SEO change and decision register
 
+## 2026-10-24 — Upland, Ontario and Montclair specialty quote choice (VGM technical exception)
+- **Source evidence:** The existing Upland washer/dryer, Upland refrigerator, Ontario washer/dryer and Montclair washer/dryer forms had one approved Formspree POST and required phone but lacked the owner-approved *optional static* paid-removal quote preference. Montclair washer/dryer also lacked a static `source_page` field; three laundry forms lacked mobile telephone keypad hints.
+- **Change scope:** Add blank-default, no-JavaScript `paid_removal_preference` choices (`free_only` / `quote_ok`) to these four existing forms; add Montclair source attribution and telephone input hints. No change to fees, eligibility, local partners, Formspree action, phone links, images, canonical, indexability or ranking copy. No customer is booked or charged by this selection.
+- **Freeze exception:** Technical customer-intake consistency only; no ranking experiments changed. Related registry tests `2026-10-04-upland-rancho-laundry-boundary`, `2026-10-04-ontario-san-bernardino-laundry-cleanup`, `2026-10-06-second-wave-zero-visibility-laundry-simplification` remain running; respect all gates. GSC Wizard subscription unavailable; ranking data not asserted.
+- **Tests/deployment:** Run `python3 scripts/audit-sfv-paid-quote-static.py`, existing phone/form checks and SEO Experiment Guard on PR; verify current deployment and public HTML separately. No actual Formspree delivery test conducted.
+- **Rollback:** Revert only this PR's four form insertions, script registrations and this note if regression is demonstrated. Revisit next scheduled VGM verification.
+
+
 ## 2026-10-24 — Upland, Montclair and Huntington Beach telephone keypad hints (technical exception)
 - **Verified source defect:** At main `a2ae8f97`, each existing city general-appliance Formspree POST had one required phone input with `type="tel"` and `autocomplete="tel"`, but no `inputmode="tel"`. ZIP already used `autocomplete="postal-code" inputmode="numeric"`; static optional paid-removal quote consent and service/source attribution already existed.
 - **Scope:** Add only `inputmode="tel"` to those three phone inputs. Guard all three in `scripts/audit-priority-intake-contract.py` and add positive/negative Upland fixtures. No changes to required fields, phone links, routing, endpoints, qualification, consent, photo, page content, metadata, schema, canonical, or internal links.
