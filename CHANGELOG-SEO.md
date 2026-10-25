@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-10-25 — Fontana / Upland / Claremont laundry intake accuracy (VGM factual technical exception)
+- **Source-verified customer issue:** Existing dedicated washer/dryer forms in Fontana, Upland and Claremont lacked a "Working, but has a problem" choice although their corresponding general city forms already distinguish that condition. Claremont laundry also omitted static service attribution. Some phone/ZIP fields lacked mobile keyboard/autofill hints.
+- **Narrow repair:** Add one unselected `Working With Issues` condition to each existing laundry form; add `service=Washer Dryer Pickup` only to Claremont; complete missing phone/ZIP mobile hints. Preserve original Formspree endpoint, existing Fontana/Upland service attribution, source-page/city/state, all other options, blank required default, optional paid-quote consent, local phone routing and SEO content.
+- **Regression:** Extend `scripts/audit-sfv-paid-quote-static.py` with three explicit Foothill city checks and positive/negative fixtures. Existing SEO experiment review gates for the three laundry pages were 2026-10-14 (Upland/Claremont) and 2026-10-16 (Fontana); no speculative SEO copy/metadata changes.
+- **Evidence limits:** Verify CI, merge, GitHub Pages deployment and fresh production HTML independently. No actual Formspree delivery, additional pickups or ranking improvement claimed.
+
+
 ## 2026-10-25 — San Diego / San Marcos image provenance accuracy (VGM factual technical exception)
 - **Actual repository source images independently visually inspected:** San Diego /IMG-20240814-WA0032.jpg shows a white Kenmore top-freezer refrigerator photographed outdoors; San Marcos /IMG-20230805-WA0013.jpg shows a stainless-steel glass-top electric range photographed outdoors. Neither image alone establishes a completed appliance pickup in the named city.
 - **Confirmed current factual error:** Both general city page hero image alts and matching og:image:alt currently say "from our [named city] pickup work," an unsupported exact-locality completed-job claim.
