@@ -625,6 +625,20 @@ def main():
     if f'<meta property="og:image:alt" content="{highland_alt}">' not in highland:
         problems.append('highland-appliance-pickup: social image alt mismatches verified refrigerator pickup hero')
 
+    # Bloomington's active Oct 24 hero-photo experiment must retain the
+    # verified truck photo, with one truthful social alt and one Twitter image.
+    bloomington = (Path('bloomington-appliance-pickup') / 'index.html').read_text(encoding='utf-8', errors='replace')
+    bloomington_photo = '/assets/optimized/20250804_103926-1600.jpg'
+    bloomington_alt = 'Pickup truck carrying several used household appliances including refrigerators and an electric range, from our appliance photo collection'
+    if f'src="{bloomington_photo}" alt="{bloomington_alt}"' not in bloomington:
+        problems.append('bloomington-appliance-pickup: verified pickup-load hero or truthful alt changed')
+    if bloomington.count('<meta property="og:image:alt"') != 1:
+        problems.append('bloomington-appliance-pickup: OG image alt must appear exactly once')
+    if f'<meta property="og:image:alt" content="{bloomington_alt}">' not in bloomington:
+        problems.append('bloomington-appliance-pickup: social image alt must match verified hero')
+    if bloomington.count('<meta name="twitter:image"') != 1:
+        problems.append('bloomington-appliance-pickup: Twitter image must appear exactly once')
+
     # Avoid turning example photos into unsupported claims of a completed
     # pickup in this exact city. This is a factual photo metadata guard,
     # not a ranking-copy or asset-rotation experiment.
