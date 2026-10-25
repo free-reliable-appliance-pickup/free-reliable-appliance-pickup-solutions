@@ -1,5 +1,13 @@
 # Competitor authority gap: backlink quality over volume — 2026-10-10
 
+## 2026-10-25 verified backlink acquisition — City of Portland Resourceful PDX
+
+- **State:** Live externally verified backlink; not merely submitted outreach. City of Portland's public Resourceful PDX directory includes `Free Reliable Appliance Pickup` in its Donate / furniture and home goods section, describes the service accurately as online appointment/request-based reuse pickup, and provides a clickable link to `https://freereliableappliancepickup.com/`.
+- **Exact source:** https://www.portland.gov/bps/sustainability/resourcefulpdx/where-go (look for the business name under Donate). **Destination:** https://freereliableappliancepickup.com/ (homepage).
+- **Independent verification:** 2026-10-25, browser read of source and direct outgoing-link click. A City of Portland coordinator separately confirmed directory publication by email on 2026-10-23. The email alone was *not* counted as the backlink; the public link was verified afterward.
+- **Evidence limits:** One confirmed referring *page* and likely one distinct government referring domain based on this verified link; not a current backlink-index count, search ranking increase, dofollow assessment, or Portland municipal endorsement. The source expressly says the city does not endorse listed organizations. Search engine crawl/indexing and lead effects require separate measurement.
+- **Next:** Seek editorially appropriate, qualified local reuse-resource directories in verified California service areas; verify each live outbound URL and preserve accurate service and eligibility descriptions. Do not pursue generic mass-directory spam.
+
 ## Current comparative estimate (Ubersuggest backlinks overview)
 | Domain | Domain Authority (Ubersuggest estimate) | Backlinks reported | Unique referring domains |
 |---|---:|---:|---:|
