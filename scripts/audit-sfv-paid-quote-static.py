@@ -579,9 +579,9 @@ def fixture_checks():
         '<option value="free_only"></option><option value="quote_ok"></option></select></form>'
     )
     for city in CA_LAUNDRY_WORKING_ISSUES.values():
-        label = city.lower().replace(" ", "-") + "-washer-dryer-pickup"
-        example = ca_good.replace(ca_label, label).replace('value="Riverside"', f'value="{city}"')
-        assert not inspect(label, example), f"valid California laundry fixture rejected: {city}"
+        ca_case_label = city.lower().replace(" ", "-") + "-washer-dryer-pickup"
+        example = ca_good.replace(ca_label, ca_case_label).replace('value="Riverside"', f'value="{city}"')
+        assert not inspect(ca_case_label, example), f"valid California laundry fixture rejected: {city}"
     for old, new in (
         ('name="service"', 'name="other_service"'),
         ('value="Riverside"', 'value="Other City"'),
