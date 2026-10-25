@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-25 — Fresno refrigerator/freezer/stove optional quote consent (VGM intake exception)
+- **Verified source gap:** Existing Fresno refrigerator, freezer and stove/oven forms had valid required phone, condition, source/city/service and Formspree POST, but unlike Fresno general and washer/dryer pages they lacked the approved no-JavaScript optional paid-removal quote choice. The existing JS enhancement cannot substitute for a static no-JS submission.
+- **Bounded correction:** Add one blank-default `paid_removal_preference` selector (`free_only`, `quote_ok`) with explicit no-charge/no-booking disclosure to each of the three original forms; extend the existing source-only consent guard. No changes to phone 310-774-4304, Formspree, required fields, eligibility, photo, SEO copy, title, links, canonical, schema, or experiment registry.
+- **Experiment gate:** The two running Fresno specialty experiments have `evaluateNotBefore` 2026-10-14; this is an expressly allowed customer-intake technical exception, not a ranking/content experiment.
+- **Verification/rollback:** Require CI, main branch and public-page verification; revert this isolated PR on any customer-intake regression. Formspree inbox delivery and organic rankings remain unverified.
+
 ## 2026-10-25 — Fresno laundry rendered escape cleanup (VGM technical exception)
 - **Verified defect:** `fresno-washer-dryer-pickup/index.html` contained one literal `\\n` text token between the second real laundry-set photo section and the request form. HTML would render the backslash and letter `n` as visible stray characters, not a line break.
 - **Narrow correction:** Replace that exact two-character token with a real source newline. No rendered wording, link, Formspree field/action, telephone, image, schema, canonical, service policy or ranking experiment changes.
