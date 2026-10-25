@@ -99,6 +99,11 @@ PAGES = {
     "riverside-refrigerator-pickup": "riverside-refrigerator-pickup/index.html",
     "anaheim-washer-dryer-pickup": "anaheim-washer-dryer-pickup/index.html",
     "pomona-washer-dryer-pickup": "pomona-washer-dryer-pickup/index.html",
+    # Existing SGV/Pomona Valley specialty request forms: optional customer quote consent (2026-10-24).
+    "pasadena-refrigerator-pickup": "pasadena-refrigerator-pickup/index.html",
+    "claremont-washer-dryer-pickup": "claremont-washer-dryer-pickup/index.html",
+    "san-dimas-washer-dryer-pickup": "san-dimas-washer-dryer-pickup/index.html",
+    "la-verne-washer-dryer-pickup": "la-verne-washer-dryer-pickup/index.html",
     # Fontana specialty request forms: verified no-JS optional quote selection (2026-10-24).
     "fontana-stove-oven-pickup": "fontana-stove-oven-pickup/index.html",
     "fontana-refrigerator-pickup": "fontana-refrigerator-pickup/index.html",
