@@ -104,6 +104,11 @@ PAGES = {
     "temple-city-washer-dryer-pickup": "temple-city-washer-dryer-pickup/index.html",
     "monterey-park-washer-dryer-pickup": "monterey-park-washer-dryer-pickup/index.html",
     "el-monte-washer-dryer-pickup": "el-monte-washer-dryer-pickup/index.html",
+    # Verified additional SGV laundry no-JS paid quote consent (2026-10-24).
+    "monrovia-washer-dryer-pickup": "monrovia-washer-dryer-pickup/index.html",
+    "covina-washer-dryer-pickup": "covina-washer-dryer-pickup/index.html",
+    "san-gabriel-washer-dryer-pickup": "san-gabriel-washer-dryer-pickup/index.html",
+    "west-covina-washer-dryer-pickup": "west-covina-washer-dryer-pickup/index.html",
     # Verified Arcadia/Glendora laundry static consent and attribution (2026-10-24).
     "arcadia-washer-dryer-pickup": "arcadia-washer-dryer-pickup/index.html",
     "glendora-washer-dryer-pickup": "glendora-washer-dryer-pickup/index.html",
