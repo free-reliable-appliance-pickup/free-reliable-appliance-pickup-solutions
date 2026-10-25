@@ -293,6 +293,14 @@ def inspect(label, html, expected_source=None):
             problems.append(f"{label}: incorrect Los Angeles city attribution")
         if len([a for a in inputs if a.get("name") == "state" and a.get("value") == "California"]) != 1:
             problems.append(f"{label}: incorrect California state attribution")
+    # Oregon laundry customers need a truthful explicit option for a machine
+    # that runs but has a known issue; do not preselect any condition.
+    if label in ("portland-washer-dryer-pickup", "salem-washer-dryer-pickup"):
+        conditions = [a for a in form["selects"] if a["attrs"].get("name") == "condition"]
+        if len(conditions) != 1 or "required" not in conditions[0]["attrs"] or not conditions[0]["options"] or conditions[0]["options"][0] != "":
+            problems.append(f"{label}: condition must require explicit choice")
+        elif "Working With Issues" not in conditions[0]["options"] or any("selected" in a for a in conditions[0]["option_attrs"][1:]):
+            problems.append(f"{label}: working-with-issues choice missing or condition preselected")
     if label in IE_SPECIALTY_INTAKE:
         expected_city, expected_service = IE_SPECIALTY_INTAKE[label]
         for key, expected in (("city", expected_city), ("state", "California"), ("service", expected_service)):
@@ -441,6 +449,20 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
+    # Oregon laundry positive and negative truthful-condition fixtures.
+    oregon_label = "portland-washer-dryer-pickup"
+    oregon_good = good.replace(f'value="{label}"', f'value="{oregon_label}"').replace(
+        '</select></form>',
+        '</select><select name="condition" required><option value=""></option>'
+        '<option value="Working With Issues"></option></select></form>'
+    )
+    assert not inspect(oregon_label, oregon_good), "valid Oregon laundry condition rejected"
+    for old, new in (
+        ('value="Working With Issues"', 'value="Unknown Condition"'),
+        ('name="condition" required', 'name="condition"'),
+        ('<option value="Working With Issues"></option>', '<option value="Working With Issues" selected></option>'),
+    ):
+        assert inspect(oregon_label, oregon_good.replace(old, new)), f"Oregon condition regression not caught: {old}"
     # Source-only condition, attribution and consent fixture for legacy
     # LA County forms with an implicit "Washer" first choice.
     la_label = "montebello-washer-dryer-pickup"
