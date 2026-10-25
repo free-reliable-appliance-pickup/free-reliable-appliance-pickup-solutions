@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-25 — Riverside / Ontario / Anaheim laundry truthful condition and attribution (VGM intake exception)
+- **Source-verified customer issue:** These three existing washer/dryer forms require a condition but offer no "Working, but has a problem" choice even though their general city forms do. Their static Formspree requests also omit the laundry service tag, reducing attribution if JavaScript is unavailable.
+- **Narrow repair:** Add one non-preselected `Working With Issues` condition option and a hidden `service=Washer and dryer pickup` field to each existing form. Preserve the original blank default, existing choices, phone, city/state/source, Formspree POST, optional paid-quote consent, images, policy, eligibility and SEO copy.
+- **Freeze and ownership:** Ontario and Anaheim laundry experiments have Oct 14/16 evaluation gates; this is a documented verified factual/intake exception, not a ranking-content test. Do not alter the experiment registry or interfere with Ranking Countermove or emergency Website Technical Repair.
+- **Verification required:** Extend static regression coverage with positive/negative fixtures; pass all CI including SEO Experiment Guard, verify merge and public HTML after deployment. No real Formspree delivery or ranking effect claimed.
+
 ## 2026-10-25 — Coachella Valley four-city customer quote preference (VGM intake exception)
 - **Verified source gap:** Palm Springs, Palm Desert, La Quinta and Rancho Mirage general appliance pickup forms submit required customer phone, address, appliance and condition but lack a static optional `paid_removal_preference` selection. La Quinta/Rancho Mirage additionally have no static general-service Formspree attribution.
 - **Targeted fix:** Add unselected, optional `free_only` / `quote_ok` selector and no-charge/approval language, ZIP mobile keypad hints, and correct `service=General major appliance pickup` hidden attribution on two city forms.
