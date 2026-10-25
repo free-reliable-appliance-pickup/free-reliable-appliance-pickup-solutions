@@ -605,6 +605,25 @@ def main():
             if 'fontana-multi-appliance.webp' in attrs.get('src', ''):
                 if (attrs.get('width'), attrs.get('height')) != ('1586', '992'):
                     problems.append('fresno general group hero must use intrinsic dimensions 1586x992')
+
+    # Avoid turning example photos into unsupported claims of a completed
+    # pickup in this exact city. This is a factual photo metadata guard,
+    # not a ranking-copy or asset-rotation experiment.
+    local_photo_claims = {
+        'corona-appliance-pickup': ('/IMG-20240326-WA0049.jpg', 'Photograph of an appliance illustrating Corona pickup requests'),
+        'riverside-appliance-pickup': ('/IMG-20240627-WA0043.jpg', 'Photograph of an appliance illustrating Riverside pickup requests'),
+    }
+    for slug, (image_path, expected_alt) in local_photo_claims.items():
+        raw = (Path(slug) / 'index.html').read_text(encoding='utf-8', errors='replace')
+        if f'src="{image_path}"' not in raw:
+            problems.append(f'{slug}: protected hero photo reference changed unexpectedly')
+        if f'alt="{expected_alt}"' not in raw:
+            problems.append(f'{slug}: hero alt must not claim unverified pickup provenance')
+        if f'<meta property="og:image:alt" content="{expected_alt}">' not in raw:
+            problems.append(f'{slug}: social image alt must match truthful hero alt')
+        if f'from our {slug.split("-appliance-pickup")[0].replace("-", " ").title()} pickup work' in raw:
+            problems.append(f'{slug}: unsupported local completed-pickup photo claim')
+
     print(f'IMAGE_LAYOUT_PRIORITY_MISMATCHES {len(layout_findings)}')
     for finding in layout_findings:
         print('IMAGE_LAYOUT_REVIEW', finding)
