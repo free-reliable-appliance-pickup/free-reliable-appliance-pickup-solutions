@@ -26,6 +26,8 @@ PAGES = {
     "glendale-appliance-pickup": "glendale-appliance-pickup/index.html",
     "calabasas-appliance-pickup": "calabasas-appliance-pickup/index.html",
     "fresno-appliance-pickup": "fresno-appliance-pickup/index.html",
+    # Fresno specialty intake must retain no-JS optional quote consent.
+    "fresno-washer-dryer-pickup": "fresno-washer-dryer-pickup/index.html",
     "orange-county-appliance-pickup": "orange-county-appliance-pickup/index.html",
     "anaheim-appliance-pickup": "anaheim-appliance-pickup/index.html",
     "irvine-appliance-pickup": "irvine-appliance-pickup/index.html",
@@ -153,7 +155,7 @@ PAGES = {
     "claremont-washer-dryer-pickup": "claremont-washer-dryer-pickup/index.html",
     "san-dimas-washer-dryer-pickup": "san-dimas-washer-dryer-pickup/index.html",
     "la-verne-washer-dryer-pickup": "la-verne-washer-dryer-pickup/index.html",
-    # Three existing CA laundry request forms: optional quote and complete routing (2026-10-25).
+    # Existing CA laundry request forms: optional quote and complete routing (2026-10-25).
     "san-bernardino-washer-dryer-pickup": "san-bernardino-washer-dryer-pickup/index.html",
     "moreno-valley-washer-dryer-pickup": "moreno-valley-washer-dryer-pickup/index.html",
     "downey-washer-dryer-pickup": "downey-washer-dryer-pickup/index.html",
@@ -189,6 +191,7 @@ NEXT_WAVE_LAUNDRY_INTAKE = {
     "san-bernardino-washer-dryer-pickup": "San Bernardino",
     "moreno-valley-washer-dryer-pickup": "Moreno Valley",
     "downey-washer-dryer-pickup": "Downey",
+    "fresno-washer-dryer-pickup": "Fresno",
 }
 # Source-only city/service, required-choice and mobile contract for five IE laundry forms.
 IE_FIVE_LAUNDRY_INTAKE = {
@@ -490,6 +493,19 @@ def fixture_checks():
         ('name="condition" required', 'name="condition"'),
     ):
         assert inspect(new_label, new_good.replace(old, new)), f"new CA laundry defect undetected: {old}"
+    # Fresno-specific positive/negative no-JS intake regression cases.
+    fresno_label = "fresno-washer-dryer-pickup"
+    fresno_good = new_good.replace('value="moreno-valley-washer-dryer-pickup"',
+        'value="fresno-washer-dryer-pickup"').replace('value="Moreno Valley"', 'value="Fresno"')
+    assert not inspect(fresno_label, fresno_good), "valid Fresno specialty form rejected"
+    for old, new in (
+        ('value="Fresno"', 'value="Clovis"'),
+        ('name="service"', 'name="service_missing"'),
+        ('name="paid_removal_preference"', 'name="no_consent"'),
+        ('name="condition" required', 'name="condition"'),
+        ('inputmode="numeric"', 'inputmode="text"'),
+    ):
+        assert inspect(fresno_label, fresno_good.replace(old, new)), f"Fresno intake defect undetected: {old}"
     # IE five-form intake: positive and negative static consent/attribution fixtures.
     ie_label = "eastvale-washer-dryer-pickup"
     ie_good = (
