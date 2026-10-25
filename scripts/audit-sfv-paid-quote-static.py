@@ -106,6 +106,7 @@ PAGES = {
     "pomona-washer-dryer-pickup": "pomona-washer-dryer-pickup/index.html",
     # Verified Rosemead/Temple City/Monterey Park/El Monte laundry consent (2026-10-24).
     "rosemead-washer-dryer-pickup": "rosemead-washer-dryer-pickup/index.html",
+    "santa-ana-washer-dryer-pickup": "santa-ana-washer-dryer-pickup/index.html",
     "temple-city-washer-dryer-pickup": "temple-city-washer-dryer-pickup/index.html",
     "monterey-park-washer-dryer-pickup": "monterey-park-washer-dryer-pickup/index.html",
     "el-monte-washer-dryer-pickup": "el-monte-washer-dryer-pickup/index.html",
@@ -226,6 +227,22 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: mobile phone hints missing")
             if len(zip_inputs) != 1 or zip_inputs[0].get("autocomplete") != "postal-code" or zip_inputs[0].get("inputmode") != "numeric":
                 problems.append(f"{label}: mobile ZIP hints missing")
+    # Verified lead-condition safety: never silently default to "Fully Working".
+    if label in ("rosemead-washer-dryer-pickup", "santa-ana-washer-dryer-pickup"):
+        if len([a for a in inputs if a.get("name") == "service" and a.get("value") == "Washer and dryer pickup" and a.get("type") == "hidden"]) != 1:
+            problems.append(f"{label}: static laundry service tag missing")
+        if label == "rosemead-washer-dryer-pickup":
+            if len([a for a in inputs if a.get("name") == "city" and a.get("value") == "Rosemead" and a.get("type") == "hidden"]) != 1:
+                problems.append(f"{label}: static city tag missing")
+            for field in ("condition", "appliance"):
+                group = [s for s in form["selects"] if s["attrs"].get("name") == field]
+                if len(group) != 1 or "required" not in group[0]["attrs"] or not group[0]["options"] or group[0]["options"][0] != "":
+                    problems.append(f"{label}: {field} must require explicit customer selection")
+                elif any("selected" in a for a in group[0]["option_attrs"][1:]):
+                    problems.append(f"{label}: {field} must not preselect working condition/appliance")
+        if label == "santa-ana-washer-dryer-pickup":
+            if len([a for a in inputs if a.get("name") == "city" and a.get("value") == "Santa Ana" and "required" in a]) != 1:
+                problems.append(f"{label}: required city must default to Santa Ana")
     # Two LA County washer/dryer pages must submit complete city/service
     # attribution even when customer-routing.js fails or is disabled.
     if label in ("san-fernando-washer-dryer-pickup", "los-angeles-washer-dryer-pickup"):
