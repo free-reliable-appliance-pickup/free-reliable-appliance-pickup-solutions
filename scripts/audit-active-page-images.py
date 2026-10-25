@@ -645,6 +645,8 @@ def main():
     local_photo_claims = {
         'corona-appliance-pickup': ('/IMG-20240326-WA0049.jpg', 'Photograph of an appliance illustrating Corona pickup requests'),
         'riverside-appliance-pickup': ('/IMG-20240627-WA0043.jpg', 'Photograph of an appliance illustrating Riverside pickup requests'),
+        'san-diego-appliance-pickup': ('/IMG-20240814-WA0032.jpg', 'White Kenmore top-freezer refrigerator photographed outdoors, illustrating San Diego appliance pickup requests'),
+        'san-marcos-appliance-pickup': ('/IMG-20230805-WA0013.jpg', 'Stainless-steel smooth-top electric range photographed outdoors, illustrating San Marcos appliance pickup requests'),
     }
     for slug, (image_path, expected_alt) in local_photo_claims.items():
         raw = (Path(slug) / 'index.html').read_text(encoding='utf-8', errors='replace')
