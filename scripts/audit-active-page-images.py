@@ -148,6 +148,25 @@ def main():
                 elif attrs.get('fetchpriority') == 'high' and asset.stat().st_size > MAX_HERO_BYTES:
                     problems.append(f'{url}: hero {src} is {asset.stat().st_size / 1_000_000:.2f} MB; use an optimized derivative under {MAX_HERO_BYTES / 1_000_000:.1f} MB')
 
+    # State request pages should show representative appliance examples,
+    # not logo-only heroes, and must never imply an unverified local pickup.
+    state_photo_contract = {
+        'texas-appliance-pickup': '/assets/california/city-heroes/fontana-multi-appliance.webp',
+        'florida-appliance-pickup': '/home-six-appliance-garage.webp',
+    }
+    for state_slug, expected_src in state_photo_contract.items():
+        page = Path(state_slug) / 'index.html'
+        if not page.is_file():
+            problems.append(f'{state_slug}: request page missing')
+            continue
+        parser = ImageRefs()
+        parser.feed(page.read_text(encoding='utf-8', errors='replace'))
+        matches = [img for img in parser.images if img.get('src') == expected_src]
+        if len(matches) != 1:
+            problems.append(f'{state_slug}: missing intended representative appliance hero {expected_src}')
+        elif not matches[0].get('alt', '').lower().startswith('example garage'):
+            problems.append(f'{state_slug}: representative appliance hero alt must not claim a completed local pickup')
+
     # Read-only inventory of *exact URL* reuse among priority general-city
     # hero photos. The same file on two city pages is a photo-rotation review
     # finding, not proof of a Google penalty or proof of the photo's origin.
