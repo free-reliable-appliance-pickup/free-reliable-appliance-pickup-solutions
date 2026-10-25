@@ -33,6 +33,12 @@ PAGES = {
     "santa-ana-appliance-pickup": "santa-ana-appliance-pickup/index.html",
     "lake-forest-appliance-pickup": "lake-forest-appliance-pickup/index.html",
     "ontario-appliance-pickup": "ontario-appliance-pickup/index.html",
+    # Five verified Inland Empire laundry form intake corrections, Oct 25.
+    "highland-washer-dryer-pickup": "highland-washer-dryer-pickup/index.html",
+    "redlands-washer-dryer-pickup": "redlands-washer-dryer-pickup/index.html",
+    "eastvale-washer-dryer-pickup": "eastvale-washer-dryer-pickup/index.html",
+    "colton-washer-dryer-pickup": "colton-washer-dryer-pickup/index.html",
+    "jurupa-valley-washer-dryer-pickup": "jurupa-valley-washer-dryer-pickup/index.html",
     # Existing Inland Empire request forms: approved quote choice works without JS.
     "montclair-appliance-pickup": "montclair-appliance-pickup/index.html",
     "chino-appliance-pickup": "chino-appliance-pickup/index.html",
@@ -184,6 +190,14 @@ NEXT_WAVE_LAUNDRY_INTAKE = {
     "moreno-valley-washer-dryer-pickup": "Moreno Valley",
     "downey-washer-dryer-pickup": "Downey",
 }
+# Source-only city/service, required-choice and mobile contract for five IE laundry forms.
+IE_FIVE_LAUNDRY_INTAKE = {
+    "highland-washer-dryer-pickup": "Highland",
+    "redlands-washer-dryer-pickup": "Redlands",
+    "eastvale-washer-dryer-pickup": "Eastvale",
+    "colton-washer-dryer-pickup": "Colton",
+    "jurupa-valley-washer-dryer-pickup": "Jurupa Valley",
+}
 # Source-only intake contract for six existing Southern California laundry forms.
 SOCAL_LAUNDRY_INTAKE = {
     "la-habra-washer-dryer-pickup": "La Habra",
@@ -301,6 +315,22 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: {key} must require explicit customer choice")
             elif any("selected" in item for item in matches[0]["option_attrs"][1:]):
                 problems.append(f"{label}: {key} must not preselect an appliance/condition")
+    if label in IE_FIVE_LAUNDRY_INTAKE:
+        expected_city = IE_FIVE_LAUNDRY_INTAKE[label]
+        for field, expected in (("city", expected_city), ("state", "California"), ("service", "Washer and dryer pickup")):
+            hits = [a for a in inputs if a.get("name") == field and a.get("value") == expected]
+            if len(hits) != 1 or (field != "city" and hits[0].get("type") != "hidden"):
+                problems.append(f"{label}: missing or incorrect {field} attribution")
+        for field, mode, auto in (("phone", "tel", "tel"), ("zip", "numeric", "postal-code")):
+            hits = [a for a in inputs if a.get("name") == field]
+            if len(hits) != 1 or "required" not in hits[0] or hits[0].get("inputmode") != mode or hits[0].get("autocomplete") != auto:
+                problems.append(f"{label}: incomplete required mobile {field} field")
+        for field in ("appliance", "condition"):
+            choices = [s for s in form["selects"] if s["attrs"].get("name") == field]
+            if len(choices) != 1 or "required" not in choices[0]["attrs"] or not choices[0]["options"] or choices[0]["options"][0] != "":
+                problems.append(f"{label}: {field} must require explicit selection")
+            elif any("selected" in item for item in choices[0]["option_attrs"][1:]):
+                problems.append(f"{label}: {field} must not preselect an unverified answer")
     if label in SOCAL_LAUNDRY_INTAKE:
         expected_city = SOCAL_LAUNDRY_INTAKE[label]
         for field, expected in (("city", expected_city), ("state", "California"), ("service", "Washer and dryer pickup")):
@@ -460,6 +490,32 @@ def fixture_checks():
         ('name="condition" required', 'name="condition"'),
     ):
         assert inspect(new_label, new_good.replace(old, new)), f"new CA laundry defect undetected: {old}"
+    # IE five-form intake: positive and negative static consent/attribution fixtures.
+    ie_label = "eastvale-washer-dryer-pickup"
+    ie_good = (
+        f'<form action="{ENDPOINT}" method="POST">'
+        f'<input type="hidden" name="source_page" value="{ie_label}">'
+        '<input type="hidden" name="city" value="Eastvale">'
+        '<input type="hidden" name="state" value="California">'
+        '<input type="hidden" name="service" value="Washer and dryer pickup">'
+        '<input name="phone" type="tel" required autocomplete="tel" inputmode="tel">'
+        '<input name="zip" required autocomplete="postal-code" inputmode="numeric">'
+        '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+        '<select name="condition" required><option value=""></option><option>Fully Working</option></select>'
+        '<select name="paid_removal_preference"><option value=""></option>'
+        '<option value="free_only"></option><option value="quote_ok"></option></select></form>'
+    )
+    assert not inspect(ie_label, ie_good), "valid IE five-form fixture rejected"
+    for old, new in (
+        ('value="Eastvale"', 'value="Fontana"'),
+        ('value="Washer and dryer pickup"', 'value="General appliance pickup"'),
+        ('inputmode="tel"', 'inputmode="numeric"'),
+        ('autocomplete="postal-code"', 'autocomplete="off"'),
+        ('name="paid_removal_preference"', 'name="consent_missing"'),
+        ('name="condition" required', 'name="condition"'),
+        ('<option value=""></option><option>Washer', '<option>Washer'),
+    ):
+        assert inspect(ie_label, ie_good.replace(old, new)), f"IE intake regression not caught: {old}"
     # Prevent regression of a real no-JavaScript Inland Empire city/service gap.
     ie_good = good.replace(f'value="{label}"', 'value="upland-freezer-pickup"').replace(
         '<input name="phone" type="tel" required>',
