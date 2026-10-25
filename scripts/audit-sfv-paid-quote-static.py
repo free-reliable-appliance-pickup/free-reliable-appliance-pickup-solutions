@@ -104,6 +104,13 @@ PAGES = {
     "riverside-refrigerator-pickup": "riverside-refrigerator-pickup/index.html",
     "anaheim-washer-dryer-pickup": "anaheim-washer-dryer-pickup/index.html",
     "pomona-washer-dryer-pickup": "pomona-washer-dryer-pickup/index.html",
+    # Six confirmed CA laundry leads needing no-JS city/service and consent safety (2026-10-24).
+    "la-habra-washer-dryer-pickup": "la-habra-washer-dryer-pickup/index.html",
+    "whittier-washer-dryer-pickup": "whittier-washer-dryer-pickup/index.html",
+    "montebello-washer-dryer-pickup": "montebello-washer-dryer-pickup/index.html",
+    "garden-grove-washer-dryer-pickup": "garden-grove-washer-dryer-pickup/index.html",
+    "orange-washer-dryer-pickup": "orange-washer-dryer-pickup/index.html",
+    "buena-park-washer-dryer-pickup": "buena-park-washer-dryer-pickup/index.html",
     # Verified Rosemead/Temple City/Monterey Park/El Monte laundry consent (2026-10-24).
     "rosemead-washer-dryer-pickup": "rosemead-washer-dryer-pickup/index.html",
     "santa-ana-washer-dryer-pickup": "santa-ana-washer-dryer-pickup/index.html",
@@ -153,6 +160,15 @@ IE_SPECIALTY_INTAKE = {
     "corona-washer-dryer-pickup": ("Corona", "Washer and dryer pickup"),
     "upland-freezer-pickup": ("Upland", "Freezer pickup"),
     "upland-stove-oven-pickup": ("Upland", "Stove, range and oven pickup"),
+}
+# Source-only intake contract for six existing Southern California laundry forms.
+SOCAL_LAUNDRY_INTAKE = {
+    "la-habra-washer-dryer-pickup": "La Habra",
+    "whittier-washer-dryer-pickup": "Whittier",
+    "montebello-washer-dryer-pickup": "Montebello",
+    "garden-grove-washer-dryer-pickup": "Garden Grove",
+    "orange-washer-dryer-pickup": "Orange",
+    "buena-park-washer-dryer-pickup": "Buena Park",
 }
 # Three existing SGV laundry forms must retain city and service in no-JS posts.
 SGV_LAUNDRY_INTAKE = {
@@ -233,6 +249,24 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: mobile phone hints missing")
             if len(zip_inputs) != 1 or zip_inputs[0].get("autocomplete") != "postal-code" or zip_inputs[0].get("inputmode") != "numeric":
                 problems.append(f"{label}: mobile ZIP hints missing")
+    if label in SOCAL_LAUNDRY_INTAKE:
+        expected_city = SOCAL_LAUNDRY_INTAKE[label]
+        for field, expected in (("city", expected_city), ("state", "California"), ("service", "Washer and dryer pickup")):
+            hits = [a for a in inputs if a.get("name") == field and a.get("type") == "hidden" and a.get("value") == expected]
+            if len(hits) != 1:
+                problems.append(f"{label}: static {field} attribution incorrect or absent")
+        for field in ("phone", "zip"):
+            hits = [a for a in inputs if a.get("name") == field]
+            expected_mode = "tel" if field == "phone" else "numeric"
+            expected_auto = "tel" if field == "phone" else "postal-code"
+            if len(hits) != 1 or hits[0].get("inputmode") != expected_mode or hits[0].get("autocomplete") != expected_auto or "required" not in hits[0]:
+                problems.append(f"{label}: incomplete required mobile {field} input")
+        if label in ("la-habra-washer-dryer-pickup", "whittier-washer-dryer-pickup", "montebello-washer-dryer-pickup"):
+            matching = [s for s in form["selects"] if s["attrs"].get("name") == "appliance"]
+            if len(matching) != 1 or "required" not in matching[0]["attrs"] or not matching[0]["options"] or matching[0]["options"][0] != "":
+                problems.append(f"{label}: appliance requires explicit selection")
+            elif any("selected" in option for option in matching[0]["option_attrs"][1:]):
+                problems.append(f"{label}: appliance must not be preselected")
     if label in SGV_LAUNDRY_INTAKE:
         expected_city = SGV_LAUNDRY_INTAKE[label]
         for field, expected in (("city", expected_city), ("state", "California"), ("service", "Washer and dryer pickup")):
@@ -303,6 +337,22 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
+    # Source-only condition, attribution and consent fixture for legacy
+    # LA County forms with an implicit "Washer" first choice.
+    la_label = "montebello-washer-dryer-pickup"
+    la_good = good.replace(f'value="{label}"', f'value="{la_label}"').replace(
+        '<input name="phone" type="tel" required>',
+        '<input name="phone" type="tel" required autocomplete="tel" inputmode="tel">'
+        '<input type="hidden" name="city" value="Montebello">'
+        '<input type="hidden" name="state" value="California">'
+        '<input type="hidden" name="service" value="Washer and dryer pickup">'
+        '<input name="zip" required inputmode="numeric" autocomplete="postal-code">'
+        '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+    )
+    assert not inspect(la_label, la_good), "valid legacy CA laundry intake rejected"
+    assert inspect(la_label, la_good.replace('value="Montebello"', 'value="Pomona"')), "wrong city must fail"
+    assert inspect(la_label, la_good.replace('name="appliance" required', 'name="appliance"')), "appliance default must fail"
+    assert inspect(la_label, la_good.replace('name="service"', 'name="other_service"')), "missing service must fail"
     # A missing, wrong-city or wrong-service form must be rejected offline.
     sgv_label = "monterey-park-washer-dryer-pickup"
     sgv_good = good.replace(f'value="{label}"', f'value="{sgv_label}"').replace(
