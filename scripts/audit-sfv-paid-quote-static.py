@@ -15,6 +15,10 @@ PAGES = {
     "apple-valley-appliance-pickup": "apple-valley-appliance-pickup/index.html",
     "palmdale-appliance-pickup": "palmdale-appliance-pickup/index.html",
     "lancaster-appliance-pickup": "lancaster-appliance-pickup/index.html",
+    "palm-springs-appliance-pickup": "palm-springs-appliance-pickup/index.html",
+    "palm-desert-appliance-pickup": "palm-desert-appliance-pickup/index.html",
+    "la-quinta-appliance-pickup": "la-quinta-appliance-pickup/index.html",
+    "rancho-mirage-appliance-pickup": "rancho-mirage-appliance-pickup/index.html",
     # SGV source-only fallback: no JavaScript needed for customer quote preference.
     "pasadena-appliance-pickup": "pasadena-appliance-pickup/index.html",
     "arcadia-appliance-pickup": "arcadia-appliance-pickup/index.html",
@@ -196,6 +200,14 @@ HIGH_DESERT_ANTELOPE_GENERAL = {
     "lancaster-appliance-pickup": "Lancaster",
 }
 
+# Coachella Valley no-JavaScript customer contact and consent safeguards.
+COACHELLA_GENERAL_INTAKE = {
+    "palm-springs-appliance-pickup": "Palm Springs",
+    "palm-desert-appliance-pickup": "Palm Desert",
+    "la-quinta-appliance-pickup": "La Quinta",
+    "rancho-mirage-appliance-pickup": "Rancho Mirage",
+}
+
 LA_SPECIALTY_SOURCE = {
     "los-angeles-refrigerator-pickup": "Los Angeles refrigerator page",
     "los-angeles-freezer-pickup": "Los Angeles freezer page",
@@ -309,6 +321,22 @@ def inspect(label, html, expected_source=None):
             problems.append(f"{label}: default / free-only / quote-only consent values changed")
         if any("selected" in a for a in s["option_attrs"][1:]):
             problems.append(f"{label}: paid quote or free-only must not be preselected")
+    if label in COACHELLA_GENERAL_INTAKE:
+        expected_city = COACHELLA_GENERAL_INTAKE[label]
+        for field, expected in (("city", expected_city), ("state", "California"), ("service", "General major appliance pickup")):
+            matches = [a for a in inputs if a.get("name") == field and a.get("type") == "hidden" and a.get("value") == expected]
+            if len(matches) != 1:
+                problems.append(f"{label}: missing or incorrect static {field} label")
+        for field, mode, auto in (("phone", "tel", "tel"), ("zip", "numeric", "postal-code")):
+            matches = [a for a in inputs if a.get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0] or matches[0].get("inputmode") != mode or matches[0].get("autocomplete") != auto:
+                problems.append(f"{label}: required mobile {field} hints missing")
+        for field in ("appliance", "condition"):
+            matches = [a for a in form["selects"] if a["attrs"].get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0]["attrs"] or not matches[0]["options"] or matches[0]["options"][0] != "":
+                problems.append(f"{label}: {field} requires explicit customer choice")
+            elif any("selected" in a for a in matches[0]["option_attrs"][1:]):
+                problems.append(f"{label}: {field} silently preselects an appliance/condition")
     if label in HIGH_DESERT_ANTELOPE_GENERAL:
         expected_city = HIGH_DESERT_ANTELOPE_GENERAL[label]
         for key, expected in (("city", expected_city), ("state", "California"), ("service", "General major appliance pickup")):
@@ -505,6 +533,31 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
+    # Coachella Valley working-condition and paid-quote consent must remain explicit.
+    valley_label = "la-quinta-appliance-pickup"
+    valley_good = (
+        f'<form action="{ENDPOINT}" method="POST">'
+        f'<input type="hidden" name="source_page" value="{valley_label}">'
+        '<input type="hidden" name="state" value="California">'
+        '<input type="hidden" name="city" value="La Quinta">'
+        '<input type="hidden" name="service" value="General major appliance pickup">'
+        '<input type="tel" name="phone" required autocomplete="tel" inputmode="tel">'
+        '<input name="zip" required autocomplete="postal-code" inputmode="numeric">'
+        '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+        '<select name="condition" required><option value=""></option><option>Fully Working</option></select>'
+        '<select name="paid_removal_preference"><option value=""></option>'
+        '<option value="free_only"></option><option value="quote_ok"></option></select></form>'
+    )
+    assert not inspect(valley_label, valley_good), "valid La Quinta intake rejected"
+    for old, new in (
+        ('value="La Quinta"', 'value="Palm Springs"'),
+        ('name="service"', 'name="wrong_service"'),
+        ('name="paid_removal_preference"', 'name="missing_consent"'),
+        ('inputmode="numeric"', 'inputmode="text"'),
+        ('name="condition" required', 'name="condition"'),
+        ('<option value=""></option><option>Washer', '<option>Washer'),
+    ):
+        assert inspect(valley_label, valley_good.replace(old, new)), f"Coachella intake regression undetected: {old}"
     # High Desert + Antelope Valley: explicit no-JS city, service and quote safeguards.
     desert_label = "palmdale-appliance-pickup"
     desert_good = (
