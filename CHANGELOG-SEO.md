@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-25 — Portland/Salem laundry working-with-issues condition choice (VGM intake exception)
+- **Verified source gap:** The existing Portland and Salem washer/dryer forms required a condition choice but offered only Fully Working, Needs Repair, Not Working and Unknown. Their general city forms already distinguish a machine that works with a known issue. The laundry-page text asks customers to describe such problems, but the laundry selector lacked that accurate option.
+- **Bounded correction:** Add a nondefault `Working With Issues` option to each existing laundry condition selector; retain all original choices and the required blank first option. Extend the existing source-only Oregon form guard and positive/negative fixtures. No change to phone 503-868-4455, Formspree POST, optional paid-quote consent, other customer fields, photographs, free-pickup eligibility, SEO text, canonical, schema or links.
+- **Experiment:** Salem laundry's running experiment has an October 15 review gate. This is a verified customer-intake technical exception, not a ranking experiment; no ranking content variables changed.
+- **Verification/rollback:** Require passing PR checks, main-branch confirmation and independent live-page verification before claiming deployment. Actual Formspree inbox delivery and rankings remain unverified; revert this isolated PR on intake regression.
+
 ## 2026-10-25 — Fresno refrigerator/freezer/stove optional quote consent (VGM intake exception)
 - **Verified source gap:** Existing Fresno refrigerator, freezer and stove/oven forms had valid required phone, condition, source/city/service and Formspree POST, but unlike Fresno general and washer/dryer pages they lacked the approved no-JavaScript optional paid-removal quote choice. The existing JS enhancement cannot substitute for a static no-JS submission.
 - **Bounded correction:** Add one blank-default `paid_removal_preference` selector (`free_only`, `quote_ok`) with explicit no-charge/no-booking disclosure to each of the three original forms; extend the existing source-only consent guard. No changes to phone 310-774-4304, Formspree, required fields, eligibility, photo, SEO copy, title, links, canonical, schema, or experiment registry.
