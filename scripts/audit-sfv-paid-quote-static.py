@@ -159,6 +159,7 @@ PAGES = {
     "el-monte-washer-dryer-pickup": "el-monte-washer-dryer-pickup/index.html",
     # Verified additional SGV laundry no-JS paid quote consent (2026-10-24).
     "monrovia-washer-dryer-pickup": "monrovia-washer-dryer-pickup/index.html",
+    "duarte-washer-dryer-pickup": "duarte-washer-dryer-pickup/index.html",
     "covina-washer-dryer-pickup": "covina-washer-dryer-pickup/index.html",
     "san-gabriel-washer-dryer-pickup": "san-gabriel-washer-dryer-pickup/index.html",
     "west-covina-washer-dryer-pickup": "west-covina-washer-dryer-pickup/index.html",
@@ -307,6 +308,9 @@ CA_LAUNDRY_WORKING_ISSUES = {
     "los-angeles-washer-dryer-pickup": "Los Angeles",
     "pomona-washer-dryer-pickup": "Pomona",
     "santa-ana-washer-dryer-pickup": "Santa Ana",
+    "monrovia-washer-dryer-pickup": "Monrovia",
+    "west-covina-washer-dryer-pickup": "West Covina",
+    "duarte-washer-dryer-pickup": "Duarte",
 }
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {

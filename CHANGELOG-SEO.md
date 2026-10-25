@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-25 — Monrovia, West Covina and Duarte laundry intake truth (VGM factual technical exception)
+- **Verified main-branch defects:** These three existing California washer/dryer forms require a condition but omit an accurate option for a running appliance with a known problem; their no-JavaScript POST lacks a static laundry-service identifier. Duarte additionally lacks an optional paid-removal quote selector and ZIP autofill hint.
+- **Minimal reversible correction:** Add non-preselected `Working With Issues` option, `service=Washer and dryer pickup` attribution; add Duarte's blank-default optional `free_only` / `quote_ok` quote preference and postal-code hint. Keep existing Formspree endpoint, source_page, city, state, phone, imagery, eligibility, SEO copy, canonical and links unchanged.
+- **Experiment boundary:** Monrovia, West Covina and Duarte laundry experiments are still listed as running; each has an Oct 16 earliest evaluation gate. This is a documented factual customer-intake correction only, not a ranking/content experiment. Emergency repair ownership is unaffected.
+- **Regression:** Extend existing California no-JavaScript static form audit to all three pages; positive and negative condition, attribution and mobile fixtures remain active. Require all CI including SEO Experiment Guard before merge. Public HTML and actual Formspree receipt must be separately verified; no ranking claims.
+
 ## 2026-10-25 — Los Angeles, Pomona and Santa Ana laundry condition truth (VGM factual technical exception)
 - **Source-verified defect:** The existing washer/dryer forms on all three city pages required appliance condition but offered only Fully Working / Needs Repair / Not Working / Unknown. A machine that runs with a known issue could not be reported accurately. Pomona's existing form also omitted static laundry-service attribution on no-JavaScript POST.
 - **Minimal reversible repair:** Add a non-preselected `Working With Issues` choice to each existing required condition selector; add hidden `service=Washer and dryer pickup` to Pomona only. Keep all existing form fields, local phone routes, Formspree action, paid-quote consent, city/state/source attribution, photographs, eligibility language, URLs, canonicals, SEO copy and schema unchanged.
