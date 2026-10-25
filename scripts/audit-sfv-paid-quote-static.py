@@ -94,6 +94,11 @@ PAGES = {
     "upland-refrigerator-pickup": "upland-refrigerator-pickup/index.html",
     "ontario-washer-dryer-pickup": "ontario-washer-dryer-pickup/index.html",
     "montclair-washer-dryer-pickup": "montclair-washer-dryer-pickup/index.html",
+    # Source-confirmed California specialty no-JS paid quote gaps (2026-10-24).
+    "riverside-washer-dryer-pickup": "riverside-washer-dryer-pickup/index.html",
+    "riverside-refrigerator-pickup": "riverside-refrigerator-pickup/index.html",
+    "anaheim-washer-dryer-pickup": "anaheim-washer-dryer-pickup/index.html",
+    "pomona-washer-dryer-pickup": "pomona-washer-dryer-pickup/index.html",
     # Fontana specialty request forms: verified no-JS optional quote selection (2026-10-24).
     "fontana-stove-oven-pickup": "fontana-stove-oven-pickup/index.html",
     "fontana-refrigerator-pickup": "fontana-refrigerator-pickup/index.html",
