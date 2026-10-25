@@ -151,6 +151,7 @@ PAGES = {
     "brea-washer-dryer-pickup": "brea-washer-dryer-pickup/index.html",
     "yorba-linda-washer-dryer-pickup": "yorba-linda-washer-dryer-pickup/index.html",
     "lake-forest-washer-dryer-pickup": "lake-forest-washer-dryer-pickup/index.html",
+    "newport-beach-washer-dryer-pickup": "newport-beach-washer-dryer-pickup/index.html",
     "mission-viejo-washer-dryer-pickup": "mission-viejo-washer-dryer-pickup/index.html",
     "laguna-niguel-washer-dryer-pickup": "laguna-niguel-washer-dryer-pickup/index.html",
     "san-clemente-washer-dryer-pickup": "san-clemente-washer-dryer-pickup/index.html",
@@ -274,6 +275,7 @@ OC_LAUNDRY_INTAKE = {
     "brea-washer-dryer-pickup": "Brea",
     "yorba-linda-washer-dryer-pickup": "Yorba Linda",
     "lake-forest-washer-dryer-pickup": "Lake Forest",
+    "newport-beach-washer-dryer-pickup": "Newport Beach",
     "mission-viejo-washer-dryer-pickup": "Mission Viejo",
     "laguna-niguel-washer-dryer-pickup": "Laguna Niguel",
     "san-clemente-washer-dryer-pickup": "San Clemente",
@@ -332,6 +334,13 @@ OC_LAUNDRY_TRUTH = {
     "tustin-washer-dryer-pickup": "Tustin",
     "orange-washer-dryer-pickup": "Orange",
     "yorba-linda-washer-dryer-pickup": "Yorba Linda",
+}
+# Four verified coastal Orange County laundry forms: nondefault truthful conditions, mobile input and static lead attribution.
+COASTAL_OC_LAUNDRY_TRUTH = {
+    "lake-forest-washer-dryer-pickup": "Lake Forest",
+    "laguna-niguel-washer-dryer-pickup": "Laguna Niguel",
+    "san-clemente-washer-dryer-pickup": "San Clemente",
+    "newport-beach-washer-dryer-pickup": "Newport Beach",
 }
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
@@ -576,6 +585,27 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: {field} cannot preselect a nonempty option")
             elif field == "condition" and matches[0]["options"].count("Working With Issues") != 1:
                 problems.append(f"{label}: running-with-issues condition missing or duplicated")
+    if label in COASTAL_OC_LAUNDRY_TRUTH:
+        expected_city = COASTAL_OC_LAUNDRY_TRUTH[label]
+        for field, expected in (("city", expected_city), ("state", "California")):
+            matches = [a for a in inputs if a.get("name") == field and a.get("value") == expected]
+            if len(matches) != 1 or (matches[0].get("type") != "hidden" and "required" not in matches[0]):
+                problems.append(f"{label}: incorrect coastal {field} attribution")
+        services = [a for a in inputs if a.get("name") == "service"]
+        if len(services) != 1 or not all(word in services[0].get("value", "").lower() for word in ("washer", "dryer")):
+            problems.append(f"{label}: missing coastal laundry service attribution")
+        for field, mode, auto in (("phone", "tel", "tel"), ("zip", "numeric", "postal-code")):
+            matches = [a for a in inputs if a.get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0] or matches[0].get("inputmode") != mode or matches[0].get("autocomplete") != auto:
+                problems.append(f"{label}: coastal mobile {field} hints missing")
+        for field in ("appliance", "condition"):
+            matches = [a for a in form["selects"] if a["attrs"].get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0]["attrs"] or not matches[0]["options"] or matches[0]["options"][0] != "":
+                problems.append(f"{label}: coastal {field} requires explicit selection")
+            elif any("selected" in a for a in matches[0]["option_attrs"][1:]):
+                problems.append(f"{label}: coastal {field} must not preselect an answer")
+            elif field == "condition" and matches[0]["options"].count("Working With Issues") != 1:
+                problems.append(f"{label}: coastal working-with-issues choice missing or duplicated")
     # Oregon laundry customers need a truthful explicit option for a machine
     # that runs but has a known issue; do not preselect any condition.
     if label in ("portland-washer-dryer-pickup", "salem-washer-dryer-pickup"):
@@ -1118,6 +1148,37 @@ def fixture_checks():
     assert not inspect("los-angeles-refrigerator-pickup", special, "Los Angeles refrigerator page")
     assert inspect("los-angeles-refrigerator-pickup", special, "wrong attribution")
     assert inspect("los-angeles-refrigerator-pickup", special.replace('value="Refrigerator pickup"', 'value="Freezer pickup"'), "Los Angeles refrigerator page")
+
+    # Coastal OC customer-form regression: a runnable washer/dryer with a fault
+    # must not be forced into "Fully Working" or "Needs Repair".
+    coastal_label = "newport-beach-washer-dryer-pickup"
+    coastal_good = (
+        f'<form action="{ENDPOINT}" method="POST">'
+        f'<input type="hidden" name="source_page" value="{coastal_label}">'
+        '<input type="hidden" name="state" value="California">'
+        '<input type="hidden" name="service" value="Newport Beach Washer Dryer Pickup">'
+        '<input name="city" value="Newport Beach" required>'
+        '<input type="tel" name="phone" required autocomplete="tel" inputmode="tel">'
+        '<input name="zip" required autocomplete="postal-code" inputmode="numeric">'
+        '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+        '<select name="condition" required><option value=""></option><option>Fully Working</option>'
+        '<option value="Working With Issues"></option><option>Needs Repair</option></select>'
+        '<select name="paid_removal_preference"><option value=""></option>'
+        '<option value="free_only"></option><option value="quote_ok"></option></select></form>'
+    )
+    assert not inspect(coastal_label, coastal_good), "valid coastal OC intake rejected"
+    for old, new in (
+        ('name="source_page"', 'name="missing_source"'),
+        ('value="Newport Beach"', 'value="Irvine"'),
+        ('name="service"', 'name="untracked_service"'),
+        ('inputmode="tel"', 'inputmode="numeric"'),
+        ('autocomplete="postal-code"', 'autocomplete="off"'),
+        ('value="Working With Issues"', 'value="Needs Repair"'),
+        ('name="paid_removal_preference"', 'name="missing_consent"'),
+        ('name="condition" required', 'name="condition"'),
+        ('<option value=""></option><option>Fully Working', '<option>Fully Working'),
+    ):
+        assert inspect(coastal_label, coastal_good.replace(old, new)), f"coastal OC regression not caught: {old}"
 
 
 if __name__ == "__main__":
