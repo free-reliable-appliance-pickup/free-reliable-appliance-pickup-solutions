@@ -615,6 +615,16 @@ def main():
     if f'<meta property="og:image:alt" content="{pasadena_alt}">' not in pasadena:
         problems.append('pasadena-appliance-pickup: social image alt mismatches multi-appliance hero')
 
+    # Highland's current hero is three refrigerators in a pickup, not a
+    # washer/dryer/stove group. Keep the social preview description accurate.
+    highland = (Path('highland-appliance-pickup') / 'index.html').read_text(encoding='utf-8', errors='replace')
+    highland_photo = '/assets/optimized/20240806_153155-1600.jpg'
+    highland_alt = 'Three used refrigerators secured in the bed of a pickup truck'
+    if f'src="{highland_photo}" alt="{highland_alt}"' not in highland:
+        problems.append('highland-appliance-pickup: verified refrigerator pickup hero changed unexpectedly')
+    if f'<meta property="og:image:alt" content="{highland_alt}">' not in highland:
+        problems.append('highland-appliance-pickup: social image alt mismatches verified refrigerator pickup hero')
+
     # Avoid turning example photos into unsupported claims of a completed
     # pickup in this exact city. This is a factual photo metadata guard,
     # not a ranking-copy or asset-rotation experiment.

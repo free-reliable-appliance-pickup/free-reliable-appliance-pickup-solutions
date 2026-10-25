@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-25 — Highland refrigerator pickup photo OG alt factual correction (VGM technical exception)
+- **Verified defect:** Highland's current visible general-page hero, visually verified in merged PR #483, shows three used refrigerators secured in a pickup truck. The og:image:alt still described a grouped washer, dryer, stove and refrigerator from the prior hero. The social preview therefore inaccurately described the actual image.
+- **Bounded correction:** Align only the existing OG image alt text to the unchanged visible hero alt. Add a narrow source-level image audit regression guard. Preserve original hero photo URL, dimensions, title/H1, description, canonical, schema, phone 909-375-6685, Formspree, acceptance rules and all visible SEO text.
+- **Experiment gate:** PR #483 froze hero-photo variables until at least Nov 1 (prefer Nov 7 GSC review). This is an explicitly permitted factual metadata correction, **not** a new image or ranking experiment; do not reset its observation window or modify Daily SEO Ranking Countermove's registry.
+- **Verification/rollback:** Require all PR checks, verify main-branch merge, Pages deployment and fresh production OG alt separately. Revert this narrow PR if the social metadata regresses. No form receipt or ranking gain claimed.
+
 ## 2026-10-25 — Pasadena multi-appliance OG alt factual mismatch (VGM technical exception)
 - **Source-confirmed:** Pasadena general pickup's OG image and visible hero both use the existing Rancho multi-appliance group photograph (washer, dryer, stove, refrigerator), but its `og:image:alt` described only a washer/dryer set. This was inaccurate social-preview metadata; not evidence of an organic ranking problem.
 - **Correction:** Align only the OG image alt text with the existing truthful visible hero alt. Preserve actual image, preload, dimensions, form/phone routing, acceptance policy, schema, canonical, copy and SEO experiment variables. Add a small regression guard to the existing active-image audit.
