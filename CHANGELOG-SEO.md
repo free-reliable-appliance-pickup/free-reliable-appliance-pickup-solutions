@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-25 — Coachella Valley four-city customer quote preference (VGM intake exception)
+- **Verified source gap:** Palm Springs, Palm Desert, La Quinta and Rancho Mirage general appliance pickup forms submit required customer phone, address, appliance and condition but lack a static optional `paid_removal_preference` selection. La Quinta/Rancho Mirage additionally have no static general-service Formspree attribution.
+- **Targeted fix:** Add unselected, optional `free_only` / `quote_ok` selector and no-charge/approval language, ZIP mobile keypad hints, and correct `service=General major appliance pickup` hidden attribution on two city forms.
+- **Protection:** Retain existing 909 local contact, Formspree POST, all city/source/state tags, eligibility, actual image, canonical, ranking copy, schema and earlier Coachella/Rancho Mirage SEO experiments (review dates Oct 9/15, passed). No extra city pages or SEO copy changes.
+- **Verification:** Check CI including static no-JS field regression tests; verify public canonical Formspree form after Pages publishes. No actual lead submission or ranking improvement inferred.
+
 ## 2026-10-25 — High Desert / Antelope Valley customer opt-in form integrity (VGM technical exception)
 - **Confirmed:** Existing Victorville, Hesperia, Adelanto, Apple Valley, Palmdale and Lancaster general pickup Formspree forms lacked a static optional paid-removal quote choice. Palmdale/Lancaster also lacked static general-service lead attribution, although each form already required customer condition, appliance, city, ZIP and phone.
 - **Limited repair:** Preserve free qualification as first choice, add blank-default optional `paid_removal_preference` with `free_only` / `quote_ok` and no-charge/no-booking disclaimer; improve ZIP mobile hints (all six) and phone hints (Palmdale/Lancaster); add static general-service attribution to those two existing forms.
