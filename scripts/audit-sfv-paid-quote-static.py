@@ -28,6 +28,10 @@ PAGES = {
     "fresno-appliance-pickup": "fresno-appliance-pickup/index.html",
     # Fresno specialty intake must retain no-JS optional quote consent.
     "fresno-washer-dryer-pickup": "fresno-washer-dryer-pickup/index.html",
+    # Existing Fresno specialty forms: static no-JS quote choice, never preselected.
+    "fresno-refrigerator-pickup": "fresno-refrigerator-pickup/index.html",
+    "fresno-freezer-pickup": "fresno-freezer-pickup/index.html",
+    "fresno-stove-oven-pickup": "fresno-stove-oven-pickup/index.html",
     "orange-county-appliance-pickup": "orange-county-appliance-pickup/index.html",
     "anaheim-appliance-pickup": "anaheim-appliance-pickup/index.html",
     "irvine-appliance-pickup": "irvine-appliance-pickup/index.html",
