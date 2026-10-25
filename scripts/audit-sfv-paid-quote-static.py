@@ -89,6 +89,11 @@ PAGES = {
     "buena-park-appliance-pickup": "buena-park-appliance-pickup/index.html",
     "yorba-linda-appliance-pickup": "yorba-linda-appliance-pickup/index.html",
     "mission-viejo-appliance-pickup": "mission-viejo-appliance-pickup/index.html",
+    # Fontana specialty request forms: verified no-JS optional quote selection (2026-10-24).
+    "fontana-stove-oven-pickup": "fontana-stove-oven-pickup/index.html",
+    "fontana-refrigerator-pickup": "fontana-refrigerator-pickup/index.html",
+    "fontana-freezer-pickup": "fontana-freezer-pickup/index.html",
+    "fontana-washer-dryer-pickup": "fontana-washer-dryer-pickup/index.html",
 }
 # Existing Los Angeles appliance-category forms use descriptive source-page attribution.
 # Validate the no-JavaScript quote choice without changing the source identifiers.
