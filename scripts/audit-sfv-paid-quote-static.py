@@ -322,6 +322,14 @@ IE_THREE_LAUNDRY_TRUTH = {
     "chino-hills-washer-dryer-pickup": "Chino Hills",
     "rialto-washer-dryer-pickup": "Rialto",
 }
+# Five existing Orange County laundry request forms: preserve truthful condition and routing.
+OC_FIVE_LAUNDRY_TRUTH = {
+    "garden-grove-washer-dryer-pickup": "Garden Grove",
+    "fullerton-washer-dryer-pickup": "Fullerton",
+    "brea-washer-dryer-pickup": "Brea",
+    "huntington-beach-washer-dryer-pickup": "Huntington Beach",
+    "buena-park-washer-dryer-pickup": "Buena Park",
+}
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
     "portland-appliance-pickup": "portland-appliance-pickup/index.html",
@@ -543,6 +551,28 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: {field} cannot silently preselect a value")
             elif field == "condition" and choices[0]["options"].count("Working With Issues") != 1:
                 problems.append(f"{label}: truthful running-with-issues option missing or duplicated")
+    # Accurate running-with-issues condition and no-JS intake on existing OC forms.
+    if label in OC_FIVE_LAUNDRY_TRUTH:
+        expected_city = OC_FIVE_LAUNDRY_TRUTH[label]
+        services = [a for a in inputs if a.get("name") == "service" and a.get("type") == "hidden" and a.get("value") == "Washer and dryer pickup"]
+        if len(services) != 1:
+            problems.append(f"{label}: laundry service attribution changed")
+        for field, expected in (("city", expected_city), ("state", "California")):
+            matches = [a for a in inputs if a.get("name") == field and a.get("value") == expected]
+            if len(matches) != 1 or (matches[0].get("type") != "hidden" and "required" not in matches[0]):
+                problems.append(f"{label}: incorrect {field} attribution")
+        for field, mode, auto in (("phone", "tel", "tel"), ("zip", "numeric", "postal-code")):
+            matches = [a for a in inputs if a.get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0] or matches[0].get("inputmode") != mode or matches[0].get("autocomplete") != auto:
+                problems.append(f"{label}: mobile {field} hints missing")
+        for field in ("appliance", "condition"):
+            matches = [a for a in form["selects"] if a["attrs"].get("name") == field]
+            if len(matches) != 1 or "required" not in matches[0]["attrs"] or not matches[0]["options"] or matches[0]["options"][0] != "":
+                problems.append(f"{label}: {field} requires explicit customer selection")
+            elif any("selected" in attrs for attrs in matches[0]["option_attrs"][1:]):
+                problems.append(f"{label}: {field} cannot preselect a nonempty option")
+            elif field == "condition" and matches[0]["options"].count("Working With Issues") != 1:
+                problems.append(f"{label}: running-with-issues condition missing or duplicated")
     # Oregon laundry customers need a truthful explicit option for a machine
     # that runs but has a known issue; do not preselect any condition.
     if label in ("portland-washer-dryer-pickup", "salem-washer-dryer-pickup"):
@@ -728,6 +758,40 @@ def fixture_checks():
             ('name="paid_removal_preference"', 'name="no_paid_quote"'),
         ):
             assert inspect(county_label, county_good.replace(old, new)), f"county intake defect not caught: {county_label}: {old}"
+    # Five existing OC laundry forms: verify valid and tampered no-JS source.
+    for oc_label, oc_city in OC_FIVE_LAUNDRY_TRUTH.items():
+        oc_good = (
+            f'<form action="{ENDPOINT}" method="POST">'
+            f'<input type="hidden" name="source_page" value="{oc_label}">'
+            f'<input type="hidden" name="city" value="{oc_city}">'
+            '<input type="hidden" name="state" value="California">'
+            '<input type="hidden" name="service" value="Washer and dryer pickup">'
+            '<input type="tel" name="phone" required autocomplete="tel" inputmode="tel">'
+            '<input name="zip" required autocomplete="postal-code" inputmode="numeric">'
+            '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+            '<select name="condition" required><option value=""></option><option>Fully Working</option>'
+            '<option value="Working With Issues"></option><option>Needs Repair</option></select>'
+            '<select name="paid_removal_preference"><option value=""></option>'
+            '<option value="free_only"></option><option value="quote_ok"></option></select></form>'
+        )
+        assert not inspect(oc_label, oc_good), f"valid OC laundry form rejected: {oc_label}"
+        for before, after in (
+            ('name="source_page"', 'name="wrong_source"'),
+            ('name="city"', 'name="wrong_city"'),
+            ('name="service"', 'name="wrong_service"'),
+            ('value="California"', 'value="Oregon"'),
+            ('inputmode="numeric"', 'inputmode="text"'),
+            ('autocomplete="tel"', 'autocomplete="off"'),
+            ('name="appliance" required', 'name="appliance"'),
+            ('name="condition" required', 'name="condition"'),
+            ('value="Working With Issues"', 'value="Fully Working"'),
+            ('name="paid_removal_preference"', 'name="unknown_consent"'),
+        ):
+            assert inspect(oc_label, oc_good.replace(before, after)), f"OC laundry defect missed: {oc_label}: {before}"
+        # Huntington Beach has editable city/state; this must also remain valid.
+        if oc_label == "huntington-beach-washer-dryer-pickup":
+            editable = oc_good.replace('type="hidden" name="city"', 'name="city" required').replace('type="hidden" name="state"', 'name="state" required')
+            assert not inspect(oc_label, editable), "editable OC city/state incorrectly rejected"
     # Source-only positive/negative regression for three verified IE laundry fixes.
     for ie_label, ie_city in IE_THREE_LAUNDRY_TRUTH.items():
         ie_good = (
