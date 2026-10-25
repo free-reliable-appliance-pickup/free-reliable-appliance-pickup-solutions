@@ -12,6 +12,7 @@ PAGES = {
     "arcadia-appliance-pickup": "arcadia-appliance-pickup/index.html",
     "san-fernando-appliance-pickup": "san-fernando-appliance-pickup/index.html",
     "san-fernando-washer-dryer-pickup": "san-fernando-washer-dryer-pickup/index.html",
+    "los-angeles-washer-dryer-pickup": "los-angeles-washer-dryer-pickup/index.html",
     "north-hollywood-appliance-pickup": "north-hollywood-appliance-pickup/index.html",
     "san-fernando-valley-appliance-pickup": "san-fernando-valley-appliance-pickup/index.html",
     "van-nuys-appliance-pickup": "van-nuys-appliance-pickup/index.html",
@@ -181,6 +182,23 @@ def inspect(label, html, expected_source=None):
             problems.append(f"{label}: default / free-only / quote-only consent values changed")
         if any("selected" in a for a in s["option_attrs"][1:]):
             problems.append(f"{label}: paid quote or free-only must not be preselected")
+    # Two LA County washer/dryer pages must submit complete city/service
+    # attribution even when customer-routing.js fails or is disabled.
+    if label in ("san-fernando-washer-dryer-pickup", "los-angeles-washer-dryer-pickup"):
+        expected_city = "San Fernando" if label.startswith("san-fernando") else "Los Angeles"
+        city_inputs = [a for a in inputs if a.get("name") == "city"]
+        if len(city_inputs) != 1 or not ("required" in city_inputs[0] or city_inputs[0].get("type") == "hidden"):
+            problems.append(f"{label}: city must be present in static form")
+        elif city_inputs[0].get("value") != expected_city:
+            problems.append(f"{label}: wrong city attribution {city_inputs[0].get('value')}")
+        if len([a for a in inputs if a.get("name") == "service" and a.get("value") == "Washer and dryer pickup"]) != 1:
+            problems.append(f"{label}: static laundry service attribution absent")
+        phones = [a for a in inputs if a.get("name") == "phone"]
+        if len(phones) != 1 or phones[0].get("autocomplete") != "tel" or phones[0].get("inputmode") != "tel":
+            problems.append(f"{label}: mobile telephone hints missing")
+        zips = [a for a in inputs if a.get("name") == "zip"]
+        if len(zips) != 1 or zips[0].get("inputmode") != "numeric" or zips[0].get("autocomplete") != "postal-code":
+            problems.append(f"{label}: postal-code mobile hints missing")
     return problems
 
 def fixture_checks():
