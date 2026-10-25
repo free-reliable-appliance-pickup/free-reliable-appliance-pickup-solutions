@@ -606,6 +606,15 @@ def main():
                 if (attrs.get('width'), attrs.get('height')) != ('1586', '992'):
                     problems.append('fresno general group hero must use intrinsic dimensions 1586x992')
 
+    # Pasadena's multi-appliance hero must not be described as a washer/dryer set
+    # in social previews. Guard a verified photo-metadata mismatch only.
+    pasadena = (Path('pasadena-appliance-pickup') / 'index.html').read_text(encoding='utf-8', errors='replace')
+    pasadena_alt = 'Washer, dryer, stove and refrigerator together from our original appliance photo collection'
+    if f'alt="{pasadena_alt}"' not in pasadena:
+        problems.append('pasadena-appliance-pickup: representative hero alt changed unexpectedly')
+    if f'<meta property="og:image:alt" content="{pasadena_alt}">' not in pasadena:
+        problems.append('pasadena-appliance-pickup: social image alt mismatches multi-appliance hero')
+
     # Avoid turning example photos into unsupported claims of a completed
     # pickup in this exact city. This is a factual photo metadata guard,
     # not a ranking-copy or asset-rotation experiment.
