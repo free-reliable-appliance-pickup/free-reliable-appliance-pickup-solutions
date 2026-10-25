@@ -141,6 +141,9 @@ PAGES = {
     "buena-park-washer-dryer-pickup": "buena-park-washer-dryer-pickup/index.html",
     # Verified OC laundry source, mobile and optional quote fallback (2026-10-24).
     "chino-hills-washer-dryer-pickup": "chino-hills-washer-dryer-pickup/index.html",
+    # Verified Inland Empire laundry form truth and no-JS quote fallback.
+    "chino-washer-dryer-pickup": "chino-washer-dryer-pickup/index.html",
+    "rialto-washer-dryer-pickup": "rialto-washer-dryer-pickup/index.html",
     "huntington-beach-washer-dryer-pickup": "huntington-beach-washer-dryer-pickup/index.html",
     "irvine-washer-dryer-pickup": "irvine-washer-dryer-pickup/index.html",
     "tustin-washer-dryer-pickup": "tustin-washer-dryer-pickup/index.html",
@@ -311,6 +314,13 @@ CA_LAUNDRY_WORKING_ISSUES = {
     "monrovia-washer-dryer-pickup": "Monrovia",
     "west-covina-washer-dryer-pickup": "West Covina",
     "duarte-washer-dryer-pickup": "Duarte",
+}
+# Preserve honest nondefault conditions, city/service routing, and mobile fields
+# for existing Chino, Chino Hills and Rialto laundry request forms.
+IE_THREE_LAUNDRY_TRUTH = {
+    "chino-washer-dryer-pickup": "Chino",
+    "chino-hills-washer-dryer-pickup": "Chino Hills",
+    "rialto-washer-dryer-pickup": "Rialto",
 }
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
@@ -512,6 +522,27 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: {field} must not preselect an appliance/condition")
             elif field == "condition" and matches[0]["options"].count("Working With Issues") != 1:
                 problems.append(f"{label}: working-with-issues choice missing or duplicated")
+    if label in IE_THREE_LAUNDRY_TRUTH:
+        expected_city = IE_THREE_LAUNDRY_TRUTH[label]
+        for field, expected in (("state", "California"), ("service", "Washer and dryer pickup")):
+            hits = [a for a in inputs if a.get("name") == field and a.get("type") == "hidden" and a.get("value") == expected]
+            if len(hits) != 1:
+                problems.append(f"{label}: missing or incorrect static {field} attribution")
+        cities = [a for a in inputs if a.get("name") == "city" and a.get("value") == expected_city]
+        if len(cities) != 1 or (cities[0].get("type") != "hidden" and "required" not in cities[0]):
+            problems.append(f"{label}: incorrect pickup city attribution")
+        for field, mode, auto in (("phone", "tel", "tel"), ("zip", "numeric", "postal-code")):
+            hits = [a for a in inputs if a.get("name") == field]
+            if len(hits) != 1 or "required" not in hits[0] or hits[0].get("inputmode") != mode or hits[0].get("autocomplete") != auto:
+                problems.append(f"{label}: required mobile {field} hints missing")
+        for field in ("appliance", "condition"):
+            choices = [a for a in form["selects"] if a["attrs"].get("name") == field]
+            if len(choices) != 1 or "required" not in choices[0]["attrs"] or not choices[0]["options"] or choices[0]["options"][0] != "":
+                problems.append(f"{label}: {field} must require an explicit choice")
+            elif any("selected" in a for a in choices[0]["option_attrs"][1:]):
+                problems.append(f"{label}: {field} cannot silently preselect a value")
+            elif field == "condition" and choices[0]["options"].count("Working With Issues") != 1:
+                problems.append(f"{label}: truthful running-with-issues option missing or duplicated")
     # Oregon laundry customers need a truthful explicit option for a machine
     # that runs but has a known issue; do not preselect any condition.
     if label in ("portland-washer-dryer-pickup", "salem-washer-dryer-pickup"):
@@ -697,6 +728,36 @@ def fixture_checks():
             ('name="paid_removal_preference"', 'name="no_paid_quote"'),
         ):
             assert inspect(county_label, county_good.replace(old, new)), f"county intake defect not caught: {county_label}: {old}"
+    # Source-only positive/negative regression for three verified IE laundry fixes.
+    for ie_label, ie_city in IE_THREE_LAUNDRY_TRUTH.items():
+        ie_good = (
+            f'<form action="{ENDPOINT}" method="POST">'
+            f'<input type="hidden" name="source_page" value="{ie_label}">'
+            f'<input type="hidden" name="city" value="{ie_city}">'
+            '<input type="hidden" name="state" value="California">'
+            '<input type="hidden" name="service" value="Washer and dryer pickup">'
+            '<input type="tel" name="phone" required autocomplete="tel" inputmode="tel">'
+            '<input name="zip" required autocomplete="postal-code" inputmode="numeric">'
+            '<select name="appliance" required><option value=""></option><option>Washer</option></select>'
+            '<select name="condition" required><option value=""></option><option>Fully Working</option>'
+            '<option value="Working With Issues"></option><option>Needs Repair</option></select>'
+            '<select name="paid_removal_preference"><option value=""></option>'
+            '<option value="free_only"></option><option value="quote_ok"></option></select></form>'
+        )
+        assert not inspect(ie_label, ie_good), f"valid IE laundry form rejected: {ie_label}"
+        for old, new in (
+            ('name="source_page"', 'name="lost_source"'),
+            (f'value="{ie_city}"', 'value="Other City"'),
+            ('name="service"', 'name="lost_service"'),
+            ('inputmode="tel"', 'inputmode="numeric"'),
+            ('autocomplete="postal-code"', 'autocomplete="off"'),
+            ('<option value=""></option><option>Washer', '<option>Washer'),
+            ('name="condition" required', 'name="condition"'),
+            ('value="Working With Issues"', 'value="Needs Repair"'),
+            ('<option value="Working With Issues"></option>', '<option value="Working With Issues" selected></option>'),
+            ('name="paid_removal_preference"', 'name="no_consent"'),
+        ):
+            assert inspect(ie_label, ie_good.replace(old, new)), f"IE laundry defect not caught: {ie_label}: {old}"
     # California laundry source/condition regression, including negative fixtures.
     ca_label = "riverside-washer-dryer-pickup"
     ca_good = (
