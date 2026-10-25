@@ -99,6 +99,11 @@ PAGES = {
     "riverside-refrigerator-pickup": "riverside-refrigerator-pickup/index.html",
     "anaheim-washer-dryer-pickup": "anaheim-washer-dryer-pickup/index.html",
     "pomona-washer-dryer-pickup": "pomona-washer-dryer-pickup/index.html",
+    # Verified Rosemead/Temple City/Monterey Park/El Monte laundry consent (2026-10-24).
+    "rosemead-washer-dryer-pickup": "rosemead-washer-dryer-pickup/index.html",
+    "temple-city-washer-dryer-pickup": "temple-city-washer-dryer-pickup/index.html",
+    "monterey-park-washer-dryer-pickup": "monterey-park-washer-dryer-pickup/index.html",
+    "el-monte-washer-dryer-pickup": "el-monte-washer-dryer-pickup/index.html",
     # Verified Arcadia/Glendora laundry static consent and attribution (2026-10-24).
     "arcadia-washer-dryer-pickup": "arcadia-washer-dryer-pickup/index.html",
     "glendora-washer-dryer-pickup": "glendora-washer-dryer-pickup/index.html",
