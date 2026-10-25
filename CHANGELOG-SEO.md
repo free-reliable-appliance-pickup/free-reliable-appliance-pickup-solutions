@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-10-25 — San Diego / San Marcos image provenance accuracy (VGM factual technical exception)
+- **Actual repository source images independently visually inspected:** San Diego /IMG-20240814-WA0032.jpg shows a white Kenmore top-freezer refrigerator photographed outdoors; San Marcos /IMG-20230805-WA0013.jpg shows a stainless-steel glass-top electric range photographed outdoors. Neither image alone establishes a completed appliance pickup in the named city.
+- **Confirmed current factual error:** Both general city page hero image alts and matching og:image:alt currently say "from our [named city] pickup work," an unsupported exact-locality completed-job claim.
+- **Minimal correction:** Replace only those two images' visual alt/OG-alt strings with truthful appliance descriptions and neutral "illustrating [city] appliance pickup requests" context. Keep both original user-photo assets, intrinsic/layout characteristics, hero visual category, site title/H1/body/meta description, canonical, schema, original phone, all form values, acceptance rules and the existing city/service intent.
+- **Regression:** Add the two existing owners to scripts/audit-active-page-images.py local photo-claim guard. Related San Diego / San Marcos page concentration experiments were eligible for review after Oct 16; this changes image description only and does not reset ranking experiments.
+- **Evidence limits:** Source-verified repair proposed in PR; require CI, merge and fresh live canonical HTML verification. No extra local pickups, backlinks or rank improvement inferred.
+
 ## 2026-10-25 — Riverside / Ontario / Anaheim laundry truthful condition and attribution (VGM intake exception)
 - **Source-verified customer issue:** These three existing washer/dryer forms require a condition but offer no "Working, but has a problem" choice even though their general city forms do. Their static Formspree requests also omit the laundry service tag, reducing attribution if JavaScript is unavailable.
 - **Narrow repair:** Add one non-preselected `Working With Issues` condition option and a hidden `service=Washer and dryer pickup` field to each existing form. Preserve the original blank default, existing choices, phone, city/state/source, Formspree POST, optional paid-quote consent, images, policy, eligibility and SEO copy.
