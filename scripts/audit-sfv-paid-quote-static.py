@@ -322,13 +322,16 @@ IE_THREE_LAUNDRY_TRUTH = {
     "chino-hills-washer-dryer-pickup": "Chino Hills",
     "rialto-washer-dryer-pickup": "Rialto",
 }
-# Five existing Orange County laundry request forms: preserve truthful condition and routing.
-OC_FIVE_LAUNDRY_TRUTH = {
+# Eight existing Orange County laundry request forms: preserve truthful condition and routing.
+OC_LAUNDRY_TRUTH = {
     "garden-grove-washer-dryer-pickup": "Garden Grove",
     "fullerton-washer-dryer-pickup": "Fullerton",
     "brea-washer-dryer-pickup": "Brea",
     "huntington-beach-washer-dryer-pickup": "Huntington Beach",
     "buena-park-washer-dryer-pickup": "Buena Park",
+    "tustin-washer-dryer-pickup": "Tustin",
+    "orange-washer-dryer-pickup": "Orange",
+    "yorba-linda-washer-dryer-pickup": "Yorba Linda",
 }
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
@@ -552,8 +555,8 @@ def inspect(label, html, expected_source=None):
             elif field == "condition" and choices[0]["options"].count("Working With Issues") != 1:
                 problems.append(f"{label}: truthful running-with-issues option missing or duplicated")
     # Accurate running-with-issues condition and no-JS intake on existing OC forms.
-    if label in OC_FIVE_LAUNDRY_TRUTH:
-        expected_city = OC_FIVE_LAUNDRY_TRUTH[label]
+    if label in OC_LAUNDRY_TRUTH:
+        expected_city = OC_LAUNDRY_TRUTH[label]
         services = [a for a in inputs if a.get("name") == "service" and a.get("type") == "hidden" and a.get("value") == "Washer and dryer pickup"]
         if len(services) != 1:
             problems.append(f"{label}: laundry service attribution changed")
@@ -758,8 +761,8 @@ def fixture_checks():
             ('name="paid_removal_preference"', 'name="no_paid_quote"'),
         ):
             assert inspect(county_label, county_good.replace(old, new)), f"county intake defect not caught: {county_label}: {old}"
-    # Five existing OC laundry forms: verify valid and tampered no-JS source.
-    for oc_label, oc_city in OC_FIVE_LAUNDRY_TRUTH.items():
+    # Eight existing OC laundry forms: verify valid and tampered no-JS source.
+    for oc_label, oc_city in OC_LAUNDRY_TRUTH.items():
         oc_good = (
             f'<form action="{ENDPOINT}" method="POST">'
             f'<input type="hidden" name="source_page" value="{oc_label}">'
