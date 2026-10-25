@@ -92,6 +92,10 @@ PAGES = {
     "mission-viejo-appliance-pickup": "mission-viejo-appliance-pickup/index.html",
     # Upland / Ontario / Montclair specialty request consent and attribution (2026-10-24).
     "upland-washer-dryer-pickup": "upland-washer-dryer-pickup/index.html",
+    # Existing IE specialty pages: preserve lead city and optional quote without JS.
+    "upland-freezer-pickup": "upland-freezer-pickup/index.html",
+    "upland-stove-oven-pickup": "upland-stove-oven-pickup/index.html",
+    "corona-washer-dryer-pickup": "corona-washer-dryer-pickup/index.html",
     "upland-refrigerator-pickup": "upland-refrigerator-pickup/index.html",
     "ontario-washer-dryer-pickup": "ontario-washer-dryer-pickup/index.html",
     "montclair-washer-dryer-pickup": "montclair-washer-dryer-pickup/index.html",
@@ -142,6 +146,12 @@ LA_SPECIALTY_SERVICE = {
     "los-angeles-refrigerator-pickup": "Refrigerator pickup",
     "los-angeles-freezer-pickup": "Freezer pickup",
     "los-angeles-stove-oven-pickup": "Stove, range and oven pickup",
+}
+# Three verified Inland Empire specialty intake/source gaps from 2026-10-24.
+IE_SPECIALTY_INTAKE = {
+    "corona-washer-dryer-pickup": ("Corona", "Washer and dryer pickup"),
+    "upland-freezer-pickup": ("Upland", "Freezer pickup"),
+    "upland-stove-oven-pickup": ("Upland", "Stove, range and oven pickup"),
 }
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
@@ -203,6 +213,19 @@ def inspect(label, html, expected_source=None):
             problems.append(f"{label}: incorrect Los Angeles city attribution")
         if len([a for a in inputs if a.get("name") == "state" and a.get("value") == "California"]) != 1:
             problems.append(f"{label}: incorrect California state attribution")
+    if label in IE_SPECIALTY_INTAKE:
+        expected_city, expected_service = IE_SPECIALTY_INTAKE[label]
+        for key, expected in (("city", expected_city), ("state", "California"), ("service", expected_service)):
+            matches = [a for a in inputs if a.get("name") == key and a.get("type") == "hidden" and a.get("value") == expected]
+            if len(matches) != 1:
+                problems.append(f"{label}: incorrect static {key} attribution")
+        if label == "corona-washer-dryer-pickup":
+            phone = [a for a in inputs if a.get("name") == "phone"]
+            zip_inputs = [a for a in inputs if a.get("name") == "zip"]
+            if len(phone) != 1 or phone[0].get("autocomplete") != "tel" or phone[0].get("inputmode") != "tel":
+                problems.append(f"{label}: mobile phone hints missing")
+            if len(zip_inputs) != 1 or zip_inputs[0].get("autocomplete") != "postal-code" or zip_inputs[0].get("inputmode") != "numeric":
+                problems.append(f"{label}: mobile ZIP hints missing")
     # Two LA County washer/dryer pages must submit complete city/service
     # attribution even when customer-routing.js fails or is disabled.
     if label in ("san-fernando-washer-dryer-pickup", "los-angeles-washer-dryer-pickup"):
@@ -244,6 +267,14 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
+    # Prevent regression of a real no-JavaScript Inland Empire city/service gap.
+    ie_good = good.replace(f'value="{label}"', 'value="upland-freezer-pickup"').replace(
+        '<input name="phone" type="tel" required>',
+        '<input name="phone" type="tel" required><input name="city" type="hidden" value="Upland"><input name="state" type="hidden" value="California"><input name="service" type="hidden" value="Freezer pickup">'
+    )
+    assert not inspect("upland-freezer-pickup", ie_good), "valid Upland static fields rejected"
+    assert inspect("upland-freezer-pickup", ie_good.replace('value="Upland"', 'value="Fontana"')), "wrong city allowed"
+    assert inspect("upland-freezer-pickup", ie_good.replace('value="Freezer pickup"', 'value="Washer pickup"')), "wrong service allowed"
     special = good.replace(
         f'<input type="hidden" name="source_page" value="{label}">',
         '<input type="hidden" name="source_page" value="Los Angeles refrigerator page">'
