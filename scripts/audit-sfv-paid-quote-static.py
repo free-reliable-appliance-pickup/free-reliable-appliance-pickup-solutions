@@ -111,6 +111,18 @@ PAGES = {
     "garden-grove-washer-dryer-pickup": "garden-grove-washer-dryer-pickup/index.html",
     "orange-washer-dryer-pickup": "orange-washer-dryer-pickup/index.html",
     "buena-park-washer-dryer-pickup": "buena-park-washer-dryer-pickup/index.html",
+    # Verified OC laundry source, mobile and optional quote fallback (2026-10-24).
+    "chino-hills-washer-dryer-pickup": "chino-hills-washer-dryer-pickup/index.html",
+    "huntington-beach-washer-dryer-pickup": "huntington-beach-washer-dryer-pickup/index.html",
+    "irvine-washer-dryer-pickup": "irvine-washer-dryer-pickup/index.html",
+    "tustin-washer-dryer-pickup": "tustin-washer-dryer-pickup/index.html",
+    "fullerton-washer-dryer-pickup": "fullerton-washer-dryer-pickup/index.html",
+    "brea-washer-dryer-pickup": "brea-washer-dryer-pickup/index.html",
+    "yorba-linda-washer-dryer-pickup": "yorba-linda-washer-dryer-pickup/index.html",
+    "lake-forest-washer-dryer-pickup": "lake-forest-washer-dryer-pickup/index.html",
+    "mission-viejo-washer-dryer-pickup": "mission-viejo-washer-dryer-pickup/index.html",
+    "laguna-niguel-washer-dryer-pickup": "laguna-niguel-washer-dryer-pickup/index.html",
+    "san-clemente-washer-dryer-pickup": "san-clemente-washer-dryer-pickup/index.html",
     # Verified Rosemead/Temple City/Monterey Park/El Monte laundry consent (2026-10-24).
     "rosemead-washer-dryer-pickup": "rosemead-washer-dryer-pickup/index.html",
     "santa-ana-washer-dryer-pickup": "santa-ana-washer-dryer-pickup/index.html",
@@ -175,6 +187,19 @@ SGV_LAUNDRY_INTAKE = {
     "temple-city-washer-dryer-pickup": "Temple City",
     "monterey-park-washer-dryer-pickup": "Monterey Park",
     "el-monte-washer-dryer-pickup": "El Monte",
+}
+OC_LAUNDRY_INTAKE = {
+    "chino-hills-washer-dryer-pickup": "Chino Hills",
+    "huntington-beach-washer-dryer-pickup": "Huntington Beach",
+    "irvine-washer-dryer-pickup": "Irvine",
+    "tustin-washer-dryer-pickup": "Tustin",
+    "fullerton-washer-dryer-pickup": "Fullerton",
+    "brea-washer-dryer-pickup": "Brea",
+    "yorba-linda-washer-dryer-pickup": "Yorba Linda",
+    "lake-forest-washer-dryer-pickup": "Lake Forest",
+    "mission-viejo-washer-dryer-pickup": "Mission Viejo",
+    "laguna-niguel-washer-dryer-pickup": "Laguna Niguel",
+    "san-clemente-washer-dryer-pickup": "San Clemente",
 }
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
@@ -280,6 +305,21 @@ def inspect(label, html, expected_source=None):
                     problems.append(f"{label}: {field} requires blank initial option and customer selection")
                 elif any("selected" in a for a in matching[0]["option_attrs"][1:]):
                     problems.append(f"{label}: {field} preselects an unverified answer")
+    if label in OC_LAUNDRY_INTAKE:
+        expected_city = OC_LAUNDRY_INTAKE[label]
+        for key, expected in (("city", expected_city), ("state", "California")):
+            matches = [a for a in inputs if a.get("name") == key and a.get("value") == expected]
+            if len(matches) != 1:
+                problems.append(f"{label}: missing or incorrect static {key} attribution")
+        services = [a for a in inputs if a.get("name") == "service"]
+        if len(services) != 1 or "washer" not in services[0].get("value", "").lower() or "dryer" not in services[0].get("value", "").lower():
+            problems.append(f"{label}: missing or incorrect laundry service attribution")
+        for key in ("condition", "appliance"):
+            matching = [entry for entry in form["selects"] if entry["attrs"].get("name") == key]
+            if len(matching) != 1 or "required" not in matching[0]["attrs"] or not matching[0]["options"] or matching[0]["options"][0] != "":
+                problems.append(f"{label}: {key} requires explicit customer selection")
+            elif any("selected" in a for a in matching[0]["option_attrs"][1:]):
+                problems.append(f"{label}: {key} preselects an unverified answer")
     # Verified lead-condition safety: never silently default to "Fully Working".
     if label in ("rosemead-washer-dryer-pickup", "santa-ana-washer-dryer-pickup"):
         if len([a for a in inputs if a.get("name") == "service" and a.get("value") == "Washer and dryer pickup" and a.get("type") == "hidden"]) != 1:
