@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-25 — Bloomington duplicate social-photo metadata (VGM factual technical exception)
+- **Source-confirmed defect:** The general Bloomington page carried two `og:image:alt` tags with contradictory descriptions and two duplicate `twitter:image` tags after its Oct 24 photo change. The second OG alt described a washer/dryer/stove/refrigerator group while the current real photo/visible alt describes appliances, including refrigerators and an electric range, already secured in a pickup truck.
+- **Minimal repair:** Keep the existing real photo, single OG image and Twitter image URL, but use exactly one `og:image:alt` matching the existing truthful visible hero alt and one `twitter:image` tag. Add a narrow regression guard in the existing image audit. No photo swap, image dimensions, ranking copy, canonical, schema, phone 909-375-6685, Formspree or eligibility changes.
+- **Experiment/ownership:** The running `2026-10-24-bloomington-redlands-photo-reuse-fix` protects photo and ranking variables until Nov 1 (Nov 7 preferred review). This is a documented factual metadata defect exception, not a new experiment; leave the registry and Daily SEO Ranking Countermove's variables untouched. Emergency breakage remains with Website Technical Repair.
+- **Verification:** Require green SEO Experiment Guard, image audit and other CI; verify branch diff, main merge, Pages run and fresh public head independently. Actual Formspree delivery and search ranking changes are not claimed. Revert the isolated correction if needed.
+
 ## 2026-10-25 — Highland refrigerator pickup photo OG alt factual correction (VGM technical exception)
 - **Verified defect:** Highland's current visible general-page hero, visually verified in merged PR #483, shows three used refrigerators secured in a pickup truck. The og:image:alt still described a grouped washer, dryer, stove and refrigerator from the prior hero. The social preview therefore inaccurately described the actual image.
 - **Bounded correction:** Align only the existing OG image alt text to the unchanged visible hero alt. Add a narrow source-level image audit regression guard. Preserve original hero photo URL, dimensions, title/H1, description, canonical, schema, phone 909-375-6685, Formspree, acceptance rules and all visible SEO text.
