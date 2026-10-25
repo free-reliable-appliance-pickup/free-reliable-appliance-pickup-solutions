@@ -154,6 +154,12 @@ IE_SPECIALTY_INTAKE = {
     "upland-freezer-pickup": ("Upland", "Freezer pickup"),
     "upland-stove-oven-pickup": ("Upland", "Stove, range and oven pickup"),
 }
+# Three existing SGV laundry forms must retain city and service in no-JS posts.
+SGV_LAUNDRY_INTAKE = {
+    "temple-city-washer-dryer-pickup": "Temple City",
+    "monterey-park-washer-dryer-pickup": "Monterey Park",
+    "el-monte-washer-dryer-pickup": "El Monte",
+}
 # Same owner-approved fallback on four existing Oregon request forms.
 OREGON_PAGES = {
     "portland-appliance-pickup": "portland-appliance-pickup/index.html",
@@ -227,6 +233,19 @@ def inspect(label, html, expected_source=None):
                 problems.append(f"{label}: mobile phone hints missing")
             if len(zip_inputs) != 1 or zip_inputs[0].get("autocomplete") != "postal-code" or zip_inputs[0].get("inputmode") != "numeric":
                 problems.append(f"{label}: mobile ZIP hints missing")
+    if label in SGV_LAUNDRY_INTAKE:
+        expected_city = SGV_LAUNDRY_INTAKE[label]
+        for field, expected in (("city", expected_city), ("state", "California"), ("service", "Washer and dryer pickup")):
+            matched = [a for a in inputs if a.get("name") == field and a.get("type") == "hidden" and a.get("value") == expected]
+            if len(matched) != 1:
+                problems.append(f"{label}: missing or incorrect static {field}")
+        if label == "monterey-park-washer-dryer-pickup":
+            for field in ("condition", "appliance"):
+                matching = [entry for entry in form["selects"] if entry["attrs"].get("name") == field]
+                if len(matching) != 1 or "required" not in matching[0]["attrs"] or not matching[0]["options"] or matching[0]["options"][0] != "":
+                    problems.append(f"{label}: {field} requires blank initial option and customer selection")
+                elif any("selected" in a for a in matching[0]["option_attrs"][1:]):
+                    problems.append(f"{label}: {field} preselects an unverified answer")
     # Verified lead-condition safety: never silently default to "Fully Working".
     if label in ("rosemead-washer-dryer-pickup", "santa-ana-washer-dryer-pickup"):
         if len([a for a in inputs if a.get("name") == "service" and a.get("value") == "Washer and dryer pickup" and a.get("type") == "hidden"]) != 1:
@@ -284,6 +303,21 @@ def fixture_checks():
     )
     for tampered in unsafe:
         assert inspect(label, tampered), "unsafe fixture went undetected"
+    # A missing, wrong-city or wrong-service form must be rejected offline.
+    sgv_label = "monterey-park-washer-dryer-pickup"
+    sgv_good = good.replace(f'value="{label}"', f'value="{sgv_label}"').replace(
+        '<input name="phone" type="tel" required>',
+        '<input name="phone" type="tel" required>'
+        '<input type="hidden" name="city" value="Monterey Park">'
+        '<input type="hidden" name="state" value="California">'
+        '<input type="hidden" name="service" value="Washer and dryer pickup">'
+        '<select name="condition" required><option value=""></option><option value="Fully Working"></option></select>'
+        '<select name="appliance" required><option value=""></option><option value="Washer"></option></select>'
+    )
+    assert not inspect(sgv_label, sgv_good), "SGV valid form should pass"
+    assert inspect(sgv_label, sgv_good.replace('value="Monterey Park"', 'value="Pasadena"')), "wrong SGV city not caught"
+    assert inspect(sgv_label, sgv_good.replace('name="condition" required', 'name="condition"')), "missing required condition not caught"
+    assert inspect(sgv_label, sgv_good.replace('<option value=""></option><option value="Fully Working"', '<option value="Fully Working"></option><option value=""')), "preselected working condition not caught"
     # Prevent regression of a real no-JavaScript Inland Empire city/service gap.
     ie_good = good.replace(f'value="{label}"', 'value="upland-freezer-pickup"').replace(
         '<input name="phone" type="tel" required>',
