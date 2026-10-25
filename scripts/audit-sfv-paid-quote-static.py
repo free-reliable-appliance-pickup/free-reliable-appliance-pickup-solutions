@@ -89,6 +89,11 @@ PAGES = {
     "buena-park-appliance-pickup": "buena-park-appliance-pickup/index.html",
     "yorba-linda-appliance-pickup": "yorba-linda-appliance-pickup/index.html",
     "mission-viejo-appliance-pickup": "mission-viejo-appliance-pickup/index.html",
+    # Upland / Ontario / Montclair specialty request consent and attribution (2026-10-24).
+    "upland-washer-dryer-pickup": "upland-washer-dryer-pickup/index.html",
+    "upland-refrigerator-pickup": "upland-refrigerator-pickup/index.html",
+    "ontario-washer-dryer-pickup": "ontario-washer-dryer-pickup/index.html",
+    "montclair-washer-dryer-pickup": "montclair-washer-dryer-pickup/index.html",
     # Fontana specialty request forms: verified no-JS optional quote selection (2026-10-24).
     "fontana-stove-oven-pickup": "fontana-stove-oven-pickup/index.html",
     "fontana-refrigerator-pickup": "fontana-refrigerator-pickup/index.html",
