@@ -143,6 +143,12 @@ def report_markdown(pr_number, results, skipped, truncated, diff_present):
         lines.append("Large PR: split it into smaller reviewable changes or check files manually.")
     return "\n".join(lines) + "\n", status
 
+def review_exit_code(status):
+    """Do not show a green GitHub check when independent review is absent or high-risk."""
+    # Even a complete low-risk review remains advisory, not a site/rank approval.
+    return 0 if status == "ADVISORY COMPLETE — still requires tests and human/CI review" else 1
+
+
 def main():
     repo = os.environ.get("GITHUB_REPOSITORY", "")
     token = os.environ.get("GITHUB_TOKEN", "")
@@ -189,8 +195,10 @@ def main():
     if summary_file:
         with open(summary_file, "a", encoding="utf-8") as handle:
             handle.write(markdown)
-    # Advisory; no branch protection bypass or false 'approved' pass.
-    return 0
+    # Archive and print the complete advisory even when the review must fail closed.
+    # This prevents a missing AI key, skipped files, model failure or high-risk
+    # findings from appearing as a successful independent-review check.
+    return review_exit_code(status)
 
 if __name__ == "__main__":
     sys.exit(main())
