@@ -92,6 +92,17 @@ class MultiAITests(unittest.TestCase):
         self.assertIn("omitted", state)
         self.assertIn("data/lead-events.json", markdown)
 
+    def test_incomplete_independent_review_fails_gitHub_check(self):
+        # Incomplete/at-risk reports must not make the independent-AI job green.
+        self.assertEqual(review.review_exit_code(
+            "INCOMPLETE — two independent AI reviews not available"), 1)
+        self.assertEqual(review.review_exit_code(
+            "INCOMPLETE — some changed files were omitted from AI review"), 1)
+        self.assertEqual(review.review_exit_code(
+            "NEEDS HUMAN REVIEW — high/critical findings"), 1)
+        self.assertEqual(review.review_exit_code(
+            "ADVISORY COMPLETE — still requires tests and human/CI review"), 0)
+
     def test_truncated_review_is_incomplete(self):
         statuses = {label: {"model": model, "status": "reviewed", "findings": []} for label, model in review.REVIEWERS.items()}
         _, state = review.report_markdown(1, statuses, ["too many"], True, True)
