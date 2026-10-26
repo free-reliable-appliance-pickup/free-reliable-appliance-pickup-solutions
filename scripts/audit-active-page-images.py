@@ -643,8 +643,8 @@ def main():
     # pickup in this exact city. This is a factual photo metadata guard,
     # not a ranking-copy or asset-rotation experiment.
     local_photo_claims = {
-        'corona-appliance-pickup': ('/IMG-20240326-WA0049.jpg', 'Photograph of an appliance illustrating Corona pickup requests'),
-        'riverside-appliance-pickup': ('/IMG-20240627-WA0043.jpg', 'Photograph of an appliance illustrating Riverside pickup requests'),
+        'corona-appliance-pickup': ('/home-six-appliance-garage.webp', 'Garage lineup of a washer, dryer, electric stove, two refrigerators and stacked laundry center illustrating eligible major appliance pickup'),
+        'riverside-appliance-pickup': ('/tacoma-group-appliances.webp', 'Garage-style indoor photo of a silver front-load washer and dryer, glass-top electric range, and stainless refrigerator illustrating Riverside major appliance pickup requests'),
         'san-diego-appliance-pickup': ('/IMG-20240814-WA0032.jpg', 'White Kenmore top-freezer refrigerator photographed outdoors, illustrating San Diego appliance pickup requests'),
         'san-marcos-appliance-pickup': ('/IMG-20230805-WA0013.jpg', 'Stainless-steel smooth-top electric range photographed outdoors, illustrating San Marcos appliance pickup requests'),
     }
