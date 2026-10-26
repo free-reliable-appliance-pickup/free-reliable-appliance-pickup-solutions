@@ -1,11 +1,9 @@
 name: Apply verified original city heroes
 
+# Manual-only write-capable migration: normal pushes are validated by the separate
+# read-only approved-hero guard. Never bulk-rewrite city pages from a PR branch.
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/upgrade-original-city-heroes.yml'
-      - 'assets/premium-user-heroes.json'
 
 permissions:
   contents: write
