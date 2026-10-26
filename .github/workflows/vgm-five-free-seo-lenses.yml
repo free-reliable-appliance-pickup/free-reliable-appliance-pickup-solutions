@@ -1,0 +1,34 @@
+name: VGM Five Free SEO Lenses
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/vgm-free-five-lenses.py'
+      - 'tests/test_vgm_five_lenses.py'
+      - 'docs/vgm-five-free-seo-lenses.md'
+      - '.github/workflows/vgm-five-free-seo-lenses.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and test source-only audit
+        run: |
+          python3 -m py_compile scripts/vgm-free-five-lenses.py tests/test_vgm_five_lenses.py
+          python3 -m unittest discover -s tests -p 'test_vgm_five_lenses.py' -v
+      - name: Create California five-lens report
+        run: |
+          python3 scripts/vgm-free-five-lenses.py --output vgm-five-lenses.md
+          cat vgm-five-lenses.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload read-only report
+        uses: actions/upload-artifact@v4
+        with:
+          name: vgm-five-free-seo-lenses
+          path: vgm-five-lenses.md
+          retention-days: 14
