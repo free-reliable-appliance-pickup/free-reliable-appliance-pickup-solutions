@@ -380,3 +380,12 @@ nationwide-refrigerator-freezer-pickup
 nationwide-stove-pickup
 salem-refrigerator-freezer-pickup
 salem-stove-pickup
+eugene-stove-pickup
+eugene-refrigerator-pickup
+eugene-washer-dryer-pickup
+grants-pass-stove-pickup
+grants-pass-refrigerator-pickup
+grants-pass-washer-dryer-pickup
+springfield-stove-pickup
+springfield-refrigerator-pickup
+springfield-washer-dryer-pickup

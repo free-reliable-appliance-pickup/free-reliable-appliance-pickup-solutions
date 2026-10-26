@@ -17,7 +17,6 @@ anthem-appliance-pickup
 apache-junction-appliance-pickup
 apple-valley-appliance-pickup
 apple-valley-washer-dryer-pickup
-appliance-installer-remodeler-pickup
 arcadia-appliance-pickup
 arcadia-washer-dryer-pickup
 arizona-appliance-pickup
@@ -64,7 +63,6 @@ burbank-washer-dryer-pickup
 calabasas-appliance-pickup
 calabasas-washer-dryer-pickup
 california-appliance-pickup
-california-appliance-recycling-resources
 california-washer-dryer-pickup
 calimesa-appliance-pickup
 calimesa-washer-dryer-pickup
@@ -563,3 +561,5 @@ sanger-washer-dryer-pickup
 selma-appliance-pickup
 selma-washer-dryer-pickup
 san-joaquin-county-appliance-pickup
+grants-pass-appliance-pickup
+springfield-appliance-pickup
