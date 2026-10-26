@@ -43,9 +43,14 @@
     "source_status": "original-full-resolution"
   },
   "/monrovia-washer-dryer-pickup/": {
-    "src": "assets/laundry/original-user-heroes/IMG-20240510-WA0002.jpg",
+    "src": "assets/laundry/original-user-heroes/IMG-20241003-WA0050.jpg",
     "alt": "Real washer and dryer set provided for Monrovia pickup service",
-    "source_status": "original-full-resolution"
+    "source_status": "original-full-resolution",
+    "original_filename": "IMG-20241003-WA0050.jpg",
+    "original_width": 1200,
+    "original_height": 1600,
+    "photo_rotation_verified_pr": 550,
+    "photo_rotation_reason": "Visually reviewed distinct white washer/dryer pair in PR #550; page, social images, WebPage and hero lock updated together."
   },
   "/duarte-washer-dryer-pickup/": {
     "src": "assets/laundry/original-user-heroes/IMG-20240512-WA0002.jpg",
@@ -63,9 +68,14 @@
     "source_status": "original-full-resolution"
   },
   "/covina-washer-dryer-pickup/": {
-    "src": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
+    "src": "assets/laundry/original-user-heroes/1000261196(3).jpg",
     "alt": "Real washer and dryer set provided for Covina pickup service",
-    "source_status": "original-full-resolution"
+    "source_status": "original-full-resolution",
+    "original_filename": "1000261196(3).jpg",
+    "original_width": 1536,
+    "original_height": 1536,
+    "photo_rotation_verified_pr": 549,
+    "photo_rotation_reason": "Visually checked white washer/dryer pair by garage door in PR #549; page, social images, WebPage and hero lock updated together."
   },
   "/west-covina-washer-dryer-pickup/": {
     "src": "assets/laundry/original-user-heroes/IMG-20240503-WA0030.jpg",
