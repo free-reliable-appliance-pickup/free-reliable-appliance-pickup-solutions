@@ -110,6 +110,33 @@ def run():
                                     zip_input.fill("12")
                                     if zip_input.evaluate("(el) => el.checkValidity()"):
                                         raise AssertionError("invalid ZIP incorrectly passes validation")
+                                    # The ZIP checker is a client-side display action only;
+                                    # requestSubmit is on hero-zip-form, never the lead form.
+                                    zip_cases = [
+                                        ("90621", "Buena Park", "/buena-park-appliance-pickup/", "+19093756685"),
+                                        ("90630", "Cypress", "/cypress-appliance-pickup/", "+19093756685"),
+                                        ("90623", "La Palma", "/la-palma-appliance-pickup/", "+19093756685"),
+                                        ("90720", "Los Alamitos", "/los-alamitos-appliance-pickup/", "+19093756685"),
+                                        ("90740", "Seal Beach", "/seal-beach-appliance-pickup/", "+19093756685"),
+                                        ("92220", "Banning", "/banning-appliance-pickup/", "+19093756685"),
+                                        ("92223", "Beaumont", "/beaumont-appliance-pickup/", "+19093756685"),
+                                        ("90012", "Los Angeles County", "/los-angeles-county-appliance-pickup/", "+13107744304"),
+                                        ("92234", "Coachella Valley", "/coachella-valley-appliance-pickup/", "+19093756685"),
+                                        ("92801", "Orange County", "/orange-county-appliance-pickup/", "+19093756685"),
+                                    ]
+                                    zip_result = page.locator("#hero-route-result")
+                                    for zip_code, region, destination, phone_href in zip_cases:
+                                        zip_input.fill(zip_code)
+                                        page.locator("#hero-zip-form").evaluate("(form) => form.requestSubmit()")
+                                        if region not in zip_result.inner_text():
+                                            raise AssertionError(zip_code + " wrong region in checker")
+                                        if zip_result.locator('a[href="' + destination + '"]').count() != 1:
+                                            raise AssertionError(zip_code + " wrong city destination")
+                                        if zip_result.locator('a[href="tel:' + phone_href + '"]').count() != 1:
+                                            raise AssertionError(zip_code + " wrong call link")
+                                        if zip_result.locator('a[href="sms:' + phone_href + '"]').count() != 1:
+                                            raise AssertionError(zip_code + " wrong text link")
+                                    print("PASS: Home ZIP checker", viewport_name, "7 fixes and 3 controls with call/text links")
                                 checks += 1
                                 dimensions = page.evaluate(
                                     "() => ({width: document.documentElement.scrollWidth, viewport: innerWidth})"
