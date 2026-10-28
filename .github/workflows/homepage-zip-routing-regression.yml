@@ -3,7 +3,7 @@ on:
   pull_request:
     paths:
       - 'index.html'
-      - 'tests/homepage_zip_routing.test.cjs'
+      - 'tests/homepage_zip_routing.test.js'
       - '.github/workflows/homepage-zip-routing-regression.yml'
   workflow_dispatch:
 permissions:
@@ -17,4 +17,4 @@ jobs:
         with:
           node-version: '22'
       - name: Run source-level ZIP routing regressions
-        run: node tests/homepage_zip_routing.test.cjs
+        run: node tests/homepage_zip_routing.test.js
