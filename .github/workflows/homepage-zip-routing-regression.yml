@@ -1,0 +1,20 @@
+name: Homepage ZIP Routing Regression
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'tests/homepage_zip_routing.test.cjs'
+      - '.github/workflows/homepage-zip-routing-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  homepage-zip-routes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run source-level ZIP routing regressions
+        run: node tests/homepage_zip_routing.test.cjs
