@@ -460,12 +460,25 @@ def main():
             problems.append(f'{slug}: Twitter image not aligned with verified category hero')
         if f'"url":"{full_url}"' not in html:
             problems.append(f'{slug}: JSON-LD primary image not aligned with verified hero')
+    # Rancho now follows the approved single-appliance-photo policy.
+    # Verify the actual hero rather than requiring obsolete gallery extras.
     rancho_general_page = Path('rancho-cucamonga-appliance-pickup/index.html')
     if rancho_general_page.is_file():
         html = rancho_general_page.read_text(encoding='utf-8', errors='replace')
-        for verified_gallery_src in ('/IMG-20241201-WA0066.jpg', '/IMG-20240222-WA0006.jpg'):
-            if f'src="{verified_gallery_src}"' not in html:
-                problems.append(f'Rancho city gallery missing verified photo {verified_gallery_src}')
+        parser = ImageRefs()
+        parser.feed(html)
+        content_images = [
+            attrs for attrs in parser.images
+            if attrs.get('src') and 'logo' not in attrs.get('alt', '').lower()
+        ]
+        if len(content_images) != 1:
+            problems.append(
+                f'Rancho city page should use exactly one non-logo appliance photo, found {len(content_images)}'
+            )
+        elif content_images[0]['src'] != '/assets/rancho-cucamonga/rancho-cucamonga-multi-appliance-group.webp':
+            problems.append('Rancho city page hero is not the verified multi-appliance group photo')
+        elif not all(term in content_images[0].get('alt', '').lower() for term in ('washer', 'dryer', 'refrigerator')):
+            problems.append('Rancho city page hero alt text must accurately describe the multi-appliance group')
         for invalid_src in ('/assets/california/real-appliances/real-refrigerator.jpg',
                             '/assets/california/real-appliances/real-freezer.jpg'):
             if f'src="{invalid_src}"' in html:
