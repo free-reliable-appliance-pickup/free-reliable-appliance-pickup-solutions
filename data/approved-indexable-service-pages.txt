@@ -51,7 +51,8 @@ burbank-washer-dryer-pickup
 calabasas-washer-dryer-pickup
 california-appliance-recycling-resources
 california-washer-dryer-pickup
-calimesa-washer-dryer-pickup
+calimesa-stove-oven-pickup
+mesa-washer-dryer-pickup
 carefree-washer-dryer-pickup
 carlsbad-washer-dryer-pickup
 carson-washer-dryer-pickup
@@ -60,6 +61,7 @@ cave-creek-washer-dryer-pickup
 central-coast-washer-dryer-pickup
 central-valley-washer-dryer-pickup
 cerritos-washer-dryer-pickup
+chandler-stove-oven-pickup
 chandler-washer-dryer-pickup
 cherry-valley-washer-dryer-pickup
 chino-hills-washer-dryer-pickup
@@ -126,6 +128,7 @@ fullerton-washer-dryer-pickup
 garden-grove-washer-dryer-pickup
 gardena-washer-dryer-pickup
 georgia-appliance-pickup
+gilbert-stove-oven-pickup
 gilbert-washer-dryer-pickup
 glendale-az-washer-dryer-pickup
 glendale-washer-dryer-pickup
@@ -315,6 +318,7 @@ santa-fe-springs-washer-dryer-pickup
 santa-maria-washer-dryer-pickup
 santa-monica-washer-dryer-pickup
 santee-washer-dryer-pickup
+scottsdale-stove-oven-pickup
 scottsdale-washer-dryer-pickup
 seal-beach-washer-dryer-pickup
 senior-living-appliance-pickup
@@ -341,6 +345,7 @@ sun-lakes-washer-dryer-pickup
 sunnyvale-washer-dryer-pickup
 surprise-washer-dryer-pickup
 temecula-washer-dryer-pickup
+tempe-stove-oven-pickup
 tempe-washer-dryer-pickup
 temple-city-washer-dryer-pickup
 texas-appliance-pickup
