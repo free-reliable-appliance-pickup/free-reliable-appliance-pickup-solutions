@@ -463,9 +463,17 @@ def main():
     rancho_general_page = Path('rancho-cucamonga-appliance-pickup/index.html')
     if rancho_general_page.is_file():
         html = rancho_general_page.read_text(encoding='utf-8', errors='replace')
-        for verified_gallery_src in ('/IMG-20241201-WA0066.jpg', '/IMG-20240222-WA0006.jpg'):
-            if f'src="{verified_gallery_src}"' not in html:
-                problems.append(f'Rancho city gallery missing verified photo {verified_gallery_src}')
+        # Rancho intentionally uses one real appliance hero. Check the actual
+        # image and category-guide navigation, not a removed gallery.
+        parser = ImageRefs()
+        parser.feed(html)
+        real_images = [attrs for attrs in parser.images if 'logo' not in attrs.get('alt', '').lower()]
+        expected_hero = '/assets/rancho-cucamonga/rancho-cucamonga-multi-appliance-group.webp'
+        if len(real_images) != 1 or urlparse(real_images[0].get('src', '')).path != expected_hero:
+            problems.append('Rancho city hub must have exactly one verified multi-appliance hero')
+        for guide in ('washer-dryer', 'refrigerator', 'freezer', 'stove-oven'):
+            if f'/rancho-cucamonga-{guide}-pickup/' not in html:
+                problems.append(f'Rancho city hub missing appliance guide {guide}')
         for invalid_src in ('/assets/california/real-appliances/real-refrigerator.jpg',
                             '/assets/california/real-appliances/real-freezer.jpg'):
             if f'src="{invalid_src}"' in html:

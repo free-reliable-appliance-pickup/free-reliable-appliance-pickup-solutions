@@ -358,7 +358,7 @@ jobs:
                       failures.append(f'{main_slug}: missing child link to {child_slug}')
               for term in ['washer','dryer','refrigerator','freezer','stove','range']:
                   if term not in main['text'].lower(): failures.append(f'{main_slug}: missing appliance breadth term {term}')
-              for phrase in ['paid junk removal','senior','property manager','high-end','independent local pickup professionals','company-owned storefront or local branch']:
+              for phrase in ['City/Burrtec bulky-item','senior','property manager','high-end','independent local pickup professionals','company-owned storefront or local branch']:
                   if phrase not in main['text'].lower(): failures.append(f'{main_slug}: missing gold-model concept {phrase}')
               if cluster['official_local_reference'] not in main['raw']:
                   failures.append(f'{main_slug}: missing official local disposal/reference link')
@@ -529,8 +529,8 @@ jobs:
                           failures.append(f'{cta_slug}: legacy CTA class {forbidden_cta} is not allowed in gold cluster')
               if required_cta and f'class="{required_cta}"' not in main['raw']:
                   failures.append(f'{main_slug}: missing required styled CTA class {required_cta}')
-              if len(re.findall(r'<img\b',main['raw'],re.I))<3:
-                  failures.append(f'{main_slug}: expected logo plus at least two page images')
+              if len(re.findall(r'<img\b',main['raw'],re.I))<2:
+                  failures.append(f'{main_slug}: expected logo plus at least one real page image')
 
               main_url=BASE+main_slug+'/'
               main_inlinks=len(inlinks.get(main_url,set()))
