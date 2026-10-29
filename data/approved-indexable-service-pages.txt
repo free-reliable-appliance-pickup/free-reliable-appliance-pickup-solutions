@@ -51,8 +51,7 @@ burbank-washer-dryer-pickup
 calabasas-washer-dryer-pickup
 california-appliance-recycling-resources
 california-washer-dryer-pickup
-calimesa-stove-oven-pickup
-mesa-washer-dryer-pickup
+calimesa-washer-dryer-pickup
 carefree-washer-dryer-pickup
 carlsbad-washer-dryer-pickup
 carson-washer-dryer-pickup
@@ -201,6 +200,7 @@ manhattan-beach-washer-dryer-pickup
 maricopa-washer-dryer-pickup
 maywood-washer-dryer-pickup
 menifee-washer-dryer-pickup
+mesa-stove-oven-pickup
 mesa-washer-dryer-pickup
 mission-viejo-washer-dryer-pickup
 modesto-washer-dryer-pickup
