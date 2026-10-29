@@ -358,7 +358,7 @@ jobs:
                       failures.append(f'{main_slug}: missing child link to {child_slug}')
               for term in ['washer','dryer','refrigerator','freezer','stove','range']:
                   if term not in main['text'].lower(): failures.append(f'{main_slug}: missing appliance breadth term {term}')
-              for phrase in ['City/Burrtec bulky-item','senior','property manager','high-end','independent local pickup professionals','company-owned storefront or local branch']:
+              for phrase in ['city/burrtec bulky-item','senior','property manager','high-end','independent local pickup professionals','company-owned storefront or local branch']:
                   if phrase not in main['text'].lower(): failures.append(f'{main_slug}: missing gold-model concept {phrase}')
               if cluster['official_local_reference'] not in main['raw']:
                   failures.append(f'{main_slug}: missing official local disposal/reference link')
