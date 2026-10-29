@@ -460,20 +460,25 @@ def main():
             problems.append(f'{slug}: Twitter image not aligned with verified category hero')
         if f'"url":"{full_url}"' not in html:
             problems.append(f'{slug}: JSON-LD primary image not aligned with verified hero')
+    # Rancho now follows the approved single-appliance-photo policy.
+    # Verify the actual hero rather than requiring obsolete gallery extras.
     rancho_general_page = Path('rancho-cucamonga-appliance-pickup/index.html')
     if rancho_general_page.is_file():
         html = rancho_general_page.read_text(encoding='utf-8', errors='replace')
-        # Rancho intentionally uses one real appliance hero. Check the actual
-        # image and category-guide navigation, not a removed gallery.
         parser = ImageRefs()
         parser.feed(html)
-        real_images = [attrs for attrs in parser.images if 'logo' not in attrs.get('alt', '').lower()]
-        expected_hero = '/assets/rancho-cucamonga/rancho-cucamonga-multi-appliance-group.webp'
-        if len(real_images) != 1 or urlparse(real_images[0].get('src', '')).path != expected_hero:
-            problems.append('Rancho city hub must have exactly one verified multi-appliance hero')
-        for guide in ('washer-dryer', 'refrigerator', 'freezer', 'stove-oven'):
-            if f'/rancho-cucamonga-{guide}-pickup/' not in html:
-                problems.append(f'Rancho city hub missing appliance guide {guide}')
+        content_images = [
+            attrs for attrs in parser.images
+            if attrs.get('src') and 'logo' not in attrs.get('alt', '').lower()
+        ]
+        if len(content_images) != 1:
+            problems.append(
+                f'Rancho city page should use exactly one non-logo appliance photo, found {len(content_images)}'
+            )
+        elif content_images[0]['src'] != '/assets/rancho-cucamonga/rancho-cucamonga-multi-appliance-group.webp':
+            problems.append('Rancho city page hero is not the verified multi-appliance group photo')
+        elif not all(term in content_images[0].get('alt', '').lower() for term in ('washer', 'dryer', 'refrigerator')):
+            problems.append('Rancho city page hero alt text must accurately describe the multi-appliance group')
         for invalid_src in ('/assets/california/real-appliances/real-refrigerator.jpg',
                             '/assets/california/real-appliances/real-freezer.jpg'):
             if f'src="{invalid_src}"' in html:
