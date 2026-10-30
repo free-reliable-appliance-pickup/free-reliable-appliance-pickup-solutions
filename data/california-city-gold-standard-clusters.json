@@ -28,7 +28,7 @@
         "Victoria",
         "San Bernardino County"
       ],
-      "official_neighborhood_reference": "https://www.cityofrc.us/ConnectRC",
+      "official_neighborhood_reference": "https://www.cityofrc.us/community-services/property-lookup",
       "official_local_contact_phone": "909-987-3717",
       "county": "San Bernardino County",
       "required_title_terms": [
@@ -62,8 +62,8 @@
         "required_phrases": [
           "$0 pickup charge",
           "four times per calendar year at no charge",
-          "guaranteed paid haul-away window",
-          "junk appliance removal",
+          "scheduled disposal option",
+          "City/Burrtec bulky-item collection",
           "do not move a good appliance to the curb before pickup is confirmed",
           "do not cut refrigerant lines"
         ]

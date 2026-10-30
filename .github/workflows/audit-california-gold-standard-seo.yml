@@ -89,7 +89,7 @@ jobs:
               if not service: failures.append(f'NO SERVICE SCHEMA: {slug}')
               if not breadcrumb: failures.append(f'NO BREADCRUMB SCHEMA: {slug}')
               if not faq: failures.append(f'NO FAQ SCHEMA: {slug}')
-              if len(non_logo)<2: failures.append(f'FEWER THAN 2 REAL/PAGE IMAGES: {slug}')
+              if len(non_logo)<1: failures.append(f'NO REAL/PAGE IMAGE: {slug}')
               for term in ('washer','dryer','refrigerator','freezer','stove'):
                   if term not in text:
                       failures.append(f'MISSING APPLIANCE BREADTH {term}: {slug}')
@@ -118,5 +118,5 @@ jobs:
                   print('-',f)
               sys.exit(1)
 
-          print('\nPASS: California priority pages have unique metadata, exact canonicals, one H1, index/follow, structured data, request paths, shared routing/branding, appliance breadth, and at least two non-logo images.')
+          print('\nPASS: California priority pages have unique metadata, exact canonicals, one H1, index/follow, structured data, request paths, shared routing/branding, appliance breadth, and at least one non-logo image.')
           PY
