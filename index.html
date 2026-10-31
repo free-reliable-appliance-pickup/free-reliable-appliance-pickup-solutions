@@ -212,7 +212,9 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
     var cityZipRoutes=[
       // Verified exact-city ZIP exceptions before broad LA/Coachella regional fallbacks.
       // Routes identify an intake review page, not guaranteed pickup coverage.
-      {name:'Buena Park, CA',zip:['90621'],phone:'909-375-6685',tel:'+19093756685',href:'/buena-park-appliance-pickup/'},
+      {name:'Buena Park, CA',zip:['90620','90621'],phone:'909-375-6685',tel:'+19093756685',href:'/buena-park-appliance-pickup/'},
+      {name:'La Habra, CA',zip:['90631'],phone:'909-375-6685',tel:'+19093756685',href:'/la-habra-appliance-pickup/'},
+      {name:'Stanton, CA',zip:['90680'],phone:'909-375-6685',tel:'+19093756685',href:'/stanton-appliance-pickup/'},
       {name:'Cypress, CA',zip:['90630'],phone:'909-375-6685',tel:'+19093756685',href:'/cypress-appliance-pickup/'},
       {name:'La Palma, CA',zip:['90623'],phone:'909-375-6685',tel:'+19093756685',href:'/la-palma-appliance-pickup/'},
       {name:'Los Alamitos, CA',zip:['90720'],phone:'909-375-6685',tel:'+19093756685',href:'/los-alamitos-appliance-pickup/'},
@@ -246,6 +248,9 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
     if(p3===925) return {region:'Riverside County',phone:'909-375-6685',tel:'+19093756685',href:'/riverside-county-appliance-pickup/'};
     if(p3===926 || p3===927 || p3===928) return {region:'Orange County',phone:'909-375-6685',tel:'+19093756685',href:'/orange-county-appliance-pickup/'};
     if(p3===935) return {region:'Antelope Valley',phone:'310-774-4304',tel:'+13107744304',href:'/antelope-valley-appliance-pickup/'};
+    // Exact Ventura County ZIPs must not be caught by the broad LA 900–916 fallback.
+    // Exclude boundary ZIP 91361 until a full pickup address confirms its county.
+    if(['91320','91360','91362','91377'].indexOf(z)!==-1) return {region:'Ventura County / Central Coast California',phone:'310-774-4304',tel:'+13107744304',href:'/central-coast-appliance-pickup/'};
     if(p3>=900 && p3<=916) return {region:'Los Angeles County',phone:'310-774-4304',tel:'+13107744304',href:'/los-angeles-county-appliance-pickup/'};
     if(p3>=919 && p3<=921) return {region:'San Diego County',phone:'310-774-4304',tel:'+13107744304',href:'/san-diego-county-appliance-pickup/'};
     if(p3>=930 && p3<=934) return {region:'Central Coast California',phone:'310-774-4304',tel:'+13107744304',href:'/central-coast-appliance-pickup/'};
