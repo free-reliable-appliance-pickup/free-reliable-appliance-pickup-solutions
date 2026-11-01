@@ -1,0 +1,30 @@
+name: VGM Oregon Regional Partner Status Truth
+
+on:
+  pull_request:
+    paths:
+      - 'assets/partner-routing.js'
+      - 'data/market-routing.json'
+      - 'data/cities.json'
+      - 'tests/vgm-oregon-partner-status-truth.cjs'
+      - '.github/workflows/vgm-oregon-partner-status-truth.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'assets/partner-routing.js'
+      - 'data/market-routing.json'
+      - 'data/cities.json'
+      - 'tests/vgm-oregon-partner-status-truth.cjs'
+      - '.github/workflows/vgm-oregon-partner-status-truth.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check Oregon regional partner claims against routing inventory
+        run: node tests/vgm-oregon-partner-status-truth.cjs
