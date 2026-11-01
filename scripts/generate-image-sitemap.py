@@ -28,6 +28,9 @@ extra = [
     "aurora-appliance-pickup",
     "portland-appliance-pickup",
     "salem-appliance-pickup",
+    # Salem appliance-specific pages must remain in the generated image sitemap.
+    "salem-refrigerator-freezer-pickup",
+    "salem-stove-pickup",
     "oregon-appliance-pickup",
     "colorado-appliance-pickup",
     "old-appliance-disposal-options",
