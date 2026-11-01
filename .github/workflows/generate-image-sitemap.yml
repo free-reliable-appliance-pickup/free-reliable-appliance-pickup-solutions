@@ -15,6 +15,11 @@ on:
       - 'data/california-washer-dryer-seo-model-pages.txt'
       - 'scripts/generate-image-sitemap.py'
       - '.github/workflows/generate-image-sitemap.yml'
+  pull_request:
+    paths:
+      - 'sitemap-images.xml'
+      - 'scripts/generate-image-sitemap.py'
+      - '.github/workflows/generate-image-sitemap.yml'
   workflow_dispatch:
 
 permissions:
@@ -22,6 +27,7 @@ permissions:
 
 jobs:
   generate:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -86,3 +92,43 @@ jobs:
             git pull --rebase origin main
           done
           exit 1
+
+  # A read-only dry run for draft PRs: never push a generated file from a PR.
+  validate_pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - name: Regenerate image sitemap without publishing
+        run: python scripts/generate-image-sitemap.py
+      - name: Validate Salem photos and image sitemap structure
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          ns={"s":"http://www.sitemaps.org/schemas/sitemap/0.9","i":"http://www.google.com/schemas/sitemap-image/1.1"}
+          root=ET.parse("sitemap-images.xml").getroot()
+          page_image_map={}
+          for entry in root.findall("s:url",ns):
+              loc=entry.findtext("s:loc",default="",namespaces=ns)
+              images=[node.text for node in entry.findall("i:image/i:loc",ns)]
+              if not loc or not images:
+                  raise SystemExit("Missing sitemap page URL or image")
+              if loc in page_image_map:
+                  raise SystemExit("Duplicate image sitemap page: "+loc)
+              page_image_map[loc]=images
+          wanted={
+              "https://freereliableappliancepickup.com/salem-refrigerator-freezer-pickup/":
+                  "https://freereliableappliancepickup.com/salem-group-appliances.webp",
+              "https://freereliableappliancepickup.com/salem-stove-pickup/":
+                  "https://freereliableappliancepickup.com/1000238723.jpg",
+          }
+          for page,image in wanted.items():
+              if image not in page_image_map.get(page,[]):
+                  raise SystemExit("Required Salem image entry missing: "+page)
+          print("PASS:",len(page_image_map),"unique pages; both Salem photos retained")
+          PY
+      - name: Verify regenerated output matches proposed sitemap
+        run: git diff --exit-code -- sitemap-images.xml
