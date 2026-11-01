@@ -1,0 +1,24 @@
+name: VGM Salem Laundry Mobile Contact Regression
+on:
+  pull_request:
+    paths:
+      - 'salem-washer-dryer-pickup/index.html'
+      - 'assets/site-brand.css'
+      - 'tests/vgm-salem-laundry-mobile-contact.js'
+      - '.github/workflows/vgm-salem-laundry-mobile-contact.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'salem-washer-dryer-pickup/index.html'
+      - 'assets/site-brand.css'
+      - 'tests/vgm-salem-laundry-mobile-contact.js'
+      - '.github/workflows/vgm-salem-laundry-mobile-contact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: node tests/vgm-salem-laundry-mobile-contact.js
