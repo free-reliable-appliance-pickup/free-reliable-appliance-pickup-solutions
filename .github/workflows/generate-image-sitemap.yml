@@ -57,6 +57,15 @@ jobs:
           missing=sorted(required_rancho-page_locs)
           if missing:
               raise SystemExit("Rancho gold-model image pages missing: "+", ".join(missing))
+          # Protect the two approved Salem specialty pages from disappearing
+          # during subsequent auto-generated image sitemap refreshes.
+          required_salem={
+              "https://freereliableappliancepickup.com/salem-refrigerator-freezer-pickup/",
+              "https://freereliableappliancepickup.com/salem-stove-pickup/",
+          }
+          missing_salem=sorted(required_salem-page_locs)
+          if missing_salem:
+              raise SystemExit("Approved Salem image pages missing: "+", ".join(missing_salem))
           PY
       - name: Commit generated image sitemap
         run: |
