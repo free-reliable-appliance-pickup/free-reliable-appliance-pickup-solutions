@@ -9,6 +9,8 @@ on:
       - '*-appliance-pickup/index.html'
       - '*-washer-dryer-pickup/index.html'
       - '*-refrigerator-pickup/index.html'
+      - '*-refrigerator-freezer-pickup/index.html'
+      - '*-stove-pickup/index.html'
       - '*-freezer-pickup/index.html'
       - '*-stove-oven-pickup/index.html'
       - 'data/california-seo-model-pages.txt'
