@@ -1,0 +1,28 @@
+name: VGM Salem Required Access Intake
+
+on:
+  pull_request:
+    paths:
+      - 'salem-appliance-pickup/index.html'
+      - 'salem-refrigerator-freezer-pickup/index.html'
+      - 'scripts/audit-salem-access-required.py'
+      - '.github/workflows/vgm-salem-access-required.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'salem-appliance-pickup/index.html'
+      - 'salem-refrigerator-freezer-pickup/index.html'
+      - 'scripts/audit-salem-access-required.py'
+      - '.github/workflows/vgm-salem-access-required.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Verify required Salem pickup access and negative fixtures
+        run: python3 scripts/audit-salem-access-required.py
