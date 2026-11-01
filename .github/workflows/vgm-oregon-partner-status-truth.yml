@@ -6,7 +6,7 @@ on:
       - 'assets/partner-routing.js'
       - 'data/market-routing.json'
       - 'data/cities.json'
-      - 'tests/vgm-oregon-partner-status-truth.cjs'
+      - 'tests/vgm-oregon-partner-status-truth.js'
       - '.github/workflows/vgm-oregon-partner-status-truth.yml'
   push:
     branches: [main]
@@ -14,7 +14,7 @@ on:
       - 'assets/partner-routing.js'
       - 'data/market-routing.json'
       - 'data/cities.json'
-      - 'tests/vgm-oregon-partner-status-truth.cjs'
+      - 'tests/vgm-oregon-partner-status-truth.js'
       - '.github/workflows/vgm-oregon-partner-status-truth.yml'
   workflow_dispatch:
 
@@ -27,4 +27,4 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Check Oregon regional partner claims against routing inventory
-        run: node tests/vgm-oregon-partner-status-truth.cjs
+        run: node tests/vgm-oregon-partner-status-truth.js
