@@ -38,13 +38,14 @@ extra = [
     "rancho-cucamonga-refrigerator-pickup",
     "rancho-cucamonga-freezer-pickup",
     "rancho-cucamonga-stove-oven-pickup",
-    # Approved Salem specialty pages with existing real appliance hero photos.
-    "salem-refrigerator-freezer-pickup",
-    "salem-stove-pickup",
     # Indexable Fresno specialty pages were omitted from the image sitemap.
     "fresno-refrigerator-pickup",
     "fresno-freezer-pickup",
     "fresno-stove-oven-pickup",
+    # Approved Salem specialty pages with existing real appliance hero photos.
+    # Keep these after Fresno to preserve established sitemap entry order.
+    "salem-refrigerator-freezer-pickup",
+    "salem-stove-pickup",
 ]
 
 slugs = []
