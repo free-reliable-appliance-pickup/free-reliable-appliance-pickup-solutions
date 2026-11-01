@@ -1,0 +1,24 @@
+name: VGM Salem Homepage Laundry Link Regression
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'salem-washer-dryer-pickup/index.html'
+      - 'tests/vgm-salem-home-laundry-link.js'
+      - '.github/workflows/vgm-salem-home-laundry-link.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'salem-washer-dryer-pickup/index.html'
+      - 'tests/vgm-salem-home-laundry-link.js'
+      - '.github/workflows/vgm-salem-home-laundry-link.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: node tests/vgm-salem-home-laundry-link.js
