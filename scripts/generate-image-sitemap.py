@@ -28,6 +28,9 @@ extra = [
     "aurora-appliance-pickup",
     "portland-appliance-pickup",
     "salem-appliance-pickup",
+    # Existing Salem specialty pages also have genuine appliance images.
+    "salem-refrigerator-freezer-pickup",
+    "salem-stove-pickup",
     "oregon-appliance-pickup",
     "colorado-appliance-pickup",
     "old-appliance-disposal-options",
