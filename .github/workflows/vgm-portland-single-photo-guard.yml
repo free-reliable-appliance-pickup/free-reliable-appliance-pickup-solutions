@@ -1,0 +1,66 @@
+name: VGM Portland Single Photo Guard
+on:
+  pull_request:
+    paths:
+      - 'portland-appliance-pickup/index.html'
+      - '.github/workflows/vgm-portland-single-photo-guard.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'portland-appliance-pickup/index.html'
+      - '.github/workflows/vgm-portland-single-photo-guard.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Verify one genuine appliance hero, lead routing and negative fixture
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          import re
+
+          class ImageScanner(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.images=[]
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower()=="img":
+                      self.images.append(dict(attrs))
+
+          def passes(raw):
+              scanner=ImageScanner()
+              scanner.feed(raw)
+              images=scanner.images
+              logos=[x for x in images if "site-brand-logo" in x.get("class","").split()]
+              content=[x for x in images if x not in logos]
+              if len(logos)!=1 or len(content)!=1:
+                  return False
+              hero=content[0]
+              if not hero.get("src","").startswith("/portland-group-appliances.webp"):
+                  return False
+              if not hero.get("alt","").strip():
+                  return False
+              head=raw.split("</head>",1)[0]
+              if '<link rel="canonical" href="https://freereliableappliancepickup.com/portland-appliance-pickup/">' not in head:
+                  return False
+              if re.search(r'<meta[^>]+name=["\']robots["\'][^>]+noindex',head,re.I):
+                  return False
+              if 'action="https://formspree.io/f/mvzeapzd"' not in raw:
+                  return False
+              if 'tel:+15038684455' not in raw:
+                  return False
+              return True
+
+          raw=Path("portland-appliance-pickup/index.html").read_text(encoding="utf-8")
+          assert passes(raw), "Portland must have one appliance hero, proper canonical, phone and form"
+          bad=raw.replace("</body>",'<img src="/unexpected-extra.jpg" alt="Extra appliance photo"></body>',1)
+          assert bad!=raw and not passes(bad), "Negative fixture failed to catch a second appliance image"
+          print("PASS: Portland has one appliance photo + site logo; negative extra-image fixture rejected")
+          PY

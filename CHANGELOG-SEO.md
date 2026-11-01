@@ -1,5 +1,13 @@
 # SEO change and decision register
 
+## 2026-11-01 — Portland single content-photo compliance (draft only)
+- **Evidence:** The existing approved `/portland-appliance-pickup/` page contains one logo, one garage-group appliance hero, and one later supplemental appliance photo. The two appliance content images conflict with the owner's one-photo-per-page requirement. Existing `sitemap-images.xml` lists both pictures, reflecting their currently published HTML.
+- **Scope:** Remove only the single supplemental `<section class="portland-real-appliance-proof-20260921">…</section>`. Retain the original Portland garage appliance hero, site logo, title, description, canonical, structured data, page copy outside that section, headings, internal links outside that section, phone/text actions, exact Formspree form, conditional free-pickup qualification and customer route information. No new image, business claim or SEO experiment.
+- **Before/after source checks:** Three `<img>` tags (logo + two content images) become two (logo + one content image). The document head, opening Formspree tag, and local phone link count are byte-identical. This is owner media-style compliance, **not a proven ranking enhancement**.
+- **Change gate:** Draft PR only, subject to independent review, applicable GitHub checks, mobile appearance, retained hero image delivery and complete customer-form operation. Do not merge without owner approval. The existing Portland page experiment is still recorded as running; no speculative ranking/intent rewrites have been made.
+- **Rollback and post-merge:** Revert the scoped PR if the retained hero or customer request experience regresses. If approved/merged, verify the live page, regenerate the image sitemap to drop the deleted secondary content image reference, and separately measure Google image visibility if data exists.
+
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
