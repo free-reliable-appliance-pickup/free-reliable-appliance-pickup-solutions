@@ -1,5 +1,13 @@
 # SEO change and decision register
 
+## 2026-11-01 — Salem approved image-sitemap regeneration guard (draft PR #690)
+- **Evidence:** Both existing approved indexable service pages `/salem-refrigerator-freezer-pickup/` and `/salem-stove-pickup/` have crawlable local image references and canonical URLs, but the main-branch generated image sitemap omitted them. The draft sitemap initially added both entries manually; however, `scripts/generate-image-sitemap.py` did not include these approved specialty slugs, so regeneration could remove the entries.
+- **Single objective:** Keep those two approved Salem page-to-image entries in the generated image sitemap. Draft #690 adds two existing URLs to the sitemap and its generator, plus a CI generation-time missing-URL assertion. No page content, imagery, contact, forms, coverage, SEO experiments, canonical or robots settings are modified.
+- **Risk/control:** Image-sitemap inventory is high-risk; **draft PR only**, pending owner approval, independent review, workflow and XML validation, and post-merge public sitemap + Search Console confirmation. No live Google indexing, images visibility or ranking improvement claimed.
+- **Source validation:** Compared main vs draft: exactly 577 existing page entries preserved and exactly two Salem entries added (579 unique total, zero duplicate or removed page entries); verified approved service-page slugs, existing page `img src` targets, generator inclusion, and regression assertion. Production unmodified.
+- **Rollback:** Revert #690 as a unit before deployment or revert its merge commit if a regression is detected; regenerate and compare the image sitemap before making any subsequent changes.
+
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
