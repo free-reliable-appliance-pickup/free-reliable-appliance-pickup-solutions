@@ -5,16 +5,20 @@ on:
     branches: [main]
     paths:
       - 'assets/customer-routing.js'
+      - 'assets/form-traffic-attribution.js'
       - 'data/market-routing.json'
       - 'data/cities.json'
       - 'scripts/test-customer-routing.js'
+      - 'scripts/test-form-traffic-attribution.js'
       - '.github/workflows/test-customer-routing.yml'
   pull_request:
     paths:
       - 'assets/customer-routing.js'
+      - 'assets/form-traffic-attribution.js'
       - 'data/market-routing.json'
       - 'data/cities.json'
       - 'scripts/test-customer-routing.js'
+      - 'scripts/test-form-traffic-attribution.js'
       - '.github/workflows/test-customer-routing.yml'
   workflow_dispatch:
 
@@ -31,3 +35,5 @@ jobs:
           node-version: '22'
       - name: Run customer routing regression tests
         run: node scripts/test-customer-routing.js
+      - name: Verify Formspree referral labels without customer data
+        run: node scripts/test-form-traffic-attribution.js
