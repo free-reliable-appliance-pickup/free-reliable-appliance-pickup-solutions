@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-const sourceTag=document.createElement('script');sourceTag.src=siteUrl('assets/form-traffic-attribution.js');document.head.appendChild(sourceTag);
+if(document.createElement){const t=document.createElement('script');t.src=siteUrl('assets/form-traffic-attribution.js');document.head.appendChild(t)}
 
 const FALLBACK={status:'request-only',territory_status:'available',region:'Unassigned market',lead_priority:3,partner_id:null,backup_partner_id:null,phone:null};
 const PRIORITY_909_PHONE='909-375-6685';
