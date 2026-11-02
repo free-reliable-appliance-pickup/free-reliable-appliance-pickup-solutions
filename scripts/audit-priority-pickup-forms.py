@@ -669,7 +669,7 @@ for city in SOUTHWEST_RIVERSIDE_ACCESS:
         errors.append(f"{city}: missing southwest Riverside page")
         continue
     raw = path.read_text(encoding="utf-8", errors="replace")
-    forms = re.findall(r'<form\\b[^>]*>.*?</form>', raw, re.I | re.S)
+    forms = re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
     if len(forms) != 1 or 'action="https://formspree.io/f/mvzeapzd"' not in forms[0]:
         errors.append(f"{city}: expected one existing Formspree form")
         continue
@@ -677,8 +677,8 @@ for city in SOUTHWEST_RIVERSIDE_ACCESS:
     for field in ("location", "stairs"):
         if form.count(f'name="{field}"') != 1 or not select_ok(form, field):
             errors.append(f"{city}: {field} must be a unique required select with blank first option")
-    details = re.findall(r'<details\\b[^>]*>.*?</details>', form, re.I | re.S)
-    if any(re.search(r'<select\\b[^>]*name="(?:location|stairs)"', d, re.I) for d in details):
+    details = re.findall(r'<details\b[^>]*>.*?</details>', form, re.I | re.S)
+    if any(re.search(r'<select\b[^>]*name="(?:location|stairs)"', d, re.I) for d in details):
         errors.append(f"{city}: required access control inside collapsed details")
     if 'tel:+19093756685' not in raw:
         errors.append(f"{city}: existing 909 telephone route missing")
