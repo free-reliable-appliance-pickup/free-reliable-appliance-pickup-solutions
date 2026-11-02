@@ -84,18 +84,18 @@ function observedVisitSource(){
     if(!document.referrer)return '';
     const host=new URL(document.referrer).hostname.toLowerCase();
     if(!host||host===location.hostname.toLowerCase())return '';
-    if(/(^|\\.)google\\.[a-z.]+$/.test(host))return 'Google referrer';
-    if(/(^|\\.)facebook\\.com$/.test(host)||host==='fb.com')return 'Facebook referrer';
-    if(/(^|\\.)instagram\\.com$/.test(host))return 'Instagram referrer';
-    if(/(^|\\.)bing\\.com$/.test(host))return 'Bing referrer';
-    if(/(^|\\.)yahoo\\.com$/.test(host))return 'Yahoo referrer';
+    if(/(^|\.)google\.[a-z.]+$/.test(host))return 'Google referrer';
+    if(/(^|\.)facebook\.com$/.test(host)||host==='fb.com')return 'Facebook referrer';
+    if(/(^|\.)instagram\.com$/.test(host))return 'Instagram referrer';
+    if(/(^|\.)bing\.com$/.test(host))return 'Bing referrer';
+    if(/(^|\.)yahoo\.com$/.test(host))return 'Yahoo referrer';
     return 'Other referral: '+host.slice(0,80);
   }catch(e){return '';}
 }
 const CURRENT_OBSERVED_SOURCE=observedVisitSource();
 try{if(CURRENT_OBSERVED_SOURCE)sessionStorage.setItem('frap_observed_traffic_source',CURRENT_OBSERVED_SOURCE);}catch(e){}
 function recordSalemTrafficSource(form){
-  if(!/^\\/salem-(?:appliance|washer-dryer|refrigerator-freezer|stove)-pickup\\/$/.test(pagePath()))return;
+  if(!/^\/salem-(?:appliance|washer-dryer|refrigerator-freezer|stove)-pickup\/$/.test(pagePath()))return;
   let source=CURRENT_OBSERVED_SOURCE;
   if(!source){try{source=sessionStorage.getItem('frap_observed_traffic_source')||'';}catch(e){}}
   hidden(form,'Traffic Source (Observed)',source||'Direct / unknown');
