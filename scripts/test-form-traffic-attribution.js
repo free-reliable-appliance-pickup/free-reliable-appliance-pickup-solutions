@@ -98,12 +98,12 @@ for(const city of ['eugene','grants-pass','springfield']){
   for(const kind of ['freezer','refrigerator','washer-dryer']){
     const filename=city+'-'+kind+'-pickup/index.html';
     const html=fs.readFileSync(filename,'utf8');
-    const routeTag='<script src="../assets/customer-routing.js" defer></script>';
+    const routeTag='<script src="../assets/form-traffic-attribution.js" defer></script>';
     assert.equal(html.split(routeTag).length-1,1,filename+' must load the shared helper exactly once');
     assert.ok(html.includes('https://formspree.io/f/mvzeapzd'),filename+' must preserve Formspree endpoint');
     assert.match(html,/name="city"/,filename+' must request a city');
     assert.match(html,/name="appliance"/,filename+' must identify the appliance');
-    assert.ok(!html.includes('src="../assets/form-traffic-attribution.js"'),filename+' must not duplicate tracking loader');
+    assert.ok(!html.includes('src="../assets/customer-routing.js"'),filename+' must not add full routing engine solely for attribution');
   }
 }
 console.log('PASS: All nine Oregon specialty forms retain exactly one shared script, endpoint, city and appliance');
