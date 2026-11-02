@@ -15,7 +15,7 @@ ACTION = 'action="https://formspree.io/f/mvzeapzd"'
 
 def check(html, slug, city):
     errors = []
-    forms = re.findall(r'<form\\b[^>]*>.*?</form>', html, re.I | re.S)
+    forms = re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
     intake = [f for f in forms if ACTION in f]
     if len(intake) != 1:
         return [f"{slug}: expected one established Formspree form"]
@@ -28,26 +28,26 @@ def check(html, slug, city):
         if form.count(f'name="{field}"') != 1 or f'name="{field}" value="{value}"' not in form:
             errors.append(f"{slug}: missing or duplicate {field} attribution")
     for field in ("name", "phone", "address", "zip", "appliance", "condition"):
-        tag = re.search(r'<(?:input|select)\\b[^>]*\\bname="' + field + r'"[^>]*>', form, re.I)
-        if not tag or not re.search(r'\\brequired\\b', tag.group(0), re.I):
+        tag = re.search(r'<(?:input|select)\b[^>]*\bname="' + field + r'"[^>]*>', form, re.I)
+        if not tag or not re.search(r'\brequired\b', tag.group(0), re.I):
             errors.append(f"{slug}: {field} not required")
     for field in ("location", "stairs"):
-        selects = re.findall(r'<select\\b[^>]*\\bname="' + field + r'"[^>]*>.*?</select>', form, re.I | re.S)
+        selects = re.findall(r'<select\b[^>]*\bname="' + field + r'"[^>]*>.*?</select>', form, re.I | re.S)
         if len(selects) != 1:
             errors.append(f"{slug}: expected one {field} select")
             continue
         select = selects[0]
         opening = select.split(">", 1)[0]
-        if not re.search(r'\\brequired\\b', opening, re.I):
+        if not re.search(r'\brequired\b', opening, re.I):
             errors.append(f"{slug}: {field} not required")
-        if not re.search(r'<option\\s+value="">', select, re.I):
+        if not re.search(r'<option\s+value="">', select, re.I):
             errors.append(f"{slug}: {field} has no blank prompt")
-        elif not re.search(r'^<option\\s+value="">', select.split(">", 1)[1], re.I):
+        elif not re.search(r'^<option\s+value="">', select.split(">", 1)[1], re.I):
             errors.append(f"{slug}: {field} blank prompt not first")
     if form.count('name="message"') != 1:
         errors.append(f"{slug}: access notes missing or duplicated")
     if slug in ("oakland", "san-francisco") and not re.search(
-        r'<textarea\\b[^>]*name="message"[^>]*\\brequired\\b', form, re.I
+        r'<textarea\b[^>]*name="message"[^>]*\brequired\b', form, re.I
     ):
         errors.append(f"{slug}: previously required message weakened")
     if 'tel:+13107744304' not in html:
