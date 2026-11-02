@@ -1,5 +1,14 @@
 # SEO change and decision register
 
+## 2026-11-01 — Salem stove hub-to-local handoff (draft; not live)
+
+- **Observed customer-navigation defect:** The existing national `/stove-oven-pickup/` Oregon/Colorado local links direct Salem stove customers to broad `/salem-appliance-pickup/`, despite a published dedicated `/salem-stove-pickup/` page with self-canonical, index, 503 Oregon phone and the existing Formspree request form.
+- **Ranking context (not guaranteed Google GPS):** In recent Salem-local search-provider samples for `free stove pickup Salem Oregon`, the general Salem page appeared around result #9; the dedicated stove page did not appear in first 12. Finalized GSC Oct 3–30 on dedicated Salem stove page: 1 impression, 0 clicks, average 10 (a single impression does not establish stable rank).
+- **One scoped change:** Substitute only the single Salem anchor in the existing `Oregon and Colorado Stove Pickup Pages` block in the national stove pickup hub, with target `/salem-stove-pickup/` and label `Salem stove & range pickup`. All neighboring links and all other source markup are preserved; no new URL, other markets, city pages, title, description, H1, canonical, schema, telephone, form/routing, business service promise, photos or script changes.
+- **Controls:** Dedicated source-only regression with broken-link negative fixture, target canonical/index/contact/Formspree assertions and read-only CI; independent review #705 and owner release approval before merge; verify real live/mobile links only after authorized deployment. No fabricated traffic, GPS rank or customer leads.
+- **Measurement and rollback:** Watch 28 finalized days after an approved release for Salem stove target GSC query × page, impressions, clicks and verified organic customer leads. Baseline 1 impression / 0 clicks (very low confidence). Rollback restores the one original Salem general anchor if a navigation regression is detected.
+
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
