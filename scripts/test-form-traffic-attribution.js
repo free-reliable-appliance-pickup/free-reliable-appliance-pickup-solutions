@@ -33,7 +33,8 @@ function buildBrowser(options={}){
       matches:q=>options.nonFormspree?false:q==='form[action*="formspree.io"]',
       querySelector:q=>{
         if(q==='[name="city"]')return options.noCity?null:{name:'city'};
-        if(q==='[name="appliance"]')return options.noAppliance?null:{name:'appliance'};
+        if(q==='[name="appliance"]')return options.noAppliance||options.pluralAppliance?null:{name:'appliance'};
+        if(q==='[name="appliances"]')return options.noAppliance?null:(options.pluralAppliance?{name:'appliances'}:null);
         const m=q.match(/\[name="([^"]+)"\]/);
         return m?fields[m[1]]||null:null;
       },
@@ -82,6 +83,10 @@ const unknown=buildBrowser({});
 assert.equal(Object.keys(unknown.submit({nonFormspree:true})).length,0,'Never alter non-Formspree forms');
 assert.equal(Object.keys(unknown.submit({noCity:true})).length,0,'Never alter forms without city');
 assert.equal(Object.keys(unknown.submit({noAppliance:true})).length,0,'Never alter forms without appliance');
+const plural=buildBrowser({search:'?utm_source=facebook'}).submit({pluralAppliance:true});
+assert.equal(plural.traffic_source_channel,'facebook_tagged','Legacy plural appliances field still gets Facebook attribution');
+assert.equal(plural.traffic_source_basis,'utm_source','Legacy plural label preserves evidence');
+console.log('PASS: Legacy plural appliances form captures source evidence');
 const overwrite=unknown.submit({preexisting:{traffic_source_channel:'stale',traffic_source_basis:'stale'}});
 assert.equal(overwrite.traffic_source_channel,'unknown','Existing hidden source fields are updated, not duplicated');
 assert.equal(Object.keys(overwrite).length,2,'Do not append duplicate attribution fields');
