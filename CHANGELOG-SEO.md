@@ -1,12 +1,12 @@
 # SEO change and decision register
 
-## 2026-11-01 — Formspree source evidence (draft, not deployed)
+## 2026-11-01 — Formspree referral evidence (draft; not live)
 
-- **Verified gap:** The existing \`source_page\` and “Free Appliance Pickup Across USA” email title identify the internal form, NOT Facebook versus Google. A Salem test arrived in the owner inbox but could not prove Google-organic origin. GSC clicks alone do not identify submitted leads.
-- **One bounded objective:** Add \`traffic_source_channel\` and \`traffic_source_basis\` only on existing Formspree submissions using browser referral host, tagged links or \`unknown\`; never label a Google-domain referral as verified organic. Preserve coarse external evidence within the tab for up to 30 minutes. Support both \`appliance\` and \`appliances\` fields. Never transmit full referral URL, UTM value or click ID.
-- **Affected pages:** Existing city forms load a 3.4 KB helper through the shared customer-routing script (kept under 40 KB). Nine established Eugene, Grants Pass and Springfield specialty forms each add only one standalone deferred source-helper tag on its own line; the rest of each existing HTML file is byte-identical. No changes to phone, pickup promises, eligibility, form endpoint, titles, canonical, images or other customer routing.
-- **Gates:** Exact-head CI and privacy/mobile/request-path tests; independent full-file PR review (#705); owner release approval; authorized end-to-end Formspree delivery check. GA4 must be connected for actual channel/session analysis. Drafts and fixtures are NOT proof of live attribution or customer growth.
-- **Rollback/measure:** Revert the helper + loader and the nine added tags; monitor source-field coverage and actual delivered lead evidence. Previous notifications cannot be retroactively attributed.
+- **Baseline:** City/page and “Across USA” email title do not prove Google vs Facebook; old customer leads are unattributable. GSC organic clicks do not equal verified form leads.
+- **Single change:** Existing Formspree posts gain coarse `traffic_source_channel` and `traffic_source_basis` from tagged campaigns/referral host or `unknown` (30-minute same-tab evidence). Google referral does **not** prove Google organic. No raw referrer URLs, click IDs or UTM values transmitted; accepts singular/plural appliance fields.
+- **Scope:** Small separate helper from current routing script, plus one **standalone source-only script tag** on each of nine Eugene/Grants Pass/Springfield specialty forms. All existing form/phone/SEO/coverage content unchanged.
+- **Gates:** Complete diff review (#705), exact-head CI, mobile and controlled inbox tests, explicit owner approval. GA4 needed for channel acquisition; no live ranking/lead claim.
+- **Rollback:** Restore original shared script and remove helper/tags. Compare confirmed lead source evidence after approved deployment.
 
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
