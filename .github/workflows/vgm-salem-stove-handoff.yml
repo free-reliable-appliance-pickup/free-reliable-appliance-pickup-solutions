@@ -1,0 +1,25 @@
+name: VGM Salem Stove Hub Handoff Regression
+on:
+  pull_request:
+    paths:
+      - 'stove-oven-pickup/index.html'
+      - 'salem-stove-pickup/index.html'
+      - 'tests/vgm-salem-stove-handoff.js'
+      - '.github/workflows/vgm-salem-stove-handoff.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'stove-oven-pickup/index.html'
+      - 'salem-stove-pickup/index.html'
+      - 'tests/vgm-salem-stove-handoff.js'
+      - '.github/workflows/vgm-salem-stove-handoff.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check Salem stove category handoff
+        run: node tests/vgm-salem-stove-handoff.js
