@@ -190,10 +190,10 @@ def inspect(page_html, page_label):
         for access_name in ("location", "stairs"):
             candidates = fields.get(access_name, [])
             match = re.search(
-                r'<select\\b[^>]*\\bname="' + access_name + r'"[^>]*>(.*?)</select>',
+                r'<select\b[^>]*\bname="' + access_name + r'"[^>]*>(.*?)</select>',
                 page_html, re.I | re.S
             )
-            first = re.match(r'\\s*<option\\b([^>]*)>', match.group(1), re.I | re.S) if match else None
+            first = re.match(r'\s*<option\b([^>]*)>', match.group(1), re.I | re.S) if match else None
             if (len(candidates) != 1 or candidates[0][0] != "select"
                     or "required" not in candidates[0][1] or not first
                     or 'value=""' not in first.group(1)):
