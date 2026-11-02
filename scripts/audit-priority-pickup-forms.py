@@ -663,7 +663,7 @@ REQUIRED_VISIBLE_ACCESS_FORMS = ("norco", "grand-terrace", "colton")
 for slug in REQUIRED_VISIBLE_ACCESS_FORMS:
     path = Path(slug + "-appliance-pickup") / "index.html"
     html = path.read_text(encoding="utf-8", errors="replace")
-    intake = [f for f in re.findall(r'<form\\b[^>]*>.*?</form>', html, re.I | re.S)
+    intake = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
               if 'action="https://formspree.io/f/mvzeapzd"' in f]
     if len(intake) != 1:
         errors.append(f"{slug}: expected one existing Formspree form")
