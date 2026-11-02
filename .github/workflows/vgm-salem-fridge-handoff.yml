@@ -1,0 +1,25 @@
+name: VGM Salem Refrigerator Hub Handoff Regression
+on:
+  pull_request:
+    paths:
+      - 'refrigerator-pickup/index.html'
+      - 'salem-refrigerator-freezer-pickup/index.html'
+      - 'tests/vgm-salem-fridge-handoff.js'
+      - '.github/workflows/vgm-salem-fridge-handoff.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'refrigerator-pickup/index.html'
+      - 'salem-refrigerator-freezer-pickup/index.html'
+      - 'tests/vgm-salem-fridge-handoff.js'
+      - '.github/workflows/vgm-salem-fridge-handoff.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check Salem refrigerator navigation and negative fixture
+        run: node tests/vgm-salem-fridge-handoff.js
