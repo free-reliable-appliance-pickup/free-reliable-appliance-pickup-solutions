@@ -1,7 +1,6 @@
-/* Customer request routing + premium washer/dryer presentation helper.
-   Operational metadata only. Never creates city URLs or indexable pages. */
 (function(){
 'use strict';
+const sourceTag=document.createElement('script');sourceTag.src=siteUrl('assets/form-traffic-attribution.js');document.head.appendChild(sourceTag);
 
 const FALLBACK={status:'request-only',territory_status:'available',region:'Unassigned market',lead_priority:3,partner_id:null,backup_partner_id:null,phone:null};
 const PRIORITY_909_PHONE='909-375-6685';
@@ -52,60 +51,10 @@ function classify(city,state){
 function routingDecision(info){const status=String(info&&info.status||FALLBACK.status),territory=String(info&&info.territory_status||FALLBACK.territory_status);if(status==='direct')return {decision:'DIRECT_OPERATION',tier:'direct-operations',action:'Review qualification and dispatch through the established company market.'};if(status==='partner-supported'||territory==='assigned')return {decision:'PARTNER_NETWORK',tier:'assigned-partner',action:'Review qualification and route to the assigned approved partner.'};if(status==='buyer-review')return {decision:'BUYER_REVIEW',tier:'buyer-review',action:'Review photos, condition and access, then check interest with available Fresno appliance buyers. Do not promise pickup until a buyer accepts the request.'};if(status==='partner-recruiting')return {decision:'RECRUITING_QUEUE',tier:'partner-recruiting',action:'Keep as an intake lead while local partner coverage is being recruited; do not promise pickup.'};return {decision:'NATIONAL_INTAKE',tier:'request-only',action:'Accept for review only; confirm local coverage before offering or scheduling pickup.'};}
 function findField(form,names){for(const name of names){const el=form.querySelector(`[name="${name}"]`)||form.querySelector('#'+name);if(el)return el;}return null;}
 function hidden(form,name,value){let el=form.querySelector(`input[type="hidden"][name="${name}"]`);if(!el){el=document.createElement('input');el.type='hidden';el.name=name;form.appendChild(el);}el.value=value==null?'':String(value);return el;}
-/* VGM lead-source diagnosis: source page != acquisition source.
-   Capture only coarse external referral evidence; never send raw referrer URLs,
-   query strings, click IDs or cross-visit identifiers to Formspree. */
-const TRAFFIC_SOURCE_SESSION_KEY='freeReliableSourceEvidenceV1';
-function observeTrafficSource(){
-  const params=new URLSearchParams(location.search||'');
-  const utm=String(params.get('utm_source')||'').trim().toLowerCase();
-  const medium=String(params.get('utm_medium')||'').trim().toLowerCase();
-  if(params.has('gclid')||params.has('gbraid')||params.has('wbraid')||
-     ((utm==='google'||utm==='googleads')&&/^(cpc|ppc|paid|paid_search)$/.test(medium)))
-    return {channel:'google_paid_tagged',basis:'paid_click_tag'};
-  if(params.has('fbclid'))return {channel:'facebook_link_tagged',basis:'fbclid'};
-  if(utm==='facebook'||utm==='fb'||utm==='meta')
-    return {channel:'facebook_tagged',basis:'utm_source'};
-  if(utm==='instagram'||utm==='ig')
-    return {channel:'instagram_tagged',basis:'utm_source'};
-  if(utm==='google')return {channel:'google_tagged_unverified',basis:'utm_source'};
-  let host='';
-  try{host=new URL(document.referrer||'').hostname.toLowerCase().replace(/^www\./,'');}catch(_){}
-  const own=String(location.hostname||'').toLowerCase().replace(/^www\./,'');
-  if(host===own||host==='free-reliable-appliance-pickup.github.io')return null;
-  if(host==='facebook.com'||host.endsWith('.facebook.com')||host==='fb.com'||host.endsWith('.fb.com'))
-    return {channel:'facebook_referral',basis:'referrer_host'};
-  if(host==='instagram.com'||host.endsWith('.instagram.com'))
-    return {channel:'instagram_referral',basis:'referrer_host'};
-  if(host==='google.com'||host.endsWith('.google.com')||/^google\.[a-z]{2,3}(?:\.[a-z]{2})?$/.test(host))
-    return {channel:'google_referral_unverified',basis:'referrer_host'};
-  if(host)return {channel:'other_referral',basis:'referrer_host'};
-  return null;
-}
-function getTrafficSourceEvidence(){
-  const now=Date.now(),observed=observeTrafficSource();
-  let cached=null;
-  try{cached=JSON.parse(sessionStorage.getItem(TRAFFIC_SOURCE_SESSION_KEY)||'null');}catch(_){}
-  if(observed){
-    const current={channel:observed.channel,basis:observed.basis,observed_at:now};
-    try{sessionStorage.setItem(TRAFFIC_SOURCE_SESSION_KEY,JSON.stringify(current));}catch(_){}
-    return current;
-  }
-  if(cached&&typeof cached.channel==='string'&&typeof cached.basis==='string'&&
-     Number.isFinite(cached.observed_at)&&now>=cached.observed_at&&now-cached.observed_at<=1800000)
-    return cached;
-  return {channel:'unknown',basis:'no_external_source_signal',observed_at:now};
-}
-const TRAFFIC_SOURCE_EVIDENCE=getTrafficSourceEvidence();
-function captureTrafficSource(form){
-  const source=getTrafficSourceEvidence();
-  hidden(form,'traffic_source_channel',source.channel);
-  hidden(form,'traffic_source_basis',source.basis);
-}
 /* Fill an omitted city only when this page and state match our verified
    city registry or a configured service-market lookup. Never guess a city
    for regional hubs, nationwide intake, partner forms, or an existing value. */
-function ensureRequestAttribution(form){captureTrafficSource(form);
+function ensureRequestAttribution(form){
   if(!findField(form,['source_page']))hidden(form,'source_page',pagePath().replace(/^\/+|\/+$/g,'')||'home');
   if(findField(form,['city','City','pickup_city','Primary City']))return;
   const state=findField(form,['state','State','pickup_state','Primary State']);
