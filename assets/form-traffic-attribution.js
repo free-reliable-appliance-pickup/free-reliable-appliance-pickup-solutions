@@ -53,7 +53,7 @@ function putHidden(form,name,value){
 document.addEventListener('submit',function(event){
   const form=event.target;
   if(!form||!form.matches||!form.matches('form[action*="formspree.io"]'))return;
-  if(!form.querySelector('[name="city"]')||!form.querySelector('[name="appliance"]'))return;
+  if(!form.querySelector('[name="city"]')||(!form.querySelector('[name="appliance"]')&&!form.querySelector('[name="appliances"]')))return;
   const source=getTrafficSourceEvidence();
   putHidden(form,'traffic_source_channel',source.channel);
   putHidden(form,'traffic_source_basis',source.basis);
