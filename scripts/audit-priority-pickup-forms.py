@@ -659,6 +659,43 @@ for slug in GENERAL_FORM_ATTRIBUTION:
             errors.append(f"{slug}: missing, duplicated, or wrong static {field}")
 print("GENERAL_FORM_ATTRIBUTION_CHECKED", len(GENERAL_FORM_ATTRIBUTION))
 
+
+# Source-only regression guard for 13 South Bay/southeast LA general pickup forms.
+# These are verified intake-completeness fixes; no live requests are submitted.
+SOUTH_BAY_ACCESS_FORMS = (
+    "redondo-beach", "manhattan-beach", "carson", "downey", "compton",
+    "hawthorne", "gardena", "hermosa-beach", "el-segundo", "lawndale",
+    "inglewood", "signal-hill", "bellflower",
+)
+for city in SOUTH_BAY_ACCESS_FORMS:
+    slug = f"{city}-appliance-pickup"
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing general pickup page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    forms = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in f]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected exactly one established Formspree intake")
+        continue
+    form = forms[0]
+    if f'name="source_page" value="{slug}"' not in form:
+        errors.append(f"{slug}: original source attribution changed")
+    for field in ("location", "stairs"):
+        if form.count(f'name="{field}"') != 1 or not select_ok(form, field):
+            errors.append(f"{slug}: {field} must be unique, native-required and blank-first")
+    for field in ("name", "phone", "address", "zip"):
+        inp = re.search(rf'<input\b[^>]*name="{field}"[^>]*>', form, re.I)
+        if not inp or not re.search(r'\brequired\b', inp.group(0), re.I):
+            errors.append(f"{slug}: original required {field} field missing")
+    for field in ("appliance", "condition"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: original required {field} select changed")
+    if form.count('name="message"') != 1:
+        errors.append(f"{slug}: original access-notes field changed")
+print("SOUTH_BAY_ACCESS_FORMS_CHECKED", len(SOUTH_BAY_ACCESS_FORMS))
+
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
 
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
