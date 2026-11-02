@@ -10,6 +10,7 @@ on:
       - '**/*-freezer-pickup/index.html'
       - '**/*-stove-oven-pickup/index.html'
       - 'scripts/audit-priority-pickup-forms.py'
+      - 'scripts/audit-bay-area-access-required.py'
       - 'scripts/audit-priority-intake-contract.py'
       - 'scripts/audit-sfv-paid-quote-static.py'
       - 'scripts/audit-coastal-paid-quote-static.py'
@@ -22,6 +23,7 @@ on:
       - '**/*-freezer-pickup/index.html'
       - '**/*-stove-oven-pickup/index.html'
       - 'scripts/audit-priority-pickup-forms.py'
+      - 'scripts/audit-bay-area-access-required.py'
       - 'scripts/audit-priority-intake-contract.py'
       - 'scripts/audit-sfv-paid-quote-static.py'
       - 'scripts/audit-coastal-paid-quote-static.py'
@@ -38,6 +40,8 @@ jobs:
       - uses: actions/checkout@v5
       - name: Validate condition and access intake
         run: python3 scripts/audit-priority-pickup-forms.py
+      - name: Validate Bay Area pickup access (source only)
+        run: python3 scripts/audit-bay-area-access-required.py
       - name: Self-test general pickup form contract guard
         run: python3 scripts/audit-priority-intake-contract.py --self-test
       - name: Validate general pickup form attribution contract
