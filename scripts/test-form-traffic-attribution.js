@@ -92,4 +92,20 @@ assert.equal(overwrite.traffic_source_channel,'unknown','Existing hidden source 
 assert.equal(Object.keys(overwrite).length,2,'Do not append duplicate attribution fields');
 console.log('PASS: Invalid forms ignored and existing hidden fields updated safely');
 
+// Newly added Oregon specialty pages must load the shared routing script once,
+ // otherwise the Formspree source-evidence helper never reaches their requests.
+for(const city of ['eugene','grants-pass','springfield']){
+  for(const kind of ['freezer','refrigerator','washer-dryer']){
+    const filename=city+'-'+kind+'-pickup/index.html';
+    const html=fs.readFileSync(filename,'utf8');
+    const routeTag='<script src="../assets/customer-routing.js" defer></script>';
+    assert.equal(html.split(routeTag).length-1,1,filename+' must load the shared helper exactly once');
+    assert.ok(html.includes('https://formspree.io/f/mvzeapzd'),filename+' must preserve Formspree endpoint');
+    assert.match(html,/name="city"/,filename+' must request a city');
+    assert.match(html,/name="appliance"/,filename+' must identify the appliance');
+    assert.ok(!html.includes('src="../assets/form-traffic-attribution.js"'),filename+' must not duplicate tracking loader');
+  }
+}
+console.log('PASS: All nine Oregon specialty forms retain exactly one shared script, endpoint, city and appliance');
+
 console.log('PASS: VGM Formspree source-evidence offline tests completed; this does NOT verify live inbox delivery.');
