@@ -46,6 +46,18 @@ jobs:
               'keizer-appliance-pickup':'503-868-4455',
 
               # California 310 routing
+              # Southeast LA: prevent 909 regression on general and laundry pages.
+              'bell-gardens-appliance-pickup':'310-774-4304',
+              'bell-gardens-washer-dryer-pickup':'310-774-4304',
+              'commerce-appliance-pickup':'310-774-4304',
+              'commerce-washer-dryer-pickup':'310-774-4304',
+              'south-gate-appliance-pickup':'310-774-4304',
+              'south-gate-washer-dryer-pickup':'310-774-4304',
+              'huntington-park-appliance-pickup':'310-774-4304',
+              'huntington-park-washer-dryer-pickup':'310-774-4304',
+              'vernon-appliance-pickup':'310-774-4304',
+              'vernon-washer-dryer-pickup':'310-774-4304',
+
               'fresno-appliance-pickup':'310-774-4304',
               'sacramento-appliance-pickup':'310-774-4304',
               'stockton-appliance-pickup':'310-774-4304',
@@ -86,6 +98,15 @@ jobs:
                   errors.append(f'EXPECTED_PHONE_MISSING {slug}: {phone}')
               if not tel_ok:
                   errors.append(f'EXPECTED_TEL_LINK_MISSING {slug}: {phone}')
+
+              # The 10 southeast LA pages must not retain the former 909
+              # contact in visible copy, links, or structured data.
+              southeast_la_prefixes=('bell-gardens-', 'commerce-', 'south-gate-', 'huntington-park-', 'vernon-')
+              if slug.startswith(southeast_la_prefixes):
+                  if '909-375-6685' in raw or '+19093756685' in raw:
+                      errors.append(f'SOUTHEAST_LA_OLD_PHONE_REMAINS {slug}')
+                  if slug.endswith('-appliance-pickup') and f'"telephone":"+1{digits}"' not in raw:
+                      errors.append(f'SOUTHEAST_LA_SCHEMA_PHONE_MISSING {slug}')
 
               for other in sorted(known-{phone}):
                   odigits=re.sub(r'\D','',other)
