@@ -1,5 +1,4 @@
-/* Customer request routing + premium washer/dryer presentation helper.
-   Operational metadata only. Never creates city URLs or indexable pages. */
+/* Pickup routing; never auto-create service pages. */
 (function(){
 'use strict';
 
@@ -10,7 +9,6 @@ let routing=null,cities=null,loadPromise=null;
 const n=v=>String(v||'').trim().toLowerCase();
 
 const CA_909_PRIORITY={
-// Customer-confirmed Southeast LA override (2026-10-11): 909, not generic county 310.
 'la mirada':'Los Angeles County','cerritos':'Los Angeles County','pico rivera':'Los Angeles County',
 'montrose':'San Gabriel Valley','la crescenta':'San Gabriel Valley','la cañada flintridge':'San Gabriel Valley','la canada flintridge':'San Gabriel Valley','altadena':'San Gabriel Valley','pasadena':'San Gabriel Valley','south pasadena':'San Gabriel Valley','san marino':'San Gabriel Valley','san gabriel':'San Gabriel Valley','sierra madre':'San Gabriel Valley','arcadia':'San Gabriel Valley','monrovia':'San Gabriel Valley','duarte':'San Gabriel Valley','azusa':'San Gabriel Valley','glendora':'San Gabriel Valley','covina':'San Gabriel Valley','west covina':'San Gabriel Valley','san dimas':'San Gabriel Valley','la verne':'San Gabriel Valley','claremont':'San Gabriel Valley','pomona':'San Gabriel Valley','el monte':'San Gabriel Valley','south el monte':'San Gabriel Valley','baldwin park':'San Gabriel Valley','montebello':'San Gabriel Valley','la puente':'San Gabriel Valley','norwalk':'San Gabriel Valley','downey':'San Gabriel Valley','rowland heights':'San Gabriel Valley','diamond bar':'San Gabriel Valley',
 'montclair':'Inland Empire','ontario':'Inland Empire','upland':'Inland Empire','rancho cucamonga':'Inland Empire','fontana':'Inland Empire','san bernardino':'Inland Empire','highland':'Inland Empire','loma linda':'Inland Empire','yucaipa':'Inland Empire','oak glen':'Inland Empire','grand terrace':'Inland Empire','bloomington':'Inland Empire','rialto':'Inland Empire','colton':'Inland Empire','redlands':'Inland Empire','muscoy':'Inland Empire','arrowhead farms':'Inland Empire','north san bernardino':'Inland Empire',
@@ -37,10 +35,6 @@ function priorityCalifornia(city,state){const sc=stateCode(state),cn=n(city);if(
 function priority909(city,state){const info=priorityCalifornia(city,state);return info&&info.phone===PRIORITY_909_PHONE?info:null;}
 function classify(city,state){
   const sc=stateCode(state),cn=n(city),priority=priorityCalifornia(city,state);
-  // A verified, explicit city route must not be shadowed by the broad
-  // California priority-city intake override. Keep the existing public
-  // 909/310 number while honoring an approved market's status and partner ID.
-  // No city is treated as supported merely because it is on the priority list.
   if(priority){
     const explicit=routing&&Array.isArray(routing.markets)
       ?routing.markets.find(m=>m.city&&stateCode(m.state_code||m.state)===sc&&n(m.city)===cn)
@@ -52,9 +46,7 @@ function classify(city,state){
 function routingDecision(info){const status=String(info&&info.status||FALLBACK.status),territory=String(info&&info.territory_status||FALLBACK.territory_status);if(status==='direct')return {decision:'DIRECT_OPERATION',tier:'direct-operations',action:'Review qualification and dispatch through the established company market.'};if(status==='partner-supported'||territory==='assigned')return {decision:'PARTNER_NETWORK',tier:'assigned-partner',action:'Review qualification and route to the assigned approved partner.'};if(status==='buyer-review')return {decision:'BUYER_REVIEW',tier:'buyer-review',action:'Review photos, condition and access, then check interest with available Fresno appliance buyers. Do not promise pickup until a buyer accepts the request.'};if(status==='partner-recruiting')return {decision:'RECRUITING_QUEUE',tier:'partner-recruiting',action:'Keep as an intake lead while local partner coverage is being recruited; do not promise pickup.'};return {decision:'NATIONAL_INTAKE',tier:'request-only',action:'Accept for review only; confirm local coverage before offering or scheduling pickup.'};}
 function findField(form,names){for(const name of names){const el=form.querySelector(`[name="${name}"]`)||form.querySelector('#'+name);if(el)return el;}return null;}
 function hidden(form,name,value){let el=form.querySelector(`input[type="hidden"][name="${name}"]`);if(!el){el=document.createElement('input');el.type='hidden';el.name=name;form.appendChild(el);}el.value=value==null?'':String(value);return el;}
-/* Fill an omitted city only when this page and state match our verified
-   city registry or a configured service-market lookup. Never guess a city
-   for regional hubs, nationwide intake, partner forms, or an existing value. */
+/* Only infer city from verified routes; never invent coverage. */
 function ensureRequestAttribution(form){
   if(!findField(form,['source_page']))hidden(form,'source_page',pagePath().replace(/^\/+|\/+$/g,'')||'home');
   if(findField(form,['city','City','pickup_city','Primary City']))return;
@@ -72,9 +64,7 @@ function ensureRequestAttribution(form){
   if(!knownCA&&!listed&&!direct)return;
   hidden(form,'city',listed&&listed.city||direct&&direct.city||cityName.replace(/\b\w/g,ch=>ch.toUpperCase()));
 }
-/* Record an observed source for Salem intake. This is not proof of organic
-   search traffic: missing referrers remain "Direct / unknown". Only store
-   the source category, never the complete referring URL or query. */
+/* Traffic source is observed, not proof of Google organic search. */
 function observedVisitSource(){
   try{
     const tag=new URLSearchParams(location.search).get('utm_source');
@@ -103,11 +93,11 @@ function recordSalemTrafficSource(form){
 }
 function qualify(form){recordPaidRemovalPreference(form);recordSalemTrafficSource(form);const city=findField(form,['city','City','pickup_city','Primary City']),state=findField(form,['state','State','pickup_state','Primary State']);if(!city||!state)return;if(!findField(form,['source_page']))hidden(form,'source_page',pagePath().replace(/^\/+|\/+$/g,'')||'home');const info=classify(city.value,state.value),route=routingDecision(info);hidden(form,'Routing City',city.value.trim());hidden(form,'Routing State Code',stateCode(state.value));hidden(form,'Routing Region',info.region||FALLBACK.region);hidden(form,'Routing Resolution Level',info.resolution_level||'fallback');hidden(form,'Routing Market Status',info.status||FALLBACK.status);hidden(form,'Routing Territory Status',info.territory_status||FALLBACK.territory_status);hidden(form,'Routing Priority',info.lead_priority||FALLBACK.lead_priority);hidden(form,'Routing Phone',info.phone||'');hidden(form,'Routing Partner ID',info.partner_id||'');hidden(form,'Routing Backup Partner ID',info.backup_partner_id||'');hidden(form,'Routing Decision',route.decision);hidden(form,'Routing Network Tier',route.tier);hidden(form,'Routing Next Action',route.action);hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed');hidden(form,'Routing Source',info.resolution_level==='priority-california-city'?'Priority California customer-routing override':'Canonical market-routing.json');hidden(form,'SEO Page Creation','Disabled');const condition=findField(form,['condition','Condition','Appliance Condition']),appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']),stairs=findField(form,['stairs','Stairs']),access=findField(form,['access','Access','Access Notes']);hidden(form,'Qualification Snapshot',[appliance&&appliance.value,condition&&condition.value,stairs&&stairs.value,access&&access.value].filter(Boolean).join(' | '));const faultDetails=findField(form,['condition_details']);const conditionValue=String(condition&&condition.value||'');const requiresReview=/(?:\b(?:issues?|problems?|repairs?|broken|damaged|unknown|mixed|faulty)\b|not[\s-]+working)/i.test(conditionValue);hidden(form,'Customer Defect Explanation',faultDetails&&faultDetails.value||'');hidden(form,'Dispatch Condition Gate',requiresReview?'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH':'CONFIRM CONDITION AND AVAILABILITY BEFORE DISPATCH');}
 function load(){if(loadPromise)return loadPromise;loadPromise=Promise.all([fetch(siteUrl('data/market-routing.json'),{cache:'no-store'}),fetch(siteUrl('data/cities.json'),{cache:'no-store'})]).then(async([r,c])=>{if(r.ok)routing=await r.json();if(c.ok)cities=await c.json();}).catch(()=>{});return loadPromise;}
-function wireForm(form){if(form.dataset.customerRoutingWired==='1')return;form.dataset.customerRoutingWired='1';form.addEventListener('submit',async function(event){if(form.dataset.customerRoutingQualified==='1'){qualify(form);return;}event.preventDefault();/* Do not leave customer requests waiting indefinitely for optional routing data. */await Promise.race([load(),new Promise(resolve=>setTimeout(resolve,2000))]);ensureRequestAttribution(form);qualify(form);form.dataset.customerRoutingQualified='1';if(typeof form.requestSubmit==='function')form.requestSubmit(event.submitter||undefined);else form.submit();},true);}
+function wireForm(form){if(form.dataset.customerRoutingWired==='1')return;form.dataset.customerRoutingWired='1';form.addEventListener('submit',async function(event){if(form.dataset.customerRoutingQualified==='1'){qualify(form);return;}event.preventDefault();await Promise.race([load(),new Promise(resolve=>setTimeout(resolve,2000))]);ensureRequestAttribution(form);qualify(form);form.dataset.customerRoutingQualified='1';if(typeof form.requestSubmit==='function')form.requestSubmit(event.submitter||undefined);else form.submit();},true);}
 function isCustomerPickupForm(form){const state=findField(form,['state','State','pickup_state','Primary State']),appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']);if(!state||!appliance)return false;if(findField(form,['city','City','pickup_city','Primary City']))return true;return /^\/[a-z0-9-]+-(?:appliance|washer-dryer|refrigerator|stove-oven|freezer)-pickup\/$/.test(pagePath());}
 function pagePath(){let p=location.pathname||'/',base=siteBase();if(base!=='/'&&p.startsWith(base.slice(0,-1)))p=p.slice(base.length-1)||'/';if(!p.startsWith('/'))p='/'+p;if(!p.endsWith('/'))p+='/';return p;}
 
-/* IMPORTANT: every hero in this rotation is a complete washer + dryer set. */
+/* Only complete laundry sets. */
 const COMPLETE_SET_HEROES=[
 'front-load-laundry-set.jpg',
 'laundry-pair.jpg',
@@ -128,7 +118,7 @@ const CITY_LABEL_OVERRIDES={
 function slugLabel(slug){if(CITY_LABEL_OVERRIDES[slug])return CITY_LABEL_OVERRIDES[slug];return slug.split('-').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');}
 const WASHER_DRYER_PHOTOS={};
 PREMIUM_WD_SLUGS.forEach((slug,i)=>{const label=slugLabel(slug);WASHER_DRYER_PHOTOS['/'+slug+'-washer-dryer-pickup/']={hero:COMPLETE_SET_HEROES[i%COMPLETE_SET_HEROES.length],alt:'Real washer and dryer set for pickup in '+label};});
-/* Keep La Crescenta on a confirmed side-by-side/front-load pair. */
+
 WASHER_DRYER_PHOTOS['/la-crescenta-washer-dryer-pickup/']={hero:'front-load-laundry-set.jpg',alt:'Real matching washer and dryer set for pickup in La Crescenta'};
 
 const CA_WASHER_DRYER_PAGES=new Set(Object.keys(WASHER_DRYER_PHOTOS));
@@ -145,9 +135,6 @@ function enhanceWasherDryerPhotos(){
   const hero=document.querySelector('.site-hero-art img');
   if(!hero)return;
   const current=String(hero.getAttribute('src')||'');
-  // Honor real, already-assigned city washer/dryer heroes in source HTML.
-  // Replacing an original during DOMContentLoaded or window.load causes
-  // repeated generic photos and can trigger unnecessary image downloads.
   if(current.includes('/assets/laundry/original-user-heroes/') ||
      hero.dataset.userProvidedHero==='1' ||
      current.includes('exact-user-hero='))return;
@@ -164,8 +151,6 @@ function enhanceWasherDryerPhotos(){
   hero.style.background='#f5f7f6';
   hero.style.borderRadius='16px';
   hero.style.boxShadow='0 12px 28px rgba(0,0,0,.18)';
-  // Do not inject the same 3-photo gallery onto every city laundry page.
-  // Each page's existing original photos remain available without duplication.
 }
 function enhanceCityLaundrySearchTerms(){if(document.querySelector('.site-city-laundry-search'))return;const path=pagePath(),config=WASHER_DRYER_PHOTOS[path];if(!config)return;const slug=path.replace(/^\//,'').replace(/-washer-dryer-pickup\/$/,'');if(['california','southern-california','san-gabriel-inland-empire','los-angeles-county','orange-county','south-orange-county','riverside-county','san-bernardino-county'].includes(slug))return;const city=slugLabel(slug),main=document.querySelector('main');if(!main)return;const section=document.createElement('section');section.className='site-city-laundry-search';const h2=document.createElement('h2');h2.textContent='Free Washer, Dryer & Laundry Set Pickup in '+city;const lead=document.createElement('p');lead.textContent='Customers in '+city+' can submit washers, dryers and complete laundry sets for pickup review. Qualification depends on appliance condition, safe access and current route availability.';const grid=document.createElement('div');grid.className='grid';[['Free Washer Pickup in '+city,'Send clear photos and describe whether the washer fills, washes, drains and spins.'],['Free Dryer Pickup in '+city,'Identify gas or electric service and whether the drum turns and produces heat.'],['Free Washer & Dryer Pickup in '+city,'Complete working washer and dryer sets receive especially strong consideration because both machines can often be routed together for reuse.']].forEach(([title,text])=>{const card=document.createElement('div'),h3=document.createElement('h3'),p=document.createElement('p');card.className='card';h3.textContent=title;p.textContent=text;card.append(h3,p);grid.appendChild(card);});const note=document.createElement('div');note.className='note';note.innerHTML='<strong>Best chance for free pickup:</strong> fully working machines and complete working sets receive the strongest consideration. Send clear appliance and access photos for review.';section.append(h2,lead,grid,note);const first=main.querySelector('section');if(first&&first.nextSibling)main.insertBefore(section,first.nextSibling);else main.appendChild(section);}
 
@@ -179,7 +164,6 @@ function pagePhone(){
   return null;
 }
 function ensurePriorityMobileCta(){
-  // Pages with a pre-rendered sticky bar also need bottom clearance on small screens.
   if(document.querySelector('.priority-mobile-cta')){
     document.body.classList.add('has-priority-mobile-cta');
     return;
@@ -234,11 +218,9 @@ function enhancePhotoFirstIntake(){
   });
 }
 
-/* Keep condition intake consistent on Formspree pickup pages that load this shared file.
-   Existing HTML fields remain useful when JavaScript is unavailable. */
+
 function enhanceApplianceConditionIntake(){
-  /* Keep each page's condition options, especially mixed qualifying loads.
-     Add missing choices without replacing existing values or selected answers. */
+  /* Preserve each form's existing condition choices. */
   const additions=[
     ['Working With Issues','Working, but has a problem (explain below)'],
     ['Mixed Load - Majority Working','Mixed load (about 80% of major appliances working)']
@@ -301,7 +283,7 @@ function enhanceRequestNextSteps(){
   });
 }
 
-/* GA4 lead-action tracking 20261002 */
+
 const GA4_MEASUREMENT_ID='G-X9VMB6GQMF';
 
 function analyticsPageLabel(){
@@ -363,7 +345,6 @@ function initLeadAnalytics(){
   document.addEventListener('submit',function(event){
     const form=event.target;
     if(!form||!form.matches||!form.matches('form[action*="formspree.io"]'))return;
-    // Routing intercepts and replays the first valid submit. Count only the routed replay.
     if(form.dataset.customerRoutingWired==='1'&&form.dataset.customerRoutingQualified!=='1')return;
     gaEvent('pickup_form_submit',{
       form_id:form.id||'pickup_form',
@@ -374,10 +355,10 @@ function initLeadAnalytics(){
 
 initLeadAnalytics();
 load();
-document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();loadPaidRemovalChoice();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();/* Avoid injecting identical keyword-heavy sections across city laundry pages; preserve the original useful page content. */document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{if(isCustomerPickupForm(form))wireForm(form);});});
-/* Some premium city files include an older inline hero lock. Re-apply the verified complete-set rotation after those load handlers finish so each city keeps its assigned washer/dryer set. */
+document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();loadPaidRemovalChoice();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{recordSalemTrafficSource(form);if(isCustomerPickupForm(form))wireForm(form);});});
+/* Reapply user-assigned laundry photos after page load. */
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
-/* Load the final sharp individual-photo override on every premium washer/dryer page. */
+
 if(typeof document!=='undefined'&&!document.querySelector('script[data-premium-sharp-hero]')){const sharp=document.createElement('script');sharp.src=siteUrl('assets/premium-sharp-hero-fix.js')+'?v=20261016-pair-only';sharp.async=true;sharp.dataset.premiumSharpHero='1';document.head.appendChild(sharp);}
 window.FreeReliableCustomerRouting={classify,qualify,ensureRequestAttribution,isCustomerPickupForm,load,siteBase,routingDecision,preferLocalRequestForm,enhanceWasherDryerPhotos,enhanceCityLaundrySearchTerms,replaceCompressedLaundryPhotos,priority909};
 })();
