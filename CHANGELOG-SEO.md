@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-10-30 — Norco and Grand Terrace laundry access intake (California Gold V3 factual/technical exception)
+- **Verified defect on main 650baa9ad696:** Both existing washer/dryer forms require contact/address/ZIP/appliance/condition but collect appliance floor/location and stairs only in an optional message. Both already have a static source-page tag and use the established Formspree endpoint and 909 regional phone.
+- **Reversible draft-only change:** Add required, blank-default location and stair selects with an explicit Unknown option to each form; add static city attribution to both and service attribution to Grand Terrace. Preserve existing form action, customer fields, phone, eligibility, images, navigation, canonical, metadata, structured data and body copy. No new location pages or speculative ranking changes.
+- **Controls:** The Norco city-boundary and Grand Terrace title experiments concern the general city pages, not these laundry specialty URLs. Do not merge until independent review, source/CI guard, mobile/desktop native validation and controlled Formspree receipt testing; verify live deployment only after an approved merge. No GSC ranking claim (Oct 25–27 specialty-page rows absent).
+- **Rollback:** Revert this PR's scoped HTML additions if access submission or customer intake regresses.
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
