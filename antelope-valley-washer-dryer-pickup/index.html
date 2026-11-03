@@ -17,13 +17,18 @@
 <p>Send the washer or dryer type, working condition, exact pickup city, access details and photos when available. Free pickup is qualification-based and must be confirmed.</p>
 <form action="https://formspree.io/f/mvzeapzd" method="POST">
 <input type="hidden" name="source_page" value="antelope-valley-washer-dryer-pickup">
+<input type="hidden" name="service" value="Washer and dryer pickup">
 <div class="site-request-grid">
 <div class="site-request-field"><label>Name<input type="text" name="name" required autocomplete="name"></label></div>
 <div class="site-request-field"><label>Phone<input type="tel" name="phone" required autocomplete="tel"></label></div>
 <div class="site-request-field"><label>City<input type="text" name="city" required autocomplete="address-level2"></label></div>
 <div class="site-request-field"><label>State<input type="text" name="state" value="California" required autocomplete="address-level1"></label></div>
+<div class="site-request-field"><label>Pickup Address<input type="text" name="address" required autocomplete="street-address"></label></div>
+<div class="site-request-field"><label>ZIP Code<input type="text" name="zip" required inputmode="numeric" autocomplete="postal-code"></label></div>
 <div class="site-request-field"><label>Laundry appliance<select name="appliance" required><option value="">Select</option><option>Washer</option><option>Dryer</option><option>Washer &amp; Dryer Set</option><option>Multiple Washers / Dryers</option></select></label></div>
 <div class="site-request-field"><label>Condition<select name="condition" required><option value="">Select condition</option><option>Fully working</option><option>Needs minor repair</option><option>Not working</option><option>Unknown</option><option>Mixed load - majority working</option></select></label></div>
+<div class="site-request-field"><label>Appliance Location<select name="location" required><option value="">Select location</option><option>First Floor</option><option>Second Floor</option><option>Third Floor or Higher</option><option>Basement</option><option>Garage</option><option>Outside</option><option>Other</option></select></label></div>
+<div class="site-request-field"><label>Stairs<select name="stairs" required><option value="">Select stairs</option><option>No Stairs</option><option>1 Flight</option><option>2 Flights</option><option>3+ Flights</option><option>Unknown</option></select></label></div>
 <div class="site-request-field full"><label>Access / Appliance Details<textarea name="message" rows="5" required placeholder="Floor, stairs, gates, parking, appliance condition, and photo availability."></textarea></label></div>
 <div class="site-request-field full"><button class="site-request-submit" type="submit">Submit Pickup Request</button></div>
 </div>
