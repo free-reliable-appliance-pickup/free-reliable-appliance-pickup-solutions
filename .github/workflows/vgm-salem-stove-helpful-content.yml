@@ -1,0 +1,24 @@
+name: VGM Salem Stove Helpful Content
+on:
+  pull_request:
+    paths:
+      - 'salem-stove-pickup/index.html'
+      - 'data/seo-experiments.json'
+      - 'tests/vgm-salem-stove-helpful-content.js'
+      - '.github/workflows/vgm-salem-stove-helpful-content.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'salem-stove-pickup/index.html'
+      - 'data/seo-experiments.json'
+      - 'tests/vgm-salem-stove-helpful-content.js'
+      - '.github/workflows/vgm-salem-stove-helpful-content.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node tests/vgm-salem-stove-helpful-content.js
