@@ -1,0 +1,24 @@
+name: VGM Salem Cooling Content
+on:
+  pull_request:
+    paths:
+      - 'salem-refrigerator-freezer-pickup/index.html'
+      - 'data/seo-experiments.json'
+      - 'tests/vgm-salem-cooling-content.js'
+      - '.github/workflows/vgm-salem-cooling-content.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'salem-refrigerator-freezer-pickup/index.html'
+      - 'data/seo-experiments.json'
+      - 'tests/vgm-salem-cooling-content.js'
+      - '.github/workflows/vgm-salem-cooling-content.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node tests/vgm-salem-cooling-content.js
