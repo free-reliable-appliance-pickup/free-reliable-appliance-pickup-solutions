@@ -1,0 +1,22 @@
+name: VGM Oregon Single Appliance Photo
+on:
+  pull_request:
+    paths:
+      - 'oregon-appliance-pickup/index.html'
+      - 'tests/vgm-oregon-single-photo.js'
+      - '.github/workflows/vgm-oregon-single-photo.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'oregon-appliance-pickup/index.html'
+      - 'tests/vgm-oregon-single-photo.js'
+      - '.github/workflows/vgm-oregon-single-photo.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node tests/vgm-oregon-single-photo.js
