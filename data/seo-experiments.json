@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-24",
+  "updated": "2026-11-03",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,38 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-03-salem-cooling-preparation-intent",
+      "market": "Salem, Oregon",
+      "hypothesis": "Helpful refrigerator and freezer condition, size and safe-access guidance may increase qualified Salem cooling pickup impressions without shifting general appliance pickup intent.",
+      "pagesChanged": [
+        "/salem-refrigerator-freezer-pickup/"
+      ],
+      "protectedOwner": "/salem-refrigerator-freezer-pickup/",
+      "lastChanged": "2026-11-03",
+      "baselinePeriod": {
+        "start": "2026-10-30",
+        "end": "2026-11-01"
+      },
+      "baseline": {
+        "gsc": {
+          "current": null,
+          "queries": [],
+          "limitation": "Three-day finalized free tier returned no page rows; not proof of no indexing or long-term zero impressions."
+        },
+        "sourceContent": "Existing page has a short shared cooling eligibility paragraph and a brief general preparation paragraph."
+      },
+      "change": "Replace one existing cooling content section with refrigerator/freezer-specific working-condition, photo, dimensions, preparation and safety guidance; preserve existing lead form, single inventory photo, phone, schema and canonical.",
+      "successSignals": [
+        "Compare finalized clicks and impressions for free refrigerator pickup Salem, freezer pickup Salem OR, and similar local queries after 14 complete post-deployment days.",
+        "Check Google-selected canonical with free URL Inspection and preserve general Salem appliance page intent.",
+        "Keep routing, photos and form submissions intact."
+      ],
+      "evaluateNotBefore": "2026-11-20",
+      "preferredReview": "2026-11-24",
+      "status": "running",
+      "freezeRule": "No speculative edits to the cooling page during observation. Reset review gate to deployment date plus 14 days if deployed after 2026-11-03."
+    },
     {
       "id": "2026-10-03-el-monte-city-parity",
       "market": "El Monte, CA",
