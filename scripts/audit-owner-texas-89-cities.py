@@ -11,7 +11,8 @@ class Scan(HTMLParser):
     def handle_starttag(self,tag,attrs):
         a=dict(attrs)
         if tag=="meta" and a.get("name")=="robots":self.meta.append(a.get("content",""))
-        if tag=="img" and not any(v in (a.get("src","").lower()) for v in ["logo","brand","icon"]):self.images.append(a.get("src"))
+        src=a.get("src") or ""
+        if tag=="img" and not any(v in src.lower() for v in ["logo","brand","icon"]):self.images.append(src)
         if tag=="form":self.forms+=1;self.in_form=True
         if self.in_form and tag in ("input","select","textarea") and a.get("name"):self.fields[a["name"]]=a
     def handle_endtag(self,tag):
@@ -64,7 +65,7 @@ for city in CITIES:
             if field not in scan.fields:errs.append(str(f)+": field missing "+field)
         if scan.fields.get("state",{}).get("value","").lower() not in ("tx","texas"):errs.append(str(f)+": non-TX hidden state")
         if scan.fields.get("source_page",{}).get("value","")!=f.parent.name:errs.append(str(f)+": source_page not matching slug")
-        if f.parent.name=="beaumont-appliance-pickup":errs.append(str(f)+": CA/TX collision")
+        if f'href="https://freereliableappliancepickup.com/{f.parent.name}/"' not in text:errs.append(str(f)+": self-canonical URL missing")
 print("OWNER_TEXAS_CITIES",len(CITIES),"APPLIANCE_CATEGORIES",len(TYPES),"GENERAL_PAGES_CHECKED",general_total,"SPECIALIST_PAGES_CHECKED",total,"PAGES_CHECKED",total+general_total,"MISSING",len(missing),"ERRORS",len(errs))
 for e in (missing+errs)[:80]:print("FAIL",e)
 sys.exit(1 if missing or errs or total!=356 or general_total!=89 else 0)
