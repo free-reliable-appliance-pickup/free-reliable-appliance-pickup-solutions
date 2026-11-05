@@ -174,7 +174,9 @@ jobs:
           expect('Victorville','CA','regional','partner-recruiting','Victorville Valley','909-375-6685','RECRUITING_QUEUE')
           expect('Lancaster','CA','regional','partner-recruiting','Antelope Valley','310-774-4304','RECRUITING_QUEUE')
           expect('Astoria','OR','regional','partner-recruiting','Oregon Coast','503-868-4455','RECRUITING_QUEUE')
-          expect('Dallas','TX','regional','partner-recruiting','Dallas-Fort Worth',None,'RECRUITING_QUEUE')
+          expect('Dallas','TX','regional','request-only','Dallas-Fort Worth',None,'NATIONAL_INTAKE')
+          if defaults_by_code['TX'].get('status') != 'request-only': sys.exit('Texas statewide default must be request-only')
+          if any(m.get('status') != 'request-only' for m in markets if m.get('state_code') == 'TX'): sys.exit('Texas regional queues must remain request-only')
           expect('Columbus','OH','statewide','request-only','Ohio statewide intake',None,'NATIONAL_INTAKE')
 
           partner_script=pathlib.Path('assets/partner-routing.js').read_text()
