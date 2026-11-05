@@ -51,7 +51,7 @@ require('name="Primary State"' in page and 'name="Preferred Lead Access Model"' 
         'future form field infrastructure unexpectedly deleted')
 require('href="#apply"' not in page.split('<main class="container" hidden',1)[0],
         'public navigation still links into inactive application')
-require(not re.search(r'<form[^>]+action="https://formspree.io/f/',page,re.I),
+require(not any((form.get('action') or '').startswith('https://formspree.io/f/') for form in parsed.forms),
         'public partner form still posts to shared customer inbox')
 require('data-future-form-action=' in page,
         'future activation route not retained')
