@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-04.1-tx-metro-routing",
+  "version": "2026-11-04.2-tx-secondary-regions",
   "purpose": "Structured city catalog for partner territory selection and internal routing support. This file does not create public SEO pages or imply confirmed pickup coverage.",
   "notes": [
     "The live partner application may include additional cities beyond this priority catalog.",
@@ -1219,6 +1219,13 @@
       "priority": 1
     },
     {
+      "city": "Abilene",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Abilene Area",
+      "priority": 2
+    },
+    {
       "city": "Addison",
       "state": "Texas",
       "state_code": "TX",
@@ -1237,6 +1244,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Amarillo",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Amarillo Area",
       "priority": 2
     },
     {
@@ -1324,6 +1338,20 @@
       "priority": 2
     },
     {
+      "city": "Brownsville",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
+      "city": "Bryan",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Bryan–College Station",
+      "priority": 2
+    },
+    {
       "city": "Buda",
       "state": "Texas",
       "state_code": "TX",
@@ -1394,6 +1422,13 @@
       "priority": 2
     },
     {
+      "city": "College Station",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Bryan–College Station",
+      "priority": 2
+    },
+    {
       "city": "Colleyville",
       "state": "Texas",
       "state_code": "TX",
@@ -1419,6 +1454,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Corpus Christi",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Corpus Christi Area",
       "priority": 2
     },
     {
@@ -1475,6 +1517,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Edinburg",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
       "priority": 2
     },
     {
@@ -1576,6 +1625,13 @@
       "priority": 2
     },
     {
+      "city": "Harlingen",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
       "city": "Helotes",
       "state": "Texas",
       "state_code": "TX",
@@ -1646,6 +1702,13 @@
       "priority": 2
     },
     {
+      "city": "Killeen",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Killeen–Temple",
+      "priority": 2
+    },
+    {
       "city": "Kingwood",
       "state": "Texas",
       "state_code": "TX",
@@ -1695,6 +1758,13 @@
       "priority": 2
     },
     {
+      "city": "Laredo",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Laredo Area",
+      "priority": 2
+    },
+    {
       "city": "League City",
       "state": "Texas",
       "state_code": "TX",
@@ -1737,6 +1807,20 @@
       "priority": 2
     },
     {
+      "city": "Longview",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "East Texas (Tyler–Longview)",
+      "priority": 2
+    },
+    {
+      "city": "Lubbock",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Lubbock Area",
+      "priority": 2
+    },
+    {
       "city": "Magnolia",
       "state": "Texas",
       "state_code": "TX",
@@ -1765,6 +1849,13 @@
       "priority": 2
     },
     {
+      "city": "McAllen",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
       "city": "McKinney",
       "state": "Texas",
       "state_code": "TX",
@@ -1776,6 +1867,20 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Midland",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Permian Basin",
+      "priority": 2
+    },
+    {
+      "city": "Mission",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
       "priority": 2
     },
     {
@@ -1807,6 +1912,13 @@
       "priority": 2
     },
     {
+      "city": "Odessa",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Permian Basin",
+      "priority": 2
+    },
+    {
       "city": "Pasadena",
       "state": "Texas",
       "state_code": "TX",
@@ -1828,10 +1940,24 @@
       "priority": 2
     },
     {
+      "city": "Pharr",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
       "city": "Plano",
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Port Arthur",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Beaumont–Port Arthur",
       "priority": 2
     },
     {
@@ -1902,6 +2028,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "San Angelo",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Angelo Area",
       "priority": 2
     },
     {
@@ -2010,6 +2143,13 @@
       "priority": 2
     },
     {
+      "city": "Temple",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Killeen–Temple",
+      "priority": 2
+    },
+    {
       "city": "Texas City",
       "state": "Texas",
       "state_code": "TX",
@@ -2038,6 +2178,13 @@
       "priority": 2
     },
     {
+      "city": "Tyler",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "East Texas (Tyler–Longview)",
+      "priority": 2
+    },
+    {
       "city": "Universal City",
       "state": "Texas",
       "state_code": "TX",
@@ -2045,10 +2192,24 @@
       "priority": 2
     },
     {
+      "city": "Victoria",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Victoria Area",
+      "priority": 2
+    },
+    {
       "city": "Vinton",
       "state": "Texas",
       "state_code": "TX",
       "region": "El Paso Metro",
+      "priority": 2
+    },
+    {
+      "city": "Waco",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Waco Area",
       "priority": 2
     },
     {
@@ -2077,6 +2238,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Wichita Falls",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Wichita Falls Area",
       "priority": 2
     },
     {
