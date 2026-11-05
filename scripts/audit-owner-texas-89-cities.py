@@ -27,6 +27,8 @@ for city in CITIES:
     else:
         general_total+=1
         gtext=general.read_text(encoding="utf-8");gscan=Scan();gscan.feed(gtext)
+        if "Pickup partner applications" in gtext:errs.append(str(general)+": closed partner program mislabeled as applications")
+        if f"What happens after a {city} request?" in gtext:errs.append(str(general)+": awkward city heading")
         if not gscan.meta or not any("noindex" in x for x in gscan.meta):
             errs.append(str(general)+": noindex missing on general page")
         if len(gscan.images)!=1:
@@ -54,6 +56,8 @@ for city in CITIES:
         f=next((Path(x) for x in options if Path(x).exists()),None)
         if f is None:missing.append(f"{city} {typ}");continue
         total+=1;text=f.read_text(encoding="utf-8");scan=Scan();scan.feed(text)
+        if "Pickup partner applications" in text:errs.append(str(f)+": closed partner program mislabeled as applications")
+        if f"What happens after a {city} request?" in text:errs.append(str(f)+": awkward city heading")
         if not scan.meta or not any("noindex" in x for x in scan.meta):errs.append(str(f)+": noindex missing")
         if len(scan.images)!=1:errs.append(str(f)+f": expected one real image, found {len(scan.images)}")
         if len(scan.images)==1:
