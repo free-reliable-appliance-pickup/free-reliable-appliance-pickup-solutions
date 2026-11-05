@@ -28,8 +28,17 @@ page = Path('texas-appliance-pickup/index.html').read_text(encoding='utf-8')
 parsed = Extract()
 parsed.feed(page)
 errors = []
-if re.search(r'partner|recruit', page, re.IGNORECASE):
-    errors.append('Texas customer page still contains partner or recruiting language')
+# Existing pickup partners can fulfill eligible customer requests. What is
+# inactive is recruitment/monetization, not existing operational partnerships.
+if re.search(r'\\brecruit(?:ing|ment)?\\b|join (?:the )?partner network|'
+             r'apply for [^<]*partner|partner (?:program|application|membership)|'
+             r'paid partner(?:ship)?|texas-pickup-partner-opportunity',
+             page, re.IGNORECASE):
+    errors.append('Texas customer page promotes inactive partner recruitment or monetization')
+if 'existing local pickup partners are available' not in page:
+    errors.append('Texas page lost accurate conditional existing-partner fulfillment explanation')
+if not Path('partners/index.html').is_file():
+    errors.append('Future partnership program infrastructure was unexpectedly removed')
 if len(parsed.form_actions) != 1 or parsed.form_actions[0] != 'https://formspree.io/f/mvzeapzd':
     errors.append('Texas customer form was changed or duplicated')
 if len(parsed.images) != 2:
