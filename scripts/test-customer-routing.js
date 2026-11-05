@@ -226,6 +226,7 @@ async function main(){
     ['Unknown',true],
     ['Mixed Load',true],
     ['Mixed Load - Mixed Conditions',true],
+    ['Mostly working multi-appliance load',true],
     ['Broken',true]
   ];
   for(const [condition,review] of conditionCases){
@@ -285,6 +286,12 @@ async function main(){
     select.value='Needs minor repair';
     listener.change();
     assertEqual(select.detailsLabel.child.required,true,'Repair condition requires fault details');
+    select.value='Minor repair needed';
+    listener.change();
+    assertEqual(select.detailsLabel.child.required,true,'Texas minor-repair option requires details');
+    select.value='Mostly working multi-appliance load';
+    listener.change();
+    assertEqual(select.detailsLabel.child.required,true,'Texas mixed-appliance load requires details');
   }
   checkConditionPreservation(
     ['', 'Fully working','Needs minor repair','Not working','Unknown','Mixed load - majority working'],
