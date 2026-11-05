@@ -70,6 +70,12 @@ jobs:
               if row.get('status')=='direct':
                   sys.exit(f'state defaults cannot claim statewide direct coverage: {row}')
 
+          # Owner policy: Texas is collecting customer pickup requests, NOT recruiting partners.
+          if defaults_by_code['TX']['status'] != 'request-only':
+              sys.exit('Texas statewide customer intake cannot be marked partner-recruiting')
+          if any(row.get('state_code')=='TX' and row.get('status')=='partner-recruiting' for row in markets):
+              sys.exit('Texas customer routes cannot be marked partner-recruiting')
+
           if set(defaults_by_code)!=state_codes:
               missing=sorted(state_codes-set(defaults_by_code)); extra=sorted(set(defaults_by_code)-state_codes)
               sys.exit(f'state defaults must cover exactly all 50 states; missing={missing}, extra={extra}')
@@ -174,7 +180,7 @@ jobs:
           expect('Victorville','CA','regional','partner-recruiting','Victorville Valley','909-375-6685','RECRUITING_QUEUE')
           expect('Lancaster','CA','regional','partner-recruiting','Antelope Valley','310-774-4304','RECRUITING_QUEUE')
           expect('Astoria','OR','regional','partner-recruiting','Oregon Coast','503-868-4455','RECRUITING_QUEUE')
-          expect('Dallas','TX','regional','partner-recruiting','Dallas-Fort Worth',None,'RECRUITING_QUEUE')
+          expect('Dallas','TX','regional','request-only','Dallas-Fort Worth',None,'NATIONAL_INTAKE')
           expect('Columbus','OH','statewide','request-only','Ohio statewide intake',None,'NATIONAL_INTAKE')
 
           partner_script=pathlib.Path('assets/partner-routing.js').read_text()
