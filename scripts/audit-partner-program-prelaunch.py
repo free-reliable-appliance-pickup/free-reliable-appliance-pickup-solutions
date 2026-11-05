@@ -55,7 +55,7 @@ require(not re.search(r'<form[^>]+action="https://formspree.io/f/',page,re.I),
         'public partner form still posts to shared customer inbox')
 require('data-future-form-action=' in page,
         'future activation route not retained')
-jsonld=re.search(r'<script type="application/ld\\+json">([\\s\\S]*?)</script>',page)
+jsonld=re.search(r'<script type="application/ld\+json">([\s\S]*?)</script>',page)
 if not jsonld:
     errors.append('original JSON-LD missing')
 else:
