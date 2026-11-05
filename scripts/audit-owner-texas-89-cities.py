@@ -23,7 +23,7 @@ for city in CITIES:
     general=next((Path(x) for x in [f"{s}-tx-appliance-pickup/index.html",f"{s}-appliance-pickup/index.html"] if Path(x).exists()),None)
     if general is None:errs.append(f"{city}: missing general city page")
     for typ in TYPES:
-        options=[f"{s}-{typ}-pickup/index.html",f"{s}-tx-{typ}-pickup/index.html"]
+        options=[f"{s}-tx-{typ}-pickup/index.html",f"{s}-{typ}-pickup/index.html"]
         f=next((Path(x) for x in options if Path(x).exists()),None)
         if f is None:missing.append(f"{city} {typ}");continue
         total+=1;text=f.read_text(encoding="utf-8");scan=Scan();scan.feed(text)
