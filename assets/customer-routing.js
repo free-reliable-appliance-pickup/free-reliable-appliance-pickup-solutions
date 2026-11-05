@@ -206,7 +206,7 @@ function enhancePhotoFirstIntake(){
       box.appendChild(sms);
     }
     form.insertBefore(box,form.firstChild);
-    if(!form.querySelector('[name="Photo Link"]')){
+    if(!form.querySelector('[name="Photo Link"],[name="photo_link"]')){
       const wrap=document.createElement('label');
       wrap.className='site-photo-link-field';
       wrap.textContent='Optional photo share link (Google Photos, iCloud, Dropbox, etc.)';
