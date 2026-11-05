@@ -1,4 +1,4 @@
-name: Audit Texas Partner Application CTA
+name: Audit Texas Customer Pickup Intake
 on:
   pull_request:
     paths:
@@ -21,5 +21,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Verify Texas partner CTA and preserve customer form
+      - name: Verify Texas customer pickup form and prohibit recruiting copy
         run: python3 scripts/audit-texas-partner-cta.py
