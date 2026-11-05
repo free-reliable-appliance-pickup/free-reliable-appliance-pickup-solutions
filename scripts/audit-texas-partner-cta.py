@@ -20,6 +20,7 @@ class Extract(HTMLParser):
         if tag == 'form':
             self.in_form = True
             self.form_actions.append(a.get('action', ''))
+            self.form_methods.append(a.get('method', 'get').lower())
         if tag == 'img':
             self.images.append(a.get('src', ''))
         if self.in_form and tag in {'input', 'select', 'textarea'} and a.get('name'):
@@ -49,6 +50,8 @@ if not Path('partners/index.html').is_file():
     errors.append('Future partnership program infrastructure was unexpectedly removed')
 if len(parsed.form_actions) != 1 or parsed.form_actions[0] != 'https://formspree.io/f/mvzeapzd':
     errors.append('Texas customer form was changed or duplicated')
+if parsed.form_methods != ['post']:
+    errors.append('Texas customer form must submit by POST, never expose contact data in a GET URL')
 if len(parsed.images) != 2:
     errors.append('Texas statewide page should have one logo and one real garage photo')
 if '<meta name="robots" content="index, follow' not in page:
