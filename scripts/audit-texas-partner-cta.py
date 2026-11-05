@@ -9,6 +9,7 @@ class Extract(HTMLParser):
     def __init__(self):
         super().__init__()
         self.form_actions = []
+        self.form_methods = []
         self.in_form = False
         self.images = []
         self.fields = []
