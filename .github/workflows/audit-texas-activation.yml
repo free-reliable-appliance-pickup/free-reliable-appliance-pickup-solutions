@@ -1,0 +1,43 @@
+name: Audit Texas Market Activation Readiness
+
+on:
+  pull_request:
+    paths:
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - 'data/partners.json'
+      - 'data/approved-indexable-locations.txt'
+      - 'data/approved-indexable-service-pages.txt'
+      - 'sitemap.xml'
+      - 'texas-appliance-pickup/index.html'
+      - '*-tx-appliance-pickup/index.html'
+      - 'scripts/audit-texas-activation.py'
+      - '.github/workflows/audit-texas-activation.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - 'data/partners.json'
+      - 'data/approved-indexable-locations.txt'
+      - 'data/approved-indexable-service-pages.txt'
+      - 'sitemap.xml'
+      - 'texas-appliance-pickup/index.html'
+      - '*-tx-appliance-pickup/index.html'
+      - 'scripts/audit-texas-activation.py'
+      - '.github/workflows/audit-texas-activation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Block unverified Texas page activation
+        run: python3 scripts/audit-texas-activation.py
+      - name: Publish Texas market readiness summary
+        shell: bash
+        run: python3 scripts/audit-texas-activation.py --markdown >> "$GITHUB_STEP_SUMMARY"
