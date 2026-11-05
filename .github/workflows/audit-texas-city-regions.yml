@@ -1,0 +1,30 @@
+name: Audit Texas City Region Routing
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - '*-tx-appliance-pickup/index.html'
+      - 'scripts/audit-texas-city-regions.py'
+      - '.github/workflows/audit-texas-city-regions.yml'
+  pull_request:
+    paths:
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - '*-tx-appliance-pickup/index.html'
+      - 'scripts/audit-texas-city-regions.py'
+      - '.github/workflows/audit-texas-city-regions.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check Texas city-to-region routing
+        run: python3 scripts/audit-texas-city-regions.py
