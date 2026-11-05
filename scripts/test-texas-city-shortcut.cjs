@@ -12,8 +12,10 @@ function el(x={}){return Object.assign({value:'',textContent:'',children:[],hand
 const input=el(),button=el(),list=el(),status=el(),city=el(),name=el();
 const request=el({querySelector(s){if(s==='form [name="city"]')return city;if(s==='form [name="name"]')return name;return null},scrollIntoView(){this.scrolled=true}});
 Object.assign(nodes,{'texas-quick-city':input,'texas-quick-continue':button,'texas-city-suggestions':list,'texas-quick-status':status,'request':request});
-const priorityNames=[...html.matchAll(/<li><a href="#request" data-texas-priority-city="([^"]+)">\\1<\\/a><\\/li>/g)].map(x=>x[1]);
-assert.deepEqual(priorityNames,["Houston","San Antonio","Dallas","Fort Worth","Austin","El Paso","Arlington","Corpus Christi","Plano","Lubbock","Laredo","Irving","Garland","Frisco","McKinney","Grand Prairie","Amarillo","Brownsville","Denton","Killeen"],'2025 Texas population order');
+const priorityTags=[...html.matchAll(/<li><a href="#request" data-texas-priority-city="([^"]+)">([^<]+)<\/a><\/li>/g)];
+assert(priorityTags.every(m=>m[1]===m[2]),'visible Texas city labels match link data');
+const priorityNames=priorityTags.map(x=>x[1]);
+assert.deepEqual(priorityNames,["Houston","San Antonio","Dallas","Fort Worth","Austin","El Paso","Arlington","Corpus Christi","Plano","Lubbock","Laredo","Irving","Garland","Frisco","Grand Prairie","McKinney","Amarillo","Brownsville","Denton","Killeen"],'requested Texas market priority order');
 const priorityLinks=priorityNames.map(name=>el({getAttribute(key){return key==='data-texas-priority-city'?name:null}}));
 const document={
  readyState:'complete',getElementById(id){return nodes[id]||null},
@@ -48,6 +50,6 @@ vm.runInNewContext(fs.readFileSync('assets/texas-city-shortcut.js','utf8'),ctx);
  assert.equal(input.value,'Corpus Christi','chosen priority city is visible in quick city input');
  priorityLinks[19].handlers.click({preventDefault(){}});
  assert.equal(city.value,'Killeen','last priority city also works');
- assert.equal((html.match(/<img\\b/gi)||[]).length,2,'only brand logo and one garage photo');
+ assert.equal((html.match(/<img\b/gi)||[]).length,2,'only brand logo and one garage photo');
  console.log('PASS: Texas quick-city shortcut, 148 suggestions, unlisted cities, form preservation');
 })().catch(e=>{console.error(e);process.exit(1)});
