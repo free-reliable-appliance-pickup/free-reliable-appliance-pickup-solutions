@@ -115,6 +115,12 @@ async function main(){
     ['Victoria','TX','partner-recruiting','Victoria Area','regional',null],
     ['Waco','TX','partner-recruiting','Waco Area','regional',null],
     ['Wichita Falls','TX','partner-recruiting','Wichita Falls Area','regional',null],
+    ['Beaumont','TX','partner-recruiting','Beaumont–Port Arthur','regional',null],
+    ['Grapevine','TX','partner-recruiting','Dallas-Fort Worth','regional',null],
+    ['Huntsville','TX','partner-recruiting','Huntsville Area','regional',null],
+    ['Princeton','TX','partner-recruiting','Dallas-Fort Worth','regional',null],
+    ['Sherman','TX','partner-recruiting','Sherman–Denison Area','regional',null],
+    ['Weslaco','TX','partner-recruiting','Rio Grande Valley','regional',null],
     ['Unknown Texas Township','TX','partner-recruiting','Texas statewide intake','statewide',null],
     ['Columbus','OH','request-only','Ohio statewide intake','statewide',null]
   ];
