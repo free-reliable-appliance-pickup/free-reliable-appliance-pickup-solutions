@@ -30,7 +30,7 @@ parsed.feed(page)
 errors = []
 # Existing pickup partners can fulfill eligible customer requests. What is
 # inactive is recruitment/monetization, not existing operational partnerships.
-if re.search(r'\\brecruit(?:ing|ment)?\\b|join (?:the )?partner network|'
+if re.search(r'\brecruit(?:ing|ment)?\b|join (?:the )?partner network|'
              r'apply for [^<]*partner|partner (?:program|application|membership)|'
              r'paid partner(?:ship)?|texas-pickup-partner-opportunity',
              page, re.IGNORECASE):
