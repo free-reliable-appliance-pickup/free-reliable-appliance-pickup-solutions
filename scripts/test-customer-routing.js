@@ -83,6 +83,15 @@ async function main(){
     ['Fresno','CA','buyer-review','Central Valley','priority-california-city','310-774-4304'],
     ['Phoenix Metro','AZ','partner-recruiting','Phoenix Metro','regional','602-726-7552'],
     ['Las Vegas Valley','NV','partner-recruiting','Las Vegas Valley','regional',null],
+    ['Katy','TX','partner-recruiting','Houston Metro','regional',null],
+    ['Pearland','TX','partner-recruiting','Houston Metro','regional',null],
+    ['Frisco','TX','partner-recruiting','Dallas-Fort Worth','regional',null],
+    ['McKinney','TX','partner-recruiting','Dallas-Fort Worth','regional',null],
+    ['Cedar Park','TX','partner-recruiting','Austin Metro','regional',null],
+    ['Schertz','TX','partner-recruiting','San Antonio Metro','regional',null],
+    ['Socorro','TX','partner-recruiting','El Paso Metro','regional',null],
+    ['El Paso','TX','partner-recruiting','El Paso Metro','regional',null],
+    ['Lubbock','TX','partner-recruiting','Texas statewide intake','statewide',null],
     ['Columbus','OH','request-only','Ohio statewide intake','statewide',null]
   ];
 
