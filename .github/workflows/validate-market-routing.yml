@@ -70,6 +70,12 @@ jobs:
               if row.get('status')=='direct':
                   sys.exit(f'state defaults cannot claim statewide direct coverage: {row}')
 
+          # Owner policy: Texas accepts customer pickup requests, not partner recruiting.
+          if defaults_by_code['TX']['status'] != 'request-only':
+              sys.exit('Texas statewide customer intake cannot be marked partner-recruiting')
+          if any(row.get('state_code')=='TX' and row.get('status')=='partner-recruiting' for row in markets):
+              sys.exit('Texas customer routes cannot be marked partner-recruiting')
+
           if set(defaults_by_code)!=state_codes:
               missing=sorted(state_codes-set(defaults_by_code)); extra=sorted(set(defaults_by_code)-state_codes)
               sys.exit(f'state defaults must cover exactly all 50 states; missing={missing}, extra={extra}')
@@ -174,7 +180,7 @@ jobs:
           expect('Victorville','CA','regional','partner-recruiting','Victorville Valley','909-375-6685','RECRUITING_QUEUE')
           expect('Lancaster','CA','regional','partner-recruiting','Antelope Valley','310-774-4304','RECRUITING_QUEUE')
           expect('Astoria','OR','regional','partner-recruiting','Oregon Coast','503-868-4455','RECRUITING_QUEUE')
-          expect('Dallas','TX','regional','partner-recruiting','Dallas-Fort Worth',None,'RECRUITING_QUEUE')
+          expect('Dallas','TX','regional','request-only','Dallas-Fort Worth',None,'NATIONAL_INTAKE')
           expect('Columbus','OH','statewide','request-only','Ohio statewide intake',None,'NATIONAL_INTAKE')
 
           partner_script=pathlib.Path('assets/partner-routing.js').read_text()
@@ -192,16 +198,30 @@ jobs:
           for token in required_partner_tokens:
               if token not in partner_script: sys.exit(f'partner routing safeguard missing required token: {token}')
 
-          if 'assets/partner-routing.js' not in partner_page and '../assets/partner-routing.js' not in partner_page:
-              sys.exit('partner page must load assets/partner-routing.js')
-          if 'assets/customer-routing.js' in partner_page or '../assets/customer-routing.js' in partner_page:
-              sys.exit('partner page must not load customer-routing.js')
-          if 'automaticCityPageCreation' in partner_page:
-              sys.exit('partner page must not contain city-page generation controls')
-
-          required_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','id="territorySummary"']
-          for token in required_matching_fields:
-              if token not in partner_page: sys.exit(f'partner capability matching field missing: {token}')
+          # Operational partner routing remains preserved for future launch.
+          # During an owner-authorized application pause, the public page MUST
+          # not expose a form or load the application behavior.
+          # Owner policy: the application pause must not be toggled by changing page markup.
+          if 'data-partner-applications="closed"' not in partner_page:
+              sys.exit('policy violation: public partner applications must remain closed')
+          paused=True
+          if paused:
+              for marker in ['Partner Program Status','New partner applications are currently closed.','id="apply"','id="territories"','id="lead-access"','href="/service-areas/"']:
+                  if marker not in partner_page: sys.exit(f'paused partner page missing required status marker: {marker}')
+              if '<form' in partner_page.lower(): sys.exit('paused partner page must not expose a partner application form')
+              if 'partner-routing.js' in partner_page: sys.exit('paused partner page must not load application routing')
+              if 'assets/customer-routing.js' in partner_page: sys.exit('paused partner page must not load customer routing')
+              if 'automaticCityPageCreation' in partner_page: sys.exit('paused partner page must not expose automatic city page controls')
+          else:
+              if 'assets/partner-routing.js' not in partner_page and '../assets/partner-routing.js' not in partner_page:
+                  sys.exit('active partner page must load assets/partner-routing.js')
+              if 'assets/customer-routing.js' in partner_page or '../assets/customer-routing.js' in partner_page:
+                  sys.exit('active partner page must not load customer-routing.js')
+              if 'automaticCityPageCreation' in partner_page:
+                  sys.exit('active partner page must not contain city-page generation controls')
+              required_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','id="territorySummary"']
+              for token in required_matching_fields:
+                  if token not in partner_page: sys.exit(f'active partner capability matching field missing: {token}')
           for token in ['publicLabel(market)','classifySelection();']:
               if token not in partner_script: sys.exit(f'partner territory status display missing: {token}')
 

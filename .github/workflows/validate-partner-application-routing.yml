@@ -20,20 +20,44 @@ jobs:
       - name: Protect partner application decisions
         run: |
           python - <<'PY'
-          import pathlib, sys
+          import pathlib, re, sys
           script=pathlib.Path('assets/partner-routing.js').read_text()
           page=pathlib.Path('partners/index.html').read_text()
           required=['DIRECT_OVERFLOW_CANDIDATE','ASSIGNED_MARKET_WAITLIST','RECRUITING_PRIORITY','FUTURE_MARKET','Partner Application Decisions','Partner Application Decision','Partner Application Next Action','applicationDecision','window.FreeReliablePartnerRouting','does not establish coverage or create an SEO page','PRIMARY_TERRITORY_CANDIDATE','FAST_SHARED_LEAD_CANDIDATE','TERRITORY_INTEREST','SHARED_LEAD_INTEREST','Partner Preference Tier','Partner Routing Score','Shared Lead Interest','Exclusive Territory Interest','Partner Routing Summary','preferenceProfile','Partner Capability Profile','Difficult Access Fit','Refrigeration Route Fit','Property Manager Route Fit','operatorType','conditionPreference','crewSize','maxStairs','storageCapacity','notificationPreference','refrigerationCapability','commercialCapability']
           for token in required:
               if token not in script: sys.exit(f'missing partner routing safeguard: {token}')
-          if 'assets/partner-routing.js' not in page and '../assets/partner-routing.js' not in page: sys.exit('partner page must load partner-routing.js')
-          if 'assets/customer-routing.js' in page or '../assets/customer-routing.js' in page: sys.exit('partner page must not load customer-routing.js')
-          if 'automaticCityPageCreation' in page: sys.exit('partner page must not contain automatic city-page controls')
-          competitor_fields=['Preferred Lead Access Model','Shared lead alerts','Exclusive or priority territory interest','Typical Response Time','Within 15 minutes','lead-access and territory options are currently application preferences','Any paid feature requires separate disclosure and agreement.']
-          for token in competitor_fields:
-              if token not in page: sys.exit(f'missing competitor-inspired partner field or disclosure: {token}')
-          core_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','Selected Cities','Operator Business Type','Condition Preference','Crew Capability','Maximum Stairs Floors','Storage Refurbishment Capacity','Preferred Notification Method','Refrigeration Freezer Capability','Property Manager Commercial Capability','What a Matched Pickup Request Can Include','Contact details remain controlled until the request is assigned through the network.']
-          for token in core_matching_fields:
-              if token not in page: sys.exit(f'missing partner matching field: {token}')
+          # Owner policy: new partner applications remain closed until a separately approved change.
+          if 'data-partner-applications="closed"' not in page:
+              sys.exit('policy violation: public partner applications must remain closed')
+          paused=True
+          if paused:
+              # Maintain routing infrastructure for future activation while
+              # strictly forbidding any public application during the pause.
+              required_status=['Partner Program Status','New partner applications are currently closed.','id="apply"','id="territories"','id="lead-access"','href="/service-areas/"','href="/free-pickup-qualification/']
+              for token in required_status:
+                  if token not in page: sys.exit(f'paused partner status missing: {token}')
+              if 'not offering paid partner memberships, lead purchases or territory subscriptions' not in page:
+                  sys.exit('paused partner page missing no-paid-access disclosure')
+              if re.search(r'\b(?:purchase|buy|order|subscribe for)\s+(?:paid\s+)?(?:lead access|leads|partner access|territory)', page, re.I):
+                  sys.exit('paused partner page advertises paid access')
+              if '<form' in page.lower(): sys.exit('paused partner page contains an application form')
+              # Inactive partner program must not link to registration destinations.
+              hrefs=re.findall(r'''href\s*=\s*["']([^"']+)["']''', page, flags=re.I)
+              blocked=r'partner[-_/]?(?:signup|sign-up|apply|application|register)|(?:join|become)[-_/]?(?:a[-_/]?)?partner'
+              if any(re.search(blocked, href, flags=re.I) for href in hrefs):
+                  sys.exit('paused partner page links to an application destination')
+              if 'partner-routing.js' in page: sys.exit('paused partner page loads application JavaScript')
+              if 'assets/customer-routing.js' in page: sys.exit('paused partner page must not load customer routing')
+              if 'automaticCityPageCreation' in page: sys.exit('paused partner page must not offer city-page controls')
+          else:
+              if 'assets/partner-routing.js' not in page and '../assets/partner-routing.js' not in page: sys.exit('active partner page must load partner-routing.js')
+              if 'assets/customer-routing.js' in page or '../assets/customer-routing.js' in page: sys.exit('active partner page must not load customer-routing.js')
+              if 'automaticCityPageCreation' in page: sys.exit('active partner page must not contain automatic city-page controls')
+              competitor_fields=['Preferred Lead Access Model','Shared lead alerts','Exclusive or priority territory interest','Typical Response Time','Within 15 minutes','lead-access and territory options are currently application preferences','Any paid feature requires separate disclosure and agreement.']
+              for token in competitor_fields:
+                  if token not in page: sys.exit(f'missing active partner field or disclosure: {token}')
+              core_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','Selected Cities','Operator Business Type','Condition Preference','Crew Capability','Maximum Stairs Floors','Storage Refurbishment Capacity','Preferred Notification Method','Refrigeration Freezer Capability','Property Manager Commercial Capability','What a Matched Pickup Request Can Include','Contact details remain controlled until the request is assigned through the network.']
+              for token in core_matching_fields:
+                  if token not in page: sys.exit(f'missing active partner matching field: {token}')
           print('PASS: partner application decisions, capability matching, preference scoring, lead-access choices and SEO-safety safeguards are protected')
           PY

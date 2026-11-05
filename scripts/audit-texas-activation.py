@@ -145,9 +145,9 @@ def collect():
         texas_pages[page_slug] = {"noindex": noindex, "in_sitemap": in_sitemap}
 
     expected_regions = {r for r in markets}
-    if len(catalog) != 148:
+    if len(catalog) != 154:
         errors.append(f"Texas city catalog changed to {len(catalog)}: review mapping and update baseline")
-    if len(expected_regions) != 20:
+    if len(expected_regions) != 22:
         errors.append(f"Texas regional queues changed to {len(expected_regions)}: review mapping and update baseline")
     missing_regions = {row.get("region") for row in catalog.values()} - expected_regions
     for region in sorted(missing_regions):
