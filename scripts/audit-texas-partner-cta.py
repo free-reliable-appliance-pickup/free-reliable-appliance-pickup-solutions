@@ -38,7 +38,7 @@ if '<meta name="robots" content="index, follow' not in page:
     errors.append('Texas statewide index directive was changed')
 if '<link rel="canonical" href="https://freereliableappliancepickup.com/texas-appliance-pickup/">' not in page:
     errors.append('Texas statewide canonical URL changed')
-if 'Texas Appliance Pickup | Eligibility Review' not in page:
+if 'Free Appliance Pickup Texas | Request Eligibility Review' not in page:
     errors.append('Texas title must describe customer eligibility rather than recruiting')
 if not ('id="texas-city-shortcut"' in page and 'id="request"' in page
         and page.index('id="texas-city-shortcut"') < page.index('id="request"')):
