@@ -115,6 +115,12 @@ async function main(){
     ['Victoria','TX','request-only','Victoria Area','regional',null],
     ['Waco','TX','request-only','Waco Area','regional',null],
     ['Wichita Falls','TX','request-only','Wichita Falls Area','regional',null],
+    ['Beaumont','TX','request-only','Beaumont–Port Arthur','regional',null],
+    ['Grapevine','TX','request-only','Dallas-Fort Worth','regional',null],
+    ['Huntsville','TX','request-only','Huntsville Area','regional',null],
+    ['Princeton','TX','request-only','Dallas-Fort Worth','regional',null],
+    ['Sherman','TX','request-only','Sherman–Denison Area','regional',null],
+    ['Weslaco','TX','request-only','Rio Grande Valley','regional',null],
     ['Unknown Texas Township','TX','request-only','Texas statewide intake','statewide',null],
     ['Columbus','OH','request-only','Ohio statewide intake','statewide',null]
   ];
@@ -153,14 +159,14 @@ async function main(){
   assertEqual(api.classify('Rancho Cucamonga','CA').status,'partner-recruiting','Test fixture leaves existing state unchanged');
   console.log('PASS: synthetic California city assignment cannot be shadowed by priority fallback');
 
-  // Texas inquiry forms must never route customer pickup requests as partner recruitment.
-  for(const sampleCity of ['Houston','Dallas','Austin','San Antonio','El Paso','Bryan','Unknown Texas Township']){
-    const info=api.classify(sampleCity,'TX'),decision=api.routingDecision(info);
-    assertEqual(info.status,'request-only',sampleCity+' Texas inquiry status');
-    assertEqual(decision.decision,'NATIONAL_INTAKE',sampleCity+' Texas inquiry routing');
-    assertEqual(decision.action.includes('recruit'),false,sampleCity+' Texas customer routing does not say recruiting');
+  // Texas customer appliance pickup requests are intake reviews, never recruiting leads.
+  for(const city of ['Houston','Dallas','Austin','San Antonio','El Paso','Bryan','Weslaco','Unknown Texas Township']){
+    const info=api.classify(city,'TX'),decision=api.routingDecision(info);
+    assertEqual(info.status,'request-only',city+' TX request-only intake');
+    assertEqual(decision.decision,'NATIONAL_INTAKE',city+' TX does not route as recruitment');
+    assertEqual(decision.action.includes('recruit'),false,city+' TX form has no recruiting action');
   }
-  console.log('PASS: Texas customer intake has no recruiting status or routing decision');
+  console.log('PASS: Texas city pickup intake stays out of recruitment queue');
 
   const laDecision=api.routingDecision(api.classify('Los Angeles County','CA'));
   assertEqual(laDecision.decision,'RECRUITING_QUEUE','Los Angeles County decision');
@@ -187,6 +193,27 @@ async function main(){
       appendChild(node){this.nodes[node.name]=node;return node;}
     };
   }
+  // Partner recruitment is an internal market catalog state, never a customer-form label.
+  // Preserve route phones/regions while ensuring the submitted Formspree fields reflect pickup review.
+  for(const [city,state] of [
+    ['Rancho Cucamonga','CA'],['Phoenix','AZ'],['Vancouver','WA'],['Austin','TX'],
+    ['Portland','OR'],['Denver','CO']
+  ]){
+    const intake=mockForm({city,state,appliance:'Washer',condition:'Fully Working'});
+    api.qualify(intake);
+    const actualStatus=api.classify(city,state).status;
+    if(actualStatus==='partner-recruiting'){
+      assertEqual(intake.nodes['Routing Market Status'].value,'request-only',city+' submitted market status');
+      assertEqual(intake.nodes['Routing Decision'].value,'NATIONAL_INTAKE',city+' submitted customer decision');
+    }else{
+      assertEqual(intake.nodes['Routing Market Status'].value,actualStatus,city+' keeps verified routing status');
+    }
+    for(const name of ['Routing Market Status','Routing Decision','Routing Network Tier','Routing Next Action']){
+      assertEqual(/recruit/i.test(String(intake.nodes[name].value)),false,city+' no recruiting text in '+name);
+    }
+  }
+  console.log('PASS: customer appliance pickup forms never submit recruiting labels, even where internal recruiting state remains');
+
   // Forms across markets submit different labels for non-fully-working appliances.
   // Every reported problem must receive the explicit partner-review gate.
   const conditionCases=[
@@ -272,7 +299,7 @@ async function main(){
   assertEqual(legacy.nodes.source_page.value,'victorville-appliance-pickup','Legacy form gains page source');
   assertEqual(legacy.nodes['Routing Region'].value,'Victorville Valley','Legacy California region');
   assertEqual(legacy.nodes['Routing Phone'].value,'909-375-6685','Legacy California phone');
-  assertEqual(legacy.nodes['Routing Decision'].value,'RECRUITING_QUEUE','Legacy request never promises service');
+  assertEqual(legacy.nodes['Routing Decision'].value,'NATIONAL_INTAKE','Legacy request never promises service');
   assertEqual(legacy.nodes['Qualification Snapshot'].value,'Washer and dryer | Fully Working','Legacy plural appliances captured');
   global.location.pathname='/fontana-appliance-pickup/';
   const existing=mockForm({city:'Fontana',state:'California',appliance:'Refrigerator',condition:'Fully Working',source_page:'original-campaign-source'});
@@ -288,7 +315,7 @@ async function main(){
   assertEqual(missingCity.nodes.source_page.value,'alhambra-washer-dryer-pickup','City-less source captured');
   api.qualify(missingCity);
   assertEqual(missingCity.nodes['Routing Phone'].value,'909-375-6685','Alhambra partner-recruiting phone');
-  assertEqual(missingCity.nodes['Routing Decision'].value,'RECRUITING_QUEUE','No pickup promise from inferred city');
+  assertEqual(missingCity.nodes['Routing Decision'].value,'NATIONAL_INTAKE','No pickup promise from inferred city');
 
   global.location.pathname='/bell-washer-dryer-pickup/';
   const bell=mockForm({state:'CA',appliances:'Washer and dryer',condition:'Unknown'});
@@ -306,7 +333,7 @@ async function main(){
     api.qualify(form);
     assertEqual(form.nodes['Routing Phone'].value,'909-375-6685',city+' laundry request routes to 909');
     assertEqual(form.nodes.source_page.value,slug+'-washer-dryer-pickup',city+' original source preserved');
-    assertEqual(form.nodes['Routing Decision'].value,'RECRUITING_QUEUE',city+' does not promise pickup');
+    assertEqual(form.nodes['Routing Decision'].value,'NATIONAL_INTAKE',city+' does not promise pickup');
   }
 
   // Vancouver's live request form must expose the fields required for
@@ -330,7 +357,7 @@ async function main(){
   api.qualify(vancouver);
   assertEqual(vancouver.nodes['Routing Region'].value,'Clark County','Vancouver route uses Clark County');
   assertEqual(vancouver.nodes['Routing Phone'].value,'503-868-4455','Vancouver route uses Washington contact');
-  assertEqual(vancouver.nodes['Routing Decision'].value,'RECRUITING_QUEUE','Do not promise assigned partner before verification');
+  assertEqual(vancouver.nodes['Routing Decision'].value,'NATIONAL_INTAKE','Do not promise assigned partner before verification');
   assertEqual(vancouver.nodes.source_page.value,'vancouver-appliance-pickup','Vancouver request attribution');
   assertEqual(vancouver.nodes['Dispatch Condition Gate'].value,'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH','Mixed Vancouver load needs review');
   console.log('PASS: Vancouver form fields, Clark County routing and mixed-load gate');
