@@ -42,6 +42,18 @@ At snapshot `369107186f31cf86f454bddf3b80f58f31b96787`, the GitHub PR API listed
 
 **Review procedure:** Independent reviewer should open the entire file for each of the 24 paths above, compare it against the `main` counterpart when present, and inspect the 199 other changed files in the PR. Fetch whole contents for any other truncated or minified patch rather than marking it reviewed. The absence of a patch does **not** mean the file was unchanged.
 
+## Review-size gate and patch-coverage changes after this snapshot
+
+The existing trusted `vgm-independent-multi-ai.yml` reviewer implementation (see issue #705) accepts **at most 15 eligible changed files and 18,000 patch characters**. The integrated Texas PR is far larger: **223 source files with ~2.37 million characters of available GitHub patch text** at the code snapshot, and **224 paths after adding this handoff**. Consequently **adding an OpenRouter free API key alone cannot provide complete coverage** for this PR. It would be misleading to mark a partial model response as independent approval.
+
+The next full patch retrieval (after the docs commit) again omitted **24** paths, but the selection was not identical to the original 24. Two *additional* HTML paths absent from that latest full diff were directly retrieved and checked for correct TX source, noindex, one Formspree form and image, no recruiting copy:
+- [`huntsville-tx-appliance-pickup/index.html`](https://github.com/free-reliable-appliance-pickup/free-reliable-appliance-pickup-solutions/blob/821ac0473a0a630994544f24912cb992adeb758d/huntsville-tx-appliance-pickup/index.html)
+- [`temple-refrigerator-pickup/index.html`](https://github.com/free-reliable-appliance-pickup/free-reliable-appliance-pickup-solutions/blob/821ac0473a0a630994544f24912cb992adeb758d/temple-refrigerator-pickup/index.html)
+
+**The union of known omitted paths is therefore 26** across the two snapshots. Reviewer must **re-fetch the full changed-file list on the exact final head** and open any file whose patch is missing or truncated; the 26-path history is *not* an exhaustive guarantee for later commits. Our checks were only structural, not genuine third-party review.
+
+A no-subscription independent-review route may be available for this **public** repository via CodeRabbit's open-source GitHub App (official offer: https://www.coderabbit.ai/oss), subject to rate limits, installation permissions and external-access/privacy considerations. **The repository owner must choose and authorize a third-party GitHub App**, or obtain a genuinely independent human reviewer. A third-party bot review does not silently replace the current required check: policy owner must approve the alternate review procedure, and the reviewer must explicitly cover the complete change and record findings. Do not claim it has been installed or reviewed.
+
 ## Mandatory checks for independent reviewer (record actual observations)
 
 1. **Source and security:** inspect `texas-appliance-pickup/index.html`, `assets/customer-routing.js`, `assets/texas-city-shortcut.js`, `data/market-routing.json`, plus form/audit scripts, every changed page and 24 patch-omitted paths. No external payloads or secret values committed; Formspree action and source tracking stable.
