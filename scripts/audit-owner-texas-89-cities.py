@@ -17,11 +17,37 @@ class Scan(HTMLParser):
     def handle_endtag(self,tag):
         if tag=="form":self.in_form=False
 def slug(s):return re.sub(r"[^a-z0-9]+","-",s.lower()).strip("-")
-errs=[];missing=[];total=0
+errs=[];missing=[];total=0;general_total=0
 for city in CITIES:
     s=slug(city)
     general=next((Path(x) for x in [f"{s}-tx-appliance-pickup/index.html",f"{s}-appliance-pickup/index.html"] if Path(x).exists()),None)
-    if general is None:errs.append(f"{city}: missing general city page")
+    if general is None:
+        errs.append(f"{city}: missing general city page")
+    else:
+        general_total+=1
+        gtext=general.read_text(encoding="utf-8");gscan=Scan();gscan.feed(gtext)
+        if not gscan.meta or not any("noindex" in x for x in gscan.meta):
+            errs.append(str(general)+": noindex missing on general page")
+        if len(gscan.images)!=1:
+            errs.append(str(general)+f": expected one real image, found {len(gscan.images)}")
+        if len(gscan.images)==1:
+            src=gscan.images[0].split("?")[0]
+            if not src.startswith("/") or not Path(src[1:]).is_file():
+                errs.append(str(general)+": general page image missing "+src)
+        if gscan.forms!=1 or "formspree.io/f/mvzeapzd" not in gtext:
+            errs.append(str(general)+": general page form mismatch")
+        if "customer-routing.js" not in gtext:
+            errs.append(str(general)+": shared routing missing on general page")
+        for field in ("name","phone","address","city","zip","appliance","condition","floor","stairs","photos_available","state","source_page"):
+            if field not in gscan.fields:
+                errs.append(str(general)+": general page field missing "+field)
+        if gscan.fields.get("state",{}).get("value","").lower() not in ("tx","texas"):
+            errs.append(str(general)+": non-TX state in general page")
+        if gscan.fields.get("source_page",{}).get("value","")!=general.parent.name:
+            errs.append(str(general)+": source_page not matching general page slug")
+        if f'href="https://freereliableappliancepickup.com/{general.parent.name}/"' not in gtext:
+            errs.append(str(general)+": self-canonical URL missing")
+
     for typ in TYPES:
         options=[f"{s}-tx-{typ}-pickup/index.html",f"{s}-{typ}-pickup/index.html"]
         f=next((Path(x) for x in options if Path(x).exists()),None)
@@ -39,6 +65,6 @@ for city in CITIES:
         if scan.fields.get("state",{}).get("value","").lower() not in ("tx","texas"):errs.append(str(f)+": non-TX hidden state")
         if scan.fields.get("source_page",{}).get("value","")!=f.parent.name:errs.append(str(f)+": source_page not matching slug")
         if f.parent.name=="beaumont-appliance-pickup":errs.append(str(f)+": CA/TX collision")
-print("OWNER_TEXAS_CITIES",len(CITIES),"APPLIANCE_CATEGORIES",len(TYPES),"PAGES_CHECKED",total,"MISSING",len(missing),"ERRORS",len(errs))
+print("OWNER_TEXAS_CITIES",len(CITIES),"APPLIANCE_CATEGORIES",len(TYPES),"GENERAL_PAGES_CHECKED",general_total,"SPECIALIST_PAGES_CHECKED",total,"PAGES_CHECKED",total+general_total,"MISSING",len(missing),"ERRORS",len(errs))
 for e in (missing+errs)[:80]:print("FAIL",e)
-sys.exit(1 if missing or errs or total!=356 else 0)
+sys.exit(1 if missing or errs or total!=356 or general_total!=89 else 0)
