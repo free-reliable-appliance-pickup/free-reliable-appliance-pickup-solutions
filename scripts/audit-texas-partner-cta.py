@@ -9,6 +9,7 @@ class Extract(HTMLParser):
     def __init__(self):
         super().__init__()
         self.form_actions = []
+        self.in_form = False
         self.images = []
         self.fields = []
         self.links = []
@@ -16,13 +17,18 @@ class Extract(HTMLParser):
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         if tag == 'form':
+            self.in_form = True
             self.form_actions.append(a.get('action', ''))
         if tag == 'img':
             self.images.append(a.get('src', ''))
-        if tag in {'input', 'select', 'textarea'} and a.get('name'):
+        if self.in_form and tag in {'input', 'select', 'textarea'} and a.get('name'):
             self.fields.append((a['name'], a.get('value', '')))
         if tag == 'a':
             self.links.append(a.get('href', ''))
+
+    def handle_endtag(self, tag):
+        if tag == 'form':
+            self.in_form = False
 
 page = Path('texas-appliance-pickup/index.html').read_text(encoding='utf-8')
 parsed = Extract()
@@ -32,7 +38,8 @@ errors = []
 # inactive is recruitment/monetization, not existing operational partnerships.
 if re.search(r'\brecruit(?:ing|ment)?\b|join (?:the )?partner network|'
              r'apply for [^<]*partner|partner (?:program|application|membership)|'
-             r'paid partner(?:ship)?|texas-pickup-partner-opportunity',
+             r'paid partner(?:ship)?|texas-pickup-partner-opportunity|'
+             r'become (?:a |an )?(?:pickup )?partner|sign ?up (?:as )?(?:a |an )?partner',
              page, re.IGNORECASE):
     errors.append('Texas customer page promotes inactive partner recruitment or monetization')
 if 'existing local pickup partners are available' not in page:
@@ -60,7 +67,8 @@ if fields.get('state') != 'TX':
     errors.append('Pickup form state changed')
 if fields.get('source_page') != 'texas-appliance-pickup':
     errors.append('Pickup form source attribution changed')
-if any('/partners/' in href for href in parsed.links):
+if any(re.search(r'/partners/|partner[-_/]?(?:signup|application|apply|register)', href, re.IGNORECASE)
+       for href in parsed.links):
     errors.append('Texas customer form links to a partner application')
 
 print('TEXAS_CUSTOMER_INTAKE_ERRORS', len(errors))
