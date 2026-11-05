@@ -4,11 +4,13 @@ on:
   pull_request:
     paths:
       - 'partners/index.html'
+      - 'assets/partner-program-prelaunch.js'
       - 'scripts/audit-partner-program-prelaunch.py'
       - '.github/workflows/audit-partner-program-prelaunch.yml'
   push:
     paths:
       - 'partners/index.html'
+      - 'assets/partner-program-prelaunch.js'
       - 'scripts/audit-partner-program-prelaunch.py'
       - '.github/workflows/audit-partner-program-prelaunch.yml'
 
