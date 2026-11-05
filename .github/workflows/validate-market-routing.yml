@@ -201,7 +201,10 @@ jobs:
           # Operational partner routing remains preserved for future launch.
           # During an owner-authorized application pause, the public page MUST
           # not expose a form or load the application behavior.
-          paused='data-partner-applications="closed"' in partner_page
+          # Owner policy: the application pause must not be toggled by changing page markup.
+          if 'data-partner-applications="closed"' not in partner_page:
+              sys.exit('policy violation: public partner applications must remain closed')
+          paused=True
           if paused:
               for marker in ['Partner Program Status','New partner applications are currently closed.','id="apply"','id="territories"','id="lead-access"','href="/service-areas/"']:
                   if marker not in partner_page: sys.exit(f'paused partner page missing required status marker: {marker}')
