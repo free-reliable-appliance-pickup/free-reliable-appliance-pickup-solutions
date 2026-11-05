@@ -1,0 +1,24 @@
+name: Audit Future-Only Partner Program
+
+on:
+  pull_request:
+    paths:
+      - 'partners/index.html'
+      - 'scripts/audit-partner-program-prelaunch.py'
+      - '.github/workflows/audit-partner-program-prelaunch.yml'
+  push:
+    paths:
+      - 'partners/index.html'
+      - 'scripts/audit-partner-program-prelaunch.py'
+      - '.github/workflows/audit-partner-program-prelaunch.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce partner prelaunch safety and preserve future program
+        run: python3 scripts/audit-partner-program-prelaunch.py
