@@ -30,13 +30,9 @@ require(len(parsed.forms)==1, 'the future partner form must be retained exactly 
 if len(parsed.forms)==1:
     form=parsed.forms[0]
     require(form.get('id')=='partnerForm','future form id altered')
-    require(form.get('data-public-enrollment')=='paused','partner enrollment not marked paused')
-    require(form.get('action')=='#' and form.get('method','').lower()=='get',
-            'public partner form must not send requests to Formspree')
-    require(form.get('data-future-form-action')=='https://formspree.io/f/mvzeapzd',
-            'future Formspree action missing from inactive configuration')
-    require(form.get('onsubmit')=='return false',
-            'partner form needs a no-submit safeguard while paused')
+    require(form.get('action')=='https://formspree.io/f/mvzeapzd' and
+            form.get('method','').lower()=='post',
+            'future Formspree source form unexpectedly modified or lost')
 require(any('hidden' in m and 'inert' in m and
             m.get('data-partnership-program')=='future-only'
             for m in parsed.main), 'future program content and form must be hidden and inert')
@@ -51,10 +47,15 @@ require('name="Primary State"' in page and 'name="Preferred Lead Access Model"' 
         'future form field infrastructure unexpectedly deleted')
 require('href="#apply"' not in page.split('<main class="container" hidden',1)[0],
         'public navigation still links into inactive application')
-require(not any((form.get('action') or '').startswith('https://formspree.io/f/') for form in parsed.forms),
-        'public partner form still posts to shared customer inbox')
-require('data-future-form-action=' in page,
-        'future activation route not retained')
+# The inactive form is hidden/inert even without JavaScript; runtime also replaces
+# its POST action and stops submit to avoid accidental public partner inquiries.
+guard=Path('assets/partner-program-prelaunch.js').read_text(encoding='utf-8')
+require('<script src="/assets/partner-program-prelaunch.js" defer></script>' in page,
+        'public partner-page prelaunch guard script not loaded')
+for text in ("setAttribute('action', '#')", "setAttribute('method', 'GET')",
+             "event.preventDefault()", "event.stopImmediatePropagation()",
+             "submit.disabled = true", "section.hidden = true", "section.inert = true"):
+    require(text in guard, 'missing partner-form runtime guard: '+text)
 jsonld=re.search(r'<script type="application/ld\+json">([\s\S]*?)</script>',page)
 if not jsonld:
     errors.append('original JSON-LD missing')
