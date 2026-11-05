@@ -28,6 +28,16 @@
     input.addEventListener('keydown',function(event){
       if(event.key==='Enter'){event.preventDefault();submitCity();}
     });
+    /* Population-ordered links use the same existing request form and qualification. */
+    document.querySelectorAll('[data-texas-priority-city]').forEach(function(link){
+      link.addEventListener('click',function(event){
+        event.preventDefault();
+        const chosen=link.getAttribute('data-texas-priority-city');
+        if(!chosen)return;
+        input.value=chosen;
+        submitCity();
+      });
+    });
     const script=document.querySelector('script[src*="texas-city-shortcut.js"]');
     const url=script&&script.src?new URL('../data/cities.json',script.src).toString():null;
     if(!url||typeof fetch!=='function')return;
