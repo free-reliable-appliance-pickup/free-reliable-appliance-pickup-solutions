@@ -15,7 +15,7 @@ Object.assign(nodes,{'texas-quick-city':input,'texas-quick-continue':button,'tex
 const priorityTags=[...html.matchAll(/<li><a href="#request" data-texas-priority-city="([^"]+)">([^<]+)<\/a><\/li>/g)];
 assert(priorityTags.every(m=>m[1]===m[2]),'visible Texas city labels match link data');
 const priorityNames=priorityTags.map(x=>x[1]);
-assert.deepEqual(priorityNames,["Houston","San Antonio","Dallas","Fort Worth","Austin","El Paso","Arlington","Corpus Christi","Plano","Lubbock","Laredo","Irving","Garland","Frisco","Grand Prairie","McKinney","Amarillo","Brownsville","Denton","Killeen","Mesquite","McAllen","Pasadena","Waco","Midland","Round Rock","Lewisville","Carrollton","Abilene","Pearland","College Station","Odessa","New Braunfels","League City","Conroe","Richardson","Tyler","Allen","Beaumont","Edinburg","Sugar Land","Georgetown","Wichita Falls","San Angelo","Temple","Bryan","Leander","Mission","Baytown","Mansfield"],'requested Texas market priority order');
+assert.deepEqual(priorityNames,["Houston","San Antonio","Dallas","Fort Worth","Austin","El Paso","Arlington","Corpus Christi","Plano","Lubbock","Laredo","Irving","Garland","Frisco","Grand Prairie","McKinney","Amarillo","Brownsville","Denton","Killeen","Mesquite","McAllen","Pasadena","Waco","Midland","Round Rock","Lewisville","Carrollton","Abilene","Pearland","College Station","Odessa","New Braunfels","League City","Conroe","Richardson","Tyler","Allen","Beaumont","Edinburg","Sugar Land","Georgetown","Wichita Falls","San Angelo","Temple","Bryan","Leander","Mission","Baytown","Mansfield","Longview","Pharr","Flower Mound","Cedar Park","San Marcos","Missouri City","Harlingen","North Richland Hills","Kyle","Pflugerville","Rowlett","Victoria","Forney","Celina","Wylie","Little Elm","Texas City","Burleson","DeSoto","Port Arthur","Rockwall","Galveston","Sherman","Grapevine","Waxahachie","Cedar Hill","Huntsville","Bedford","The Colony","Keller","Prosper","Weslaco","Princeton","Rosenberg","Lancaster","Weatherford","Seguin","Cibolo","Duncanville"],'requested Texas market priority order');
 const priorityLinks=priorityNames.map(name=>el({getAttribute(key){return key==='data-texas-priority-city'?name:null}}));
 const document={
  readyState:'complete',getElementById(id){return nodes[id]||null},
@@ -56,6 +56,15 @@ vm.runInNewContext(fs.readFileSync('assets/texas-city-shortcut.js','utf8'),ctx);
  assert.equal(city.value,'Beaumont','Beaumont TX selection works without changing states');
  priorityLinks[49].handlers.click({preventDefault(){}});
  assert.equal(city.value,'Mansfield','last added city also fills the Texas request form');
+ priorityLinks[50].handlers.click({preventDefault(){}});
+ assert.equal(city.value,'Longview','third group begins with Longview');
+ priorityLinks[63].handlers.click({preventDefault(){}});
+ assert.equal(city.value,'Celina','voice-transcribed Celina resolves to correct Texas city');
+ priorityLinks[67].handlers.click({preventDefault(){}});
+ assert.equal(city.value,'Burleson','Burleson appears in the requested Texas market priority');
+ priorityLinks[88].handlers.click({preventDefault(){}});
+ assert.equal(city.value,'Duncanville','third group finishes with Duncanville');
+ assert.equal(new Set(priorityNames).size,priorityNames.length,'no duplicated city priority links');
  assert.equal((html.match(/<img\b/gi)||[]).length,2,'only brand logo and one garage photo');
  console.log('PASS: Texas quick-city shortcut, 148 suggestions, unlisted cities, form preservation');
 })().catch(e=>{console.error(e);process.exit(1)});
