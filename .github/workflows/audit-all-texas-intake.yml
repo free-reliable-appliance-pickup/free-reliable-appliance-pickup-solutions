@@ -1,0 +1,32 @@
+name: Audit All Texas Intake Pages
+
+on:
+  pull_request:
+    paths:
+      - '**/index.html'
+      - 'assets/customer-routing.js'
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - 'scripts/audit-all-texas-intake.py'
+      - '.github/workflows/audit-all-texas-intake.yml'
+  push:
+    branches: [main]
+    paths:
+      - '**/index.html'
+      - 'assets/customer-routing.js'
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - 'scripts/audit-all-texas-intake.py'
+      - '.github/workflows/audit-all-texas-intake.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Audit all Texas request forms and photographs
+        run: python3 scripts/audit-all-texas-intake.py
