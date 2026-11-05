@@ -1,0 +1,32 @@
+name: Audit Texas Regional Intake
+
+on:
+  pull_request:
+    paths:
+      - 'dallas-fort-worth-*/index.html'
+      - 'austin-metro-*/index.html'
+      - 'san-antonio-metro-*/index.html'
+      - '*-county-tx-appliance-pickup/index.html'
+      - 'scripts/audit-texas-regional-intake.py'
+      - '.github/workflows/audit-texas-regional-intake.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'dallas-fort-worth-*/index.html'
+      - 'austin-metro-*/index.html'
+      - 'san-antonio-metro-*/index.html'
+      - '*-county-tx-appliance-pickup/index.html'
+      - 'scripts/audit-texas-regional-intake.py'
+      - '.github/workflows/audit-texas-regional-intake.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Texas region lead forms
+        run: python3 scripts/audit-texas-regional-intake.py
