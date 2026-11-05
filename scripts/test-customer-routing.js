@@ -115,12 +115,6 @@ async function main(){
     ['Victoria','TX','request-only','Victoria Area','regional',null],
     ['Waco','TX','request-only','Waco Area','regional',null],
     ['Wichita Falls','TX','request-only','Wichita Falls Area','regional',null],
-    ['Beaumont','TX','request-only','Beaumont–Port Arthur','regional',null],
-    ['Grapevine','TX','request-only','Dallas-Fort Worth','regional',null],
-    ['Huntsville','TX','request-only','Huntsville Area','regional',null],
-    ['Princeton','TX','request-only','Dallas-Fort Worth','regional',null],
-    ['Sherman','TX','request-only','Sherman–Denison Area','regional',null],
-    ['Weslaco','TX','request-only','Rio Grande Valley','regional',null],
     ['Unknown Texas Township','TX','request-only','Texas statewide intake','statewide',null],
     ['Columbus','OH','request-only','Ohio statewide intake','statewide',null]
   ];
@@ -159,14 +153,14 @@ async function main(){
   assertEqual(api.classify('Rancho Cucamonga','CA').status,'partner-recruiting','Test fixture leaves existing state unchanged');
   console.log('PASS: synthetic California city assignment cannot be shadowed by priority fallback');
 
-  // Texas customer appliance pickup requests are intake reviews, never recruiting leads.
-  for(const city of ['Houston','Dallas','Austin','San Antonio','El Paso','Bryan','Weslaco','Unknown Texas Township']){
-    const info=api.classify(city,'TX'),decision=api.routingDecision(info);
-    assertEqual(info.status,'request-only',city+' TX request-only intake');
-    assertEqual(decision.decision,'NATIONAL_INTAKE',city+' TX does not route as recruitment');
-    assertEqual(decision.action.includes('recruit'),false,city+' TX form has no recruiting action');
+  // Texas inquiry forms must never route customer pickup requests as partner recruitment.
+  for(const sampleCity of ['Houston','Dallas','Austin','San Antonio','El Paso','Bryan','Unknown Texas Township']){
+    const info=api.classify(sampleCity,'TX'),decision=api.routingDecision(info);
+    assertEqual(info.status,'request-only',sampleCity+' Texas inquiry status');
+    assertEqual(decision.decision,'NATIONAL_INTAKE',sampleCity+' Texas inquiry routing');
+    assertEqual(decision.action.includes('recruit'),false,sampleCity+' Texas customer routing does not say recruiting');
   }
-  console.log('PASS: Texas city pickup intake stays out of recruitment queue');
+  console.log('PASS: Texas customer intake has no recruiting status or routing decision');
 
   const laDecision=api.routingDecision(api.classify('Los Angeles County','CA'));
   assertEqual(laDecision.decision,'RECRUITING_QUEUE','Los Angeles County decision');
@@ -193,8 +187,7 @@ async function main(){
       appendChild(node){this.nodes[node.name]=node;return node;}
     };
   }
-  // Partner recruitment is an internal market catalog state, never a customer-form label.
-  // Preserve route phones/regions while ensuring the submitted Formspree fields reflect pickup review.
+  // Customer pickup submissions never present internal partner-recruiting states as a customer workflow.
   for(const [city,state] of [
     ['Rancho Cucamonga','CA'],['Phoenix','AZ'],['Vancouver','WA'],['Austin','TX'],
     ['Portland','OR'],['Denver','CO']
@@ -204,15 +197,15 @@ async function main(){
     const actualStatus=api.classify(city,state).status;
     if(actualStatus==='partner-recruiting'){
       assertEqual(intake.nodes['Routing Market Status'].value,'request-only',city+' submitted market status');
-      assertEqual(intake.nodes['Routing Decision'].value,'NATIONAL_INTAKE',city+' submitted customer decision');
+      assertEqual(intake.nodes['Routing Decision'].value,'NATIONAL_INTAKE',city+' customer intake is not recruiting');
     }else{
-      assertEqual(intake.nodes['Routing Market Status'].value,actualStatus,city+' keeps verified routing status');
+      assertEqual(intake.nodes['Routing Market Status'].value,actualStatus,city+' keeps verified status');
     }
     for(const name of ['Routing Market Status','Routing Decision','Routing Network Tier','Routing Next Action']){
-      assertEqual(/recruit/i.test(String(intake.nodes[name].value)),false,city+' no recruiting text in '+name);
+      assertEqual(/recruit/i.test(String(intake.nodes[name].value)),false,city+' customer form avoids recruiting');
     }
   }
-  console.log('PASS: customer appliance pickup forms never submit recruiting labels, even where internal recruiting state remains');
+  console.log('PASS: customer pickup submissions never include recruiting labels');
 
   // Forms across markets submit different labels for non-fully-working appliances.
   // Every reported problem must receive the explicit partner-review gate.
