@@ -26,7 +26,10 @@ jobs:
           required=['DIRECT_OVERFLOW_CANDIDATE','ASSIGNED_MARKET_WAITLIST','RECRUITING_PRIORITY','FUTURE_MARKET','Partner Application Decisions','Partner Application Decision','Partner Application Next Action','applicationDecision','window.FreeReliablePartnerRouting','does not establish coverage or create an SEO page','PRIMARY_TERRITORY_CANDIDATE','FAST_SHARED_LEAD_CANDIDATE','TERRITORY_INTEREST','SHARED_LEAD_INTEREST','Partner Preference Tier','Partner Routing Score','Shared Lead Interest','Exclusive Territory Interest','Partner Routing Summary','preferenceProfile','Partner Capability Profile','Difficult Access Fit','Refrigeration Route Fit','Property Manager Route Fit','operatorType','conditionPreference','crewSize','maxStairs','storageCapacity','notificationPreference','refrigerationCapability','commercialCapability']
           for token in required:
               if token not in script: sys.exit(f'missing partner routing safeguard: {token}')
-          paused='data-partner-applications="closed"' in page
+          # Owner policy: new partner applications remain closed until a separately approved change.
+          if 'data-partner-applications="closed"' not in page:
+              sys.exit('policy violation: public partner applications must remain closed')
+          paused=True
           if paused:
               # Maintain routing infrastructure for future activation while
               # strictly forbidding any public application during the pause.
