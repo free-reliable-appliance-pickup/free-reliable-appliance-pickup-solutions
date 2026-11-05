@@ -1,0 +1,19 @@
+name: Audit Owner Texas 89 City Coverage
+on:
+  pull_request:
+    paths:
+      - '*-pickup/index.html'
+      - 'scripts/audit-owner-texas-89-cities.py'
+      - '.github/workflows/audit-owner-texas-89-cities.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 scripts/audit-owner-texas-89-cities.py
