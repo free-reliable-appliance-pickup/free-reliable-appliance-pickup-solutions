@@ -83,39 +83,39 @@ async function main(){
     ['Fresno','CA','buyer-review','Central Valley','priority-california-city','310-774-4304'],
     ['Phoenix Metro','AZ','partner-recruiting','Phoenix Metro','regional','602-726-7552'],
     ['Las Vegas Valley','NV','partner-recruiting','Las Vegas Valley','regional',null],
-    ['Katy','TX','partner-recruiting','Houston Metro','regional',null],
-    ['Pearland','TX','partner-recruiting','Houston Metro','regional',null],
-    ['Frisco','TX','partner-recruiting','Dallas-Fort Worth','regional',null],
-    ['McKinney','TX','partner-recruiting','Dallas-Fort Worth','regional',null],
-    ['Cedar Park','TX','partner-recruiting','Austin Metro','regional',null],
-    ['Schertz','TX','partner-recruiting','San Antonio Metro','regional',null],
-    ['Socorro','TX','partner-recruiting','El Paso Metro','regional',null],
-    ['El Paso','TX','partner-recruiting','El Paso Metro','regional',null],
-    ['Abilene','TX','partner-recruiting','Abilene Area','regional',null],
-    ['Amarillo','TX','partner-recruiting','Amarillo Area','regional',null],
-    ['Brownsville','TX','partner-recruiting','Rio Grande Valley','regional',null],
-    ['Edinburg','TX','partner-recruiting','Rio Grande Valley','regional',null],
-    ['Harlingen','TX','partner-recruiting','Rio Grande Valley','regional',null],
-    ['McAllen','TX','partner-recruiting','Rio Grande Valley','regional',null],
-    ['Mission','TX','partner-recruiting','Rio Grande Valley','regional',null],
-    ['Pharr','TX','partner-recruiting','Rio Grande Valley','regional',null],
-    ['Bryan','TX','partner-recruiting','Bryan–College Station','regional',null],
-    ['College Station','TX','partner-recruiting','Bryan–College Station','regional',null],
-    ['Corpus Christi','TX','partner-recruiting','Corpus Christi Area','regional',null],
-    ['Killeen','TX','partner-recruiting','Killeen–Temple','regional',null],
-    ['Temple','TX','partner-recruiting','Killeen–Temple','regional',null],
-    ['Laredo','TX','partner-recruiting','Laredo Area','regional',null],
-    ['Longview','TX','partner-recruiting','East Texas (Tyler–Longview)','regional',null],
-    ['Tyler','TX','partner-recruiting','East Texas (Tyler–Longview)','regional',null],
-    ['Lubbock','TX','partner-recruiting','Lubbock Area','regional',null],
-    ['Midland','TX','partner-recruiting','Permian Basin','regional',null],
-    ['Odessa','TX','partner-recruiting','Permian Basin','regional',null],
-    ['Port Arthur','TX','partner-recruiting','Beaumont–Port Arthur','regional',null],
-    ['San Angelo','TX','partner-recruiting','San Angelo Area','regional',null],
-    ['Victoria','TX','partner-recruiting','Victoria Area','regional',null],
-    ['Waco','TX','partner-recruiting','Waco Area','regional',null],
-    ['Wichita Falls','TX','partner-recruiting','Wichita Falls Area','regional',null],
-    ['Unknown Texas Township','TX','partner-recruiting','Texas statewide intake','statewide',null],
+    ['Katy','TX','request-only','Houston Metro','regional',null],
+    ['Pearland','TX','request-only','Houston Metro','regional',null],
+    ['Frisco','TX','request-only','Dallas-Fort Worth','regional',null],
+    ['McKinney','TX','request-only','Dallas-Fort Worth','regional',null],
+    ['Cedar Park','TX','request-only','Austin Metro','regional',null],
+    ['Schertz','TX','request-only','San Antonio Metro','regional',null],
+    ['Socorro','TX','request-only','El Paso Metro','regional',null],
+    ['El Paso','TX','request-only','El Paso Metro','regional',null],
+    ['Abilene','TX','request-only','Abilene Area','regional',null],
+    ['Amarillo','TX','request-only','Amarillo Area','regional',null],
+    ['Brownsville','TX','request-only','Rio Grande Valley','regional',null],
+    ['Edinburg','TX','request-only','Rio Grande Valley','regional',null],
+    ['Harlingen','TX','request-only','Rio Grande Valley','regional',null],
+    ['McAllen','TX','request-only','Rio Grande Valley','regional',null],
+    ['Mission','TX','request-only','Rio Grande Valley','regional',null],
+    ['Pharr','TX','request-only','Rio Grande Valley','regional',null],
+    ['Bryan','TX','request-only','Bryan–College Station','regional',null],
+    ['College Station','TX','request-only','Bryan–College Station','regional',null],
+    ['Corpus Christi','TX','request-only','Corpus Christi Area','regional',null],
+    ['Killeen','TX','request-only','Killeen–Temple','regional',null],
+    ['Temple','TX','request-only','Killeen–Temple','regional',null],
+    ['Laredo','TX','request-only','Laredo Area','regional',null],
+    ['Longview','TX','request-only','East Texas (Tyler–Longview)','regional',null],
+    ['Tyler','TX','request-only','East Texas (Tyler–Longview)','regional',null],
+    ['Lubbock','TX','request-only','Lubbock Area','regional',null],
+    ['Midland','TX','request-only','Permian Basin','regional',null],
+    ['Odessa','TX','request-only','Permian Basin','regional',null],
+    ['Port Arthur','TX','request-only','Beaumont–Port Arthur','regional',null],
+    ['San Angelo','TX','request-only','San Angelo Area','regional',null],
+    ['Victoria','TX','request-only','Victoria Area','regional',null],
+    ['Waco','TX','request-only','Waco Area','regional',null],
+    ['Wichita Falls','TX','request-only','Wichita Falls Area','regional',null],
+    ['Unknown Texas Township','TX','request-only','Texas statewide intake','statewide',null],
     ['Columbus','OH','request-only','Ohio statewide intake','statewide',null]
   ];
 
@@ -153,6 +153,12 @@ async function main(){
   assertEqual(api.classify('Rancho Cucamonga','CA').status,'partner-recruiting','Test fixture leaves existing state unchanged');
   console.log('PASS: synthetic California city assignment cannot be shadowed by priority fallback');
 
+  // Catalog state is request-only for all Texas queues and the statewide fallback.
+  for(const city of ['Katy','Dallas','Austin','San Antonio','El Paso','Bryan','Unknown Texas Township']){
+    const status=api.classify(city,'TX'),decision=api.routingDecision(status);
+    assertEqual(status.status,'request-only',city+' Texas catalog is not recruiting');
+    assertEqual(decision.decision,'NATIONAL_INTAKE',city+' review-only customer routing');
+  }
   const laDecision=api.routingDecision(api.classify('Los Angeles County','CA'));
   assertEqual(laDecision.decision,'RECRUITING_QUEUE','Los Angeles County decision');
   const denverDecision=api.routingDecision(api.classify('Denver Metro','CO'));
@@ -178,6 +184,24 @@ async function main(){
       appendChild(node){this.nodes[node.name]=node;return node;}
     };
   }
+  // End-to-end customer-only regression for integrated Texas + national intake.
+  for(const [city,state] of [
+    ['Houston','TX'],['Dallas','TX'],['Rancho Cucamonga','CA'],
+    ['Phoenix','AZ'],['Vancouver','WA'],['Portland','OR'],['Denver','CO']
+  ]){
+    const form=mockForm({city,state,appliance:'Washer',condition:'Fully Working'});
+    api.qualify(form);
+    const source=api.classify(city,state);
+    assertEqual(form.nodes['Routing Market Status'].value,source.status==='partner-recruiting'?'request-only':source.status,city+' pickup market status');
+    if(source.status==='partner-recruiting'||source.status==='request-only') {
+      assertEqual(form.nodes['Routing Decision'].value,'NATIONAL_INTAKE',city+' pickup remains intake only');
+    }
+    for(const field of ['Routing Market Status','Routing Decision','Routing Network Tier','Routing Next Action']){
+      assertEqual(/recruit/i.test(String(form.nodes[field].value)),false,city+' no recruiting text '+field);
+    }
+  }
+  console.log('PASS: six focused Texas and national pickup updates are compatible');
+
   // Forms across markets submit different labels for non-fully-working appliances.
   // Every reported problem must receive the explicit partner-review gate.
   const conditionCases=[
@@ -263,7 +287,7 @@ async function main(){
   assertEqual(legacy.nodes.source_page.value,'victorville-appliance-pickup','Legacy form gains page source');
   assertEqual(legacy.nodes['Routing Region'].value,'Victorville Valley','Legacy California region');
   assertEqual(legacy.nodes['Routing Phone'].value,'909-375-6685','Legacy California phone');
-  assertEqual(legacy.nodes['Routing Decision'].value,'RECRUITING_QUEUE','Legacy request never promises service');
+  assertEqual(legacy.nodes['Routing Decision'].value,'NATIONAL_INTAKE','Legacy request never promises service');
   assertEqual(legacy.nodes['Qualification Snapshot'].value,'Washer and dryer | Fully Working','Legacy plural appliances captured');
   global.location.pathname='/fontana-appliance-pickup/';
   const existing=mockForm({city:'Fontana',state:'California',appliance:'Refrigerator',condition:'Fully Working',source_page:'original-campaign-source'});
@@ -279,7 +303,7 @@ async function main(){
   assertEqual(missingCity.nodes.source_page.value,'alhambra-washer-dryer-pickup','City-less source captured');
   api.qualify(missingCity);
   assertEqual(missingCity.nodes['Routing Phone'].value,'909-375-6685','Alhambra partner-recruiting phone');
-  assertEqual(missingCity.nodes['Routing Decision'].value,'RECRUITING_QUEUE','No pickup promise from inferred city');
+  assertEqual(missingCity.nodes['Routing Decision'].value,'NATIONAL_INTAKE','No pickup promise from inferred city');
 
   global.location.pathname='/bell-washer-dryer-pickup/';
   const bell=mockForm({state:'CA',appliances:'Washer and dryer',condition:'Unknown'});
@@ -297,7 +321,7 @@ async function main(){
     api.qualify(form);
     assertEqual(form.nodes['Routing Phone'].value,'909-375-6685',city+' laundry request routes to 909');
     assertEqual(form.nodes.source_page.value,slug+'-washer-dryer-pickup',city+' original source preserved');
-    assertEqual(form.nodes['Routing Decision'].value,'RECRUITING_QUEUE',city+' does not promise pickup');
+    assertEqual(form.nodes['Routing Decision'].value,'NATIONAL_INTAKE',city+' does not promise pickup');
   }
 
   // Vancouver's live request form must expose the fields required for
@@ -321,7 +345,7 @@ async function main(){
   api.qualify(vancouver);
   assertEqual(vancouver.nodes['Routing Region'].value,'Clark County','Vancouver route uses Clark County');
   assertEqual(vancouver.nodes['Routing Phone'].value,'503-868-4455','Vancouver route uses Washington contact');
-  assertEqual(vancouver.nodes['Routing Decision'].value,'RECRUITING_QUEUE','Do not promise assigned partner before verification');
+  assertEqual(vancouver.nodes['Routing Decision'].value,'NATIONAL_INTAKE','Do not promise assigned partner before verification');
   assertEqual(vancouver.nodes.source_page.value,'vancouver-appliance-pickup','Vancouver request attribution');
   assertEqual(vancouver.nodes['Dispatch Condition Gate'].value,'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH','Mixed Vancouver load needs review');
   console.log('PASS: Vancouver form fields, Clark County routing and mixed-load gate');
