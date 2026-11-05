@@ -1,0 +1,25 @@
+name: Audit Texas Partner Application CTA
+on:
+  pull_request:
+    paths:
+      - 'texas-appliance-pickup/index.html'
+      - 'partners/index.html'
+      - 'scripts/audit-texas-partner-cta.py'
+      - '.github/workflows/audit-texas-partner-cta.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'texas-appliance-pickup/index.html'
+      - 'partners/index.html'
+      - 'scripts/audit-texas-partner-cta.py'
+      - '.github/workflows/audit-texas-partner-cta.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Verify Texas partner CTA and preserve customer form
+        run: python3 scripts/audit-texas-partner-cta.py
