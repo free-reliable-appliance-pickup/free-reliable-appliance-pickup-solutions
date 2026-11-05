@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-04.2-tx-secondary-regions",
+  "version": "2026-11-04.3-tx-6-cities-routing",
   "purpose": "Structured city catalog for partner territory selection and internal routing support. This file does not create public SEO pages or imply confirmed pickup coverage.",
   "notes": [
     "The live partner application may include additional cities beyond this priority catalog.",
@@ -1310,6 +1310,13 @@
       "priority": 2
     },
     {
+      "city": "Beaumont",
+      "region": "Beaumont–Port Arthur",
+      "state": "Texas",
+      "state_code": "TX",
+      "priority": 2
+    },
+    {
       "city": "Bedford",
       "state": "Texas",
       "state_code": "TX",
@@ -1618,6 +1625,13 @@
       "priority": 2
     },
     {
+      "city": "Grapevine",
+      "region": "Dallas-Fort Worth",
+      "state": "Texas",
+      "state_code": "TX",
+      "priority": 2
+    },
+    {
       "city": "Haltom City",
       "state": "Texas",
       "state_code": "TX",
@@ -1657,6 +1671,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Huntsville",
+      "region": "Huntsville Area",
+      "state": "Texas",
+      "state_code": "TX",
       "priority": 2
     },
     {
@@ -1968,6 +1989,13 @@
       "priority": 2
     },
     {
+      "city": "Princeton",
+      "region": "Dallas-Fort Worth",
+      "state": "Texas",
+      "state_code": "TX",
+      "priority": 2
+    },
+    {
       "city": "Prosper",
       "state": "Texas",
       "state_code": "TX",
@@ -2084,6 +2112,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
+      "city": "Sherman",
+      "region": "Sherman–Denison Area",
+      "state": "Texas",
+      "state_code": "TX",
       "priority": 2
     },
     {
@@ -2231,6 +2266,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Weslaco",
+      "region": "Rio Grande Valley",
+      "state": "Texas",
+      "state_code": "TX",
       "priority": 2
     },
     {
