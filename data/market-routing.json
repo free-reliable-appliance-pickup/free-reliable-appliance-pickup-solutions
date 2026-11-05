@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-04.2-tx-secondary-regions",
+  "version": "2026-11-04.3-tx-6-cities-routing",
   "purpose": "Operational coverage routing for the nationwide appliance pickup partner network. This file is not a promise of pickup availability. Customer requests remain subject to qualification and confirmed local coverage.",
   "statuses": {
     "direct": "Established market served by Free Reliable Appliance Pickup operations.",
@@ -1171,6 +1171,32 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Wichita Falls Area",
+      "status": "partner-recruiting",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
+    },
+    {
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Huntsville Area",
+      "status": "partner-recruiting",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
+    },
+    {
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Sherman–Denison Area",
       "status": "partner-recruiting",
       "territory_status": "available",
       "partner_id": null,
