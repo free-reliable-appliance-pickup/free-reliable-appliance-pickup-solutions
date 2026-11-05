@@ -3,6 +3,10 @@ on:
   pull_request:
     paths:
       - '*-pickup/index.html'
+      - '**/*.webp'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.png'
       - 'scripts/audit-owner-texas-89-cities.py'
       - '.github/workflows/audit-owner-texas-89-cities.yml'
   workflow_dispatch:
