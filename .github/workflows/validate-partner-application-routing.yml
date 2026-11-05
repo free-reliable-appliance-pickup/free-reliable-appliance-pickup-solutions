@@ -33,6 +33,10 @@ jobs:
               required_status=['Partner Program Status','New partner applications are currently closed.','id="apply"','id="territories"','id="lead-access"','href="/service-areas/"','href="/free-pickup-qualification/']
               for token in required_status:
                   if token not in page: sys.exit(f'paused partner status missing: {token}')
+              if 'not offering paid partner memberships, lead purchases or territory subscriptions' not in page:
+                  sys.exit('paused partner page missing no-paid-access disclosure')
+              if re.search(r'\b(?:purchase|buy|order|subscribe for)\s+(?:paid\s+)?(?:lead access|leads|partner access|territory)', page, re.I):
+                  sys.exit('paused partner page advertises paid access')
               if '<form' in page.lower(): sys.exit('paused partner page contains an application form')
               # Inactive partner program must not link to registration destinations.
               hrefs=re.findall(r'''href\s*=\s*["']([^"']+)["']''', page, flags=re.I)
