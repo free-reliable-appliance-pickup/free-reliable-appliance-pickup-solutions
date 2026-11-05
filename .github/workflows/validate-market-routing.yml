@@ -198,16 +198,27 @@ jobs:
           for token in required_partner_tokens:
               if token not in partner_script: sys.exit(f'partner routing safeguard missing required token: {token}')
 
-          if 'assets/partner-routing.js' not in partner_page and '../assets/partner-routing.js' not in partner_page:
-              sys.exit('partner page must load assets/partner-routing.js')
-          if 'assets/customer-routing.js' in partner_page or '../assets/customer-routing.js' in partner_page:
-              sys.exit('partner page must not load customer-routing.js')
-          if 'automaticCityPageCreation' in partner_page:
-              sys.exit('partner page must not contain city-page generation controls')
-
-          required_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','id="territorySummary"']
-          for token in required_matching_fields:
-              if token not in partner_page: sys.exit(f'partner capability matching field missing: {token}')
+          # Operational partner routing remains preserved for future launch.
+          # During an owner-authorized application pause, the public page MUST
+          # not expose a form or load the application behavior.
+          paused='data-partner-applications="closed"' in partner_page
+          if paused:
+              for marker in ['Partner Program Status','New partner applications are currently closed.','id="apply"','id="territories"','id="lead-access"','href="/service-areas/"']:
+                  if marker not in partner_page: sys.exit(f'paused partner page missing required status marker: {marker}')
+              if '<form' in partner_page.lower(): sys.exit('paused partner page must not expose a partner application form')
+              if 'partner-routing.js' in partner_page: sys.exit('paused partner page must not load application routing')
+              if 'assets/customer-routing.js' in partner_page: sys.exit('paused partner page must not load customer routing')
+              if 'automaticCityPageCreation' in partner_page: sys.exit('paused partner page must not expose automatic city page controls')
+          else:
+              if 'assets/partner-routing.js' not in partner_page and '../assets/partner-routing.js' not in partner_page:
+                  sys.exit('active partner page must load assets/partner-routing.js')
+              if 'assets/customer-routing.js' in partner_page or '../assets/customer-routing.js' in partner_page:
+                  sys.exit('active partner page must not load customer-routing.js')
+              if 'automaticCityPageCreation' in partner_page:
+                  sys.exit('active partner page must not contain city-page generation controls')
+              required_matching_fields=['Service Radius','Daily Pickup Capacity','Inside and Stairs Capability','Availability','Appliance Capabilities','id="territorySummary"']
+              for token in required_matching_fields:
+                  if token not in partner_page: sys.exit(f'active partner capability matching field missing: {token}')
           for token in ['publicLabel(market)','classifySelection();']:
               if token not in partner_script: sys.exit(f'partner territory status display missing: {token}')
 
