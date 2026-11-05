@@ -258,7 +258,7 @@ function enhanceApplianceConditionIntake(){
       holder.insertAdjacentElement('afterend',label);
     }
     const update=()=>{
-      const hasProblem=/^(?:working with issues|needs(?: minor)? repair|minor repair needed|not working|mixed load)/i.test(select.value.trim());
+      const hasProblem=/issues|problems|repair|not working|mixed|multi-appliance load|broken|damaged|faulty/i.test(select.value);
       details.required=hasProblem;
       details.setAttribute('aria-required',String(hasProblem));
     };
