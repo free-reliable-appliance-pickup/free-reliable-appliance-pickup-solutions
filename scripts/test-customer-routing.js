@@ -376,6 +376,36 @@ async function main(){
   assertEqual(!!unknown.nodes.city,false,'Unverified city slug is not fabricated');
   global.location.pathname='/';
 
+  // Texas traffic provenance: annotate eligible TX requests, never invent a
+  // Google/Facebook source when the browser supplies no UTM or external referrer.
+  const provenancePath=global.location.pathname;
+  try {
+    global.location.pathname='/katy-appliance-pickup/';
+    const txSourceForm=mockForm({city:'Katy',state:'Texas',appliance:'Refrigerator',condition:'Fully working'});
+    api.qualify(txSourceForm);
+    assertEqual(txSourceForm.nodes['Traffic Source (Observed)'].value,
+      'Direct / unknown','TX source remains unknown without UTM or referrer');
+    assertEqual(txSourceForm.nodes['Traffic Source Method'].value,
+      'No UTM or external referrer available','TX source method correctly describes uncertainty');
+    assertEqual(txSourceForm.nodes['Routing Region'].value,
+      'Houston Metro','Texas routing unaffected by source tracking');
+
+    global.location.pathname='/salem-appliance-pickup/';
+    const salemSourceForm=mockForm({city:'Salem',state:'OR',appliance:'Refrigerator',condition:'Fully working'});
+    api.qualify(salemSourceForm);
+    assertEqual(salemSourceForm.nodes['Traffic Source (Observed)'].value,
+      'Direct / unknown','Existing Salem provenance remains active');
+
+    global.location.pathname='/phoenix-appliance-pickup/';
+    const azSourceForm=mockForm({city:'Phoenix',state:'AZ',appliance:'Washer',condition:'Fully working'});
+    api.qualify(azSourceForm);
+    assertEqual(!!azSourceForm.nodes['Traffic Source (Observed)'],false,
+      'Non-targeted states remain unchanged');
+  } finally {
+    global.location.pathname=provenancePath;
+  }
+  console.log('PASS: Texas observed traffic source is attributed without false Google/Facebook claims');
+
   console.log('PASS: legacy form alias, page attribution, confirmed route metadata and preexisting attribution');
 
   // Original user-selected laundry heroes must not be replaced by the generic
