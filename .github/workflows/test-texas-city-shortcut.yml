@@ -1,0 +1,30 @@
+name: Test Texas City Shortcut
+on:
+  pull_request:
+    paths:
+      - 'texas-appliance-pickup/index.html'
+      - 'assets/texas-city-shortcut.js'
+      - 'data/cities.json'
+      - 'scripts/test-texas-city-shortcut.cjs'
+      - '.github/workflows/test-texas-city-shortcut.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'texas-appliance-pickup/index.html'
+      - 'assets/texas-city-shortcut.js'
+      - 'data/cities.json'
+      - 'scripts/test-texas-city-shortcut.cjs'
+      - '.github/workflows/test-texas-city-shortcut.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test Texas statewide city shortcut
+        run: node scripts/test-texas-city-shortcut.cjs
