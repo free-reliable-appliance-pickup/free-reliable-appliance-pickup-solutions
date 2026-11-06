@@ -5,7 +5,7 @@
   const api=window.FreeReliableCustomerRouting;
   if(!api)return;
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
-    if(!api.isCustomerPickupForm(form)||form.querySelector('[name="paid_removal_preference"],[name="paid_option"]'))return;
+    if(!api.isCustomerPickupForm(form)||(form.querySelector('[name="paid_removal_preference"]')||form.querySelector('[name="paid_option"]')))return;
     const submit=form.querySelector('button[type="submit"],input[type="submit"]');
     if(!submit||!submit.parentNode)return;
     const holder=document.createElement('div');

@@ -85,8 +85,7 @@ function observedVisitSource(){
 const CURRENT_OBSERVED_SOURCE=observedVisitSource();
 try{if(CURRENT_OBSERVED_SOURCE)sessionStorage.setItem('frap_observed_traffic_source',CURRENT_OBSERVED_SOURCE);}catch(e){}
 function recordObservedTrafficSource(form){
-  // Record observed provenance on Salem priority pages and Texas request forms.
-  // A referrer or UTM tag indicates a source hint, not proof of Google organic ranking.
+    // A referrer or UTM tag indicates a source hint, not proof of Google organic ranking.
   const state=findField(form,['state','State','pickup_state','Primary State']);
   const texas=state&&stateCode(state.value)==='TX';
   const salem=/^\/salem-(?:appliance|washer-dryer|refrigerator-freezer|stove)-pickup\/$/.test(pagePath());
@@ -102,7 +101,6 @@ function wireForm(form){if(form.dataset.customerRoutingWired==='1')return;form.d
 function isCustomerPickupForm(form){const state=findField(form,['state','State','pickup_state','Primary State']),appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']);if(!state||!appliance)return false;if(findField(form,['city','City','pickup_city','Primary City']))return true;return /^\/[a-z0-9-]+-(?:appliance|washer-dryer|refrigerator|stove-oven|freezer)-pickup\/$/.test(pagePath());}
 function pagePath(){let p=location.pathname||'/',base=siteBase();if(base!=='/'&&p.startsWith(base.slice(0,-1)))p=p.slice(base.length-1)||'/';if(!p.startsWith('/'))p='/'+p;if(!p.endsWith('/'))p+='/';return p;}
 
-/* Only complete laundry sets. */
 const COMPLETE_SET_HEROES=[
 'front-load-laundry-set.jpg',
 'laundry-pair.jpg',
@@ -225,8 +223,7 @@ function enhancePhotoFirstIntake(){
 
 
 function enhanceApplianceConditionIntake(){
-  /* Preserve each form's existing condition choices. */
-  const additions=[
+    const additions=[
     ['Working With Issues','Working, but has a problem (explain below)'],
     ['Mixed Load - Majority Working','Mixed load (about 80% of major appliances working)']
   ];
@@ -269,11 +266,10 @@ function enhanceApplianceConditionIntake(){
 
 function loadPaidRemovalChoice(){if(document.querySelector('script[data-paid-removal-choice]'))return;const t=document.createElement('script');t.src=siteUrl('assets/paid-removal-choice.js');t.defer=true;t.dataset.paidRemovalChoice='1';document.head.appendChild(t);}
 function recordPaidRemovalPreference(form){
-  const control=findField(form,['paid_removal_preference','paid_option']);
-  const raw=String(control&&control.value||'').trim().toLowerCase();
-  const normalized=raw==='quote_ok'||raw==='yes, after seeing the price'?'quote_ok':raw==='free_only'||raw==='no, free pickup only'?'free_only':'';
-  if(control&&control.name==='paid_option')hidden(form,'paid_removal_preference',normalized);
-  const choice=normalized==='quote_ok'?'QUOTE_REVIEW_ONLY':normalized==='free_only'?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
+  const c=findField(form,['paid_removal_preference','paid_option']),v=c&&c.value;
+  const q=v==='quote_ok'||v==='Yes, after seeing the price',f=v==='free_only'||v==='No, free pickup only';
+  if(c&&c.name==='paid_option')hidden(form,'paid_removal_preference',q?'quote_ok':f?'free_only':'');
+  const choice=q?'QUOTE_REVIEW_ONLY':f?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
   hidden(form,'Paid Removal Quote Gate',choice);
   hidden(form,'Paid Removal Next Step',choice==='QUOTE_REVIEW_ONLY'?'Offer a separate quote only if free pickup is unavailable, subject to approved local capacity and explicit customer price acceptance. Do not charge or book automatically.':'Do not offer paid removal without new explicit customer permission.');
 }
@@ -364,7 +360,6 @@ function initLeadAnalytics(){
 initLeadAnalytics();
 load();
 document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();loadPaidRemovalChoice();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{recordObservedTrafficSource(form);if(isCustomerPickupForm(form))wireForm(form);});});
-/* Reapply user-assigned laundry photos after page load. */
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 
 if(typeof document!=='undefined'&&!document.querySelector('script[data-premium-sharp-hero]')){const sharp=document.createElement('script');sharp.src=siteUrl('assets/premium-sharp-hero-fix.js')+'?v=20261016-pair-only';sharp.async=true;sharp.dataset.premiumSharpHero='1';document.head.appendChild(sharp);}
