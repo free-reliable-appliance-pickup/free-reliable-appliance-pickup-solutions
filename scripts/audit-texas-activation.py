@@ -149,7 +149,7 @@ def collect():
     # request-only Dallas–Fort Worth markets; no operator or indexing approvals.
     # Melissa (Dallas–Fort Worth) and Iowa Colony (Houston Metro) are added as
     # request-only catalog entries; no market activation or SEO approval.
-    if len(catalog) != 182:
+    if len(catalog) != 205:
         errors.append(f"Texas city catalog changed to {len(catalog)}: review mapping and update baseline")
     for city_name in ("Sachse", "Watauga", "Balch Springs"):
         row = catalog.get(city_name.casefold())
@@ -200,6 +200,14 @@ def collect():
         queue = markets.get(region)
         if not queue or queue.get("status") != "request-only" or queue.get("partner_id") or queue.get("phone"):
             errors.append(f"{city_name}: unverified market must remain request-only")
+    # Competitor-listed statewide Texas cities; remain request-only.
+    for city_name, region in [["Midlothian","Dallas-Fort Worth"],["Red Oak","Dallas-Fort Worth"],["Ennis","Dallas-Fort Worth"],["Cleburne","Dallas-Fort Worth"],["Clute","Houston Metro"],["Sealy","Houston Metro"],["Willis","Houston Metro"],["Hitchcock","Houston Metro"],["Elgin","Austin Metro"],["Lago Vista","Austin Metro"],["Floresville","San Antonio Metro"],["Kirby","San Antonio Metro"],["Donna","Rio Grande Valley"],["Mercedes","Rio Grande Valley"],["San Benito","Rio Grande Valley"],["Rio Grande City","Rio Grande Valley"],["Nacogdoches","Lufkin Area"],["Marshall","East Texas (Tyler–Longview)"],["Kilgore","East Texas (Tyler–Longview)"],["Alice","Corpus Christi Area"],["Robstown","Corpus Christi Area"],["Kingsville","Corpus Christi Area"],["Rockport","Corpus Christi Area"]]:
+        entry = catalog.get(city_name.casefold())
+        if not entry or entry.get("region") != region:
+            errors.append(f"{city_name}: unexpected TX catalog mapping")
+        queue = markets.get(region)
+        if not queue or queue.get("status") != "request-only" or queue.get("partner_id") or queue.get("phone"):
+            errors.append(f"{city_name}: unverified territory not request-only")
     missing_regions = {row.get("region") for row in catalog.values()} - expected_regions
     for region in sorted(missing_regions):
         errors.append(f"Texas city catalog references missing region: {region}")

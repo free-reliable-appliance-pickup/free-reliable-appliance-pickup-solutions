@@ -2715,6 +2715,167 @@
       "state_code": "TX",
       "region": "Lufkin Area",
       "priority": 2
+    },
+    {
+      "city": "Midlothian",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Red Oak",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Ennis",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Cleburne",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Clute",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Sealy",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Willis",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Hitchcock",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Elgin",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
+      "priority": 2
+    },
+    {
+      "city": "Lago Vista",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
+      "priority": 2
+    },
+    {
+      "city": "Floresville",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
+      "city": "Kirby",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
+      "city": "Donna",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
+      "city": "Mercedes",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
+      "city": "San Benito",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
+      "city": "Rio Grande City",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
+      "city": "Nacogdoches",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Lufkin Area",
+      "priority": 2
+    },
+    {
+      "city": "Marshall",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "East Texas (Tyler–Longview)",
+      "priority": 2
+    },
+    {
+      "city": "Kilgore",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "East Texas (Tyler–Longview)",
+      "priority": 2
+    },
+    {
+      "city": "Alice",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Corpus Christi Area",
+      "priority": 2
+    },
+    {
+      "city": "Robstown",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Corpus Christi Area",
+      "priority": 2
+    },
+    {
+      "city": "Kingsville",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Corpus Christi Area",
+      "priority": 2
+    },
+    {
+      "city": "Rockport",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Corpus Christi Area",
+      "priority": 2
     }
   ]
 }
