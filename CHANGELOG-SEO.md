@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-11-03 — Salem refrigerator/freezer helpful-content experiment (draft only)
+- **Evidence:** Short generic cooling eligibility/preparation paragraphs; no Google Search Console metrics for this page in the limited Oct 30–Nov 1 finalized sample, not evidence of deindexing.
+- **Change:** One existing content section rewritten with original appliance-specific detail about cooling/freezing, defects, dimensions, photos, stairs, moving, and refrigerant precautions. Keep one original inventory photo (not identified as a Salem job), original form, contact, schema and geographic disclaimer.
+- **Measurement:** Experiment `2026-11-03-salem-cooling-preparation-intent`; evaluate after at least 14 complete finalized post-deployment days, adjusting dates if published later.
+- **Conflict control:** PR #779 changes the same cooling page's form; PR #781 changes the common experiment registry/changelog. Rebase and reconcile; do not merge overlapping drafts without re-testing.
+- **Release gates:** Independent review #705, owner approval, full CI, real mobile rendering, free Google URL Inspection. No paid tools, no fake local reviews or completed jobs, no live form submission.
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
