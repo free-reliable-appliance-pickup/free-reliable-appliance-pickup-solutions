@@ -167,7 +167,12 @@ def audit():
                 if not alt:
                     errors.append(f"{name}: photo missing alt text")
                 elif not ALLOWED[typ].search(alt):
-                    errors.append(f"{name}: alt text lacks {typ} category")
+                    # A general group photo can accurately enumerate its
+                    # appliances without using the literal word "appliance".
+                    types_in_alt = sum(bool(re.search(r"\b" + token + r"\b", alt, re.I))
+                                       for token in ("washer", "dryer", "stove", "refrigerator", "freezer"))
+                    if typ != "appliance" or types_in_alt < 2:
+                        errors.append(f"{name}: alt text lacks {typ} category")
                 # Filename is an additional heuristic, not proof of what a photo
                 # depicts. Flag ambiguous assets for human review below.
                 if typ != "appliance" and not ALLOWED[typ].search(src):
@@ -206,7 +211,7 @@ def audit():
             print("PHOTO_ASSET", typ, count, path)
     for problem in errors[:200]:
         print("FAIL", problem)
-    for problem in warnings[:250]:
+    for problem in warnings:
         print("REVIEW", problem)
     return errors, warnings
 
