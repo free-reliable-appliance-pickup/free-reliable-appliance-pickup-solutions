@@ -30,7 +30,7 @@ jobs:
         run: |
           python -m pip install playwright==1.57.0
           python -m playwright install --with-deps chromium
-      - name: Verify six representative TX drafts at desktop/mobile widths
+      - name: Verify seven representative TX drafts at desktop/mobile widths
         env:
           VGM_TEXAS_SCREENSHOT_DIR: ${{ runner.temp }}/texas-draft-previews
         run: python scripts/vgm_texas_browser_smoke.py
