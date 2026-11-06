@@ -81,6 +81,15 @@ def check(path):
     scripts = [s for s in p.scripts if re.search(r"(^|/)customer-routing\.js(?:\?|$)", s)]
     if len(scripts) != 1:
         failures.append("missing/duplicated customer-routing.js include")
+    elif scripts[0] != "/assets/customer-routing.js":
+        failures.append("customer routing script must use the root-absolute asset path")
+    # Catch duplicate visible state breadcrumbs; a second Texas link is also
+    # a common signal of redundant BreadcrumbList JSON-LD on these pages.
+    for nav in re.findall(r'<nav\\b[^>]*class="[^"]*(?:\\bcrumb\\b|\\bbreadcrumb\\b)[^"]*"[^>]*>[\\s\\S]*?</nav>', content, re.I):
+        texas_links = re.findall(r'<a\\b[^>]*href="/texas-appliance-pickup/"[^>]*>', nav, re.I)
+        if len(texas_links) > 1:
+            failures.append("duplicate Texas link in visible breadcrumbs")
+            break
     photos = [src for src in p.images if not re.search(r"(?:logo|brand|icon)", src, re.I)]
     if len(photos) != 1:
         failures.append("expected one representative appliance photo (not a logo); found " + str(len(photos)))
