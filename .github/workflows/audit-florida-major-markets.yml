@@ -1,0 +1,34 @@
+name: Audit Florida Major-Market Request Guides
+on:
+  pull_request:
+    paths:
+      - 'data/florida-major-market-plan.json'
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - 'florida-appliance-pickup/index.html'
+      - '*-fl-*-pickup/index.html'
+      - 'scripts/audit-florida-major-markets.py'
+      - '.github/workflows/audit-florida-major-markets.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/florida-major-market-plan.json'
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - 'florida-appliance-pickup/index.html'
+      - '*-fl-*-pickup/index.html'
+      - 'scripts/audit-florida-major-markets.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/audit-florida-major-markets.py

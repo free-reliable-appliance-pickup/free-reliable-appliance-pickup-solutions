@@ -2876,6 +2876,279 @@
       "state_code": "TX",
       "region": "Corpus Christi Area",
       "priority": 2
+    },
+    {
+      "city": "Hialeah",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Doral",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Miami Gardens",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Homestead",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Hollywood",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Pembroke Pines",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Miramar",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Pompano Beach",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Coral Springs",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Boca Raton",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Boynton Beach",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Delray Beach",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "South Florida",
+      "priority": 2
+    },
+    {
+      "city": "Brandon",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Tampa Bay",
+      "priority": 2
+    },
+    {
+      "city": "Riverview",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Tampa Bay",
+      "priority": 2
+    },
+    {
+      "city": "Wesley Chapel",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Tampa Bay",
+      "priority": 2
+    },
+    {
+      "city": "Plant City",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Tampa Bay",
+      "priority": 2
+    },
+    {
+      "city": "Sanford",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Central Florida",
+      "priority": 2
+    },
+    {
+      "city": "Apopka",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Central Florida",
+      "priority": 2
+    },
+    {
+      "city": "Winter Garden",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Central Florida",
+      "priority": 2
+    },
+    {
+      "city": "St. Cloud",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Central Florida",
+      "priority": 2
+    },
+    {
+      "city": "Clermont",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Central Florida",
+      "priority": 2
+    },
+    {
+      "city": "Altamonte Springs",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Central Florida",
+      "priority": 2
+    },
+    {
+      "city": "Orange Park",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Northeast Florida",
+      "priority": 2
+    },
+    {
+      "city": "Jacksonville Beach",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Northeast Florida",
+      "priority": 2
+    },
+    {
+      "city": "St. Augustine",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Northeast Florida",
+      "priority": 2
+    },
+    {
+      "city": "Palm Coast",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Northeast Florida",
+      "priority": 2
+    },
+    {
+      "city": "Tallahassee",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "North Florida",
+      "priority": 2
+    },
+    {
+      "city": "Quincy",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "North Florida",
+      "priority": 2
+    },
+    {
+      "city": "Crawfordville",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "North Florida",
+      "priority": 2
+    },
+    {
+      "city": "Lakeland",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Polk County",
+      "priority": 2
+    },
+    {
+      "city": "Winter Haven",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Polk County",
+      "priority": 2
+    },
+    {
+      "city": "Haines City",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Polk County",
+      "priority": 2
+    },
+    {
+      "city": "Port St. Lucie",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Treasure Coast",
+      "priority": 2
+    },
+    {
+      "city": "Cape Coral",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Southwest Florida",
+      "priority": 2
+    },
+    {
+      "city": "Fort Myers",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Southwest Florida",
+      "priority": 2
+    },
+    {
+      "city": "Sarasota",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Southwest Florida",
+      "priority": 2
+    },
+    {
+      "city": "Bradenton",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Southwest Florida",
+      "priority": 2
+    },
+    {
+      "city": "North Port",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Southwest Florida",
+      "priority": 2
+    },
+    {
+      "city": "Palm Bay",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Space Coast",
+      "priority": 2
     }
   ]
 }
