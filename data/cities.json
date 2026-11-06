@@ -1359,6 +1359,13 @@
       "priority": 2
     },
     {
+      "city": "Brookshire",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
       "city": "Brownsville",
       "state": "Texas",
       "state_code": "TX",
@@ -1587,6 +1594,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Fair Oaks Ranch",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
       "priority": 2
     },
     {
