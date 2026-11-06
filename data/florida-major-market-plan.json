@@ -1,0 +1,412 @@
+{
+  "created": "2026-11-06",
+  "policy": "Research radius only; not guaranteed service coverage, free pickup, or approval for city indexing.",
+  "sources": [
+    "https://www.edr.state.fl.us/Content/population-demographics/reports/econographicnews_2025_Volume1.pdf",
+    "https://pumsdata.com/data/permits/florida",
+    "https://www.floridarealtors.org/news-media/news-articles/2026/09/florida-home-permits-rebound-28-august"
+  ],
+  "groups": [
+    {
+      "region": "South Florida",
+      "label": "Miami, Fort Lauderdale & West Palm Beach",
+      "planningNote": "Use separate Miami-Dade, Broward and Palm Beach dispatch clusters, roughly 20–30 miles from each confirmed operator; do not imply one Miami pickup vehicle covers the entire coast.",
+      "cities": [
+        "Miami",
+        "Hialeah",
+        "Doral",
+        "Miami Gardens",
+        "Homestead",
+        "Fort Lauderdale",
+        "Hollywood",
+        "Pembroke Pines",
+        "Miramar",
+        "Pompano Beach",
+        "Coral Springs",
+        "West Palm Beach",
+        "Boca Raton",
+        "Boynton Beach",
+        "Delray Beach"
+      ]
+    },
+    {
+      "region": "Tampa Bay",
+      "label": "Tampa Bay and surrounding cities",
+      "planningNote": "Review Tampa/Hillsborough at approximately 25–30 miles and Pinellas/St. Petersburg/Clearwater separately at approximately 15–25 miles, accounting for bay bridges and drive time. Wesley Chapel and Plant City require route-specific review.",
+      "cities": [
+        "Tampa",
+        "St. Petersburg",
+        "Clearwater",
+        "Brandon",
+        "Riverview",
+        "Wesley Chapel",
+        "Plant City"
+      ]
+    },
+    {
+      "region": "Central Florida",
+      "label": "Orlando, Kissimmee and growth suburbs",
+      "planningNote": "Use 25–35 miles around each confirmed Orlando/Orange-Seminole-Osceola operator; evaluate St. Cloud and Clermont as outer growth clusters, not assumed free routes.",
+      "cities": [
+        "Orlando",
+        "Kissimmee",
+        "Sanford",
+        "Apopka",
+        "Winter Garden",
+        "St. Cloud",
+        "Clermont",
+        "Altamonte Springs"
+      ]
+    },
+    {
+      "region": "Northeast Florida",
+      "label": "Jacksonville and St. Johns growth corridor",
+      "planningNote": "Start Jacksonville with an approximately 25–35-mile operator review zone. Treat St. Augustine and Palm Coast as separate growth markets when local route travel is impractical.",
+      "cities": [
+        "Jacksonville",
+        "Orange Park",
+        "Jacksonville Beach",
+        "St. Augustine",
+        "Palm Coast"
+      ]
+    },
+    {
+      "region": "North Florida",
+      "label": "Tallahassee and nearby counties",
+      "planningNote": "Start with an approximately 25–30-mile research area around Tallahassee, with rural, Gadsden and Wakulla requests reviewed separately by actual drive/access.",
+      "cities": [
+        "Tallahassee",
+        "Quincy",
+        "Crawfordville"
+      ]
+    },
+    {
+      "region": "Polk County",
+      "label": "Lakeland and Polk County housing corridor",
+      "planningNote": "Use separate 20–30-mile Lakeland and Winter Haven/Haines City route studies; avoid assuming all of Polk County has an active free pickup partner.",
+      "cities": [
+        "Lakeland",
+        "Winter Haven",
+        "Haines City"
+      ]
+    },
+    {
+      "region": "Treasure Coast",
+      "label": "Port St. Lucie growth market",
+      "planningNote": "Evaluate a 20–30-mile local route around Port St. Lucie; Fort Pierce and Stuart need individual route checks.",
+      "cities": [
+        "Port St. Lucie"
+      ]
+    },
+    {
+      "region": "Southwest Florida",
+      "label": "Cape Coral, Fort Myers, Sarasota and North Port",
+      "planningNote": "Use local 20–30-mile clusters for Cape Coral–Fort Myers and Sarasota–Bradenton, with North Port as its own growth-zone review. Bridges, water and county boundaries make a single radius misleading.",
+      "cities": [
+        "Cape Coral",
+        "Fort Myers",
+        "Sarasota",
+        "Bradenton",
+        "North Port"
+      ]
+    },
+    {
+      "region": "Space Coast",
+      "label": "Palm Bay housing growth market",
+      "planningNote": "Review a local 20–30-mile Palm Bay–Melbourne area; do not imply coverage to Orlando or every Brevard coastal location.",
+      "cities": [
+        "Palm Bay"
+      ]
+    }
+  ],
+  "cities": [
+    {
+      "city": "Miami",
+      "county": "Miami-Dade",
+      "region": "South Florida",
+      "nearbyExamples": "Brickell, Little Havana and Edgewater"
+    },
+    {
+      "city": "Hialeah",
+      "county": "Miami-Dade",
+      "region": "South Florida",
+      "nearbyExamples": "Miami Lakes, Hialeah Gardens and Miami Springs"
+    },
+    {
+      "city": "Doral",
+      "county": "Miami-Dade",
+      "region": "South Florida",
+      "nearbyExamples": "Sweetwater, Fontainebleau and Westchester"
+    },
+    {
+      "city": "Miami Gardens",
+      "county": "Miami-Dade",
+      "region": "South Florida",
+      "nearbyExamples": "North Miami Beach, Opa-locka and Miramar"
+    },
+    {
+      "city": "Homestead",
+      "county": "Miami-Dade",
+      "region": "South Florida",
+      "nearbyExamples": "Florida City, Leisure City and Princeton"
+    },
+    {
+      "city": "Fort Lauderdale",
+      "county": "Broward",
+      "region": "South Florida",
+      "nearbyExamples": "Dania Beach, Wilton Manors and Oakland Park"
+    },
+    {
+      "city": "Hollywood",
+      "county": "Broward",
+      "region": "South Florida",
+      "nearbyExamples": "Dania Beach, Hallandale Beach and Pembroke Pines"
+    },
+    {
+      "city": "Pembroke Pines",
+      "county": "Broward",
+      "region": "South Florida",
+      "nearbyExamples": "Miramar, Davie and Cooper City"
+    },
+    {
+      "city": "Miramar",
+      "county": "Broward",
+      "region": "South Florida",
+      "nearbyExamples": "Pembroke Pines, Miami Gardens and Davie"
+    },
+    {
+      "city": "Pompano Beach",
+      "county": "Broward",
+      "region": "South Florida",
+      "nearbyExamples": "Coconut Creek, Deerfield Beach and Oakland Park"
+    },
+    {
+      "city": "Coral Springs",
+      "county": "Broward",
+      "region": "South Florida",
+      "nearbyExamples": "Margate, Parkland and Coconut Creek"
+    },
+    {
+      "city": "West Palm Beach",
+      "county": "Palm Beach",
+      "region": "South Florida",
+      "nearbyExamples": "Riviera Beach, Lake Worth Beach and Palm Beach Gardens"
+    },
+    {
+      "city": "Boca Raton",
+      "county": "Palm Beach",
+      "region": "South Florida",
+      "nearbyExamples": "Delray Beach, Highland Beach and Deerfield Beach"
+    },
+    {
+      "city": "Boynton Beach",
+      "county": "Palm Beach",
+      "region": "South Florida",
+      "nearbyExamples": "Delray Beach, Lake Worth Beach and Lantana"
+    },
+    {
+      "city": "Delray Beach",
+      "county": "Palm Beach",
+      "region": "South Florida",
+      "nearbyExamples": "Boynton Beach, Boca Raton and Gulf Stream"
+    },
+    {
+      "city": "Tampa",
+      "county": "Hillsborough",
+      "region": "Tampa Bay",
+      "nearbyExamples": "Temple Terrace, Carrollwood and Town 'n' Country"
+    },
+    {
+      "city": "St. Petersburg",
+      "county": "Pinellas",
+      "region": "Tampa Bay",
+      "nearbyExamples": "Gulfport, Pinellas Park and Treasure Island"
+    },
+    {
+      "city": "Clearwater",
+      "county": "Pinellas",
+      "region": "Tampa Bay",
+      "nearbyExamples": "Largo, Dunedin and Safety Harbor"
+    },
+    {
+      "city": "Brandon",
+      "county": "Hillsborough",
+      "region": "Tampa Bay",
+      "nearbyExamples": "Valrico, Seffner and Riverview"
+    },
+    {
+      "city": "Riverview",
+      "county": "Hillsborough",
+      "region": "Tampa Bay",
+      "nearbyExamples": "Brandon, Gibsonton and Apollo Beach"
+    },
+    {
+      "city": "Wesley Chapel",
+      "county": "Pasco",
+      "region": "Tampa Bay",
+      "nearbyExamples": "Lutz, Land O' Lakes and Zephyrhills"
+    },
+    {
+      "city": "Plant City",
+      "county": "Hillsborough",
+      "region": "Tampa Bay",
+      "nearbyExamples": "Dover, Seffner and Lakeland"
+    },
+    {
+      "city": "Orlando",
+      "county": "Orange",
+      "region": "Central Florida",
+      "nearbyExamples": "Conway, Ocoee and Winter Park"
+    },
+    {
+      "city": "Kissimmee",
+      "county": "Osceola",
+      "region": "Central Florida",
+      "nearbyExamples": "Poinciana, St. Cloud and Celebration"
+    },
+    {
+      "city": "Sanford",
+      "county": "Seminole",
+      "region": "Central Florida",
+      "nearbyExamples": "Lake Mary, DeBary and Longwood"
+    },
+    {
+      "city": "Apopka",
+      "county": "Orange",
+      "region": "Central Florida",
+      "nearbyExamples": "Ocoee, Altamonte Springs and Zellwood"
+    },
+    {
+      "city": "Winter Garden",
+      "county": "Orange",
+      "region": "Central Florida",
+      "nearbyExamples": "Ocoee, Oakland and Clermont"
+    },
+    {
+      "city": "St. Cloud",
+      "county": "Osceola",
+      "region": "Central Florida",
+      "nearbyExamples": "Kissimmee, Narcoossee and Lake Nona"
+    },
+    {
+      "city": "Clermont",
+      "county": "Lake",
+      "region": "Central Florida",
+      "nearbyExamples": "Minneola, Groveland and Winter Garden"
+    },
+    {
+      "city": "Altamonte Springs",
+      "county": "Seminole",
+      "region": "Central Florida",
+      "nearbyExamples": "Maitland, Casselberry and Longwood"
+    },
+    {
+      "city": "Jacksonville",
+      "county": "Duval",
+      "region": "Northeast Florida",
+      "nearbyExamples": "Mandarin, Arlington and Riverside"
+    },
+    {
+      "city": "Orange Park",
+      "county": "Clay",
+      "region": "Northeast Florida",
+      "nearbyExamples": "Fleming Island, Middleburg and Lakeside"
+    },
+    {
+      "city": "Jacksonville Beach",
+      "county": "Duval",
+      "region": "Northeast Florida",
+      "nearbyExamples": "Neptune Beach, Atlantic Beach and Ponte Vedra Beach"
+    },
+    {
+      "city": "St. Augustine",
+      "county": "St. Johns",
+      "region": "Northeast Florida",
+      "nearbyExamples": "St. Augustine Beach, Vilano Beach and Nocatee"
+    },
+    {
+      "city": "Palm Coast",
+      "county": "Flagler",
+      "region": "Northeast Florida",
+      "nearbyExamples": "Flagler Beach, Bunnell and Hammock"
+    },
+    {
+      "city": "Tallahassee",
+      "county": "Leon",
+      "region": "North Florida",
+      "nearbyExamples": "Midway, Woodville and Bradfordville"
+    },
+    {
+      "city": "Quincy",
+      "county": "Gadsden",
+      "region": "North Florida",
+      "nearbyExamples": "Havana, Midway and Gretna"
+    },
+    {
+      "city": "Crawfordville",
+      "county": "Wakulla",
+      "region": "North Florida",
+      "nearbyExamples": "Woodville, Medart and Panacea"
+    },
+    {
+      "city": "Lakeland",
+      "county": "Polk",
+      "region": "Polk County",
+      "nearbyExamples": "Auburndale, Plant City and Mulberry"
+    },
+    {
+      "city": "Winter Haven",
+      "county": "Polk",
+      "region": "Polk County",
+      "nearbyExamples": "Auburndale, Lake Alfred and Eagle Lake"
+    },
+    {
+      "city": "Haines City",
+      "county": "Polk",
+      "region": "Polk County",
+      "nearbyExamples": "Davenport, Lake Alfred and Poinciana"
+    },
+    {
+      "city": "Port St. Lucie",
+      "county": "St. Lucie",
+      "region": "Treasure Coast",
+      "nearbyExamples": "Fort Pierce, Tradition and Stuart"
+    },
+    {
+      "city": "Cape Coral",
+      "county": "Lee",
+      "region": "Southwest Florida",
+      "nearbyExamples": "North Fort Myers, Pine Island and Fort Myers"
+    },
+    {
+      "city": "Fort Myers",
+      "county": "Lee",
+      "region": "Southwest Florida",
+      "nearbyExamples": "North Fort Myers, Lehigh Acres and Cape Coral"
+    },
+    {
+      "city": "Sarasota",
+      "county": "Sarasota",
+      "region": "Southwest Florida",
+      "nearbyExamples": "Siesta Key, Fruitville and Bee Ridge"
+    },
+    {
+      "city": "Bradenton",
+      "county": "Manatee",
+      "region": "Southwest Florida",
+      "nearbyExamples": "Palmetto, Lakewood Ranch and Ellenton"
+    },
+    {
+      "city": "North Port",
+      "county": "Sarasota",
+      "region": "Southwest Florida",
+      "nearbyExamples": "Port Charlotte, Warm Mineral Springs and Venice"
+    },
+    {
+      "city": "Palm Bay",
+      "county": "Brevard",
+      "region": "Space Coast",
+      "nearbyExamples": "Melbourne, West Melbourne and Malabar"
+    }
+  ]
+}
