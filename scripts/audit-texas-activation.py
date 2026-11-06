@@ -27,6 +27,7 @@ class PickupPage(HTMLParser):
         self.robots = []
         self.canonical = []
         self.forms = []
+        self.images = []
         self.in_form = False
 
     def handle_starttag(self, tag, attrs):
@@ -35,6 +36,8 @@ class PickupPage(HTMLParser):
             self.robots.append(a.get("content", "").lower())
         if tag == "link" and a.get("rel", "").lower() == "canonical":
             self.canonical.append(a.get("href", ""))
+        if tag == "img" and a.get("src"):
+            self.images.append(a["src"])
         if tag == "form":
             self.forms.append({"attributes": a, "inputs": {}})
             self.in_form = True
@@ -118,6 +121,11 @@ def collect():
         if not pickup_in_texas(page):
             continue
         page_slug = slug(path)
+        # Asset verified visually: this misleadingly named "refrigerator"
+        # photo actually shows a top-loading washing machine.
+        if (page_slug.endswith("-refrigerator-pickup") and
+                "/assets/rancho-cucamonga/rancho-cucamonga-refrigerator-pickup-real-refrigerator.jpg" in page.images):
+            errors.append(f"{page_slug}: refrigerator category has a washer photo")
         noindex = any("noindex" in x for x in page.robots)
         in_sitemap = url_for(page_slug) in sitemap
         if len(page.canonical) != 1 or page.canonical[0] != url_for(page_slug):
@@ -142,13 +150,110 @@ def collect():
                 market = record_market(form_cities[0], markets, catalog)
                 if not primary_partner_confirmed(market, partners):
                     errors.append(f"{page_slug}: indexable without verified route + approved partner registry status")
-        texas_pages[page_slug] = {"noindex": noindex, "in_sitemap": in_sitemap}
+        # Check the actual submitted city for request-only pages too. A
+        # correctly named TX URL with a copied city field can misroute leads.
+        city_controls = [
+            inp
+            for form in page.forms
+            for inp in form["inputs"].get("city", [])
+        ]
+        form_cities = {
+            inp.get("value", "").strip().casefold()
+            for inp in city_controls if inp.get("value", "").strip()
+        }
+        texas_pages[page_slug] = {
+            "noindex": noindex, "in_sitemap": in_sitemap,
+            "form_cities": form_cities,
+            "required_city_input": any("required" in inp for inp in city_controls),
+        }
+
+    # Enforce a complete Texas five-category source inventory. We use the
+    # parsed TX form inventory, not filename existence: for example,
+    # /selma-washer-dryer-pickup/ is a California page, not a Texas guide.
+    for city_name in sorted(catalog):
+        city_slug = re.sub(r"[^a-z0-9]+", "-", city_name).strip("-")
+        for kind in ("appliance", "washer-dryer", "refrigerator", "freezer", "stove-oven"):
+            candidates = (
+                f"{city_slug}-tx-{kind}-pickup",
+                f"{city_slug}-{kind}-pickup",
+            )
+            # A required, blank city input legitimately asks the customer to
+            # type the pickup city. A nonblank prefill must match this guide:
+            # rejecting copied city defaults protects customer routing.
+            if not any(
+                (page := texas_pages.get(candidate))
+                and page["required_city_input"]
+                and (not page["form_cities"] or city_name in page["form_cities"])
+                for candidate in candidates
+            ):
+                errors.append(
+                    f"{city_name}: missing Texas {kind} guide, required city input, or correct prefill"
+                )
 
     expected_regions = {r for r in markets}
-    if len(catalog) != 154:
+    # Baseline reviewed 2026-11-05: Sachse, Watauga and Balch Springs added as
+    # request-only Dallas–Fort Worth markets; no operator or indexing approvals.
+    # Melissa (Dallas–Fort Worth) and Iowa Colony (Houston Metro) are added as
+    # request-only catalog entries; no market activation or SEO approval.
+    if len(catalog) != 205:
         errors.append(f"Texas city catalog changed to {len(catalog)}: review mapping and update baseline")
-    if len(expected_regions) != 22:
+    for city_name in ("Sachse", "Watauga", "Balch Springs"):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != "Dallas-Fort Worth":
+            errors.append(f"{city_name}: missing from request-only Dallas-Fort Worth catalog mapping")
+    for city_name, region in (("Melissa", "Dallas-Fort Worth"), ("Iowa Colony", "Houston Metro")):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: missing expected request-only Texas region mapping")
+    # Liberty Hill / Bulverde: request-only metro mapping, with no operator approval.
+    for city_name, region in (("Liberty Hill", "Austin Metro"), ("Bulverde", "San Antonio Metro")):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: missing expected request-only Texas region mapping")
+    if len(expected_regions) != 24:
         errors.append(f"Texas regional queues changed to {len(expected_regions)}: review mapping and update baseline")
+    # Seagoville and Lockhart remain request-only markets with no verified operator.
+    for city_name, region in (("Seagoville", "Dallas-Fort Worth"), ("Lockhart", "Austin Metro")):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: missing expected request-only Texas region mapping")
+    # Castle Hills and Dayton remain request-only markets with no verified operator.
+    for city_name, region in (("Castle Hills", "San Antonio Metro"), ("Dayton", "Houston Metro")):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: missing expected request-only Texas region mapping")
+    # Anna and Dripping Springs remain request-only with no verified operators.
+    for city_name, region in (("Anna", "Dallas-Fort Worth"), ("Dripping Springs", "Austin Metro")):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: missing expected request-only Texas region mapping")
+    # Fair Oaks Ranch and Brookshire remain request-only; no local operator verified.
+    for city_name, region in (("Fair Oaks Ranch", "San Antonio Metro"), ("Brookshire", "Houston Metro")):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: missing expected request-only Texas region mapping")
+    # Four competitor-market city requests remain unverified, request-only.
+    for city_name, region in (("Aubrey", "Dallas-Fort Worth"), ("Hutchins", "Dallas-Fort Worth"),
+                              ("Shenandoah", "Houston Metro"), ("Bee Cave", "Austin Metro")):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: missing expected request-only Texas region mapping")
+    # Texas final-nine competitor gap: no local fulfillment or indexability is assumed.
+    for city_name, region in [["Santa Fe","Houston Metro"],["Hunters Creek Village","Houston Metro"],["Freeport","Houston Metro"],["Cleveland","Houston Metro"],["Shavano Park","San Antonio Metro"],["Del Rio","Del Rio–Eagle Pass Area"],["Eagle Pass","Del Rio–Eagle Pass Area"],["Copperas Cove","Killeen–Temple"],["Lufkin","Lufkin Area"]]:
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: incorrect request-only Texas routing")
+        queue = markets.get(region)
+        if not queue or queue.get("status") != "request-only" or queue.get("partner_id") or queue.get("phone"):
+            errors.append(f"{city_name}: unverified market must remain request-only")
+    # Competitor-listed statewide Texas cities; remain request-only.
+    for city_name, region in [["Midlothian","Dallas-Fort Worth"],["Red Oak","Dallas-Fort Worth"],["Ennis","Dallas-Fort Worth"],["Cleburne","Dallas-Fort Worth"],["Clute","Houston Metro"],["Sealy","Houston Metro"],["Willis","Houston Metro"],["Hitchcock","Houston Metro"],["Elgin","Austin Metro"],["Lago Vista","Austin Metro"],["Floresville","San Antonio Metro"],["Kirby","San Antonio Metro"],["Donna","Rio Grande Valley"],["Mercedes","Rio Grande Valley"],["San Benito","Rio Grande Valley"],["Rio Grande City","Rio Grande Valley"],["Nacogdoches","Lufkin Area"],["Marshall","East Texas (Tyler–Longview)"],["Kilgore","East Texas (Tyler–Longview)"],["Alice","Corpus Christi Area"],["Robstown","Corpus Christi Area"],["Kingsville","Corpus Christi Area"],["Rockport","Corpus Christi Area"]]:
+        entry = catalog.get(city_name.casefold())
+        if not entry or entry.get("region") != region:
+            errors.append(f"{city_name}: unexpected TX catalog mapping")
+        queue = markets.get(region)
+        if not queue or queue.get("status") != "request-only" or queue.get("partner_id") or queue.get("phone"):
+            errors.append(f"{city_name}: unverified territory not request-only")
     missing_regions = {row.get("region") for row in catalog.values()} - expected_regions
     for region in sorted(missing_regions):
         errors.append(f"Texas city catalog references missing region: {region}")

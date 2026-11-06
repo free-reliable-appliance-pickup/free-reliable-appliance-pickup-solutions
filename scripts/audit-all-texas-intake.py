@@ -81,9 +81,25 @@ def check(path):
     scripts = [s for s in p.scripts if re.search(r"(^|/)customer-routing\.js(?:\?|$)", s)]
     if len(scripts) != 1:
         failures.append("missing/duplicated customer-routing.js include")
+    elif scripts[0] != "/assets/customer-routing.js":
+        failures.append("customer routing script must use the root-absolute asset path")
+    # Catch duplicate visible state breadcrumbs; a second Texas link is also
+    # a common signal of redundant BreadcrumbList JSON-LD on these pages.
+    for nav in re.findall(r'<nav[^>]*class="[^"]*(?:crumb|breadcrumb)[^"]*"[^>]*>.*?</nav>', content, re.I | re.S):
+        texas_links = re.findall(r'<a[^>]*href="/texas-appliance-pickup/"[^>]*>', nav, re.I)
+        if len(texas_links) > 1:
+            failures.append("duplicate Texas link in visible breadcrumbs")
+            break
     photos = [src for src in p.images if not re.search(r"(?:logo|brand|icon)", src, re.I)]
     if len(photos) != 1:
         failures.append("expected one representative appliance photo (not a logo); found " + str(len(photos)))
+    # An existing image tag is not enough if its source asset is missing.
+    # Only local images can be validated from this read-only repository audit.
+    for src in photos:
+        if src.startswith("/") and not src.startswith("//"):
+            asset = Path(src.split("?", 1)[0].split("#", 1)[0].lstrip("/"))
+            if not asset.is_file():
+                failures.append("missing local appliance photo: " + src)
     if path.as_posix() != "texas-appliance-pickup/index.html" and not any(
         "noindex" in directive for directive in p.head_robots
     ):
