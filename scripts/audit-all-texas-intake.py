@@ -84,6 +84,13 @@ def check(path):
     photos = [src for src in p.images if not re.search(r"(?:logo|brand|icon)", src, re.I)]
     if len(photos) != 1:
         failures.append("expected one representative appliance photo (not a logo); found " + str(len(photos)))
+    # An existing image tag is not enough if its source asset is missing.
+    # Only local images can be validated from this read-only repository audit.
+    for src in photos:
+        if src.startswith("/") and not src.startswith("//"):
+            asset = Path(src.split("?", 1)[0].split("#", 1)[0].lstrip("/"))
+            if not asset.is_file():
+                failures.append("missing local appliance photo: " + src)
     if path.as_posix() != "texas-appliance-pickup/index.html" and not any(
         "noindex" in directive for directive in p.head_robots
     ):
