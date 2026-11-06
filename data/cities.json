@@ -1702,6 +1702,13 @@
       "priority": 2
     },
     {
+      "city": "Iowa Colony",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
       "city": "Irving",
       "state": "Texas",
       "state_code": "TX",
@@ -1885,6 +1892,13 @@
     },
     {
       "city": "McKinney",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Melissa",
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
