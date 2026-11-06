@@ -269,8 +269,11 @@ function enhanceApplianceConditionIntake(){
 
 function loadPaidRemovalChoice(){if(document.querySelector('script[data-paid-removal-choice]'))return;const t=document.createElement('script');t.src=siteUrl('assets/paid-removal-choice.js');t.defer=true;t.dataset.paidRemovalChoice='1';document.head.appendChild(t);}
 function recordPaidRemovalPreference(form){
-  const control=findField(form,['paid_removal_preference']);
-  const choice=control&&control.value==='quote_ok'?'QUOTE_REVIEW_ONLY':control&&control.value==='free_only'?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
+  const control=findField(form,['paid_removal_preference','paid_option']);
+  const raw=String(control&&control.value||'').trim().toLowerCase();
+  const normalized=raw==='quote_ok'||raw==='yes, after seeing the price'?'quote_ok':raw==='free_only'||raw==='no, free pickup only'?'free_only':'';
+  if(control&&control.name==='paid_option')hidden(form,'paid_removal_preference',normalized);
+  const choice=normalized==='quote_ok'?'QUOTE_REVIEW_ONLY':normalized==='free_only'?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
   hidden(form,'Paid Removal Quote Gate',choice);
   hidden(form,'Paid Removal Next Step',choice==='QUOTE_REVIEW_ONLY'?'Offer a separate quote only if free pickup is unavailable, subject to approved local capacity and explicit customer price acceptance. Do not charge or book automatically.':'Do not offer paid removal without new explicit customer permission.');
 }
