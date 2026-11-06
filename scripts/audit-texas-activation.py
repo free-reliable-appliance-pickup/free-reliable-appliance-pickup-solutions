@@ -150,7 +150,18 @@ def collect():
                 market = record_market(form_cities[0], markets, catalog)
                 if not primary_partner_confirmed(market, partners):
                     errors.append(f"{page_slug}: indexable without verified route + approved partner registry status")
-        texas_pages[page_slug] = {"noindex": noindex, "in_sitemap": in_sitemap}
+        # Check the actual submitted city for request-only pages too. A
+        # correctly named TX URL with a copied city field can misroute leads.
+        form_cities = {
+            inp.get("value", "").strip().casefold()
+            for form in page.forms
+            for inp in form["inputs"].get("city", [])
+            if inp.get("value", "").strip()
+        }
+        texas_pages[page_slug] = {
+            "noindex": noindex, "in_sitemap": in_sitemap,
+            "form_cities": form_cities,
+        }
 
     # Enforce a complete Texas five-category source inventory. We use the
     # parsed TX form inventory, not filename existence: for example,
@@ -162,8 +173,13 @@ def collect():
                 f"{city_slug}-tx-{kind}-pickup",
                 f"{city_slug}-{kind}-pickup",
             )
-            if not any(candidate in texas_pages for candidate in candidates):
-                errors.append(f"{city_name}: missing Texas {kind} pickup request guide")
+            if not any(
+                city_name in texas_pages.get(candidate, {}).get("form_cities", set())
+                for candidate in candidates
+            ):
+                errors.append(
+                    f"{city_name}: missing Texas {kind} pickup guide or mismatched form city"
+                )
 
     expected_regions = {r for r in markets}
     # Baseline reviewed 2026-11-05: Sachse, Watauga and Balch Springs added as
