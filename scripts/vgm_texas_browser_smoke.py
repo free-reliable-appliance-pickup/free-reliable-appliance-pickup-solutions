@@ -16,6 +16,7 @@ CASES = [
     ("/san-antonio-freezer-pickup/", "San Antonio", "San Antonio Metro"),
     ("/el-paso-stove-oven-pickup/", "El Paso", "El Paso Metro"),
     ("/kingwood-tx-freezer-pickup/", "Houston", "Houston Metro"),
+    ("/watauga-tx-appliance-pickup/", "Watauga", "Dallas-Fort Worth"),
 ]
 VIEWPORTS = [
     ("desktop", {"width": 1365, "height": 900}),
