@@ -2652,6 +2652,69 @@
       "state_code": "TX",
       "region": "Austin Metro",
       "priority": 2
+    },
+    {
+      "city": "Santa Fe",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Hunters Creek Village",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Freeport",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Cleveland",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Shavano Park",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
+      "city": "Del Rio",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Del Rio–Eagle Pass Area",
+      "priority": 2
+    },
+    {
+      "city": "Eagle Pass",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Del Rio–Eagle Pass Area",
+      "priority": 2
+    },
+    {
+      "city": "Copperas Cove",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Killeen–Temple",
+      "priority": 2
+    },
+    {
+      "city": "Lufkin",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Lufkin Area",
+      "priority": 2
     }
   ]
 }

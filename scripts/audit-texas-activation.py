@@ -149,7 +149,7 @@ def collect():
     # request-only Dallas–Fort Worth markets; no operator or indexing approvals.
     # Melissa (Dallas–Fort Worth) and Iowa Colony (Houston Metro) are added as
     # request-only catalog entries; no market activation or SEO approval.
-    if len(catalog) != 173:
+    if len(catalog) != 182:
         errors.append(f"Texas city catalog changed to {len(catalog)}: review mapping and update baseline")
     for city_name in ("Sachse", "Watauga", "Balch Springs"):
         row = catalog.get(city_name.casefold())
@@ -164,7 +164,7 @@ def collect():
         row = catalog.get(city_name.casefold())
         if not row or row.get("region") != region:
             errors.append(f"{city_name}: missing expected request-only Texas region mapping")
-    if len(expected_regions) != 22:
+    if len(expected_regions) != 24:
         errors.append(f"Texas regional queues changed to {len(expected_regions)}: review mapping and update baseline")
     # Seagoville and Lockhart remain request-only markets with no verified operator.
     for city_name, region in (("Seagoville", "Dallas-Fort Worth"), ("Lockhart", "Austin Metro")):
@@ -192,6 +192,14 @@ def collect():
         row = catalog.get(city_name.casefold())
         if not row or row.get("region") != region:
             errors.append(f"{city_name}: missing expected request-only Texas region mapping")
+    # Texas final-nine competitor gap: no local fulfillment or indexability is assumed.
+    for city_name, region in [["Santa Fe","Houston Metro"],["Hunters Creek Village","Houston Metro"],["Freeport","Houston Metro"],["Cleveland","Houston Metro"],["Shavano Park","San Antonio Metro"],["Del Rio","Del Rio–Eagle Pass Area"],["Eagle Pass","Del Rio–Eagle Pass Area"],["Copperas Cove","Killeen–Temple"],["Lufkin","Lufkin Area"]]:
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: incorrect request-only Texas routing")
+        queue = markets.get(region)
+        if not queue or queue.get("status") != "request-only" or queue.get("partner_id") or queue.get("phone"):
+            errors.append(f"{city_name}: unverified market must remain request-only")
     missing_regions = {row.get("region") for row in catalog.values()} - expected_regions
     for region in sorted(missing_regions):
         errors.append(f"Texas city catalog references missing region: {region}")

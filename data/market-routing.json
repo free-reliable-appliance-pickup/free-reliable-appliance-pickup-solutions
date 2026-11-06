@@ -1205,6 +1205,32 @@
       "phone": null,
       "pricing_status": "collect_data",
       "monthly_price_cents": null
+    },
+    {
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Del Rio–Eagle Pass Area",
+      "status": "request-only",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
+    },
+    {
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Lufkin Area",
+      "status": "request-only",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
     }
   ]
 }
