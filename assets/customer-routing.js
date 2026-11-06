@@ -270,7 +270,11 @@ function enhanceApplianceConditionIntake(){
 function loadPaidRemovalChoice(){if(document.querySelector('script[data-paid-removal-choice]'))return;const t=document.createElement('script');t.src=siteUrl('assets/paid-removal-choice.js');t.defer=true;t.dataset.paidRemovalChoice='1';document.head.appendChild(t);}
 function recordPaidRemovalPreference(form){
   const control=findField(form,['paid_removal_preference']);
-  const choice=control&&control.value==='quote_ok'?'QUOTE_REVIEW_ONLY':control&&control.value==='free_only'?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
+  const legacy=findField(form,['paid_option']);
+  // Some older city forms collect the same voluntary choice under paid_option.
+  // Never infer paid consent from a blank or unrecognized answer.
+  const raw=String(control&&control.value||legacy&&legacy.value||'').trim().toLowerCase();
+  const choice=raw==='quote_ok'||raw.startsWith('yes')?'QUOTE_REVIEW_ONLY':raw==='free_only'||raw.startsWith('no')?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
   hidden(form,'Paid Removal Quote Gate',choice);
   hidden(form,'Paid Removal Next Step',choice==='QUOTE_REVIEW_ONLY'?'Offer a separate quote only if free pickup is unavailable, subject to approved local capacity and explicit customer price acceptance. Do not charge or book automatically.':'Do not offer paid removal without new explicit customer permission.');
 }
