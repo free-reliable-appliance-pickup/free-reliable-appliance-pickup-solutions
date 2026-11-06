@@ -152,15 +152,19 @@ def collect():
                     errors.append(f"{page_slug}: indexable without verified route + approved partner registry status")
         # Check the actual submitted city for request-only pages too. A
         # correctly named TX URL with a copied city field can misroute leads.
-        form_cities = {
-            inp.get("value", "").strip().casefold()
+        city_controls = [
+            inp
             for form in page.forms
             for inp in form["inputs"].get("city", [])
-            if inp.get("value", "").strip()
+        ]
+        form_cities = {
+            inp.get("value", "").strip().casefold()
+            for inp in city_controls if inp.get("value", "").strip()
         }
         texas_pages[page_slug] = {
             "noindex": noindex, "in_sitemap": in_sitemap,
             "form_cities": form_cities,
+            "required_city_input": any("required" in inp for inp in city_controls),
         }
 
     # Enforce a complete Texas five-category source inventory. We use the
@@ -173,12 +177,17 @@ def collect():
                 f"{city_slug}-tx-{kind}-pickup",
                 f"{city_slug}-{kind}-pickup",
             )
+            # A required, blank city input legitimately asks the customer to
+            # type the pickup city. A nonblank prefill must match this guide:
+            # rejecting copied city defaults protects customer routing.
             if not any(
-                city_name in texas_pages.get(candidate, {}).get("form_cities", set())
+                (page := texas_pages.get(candidate))
+                and page["required_city_input"]
+                and (not page["form_cities"] or city_name in page["form_cities"])
                 for candidate in candidates
             ):
                 errors.append(
-                    f"{city_name}: missing Texas {kind} pickup guide or mismatched form city"
+                    f"{city_name}: missing Texas {kind} guide, required city input, or correct prefill"
                 )
 
     expected_regions = {r for r in markets}
