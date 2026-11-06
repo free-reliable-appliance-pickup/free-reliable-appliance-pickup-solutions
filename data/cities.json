@@ -1296,6 +1296,13 @@
       "priority": 2
     },
     {
+      "city": "Balch Springs",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
       "city": "Bastrop",
       "state": "Texas",
       "state_code": "TX",
@@ -2052,6 +2059,13 @@
       "priority": 2
     },
     {
+      "city": "Sachse",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
       "city": "Saginaw",
       "state": "Texas",
       "state_code": "TX",
@@ -2245,6 +2259,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Waco Area",
+      "priority": 2
+    },
+    {
+      "city": "Watauga",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
       "priority": 2
     },
     {
