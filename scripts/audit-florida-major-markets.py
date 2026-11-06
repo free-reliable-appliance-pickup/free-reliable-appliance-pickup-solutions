@@ -78,7 +78,12 @@ def main():
     hub = Path("florida-appliance-pickup/index.html").read_text()
     for r in data["cities"]:
         k=re.sub(r"[^a-z0-9]+","-",r["city"].lower()).strip("-")
-        if f"/{k}-fl-appliance-pickup/" not in hub: errors.append(f"hub missing {r['city']}")
+        if f'<details class="florida-city-choice" data-florida-city="{k}">' not in hub:
+            errors.append(f"hub lacks five-guide selector for {r['city']}")
+        for kind in TYPES:
+            link = f'href="/{k}-fl-{kind}-pickup/"'
+            if hub.count(link) != 1:
+                errors.append(f"hub missing or duplicated {kind} guide for {r['city']}: {hub.count(link)}")
     if 'name="robots" content="index, follow' not in hub: errors.append("Florida statewide hub lost index status")
     print("FLORIDA_MAJOR_MARKET_CITIES",len(data["cities"]))
     print("FLORIDA_GUIDES_AUDITED",len(paths))
