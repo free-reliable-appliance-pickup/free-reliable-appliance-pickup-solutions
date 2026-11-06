@@ -3149,6 +3149,118 @@
       "state_code": "FL",
       "region": "Space Coast",
       "priority": 2
+    },
+    {
+      "city": "Daytona Beach",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Daytona–Volusia",
+      "priority": 2
+    },
+    {
+      "city": "Deltona",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Daytona–Volusia",
+      "priority": 2
+    },
+    {
+      "city": "Ormond Beach",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Daytona–Volusia",
+      "priority": 2
+    },
+    {
+      "city": "Melbourne",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Space Coast",
+      "priority": 2
+    },
+    {
+      "city": "Titusville",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Space Coast",
+      "priority": 2
+    },
+    {
+      "city": "Pensacola",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Pensacola Area",
+      "priority": 2
+    },
+    {
+      "city": "Milton",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Pensacola Area",
+      "priority": 2
+    },
+    {
+      "city": "Navarre",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Pensacola Area",
+      "priority": 2
+    },
+    {
+      "city": "Ocala",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Ocala–The Villages",
+      "priority": 2
+    },
+    {
+      "city": "The Villages",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Ocala–The Villages",
+      "priority": 2
+    },
+    {
+      "city": "Naples",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Naples Area",
+      "priority": 2
+    },
+    {
+      "city": "Bonita Springs",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Southwest Florida",
+      "priority": 2
+    },
+    {
+      "city": "Gainesville",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Gainesville Metro",
+      "priority": 2
+    },
+    {
+      "city": "Fort Walton Beach",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Emerald Coast",
+      "priority": 2
+    },
+    {
+      "city": "Destin",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Emerald Coast",
+      "priority": 2
+    },
+    {
+      "city": "Crestview",
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Emerald Coast",
+      "priority": 2
     }
   ]
 }

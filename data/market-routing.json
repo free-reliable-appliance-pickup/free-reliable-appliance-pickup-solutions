@@ -1296,6 +1296,84 @@
       "phone": null,
       "pricing_status": "collect_data",
       "monthly_price_cents": null
+    },
+    {
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Daytona–Volusia",
+      "status": "request-only",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
+    },
+    {
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Pensacola Area",
+      "status": "request-only",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
+    },
+    {
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Ocala–The Villages",
+      "status": "request-only",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
+    },
+    {
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Naples Area",
+      "status": "request-only",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
+    },
+    {
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Gainesville Metro",
+      "status": "request-only",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
+    },
+    {
+      "state": "Florida",
+      "state_code": "FL",
+      "region": "Emerald Coast",
+      "status": "request-only",
+      "territory_status": "available",
+      "partner_id": null,
+      "backup_partner_id": null,
+      "lead_priority": 2,
+      "phone": null,
+      "pricing_status": "collect_data",
+      "monthly_price_cents": null
     }
   ]
 }

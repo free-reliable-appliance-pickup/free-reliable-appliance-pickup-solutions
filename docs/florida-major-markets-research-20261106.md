@@ -68,3 +68,18 @@ Sources:
 - https://www.edr.state.fl.us/Content/population-demographics/reports/econographicnews_2025_Volume1.pdf
 - https://pumsdata.com/data/permits/florida
 - https://www.floridarealtors.org/news-media/news-articles/2026/09/florida-home-permits-rebound-28-august
+
+## Final large-metro gap closing — November 6, 2026
+
+Official 2025 Florida metropolitan estimates identify substantial remaining population centers absent from the first 48-city release: Daytona Beach–Deltona–Ormond Beach (745,247), Pensacola (549,173), Ocala (433,765), Naples (413,314), Gainesville (364,471), Space Coast (667,900) and Crestview–Fort Walton Beach–Destin (316,740). Ocala also has substantial recent housing growth. Source: University of Florida BEBR Florida Estimates of Population 2025, Table 4: https://www.edr.state.fl.us/Content/population-demographics/data/Estimates2025.pdf .
+
+Added 16 city-specific request screening guides in the corresponding metro clusters, using five categories each (80 additional guides). **Cumulative Florida catalog: 64 selected cities, 320 category guides**. All new city pages are `noindex, follow` and excluded from sitemap until independently verified route/operator plus owner approval. Existing statewide hub stays indexable. No promised free pickup radius.
+
+- **Daytona Beach, Deltona and Ormond Beach** — Daytona Beach, Deltona, Ormond Beach. Evaluate separate 20–30-mile request screening around confirmed Volusia County operators. Coastal bridge access, Deltona's inland route and Daytona-area apartment/condo access change actual service viability.
+- **Pensacola, Milton and Navarre** — Pensacola, Milton, Navarre. Evaluate 25–30 miles around confirmed Pensacola operators and separate Santa Rosa routes for Milton/Navarre. Bridges and long coastal drives mean this is not a guaranteed coverage circle.
+- **Ocala and The Villages** — Ocala, The Villages. Treat Ocala and The Villages as separate 20–30-mile request-review clusters, especially across Marion, Sumter and Lake counties. No automatic cross-county free pickup.
+- **Naples and Collier County** — Naples. Evaluate a 20–25-mile local operator zone around Naples; keep Bonita Springs in the Lee County/Southwest Florida group and screen each city separately.
+- **Gainesville and surrounding Alachua County** — Gainesville. Evaluate 20–30 miles around an actual Gainesville-area operator, checking university move activity, apartment access and west-side growth neighborhoods; not a confirmed pickup offer.
+- **Crestview, Fort Walton Beach and Destin** — Crestview, Fort Walton Beach, Destin. Treat inland Crestview separately from Fort Walton Beach and Destin; evaluate 15–25-mile operator zones with coastal traffic, bridges, condos and military-housing access considered.
+- **Space Coast extension** — Melbourne and Titusville added next to Palm Bay; route separately as required.
+- **Southwest Florida extension** — Bonita Springs added near Fort Myers/Cape Coral and Naples, with county-specific routing review.
