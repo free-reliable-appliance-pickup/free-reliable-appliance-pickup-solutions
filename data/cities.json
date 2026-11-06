@@ -1261,6 +1261,13 @@
       "priority": 2
     },
     {
+      "city": "Anna",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
       "city": "Anthony",
       "state": "Texas",
       "state_code": "TX",
@@ -1545,6 +1552,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Dripping Springs",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
       "priority": 2
     },
     {
