@@ -85,8 +85,8 @@ def check(path):
         failures.append("customer routing script must use the root-absolute asset path")
     # Catch duplicate visible state breadcrumbs; a second Texas link is also
     # a common signal of redundant BreadcrumbList JSON-LD on these pages.
-    for nav in re.findall(r'<nav\\b[^>]*class="[^"]*(?:\\bcrumb\\b|\\bbreadcrumb\\b)[^"]*"[^>]*>[\\s\\S]*?</nav>', content, re.I):
-        texas_links = re.findall(r'<a\\b[^>]*href="/texas-appliance-pickup/"[^>]*>', nav, re.I)
+    for nav in re.findall(r'<nav[^>]*class="[^"]*(?:crumb|breadcrumb)[^"]*"[^>]*>.*?</nav>', content, re.I | re.S):
+        texas_links = re.findall(r'<a[^>]*href="/texas-appliance-pickup/"[^>]*>', nav, re.I)
         if len(texas_links) > 1:
             failures.append("duplicate Texas link in visible breadcrumbs")
             break
