@@ -27,6 +27,7 @@ class PickupPage(HTMLParser):
         self.robots = []
         self.canonical = []
         self.forms = []
+        self.images = []
         self.in_form = False
 
     def handle_starttag(self, tag, attrs):
@@ -35,6 +36,8 @@ class PickupPage(HTMLParser):
             self.robots.append(a.get("content", "").lower())
         if tag == "link" and a.get("rel", "").lower() == "canonical":
             self.canonical.append(a.get("href", ""))
+        if tag == "img" and a.get("src"):
+            self.images.append(a["src"])
         if tag == "form":
             self.forms.append({"attributes": a, "inputs": {}})
             self.in_form = True
@@ -118,6 +121,11 @@ def collect():
         if not pickup_in_texas(page):
             continue
         page_slug = slug(path)
+        # Asset verified visually: this misleadingly named "refrigerator"
+        # photo actually shows a top-loading washing machine.
+        if (page_slug.endswith("-refrigerator-pickup") and
+                "/assets/rancho-cucamonga/rancho-cucamonga-refrigerator-pickup-real-refrigerator.jpg" in page.images):
+            errors.append(f"{page_slug}: refrigerator category has a washer photo")
         noindex = any("noindex" in x for x in page.robots)
         in_sitemap = url_for(page_slug) in sitemap
         if len(page.canonical) != 1 or page.canonical[0] != url_for(page_slug):
