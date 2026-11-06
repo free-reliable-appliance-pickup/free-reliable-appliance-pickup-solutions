@@ -10,6 +10,7 @@ on:
       - '.github/workflows/audit-priority-city-internal-links.yml'
       - 'scripts/audit-valley-coast-directory.py'
       - 'scripts/audit-socal-hub-valley-coast-links.py'
+      - 'scripts/audit-antelope-alias-request-anchors.py'
   workflow_dispatch:
 
 permissions:
@@ -24,6 +25,8 @@ jobs:
         run: python3 scripts/audit-valley-coast-directory.py
       - name: Verify SoCal Valley and Ventura Coast owner links
         run: python3 scripts/audit-socal-hub-valley-coast-links.py
+      - name: Verify Antelope Valley support request anchors
+        run: python3 scripts/audit-antelope-alias-request-anchors.py
       - name: Analyze priority city crawl paths
         shell: bash
         run: |
