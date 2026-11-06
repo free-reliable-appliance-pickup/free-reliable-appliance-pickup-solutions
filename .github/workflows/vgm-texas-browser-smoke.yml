@@ -31,4 +31,14 @@ jobs:
           python -m pip install playwright==1.57.0
           python -m playwright install --with-deps chromium
       - name: Verify six representative TX drafts at desktop/mobile widths
+        env:
+          VGM_TEXAS_SCREENSHOT_DIR: ${{ runner.temp }}/texas-draft-previews
         run: python scripts/vgm_texas_browser_smoke.py
+      - name: Save unpublished Texas mobile/desktop previews for owner review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: texas-draft-visual-previews
+          path: ${{ runner.temp }}/texas-draft-previews/*.png
+          if-no-files-found: warn
+          retention-days: 7
