@@ -1401,6 +1401,13 @@
       "priority": 2
     },
     {
+      "city": "Castle Hills",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
       "city": "Cedar Hill",
       "state": "Texas",
       "state_code": "TX",
@@ -1503,6 +1510,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Dayton",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
       "priority": 2
     },
     {
