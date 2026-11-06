@@ -2624,6 +2624,34 @@
       "state_code": "WA",
       "region": "Yakima Valley",
       "priority": 2
+    },
+    {
+      "city": "Aubrey",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Hutchins",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Shenandoah",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Bee Cave",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
+      "priority": 2
     }
   ]
 }
