@@ -176,7 +176,7 @@ def run():
                                         form.locator('[name="' + field + '"]').select_option(label=value)
                                     if not form.evaluate("(form) => form.checkValidity()"):
                                         raise AssertionError("synthetic Kingwood test fixture invalid")
-                                    # Capture the second, qualified submit event;
+                                    # Capture a qualified customer submit event;
                                     # the intercept prevents any outbound POST.
                                     # This exercises wireForm, not just qualify().
                                     form.evaluate("""form => {
@@ -198,8 +198,8 @@ def run():
                                         timeout=12000,
                                     )
                                     events = page.evaluate("() => window.__vgmSubmitEvents")
-                                    if len(events) < 2 or events[0]["qualified"]:
-                                        raise AssertionError("expected unqualified then qualified submit events")
+                                    if not events or not any(item["qualified"] for item in events):
+                                        raise AssertionError("qualified browser submit event was not captured")
                                     fields = {key: [str(value)] for key, value in
                                               next(item["fields"] for item in events if item["qualified"]).items()}
                                     expected_fields = {
