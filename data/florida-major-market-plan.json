@@ -101,21 +101,79 @@
     {
       "region": "Southwest Florida",
       "label": "Cape Coral, Fort Myers, Sarasota and North Port",
-      "planningNote": "Use local 20–30-mile clusters for Cape Coral–Fort Myers and Sarasota–Bradenton, with North Port as its own growth-zone review. Bridges, water and county boundaries make a single radius misleading.",
+      "planningNote": "Use local 20–30-mile clusters for Cape Coral–Fort Myers and Sarasota–Bradenton, with North Port as its own growth-zone review. Bridges, water and county boundaries make a single radius misleading. Bonita Springs is a separate Lee County route-screening city near Collier County and requires its own verified operator.",
       "cities": [
         "Cape Coral",
         "Fort Myers",
         "Sarasota",
         "Bradenton",
-        "North Port"
+        "North Port",
+        "Bonita Springs"
       ]
     },
     {
       "region": "Space Coast",
-      "label": "Palm Bay housing growth market",
-      "planningNote": "Review a local 20–30-mile Palm Bay–Melbourne area; do not imply coverage to Orlando or every Brevard coastal location.",
+      "label": "Palm Bay, Melbourne and Titusville",
+      "planningNote": "Review Palm Bay–Melbourne and Titusville as separate 20–30-mile operator research clusters; the coastal and intercity drive does not guarantee a shared pickup route.",
       "cities": [
-        "Palm Bay"
+        "Palm Bay",
+        "Melbourne",
+        "Titusville"
+      ]
+    },
+    {
+      "region": "Daytona–Volusia",
+      "label": "Daytona Beach, Deltona and Ormond Beach",
+      "planningNote": "Evaluate separate 20–30-mile request screening around confirmed Volusia County operators. Coastal bridge access, Deltona's inland route and Daytona-area apartment/condo access change actual service viability.",
+      "cities": [
+        "Daytona Beach",
+        "Deltona",
+        "Ormond Beach"
+      ]
+    },
+    {
+      "region": "Pensacola Area",
+      "label": "Pensacola, Milton and Navarre",
+      "planningNote": "Evaluate 25–30 miles around confirmed Pensacola operators and separate Santa Rosa routes for Milton/Navarre. Bridges and long coastal drives mean this is not a guaranteed coverage circle.",
+      "cities": [
+        "Pensacola",
+        "Milton",
+        "Navarre"
+      ]
+    },
+    {
+      "region": "Ocala–The Villages",
+      "label": "Ocala and The Villages",
+      "planningNote": "Treat Ocala and The Villages as separate 20–30-mile request-review clusters, especially across Marion, Sumter and Lake counties. No automatic cross-county free pickup.",
+      "cities": [
+        "Ocala",
+        "The Villages"
+      ]
+    },
+    {
+      "region": "Naples Area",
+      "label": "Naples and Collier County",
+      "planningNote": "Evaluate a 20–25-mile local operator zone around Naples; keep Bonita Springs in the Lee County/Southwest Florida group and screen each city separately.",
+      "cities": [
+        "Naples"
+      ]
+    },
+    {
+      "region": "Gainesville Metro",
+      "label": "Gainesville and surrounding Alachua County",
+      "planningNote": "Evaluate 20–30 miles around an actual Gainesville-area operator, checking university move activity, apartment access and west-side growth neighborhoods; not a confirmed pickup offer.",
+      "cities": [
+        "Gainesville"
+      ]
+    },
+    {
+      "region": "Emerald Coast",
+      "label": "Crestview, Fort Walton Beach and Destin",
+      "planningNote": "Treat inland Crestview separately from Fort Walton Beach and Destin; evaluate 15–25-mile operator zones with coastal traffic, bridges, condos and military-housing access considered.",
+      "cities": [
+        "Crestview",
+        "Fort Walton Beach",
+        "Destin"
       ]
     }
   ],
@@ -407,6 +465,102 @@
       "county": "Brevard",
       "region": "Space Coast",
       "nearbyExamples": "Melbourne, West Melbourne and Malabar"
+    },
+    {
+      "city": "Daytona Beach",
+      "county": "Volusia",
+      "region": "Daytona–Volusia",
+      "nearbyExamples": "Ormond Beach, South Daytona and Port Orange"
+    },
+    {
+      "city": "Deltona",
+      "county": "Volusia",
+      "region": "Daytona–Volusia",
+      "nearbyExamples": "Orange City, DeBary and DeLand"
+    },
+    {
+      "city": "Ormond Beach",
+      "county": "Volusia",
+      "region": "Daytona–Volusia",
+      "nearbyExamples": "Daytona Beach, Holly Hill and Flagler Beach"
+    },
+    {
+      "city": "Melbourne",
+      "county": "Brevard",
+      "region": "Space Coast",
+      "nearbyExamples": "West Melbourne, Palm Bay and Satellite Beach"
+    },
+    {
+      "city": "Titusville",
+      "county": "Brevard",
+      "region": "Space Coast",
+      "nearbyExamples": "Mims, Port St. John and Cocoa"
+    },
+    {
+      "city": "Pensacola",
+      "county": "Escambia",
+      "region": "Pensacola Area",
+      "nearbyExamples": "Ferry Pass, Brent and Warrington"
+    },
+    {
+      "city": "Milton",
+      "county": "Santa Rosa",
+      "region": "Pensacola Area",
+      "nearbyExamples": "Pace, East Milton and Bagdad"
+    },
+    {
+      "city": "Navarre",
+      "county": "Santa Rosa",
+      "region": "Pensacola Area",
+      "nearbyExamples": "Holley, Midway and Gulf Breeze"
+    },
+    {
+      "city": "Ocala",
+      "county": "Marion",
+      "region": "Ocala–The Villages",
+      "nearbyExamples": "Belleview, Silver Springs Shores and Dunnellon"
+    },
+    {
+      "city": "The Villages",
+      "county": "Sumter, Lake and Marion",
+      "region": "Ocala–The Villages",
+      "nearbyExamples": "Lady Lake, Wildwood and Fruitland Park"
+    },
+    {
+      "city": "Naples",
+      "county": "Collier",
+      "region": "Naples Area",
+      "nearbyExamples": "Golden Gate, East Naples and Marco Island"
+    },
+    {
+      "city": "Bonita Springs",
+      "county": "Lee",
+      "region": "Southwest Florida",
+      "nearbyExamples": "Estero, Naples and Fort Myers"
+    },
+    {
+      "city": "Gainesville",
+      "county": "Alachua",
+      "region": "Gainesville Metro",
+      "nearbyExamples": "Newberry, Alachua and Archer"
+    },
+    {
+      "city": "Fort Walton Beach",
+      "county": "Okaloosa",
+      "region": "Emerald Coast",
+      "nearbyExamples": "Mary Esther, Shalimar and Destin"
+    },
+    {
+      "city": "Destin",
+      "county": "Okaloosa",
+      "region": "Emerald Coast",
+      "nearbyExamples": "Miramar Beach, Fort Walton Beach and Santa Rosa Beach"
+    },
+    {
+      "city": "Crestview",
+      "county": "Okaloosa",
+      "region": "Emerald Coast",
+      "nearbyExamples": "Niceville, Baker and Laurel Hill"
     }
   ]
 }

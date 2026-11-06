@@ -41,6 +41,8 @@ def main():
     data = json.loads(Path("data/florida-major-market-plan.json").read_text())
     base = "https://freereliableappliancepickup.com/"
     errors = []
+    if len(data["cities"]) != 64:
+        errors.append(f'Unexpected Florida city inventory: {len(data["cities"])}; expected 64')
     paths = []
     for row in data["cities"]:
         city = row["city"]
