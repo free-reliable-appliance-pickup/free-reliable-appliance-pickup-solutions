@@ -659,6 +659,50 @@ for slug in GENERAL_FORM_ATTRIBUTION:
             errors.append(f"{slug}: missing, duplicated, or wrong static {field}")
 print("GENERAL_FORM_ATTRIBUTION_CHECKED", len(GENERAL_FORM_ATTRIBUTION))
 
+
+# San Diego County: eleven non-overlapping general forms must collect access
+# as visible, native-required blank-first selections, even without JavaScript.
+# San Diego, El Cajon and San Marcos are owned by separate draft PR #674.
+SAN_DIEGO_GENERAL_ACCESS = (
+    "chula-vista-appliance-pickup",
+    "national-city-appliance-pickup",
+    "la-mesa-appliance-pickup",
+    "santee-appliance-pickup",
+    "escondido-appliance-pickup",
+    "oceanside-appliance-pickup",
+    "carlsbad-appliance-pickup",
+    "encinitas-appliance-pickup",
+    "vista-appliance-pickup",
+    "poway-appliance-pickup",
+    "del-mar-appliance-pickup",
+)
+for slug in SAN_DIEGO_GENERAL_ACCESS:
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing San Diego County general page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    forms = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in f]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected exactly one Formspree intake")
+        continue
+    form = forms[0]
+    if form.count(f'name="source_page" value="{slug}"') != 1:
+        errors.append(f"{slug}: source attribution changed")
+    for field in ("name", "phone", "address", "zip"):
+        match = re.search(r'<input\b[^>]*\bname="' + field + r'"[^>]*>', form, re.I)
+        if not match or not re.search(r'\brequired\b', match.group(0), re.I):
+            errors.append(f"{slug}: missing required {field}")
+    for field in ("appliance", "condition", "location", "stairs"):
+        if form.count(f'name="{field}"') != 1 or not select_ok(form, field):
+            errors.append(f"{slug}: {field} must be a unique required blank-first select")
+    if form.count('name="message"') != 1:
+        errors.append(f"{slug}: original access notes field missing")
+    if 'tel:+13107744304' not in raw:
+        errors.append(f"{slug}: existing 310 phone route changed")
+print("SAN_DIEGO_GENERAL_ACCESS_CHECKED", len(SAN_DIEGO_GENERAL_ACCESS))
+
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
 
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
