@@ -1856,6 +1856,13 @@
       "priority": 2
     },
     {
+      "city": "Lockhart",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
+      "priority": 2
+    },
+    {
       "city": "Longview",
       "state": "Texas",
       "state_code": "TX",
@@ -2140,6 +2147,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Seagoville",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
       "priority": 2
     },
     {
