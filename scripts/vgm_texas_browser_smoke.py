@@ -29,8 +29,12 @@ class QuietHandler(SimpleHTTPRequestHandler):
         pass
 
     def send_head(self):
-        """Never expose checkout Git metadata to tested browser page scripts."""
-        if ".git" in self.path.split("?", 1)[0].split("/"):
+        """Reject raw, URL-encoded, and symlinked checkout Git-metadata paths."""
+        target = Path(self.translate_path(self.path))
+        # translate_path applies the same URL decoding used by the file server.
+        if any(part.casefold() == ".git" for part in target.parts) or any(
+            part.casefold() == ".git" for part in target.resolve(strict=False).parts
+        ):
             self.send_error(404)
             return None
         return super().send_head()
@@ -48,6 +52,22 @@ def run():
     failures = []
     passed = 0
     try:
+        # Test the HTTP boundary, not just the Python path-guard function.
+        # Both URL forms must be rejected before page scripts can read .git.
+        from urllib.error import HTTPError
+        from urllib.request import urlopen
+
+        for protected_path in ("/.git/config", "/%2egit/config"):
+            try:
+                with urlopen(base + protected_path, timeout=5) as response:
+                    status = response.status
+            except HTTPError as error:
+                status = error.code
+            if status != 404:
+                raise AssertionError(
+                    "Git metadata accessible via " + protected_path + ": HTTP " + str(status)
+                )
+        print("PASS Git metadata denied for direct and URL-encoded access")
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
             try:
