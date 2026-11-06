@@ -1,0 +1,32 @@
+name: VGM Texas Draft Browser Forms (Read Only)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/vgm-texas-browser-smoke.yml'
+      - 'scripts/vgm_texas_browser_smoke.py'
+      - 'assets/customer-routing.js'
+      - 'assets/paid-removal-choice.js'
+      - 'data/cities.json'
+      - 'data/market-routing.json'
+      - '**/*-pickup/index.html'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  texas-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser test dependency
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Verify six representative TX drafts at desktop/mobile widths
+        run: python scripts/vgm_texas_browser_smoke.py
