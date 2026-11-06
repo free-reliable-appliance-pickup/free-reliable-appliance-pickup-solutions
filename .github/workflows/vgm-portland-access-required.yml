@@ -1,0 +1,22 @@
+name: VGM Portland Required Access Intake
+on:
+  pull_request:
+    paths:
+      - 'portland-appliance-pickup/index.html'
+      - 'scripts/audit-portland-access-required.py'
+      - '.github/workflows/vgm-portland-access-required.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'portland-appliance-pickup/index.html'
+      - 'scripts/audit-portland-access-required.py'
+      - '.github/workflows/vgm-portland-access-required.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/audit-portland-access-required.py
