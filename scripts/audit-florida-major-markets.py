@@ -76,6 +76,17 @@ def main():
         if catalog.get(("FL",r["city"]),{}).get("region")!=r["region"]: errors.append(f"region mismatch: {r['city']}")
         if markets.get(r["region"],{}).get("status")!="request-only": errors.append(f"unsafe market status: {r['region']}")
     hub = Path("florida-appliance-pickup/index.html").read_text()
+    hub_form = Page()
+    hub_form.feed(hub)
+    for name in ("name", "phone", "address", "city", "zip", "appliance", "condition", "floor", "stairs", "photos_available", "paid_option", "photo_link"):
+        if name not in hub_form.fields:
+            errors.append(f"Florida statewide form is missing {name}")
+    if not any("required" in f for f in hub_form.fields.get("photos_available", [])):
+        errors.append("Florida statewide form must ask photo availability")
+    if 'enctype="multipart/form-data"' in hub or 'type="file"' in hub:
+        errors.append("Florida hub must not promise unsupported Formspree Free file uploads")
+    if "can apply for the markets they can actually cover" in hub:
+        errors.append("Florida hub retains unapproved recruiting invitation")
     for r in data["cities"]:
         k=re.sub(r"[^a-z0-9]+","-",r["city"].lower()).strip("-")
         if f'<details class="florida-city-choice" data-florida-city="{k}">' not in hub:
