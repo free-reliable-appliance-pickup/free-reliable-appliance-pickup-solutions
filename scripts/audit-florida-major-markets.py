@@ -84,6 +84,23 @@ def main():
             link = f'href="/{k}-fl-{kind}-pickup/"'
             if hub.count(link) != 1:
                 errors.append(f"hub missing or duplicated {kind} guide for {r['city']}: {hub.count(link)}")
+    # Regression gate: major metro and Lee/Collier neighbors link to same appliance type.
+    priority_neighbors = {
+        "fort-lauderdale": ("hollywood", "pompano-beach", "pembroke-pines", "miramar", "coral-springs"),
+        "west-palm-beach": ("boynton-beach", "delray-beach", "boca-raton"),
+        "bonita-springs": ("naples", "fort-myers", "cape-coral"),
+    }
+    for city_slug, neighbors in priority_neighbors.items():
+        for kind in TYPES:
+            page_path = Path(f"{city_slug}-fl-{kind}-pickup/index.html")
+            if not page_path.exists():
+                errors.append(f"missing nearby-navigation guide: {page_path}")
+                continue
+            content = page_path.read_text(encoding="utf-8")
+            for neighbor_slug in neighbors:
+                expected = f'href="/{neighbor_slug}-fl-{kind}-pickup/"'
+                if content.count(expected) != 1:
+                    errors.append(f"{page_path}: missing or duplicated nearby guide {neighbor_slug} ({kind})")
     if 'name="robots" content="index, follow' not in hub: errors.append("Florida statewide hub lost index status")
     print("FLORIDA_MAJOR_MARKET_CITIES",len(data["cities"]))
     print("FLORIDA_GUIDES_AUDITED",len(paths))
