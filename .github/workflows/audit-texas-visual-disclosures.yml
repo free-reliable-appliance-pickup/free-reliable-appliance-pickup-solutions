@@ -31,4 +31,4 @@ jobs:
         with:
           python-version: '3.12'
       - name: Audit all Texas city photos, page identity and visible disclosures
-        run: python3 scripts/audit-texas-visual-disclosures.py
+        run: python3 scripts/audit-texas-visual-disclosures.py --strict-disclosures
