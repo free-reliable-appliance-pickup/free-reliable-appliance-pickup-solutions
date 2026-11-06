@@ -7,6 +7,7 @@ a live GitHub Pages deployment, indexing, or organic rankings.
 from html.parser import HTMLParser
 from pathlib import Path
 import argparse
+import re
 import sys
 
 FORM_ACTION = "https://formspree.io/f/mvzeapzd"
@@ -69,6 +70,12 @@ MOBILE_HINT_PAGES = {
 }
 
 OPTIONAL_ACCESS_MESSAGE_PAGES = {"san-gabriel-valley-appliance-pickup"}
+# Existing Coachella general forms: native required access selects, not free-text only.
+ACCESS_REQUIRED_PAGES = {
+    "rancho-mirage-appliance-pickup",
+    "palm-desert-appliance-pickup",
+    "la-quinta-appliance-pickup",
+}
 
 # Existing general-market pages only. Do not invent or publish new city URLs.
 CITIES = (
@@ -84,6 +91,7 @@ CITIES = (
     "norwalk", "long-beach", "bellflower", "compton", "south-gate",
     "south-el-monte", "san-fernando", "sylmar",
     "temecula", "murrieta", "victorville", "palm-desert",
+    "rancho-mirage", "la-quinta",
     "loma-linda", "banning", "beaumont", "hemet",
     "hesperia", "apple-valley", "adelanto", "phelan", "el-mirage",
     "walnut", "rowland-heights", "la-crescenta", "sierra-madre",
@@ -178,6 +186,19 @@ def inspect(page_html, page_label):
         if len(messages) != 1 or messages[0][0] != "textarea" or "required" in messages[0][1]:
             errors.append(f"{page_label}: long access-details message must remain optional")
 
+    if page_label in ACCESS_REQUIRED_PAGES:
+        for access_name in ("location", "stairs"):
+            candidates = fields.get(access_name, [])
+            match = re.search(
+                r'<select\b[^>]*\bname="' + access_name + r'"[^>]*>(.*?)</select>',
+                page_html, re.I | re.S
+            )
+            first = re.match(r'\s*<option\b([^>]*)>', match.group(1), re.I | re.S) if match else None
+            if (len(candidates) != 1 or candidates[0][0] != "select"
+                    or "required" not in candidates[0][1] or not first
+                    or 'value=""' not in first.group(1)):
+                errors.append(f"{page_label}: {access_name} must be a blank-first required select")
+
     return errors
 
 
@@ -232,7 +253,20 @@ def self_test():
     upland_good = oc_good.replace("orange-appliance-pickup", "upland-appliance-pickup")
     assert not inspect(upland_good, "upland-appliance-pickup"), "valid Upland mobile fixture rejected"
     assert inspect(upland_good.replace('inputmode="tel"', 'inputmode="text"'), "upland-appliance-pickup"), "bad Upland phone keypad passed"
-    print(f"FIXTURE_TESTS_PASSED 8 positive + {len(negative) + 10} negative")
+    # Each protected Coachella general page must reject absent, optional, or defaulted access.
+    for city in sorted(ACCESS_REQUIRED_PAGES):
+        access_good = good.replace('value="home"', f'value="{city}"').replace(
+            "</form>",
+            '<select name="location" required><option value="">Select location</option>'
+            '<option>Garage</option></select>'
+            '<select name="stairs" required><option value="">Select stairs</option>'
+            '<option>No Stairs</option></select></form>',
+        )
+        assert not inspect(access_good, city), f"{city}: valid access fixture rejected"
+        assert inspect(access_good.replace('name="location" required', 'name="location"'), city), f"{city}: optional location passed"
+        assert inspect(access_good.replace('name="stairs" required', 'name="stairs"'), city), f"{city}: optional stairs passed"
+        assert inspect(access_good.replace('<option value="">Select location</option>', '<option value="garage">Garage</option>'), city), f"{city}: defaulted location passed"
+    print(f"FIXTURE_TESTS_PASSED {8 + len(ACCESS_REQUIRED_PAGES)} positive + {len(negative) + 10 + 3 * len(ACCESS_REQUIRED_PAGES)} negative")
 
 
 def main():
