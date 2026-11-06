@@ -4,7 +4,6 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
-from urllib.parse import parse_qs
 
 from playwright.sync_api import sync_playwright
 
@@ -147,6 +146,11 @@ def run():
                                         raise AssertionError("unverified Texas partner marked as assigned")
                                     if "None until" not in result["promise"]:
                                         raise AssertionError("Texas form promises unavailable pickup")
+                                dimensions = page.evaluate(
+                                    "() => ({page: document.documentElement.scrollWidth, window: innerWidth})"
+                                )
+                                if dimensions["page"] > dimensions["window"] + 8:
+                                    raise AssertionError("horizontal overflow: " + str(dimensions))
                                 # Test the actual submit event chain, not just a direct
                                 # qualify() call. All values are invented, and the
                                 # outgoing Formspree POST stays blocked by page.route.
@@ -172,13 +176,32 @@ def run():
                                         form.locator('[name="' + field + '"]').select_option(label=value)
                                     if not form.evaluate("(form) => form.checkValidity()"):
                                         raise AssertionError("synthetic Kingwood test fixture invalid")
-                                    with page.expect_request(
-                                        lambda req: req.url.startswith("https://formspree.io/") and req.method == "POST",
-                                        timeout=15000,
-                                    ) as outbound:
-                                        form.locator('button[type="submit"]').click()
-                                    request = outbound.value
-                                    fields = parse_qs(request.post_data or "", keep_blank_values=True)
+                                    # Capture the second, qualified submit event;
+                                    # the intercept prevents any outbound POST.
+                                    # This exercises wireForm, not just qualify().
+                                    form.evaluate("""form => {
+                                        if(form.dataset.customerRoutingWired !== '1')
+                                            throw Error('customer submit handler not wired');
+                                        window.__vgmSubmitEvents = [];
+                                        form.addEventListener('submit', event => {
+                                            const qualified = form.dataset.customerRoutingQualified === '1';
+                                            window.__vgmSubmitEvents.push({
+                                                qualified,
+                                                fields: Object.fromEntries(new FormData(form).entries())
+                                            });
+                                            if(qualified) event.preventDefault();
+                                        }, true);
+                                    }""")
+                                    form.locator('button[type="submit"]').click()
+                                    page.wait_for_function(
+                                        "() => window.__vgmSubmitEvents?.some(item => item.qualified)",
+                                        timeout=12000,
+                                    )
+                                    events = page.evaluate("() => window.__vgmSubmitEvents")
+                                    if len(events) < 2 or events[0]["qualified"]:
+                                        raise AssertionError("expected unqualified then qualified submit events")
+                                    fields = {key: [str(value)] for key, value in
+                                              next(item["fields"] for item in events if item["qualified"]).items()}
                                     expected_fields = {
                                         "source_page": "kingwood-tx-freezer-pickup",
                                         "state": "TX",
@@ -195,11 +218,6 @@ def run():
                                                 "intercepted Kingwood submit mismatch: " + field
                                             )
                                     print("PASS synthetic Kingwood submit intercepted; latest free-only consent retained")
-                                dimensions = page.evaluate(
-                                    "() => ({page: document.documentElement.scrollWidth, window: innerWidth})"
-                                )
-                                if dimensions["page"] > dimensions["window"] + 8:
-                                    raise AssertionError("horizontal overflow: " + str(dimensions))
                                 passed += 1
                                 print("PASS", label, "photo, form, noindex, routing, quote changes")
                             except Exception as exc:
