@@ -1373,6 +1373,13 @@
       "priority": 2
     },
     {
+      "city": "Bulverde",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
       "city": "Burleson",
       "state": "Texas",
       "state_code": "TX",
@@ -1825,6 +1832,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Liberty Hill",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
       "priority": 2
     },
     {

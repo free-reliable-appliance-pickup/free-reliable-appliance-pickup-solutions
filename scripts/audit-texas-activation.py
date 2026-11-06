@@ -149,13 +149,18 @@ def collect():
     # request-only Dallas–Fort Worth markets; no operator or indexing approvals.
     # Melissa (Dallas–Fort Worth) and Iowa Colony (Houston Metro) are added as
     # request-only catalog entries; no market activation or SEO approval.
-    if len(catalog) != 159:
+    if len(catalog) != 161:
         errors.append(f"Texas city catalog changed to {len(catalog)}: review mapping and update baseline")
     for city_name in ("Sachse", "Watauga", "Balch Springs"):
         row = catalog.get(city_name.casefold())
         if not row or row.get("region") != "Dallas-Fort Worth":
             errors.append(f"{city_name}: missing from request-only Dallas-Fort Worth catalog mapping")
     for city_name, region in (("Melissa", "Dallas-Fort Worth"), ("Iowa Colony", "Houston Metro")):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != region:
+            errors.append(f"{city_name}: missing expected request-only Texas region mapping")
+    # Liberty Hill / Bulverde: request-only metro mapping, with no operator approval.
+    for city_name, region in (("Liberty Hill", "Austin Metro"), ("Bulverde", "San Antonio Metro")):
         row = catalog.get(city_name.casefold())
         if not row or row.get("region") != region:
             errors.append(f"{city_name}: missing expected request-only Texas region mapping")
