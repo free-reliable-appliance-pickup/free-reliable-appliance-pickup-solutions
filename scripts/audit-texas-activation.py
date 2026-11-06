@@ -145,8 +145,14 @@ def collect():
         texas_pages[page_slug] = {"noindex": noindex, "in_sitemap": in_sitemap}
 
     expected_regions = {r for r in markets}
-    if len(catalog) != 154:
+    # Baseline reviewed 2026-11-05: Sachse, Watauga and Balch Springs added as
+    # request-only Dallas–Fort Worth markets; no operator or indexing approvals.
+    if len(catalog) != 157:
         errors.append(f"Texas city catalog changed to {len(catalog)}: review mapping and update baseline")
+    for city_name in ("Sachse", "Watauga", "Balch Springs"):
+        row = catalog.get(city_name.casefold())
+        if not row or row.get("region") != "Dallas-Fort Worth":
+            errors.append(f"{city_name}: missing from request-only Dallas-Fort Worth catalog mapping")
     if len(expected_regions) != 22:
         errors.append(f"Texas regional queues changed to {len(expected_regions)}: review mapping and update baseline")
     missing_regions = {row.get("region") for row in catalog.values()} - expected_regions
