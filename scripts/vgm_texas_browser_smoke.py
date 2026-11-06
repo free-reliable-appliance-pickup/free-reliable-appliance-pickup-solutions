@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Browser-only Texas draft form checks; no customer data, POST, or deployment."""
+"""Browser-only Texas draft checks; synthetic intercepted POSTs never leave CI."""
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
+from urllib.parse import parse_qs
 
 from playwright.sync_api import sync_playwright
 
@@ -27,6 +28,13 @@ class QuietHandler(SimpleHTTPRequestHandler):
 
     def log_message(self, *_args):
         pass
+
+    def send_head(self):
+        """Never expose checkout Git metadata to tested browser page scripts."""
+        if ".git" in self.path.split("?", 1)[0].split("/"):
+            self.send_error(404)
+            return None
+        return super().send_head()
 
 
 def run():
@@ -139,6 +147,54 @@ def run():
                                         raise AssertionError("unverified Texas partner marked as assigned")
                                     if "None until" not in result["promise"]:
                                         raise AssertionError("Texas form promises unavailable pickup")
+                                # Test the actual submit event chain, not just a direct
+                                # qualify() call. All values are invented, and the
+                                # outgoing Formspree POST stays blocked by page.route.
+                                if path == "/kingwood-tx-freezer-pickup/" and mode == "mobile":
+                                    choice.select_option("Yes, after seeing the price")
+                                    page.evaluate("""() => window.FreeReliableCustomerRouting.qualify(
+                                        document.querySelector('form[action*="formspree.io"]'))""")
+                                    choice.select_option("No, free pickup only")
+                                    for field, value in (
+                                        ("name", "VGM Synthetic Browser Test"),
+                                        ("phone", "5550100100"),
+                                        ("address", "123 Example Testing Street"),
+                                        ("zip", "77339"),
+                                        ("access_notes", "Synthetic form validation only; no real pickup"),
+                                    ):
+                                        form.locator('[name="' + field + '"]').fill(value)
+                                    for field, value in (
+                                        ("condition", "Fully working"),
+                                        ("floor", "Ground floor"),
+                                        ("stairs", "No stairs"),
+                                        ("photos_available", "Yes"),
+                                    ):
+                                        form.locator('[name="' + field + '"]').select_option(label=value)
+                                    if not form.evaluate("(form) => form.checkValidity()"):
+                                        raise AssertionError("synthetic Kingwood test fixture invalid")
+                                    with page.expect_request(
+                                        lambda req: req.url.startswith("https://formspree.io/") and req.method == "POST",
+                                        timeout=15000,
+                                    ) as outbound:
+                                        form.locator('button[type="submit"]').click()
+                                    request = outbound.value
+                                    fields = parse_qs(request.post_data or "", keep_blank_values=True)
+                                    expected_fields = {
+                                        "source_page": "kingwood-tx-freezer-pickup",
+                                        "state": "TX",
+                                        "city": "Houston",
+                                        "paid_option": "No, free pickup only",
+                                        "paid_removal_preference": "free_only",
+                                        "Paid Removal Quote Gate": "FREE_PICKUP_ONLY",
+                                        "Routing Market Status": "request-only",
+                                        "Routing Region": "Houston Metro",
+                                    }
+                                    for field, expected in expected_fields.items():
+                                        if fields.get(field) != [expected]:
+                                            raise AssertionError(
+                                                "intercepted Kingwood submit mismatch: " + field
+                                            )
+                                    print("PASS synthetic Kingwood submit intercepted; latest free-only consent retained")
                                 dimensions = page.evaluate(
                                     "() => ({page: document.documentElement.scrollWidth, window: innerWidth})"
                                 )
