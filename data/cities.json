@@ -1261,6 +1261,13 @@
       "priority": 2
     },
     {
+      "city": "Anna",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
       "city": "Anthony",
       "state": "Texas",
       "state_code": "TX",
@@ -1290,6 +1297,13 @@
     },
     {
       "city": "Azle",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Balch Springs",
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
@@ -1345,6 +1359,13 @@
       "priority": 2
     },
     {
+      "city": "Brookshire",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
       "city": "Brownsville",
       "state": "Texas",
       "state_code": "TX",
@@ -1366,6 +1387,13 @@
       "priority": 2
     },
     {
+      "city": "Bulverde",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
       "city": "Burleson",
       "state": "Texas",
       "state_code": "TX",
@@ -1384,6 +1412,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Castle Hills",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
       "priority": 2
     },
     {
@@ -1492,6 +1527,13 @@
       "priority": 2
     },
     {
+      "city": "Dayton",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
       "city": "Deer Park",
       "state": "Texas",
       "state_code": "TX",
@@ -1520,6 +1562,13 @@
       "priority": 2
     },
     {
+      "city": "Dripping Springs",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
+      "priority": 2
+    },
+    {
       "city": "Duncanville",
       "state": "Texas",
       "state_code": "TX",
@@ -1545,6 +1594,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Fair Oaks Ranch",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
       "priority": 2
     },
     {
@@ -1695,6 +1751,13 @@
       "priority": 2
     },
     {
+      "city": "Iowa Colony",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
       "city": "Irving",
       "state": "Texas",
       "state_code": "TX",
@@ -1814,6 +1877,13 @@
       "priority": 2
     },
     {
+      "city": "Liberty Hill",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
+      "priority": 2
+    },
+    {
       "city": "Little Elm",
       "state": "Texas",
       "state_code": "TX",
@@ -1825,6 +1895,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
+      "city": "Lockhart",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
       "priority": 2
     },
     {
@@ -1878,6 +1955,13 @@
     },
     {
       "city": "McKinney",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Melissa",
       "state": "Texas",
       "state_code": "TX",
       "region": "Dallas-Fort Worth",
@@ -2052,6 +2136,13 @@
       "priority": 2
     },
     {
+      "city": "Sachse",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
       "city": "Saginaw",
       "state": "Texas",
       "state_code": "TX",
@@ -2098,6 +2189,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Seagoville",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
       "priority": 2
     },
     {
@@ -2245,6 +2343,13 @@
       "state": "Texas",
       "state_code": "TX",
       "region": "Waco Area",
+      "priority": 2
+    },
+    {
+      "city": "Watauga",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
       "priority": 2
     },
     {
@@ -2518,6 +2623,258 @@
       "state": "Washington",
       "state_code": "WA",
       "region": "Yakima Valley",
+      "priority": 2
+    },
+    {
+      "city": "Aubrey",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Hutchins",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Shenandoah",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Bee Cave",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
+      "priority": 2
+    },
+    {
+      "city": "Santa Fe",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Hunters Creek Village",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Freeport",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Cleveland",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Shavano Park",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
+      "city": "Del Rio",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Del Rio–Eagle Pass Area",
+      "priority": 2
+    },
+    {
+      "city": "Eagle Pass",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Del Rio–Eagle Pass Area",
+      "priority": 2
+    },
+    {
+      "city": "Copperas Cove",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Killeen–Temple",
+      "priority": 2
+    },
+    {
+      "city": "Lufkin",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Lufkin Area",
+      "priority": 2
+    },
+    {
+      "city": "Midlothian",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Red Oak",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Ennis",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Cleburne",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Dallas-Fort Worth",
+      "priority": 2
+    },
+    {
+      "city": "Clute",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Sealy",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Willis",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Hitchcock",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Houston Metro",
+      "priority": 2
+    },
+    {
+      "city": "Elgin",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
+      "priority": 2
+    },
+    {
+      "city": "Lago Vista",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Austin Metro",
+      "priority": 2
+    },
+    {
+      "city": "Floresville",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
+      "city": "Kirby",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "San Antonio Metro",
+      "priority": 2
+    },
+    {
+      "city": "Donna",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
+      "city": "Mercedes",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
+      "city": "San Benito",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
+      "city": "Rio Grande City",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Rio Grande Valley",
+      "priority": 2
+    },
+    {
+      "city": "Nacogdoches",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Lufkin Area",
+      "priority": 2
+    },
+    {
+      "city": "Marshall",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "East Texas (Tyler–Longview)",
+      "priority": 2
+    },
+    {
+      "city": "Kilgore",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "East Texas (Tyler–Longview)",
+      "priority": 2
+    },
+    {
+      "city": "Alice",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Corpus Christi Area",
+      "priority": 2
+    },
+    {
+      "city": "Robstown",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Corpus Christi Area",
+      "priority": 2
+    },
+    {
+      "city": "Kingsville",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Corpus Christi Area",
+      "priority": 2
+    },
+    {
+      "city": "Rockport",
+      "state": "Texas",
+      "state_code": "TX",
+      "region": "Corpus Christi Area",
       "priority": 2
     }
   ]
