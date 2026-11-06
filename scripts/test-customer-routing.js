@@ -394,6 +394,28 @@ async function main(){
     assertEqual(request.nodes['Paid Removal Next Step'].value.includes('Do not charge or book automatically.'),value==='quote_ok',
       'Quote interest never authorizes a charge and free-only must stay free-only');
   }
+
+  // A failed/blocked validation may leave the normalized hidden preference in the
+  // form. On retry, honor the current visible legacy paid_option, not that stale field.
+  for(const [before,after,expected,normalized] of [
+    ['Yes, after seeing the price','No, free pickup only','FREE_PICKUP_ONLY','free_only'],
+    ['No, free pickup only','Yes, after seeing the price','QUOTE_REVIEW_ONLY','quote_ok'],
+    ['Yes, after seeing the price','','NO_PAID_QUOTE_AUTHORIZATION',''],
+    ['', 'No, free pickup only','FREE_PICKUP_ONLY','free_only']
+  ]){
+    const request=mockForm({
+      city:'Kingwood',state:'TX',appliance:'Freezer',
+      condition:'Fully Working',paid_option:before
+    });
+    api.qualify(request);
+    request.nodes.paid_option.value=after;
+    api.qualify(request);
+    assertEqual(request.nodes['Paid Removal Quote Gate'].value,expected,'Changed Texas quote choice');
+    assertEqual(request.nodes.paid_removal_preference.value,normalized,'Legacy normalized value refreshed');
+    assertEqual(request.nodes['Paid Removal Next Step'].value.includes('Do not charge or book automatically.'),
+      expected==='QUOTE_REVIEW_ONLY','Changed quote selection does not authorize charge');
+  }
+  console.log('PASS: resubmitted Texas legacy paid choices honor the latest customer selection');
   console.log('PASS: explicit free-only versus paid quote opt-in and no automatic charge');
   // High-priority city forms must work without an optional dynamically loaded script.
   // Dynamic enhancement checks the name before insertion to avoid double fields.
