@@ -152,6 +152,19 @@ def collect():
                     errors.append(f"{page_slug}: indexable without verified route + approved partner registry status")
         texas_pages[page_slug] = {"noindex": noindex, "in_sitemap": in_sitemap}
 
+    # Enforce a complete Texas five-category source inventory. We use the
+    # parsed TX form inventory, not filename existence: for example,
+    # /selma-washer-dryer-pickup/ is a California page, not a Texas guide.
+    for city_name in sorted(catalog):
+        city_slug = re.sub(r"[^a-z0-9]+", "-", city_name).strip("-")
+        for kind in ("appliance", "washer-dryer", "refrigerator", "freezer", "stove-oven"):
+            candidates = (
+                f"{city_slug}-tx-{kind}-pickup",
+                f"{city_slug}-{kind}-pickup",
+            )
+            if not any(candidate in texas_pages for candidate in candidates):
+                errors.append(f"{city_name}: missing Texas {kind} pickup request guide")
+
     expected_regions = {r for r in markets}
     # Baseline reviewed 2026-11-05: Sachse, Watauga and Balch Springs added as
     # request-only Dallas–Fort Worth markets; no operator or indexing approvals.
