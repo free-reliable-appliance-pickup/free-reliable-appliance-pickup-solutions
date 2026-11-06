@@ -657,6 +657,26 @@ for slug in GENERAL_FORM_ATTRIBUTION:
         expected = f'name="{field}" value="{value}"'
         if form.count(f'name="{field}"') != 1 or expected not in form:
             errors.append(f"{slug}: missing, duplicated, or wrong static {field}")
+# Guard the three Inland Empire general forms against reintroducing
+# hidden or optional removal-access selectors. This is a source-only check.
+REQUIRED_VISIBLE_ACCESS_FORMS = ("norco", "grand-terrace", "colton")
+for slug in REQUIRED_VISIBLE_ACCESS_FORMS:
+    path = Path(slug + "-appliance-pickup") / "index.html"
+    html = path.read_text(encoding="utf-8", errors="replace")
+    intake = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+              if 'action="https://formspree.io/f/mvzeapzd"' in f]
+    if len(intake) != 1:
+        errors.append(f"{slug}: expected one existing Formspree form")
+        continue
+    form = intake[0]
+    visible = form.split('<details', 1)[0]
+    for field in ("location", "stairs"):
+        if form.count(f'name="{field}"') != 1 or not select_ok(visible, field):
+            errors.append(f"{slug}: {field} must be visible, unique, required and blank-first")
+    if 'name="property_type"' not in form or 'name="photos_available"' not in form:
+        errors.append(f"{slug}: optional property/photo fields lost")
+print("VISIBLE_REQUIRED_ACCESS_FORMS_CHECKED", len(REQUIRED_VISIBLE_ACCESS_FORMS))
+
 print("GENERAL_FORM_ATTRIBUTION_CHECKED", len(GENERAL_FORM_ATTRIBUTION))
 
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
