@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Browser-only Texas draft checks; synthetic intercepted POSTs never leave CI."""
+import os
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -51,6 +52,14 @@ def run():
     base = "http://127.0.0.1:" + str(server.server_port)
     failures = []
     passed = 0
+    # The preview is a CI artifact only: never publish screenshots or capture
+    # synthetic/customer form values. Keep output outside the served checkout.
+    preview_root = os.environ.get("VGM_TEXAS_SCREENSHOT_DIR", "").strip()
+    preview_dir = Path(preview_root).resolve() if preview_root else None
+    if preview_dir:
+        if preview_dir == ROOT or ROOT in preview_dir.parents:
+            raise SystemExit("Screenshot output must be outside served checkout")
+        preview_dir.mkdir(parents=True, exist_ok=True)
     try:
         # Test the HTTP boundary, not just the Python path-guard function.
         # Both URL forms must be rejected before page scripts can read .git.
@@ -119,6 +128,15 @@ def run():
                                 )
                                 if width < 100:
                                     raise AssertionError("appliance photo did not decode")
+                                # Capture visible page layout before populating ANY
+                                # form control, including synthetic browser-only data.
+                                if preview_dir:
+                                    safe_name = path.strip("/").replace("/", "-")
+                                    page.screenshot(
+                                        path=str(preview_dir / (mode + "-" + safe_name + ".png")),
+                                        full_page=True,
+                                        animations="disabled",
+                                    )
                                 page.wait_for_function(
                                     "() => !!(window.FreeReliableCustomerRouting && "
                                     "document.querySelector('form[action*=formspree] select[name=paid_option], "
