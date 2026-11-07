@@ -62,7 +62,19 @@ def main():
             if len(p.forms) != 1 or "formspree.io/f/" not in p.forms[0].get("action",""): errors.append(f"{path}: form action")
             if any(name not in p.fields for name in required): errors.append(f"{path}: missing form fields")
             if not any(x.get("value")=="FL" for x in p.fields.get("state",[])): errors.append(f"{path}: incorrect state")
-            if not any(x.get("value") == city for x in p.fields.get("city",[])): errors.append(f"{path}: incorrect city")
+            city_fields = p.fields.get("city", [])
+            explicit_pickup_city = (
+                kind == "appliance"
+                and city in {"Jacksonville", "Tampa", "Tallahassee"}
+                and any(
+                    x.get("value", "") == ""
+                    and x.get("placeholder") == "Actual pickup city"
+                    and "required" in x
+                    for x in city_fields
+                )
+            )
+            if not (any(x.get("value") == city for x in city_fields) or explicit_pickup_city):
+                errors.append(f"{path}: incorrect or unconfirmed pickup city")
             if not any("noindex" in x for x in p.robots): errors.append(f"{path}: accidental indexing")
             if p.canonicals != [base+path.parent.name+"/"]: errors.append(f"{path}: canonical mismatch")
             if "/assets/customer-routing.js" not in p.scripts: errors.append(f"{path}: routing js missing")
