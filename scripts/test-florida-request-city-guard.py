@@ -106,6 +106,32 @@ class FloridaCityGuardTests(unittest.TestCase):
         self.check_city(form('type="hidden" value="Miami" required'), city="Miami",
                         kind="washer-dryer", expected=False)
 
+    def test_select_and_textarea_city_decoys_never_pass(self):
+        for tag in ("select", "textarea"):
+            for city, kind in (("Tampa", "appliance"), ("Miami", "washer-dryer")):
+                with self.subTest(tag=tag, city=city):
+                    markup = (
+                        '<form><label>Actual pickup city'
+                        f'<{tag} name="city" value="{city}" required '
+                        f'placeholder="Actual pickup city"></{tag}>'
+                        '</label></form>'
+                    )
+                    self.check_city(markup, city=city, kind=kind, expected=False)
+
+    def test_hidden_or_inert_city_inputs_never_pass(self):
+        for attributes in (
+            "hidden",
+            'aria-hidden="true"',
+            'style="display: none"',
+            'style="DISPLAY : none"',
+            'style="visibility: hidden"',
+            "inert",
+        ):
+            for city, kind in (("Tampa", "appliance"), ("Miami", "washer-dryer")):
+                with self.subTest(attributes=attributes, city=city):
+                    field = f'value="{city}" required {attributes}'
+                    self.check_city(form(field), city=city, kind=kind, expected=False)
+
     def test_only_unambiguous_noindex_follow_passes(self):
         self.assertTrue(valid_request_robots(["noindex, follow"]))
         self.assertTrue(valid_request_robots(["FOLLOW, NOINDEX"]))
