@@ -29,7 +29,7 @@ class Page(HTMLParser):
             self.forms.append(a)
             self.in_form = True
         if tag == "label" and self.in_form and not self.template_depth:
-            self.label_stack.append({"text": [], "city_fields": [], "hidden": (
+            self.label_stack.append({"text": [], "city_fields": [], "for": a.get("for"), "hidden": (
                 "hidden" in a or a.get("aria-hidden") == "true"
                 or "display:none" in (a.get("style") or "").replace(" ", "").lower()
             )})
@@ -54,7 +54,12 @@ class Page(HTMLParser):
             label = self.label_stack.pop()
             label_text = " ".join("".join(label["text"]).split()).casefold()
             if not label["hidden"] and label_text == "actual pickup city":
-                self.labeled_city_fields.extend(label["city_fields"])
+                for city_field in label["city_fields"]:
+                    # An explicit for= associates the label with that exact ID,
+                    # even if the input is nested under the label.
+                    target = label["for"]
+                    if target is None or (city_field.get("id") and target == city_field.get("id")):
+                        self.labeled_city_fields.append(city_field)
         if tag == "form":
             self.in_form = False
             self.label_stack.clear()
