@@ -86,6 +86,40 @@ class FloridaPickupCityTests(unittest.TestCase):
             '<input data-name="city" value="" required></label>'
         ))
 
+    def test_lookalike_label_outside_form_rejected(self):
+        field = '<input name="city" value="" placeholder="Actual pickup city" required>'
+        fake_label = '<label>Actual pickup city' + field + '</label>'
+        html = fake_label + '<form action="https://formspree.io/f/test">' + field + '</form>'
+        page = audit.Page()
+        page.feed(html)
+        self.assertFalse(audit.valid_city_field(page, html, "Jacksonville", "appliance"))
+
+    def test_lookalike_label_in_html_comment_rejected(self):
+        field = '<input name="city" value="" placeholder="Actual pickup city" required>'
+        html = ('<form action="https://formspree.io/f/test">'
+                '<!-- <label>Actual pickup city' + field + '</label> -->'
+                + field + '</form>')
+        page = audit.Page()
+        page.feed(html)
+        self.assertFalse(audit.valid_city_field(page, html, "Tampa", "appliance"))
+
+    def test_lookalike_label_inside_template_rejected(self):
+        field = '<input name="city" value="" placeholder="Actual pickup city" required>'
+        html = ('<form action="https://formspree.io/f/test">'
+                '<template><label>Actual pickup city' + field + '</label></template>'
+                + field + '</form>')
+        page = audit.Page()
+        page.feed(html)
+        self.assertFalse(audit.valid_city_field(page, html, "Tallahassee", "appliance"))
+
+    def test_hidden_label_rejected(self):
+        for hidden in ('hidden', 'style="display: none"', 'aria-hidden="true"'):
+            with self.subTest(hidden=hidden):
+                self.assertFalse(self.valid(
+                    '<label ' + hidden + '>Actual pickup city'
+                    '<input name="city" value="" placeholder="Actual pickup city" required></label>'
+                ))
+
     def test_duplicate_city_inputs_rejected(self):
         self.assertFalse(self.valid(
             '<label>Actual pickup city'
