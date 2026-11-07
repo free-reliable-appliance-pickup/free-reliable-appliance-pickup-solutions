@@ -22,21 +22,26 @@ class Page(HTMLParser):
         self.template_depth = 0
         self.label_stack = []
         self.labeled_city_fields = []
+        self.disabled_fieldset_stack = []
     def handle_starttag(self, tag, attrs):
         """Capture real form fields, visible city labels and publication metadata."""
         a = dict(attrs)
+        inline_style = re.sub(r"\s+", "", (a.get("style") or "").casefold())
         if tag == "template":
             self.template_depth += 1
         if tag == "form" and not self.template_depth:
             self.forms.append(a)
             self.in_form = True
+        if tag == "fieldset" and self.in_form and not self.template_depth:
+            self.disabled_fieldset_stack.append("disabled" in a or any(self.disabled_fieldset_stack))
         if tag == "label" and self.in_form and not self.template_depth:
             self.label_stack.append({"text": [], "city_fields": [], "for": a.get("for"), "for_present": "for" in a, "hidden": (
-                "hidden" in a or a.get("aria-hidden") == "true"
-                or "display:none" in (a.get("style") or "").replace(" ", "").lower()
+                "hidden" in a or (a.get("aria-hidden") or "").casefold() == "true"
+                or "display:none" in inline_style or "visibility:hidden" in inline_style
             )})
         if tag in ("input","select","textarea") and self.in_form and not self.template_depth and a.get("name"):
             a["_tag"] = tag
+            a["_disabled_by_fieldset"] = bool(self.disabled_fieldset_stack and self.disabled_fieldset_stack[-1])
             self.fields.setdefault(a["name"], []).append(a)
             if tag == "input" and a["name"] == "city" and self.label_stack:
                 self.label_stack[-1]["city_fields"].append(a)
@@ -65,10 +70,13 @@ class Page(HTMLParser):
                     target = label["for"]
                     if not label["for_present"] or (target is not None and city_field.get("id") and target == city_field.get("id")):
                         self.labeled_city_fields.append(city_field)
+        if tag == "fieldset" and self.in_form and not self.template_depth and self.disabled_fieldset_stack:
+            self.disabled_fieldset_stack.pop()
         if tag == "form" and not self.template_depth:
             # An inert <template> form cannot terminate the actual pickup form.
             self.in_form = False
             self.label_stack.clear()
+            self.disabled_fieldset_stack.clear()
         if tag == "template" and self.template_depth:
             self.template_depth -= 1
 
@@ -91,6 +99,7 @@ def valid_city_field(page, html, city, kind):
         and (field.get("type") or "text").casefold() == "text"
         and "required" in field
         and "disabled" not in field
+        and not field.get("_disabled_by_fieldset")
         and "readonly" not in field
         and "hidden" not in field
         and "inert" not in field
