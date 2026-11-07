@@ -90,8 +90,6 @@ function recordObservedTrafficSource(form){
   const texas=state&&stateCode(state.value)==='TX';
   const florida=state&&stateCode(state.value)==='FL';
   const salem=/^\/salem-(?:appliance|washer-dryer|refrigerator-freezer|stove)-pickup\/$/.test(pagePath());
-  // Florida forms should preserve observed referrer/UTM hints like Texas forms.
-  // These hints cannot establish organic rankings or completed pickup coverage.
   if(!texas&&!florida&&!salem)return;
   let source=CURRENT_OBSERVED_SOURCE;
   if(!source){try{source=sessionStorage.getItem('frap_observed_traffic_source')||'';}catch(e){}}
