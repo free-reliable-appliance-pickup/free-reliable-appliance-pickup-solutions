@@ -15,8 +15,8 @@ from urllib.request import Request, urlopen
 GITHUB_API = "https://api.github.com"
 OPENROUTER_API = "https://openrouter.ai/api/v1/chat/completions"
 REVIEWERS = {
-    "Independent code reviewer (Cohere)": "cohere/north-mini-code:free",
-    "Independent site/SEO reviewer (Qwen)": "qwen/qwen3.8-27b:free",
+    "Independent code reviewer (Recursive Flint)": "recursive/flint-v1.0:free",
+    "Independent site/SEO reviewer (Dots Studio)": "dots-studio/dots-3-note-preview:free",
 }
 SAFE_EXTENSIONS = (".html", ".css", ".js", ".json", ".md", ".py", ".yml", ".yaml")
 EXCLUDED_NAMES = (".env", ".pem", ".key", "credentials", "secret", "private", "lead-events", "partners.json")
@@ -107,8 +107,11 @@ def call_free_model(key, model, prompt):
     payload = json.dumps({
         "model": model,
         "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}],
-        "max_tokens": 1200,
+        "max_tokens": 2200,
         "temperature": 0.1,
+        # Both specifically allow JSON response formatting; never rely on
+        # model promises alone — parse_review still validates every finding.
+        "response_format": {"type": "json_object"},
     }).encode()
     req = Request(OPENROUTER_API, data=payload, method="POST", headers={
         "Authorization": "Bearer " + key, "Content-Type": "application/json",

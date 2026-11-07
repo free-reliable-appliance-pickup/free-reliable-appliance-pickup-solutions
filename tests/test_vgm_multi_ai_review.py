@@ -1,5 +1,8 @@
 """Safety and completeness tests for our read-only public-PR AI review."""
 import importlib.util
+import json
+from io import BytesIO
+from unittest.mock import patch
 import pathlib
 import unittest
 
@@ -63,14 +66,14 @@ class MultiAITests(unittest.TestCase):
 
     def test_report_discloses_http_code_not_secret_or_upstream_body(self):
         statuses = {
-            "Independent code reviewer (Cohere)": {
-                "model": review.REVIEWERS["Independent code reviewer (Cohere)"],
+            "Independent code reviewer (Recursive Flint)": {
+                "model": review.REVIEWERS["Independent code reviewer (Recursive Flint)"],
                 "status": "unavailable",
                 "error": "ModelOutputError",
                 "output_issue": "invalid_json",
             },
-            "Independent site/SEO reviewer (Qwen)": {
-                "model": review.REVIEWERS["Independent site/SEO reviewer (Qwen)"],
+            "Independent site/SEO reviewer (Dots Studio)": {
+                "model": review.REVIEWERS["Independent site/SEO reviewer (Dots Studio)"],
                 "status": "unavailable",
                 "error": "HTTPError",
                 "http_status": 429,
@@ -94,6 +97,27 @@ class MultiAITests(unittest.TestCase):
             with self.subTest(model=model):
                 with self.assertRaises(ValueError):
                     review.call_free_model("fake", model, "test")
+
+    def test_two_distinct_verified_free_reviewers(self):
+        self.assertEqual(review.REVIEWERS, {
+            "Independent code reviewer (Recursive Flint)": "recursive/flint-v1.0:free",
+            "Independent site/SEO reviewer (Dots Studio)": "dots-studio/dots-3-note-preview:free",
+        })
+        self.assertEqual(len(set(review.REVIEWERS.values())), 2)
+        self.assertTrue(all(m.endswith(":free") for m in review.REVIEWERS.values()))
+
+    def test_free_reviewers_request_strict_json_without_network(self):
+        expected = {"choices": [{"message": {"content": '{"findings":[]}'}}]}
+        for model in review.REVIEWERS.values():
+            with self.subTest(model=model):
+                with patch.object(review, "urlopen", return_value=BytesIO(json.dumps(expected).encode())) as mock:
+                    self.assertEqual(review.call_free_model("test-only", model, "patch"), [])
+                    request = mock.call_args[0][0]
+                    body = json.loads(request.data)
+                    self.assertEqual(body["model"], model)
+                    self.assertEqual(body["response_format"], {"type": "json_object"})
+                    self.assertEqual(body["messages"][1]["content"], "patch")
+                    self.assertTrue(body["max_tokens"] >= 1200)
 
     def test_no_credentials_does_not_count_as_review(self):
         statuses = {label: {"model": model, "status": "not configured"} for label, model in review.REVIEWERS.items()}
