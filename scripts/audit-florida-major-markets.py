@@ -76,7 +76,18 @@ def valid_city_field(page, html, city, kind):
     fields = page.fields.get("city", [])
     explicit_market = kind == "appliance" and city in {"Jacksonville", "Tampa", "Tallahassee"}
     if not explicit_market:
-        return len(fields) == 1 and fields[0].get("value") == city
+        if len(fields) != 1:
+            return False
+        field = fields[0]
+        # Prefilled city guides still require a real, editable text control.
+        # Hidden/disabled inputs would misattribute an actual nearby pickup.
+        return (
+            field.get("value") == city
+            and (field.get("type") or "text").lower() == "text"
+            and "required" in field
+            and "disabled" not in field
+            and "readonly" not in field
+        )
 
     field = fields[0] if len(fields) == 1 else {}
     # Match the actual input parsed inside this form to its wrapping label.
