@@ -112,6 +112,13 @@ class FloridaPickupCityTests(unittest.TestCase):
         page.feed(html)
         self.assertFalse(audit.valid_city_field(page, html, "Tallahassee", "appliance"))
 
+    def test_inert_template_form_cannot_terminate_real_form(self):
+        self.assertTrue(self.valid(
+            '<template><form><input name="city" value="Incorrect"></form></template>'
+            '<label>Actual pickup city'
+            '<input name="city" value="" placeholder="Actual pickup city" required></label>'
+        ))
+
     def test_hidden_label_rejected(self):
         for hidden in ('hidden', 'style="display: none"', 'aria-hidden="true"'):
             with self.subTest(hidden=hidden):
