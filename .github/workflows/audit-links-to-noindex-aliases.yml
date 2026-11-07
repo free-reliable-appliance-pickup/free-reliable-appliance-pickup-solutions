@@ -29,18 +29,36 @@ jobs:
               if '.git' not in p.parts and '.github' not in p.parts and p != Path('index.html')
           )
 
+          # Noindex is not synonymous with an alias. An explicitly labeled,
+          # self-canonical request-only city guide may be useful to customers
+          # while remaining excluded from search. An alias points elsewhere.
+          def canonical_in(head):
+              for tag in re.findall(r'<link\\b[^>]*>',head,re.I):
+                  rel=re.search(r'\\brel\\s*=\\s*([\\x22\\x27])([^\\x22\\x27]*)\\1',tag,re.I)
+                  href=re.search(r'\\bhref\\s*=\\s*([\\x22\\x27])([^\\x22\\x27]*)\\1',tag,re.I)
+                  if rel and href and 'canonical' in rel.group(2).lower().split():
+                      return href.group(2).strip()
+              return None
+
           noindex=set()
+          aliases=set()
           indexable=[]
           for p in pages:
               text=p.read_text(encoding='utf-8',errors='ignore')
-              head=text.lower().split('</head>',1)[0]
+              head=text.split('</head>',1)[0]
               rel='' if p==Path('index.html') else p.parent.as_posix().strip('/')
-              if 'noindex' in head:
-                  if rel: noindex.add(rel)
+              if re.search(r'<meta\\b[^>]*\\bname=[\\x22\\x27]robots[\\x22\\x27][^>]*\\bcontent=[\\x22\\x27][^>]*noindex',head,re.I):
+                  if rel:
+                      noindex.add(rel)
+                      canonical=canonical_in(head)
+                      if not canonical or canonical.rstrip('/') != (base+rel).rstrip('/'):
+                          aliases.add(rel)
               else:
                   indexable.append((p,text))
 
+          assert canonical_in('<link rel="canonical" href="'+base+'miami-fl-appliance-pickup/">') == base+'miami-fl-appliance-pickup/'
           leaks=[]
+          allowed_guides=0
           for p,text in indexable:
               hrefs=re.findall(r'href=["\']([^"\']+)["\']',text,re.I)
               for href in hrefs:
@@ -58,12 +76,16 @@ jobs:
                   # Utility/legal noindex pages are intentionally linked from the site.
                   if target in {'privacy','terms'}:
                       continue
-                  if target and target in noindex:
+                  if target and target in aliases:
                       leaks.append((str(p),href,target))
+                  elif target and target in noindex:
+                      allowed_guides+=1
 
           print(f'NOINDEX_PATHS {len(noindex)}')
+          print(f'NOINDEX_ALIASES {len(aliases)}')
           print(f'INDEXABLE_PAGES_SCANNED {len(indexable)}')
-          print(f'LINKS_TO_NOINDEX {len(leaks)}')
+          print(f'LINKS_TO_SELFCANONICAL_NOINDEX_GUIDES {allowed_guides}')
+          print(f'LINKS_TO_NOINDEX_ALIASES {len(leaks)}')
           for src,href,target in leaks[:300]:
               print(f'LEAK {src} -> {href} [{target}]')
 
