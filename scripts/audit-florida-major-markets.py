@@ -60,7 +60,8 @@ class Page(HTMLParser):
                     target = label["for"]
                     if target is None or (city_field.get("id") and target == city_field.get("id")):
                         self.labeled_city_fields.append(city_field)
-        if tag == "form":
+        if tag == "form" and not self.template_depth:
+            # An inert <template> form cannot terminate the actual pickup form.
             self.in_form = False
             self.label_stack.clear()
         if tag == "template" and self.template_depth:
