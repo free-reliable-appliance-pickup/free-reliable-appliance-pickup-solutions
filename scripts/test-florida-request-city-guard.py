@@ -132,6 +132,20 @@ class FloridaCityGuardTests(unittest.TestCase):
                     field = f'value="{city}" required {attributes}'
                     self.check_city(form(field), city=city, kind=kind, expected=False)
 
+    def test_every_city_guide_requires_visible_associated_pickup_label(self):
+        for city, kind in (("Tampa", "appliance"), ("Miami", "washer-dryer"),
+                           ("Pensacola", "freezer"), ("Orlando", "refrigerator")):
+            with self.subTest(city=city, kind=kind):
+                markup = (
+                    '<form><label>Delivery city</label>'
+                    f'<input name="city" value="{city}" required></form>'
+                )
+                self.check_city(markup, city=city, kind=kind, expected=False)
+                hidden_label = form(f'value="{city}" required', label_attrs='hidden')
+                self.check_city(hidden_label, city=city, kind=kind, expected=False)
+                linked = form(f'value="{city}" required')
+                self.check_city(linked, city=city, kind=kind, expected=True)
+
     def test_only_unambiguous_noindex_follow_passes(self):
         self.assertTrue(valid_request_robots(["noindex, follow"]))
         self.assertTrue(valid_request_robots(["FOLLOW, NOINDEX"]))
