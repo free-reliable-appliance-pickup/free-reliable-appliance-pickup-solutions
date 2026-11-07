@@ -143,6 +143,16 @@ class FloridaPickupCityTests(unittest.TestCase):
             'placeholder="Actual pickup city" required></label>'
         ))
 
+    def test_bare_for_attribute_does_not_label_city(self):
+        self.assertFalse(self.valid(
+            '<label for>Actual pickup city'
+            '<input name="city" value="" placeholder="Actual pickup city" required></label>'
+        ))
+        self.assertFalse(self.valid(
+            '<label for="">Actual pickup city'
+            '<input name="city" value="" placeholder="Actual pickup city" required></label>'
+        ))
+
     def test_duplicate_city_inputs_rejected(self):
         self.assertFalse(self.valid(
             '<label>Actual pickup city'
