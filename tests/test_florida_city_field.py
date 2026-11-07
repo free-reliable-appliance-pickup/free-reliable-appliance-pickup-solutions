@@ -164,6 +164,21 @@ class FloridaPickupCityTests(unittest.TestCase):
             with self.subTest(robots=robots):
                 self.assertFalse(audit.valid_request_robots(robots))
 
+    def test_other_cities_reject_hidden_or_unusable_city_controls(self):
+        for bad in (
+            '<input type="hidden" name="city" value="Orlando" required>',
+            '<input name="city" value="Orlando" required disabled>',
+            '<input name="city" value="Orlando" required readonly>',
+            '<input name="city" value="Orlando">',
+        ):
+            with self.subTest(markup=bad):
+                self.assertFalse(self.valid('<label>Actual pickup city' + bad + '</label>',
+                                            city="Orlando"))
+        self.assertTrue(self.valid(
+            '<label>Actual pickup city<input name="city" value="Orlando" required></label>',
+            city="Orlando"
+        ))
+
     def test_all_other_city_guides_keep_exact_city_requirement(self):
         self.assertTrue(self.valid(
             '<label>Actual pickup city<input name="city" value="Orlando" required></label>',
