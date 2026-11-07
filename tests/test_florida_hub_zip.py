@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only regression test for the Florida statewide pickup ZIP field."""
+"""Read-only regression tests for Florida statewide ZIP and access intake."""
 from html.parser import HTMLParser
 from pathlib import Path
 import re
@@ -61,12 +61,17 @@ class FloridaHubZipTests(unittest.TestCase):
             with self.subTest(invalid=invalid):
                 self.assertIsNone(re.fullmatch(zipfield["pattern"], invalid))
 
-    def test_city_address_and_phone_remain_required(self):
+    def test_contact_location_and_access_are_required(self):
         fields = self.parser.forms[0]["fields"]
-        for name in ("name", "phone", "address", "city", "floor", "stairs", "condition", "photos_available"):
+        for name in ("name", "phone", "address", "city", "zip", "appliance", "floor", "stairs", "condition", "photos_available", "access"):
             with self.subTest(name=name):
                 self.assertEqual(len(fields.get(name, [])), 1)
                 self.assertIn("required", fields[name][0])
+
+    def test_access_details_are_explainable_when_none(self):
+        access = self.parser.forms[0]["fields"]["access"][0]
+        self.assertEqual(access.get("type"), "text")
+        self.assertIn("If none, enter None.", access.get("placeholder", ""))
 
     def test_no_form_upload_claims(self):
         fields = self.parser.forms[0]["fields"]
