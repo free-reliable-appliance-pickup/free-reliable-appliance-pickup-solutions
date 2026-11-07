@@ -82,7 +82,7 @@ def valid_city_field(page, html, city, kind):
     if len(fields) != 1:
         return False
     field = fields[0]
-    style = re.sub(r"\\s+", "", (field.get("style") or "").casefold())
+    style = re.sub(r"\s+", "", (field.get("style") or "").casefold())
     # Both the original prefilled fields and staged actual-city inputs must
     # be real, visible, editable text controls. A select/textarea or visually
     # hidden input must never pass the city-correction gate.
