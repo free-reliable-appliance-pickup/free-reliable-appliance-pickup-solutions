@@ -36,6 +36,7 @@ class Page(HTMLParser):
                 or "display:none" in (a.get("style") or "").replace(" ", "").lower()
             )})
         if tag in ("input","select","textarea") and self.in_form and not self.template_depth and a.get("name"):
+            a["_tag"] = tag
             self.fields.setdefault(a["name"], []).append(a)
             if tag == "input" and a["name"] == "city" and self.label_stack:
                 self.label_stack[-1]["city_fields"].append(a)
@@ -78,34 +79,36 @@ def valid_city_field(page, html, city, kind):
     Other city-category guides must keep their matching editable city field.
     """
     fields = page.fields.get("city", [])
+    if len(fields) != 1:
+        return False
+    field = fields[0]
+    style = re.sub(r"\\s+", "", (field.get("style") or "").casefold())
+    # Both the original prefilled fields and staged actual-city inputs must
+    # be real, visible, editable text controls. A select/textarea or visually
+    # hidden input must never pass the city-correction gate.
+    editable_city = (
+        field.get("_tag") == "input"
+        and (field.get("type") or "text").casefold() == "text"
+        and "required" in field
+        and "disabled" not in field
+        and "readonly" not in field
+        and "hidden" not in field
+        and "inert" not in field
+        and (field.get("aria-hidden") or "").casefold() != "true"
+        and "display:none" not in style
+        and "visibility:hidden" not in style
+    )
+    if not editable_city:
+        return False
     explicit_market = kind == "appliance" and city in {"Jacksonville", "Tampa", "Tallahassee"}
     if not explicit_market:
-        if len(fields) != 1:
-            return False
-        field = fields[0]
-        # Prefilled city guides still require a real, editable text control.
-        # Hidden/disabled inputs would misattribute an actual nearby pickup.
-        return (
-            field.get("value") == city
-            and (field.get("type") or "text").lower() == "text"
-            and "required" in field
-            and "disabled" not in field
-            and "readonly" not in field
-        )
+        return field.get("value") == city
 
-    field = fields[0] if len(fields) == 1 else {}
     # Match the actual input parsed inside this form to its wrapping label.
     # A lookalike label elsewhere on the page, in a comment or in a template
     # must never validate an unlabeled submitted city.
     labeled = any(item is field for item in page.labeled_city_fields)
-    safe_text_input = (
-        len(fields) == 1
-        and (field.get("type") or "text").lower() == "text"
-        and "required" in field
-        and "disabled" not in field
-        and "readonly" not in field
-        and bool(labeled)
-    )
+    safe_text_input = bool(labeled)
     explicit = (
         safe_text_input
         and field.get("value", "") == ""
