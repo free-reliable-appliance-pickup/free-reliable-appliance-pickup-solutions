@@ -8,6 +8,7 @@ on:
       - 'florida-appliance-pickup/index.html'
       - '*-fl-*-pickup/index.html'
       - 'scripts/audit-florida-major-markets.py'
+      - 'scripts/test-florida-city-fieldset.py'
       - 'scripts/test-florida-request-city-guard.py'
       - '.github/workflows/audit-florida-major-markets.yml'
   push:
@@ -19,6 +20,7 @@ on:
       - 'florida-appliance-pickup/index.html'
       - '*-fl-*-pickup/index.html'
       - 'scripts/audit-florida-major-markets.py'
+      - 'scripts/test-florida-city-fieldset.py'
       - 'scripts/test-florida-request-city-guard.py'
   workflow_dispatch:
 permissions:
@@ -33,5 +35,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: python scripts/test-florida-city-fieldset.py
       - run: python scripts/test-florida-request-city-guard.py
       - run: python scripts/audit-florida-major-markets.py
