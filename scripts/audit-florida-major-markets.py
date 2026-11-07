@@ -10,6 +10,7 @@ TYPES = ("appliance", "washer-dryer", "refrigerator", "freezer", "stove-oven")
 
 class Page(HTMLParser):
     def __init__(self):
+        """Initialize request-form, metadata, template and label tracking."""
         super().__init__(convert_charrefs=True)
         self.in_form = False
         self.fields = {}
@@ -22,6 +23,7 @@ class Page(HTMLParser):
         self.label_stack = []
         self.labeled_city_fields = []
     def handle_starttag(self, tag, attrs):
+        """Capture real form fields, visible city labels and publication metadata."""
         a = dict(attrs)
         if tag == "template":
             self.template_depth += 1
@@ -46,10 +48,12 @@ class Page(HTMLParser):
         if tag == "script" and a.get("src"):
             self.scripts.append(a.get("src"))
     def handle_data(self, data):
+        """Accumulate text from labels inside non-template customer forms."""
         if self.in_form and not self.template_depth and self.label_stack:
             self.label_stack[-1]["text"].append(data)
 
     def handle_endtag(self, tag):
+        """Complete visible city-label associations and close active HTML scopes."""
         if tag == "label" and self.in_form and not self.template_depth and self.label_stack:
             label = self.label_stack.pop()
             label_text = " ".join("".join(label["text"]).split()).casefold()
@@ -122,6 +126,7 @@ def valid_request_robots(robots):
 
 
 def main():
+    """Audit all 320 Florida guides and the statewide hub without modifying files."""
     data = json.loads(Path("data/florida-major-market-plan.json").read_text())
     base = "https://freereliableappliancepickup.com/"
     errors = []
