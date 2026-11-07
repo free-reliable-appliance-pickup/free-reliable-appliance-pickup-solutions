@@ -45,9 +45,9 @@ jobs:
           indexable=[]
           for p in pages:
               text=p.read_text(encoding='utf-8',errors='ignore')
-              head=text.split('</head>',1)[0]
+              head=text.lower().split('</head>',1)[0]
               rel='' if p==Path('index.html') else p.parent.as_posix().strip('/')
-              if re.search(r'<meta\b[^>]*\bname=[\x22\x27]robots[\x22\x27][^>]*\bcontent=[\x22\x27][^>]*noindex',head,re.I):
+              if 'noindex' in head:
                   if rel:
                       noindex.add(rel)
                       canonical=canonical_in(head)
