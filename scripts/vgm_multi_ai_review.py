@@ -107,7 +107,10 @@ def call_free_model(key, model, prompt):
     payload = json.dumps({
         "model": model,
         "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}],
-        "max_tokens": 2200,
+        # Reasoning-enabled free models otherwise consumed the small prior
+        # completion cap before providing a final structured answer.
+        "max_tokens": 5000,
+        "reasoning": {"effort": "low"},
         "temperature": 0.1,
         # Both specifically allow JSON response formatting; never rely on
         # model promises alone — parse_review still validates every finding.
@@ -120,7 +123,14 @@ def call_free_model(key, model, prompt):
     })
     with urlopen(req, timeout=65) as response:
         data = json.load(response)
-    output = data["choices"][0]["message"]["content"]
+    choice = data["choices"][0]
+    output = choice["message"]["content"]
+    if not isinstance(output, str) or not output.strip():
+        # Completion metadata can diagnose token exhaustion without logging
+        # model text, provider details, account information, or credentials.
+        finish = choice.get("finish_reason")
+        safe_finish = finish if finish in ("length", "stop", "content_filter", "tool_calls") else "other"
+        raise ModelOutputError("empty_or_nontext_response_finish_" + safe_finish)
     return parse_review(output)
 
 def report_markdown(pr_number, results, skipped, truncated, diff_present):
