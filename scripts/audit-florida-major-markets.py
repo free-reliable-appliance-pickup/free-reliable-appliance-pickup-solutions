@@ -65,22 +65,32 @@ def main():
             city_fields = p.fields.get("city", [])
             needs_explicit_city = kind == "appliance" and city in {"Jacksonville", "Tampa", "Tallahassee"}
             if needs_explicit_city:
-                # Nearby town customers must type the actual city; a hidden/disabled field,
-                # missing visible label, or default guide-city value does not qualify.
+                # Two-phase migration: main currently has a prefilled guide city;
+                # after #868, #869 and #871 merge, remove legacy_prefilled_city.
+                # The new actual-city form must be labeled, visible, required and enabled.
                 city_field = city_fields[0] if len(city_fields) == 1 else {}
                 labeled_city_input = re.search(
                     r'<label>\s*Actual pickup city\s*<input\b[^>]*\bname="city"[^>]*>\s*</label>',
                     txt, re.I
                 )
-                correct_city = (
+                safe_text_input = (
                     len(city_fields) == 1
-                    and city_field.get("value", "") == ""
-                    and city_field.get("placeholder") == "Actual pickup city"
                     and city_field.get("type", "text").lower() == "text"
                     and "required" in city_field
                     and "disabled" not in city_field
                     and bool(labeled_city_input)
                 )
+                explicit_pickup_city = (
+                    safe_text_input
+                    and city_field.get("value", "") == ""
+                    and city_field.get("placeholder") == "Actual pickup city"
+                )
+                legacy_prefilled_city = (
+                    safe_text_input
+                    and city_field.get("value") == city
+                    and "placeholder" not in city_field
+                )
+                correct_city = explicit_pickup_city or legacy_prefilled_city
             else:
                 correct_city = len(city_fields) == 1 and city_fields[0].get("value") == city
             if not correct_city:
