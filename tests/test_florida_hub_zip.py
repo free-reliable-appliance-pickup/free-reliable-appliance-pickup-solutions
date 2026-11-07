@@ -63,7 +63,7 @@ class FloridaHubZipTests(unittest.TestCase):
 
     def test_contact_location_and_access_are_required(self):
         fields = self.parser.forms[0]["fields"]
-        for name in ("name", "phone", "address", "city", "zip", "appliance", "floor", "stairs", "condition", "photos_available", "access"):
+        for name in ("name", "phone", "address", "city", "zip", "appliance", "floor", "stairs", "condition", "photos_available", "access", "message"):
             with self.subTest(name=name):
                 self.assertEqual(len(fields.get(name, [])), 1)
                 self.assertIn("required", fields[name][0])
@@ -72,6 +72,13 @@ class FloridaHubZipTests(unittest.TestCase):
         access = self.parser.forms[0]["fields"]["access"][0]
         self.assertEqual(access.get("type"), "text")
         self.assertIn("If none, enter None.", access.get("placeholder", ""))
+
+    def test_appliance_inventory_is_required(self):
+        details = self.parser.forms[0]["fields"]["message"]
+        self.assertEqual(len(details), 1)
+        self.assertIn("required", details[0])
+        self.assertIn("List each appliance", details[0].get("placeholder", ""))
+        self.assertIn("working", details[0].get("placeholder", ""))
 
     def test_no_form_upload_claims(self):
         fields = self.parser.forms[0]["fields"]
