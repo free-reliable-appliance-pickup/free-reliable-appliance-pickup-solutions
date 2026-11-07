@@ -134,7 +134,7 @@ class MultiAITests(unittest.TestCase):
                     self.assertEqual(body["response_format"], {"type": "json_object"})
                     self.assertEqual(body["messages"][1]["content"], "patch")
                     self.assertEqual(body["max_tokens"], 5000)
-                    self.assertEqual(body["reasoning"], {"effort": "low"})
+                    self.assertEqual(body["reasoning"], {"enabled": False})
 
     def test_no_credentials_does_not_count_as_review(self):
         statuses = {label: {"model": model, "status": "not configured"} for label, model in review.REVIEWERS.items()}

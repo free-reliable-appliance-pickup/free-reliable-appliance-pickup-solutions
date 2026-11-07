@@ -107,10 +107,11 @@ def call_free_model(key, model, prompt):
     payload = json.dumps({
         "model": model,
         "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}],
-        # Reasoning-enabled free models otherwise consumed the small prior
-        # completion cap before providing a final structured answer.
+        # Both allowed free models exhausted 5,000 completion tokens on
+        # reasoning without producing final JSON (verified finish_reason=length).
+        # Request direct final answers; this never accepts partial reviews.
         "max_tokens": 5000,
-        "reasoning": {"effort": "low"},
+        "reasoning": {"enabled": False},
         "temperature": 0.1,
         # Both specifically allow JSON response formatting; never rely on
         # model promises alone — parse_review still validates every finding.
