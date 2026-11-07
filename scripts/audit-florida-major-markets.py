@@ -37,6 +37,44 @@ class Page(HTMLParser):
         if tag == "form":
             self.in_form = False
 
+
+def valid_city_field(page, html, city, kind):
+    """Verify the submitted city is explicit where nearby-city requests are invited.
+
+    Temporary legacy support is removed only after the three general guides merge.
+    """
+    fields = page.fields.get("city", [])
+    explicit_market = kind == "appliance" and city in {"Jacksonville", "Tampa", "Tallahassee"}
+    if not explicit_market:
+        return len(fields) == 1 and fields[0].get("value") == city
+
+    field = fields[0] if len(fields) == 1 else {}
+    labeled = re.search(
+        r'<label(?:\s+[^>]*)?>\s*Actual pickup city\s*<input\b(?=[^>]*\sname="city"(?:\s|/?>))[^>]*>\s*</label>',
+        html, re.I,
+    )
+    safe_text_input = (
+        len(fields) == 1
+        and field.get("type", "text").lower() == "text"
+        and "required" in field
+        and "disabled" not in field
+        and "readonly" not in field
+        and bool(labeled)
+    )
+    explicit = (
+        safe_text_input
+        and field.get("value", "") == ""
+        and field.get("placeholder") == "Actual pickup city"
+    )
+    # Compatibility only while main has the original three prefilled guides.
+    # Remove legacy after #868, #869, #871 merge; tracked by issue #876.
+    legacy = (
+        safe_text_input
+        and field.get("value") == city
+        and "placeholder" not in field
+    )
+    return explicit or legacy
+
 def main():
     data = json.loads(Path("data/florida-major-market-plan.json").read_text())
     base = "https://freereliableappliancepickup.com/"
@@ -62,38 +100,7 @@ def main():
             if len(p.forms) != 1 or "formspree.io/f/" not in p.forms[0].get("action",""): errors.append(f"{path}: form action")
             if any(name not in p.fields for name in required): errors.append(f"{path}: missing form fields")
             if not any(x.get("value")=="FL" for x in p.fields.get("state",[])): errors.append(f"{path}: incorrect state")
-            city_fields = p.fields.get("city", [])
-            needs_explicit_city = kind == "appliance" and city in {"Jacksonville", "Tampa", "Tallahassee"}
-            if needs_explicit_city:
-                # Two-phase migration: main currently has a prefilled guide city;
-                # after #868, #869 and #871 merge, remove legacy_prefilled_city.
-                # The new actual-city form must be labeled, visible, required and enabled.
-                city_field = city_fields[0] if len(city_fields) == 1 else {}
-                labeled_city_input = re.search(
-                    r'<label(?:\s+[^>]*)?>\s*Actual pickup city\s*<input\b(?=[^>]*\sname="city"(?:\s|/?>))[^>]*>\s*</label>',
-                    txt, re.I
-                )
-                safe_text_input = (
-                    len(city_fields) == 1
-                    and city_field.get("type", "text").lower() == "text"
-                    and "required" in city_field
-                    and "disabled" not in city_field
-                    and "readonly" not in city_field
-                    and bool(labeled_city_input)
-                )
-                explicit_pickup_city = (
-                    safe_text_input
-                    and city_field.get("value", "") == ""
-                    and city_field.get("placeholder") == "Actual pickup city"
-                )
-                legacy_prefilled_city = (
-                    safe_text_input
-                    and city_field.get("value") == city
-                    and "placeholder" not in city_field
-                )
-                correct_city = explicit_pickup_city or legacy_prefilled_city
-            else:
-                correct_city = len(city_fields) == 1 and city_fields[0].get("value") == city
+            correct_city = valid_city_field(p, txt, city, kind)
             if not correct_city:
                 errors.append(f"{path}: incorrect or unconfirmed pickup city")
             if not any("noindex" in x for x in p.robots): errors.append(f"{path}: accidental indexing")
