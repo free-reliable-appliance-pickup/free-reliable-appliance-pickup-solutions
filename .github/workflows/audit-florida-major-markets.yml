@@ -19,6 +19,7 @@ on:
       - 'florida-appliance-pickup/index.html'
       - '*-fl-*-pickup/index.html'
       - 'scripts/audit-florida-major-markets.py'
+      - 'scripts/test-florida-request-city-guard.py'
   workflow_dispatch:
 permissions:
   contents: read
