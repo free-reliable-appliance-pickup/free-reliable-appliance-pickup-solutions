@@ -15,20 +15,28 @@ class FormFields(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.forms = []
         self.form = None
+        self.current_select = None
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
         if tag == "form":
-            self.form = {"attrs": attributes, "fields": {}}
+            self.form = {"attrs": attributes, "fields": {}, "select_options": {}}
             self.forms.append(self.form)
         elif self.form is not None and tag in ("input", "select", "textarea"):
             name = attributes.get("name")
             if name:
                 self.form["fields"].setdefault(name, []).append(attributes)
+                if tag == "select":
+                    self.current_select = name
+        elif self.form is not None and tag == "option" and self.current_select:
+            self.form["select_options"].setdefault(self.current_select, []).append(attributes)
 
     def handle_endtag(self, tag):
-        if tag == "form":
+        if tag == "select":
+            self.current_select = None
+        elif tag == "form":
             self.form = None
+            self.current_select = None
 
 
 class FloridaHubZipTests(unittest.TestCase):
@@ -69,6 +77,18 @@ class FloridaHubZipTests(unittest.TestCase):
                 self.assertEqual(len(fields.get(name, [])), 1)
                 self.assertIn("required", fields[name][0])
 
+    def test_required_selects_have_no_default_answer(self):
+        form = self.parser.forms[0]
+        for name in ("appliance", "condition", "floor", "stairs", "photos_available"):
+            with self.subTest(name=name):
+                self.assertIn("required", form["fields"][name][0])
+                options = form["select_options"].get(name, [])
+                self.assertGreater(len(options), 1)
+                selected = [opt for opt in options if "selected" in opt]
+                self.assertLessEqual(len(selected), 1)
+                default = selected[0] if selected else options[0]
+                self.assertEqual(default.get("value"), "", name + " must require a deliberate choice")
+
     def test_access_guidance_is_visible_and_linked_to_input(self):
         access = self.parser.forms[0]["fields"]["access"][0]
         self.assertEqual(access.get("type"), "text")
@@ -83,10 +103,19 @@ class FloridaHubZipTests(unittest.TestCase):
         details = self.parser.forms[0]["fields"]["message"]
         self.assertEqual(len(details), 1)
         self.assertIn("required", details[0])
-        self.assertRegex(
-            self.markup,
-            r'Appliance Details \(required\): List each appliance, quantity, whether it works, repair problems, and brand/model if known\.<textarea',
+        message_label = (
+            r'<label>Appliance Details \(required\): List each appliance, quantity, '
+            r'whether it works, repair problems, and brand/model if known\.'
+            r'<textarea\s+[^>]*name="message"[^>]*></textarea></label>'
         )
+        self.assertRegex(self.markup, message_label)
+        # Negative fixture: visible instructions are insufficient when their
+        # label is not programmatically associated with the textarea.
+        disconnected = self.markup.replace(
+            '<label>Appliance Details (required):',
+            '<div>Appliance Details (required):',
+        ).replace('</textarea></label>', '</textarea></div>')
+        self.assertNotRegex(disconnected, message_label)
 
     def test_no_form_upload_claims(self):
         fields = self.parser.forms[0]["fields"]
