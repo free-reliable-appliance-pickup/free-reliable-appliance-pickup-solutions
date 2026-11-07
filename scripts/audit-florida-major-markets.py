@@ -50,12 +50,12 @@ def valid_city_field(page, html, city, kind):
 
     field = fields[0] if len(fields) == 1 else {}
     labeled = re.search(
-        r'<label(?:\s+[^>]*)?>\s*Actual pickup city\s*<input\b(?=[^>]*\sname="city"(?:\s|/?>))[^>]*>\s*</label>',
+        r"""<label(?:\s+[^>]*)?>\s*Actual pickup city\s*<input\b(?=[^>]*\sname\s*=\s*(?:"city"|'city'|city)(?=[\s/>]))[^>]*>\s*</label>""",
         html, re.I,
     )
     safe_text_input = (
         len(fields) == 1
-        and field.get("type", "text").lower() == "text"
+        and (field.get("type") or "text").lower() == "text"
         and "required" in field
         and "disabled" not in field
         and "readonly" not in field
