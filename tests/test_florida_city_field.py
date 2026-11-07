@@ -120,6 +120,22 @@ class FloridaPickupCityTests(unittest.TestCase):
                     '<input name="city" value="" placeholder="Actual pickup city" required></label>'
                 ))
 
+    def test_label_for_must_point_to_the_city_field(self):
+        self.assertFalse(self.valid(
+            '<label for="zip">Actual pickup city'
+            '<input id="pickup-city" name="city" value="" '
+            'placeholder="Actual pickup city" required></label>'
+        ))
+        self.assertFalse(self.valid(
+            '<label for="pickup-city">Actual pickup city'
+            '<input name="city" value="" placeholder="Actual pickup city" required></label>'
+        ))
+        self.assertTrue(self.valid(
+            '<label for="pickup-city">Actual pickup city'
+            '<input id="pickup-city" name="city" value="" '
+            'placeholder="Actual pickup city" required></label>'
+        ))
+
     def test_duplicate_city_inputs_rejected(self):
         self.assertFalse(self.valid(
             '<label>Actual pickup city'
