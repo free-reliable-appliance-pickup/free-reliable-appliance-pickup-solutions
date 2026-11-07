@@ -63,17 +63,27 @@ def main():
             if any(name not in p.fields for name in required): errors.append(f"{path}: missing form fields")
             if not any(x.get("value")=="FL" for x in p.fields.get("state",[])): errors.append(f"{path}: incorrect state")
             city_fields = p.fields.get("city", [])
-            explicit_pickup_city = (
-                kind == "appliance"
-                and city in {"Jacksonville", "Tampa", "Tallahassee"}
-                and any(
-                    x.get("value", "") == ""
-                    and x.get("placeholder") == "Actual pickup city"
-                    and "required" in x
-                    for x in city_fields
+            needs_explicit_city = kind == "appliance" and city in {"Jacksonville", "Tampa", "Tallahassee"}
+            if needs_explicit_city:
+                # Nearby town customers must type the actual city; a hidden/disabled field,
+                # missing visible label, or default guide-city value does not qualify.
+                city_field = city_fields[0] if len(city_fields) == 1 else {}
+                labeled_city_input = re.search(
+                    r'<label>\s*Actual pickup city\s*<input\b[^>]*\bname="city"[^>]*>\s*</label>',
+                    txt, re.I
                 )
-            )
-            if not (any(x.get("value") == city for x in city_fields) or explicit_pickup_city):
+                correct_city = (
+                    len(city_fields) == 1
+                    and city_field.get("value", "") == ""
+                    and city_field.get("placeholder") == "Actual pickup city"
+                    and city_field.get("type", "text").lower() == "text"
+                    and "required" in city_field
+                    and "disabled" not in city_field
+                    and bool(labeled_city_input)
+                )
+            else:
+                correct_city = len(city_fields) == 1 and city_fields[0].get("value") == city
+            if not correct_city:
                 errors.append(f"{path}: incorrect or unconfirmed pickup city")
             if not any("noindex" in x for x in p.robots): errors.append(f"{path}: accidental indexing")
             if p.canonicals != [base+path.parent.name+"/"]: errors.append(f"{path}: canonical mismatch")
