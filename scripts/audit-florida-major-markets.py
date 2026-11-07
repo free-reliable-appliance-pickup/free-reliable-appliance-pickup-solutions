@@ -18,13 +18,25 @@ class Page(HTMLParser):
         self.canonicals = []
         self.forms = []
         self.scripts = []
+        self.template_depth = 0
+        self.label_stack = []
+        self.labeled_city_fields = []
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
-        if tag == "form":
+        if tag == "template":
+            self.template_depth += 1
+        if tag == "form" and not self.template_depth:
             self.forms.append(a)
             self.in_form = True
-        if tag in ("input","select","textarea") and self.in_form and a.get("name"):
+        if tag == "label" and self.in_form and not self.template_depth:
+            self.label_stack.append({"text": [], "city_fields": [], "hidden": (
+                "hidden" in a or a.get("aria-hidden") == "true"
+                or "display:none" in (a.get("style") or "").replace(" ", "").lower()
+            )})
+        if tag in ("input","select","textarea") and self.in_form and not self.template_depth and a.get("name"):
             self.fields.setdefault(a["name"], []).append(a)
+            if tag == "input" and a["name"] == "city" and self.label_stack:
+                self.label_stack[-1]["city_fields"].append(a)
         if tag == "img":
             self.images.append(a)
         if tag == "meta" and a.get("name", "").lower() == "robots":
@@ -33,9 +45,21 @@ class Page(HTMLParser):
             self.canonicals.append(a.get("href"))
         if tag == "script" and a.get("src"):
             self.scripts.append(a.get("src"))
+    def handle_data(self, data):
+        if self.in_form and not self.template_depth and self.label_stack:
+            self.label_stack[-1]["text"].append(data)
+
     def handle_endtag(self, tag):
+        if tag == "label" and self.in_form and not self.template_depth and self.label_stack:
+            label = self.label_stack.pop()
+            label_text = " ".join("".join(label["text"]).split()).casefold()
+            if not label["hidden"] and label_text == "actual pickup city":
+                self.labeled_city_fields.extend(label["city_fields"])
         if tag == "form":
             self.in_form = False
+            self.label_stack.clear()
+        if tag == "template" and self.template_depth:
+            self.template_depth -= 1
 
 
 def valid_city_field(page, html, city, kind):
@@ -49,10 +73,10 @@ def valid_city_field(page, html, city, kind):
         return len(fields) == 1 and fields[0].get("value") == city
 
     field = fields[0] if len(fields) == 1 else {}
-    labeled = re.search(
-        r"""<label(?:\s+[^>]*)?>\s*Actual pickup city\s*<input\b(?=[^>]*\sname\s*=\s*(?:"city"|'city'|city)(?=[\s/>]))[^>]*>\s*</label>""",
-        html, re.I,
-    )
+    # Match the actual input parsed inside this form to its wrapping label.
+    # A lookalike label elsewhere on the page, in a comment or in a template
+    # must never validate an unlabeled submitted city.
+    labeled = any(item is field for item in page.labeled_city_fields)
     safe_text_input = (
         len(fields) == 1
         and (field.get("type") or "text").lower() == "text"
