@@ -37,7 +37,7 @@ jobs:
           python-version: '3.12'
       - name: Test multi-AI review safeguards
         run: python -m unittest discover -s tests -p 'test_vgm_multi_ai_review.py' -v
-      - name: Independent reviews — Cohere and Qwen FREE models only
+      - name: Independent reviews — two approved FREE models only
         env:
           GITHUB_TOKEN: ${{ github.token }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
