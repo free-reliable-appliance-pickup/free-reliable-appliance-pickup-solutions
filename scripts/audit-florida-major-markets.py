@@ -69,9 +69,9 @@ class Page(HTMLParser):
 
 
 def valid_city_field(page, html, city, kind):
-    """Verify the submitted city is explicit where nearby-city requests are invited.
+    """Require an explicit, editable actual pickup city for three major market guides.
 
-    Temporary legacy support is removed only after the three general guides merge.
+    Other city-category guides must keep their matching editable city field.
     """
     fields = page.fields.get("city", [])
     explicit_market = kind == "appliance" and city in {"Jacksonville", "Tampa", "Tallahassee"}
@@ -107,14 +107,9 @@ def valid_city_field(page, html, city, kind):
         and field.get("value", "") == ""
         and field.get("placeholder") == "Actual pickup city"
     )
-    # Compatibility only while main has the original three prefilled guides.
-    # Remove legacy after #868, #869, #871 merge; tracked by issue #876.
-    legacy = (
-        safe_text_input
-        and field.get("value") == city
-        and "placeholder" not in field
-    )
-    return explicit or legacy
+    # Do not accept a default city value on a guide that also welcomes
+    # nearby communities: each visitor must explicitly enter the actual city.
+    return explicit
 
 def valid_request_robots(robots):
     """A city guide cannot receive conflicting or duplicate indexing directives."""
