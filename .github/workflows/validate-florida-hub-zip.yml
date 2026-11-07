@@ -1,0 +1,28 @@
+name: Validate Florida Statewide ZIP Intake
+on:
+  pull_request:
+    paths:
+      - 'florida-appliance-pickup/index.html'
+      - 'tests/test_florida_hub_zip.py'
+      - '.github/workflows/validate-florida-hub-zip.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'florida-appliance-pickup/index.html'
+      - 'tests/test_florida_hub_zip.py'
+      - '.github/workflows/validate-florida-hub-zip.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_florida_hub_zip.py' -v
+      - run: python scripts/audit-florida-major-markets.py
