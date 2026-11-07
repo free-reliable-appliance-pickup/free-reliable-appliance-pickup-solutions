@@ -484,7 +484,3 @@ Next action / no-revisit-before:
 - **Freeze/ownership:** Reviewed `data/seo-experiments.json`; Temecula, Murrieta, Victorville and Palm Desert have ranking experiments. This is the permitted verified technical-attribution exception, not a speculative SEO change; leave the Daily SEO Ranking Countermove and emergency Website Technical Repair work untouched.
 - **Acceptance:** Exact six-file branch diff; required-phone/source/service assertions and positive/negative fixture tests; 47-page priority intake audit with zero failures; passing relevant GitHub Actions on exact PR head before any merge. Verify deployment separately. No real Formspree receipt, organic ranking gain or new local service capability is claimed.
 - **Rollback:** Revert the scoped pull request if regression occurs.
-
-## 2026-11-07 — Florida ZIP and inventory intake (PR #911)
-- Require five-digit ZIP, access details ("None" permitted) and appliance-by-appliance condition; provide persistent accessible guidance.
-- Preserve Formspree, routing, eligibility, images, robots and sitemap. Tests and 320-guide audit passed; independent review and live receipt required before release.
