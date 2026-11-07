@@ -485,8 +485,6 @@ Next action / no-revisit-before:
 - **Acceptance:** Exact six-file branch diff; required-phone/source/service assertions and positive/negative fixture tests; 47-page priority intake audit with zero failures; passing relevant GitHub Actions on exact PR head before any merge. Verify deployment separately. No real Formspree receipt, organic ranking gain or new local service capability is claimed.
 - **Rollback:** Revert the scoped pull request if regression occurs.
 
-## 2026-11-07 — Florida statewide form safety (PR #911)
-- **Defect/fix:** Required ZIP accepted malformed values; access and appliance inventory were optional. Enforce five digits and require access ("None" if clear) plus an item-by-item condition description.
-- **Scope:** No change to Formspree, phone, photos, paid quotes, routing, claims, images, SEO ownership, robots or sitemap.
-- **Verification:** Seven focused tests and 320 Florida-guide audit passed on PR branch. Independent review, approval, merge and live inbox test still pending. Revert PR if form completion regresses.
-
+## 2026-11-07 — Florida ZIP and inventory intake (PR #911)
+- Require five-digit ZIP, access details ("None" permitted) and appliance-by-appliance condition; provide persistent accessible guidance.
+- Preserve Formspree, routing, eligibility, images, robots and sitemap. Tests and 320-guide audit passed; independent review and live receipt required before release.
