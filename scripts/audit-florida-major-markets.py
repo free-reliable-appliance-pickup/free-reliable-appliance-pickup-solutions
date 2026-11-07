@@ -29,7 +29,7 @@ class Page(HTMLParser):
             self.forms.append(a)
             self.in_form = True
         if tag == "label" and self.in_form and not self.template_depth:
-            self.label_stack.append({"text": [], "city_fields": [], "for": a.get("for"), "hidden": (
+            self.label_stack.append({"text": [], "city_fields": [], "for": a.get("for"), "for_present": "for" in a, "hidden": (
                 "hidden" in a or a.get("aria-hidden") == "true"
                 or "display:none" in (a.get("style") or "").replace(" ", "").lower()
             )})
@@ -58,7 +58,7 @@ class Page(HTMLParser):
                     # An explicit for= associates the label with that exact ID,
                     # even if the input is nested under the label.
                     target = label["for"]
-                    if target is None or (city_field.get("id") and target == city_field.get("id")):
+                    if not label["for_present"] or (target is not None and city_field.get("id") and target == city_field.get("id")):
                         self.labeled_city_fields.append(city_field)
         if tag == "form" and not self.template_depth:
             # An inert <template> form cannot terminate the actual pickup form.
