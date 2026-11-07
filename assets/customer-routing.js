@@ -88,8 +88,9 @@ function recordObservedTrafficSource(form){
     // A referrer or UTM tag indicates a source hint, not proof of Google organic ranking.
   const state=findField(form,['state','State','pickup_state','Primary State']);
   const texas=state&&stateCode(state.value)==='TX';
+  const florida=state&&stateCode(state.value)==='FL';
   const salem=/^\/salem-(?:appliance|washer-dryer|refrigerator-freezer|stove)-pickup\/$/.test(pagePath());
-  if(!texas&&!salem)return;
+  if(!texas&&!florida&&!salem)return;
   let source=CURRENT_OBSERVED_SOURCE;
   if(!source){try{source=sessionStorage.getItem('frap_observed_traffic_source')||'';}catch(e){}}
   hidden(form,'Traffic Source (Observed)',source||'Direct / unknown');
