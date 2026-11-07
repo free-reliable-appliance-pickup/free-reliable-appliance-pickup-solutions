@@ -37,6 +37,22 @@ class FloridaPickupCityTests(unittest.TestCase):
             'placeholder="Actual pickup city" required></label>'
         ))
 
+    def test_valid_name_attribute_spellings(self):
+        variants = ("name='city'", "name=city", 'name = "city"')
+        for name_attribute in variants:
+            with self.subTest(name_attribute=name_attribute):
+                self.assertTrue(self.valid(
+                    '<label class="field">Actual pickup city'
+                    '<input ' + name_attribute
+                    + ' value="" placeholder="Actual pickup city" required></label>'
+                ))
+
+    def test_valueless_type_attribute_does_not_crash(self):
+        self.assertTrue(self.valid(
+            '<label>Actual pickup city'
+            '<input type name="city" value="" placeholder="Actual pickup city" required></label>'
+        ))
+
     def test_legacy_prefilled_city_is_temporary_compatibility(self):
         self.assertTrue(self.valid(
             '<label>Actual pickup city<input name="city" value="Jacksonville" required></label>'
