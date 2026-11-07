@@ -33,9 +33,9 @@ jobs:
           # self-canonical request-only city guide may be useful to customers
           # while remaining excluded from search. An alias points elsewhere.
           def canonical_in(head):
-              for tag in re.findall(r'<link\\b[^>]*>',head,re.I):
-                  rel=re.search(r'\\brel\\s*=\\s*([\\x22\\x27])([^\\x22\\x27]*)\\1',tag,re.I)
-                  href=re.search(r'\\bhref\\s*=\\s*([\\x22\\x27])([^\\x22\\x27]*)\\1',tag,re.I)
+              for tag in re.findall(r'<link\b[^>]*>',head,re.I):
+                  rel=re.search(r'\brel\s*=\s*([\x22\x27])([^\x22\x27]*)\1',tag,re.I)
+                  href=re.search(r'\bhref\s*=\s*([\x22\x27])([^\x22\x27]*)\1',tag,re.I)
                   if rel and href and 'canonical' in rel.group(2).lower().split():
                       return href.group(2).strip()
               return None
@@ -47,7 +47,7 @@ jobs:
               text=p.read_text(encoding='utf-8',errors='ignore')
               head=text.split('</head>',1)[0]
               rel='' if p==Path('index.html') else p.parent.as_posix().strip('/')
-              if re.search(r'<meta\\b[^>]*\\bname=[\\x22\\x27]robots[\\x22\\x27][^>]*\\bcontent=[\\x22\\x27][^>]*noindex',head,re.I):
+              if re.search(r'<meta\b[^>]*\bname=[\x22\x27]robots[\x22\x27][^>]*\bcontent=[\x22\x27][^>]*noindex',head,re.I):
                   if rel:
                       noindex.add(rel)
                       canonical=canonical_in(head)
