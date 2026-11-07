@@ -3,13 +3,13 @@ on:
   pull_request:
     paths:
       - 'assets/customer-routing.js'
-      - 'tests/test-florida-observed-source.cjs'
+      - 'tests/test-florida-observed-source.js'
       - '.github/workflows/test-florida-observed-source.yml'
   push:
     branches: [main]
     paths:
       - 'assets/customer-routing.js'
-      - 'tests/test-florida-observed-source.cjs'
+      - 'tests/test-florida-observed-source.js'
       - '.github/workflows/test-florida-observed-source.yml'
   workflow_dispatch:
 permissions:
@@ -25,4 +25,4 @@ jobs:
         with:
           node-version: '22'
       - run: node --check assets/customer-routing.js
-      - run: node tests/test-florida-observed-source.cjs
+      - run: node tests/test-florida-observed-source.js
