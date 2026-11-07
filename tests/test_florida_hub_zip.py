@@ -61,6 +61,9 @@ class FloridaHubZipTests(unittest.TestCase):
         self.assertEqual(zipfield.get("inputmode"), "numeric")
         self.assertEqual(zipfield.get("autocomplete"), "postal-code")
         self.assertEqual(zipfield.get("pattern"), "[0-9]{5}")
+        self.assertEqual(zipfield.get("aria-describedby"), "florida-zip-help")
+        self.assertIn('id="florida-zip-help">Enter a five-digit pickup ZIP code', self.markup)
+        self.assertIn("required for routing, not a guaranteed appointment", self.markup)
         self.assertEqual(zipfield.get("minlength"), "5")
         self.assertEqual(zipfield.get("maxlength"), "5")
         for valid in ("33101", "32801", "02108"):
@@ -103,16 +106,17 @@ class FloridaHubZipTests(unittest.TestCase):
         details = self.parser.forms[0]["fields"]["message"]
         self.assertEqual(len(details), 1)
         self.assertIn("required", details[0])
+        self.assertEqual(details[0].get("id"), "florida-message")
         message_label = (
-            r'<label>Appliance Details \(required\): List each appliance, quantity, '
+            r'<label for="florida-message">Appliance Details \(required\): List each appliance, quantity, '
             r'whether it works, repair problems, and brand/model if known\.'
-            r'<textarea\s+[^>]*name="message"[^>]*></textarea></label>'
+            r'<textarea\s+id="florida-message" name="message"[^>]*></textarea></label>'
         )
         self.assertRegex(self.markup, message_label)
         # Negative fixture: visible instructions are insufficient when their
         # label is not programmatically associated with the textarea.
         disconnected = self.markup.replace(
-            '<label>Appliance Details (required):',
+            '<label for="florida-message">Appliance Details (required):',
             '<div>Appliance Details (required):',
         ).replace('</textarea></label>', '</textarea></div>')
         self.assertNotRegex(disconnected, message_label)
