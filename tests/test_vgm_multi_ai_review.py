@@ -86,6 +86,22 @@ class MultiAITests(unittest.TestCase):
         self.assertNotIn("sk-or-v1", markdown)
         self.assertEqual(review.review_exit_code(state), 1)
 
+    def test_empty_final_answer_reports_only_safe_finish_reason(self):
+        responses = (("length", "empty_or_nontext_response_finish_length"),
+                     ("stop", "empty_or_nontext_response_finish_stop"),
+                     ("surprising_private_value", "empty_or_nontext_response_finish_other"))
+        for finish, expected in responses:
+            with self.subTest(finish=finish):
+                payload = {"choices": [{"finish_reason": finish,
+                                        "message": {"content": None,
+                                                    "reasoning": "never log this text"}}]}
+                with patch.object(review, "urlopen",
+                                  return_value=BytesIO(json.dumps(payload).encode())):
+                    with self.assertRaises(review.ModelOutputError) as context:
+                        review.call_free_model("fake", next(iter(review.REVIEWERS.values())), "diff")
+                self.assertEqual(context.exception.category, expected)
+                self.assertNotIn("never log", str(context.exception))
+
     def test_invalid_model_output_not_a_pass(self):
         for bad in ('{"findings": "all good"}', '{"findings":[{"severity":"safe"}]}', 'looks fine'):
             with self.subTest(bad=bad):
@@ -117,7 +133,8 @@ class MultiAITests(unittest.TestCase):
                     self.assertEqual(body["model"], model)
                     self.assertEqual(body["response_format"], {"type": "json_object"})
                     self.assertEqual(body["messages"][1]["content"], "patch")
-                    self.assertTrue(body["max_tokens"] >= 1200)
+                    self.assertEqual(body["max_tokens"], 5000)
+                    self.assertEqual(body["reasoning"], {"effort": "low"})
 
     def test_no_credentials_does_not_count_as_review(self):
         statuses = {label: {"model": model, "status": "not configured"} for label, model in review.REVIEWERS.items()}
