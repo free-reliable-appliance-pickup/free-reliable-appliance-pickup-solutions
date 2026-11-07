@@ -70,7 +70,7 @@ def main():
                 # The new actual-city form must be labeled, visible, required and enabled.
                 city_field = city_fields[0] if len(city_fields) == 1 else {}
                 labeled_city_input = re.search(
-                    r'<label>\s*Actual pickup city\s*<input\b[^>]*\bname="city"[^>]*>\s*</label>',
+                    r'<label(?:\s+[^>]*)?>\s*Actual pickup city\s*<input\b[^>]*\bname="city"[^>]*>\s*</label>',
                     txt, re.I
                 )
                 safe_text_input = (
