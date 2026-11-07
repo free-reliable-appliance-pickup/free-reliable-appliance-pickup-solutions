@@ -34,8 +34,9 @@ class FormFields(HTMLParser):
 class FloridaHubZipTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.markup = HUB.read_text(encoding="utf-8")
         cls.parser = FormFields()
-        cls.parser.feed(HUB.read_text(encoding="utf-8"))
+        cls.parser.feed(cls.markup)
 
     def test_one_customer_request_form_and_one_zip(self):
         self.assertEqual(len(self.parser.forms), 1)
@@ -68,17 +69,24 @@ class FloridaHubZipTests(unittest.TestCase):
                 self.assertEqual(len(fields.get(name, [])), 1)
                 self.assertIn("required", fields[name][0])
 
-    def test_access_details_are_explainable_when_none(self):
+    def test_access_guidance_is_visible_and_linked_to_input(self):
         access = self.parser.forms[0]["fields"]["access"][0]
         self.assertEqual(access.get("type"), "text")
-        self.assertIn("If none, enter None.", access.get("placeholder", ""))
+        self.assertEqual(access.get("aria-describedby"), "florida-access-help")
+        self.assertNotIn("If none", access.get("placeholder", ""))
+        self.assertRegex(
+            self.markup,
+            r'<p class="site-request-note" id="florida-access-help">[^<]*enter "None"[^<]*</p>',
+        )
 
-    def test_appliance_inventory_is_required(self):
+    def test_appliance_inventory_is_required_and_guidance_stays_visible(self):
         details = self.parser.forms[0]["fields"]["message"]
         self.assertEqual(len(details), 1)
         self.assertIn("required", details[0])
-        self.assertIn("List each appliance", details[0].get("placeholder", ""))
-        self.assertIn("working", details[0].get("placeholder", ""))
+        self.assertRegex(
+            self.markup,
+            r'Appliance Details \(required\): List each appliance, quantity, whether it works, repair problems, and brand/model if known\.<textarea',
+        )
 
     def test_no_form_upload_claims(self):
         fields = self.parser.forms[0]["fields"]
