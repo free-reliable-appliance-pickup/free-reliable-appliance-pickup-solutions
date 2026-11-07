@@ -127,6 +127,20 @@ class FloridaPickupCityTests(unittest.TestCase):
             '<input name="city" value="Tampa">'
         ))
 
+    def test_valid_noindex_follow_in_city_guides(self):
+        self.assertTrue(audit.valid_request_robots(["noindex, follow"]))
+        self.assertTrue(audit.valid_request_robots([" NoIndex , FOLLOW , noarchive "]))
+
+    def test_conflicting_or_duplicate_robots_rejected(self):
+        invalid = (
+            [], ["index, follow"], ["notnoindex, follow"],
+            ["noindex, index, follow"], ["noindex, nofollow"],
+            ["noindex"], ["noindex, follow", "index, follow"],
+        )
+        for robots in invalid:
+            with self.subTest(robots=robots):
+                self.assertFalse(audit.valid_request_robots(robots))
+
     def test_all_other_city_guides_keep_exact_city_requirement(self):
         self.assertTrue(self.valid(
             '<label>Actual pickup city<input name="city" value="Orlando" required></label>',
