@@ -15,7 +15,7 @@ from urllib.request import Request, urlopen
 GITHUB_API = "https://api.github.com"
 OPENROUTER_API = "https://openrouter.ai/api/v1/chat/completions"
 REVIEWERS = {
-    "Independent code reviewer (Recursive Flint)": "recursive/flint-v1.0:free",
+    "Independent code reviewer (XingChen)": "xingchen-agi/xing4.0-29b-a4b:free",
     "Independent site/SEO reviewer (Dots Studio)": "dots-studio/dots-3-note-preview:free",
 }
 SAFE_EXTENSIONS = (".html", ".css", ".js", ".json", ".md", ".py", ".yml", ".yaml")
