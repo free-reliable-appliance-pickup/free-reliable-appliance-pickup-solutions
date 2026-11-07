@@ -66,8 +66,8 @@ class MultiAITests(unittest.TestCase):
 
     def test_report_discloses_http_code_not_secret_or_upstream_body(self):
         statuses = {
-            "Independent code reviewer (Recursive Flint)": {
-                "model": review.REVIEWERS["Independent code reviewer (Recursive Flint)"],
+            "Independent code reviewer (XingChen)": {
+                "model": review.REVIEWERS["Independent code reviewer (XingChen)"],
                 "status": "unavailable",
                 "error": "ModelOutputError",
                 "output_issue": "invalid_json",
@@ -116,7 +116,7 @@ class MultiAITests(unittest.TestCase):
 
     def test_two_distinct_verified_free_reviewers(self):
         self.assertEqual(review.REVIEWERS, {
-            "Independent code reviewer (Recursive Flint)": "recursive/flint-v1.0:free",
+            "Independent code reviewer (XingChen)": "xingchen-agi/xing4.0-29b-a4b:free",
             "Independent site/SEO reviewer (Dots Studio)": "dots-studio/dots-3-note-preview:free",
         })
         self.assertEqual(len(set(review.REVIEWERS.values())), 2)
