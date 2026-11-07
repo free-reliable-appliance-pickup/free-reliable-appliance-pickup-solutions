@@ -44,6 +44,45 @@ class MultiAITests(unittest.TestCase):
     def test_parse_fenced_json(self):
         self.assertEqual(review.parse_review('```json\n{"findings": []}\n```'), [])
 
+    def test_leading_think_block_can_precede_verified_json(self):
+        content = '<think>Draft thoughts, not a review.</think>\n```json\n{"findings":[] }\n```'
+        self.assertEqual(review.parse_review(content), [])
+
+    def test_invalid_review_response_has_safe_fixed_category(self):
+        for payload, category in (
+            (None, "empty_or_nontext_response"),
+            ("", "empty_or_nontext_response"),
+            ("not json", "invalid_json"),
+            ('{"findings":"ok"}', "invalid_findings_schema"),
+            ('{"findings":[{"severity":"safe"}]}', "invalid_finding"),
+        ):
+            with self.subTest(payload=payload):
+                with self.assertRaises(review.ModelOutputError) as ctx:
+                    review.parse_review(payload)
+                self.assertEqual(ctx.exception.category, category)
+
+    def test_report_discloses_http_code_not_secret_or_upstream_body(self):
+        statuses = {
+            "Independent code reviewer (Cohere)": {
+                "model": review.REVIEWERS["Independent code reviewer (Cohere)"],
+                "status": "unavailable",
+                "error": "ModelOutputError",
+                "output_issue": "invalid_json",
+            },
+            "Independent site/SEO reviewer (Qwen)": {
+                "model": review.REVIEWERS["Independent site/SEO reviewer (Qwen)"],
+                "status": "unavailable",
+                "error": "HTTPError",
+                "http_status": 429,
+            },
+        }
+        markdown, state = review.report_markdown(911, statuses, [], False, True)
+        self.assertIn("INCOMPLETE", state)
+        self.assertIn("HTTP status: 429", markdown)
+        self.assertIn("Output issue: invalid_json", markdown)
+        self.assertNotIn("sk-or-v1", markdown)
+        self.assertEqual(review.review_exit_code(state), 1)
+
     def test_invalid_model_output_not_a_pass(self):
         for bad in ('{"findings": "all good"}', '{"findings":[{"severity":"safe"}]}', 'looks fine'):
             with self.subTest(bad=bad):

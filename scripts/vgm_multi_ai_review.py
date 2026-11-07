@@ -70,17 +70,33 @@ def build_diff(files):
         used += len(patch)
     return "\n\n".join(chunks), skipped, truncated
 
+class ModelOutputError(ValueError):
+    """A safe failure category; never embed raw model text in workflow logs."""
+
+    def __init__(self, category):
+        self.category = category
+        super().__init__(category)
+
+
 def parse_review(content):
-    if not isinstance(content, str):
-        raise ValueError("model output was not text")
-    cleaned = re.sub(r"^\s*```(?:json)?\s*|\s*```\s*$", "", content.strip(), flags=re.I)
-    obj = json.loads(cleaned)
+    if not isinstance(content, str) or not content.strip():
+        raise ModelOutputError("empty_or_nontext_response")
+    cleaned = content.strip()
+    # Some reasoning-capable free models wrap their final JSON after think tags.
+    # Accept only the JSON after a complete leading reasoning block.
+    if cleaned.startswith("<think>") and "</think>" in cleaned:
+        cleaned = cleaned.split("</think>", 1)[1].strip()
+    cleaned = re.sub(r"^\s*```(?:json)?\s*|\s*```\s*$", "", cleaned, flags=re.I)
+    try:
+        obj = json.loads(cleaned)
+    except json.JSONDecodeError as exc:
+        raise ModelOutputError("invalid_json") from exc
     if not isinstance(obj, dict) or not isinstance(obj.get("findings"), list):
-        raise ValueError("model did not return findings array")
+        raise ModelOutputError("invalid_findings_schema")
     findings = []
     for f in obj["findings"][:20]:
         if not isinstance(f, dict) or f.get("severity") not in ("critical", "high", "medium", "low"):
-            raise ValueError("invalid finding")
+            raise ModelOutputError("invalid_finding")
         findings.append({k: str(f.get(k, ""))[:700] for k in ("severity", "file", "issue", "evidence", "recommendation")})
     return findings
 
@@ -130,6 +146,12 @@ def report_markdown(pr_number, results, skipped, truncated, diff_present):
                   f"Run state: **{result['status']}**", ""]
         if result.get("error"):
             lines.append("Reason: reviewer unavailable or returned invalid format.")
+            # Numeric HTTP status and fixed parse categories are safe to show;
+            # never include upstream response bodies, prompts, or auth headers.
+            if result.get("http_status") is not None:
+                lines.append(f"HTTP status: {result['http_status']}")
+            if result.get("output_issue"):
+                lines.append(f"Output issue: {result['output_issue']}")
         for f in result.get("findings", []):
             lines += [f"- **{f['severity'].upper()}** — `{f['file']}`: {f['issue']}",
                       f"  - Evidence: {f['evidence']}",
@@ -179,9 +201,18 @@ def main():
             try:
                 result["findings"] = call_free_model(key, model, patch)
                 result["status"] = "reviewed"
-            except (HTTPError, URLError, ValueError, KeyError, IndexError, TypeError, TimeoutError) as exc:
+            except HTTPError as exc:
                 result["status"] = "unavailable"
-                # Do not log error bodies, potentially containing account metadata.
+                result["error"] = "HTTPError"
+                # Only the numeric HTTP code is safe for account/rate diagnostics.
+                # Upstream response bodies can include account details: never read them.
+                result["http_status"] = int(exc.code)
+            except ModelOutputError as exc:
+                result["status"] = "unavailable"
+                result["error"] = "ModelOutputError"
+                result["output_issue"] = exc.category
+            except (URLError, ValueError, KeyError, IndexError, TypeError, TimeoutError) as exc:
+                result["status"] = "unavailable"
                 result["error"] = type(exc).__name__
         results[label] = result
     markdown, status = report_markdown(pr, results, skipped, truncated, bool(patch))
