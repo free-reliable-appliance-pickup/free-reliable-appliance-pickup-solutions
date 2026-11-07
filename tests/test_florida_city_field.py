@@ -53,13 +53,14 @@ class FloridaPickupCityTests(unittest.TestCase):
             '<input type name="city" value="" placeholder="Actual pickup city" required></label>'
         ))
 
-    def test_legacy_prefilled_city_is_temporary_compatibility(self):
-        self.assertTrue(self.valid(
-            '<label>Actual pickup city<input name="city" value="Jacksonville" required></label>'
-        ))
-        self.assertFalse(self.valid(
-            '<label>Actual pickup city<input name="city" value="Tampa" required></label>'
-        ))
+    def test_prefilled_major_market_city_rejected(self):
+        for city in ("Jacksonville", "Tampa", "Tallahassee"):
+            with self.subTest(city=city):
+                self.assertFalse(self.valid(
+                    '<label>Actual pickup city<input name="city" value="' + city
+                    + '" required></label>',
+                    city=city,
+                ))
 
     def test_hidden_disabled_readonly_or_optional_field_rejected(self):
         fields = [
