@@ -98,28 +98,24 @@ def valid_city_field(page, html, city, kind):
         and "display:none" not in style
         and "visibility:hidden" not in style
     )
-    if not editable_city:
+    # Every Florida guide (not just the three staged general guides) must
+    # present a visible label associated with the actual submitted city input.
+    # A detached label, hidden label or inert template cannot prove this.
+    labeled = any(item is field for item in page.labeled_city_fields)
+    if not editable_city or not labeled:
         return False
     explicit_market = kind == "appliance" and city in {"Jacksonville", "Tampa", "Tallahassee"}
     if not explicit_market:
         return field.get("value") == city
 
-    # Match the actual input parsed inside this form to its wrapping label.
-    # A lookalike label elsewhere on the page, in a comment or in a template
-    # must never validate an unlabeled submitted city.
-    labeled = any(item is field for item in page.labeled_city_fields)
-    safe_text_input = bool(labeled)
     explicit = (
-        safe_text_input
-        and field.get("value", "") == ""
+        field.get("value", "") == ""
         and field.get("placeholder") == "Actual pickup city"
     )
     # Temporary staged migration: permit only the three correctly labeled,
     # editable city-prefilled general guides until their page PRs merge.
-    # Keep rejecting a different city, hidden/readonly controls or missing labels.
     legacy = (
-        safe_text_input
-        and field.get("value", "") == city
+        field.get("value", "") == city
         and not field.get("placeholder")
     )
     return explicit or legacy
