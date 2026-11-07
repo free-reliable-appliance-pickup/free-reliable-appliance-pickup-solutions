@@ -99,6 +99,16 @@ def valid_city_field(page, html, city, kind):
     )
     return explicit or legacy
 
+def valid_request_robots(robots):
+    """A city guide cannot receive conflicting or duplicate indexing directives."""
+    if len(robots) != 1:
+        return False
+    directives = {part.strip().casefold() for part in robots[0].split(",")}
+    return "noindex" in directives and "follow" in directives and not (
+        "index" in directives or "nofollow" in directives
+    )
+
+
 def main():
     data = json.loads(Path("data/florida-major-market-plan.json").read_text())
     base = "https://freereliableappliancepickup.com/"
@@ -127,7 +137,7 @@ def main():
             correct_city = valid_city_field(p, txt, city, kind)
             if not correct_city:
                 errors.append(f"{path}: incorrect or unconfirmed pickup city")
-            if not any("noindex" in x for x in p.robots): errors.append(f"{path}: accidental indexing")
+            if not valid_request_robots(p.robots): errors.append(f"{path}: missing, duplicate or conflicting request-only robots directives")
             if p.canonicals != [base+path.parent.name+"/"]: errors.append(f"{path}: canonical mismatch")
             if "/assets/customer-routing.js" not in p.scripts: errors.append(f"{path}: routing js missing")
             if "not a documented completed pickup" not in txt: errors.append(f"{path}: photo provenance missing")
