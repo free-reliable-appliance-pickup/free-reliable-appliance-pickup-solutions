@@ -9,6 +9,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlparse, unquote
 import itertools
+import os
 import re
 import sys
 
@@ -59,9 +60,12 @@ def shingles(tokens, n=5):
 def inspect(root):
     pages = sorted(set(root.glob("*-ga-*-pickup/index.html")) |
                    set(root.glob("*-ga-appliance-pickup/index.html")))
-    expected = 43 if "georgia-integration-test-all43" in str(Path(".").resolve()) else None
-    # The audit is intended to work unchanged on both the 43-page integration
-    # branch and the 14-page staging subset.
+    # The full integration release candidate must remain differentiated.
+    # Smaller noindex staging branches keep similarity as a diagnostic.
+    integrated_release = os.environ.get("GITHUB_REF_NAME") == "vgm/georgia-integration-test-all43-20261107"
+    if integrated_release and len(pages) != 43:
+        print(f"FAIL: integrated Georgia branch expected 43 guides, found {len(pages)}")
+        return 1
     if not pages:
         print("FAIL: no Georgia pages to inspect")
         return 1
@@ -123,8 +127,12 @@ def inspect(root):
     for problem in fragment_errors[:70]:
         print("FAIL", problem)
     if excessive:
-        print("NOTE: similarity warnings are diagnostic for noindex draft guides, not authority to publish them.")
-    return 1 if broken or fragment_errors else 0
+        if integrated_release:
+            for score, a, b, _, _ in excessive[:12]:
+                print(f"FAIL: Georgia near-duplicate {score:.3f} {a} vs {b}")
+        else:
+            print("NOTE: similarity warnings are diagnostic for noindex drafts, not authority to publish them.")
+    return 1 if broken or fragment_errors or (integrated_release and excessive) else 0
 
 
 if __name__ == "__main__":
