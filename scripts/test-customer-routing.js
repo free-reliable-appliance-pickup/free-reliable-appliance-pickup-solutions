@@ -193,6 +193,27 @@ async function main(){
       appendChild(node){this.nodes[node.name]=node;return node;}
     };
   }
+  // Florida city forms use "access_notes" while the statewide hub uses "access".
+  // Both must appear in the Formspree routing summary without changing local
+  // route status, making dispatch promises, or losing their submitted fields.
+  for(const [label,field] of [
+    ['Florida dedicated city','access_notes'],
+    ['Florida statewide hub','access']
+  ]){
+    const details='Second floor, stairs, narrow gate, driveway unavailable';
+    const form=mockForm({city:'Orlando',state:'FL',appliance:'Washer and dryer set',
+      condition:'Needs minor repair',stairs:'One flight',[field]:details});
+    api.qualify(form);
+    const snapshot=form.nodes['Qualification Snapshot'].value;
+    assertEqual(snapshot.includes(details),true,label+' access is retained in qualification snapshot');
+    assertEqual(form.nodes[field].value,details,label+' submitted source access remains unchanged');
+    assertEqual(form.nodes['Routing State Code'].value,'FL',label+' keeps state');
+    assertEqual(form.nodes['Routing Region'].value,'Central Florida',label+' keeps regional routing');
+    assertEqual(form.nodes['Routing Market Status'].value,'request-only',label+' is not a service promise');
+    assertEqual(form.nodes['Routing Decision'].value,'NATIONAL_INTAKE',label+' remains review only');
+  }
+  console.log('PASS: Florida city and statewide access both included in safe routing summary');
+
   // Partner recruitment is an internal market catalog state, never a customer-form label.
   // Preserve route phones/regions while ensuring the submitted Formspree fields reflect pickup review.
   for(const [city,state] of [
