@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - vgm/georgia-next-atlanta-suburbs-staged-20261107
+      - vgm/georgia-integration-test-all43-20261107
     paths:
       - '*-ga-appliance-pickup/index.html'
       - '*-ga-*-pickup/index.html'
