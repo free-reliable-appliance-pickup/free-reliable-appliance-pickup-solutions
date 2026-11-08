@@ -202,8 +202,9 @@ class QuotaGateWorkflowTests(unittest.TestCase):
         self.assertLess(text.index("Refuse non-selected"), text.index("Checkout TRUSTED"))
         self.assertLess(text.index("Refuse non-selected"),
                         text.index("Independent reviews — two approved FREE models only"))
-        self.assertIn("    if: ${{ always() }}", text)  # Required job must run, never skip green.
+        self.assertIn("    if: ${{ !cancelled() }}", text)  # Required job runs unless explicitly canceled.
         self.assertNotIn("    if: >-", text)  # Skipped required jobs can pass.
+        self.assertIn("'unrelated-label' || 'release'", text)  # Other labels cannot cancel selected review.
         self.assertIn("workflow_dispatch:", text)
         marker = "          python3 - <<'PY'\n"
         self.assertEqual(text.count(marker), 1)
