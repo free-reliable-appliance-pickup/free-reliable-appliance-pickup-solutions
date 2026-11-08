@@ -10,6 +10,7 @@ TYPES = ("appliance", "washer-dryer", "refrigerator", "freezer", "stove-oven")
 
 class Page(HTMLParser):
     def __init__(self):
+        """Initialize request-form, metadata, template and label tracking."""
         super().__init__(convert_charrefs=True)
         self.in_form = False
         self.fields = {}
@@ -18,13 +19,32 @@ class Page(HTMLParser):
         self.canonicals = []
         self.forms = []
         self.scripts = []
+        self.template_depth = 0
+        self.label_stack = []
+        self.labeled_city_fields = []
+        self.disabled_fieldset_stack = []
     def handle_starttag(self, tag, attrs):
+        """Capture real form fields, visible city labels and publication metadata."""
         a = dict(attrs)
-        if tag == "form":
+        inline_style = re.sub(r"\s+", "", (a.get("style") or "").casefold())
+        if tag == "template":
+            self.template_depth += 1
+        if tag == "form" and not self.template_depth:
             self.forms.append(a)
             self.in_form = True
-        if tag in ("input","select","textarea") and self.in_form and a.get("name"):
+        if tag == "fieldset" and self.in_form and not self.template_depth:
+            self.disabled_fieldset_stack.append("disabled" in a or any(self.disabled_fieldset_stack))
+        if tag == "label" and self.in_form and not self.template_depth:
+            self.label_stack.append({"text": [], "city_fields": [], "for": a.get("for"), "for_present": "for" in a, "hidden": (
+                "hidden" in a or (a.get("aria-hidden") or "").casefold() == "true"
+                or "display:none" in inline_style or "visibility:hidden" in inline_style
+            )})
+        if tag in ("input","select","textarea") and self.in_form and not self.template_depth and a.get("name"):
+            a["_tag"] = tag
+            a["_disabled_by_fieldset"] = bool(self.disabled_fieldset_stack and self.disabled_fieldset_stack[-1])
             self.fields.setdefault(a["name"], []).append(a)
+            if tag == "input" and a["name"] == "city" and self.label_stack:
+                self.label_stack[-1]["city_fields"].append(a)
         if tag == "img":
             self.images.append(a)
         if tag == "meta" and a.get("name", "").lower() == "robots":
@@ -33,11 +53,94 @@ class Page(HTMLParser):
             self.canonicals.append(a.get("href"))
         if tag == "script" and a.get("src"):
             self.scripts.append(a.get("src"))
+    def handle_data(self, data):
+        """Accumulate text from labels inside non-template customer forms."""
+        if self.in_form and not self.template_depth and self.label_stack:
+            self.label_stack[-1]["text"].append(data)
+
     def handle_endtag(self, tag):
-        if tag == "form":
+        """Complete visible city-label associations and close active HTML scopes."""
+        if tag == "label" and self.in_form and not self.template_depth and self.label_stack:
+            label = self.label_stack.pop()
+            label_text = " ".join("".join(label["text"]).split()).casefold()
+            if not label["hidden"] and label_text == "actual pickup city":
+                for city_field in label["city_fields"]:
+                    # An explicit for= associates the label with that exact ID,
+                    # even if the input is nested under the label.
+                    target = label["for"]
+                    if not label["for_present"] or (target is not None and city_field.get("id") and target == city_field.get("id")):
+                        self.labeled_city_fields.append(city_field)
+        if tag == "fieldset" and self.in_form and not self.template_depth and self.disabled_fieldset_stack:
+            self.disabled_fieldset_stack.pop()
+        if tag == "form" and not self.template_depth:
+            # An inert <template> form cannot terminate the actual pickup form.
             self.in_form = False
+            self.label_stack.clear()
+            self.disabled_fieldset_stack.clear()
+        if tag == "template" and self.template_depth:
+            self.template_depth -= 1
+
+
+def valid_city_field(page, html, city, kind):
+    """Require an explicit, editable actual pickup city for three major market guides.
+
+    Other city-category guides must keep their matching editable city field.
+    """
+    fields = page.fields.get("city", [])
+    if len(fields) != 1:
+        return False
+    field = fields[0]
+    style = re.sub(r"\s+", "", (field.get("style") or "").casefold())
+    # Both the original prefilled fields and staged actual-city inputs must
+    # be real, visible, editable text controls. A select/textarea or visually
+    # hidden input must never pass the city-correction gate.
+    editable_city = (
+        field.get("_tag") == "input"
+        and (field.get("type") or "text").casefold() == "text"
+        and "required" in field
+        and "disabled" not in field
+        and not field.get("_disabled_by_fieldset")
+        and "readonly" not in field
+        and "hidden" not in field
+        and "inert" not in field
+        and (field.get("aria-hidden") or "").casefold() != "true"
+        and "display:none" not in style
+        and "visibility:hidden" not in style
+    )
+    # Every Florida guide (not just the three staged general guides) must
+    # present a visible label associated with the actual submitted city input.
+    # A detached label, hidden label or inert template cannot prove this.
+    labeled = any(item is field for item in page.labeled_city_fields)
+    if not editable_city or not labeled:
+        return False
+    explicit_market = kind == "appliance" and city in {"Jacksonville", "Tampa", "Tallahassee"}
+    if not explicit_market:
+        return field.get("value") == city
+
+    explicit = (
+        field.get("value", "") == ""
+        and field.get("placeholder") == "Actual pickup city"
+    )
+    # Temporary staged migration: permit only the three correctly labeled,
+    # editable city-prefilled general guides until their page PRs merge.
+    legacy = (
+        field.get("value", "") == city
+        and not field.get("placeholder")
+    )
+    return explicit or legacy
+
+def valid_request_robots(robots):
+    """A city guide cannot receive conflicting or duplicate indexing directives."""
+    if len(robots) != 1:
+        return False
+    directives = {part.strip().casefold() for part in robots[0].split(",")}
+    return "noindex" in directives and "follow" in directives and not (
+        "index" in directives or "nofollow" in directives
+    )
+
 
 def main():
+    """Audit all 320 Florida guides and the statewide hub without modifying files."""
     data = json.loads(Path("data/florida-major-market-plan.json").read_text())
     base = "https://freereliableappliancepickup.com/"
     errors = []
@@ -62,8 +165,10 @@ def main():
             if len(p.forms) != 1 or "formspree.io/f/" not in p.forms[0].get("action",""): errors.append(f"{path}: form action")
             if any(name not in p.fields for name in required): errors.append(f"{path}: missing form fields")
             if not any(x.get("value")=="FL" for x in p.fields.get("state",[])): errors.append(f"{path}: incorrect state")
-            if not any(x.get("value") == city for x in p.fields.get("city",[])): errors.append(f"{path}: incorrect city")
-            if not any("noindex" in x for x in p.robots): errors.append(f"{path}: accidental indexing")
+            correct_city = valid_city_field(p, txt, city, kind)
+            if not correct_city:
+                errors.append(f"{path}: incorrect or unconfirmed pickup city")
+            if not valid_request_robots(p.robots): errors.append(f"{path}: missing, duplicate or conflicting request-only robots directives")
             if p.canonicals != [base+path.parent.name+"/"]: errors.append(f"{path}: canonical mismatch")
             if "/assets/customer-routing.js" not in p.scripts: errors.append(f"{path}: routing js missing")
             if "not a documented completed pickup" not in txt: errors.append(f"{path}: photo provenance missing")
