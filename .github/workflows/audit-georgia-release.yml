@@ -1,0 +1,28 @@
+name: Audit staged Georgia customer request guides
+
+on:
+  push:
+    branches:
+      - vgm/georgia-next-atlanta-suburbs-staged-20261107
+    paths:
+      - '*-ga-appliance-pickup/index.html'
+      - '*-ga-*-pickup/index.html'
+      - 'scripts/audit-georgia-release.py'
+      - '.github/workflows/audit-georgia-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify staged Georgia forms, photos, schema, and noindex
+        run: python scripts/audit-georgia-release.py
