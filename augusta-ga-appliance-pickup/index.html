@@ -57,7 +57,7 @@ small{display:block;color:#40564a;margin-top:7px}footer{background:#1e3d2e;color
 <section id="request"><h2>Request an Augusta-area appliance pickup review</h2><p>Use your actual pickup city even if you reached this page while searching for Augusta. For example, an address in Martinez, Evans, or Grovetown should use its own actual pickup city and ZIP, not be labeled as Augusta.</p>
 <form action="https://formspree.io/f/mvzeapzd" method="POST" aria-label="Augusta Georgia appliance pickup request">
 <input type="hidden" name="_subject" value="Georgia Augusta appliance pickup eligibility request">
-<input type="hidden" name="state" value="GA">
+<label>Actual pickup state<select name="state" required autocomplete="address-level1"><option value="">Choose pickup state</option><option value="GA">Georgia</option></select></label>
 <input type="hidden" name="source_page" value="augusta-ga-appliance-pickup">
 <div class="fields">
 <label>Full name<input name="name" autocomplete="name" required></label>
