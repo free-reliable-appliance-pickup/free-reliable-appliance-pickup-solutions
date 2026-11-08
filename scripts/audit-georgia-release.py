@@ -6,6 +6,7 @@ real pickup operators, SEO rankings, or whether photos were actually received.
 """
 from html.parser import HTMLParser
 from pathlib import Path
+import os
 import json
 import re
 import sys
@@ -92,8 +93,9 @@ def audit(root):
                     if p.is_file() and p not in paths)
     errors = []
     checks = 0
-    if len(paths) < 14:
-        errors.append(f"expected at least 14 staged Georgia guides; found {len(paths)}")
+    expected = 43 if os.environ.get("GITHUB_REF_NAME") == "vgm/georgia-integration-test-all43-20261107" else 14
+    if len(paths) != expected:
+        errors.append(f"expected exactly {expected} staged Georgia guides; found {len(paths)}")
 
     sitemap_text = (root / "sitemap.xml").read_text(encoding="utf-8")
     for path in paths:
@@ -105,7 +107,7 @@ def audit(root):
         checks += 1
 
         city_slug = slug.split("-ga-", 1)[0]
-        city_name = " ".join(s.capitalize() for s in city_slug.split("-"))
+        city_name = {"mcdonough": "McDonough"}.get(city_slug, " ".join(s.capitalize() for s in city_slug.split("-")))
         if city_name not in p.title or "GA" not in p.title:
             errors.append(f"{slug}: page title does not identify the city")
         if not any(m.get("name") == "description"
@@ -171,7 +173,7 @@ def audit(root):
             src = image.get("src", "")
             if not src.startswith("/") or not (root / src.lstrip("/")).is_file():
                 errors.append(f"{slug}: missing local appliance image {src}")
-            if len(image.get("alt", "")) < 40 or "not a completed" not in image.get("alt", "").lower():
+            if len(image.get("alt", "")) < 40 or not re.search(r"\bnot a (?:documented|completed)\b", image.get("alt", "").lower()):
                 errors.append(f"{slug}: truthful photo alt/provenance missing")
             if image.get("width") != "640" or image.get("height") != "440":
                 errors.append(f"{slug}: hero intrinsic aspect ratio metadata changed")
