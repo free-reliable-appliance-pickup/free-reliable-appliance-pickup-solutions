@@ -22,8 +22,18 @@ class CityFieldVisibilityTests(unittest.TestCase):
 
     def test_enabled_fieldset_allows_real_city(self):
         """A normal labeled fieldset must remain usable."""
-        html = '<form><fieldset><label>Actual pickup city<input name="city" value="Tampa" required></label></fieldset></form>'
+        html = '<form><fieldset><label>Actual pickup city<input name="city" value="" placeholder="Actual pickup city" required></label></fieldset></form>'
         self.assertTrue(valid(html))
+
+    def test_three_major_general_guides_reject_old_prefills(self):
+        """Customers must supply their actual city for newly migrated guides."""
+        for city in ("Jacksonville", "Tampa", "Tallahassee"):
+            html = (
+                "<form><label>Actual pickup city"
+                f'<input name="city" value="{city}" required></label></form>'
+            )
+            with self.subTest(city=city):
+                self.assertFalse(valid(html, city, "appliance"))
 
     def test_disabled_fieldset_rejects_city(self):
         """Disabling a parent fieldset must fail for legacy and other guides."""
