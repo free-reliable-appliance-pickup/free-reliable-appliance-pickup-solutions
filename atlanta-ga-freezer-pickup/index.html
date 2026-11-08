@@ -56,7 +56,6 @@ small{display:block;color:#40564a;margin-top:7px}footer{background:#1e3d2e;color
 <section id="request"><h2>Request an Atlanta-area freezer pickup review</h2><p>Use your actual pickup city even if you reached this page while searching for Atlanta. A Marietta, Decatur, Smyrna or Norcross address must be entered under its real city, not labeled as Atlanta.</p>
 <form action="https://formspree.io/f/mvzeapzd" method="POST" aria-label="Atlanta Georgia Freezer pickup request">
 <input type="hidden" name="_subject" value="Georgia Atlanta Freezer pickup eligibility request">
-<input type="hidden" name="state" value="GA">
 <input type="hidden" name="source_page" value="atlanta-ga-freezer-pickup">
 <div class="fields">
 <label>Full name<input name="name" autocomplete="name" required></label>
@@ -64,19 +63,20 @@ small{display:block;color:#40564a;margin-top:7px}footer{background:#1e3d2e;color
 <label>Email (optional)<input name="email" type="email" autocomplete="email"></label>
 <label>Street address<input name="address" autocomplete="street-address" required></label>
 <label>Actual pickup city<input name="city" placeholder="Enter the real pickup city" autocomplete="address-level2" required></label>
+<label>Actual pickup state<select name="state" required autocomplete="address-level1"><option value="">Choose pickup state</option><option value="GA">Georgia</option></select></label>
 <label>Five-digit ZIP code<input name="zip" inputmode="numeric" pattern="[0-9]{5}" autocomplete="postal-code" required></label>
 <label>Appliance type<select name="appliance" required>
 <option value="">Choose type</option><option>Multiple major appliances</option><option>Washer and dryer set</option><option>Washer</option><option>Dryer</option><option>Refrigerator</option><option selected>Freezer</option><option>Stove / range / oven</option></select></label>
 <label>Working condition<select name="condition" required><option value="">Choose condition</option><option>Fully working</option><option>Working with issues / repairable</option><option>Not working</option><option>Mixed load, majority working</option><option>Unknown / needs testing</option></select></label>
 <label>Appliance floor / location<select name="floor" required><option value="">Choose location</option><option>Garage or driveway</option><option>Ground floor</option><option>Second floor</option><option>Third floor or higher</option><option>Basement</option></select></label>
 <label>Stairs / elevator<select name="stairs" required><option value="">Choose access</option><option>No stairs</option><option>1–5 steps</option><option>One flight</option><option>Two or more flights</option><option>Elevator</option></select></label>
-<label>Can you provide current appliance photos?<select name="photos_available" required><option value="">Choose an answer</option><option>Yes, I can share photos</option><option>I need help sharing photos</option></select></label>
-<label>Would you accept a separate pickup quote if free service is unavailable?<select name="paid_option"><option value="">No selection</option><option>Yes, after seeing the price</option><option>No, free pickup only</option></select></label>
+<label>Can you provide current appliance photos?<select name="photos_available" required><option value="">Choose an answer</option><option>Yes, I can share photos</option><option>No photos available</option><option>I need help sharing photos</option></select></label>
+<label>Would you accept a separate pickup quote if free service is unavailable?<select name="paid_option"><option value="">No selection</option><option value="quote_ok">Yes, after seeing the price</option><option value="free_only">No, free pickup only</option></select></label>
 <label class="wide">Appliances, quantities, working tests and safe loading access<textarea name="access_notes" required placeholder="List every machine and what works. Mention gate, parking, hallway, steps, elevator and pickup accessibility."></textarea></label>
 <label class="wide">Current appliance photo link (optional)<input type="url" name="photo_link" placeholder="https://"></label>
 <div class="wide"><button type="submit">Submit appliance eligibility request</button><small>We will confirm whether a local operator can accept the request. No scheduling or fee is approved by submitting this form.</small><small>Request details are processed through Formspree for eligibility review. Please do not include IDs or payment information.</small></div>
 </div></form></section>
-<section><h2>How the review works</h2><ol><li>Identify chest versus upright freezer, whether it freezes consistently and any gasket, hinge or compressor issues.</li><li>Provide photos, ZIP, floor, stairs and a safe loading route.</li><li>We review reuse potential and actual pickup coverage before confirming whether collection is possible. If only paid removal is possible, we request your agreement to a separate quote first.</li></ol></section>
+<section><h2>How the review works</h2><ol><li>Identify chest versus upright freezer, whether it freezes consistently and any gasket, hinge or compressor issues.</li><li>Provide photos if available, plus ZIP, floor, stairs and a safe loading route.</li><li>We review reuse potential and actual pickup coverage before confirming whether collection is possible. If only paid removal is possible, we request your agreement to a separate quote first.</li></ol></section>
 <section><h2>Other Georgia cities</h2><p>Searching from Marietta, Lawrenceville, Duluth, Douglasville, Smyrna, Norcross or elsewhere in Georgia? Enter your <strong>actual city</strong> above, or use the <a href="/georgia-appliance-pickup/">Georgia statewide request form</a>. These location examples do not imply that pickup is already offered in those cities.</p></section>
 </main>
 <footer>Free Reliable Appliance Pickup · <a href="/georgia-appliance-pickup/">Georgia pickup requests</a> · Request-only / coverage not yet verified</footer>
