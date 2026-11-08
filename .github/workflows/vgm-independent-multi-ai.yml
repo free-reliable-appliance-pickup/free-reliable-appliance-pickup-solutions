@@ -24,17 +24,35 @@ concurrency:
 
 jobs:
   independent-review:
-    # Missing release-review label = no external API calls; branch protection still
-    # requires a successful two-model check before any release can merge.
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.pull_request.head.repo.full_name == github.repository &&
-       contains(github.event.pull_request.labels.*.name, 'vgm-release-review') &&
-       (github.event.action != 'labeled' ||
-        github.event.label.name == 'vgm-release-review'))
+    # IMPORTANT: A skipped GitHub Actions job is treated as SUCCESS by branch
+    # protection. The mandatory reviewer job must RUN and FAIL CLOSED when an
+    # unselected PR is opened or synchronized, without making model API calls.
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
+      - name: Refuse non-selected or external release PRs (fail closed; no AI calls)
+        if: github.event_name == 'pull_request_target'
+        env:
+          PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          TRUSTED_REPO: ${{ github.repository }}
+          REVIEW_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+          EVENT_ACTION: ${{ github.event.action }}
+          EVENT_LABEL: ${{ github.event.label.name }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+          labels = json.loads(os.environ["REVIEW_LABELS"])
+          is_same_repo = os.environ.get("PR_HEAD_REPO") == os.environ.get("TRUSTED_REPO")
+          is_selected = "vgm-release-review" in labels
+          is_label_event = os.environ.get("EVENT_ACTION") == "labeled"
+          is_expected_label = os.environ.get("EVENT_LABEL") == "vgm-release-review"
+          if not is_same_repo or not is_selected or (is_label_event and not is_expected_label):
+              print("Not selected as a trusted release candidate; mandatory independent review FAILS CLOSED (no external AI calls).")
+              sys.exit(1)
+          print("Explicit trusted release-candidate label confirmed; requesting both independent free-model reviews.")
+          PY
       - name: Checkout TRUSTED default branch (never check out pull request)
         uses: actions/checkout@v4
         with:
