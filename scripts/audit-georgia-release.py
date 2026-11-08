@@ -110,6 +110,11 @@ def audit(root):
         city_name = {"mcdonough": "McDonough"}.get(city_slug, " ".join(s.capitalize() for s in city_slug.split("-")))
         if city_name not in p.title or "GA" not in p.title:
             errors.append(f"{slug}: page title does not identify the city")
+        # Real-location copy must not say "Request an Savannah", etc.
+        if city_name[0].lower() not in "aeiou" and re.search(
+            r"\bRequest an " + re.escape(city_name) + r"\b", raw
+        ):
+            errors.append(f"{slug}: incorrect city-name article in request copy")
         if not any(m.get("name") == "description"
                    and city_name in m.get("content", "")
                    for m in p.meta):
