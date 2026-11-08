@@ -5,6 +5,8 @@ from io import BytesIO
 from unittest.mock import patch
 import pathlib
 import unittest
+import subprocess
+import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("review", ROOT / "scripts" / "vgm_multi_ai_review.py")
@@ -187,6 +189,44 @@ class MultiAITests(unittest.TestCase):
         statuses = {label: {"model": model, "status": "reviewed", "findings": []} for label, model in review.REVIEWERS.items()}
         _, state = review.report_markdown(1, statuses, ["too many"], True, True)
         self.assertIn("INCOMPLETE", state)
+
+
+class QuotaGateWorkflowTests(unittest.TestCase):
+    """Synthetic event tests for the required, fail-closed review job."""
+
+    def test_release_label_gate(self):
+        text = (ROOT / ".github/workflows/vgm-independent-multi-ai.yml").read_text()
+        self.assertIn("types: [opened, synchronize, reopened, labeled, unlabeled, edited]", text)
+        self.assertIn("Refuse non-selected or external release PRs", text)
+        self.assertIn("sys.exit(1)", text)
+        self.assertLess(text.index("Refuse non-selected"), text.index("Checkout TRUSTED"))
+        self.assertLess(text.index("Refuse non-selected"),
+                        text.index("Independent reviews — two approved FREE models only"))
+        self.assertNotIn("    if: >-", text)  # Skipped required jobs can pass.
+        self.assertIn("workflow_dispatch:", text)
+        marker = "          python3 - <<'PY'\n"
+        self.assertEqual(text.count(marker), 1)
+        snippet = text.split(marker, 1)[1].split("\n          PY", 1)[0]
+        script = "\n".join(line[10:] if line.startswith("          ") else line
+                           for line in snippet.splitlines())
+        cases = (
+            ("selected synchronize", ["vgm-release-review"], "synchronize", "", "owner/repo", 0),
+            ("selected label", ["vgm-release-review"], "labeled", "vgm-release-review", "owner/repo", 0),
+            ("no label", [], "opened", "", "owner/repo", 1),
+            ("no label after edit", [], "edited", "", "owner/repo", 1),
+            ("removed label", [], "unlabeled", "vgm-release-review", "owner/repo", 1),
+            ("unrelated label", ["vgm-release-review"], "labeled", "other", "owner/repo", 1),
+            ("fork", ["vgm-release-review"], "synchronize", "", "fork/repo", 1),
+        )
+        for name, labels, action, event_label, head_repo, expected in cases:
+            with self.subTest(name=name):
+                env = {"REVIEW_LABELS": json.dumps(labels), "PR_HEAD_REPO": head_repo,
+                       "TRUSTED_REPO": "owner/repo", "EVENT_ACTION": action,
+                       "EVENT_LABEL": event_label}
+                proc = subprocess.run([sys.executable, "-c", script], env=env,
+                                      capture_output=True, text=True, timeout=5)
+                self.assertEqual(proc.returncode, expected,
+                                 msg=f"{name}: {proc.stdout} {proc.stderr}")
 
 
 if __name__ == "__main__":
