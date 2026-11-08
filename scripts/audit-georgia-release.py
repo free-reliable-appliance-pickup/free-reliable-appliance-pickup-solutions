@@ -196,6 +196,69 @@ def audit(root):
         if re.search(r"(become (?:a|our) partner|sign up as a partner|join our partner program)", raw, re.I):
             errors.append(f"{slug}: recruiting call-to-action in customer-only guide")
 
+    # Audit the statewide lead-first hub separately: unlike city guides,
+    # the existing Georgia hub is indexable and must never lose its lead form.
+    hub_path = root / "georgia-appliance-pickup/index.html"
+    if not hub_path.is_file():
+        errors.append("Georgia statewide request hub is missing")
+    else:
+        hub_raw = hub_path.read_text(encoding="utf-8")
+        hub = Page()
+        hub.feed(hub_raw)
+        if hub.title.strip() != "Georgia Appliance Pickup Requests | Customer Eligibility Review":
+            errors.append("Georgia statewide hub: request-first title was lost")
+        if [m.get("content", "").lower() for m in hub.meta
+            if m.get("name", "").lower() == "robots"] != [
+                "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+            ]:
+            errors.append("Georgia statewide hub: indexable request-hub robots changed")
+        if [x.get("href") for x in hub.links if x.get("rel") == "canonical"] != [
+                BASE + "georgia-appliance-pickup/"
+            ]:
+            errors.append("Georgia statewide hub: canonical mismatch")
+        if len(hub.forms) != 1 or hub.forms[0].get("action") != ACTION or hub.forms[0].get("method", "").lower() != "post":
+            errors.append("Georgia statewide hub: one working Formspree POST required")
+        for name in COMMON_REQUIRED + ("access", "message"):
+            values = hub.fields.get(name, [])
+            if len(values) != 1 or "required" not in values[0][1]:
+                errors.append(f"Georgia statewide hub: missing required field {name}")
+        if "photo_link" not in hub.fields or hub.fields["photo_link"][0][1].get("type") != "url":
+            errors.append("Georgia statewide hub: current photo URL input missing")
+        if "paid_option" not in hub.fields or "required" in hub.fields["paid_option"][0][1]:
+            errors.append("Georgia statewide hub: optional quoted-fee choice missing")
+        city_fields = hub.fields.get("city", [])
+        if len(city_fields) == 1 and (
+            city_fields[0][0] != "input"
+            or city_fields[0][1].get("type", "text") != "text"
+            or "value" in city_fields[0][1]
+            or "readonly" in city_fields[0][1]
+            or "disabled" in city_fields[0][1]
+        ):
+            errors.append("Georgia statewide hub: city input must be editable and unprefilled")
+        if not any("actual pickup city" in text for text in hub.labels.get("city", [])):
+            errors.append("Georgia statewide hub: actual-city label missing")
+        if len(hub.fields.get("zip", [])) == 1 and hub.fields["zip"][0][1].get("pattern") != "[0-9]{5}":
+            errors.append("Georgia statewide hub: US ZIP validation missing")
+        hub_images = [i for i in hub.images if "/assets/brand/" not in i.get("src", "")]
+        if len(hub_images) != 1 or hub_images[0].get("src") != "/home-six-appliance-garage.webp":
+            errors.append("Georgia statewide hub: wrong number or type of appliance photos")
+        if not (root / "home-six-appliance-garage.webp").is_file():
+            errors.append("Georgia statewide hub: hero image asset missing")
+        if 'href="/partners/"' in hub_raw or "partner territories are active" in hub_raw:
+            errors.append("Georgia statewide hub: unsupported active partner promotion")
+        if "partnership territories are not active" not in hub_raw:
+            errors.append("Georgia statewide hub: inactive territory disclaimer missing")
+        if not hub.jsonld:
+            errors.append("Georgia statewide hub: structured data absent")
+        for block in hub.jsonld:
+            try:
+                parsed_schema = json.loads(block)
+                if parsed_schema.get("@context") != "https://schema.org":
+                    errors.append("Georgia statewide hub: wrong JSON-LD context")
+            except json.JSONDecodeError:
+                errors.append("Georgia statewide hub: invalid structured data")
+        print("GEORGIA_STATEWIDE_HUB_AUDITED=1")
+
     print(f"GEORGIA_GUIDES_AUDITED={checks}")
     print(f"GEORGIA_ERRORS={len(errors)}")
     for err in errors[:70]:
