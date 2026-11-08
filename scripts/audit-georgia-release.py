@@ -93,6 +93,7 @@ def audit(root):
                     if p.is_file() and p not in paths)
     errors = []
     checks = 0
+    unique_laundry_photos = {}
     expected = 43 if os.environ.get("GITHUB_REF_NAME") == "vgm/georgia-integration-test-all43-20261107" else 14
     if len(paths) != expected:
         errors.append(f"expected exactly {expected} staged Georgia guides; found {len(paths)}")
@@ -176,6 +177,12 @@ def audit(root):
         else:
             image = appliance_images[0]
             src = image.get("src", "")
+            if slug.endswith("-ga-washer-dryer-pickup"):
+                previous = unique_laundry_photos.get(src)
+                if previous:
+                    errors.append(f"{slug}: washer/dryer illustration duplicates {previous}")
+                else:
+                    unique_laundry_photos[src] = slug
             if not src.startswith("/") or not (root / src.lstrip("/")).is_file():
                 errors.append(f"{slug}: missing local appliance image {src}")
             if len(image.get("alt", "")) < 40 or not re.search(r"\bnot a (?:documented|completed)\b", image.get("alt", "").lower()):
