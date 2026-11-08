@@ -255,7 +255,7 @@ function enhanceApplianceConditionIntake(){
       holder.insertAdjacentElement('afterend',label);
     }
     const update=()=>{
-      const hasProblem=/issues|problems|repair|not working|unknown|needs testing|mixed|multi-appliance load|broken|damaged|faulty/i.test(select.value);
+      const hasProblem=/issues|problems?|repair|not working|unknown|needs testing|mixed|multi-appliance load|broken|damaged|faulty/i.test(select.value);
       details.required=hasProblem;
       details.setAttribute('aria-required',String(hasProblem));
     };
