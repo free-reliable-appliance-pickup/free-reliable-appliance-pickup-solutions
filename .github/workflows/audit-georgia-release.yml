@@ -9,6 +9,7 @@ on:
       - '*-ga-appliance-pickup/index.html'
       - '*-ga-*-pickup/index.html'
       - 'scripts/audit-georgia-release.py'
+      - 'scripts/audit-georgia-link-content.py'
       - '.github/workflows/audit-georgia-release.yml'
   workflow_dispatch:
 
@@ -27,3 +28,5 @@ jobs:
           python-version: '3.12'
       - name: Verify staged Georgia forms, photos, schema, and noindex
         run: python scripts/audit-georgia-release.py
+      - name: Verify local links and assess draft-content similarity
+        run: python scripts/audit-georgia-link-content.py
