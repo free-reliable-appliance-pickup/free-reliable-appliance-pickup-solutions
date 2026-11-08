@@ -4,7 +4,9 @@ name: VGM Independent Multi-AI Review (Free Models)
 # Automatic for new/updated PRs after this workflow is merged and a key is configured.
 on:
   pull_request_target:
-    types: [opened, synchronize, reopened]
+    # Reviews are queued explicitly to protect the shared 50/day free-model quota.
+    # Label one release candidate at a time; synchronization re-checks its exact head.
+    types: [opened, synchronize, reopened, labeled]
   workflow_dispatch:
     inputs:
       pr_number:
@@ -22,7 +24,14 @@ concurrency:
 
 jobs:
   independent-review:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    # Missing release-review label = no external API calls; branch protection still
+    # requires a successful two-model check before any release can merge.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.head.repo.full_name == github.repository &&
+       contains(github.event.pull_request.labels.*.name, 'vgm-release-review') &&
+       (github.event.action != 'labeled' ||
+        github.event.label.name == 'vgm-release-review'))
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
