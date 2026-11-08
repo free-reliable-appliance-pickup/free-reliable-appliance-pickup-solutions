@@ -24,6 +24,9 @@ concurrency:
 
 jobs:
   independent-review:
+    # Run the required job on every triggering event. Skipped jobs can appear
+    # green in branch protection; the first step enforces fail-closed gating.
+    if: ${{ always() }}
     # IMPORTANT: A skipped GitHub Actions job is treated as SUCCESS by branch
     # protection. The mandatory reviewer job must RUN and FAIL CLOSED when an
     # unselected PR is opened or synchronized, without making model API calls.
