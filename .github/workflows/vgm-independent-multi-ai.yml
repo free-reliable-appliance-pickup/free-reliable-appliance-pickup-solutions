@@ -5,8 +5,8 @@ name: VGM Independent Multi-AI Review (Free Models)
 on:
   pull_request_target:
     # Reviews are queued explicitly to protect the shared 50/day free-model quota.
-    # Label one release candidate at a time; synchronization re-checks its exact head.
-    types: [opened, synchronize, reopened, labeled]
+    # Label one release candidate at a time; updates, removals and edits re-check eligibility.
+    types: [opened, synchronize, reopened, labeled, unlabeled, edited]
   workflow_dispatch:
     inputs:
       pr_number:
@@ -46,9 +46,12 @@ jobs:
           labels = json.loads(os.environ["REVIEW_LABELS"])
           is_same_repo = os.environ.get("PR_HEAD_REPO") == os.environ.get("TRUSTED_REPO")
           is_selected = "vgm-release-review" in labels
-          is_label_event = os.environ.get("EVENT_ACTION") == "labeled"
-          is_expected_label = os.environ.get("EVENT_LABEL") == "vgm-release-review"
-          if not is_same_repo or not is_selected or (is_label_event and not is_expected_label):
+          action = os.environ.get("EVENT_ACTION")
+          label_event = action in ("labeled", "unlabeled")
+          valid_label_event = action == "labeled" and os.environ.get("EVENT_LABEL") == "vgm-release-review"
+          # Even if the selected label remains on a PR, unrelated label events
+          # should never create an accidental green review check.
+          if not is_same_repo or not is_selected or (label_event and not valid_label_event):
               print("Not selected as a trusted release candidate; mandatory independent review FAILS CLOSED (no external AI calls).")
               sys.exit(1)
           print("Explicit trusted release-candidate label confirmed; requesting both independent free-model reviews.")
