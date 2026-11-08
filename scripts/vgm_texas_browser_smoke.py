@@ -200,7 +200,7 @@ def run():
                                     choice.select_option("No, free pickup only")
                                     for field, value in (
                                         ("name", "VGM Synthetic Browser Test"),
-                                        ("phone", "5550100100"),
+                                        ("phone", "2025550100"),
                                         ("address", "123 Example Testing Street"),
                                         ("zip", "77339"),
                                         ("access_notes", "Synthetic form validation only; no real pickup"),
