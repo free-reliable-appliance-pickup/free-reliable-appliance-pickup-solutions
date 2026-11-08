@@ -82,7 +82,7 @@ class Page(HTMLParser):
 
 
 def valid_city_field(page, html, city, kind):
-    """Require an explicit, editable actual pickup city for three major market guides.
+    """Require blank, editable actual pickup city for three major market guides.
 
     Other city-category guides must keep their matching editable city field.
     """
@@ -121,13 +121,9 @@ def valid_city_field(page, html, city, kind):
         field.get("value", "") == ""
         and field.get("placeholder") == "Actual pickup city"
     )
-    # Temporary staged migration: permit only the three correctly labeled,
-    # editable city-prefilled general guides until their page PRs merge.
-    legacy = (
-        field.get("value", "") == city
-        and not field.get("placeholder")
-    )
-    return explicit or legacy
+    # All three general guides now use blank, required actual-city fields.
+    # Do not allow a prefilled guide city to silently substitute for pickup location.
+    return explicit
 
 def valid_request_robots(robots):
     """A city guide cannot receive conflicting or duplicate indexing directives."""
