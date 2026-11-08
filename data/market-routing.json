@@ -109,8 +109,9 @@
       "state_code": "GA",
       "region": "Georgia statewide intake",
       "status": "request-only",
-      "territory_status": "available",
-      "lead_priority": 3
+      "territory_status": "waitlist",
+      "lead_priority": 3,
+      "partner_program_open": false
     },
     {
       "state": "Hawaii",
