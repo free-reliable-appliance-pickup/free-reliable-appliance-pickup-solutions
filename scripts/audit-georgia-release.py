@@ -92,6 +92,7 @@ def audit(root):
                     if p.is_file() and p not in paths)
     errors = []
     checks = 0
+    unique_laundry_photos = {}
     if len(paths) < 14:
         errors.append(f"expected at least 14 staged Georgia guides; found {len(paths)}")
 
@@ -169,6 +170,12 @@ def audit(root):
         else:
             image = appliance_images[0]
             src = image.get("src", "")
+            if slug.endswith("-ga-washer-dryer-pickup"):
+                previous = unique_laundry_photos.get(src)
+                if previous:
+                    errors.append(f"{slug}: washer/dryer illustration duplicates {previous}")
+                else:
+                    unique_laundry_photos[src] = slug
             if not src.startswith("/") or not (root / src.lstrip("/")).is_file():
                 errors.append(f"{slug}: missing local appliance image {src}")
             if len(image.get("alt", "")) < 40 or "not a completed" not in image.get("alt", "").lower():
