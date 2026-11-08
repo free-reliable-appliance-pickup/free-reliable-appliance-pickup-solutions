@@ -9,7 +9,7 @@ const end = source.indexOf("\nfunction qualify(form)", start);
 assert.ok(start >= 0 && end > start, "customer-source function must exist");
 const functionBody = source.slice(start, end);
 
-function submit({state, page="/florida-appliance-pickup/", observed="", remembered=""}) {
+function submit({state, page="/florida-appliance-pickup/", observed="", remembered=null}) {
   const form = {state, submitted: {}};
   const runtime = {
     CURRENT_OBSERVED_SOURCE: observed,
@@ -35,10 +35,14 @@ const observed = "Traffic Source (Observed)";
 const method = "Traffic Source Method";
 assert.equal(submit({state:"FL", observed:"UTM: facebook"})[observed], "UTM: facebook",
   "Florida hub submissions preserve observed tagged traffic");
+assert.equal(submit({state:"FL", observed:"UTM: facebook"})[method], "UTM tag or website referrer",
+  "Florida tagged requests accurately record observed-source method");
 assert.equal(submit({state:"Florida", observed:"Google referrer"})[observed], "Google referrer",
   "Florida state name forms are tracked");
 assert.equal(submit({state:"FL", page:"/orlando-fl-refrigerator-pickup/", observed:"Bing referrer"})[observed],
   "Bing referrer", "dedicated Florida city forms keep referrer labels");
+assert.equal(submit({state:"FL", page:"/orlando-fl-refrigerator-pickup/", observed:"Bing referrer"})[method],
+  "UTM tag or website referrer", "Florida city forms record source method");
 assert.equal(submit({state:"FL", remembered:"Facebook referrer"})[observed],
   "Facebook referrer", "same-session referrer survives internal navigation");
 const direct = submit({state:"FL"});
@@ -52,4 +56,4 @@ assert.deepEqual(Object.keys(submit({state:"CA", observed:"Google referrer"})), 
   "unrelated states are unchanged");
 assert.deepEqual(Object.keys(submit({state:null, observed:"Google referrer"})), [],
   "forms without state field are unchanged");
-console.log("PASS: 9 Florida/Texas/Salem observed-source regression checks");
+console.log("PASS: Florida/Texas/Salem observed-source and method regression checks");
