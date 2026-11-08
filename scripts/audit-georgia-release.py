@@ -98,6 +98,26 @@ def audit(root):
     if len(paths) != expected:
         errors.append(f"expected exactly {expected} staged Georgia guides; found {len(paths)}")
 
+    # An unverified Georgia city must never be marked as a recruitable territory.
+    # The supported "waitlist" routing enum means non-assignable; customer
+    # inquiries remain request-only and do not constitute partner applications.
+    routing_data = json.loads((root / "data/market-routing.json").read_text(encoding="utf-8"))
+    defaults = [m for m in routing_data.get("state_defaults", []) if m.get("state_code") == "GA"]
+    if len(defaults) != 1 or any(
+        defaults[0].get(k) != v for k, v in (
+            ("status", "request-only"),
+            ("territory_status", "waitlist"),
+            ("partner_program_open", False),
+        )
+    ):
+        errors.append("GEORGIA_ROUTE_PROGRAM: customer-only Georgia default must be closed to partner enrollment")
+    active_ga = [m for m in routing_data.get("markets", [])
+                 if m.get("state_code") == "GA" and
+                 (m.get("status") in ("direct", "partner-supported", "partner-recruiting")
+                  or m.get("territory_status") in ("available", "assigned", "protected"))]
+    if active_ga:
+        errors.append("GEORGIA_ROUTE_PROGRAM: unverified active or recruitable Georgia market override")
+
     sitemap_text = (root / "sitemap.xml").read_text(encoding="utf-8")
     for path in paths:
         slug = path.parent.name
