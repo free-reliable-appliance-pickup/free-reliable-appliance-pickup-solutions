@@ -1,8 +1,14 @@
 """Offline regressions for the Minnesota live read-only smoke parser."""
+import io
+import json
+import tempfile
+import threading
+import time
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
-from scripts.ttg_minnesota_live_smoke import BASE, FORM, REQUIRED, audit_live_page, check_page, has_minnesota_hub_link
+from scripts.ttg_minnesota_live_smoke import BASE, FORM, REQUIRED, audit_live_page, check_page, has_minnesota_hub_link, main
 
 
 def fixture(slug="minnesota-appliance-pickup", robots="noindex, follow"):
@@ -47,6 +53,48 @@ class SmokeRegression(unittest.TestCase):
             slug, errors = audit_live_page("minneapolis-mn-appliance-pickup/index.html", [])
         self.assertEqual(slug, "minneapolis-mn-appliance-pickup")
         self.assertEqual(errors, ["timed out"])
+
+    def test_main_limits_get_workers_and_preserves_manifest_order(self):
+        """Six mocked pages overlap at four workers while reporting in input order."""
+        paths = [f"city-{i}-mn-appliance-pickup/index.html" for i in range(6)]
+        barrier = threading.Barrier(4)
+        lock = threading.Lock()
+        active = 0
+        peak = 0
+        completed = []
+
+        def fake_audit(path, manifest_pages):
+            nonlocal active, peak
+            self.assertEqual(manifest_pages, paths)
+            with lock:
+                active += 1
+                peak = max(peak, active)
+            if path in paths[:4]:
+                barrier.wait(timeout=3)
+            # Force the first manifest page to finish later than the others.
+            time.sleep(0.08 if path == paths[0] else 0.005)
+            with lock:
+                completed.append(path)
+                active -= 1
+            return path.removesuffix("/index.html"), []
+
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = Path(directory) / "data/ttg-state-batches/MN.json"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(json.dumps({"pages": paths}), encoding="utf-8")
+            output = io.StringIO()
+            with patch("scripts.ttg_minnesota_live_smoke.ROOT", Path(directory)), \\
+                 patch("scripts.ttg_minnesota_live_smoke.audit_live_page",
+                       side_effect=fake_audit), \\
+                 patch("scripts.ttg_minnesota_live_smoke.fetch_html",
+                       return_value='<a href="/minnesota-appliance-pickup/">Minnesota</a>'), \\
+                 redirect_stdout(output):
+                self.assertEqual(main(), 0)
+
+        self.assertEqual(peak, 4)
+        self.assertNotEqual(completed, paths)
+        reported = [line for line in output.getvalue().splitlines() if line.startswith("PASS ")]
+        self.assertEqual(reported, [f"PASS {BASE}{p.removesuffix('/index.html')}/" for p in paths])
 
     def test_valid_request_only(self):
         """Accept a fully valid request-only page."""
