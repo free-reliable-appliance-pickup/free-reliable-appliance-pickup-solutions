@@ -20,6 +20,6 @@
 
 `python -m scripts.ttg_release_readiness --state IL --report ttg-illinois-readiness.json`
 
-This command reports the requested city list, existing structural QA, recorded operational prerequisites and separate blockers. It succeeds for a safe request-only staging configuration even when business coverage is not verified; `--require-evidence` exits nonzero when any selected city prerequisite is absent. GitHub Actions stores a report artifact daily and for relevant PRs. It never changes HTML or customer records.
+This command reports the requested city list, existing structural QA, recorded operational prerequisites and separate blockers. It succeeds for a safe request-only staging configuration even when business coverage is not verified; `--require-evidence` exits nonzero when any selected city prerequisite is absent. The existing Illinois smoke-test GitHub Actions workflow stores a report artifact daily and for relevant PRs, avoiding a separate workflow and duplicate scheduling. It never changes HTML or customer records.
 
 If the GitHub Actions platform reports an **internal server error before any job starts**, do not treat it as a failed website test or a successful approval. Start a new properly reviewed run; never bypass actual failed tests or CodeQL findings. This is distinct from a local operator-coverage blocker.
