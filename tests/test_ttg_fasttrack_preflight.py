@@ -14,7 +14,7 @@ def create_page(root: Path, *, noindex: bool = True, img_exists: bool = True):
         (root / "assets/real-used-appliances.webp").write_bytes(b"mock-image")
     fields = "".join(
         f'<label>{name}<input name="{name}" required></label>'
-        for name in ("name", "phone", "address", "city", "state", "zip",
+        for name in ("name", "phone", "address", "city", "zip",
                      "appliance", "condition", "floor", "stairs",
                      "access", "photos_available")
     )
@@ -28,6 +28,7 @@ def create_page(root: Path, *, noindex: bool = True, img_exists: bool = True):
         + '<img src="/assets/real-used-appliances.webp" alt="Used appliances in a garage">'
         + '<form action="https://formspree.io/f/mvzeapzd" method="POST">'
         + '<input type="hidden" name="source_page" value="chicago-il-appliance-pickup">'
+        + '<label>State<select name="state" required><option value="IL">Illinois</option></select></label>'
         + fields
         + '<label>Agree<input type="checkbox" required name="privacy_acknowledgment"></label>'
         + '<input type="url" name="photo_link"><button type="submit">Request review</button>'
@@ -82,6 +83,32 @@ class PreflightTests(unittest.TestCase):
             result = inspect_page(root, path, "IL", request_only=True)
             self.assertIn("required_attribute_missing:phone", result["errors"])
             self.assertTrue(any(x.startswith("canonical_mismatch") for x in result["errors"]))
+
+
+    def test_state_selector_cannot_point_to_wrong_state(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = create_page(root)
+            location = root / path
+            text = location.read_text(encoding="utf-8")
+            location.write_text(text.replace('value="IL"', 'value="GA"'), encoding="utf-8")
+            result = inspect_page(root, path, "IL", request_only=True)
+            self.assertIn("form_state_must_be_restricted_to_target_code", result["errors"])
+
+    def test_privacy_acknowledgment_must_be_required(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = create_page(root)
+            location = root / path
+            text = location.read_text(encoding="utf-8")
+            location.write_text(
+                text.replace('type="checkbox" required name="privacy_acknowledgment"',
+                             'type="checkbox" name="privacy_acknowledgment"'),
+                encoding="utf-8"
+            )
+            result = inspect_page(root, path, "IL", request_only=True)
+            self.assertIn("privacy_acknowledgment_must_be_required", result["errors"])
+
 
 
 if __name__ == "__main__":
