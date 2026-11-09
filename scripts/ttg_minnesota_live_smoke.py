@@ -66,7 +66,7 @@ class Extract(HTMLParser):
 
 
 def check_page(slug, content, manifest_pages=()):
-    """Report structural and request-only safety errors for an Minnesota page."""
+    """Report structural and request-only safety errors for a Minnesota page."""
     p = Extract()
     p.feed(content)
     errors = []
