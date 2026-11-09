@@ -60,6 +60,16 @@ class IllinoisPreflightTests(unittest.TestCase):
         failures = self.check(self.sample.replace("/chicago-il-appliance-pickup/", "/aurora-il-appliance-pickup/"))
         self.assertTrue(any("canonical" in e for e in failures))
 
+    def test_require_pickup_state(self):
+        """A state select without required must fail rather than silently submit."""
+        failures = self.check(self.sample.replace('<select name="state" required>', '<select name="state">'))
+        self.assertTrue(any("state" in e and "required" in e for e in failures))
+
+    def test_canonical_rel_tokens_casefolded(self):
+        """An HTML rel token list may contain canonical in mixed case."""
+        markup = self.sample.replace('rel="canonical"', 'rel="alternate CANONICAL"')
+        self.assertEqual(self.check(markup), [])
+
     def test_reject_broken_photo(self):
         """An HTML photo path without the actual asset is not accepted."""
         failures = self.check(self.sample.replace("/photo.webp", "/not-found.webp"))
