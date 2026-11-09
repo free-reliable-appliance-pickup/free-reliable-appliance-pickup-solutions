@@ -17,6 +17,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
 
+# Support direct `python scripts/ttg_fasttrack_preflight.py` as well as unittest imports.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.ttg_fasttrack_inventory import ROOT, collect, load_sources, slugify
 
 REQUIRED_FIELDS = frozenset(
