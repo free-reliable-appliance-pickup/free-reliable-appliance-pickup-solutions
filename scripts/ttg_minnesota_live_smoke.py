@@ -5,6 +5,7 @@ Checks GET responses, page metadata, request form structure, and hub navigation.
 Never sends a form, tests a phone number, confirms local operators, or indexes pages.
 """
 import json
+from concurrent.futures import ThreadPoolExecutor
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin
@@ -131,17 +132,26 @@ def has_minnesota_hub_link(content):
     return any(urljoin(service_base, href) == expected for href in parser.links if href)
 
 
+def audit_live_page(path, manifest_pages):
+    """GET and validate one page; never submit a form."""
+    slug = path.removesuffix("/index.html")
+    try:
+        problems = check_page(slug, fetch_html(slug + "/"), manifest_pages)
+    except RuntimeError as exc:
+        problems = [str(exc)]
+    return slug, problems
+
+
 def main():
     """Check the manifest-listed URLs and the service-area directory."""
     manifest = json.loads((ROOT / "data/ttg-state-batches/MN.json").read_text(encoding="utf-8"))
     pages = manifest["pages"]
     failures = []
-    for path in pages:
-        slug = path.removesuffix("/index.html")
-        try:
-            problems = check_page(slug, fetch_html(slug + "/"), pages)
-        except RuntimeError as exc:
-            problems = [str(exc)]
+    # Four bounded GET workers keep slow responses inside the 10-minute job budget.
+    # map() preserves manifest order in the report even when requests finish out of order.
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        results = list(executor.map(lambda path: audit_live_page(path, pages), pages))
+    for slug, problems in results:
         failures.extend(f"{slug}: {problem}" for problem in problems)
         print(f"{'FAIL' if problems else 'PASS'} {BASE}{slug}/")
     try:
