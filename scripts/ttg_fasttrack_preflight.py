@@ -175,6 +175,22 @@ def inspect_page(root: Path, path: str, state_code: str, *, request_only: bool) 
                                 ("not guaranteed", "not confirmed", "request-only",
                                  "request only", "eligibility review", "no active")):
         errors.append("unverified_market_must_disclose_coverage")
+    # A native async submit handler + the shared capture-phase router can queue
+    # duplicate requestSubmit() events while routing metadata is loading.
+    # Require a document-capture guard before approving this staged source.
+    async_handler = re.search(
+        r"form\\.addEventListener\\(\\s*['\\\"]submit['\\\"]\\s*,\\s*async\\b",
+        markup,
+    )
+    if async_handler and "customer-routing.js" in markup:
+        markers = (
+            "document.addEventListener('submit'",
+            "routingPending",
+            "event.stopImmediatePropagation()",
+            "form.dataset.customerRoutingQualified",
+        )
+        if not all(marker in markup for marker in markers):
+            errors.append("async_routing_duplicate_submit_guard_missing")
     if "customer-routing.js" not in markup:
         warnings.append("shared_customer_routing_not_linked")
     return {"path": path, "state_code": state_code, "errors": errors, "warnings": warnings,
