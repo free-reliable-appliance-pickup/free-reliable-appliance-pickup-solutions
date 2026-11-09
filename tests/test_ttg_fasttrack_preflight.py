@@ -123,6 +123,58 @@ class PreflightTests(unittest.TestCase):
             result = inspect_page(root, path, "IL", request_only=True)
             self.assertIn("source_page_mismatch", result["errors"])
 
+    def test_form_must_use_post_to_protect_contact_data(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = create_page(root)
+            location = root / path
+            text = location.read_text(encoding="utf-8").replace(
+                'method="POST"', 'method="GET"')
+            location.write_text(text, encoding="utf-8")
+            result = inspect_page(root, path, "IL", request_only=True)
+            self.assertIn("form_must_use_post", result["errors"])
+
+    def test_duplicate_source_page_is_rejected(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = create_page(root)
+            location = root / path
+            text = location.read_text(encoding="utf-8")
+            text = text.replace(
+                '<input type="hidden" name="source_page" value="chicago-il-appliance-pickup">',
+                '<input type="hidden" name="source_page" value="chicago-il-appliance-pickup">'
+                '<input type="hidden" name="source_page" value="aurora-il-appliance-pickup">'
+            )
+            location.write_text(text, encoding="utf-8")
+            result = inspect_page(root, path, "IL", request_only=True)
+            self.assertIn("source_page_missing_or_empty", result["errors"])
+
+    def test_option_without_value_uses_visible_state_text(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = create_page(root)
+            location = root / path
+            text = location.read_text(encoding="utf-8").replace(
+                '<option value="IL">Illinois</option>',
+                '<option value="IL">Illinois</option><option>GA</option>'
+            )
+            location.write_text(text, encoding="utf-8")
+            result = inspect_page(root, path, "IL", request_only=True)
+            self.assertIn("form_state_must_be_restricted_to_target_code", result["errors"])
+
+    def test_privacy_acknowledgment_must_be_checkbox(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = create_page(root)
+            location = root / path
+            text = location.read_text(encoding="utf-8").replace(
+                'type="checkbox" required name="privacy_acknowledgment"',
+                'type="text" required name="privacy_acknowledgment"'
+            )
+            location.write_text(text, encoding="utf-8")
+            result = inspect_page(root, path, "IL", request_only=True)
+            self.assertIn("privacy_acknowledgment_must_be_required", result["errors"])
+
     def test_privacy_acknowledgment_must_be_required(self):
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)
