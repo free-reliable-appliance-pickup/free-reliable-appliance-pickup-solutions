@@ -117,6 +117,18 @@ assert.equal(visit({ state: "TX", search: "?utm_source=google" })[observedField]
 assert.equal(visit({ state: "OR", page: "/salem-appliance-pickup/",
   referrer: "https://www.facebook.com/" })[observedField], "Facebook referrer");
 
+// Illinois TTG 17-page intake must retain attribution without guessing at traffic source.
+const ilStorage = new Map();
+const ilLanding = visit({ state: "IL", page: "/illinois-appliance-pickup/",
+  search: "?utm_source=facebook", storage: ilStorage });
+assert.equal(ilLanding[observedField], "UTM: facebook");
+const ilChicago = visit({ state: "IL", page: "/chicago-il-appliance-pickup/",
+  referrer: "https://freereliableappliancepickup.com/illinois-appliance-pickup/",
+  storage: ilStorage });
+assert.equal(ilChicago[observedField], "UTM: facebook");
+assert.equal(visit({ state: "IL", page: "/rockford-il-appliance-pickup/" })[observedField],
+  "Direct / unknown");
+
 // Do not add observed-source fields to other markets or missing-state forms.
 assert.deepEqual(Object.keys(visit({ state: "CA", search: "?utm_source=google" })), []);
 assert.deepEqual(Object.keys(visit({ state: null, search: "?utm_source=google" })), []);
