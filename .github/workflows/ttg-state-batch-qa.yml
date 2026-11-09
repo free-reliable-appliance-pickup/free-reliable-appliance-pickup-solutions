@@ -20,5 +20,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ttg_state_batch_qa.py' -v
       - name: Validate Minnesota state, city and appliance link integrity
         run: python -m unittest discover -s tests -p 'test_ttg_minnesota_pages.py' -v
+      - name: Test statewide free-pickup eligibility messaging
+        run: python -m unittest discover -s tests -p 'test_ttg_free_pickup_state_hubs.py' -v
       - name: Validate state manifests and every listed page
         run: python scripts/ttg_state_batch_qa.py
