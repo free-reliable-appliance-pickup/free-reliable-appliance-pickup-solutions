@@ -144,7 +144,12 @@ def check_manifest(path, root=ROOT):
             problems.append("unsafe page path: " + raw)
             continue
         slug = rel.parent.name
-        if slug != state_slug and not (f"-{code.lower()}-" in slug and slug.endswith("-pickup")):
+        intents = ("appliance", "washer-dryer", "refrigerator", "freezer",
+                   "stove-oven", "stove", "washer", "dryer")
+        valid_city = any(slug.endswith(f"-{code.lower()}-{intent}-pickup")
+                         and len(slug) > len(f"-{code.lower()}-{intent}-pickup")
+                         for intent in intents)
+        if slug != state_slug and not valid_city:
             problems.append("wrong state-coded pickup directory: " + raw)
             continue
         page = (root / rel).resolve()
