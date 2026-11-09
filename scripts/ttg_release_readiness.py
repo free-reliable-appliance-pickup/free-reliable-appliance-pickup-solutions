@@ -22,7 +22,7 @@ def staged_cities(pages, state_code):
 
 def dated(value):
     """Require an actual calendar date without implying it was independently verified."""
-    if not isinstance(value, str) or not re.fullmatch(r"\\d{4}-\\d{2}-\\d{2}", value):
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
         return False
     try:
         date.fromisoformat(value)
@@ -73,7 +73,7 @@ def evidence_check(record, cities, requested_city=None):
         zip_codes = entry.get("zip_codes", [])
         if not (
             isinstance(zip_codes, list) and zip_codes and
-            all(isinstance(z, str) and re.fullmatch(r"\\d{5}", z) for z in zip_codes)
+            all(isinstance(z, str) and re.fullmatch(r"\d{5}", z) for z in zip_codes)
             and isinstance(entry.get("operator_reference"), str)
             and entry["operator_reference"].strip()
             and entry.get("pickup_terms_checked") is True
@@ -151,7 +151,7 @@ def main():
         parser.error("state must be two letters")
     result = assess(args.state, city=args.city)
     if args.report:
-        args.report.write_text(json.dumps(result, indent=2) + "\\n", encoding="utf-8")
+        args.report.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(f"TTG {result['state']}: {result['pages']} staged request pages, "
           f"{len(result['cities'])} cities, {len(result['verified_cities'])} cities with evidence.")
     for problem in result["technical_errors"]:
