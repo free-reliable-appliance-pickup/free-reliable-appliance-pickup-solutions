@@ -21,6 +21,8 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - run: python -m unittest discover -s tests -p test_ttg_illinois_live_smoke.py -v
   production-pages:
     if: github.event_name != 'pull_request'
@@ -29,5 +31,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: GET-only production checks (no form submits)
         run: python scripts/ttg_illinois_live_smoke.py
