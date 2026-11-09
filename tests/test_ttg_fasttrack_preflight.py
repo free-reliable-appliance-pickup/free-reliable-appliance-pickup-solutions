@@ -175,6 +175,20 @@ class PreflightTests(unittest.TestCase):
             result = inspect_page(root, path, "IL", request_only=True)
             self.assertIn("privacy_acknowledgment_must_be_required", result["errors"])
 
+    def test_async_routing_submit_requires_pre_router_duplicate_guard(self):
+        """An async Formspree page must not queue multiple routing resubmits."""
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = create_page(root)
+            location = root / path
+            markup = location.read_text(encoding="utf-8").replace(
+                "</body>",
+                "<script>form.addEventListener('submit', async function (event) {});</script></body>",
+            )
+            location.write_text(markup, encoding="utf-8")
+            result = inspect_page(root, path, "IL", request_only=True)
+            self.assertIn("async_routing_duplicate_submit_guard_missing", result["errors"])
+
     def test_privacy_acknowledgment_must_be_required(self):
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)
