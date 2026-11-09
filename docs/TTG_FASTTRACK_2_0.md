@@ -17,7 +17,7 @@ Finish each state in one cohesive batch while ensuring any published page is saf
 
 ## Findings on 2026-11-09
 - Chicago #989 failed the old independent workflow's 18k diff budget (18,719 characters), NOT just model quota. Reduced to approx. 17.5k in commit 926dc936adb20ddaecdfeb67d3e48a99ea05e5cf, retaining safety and form details; live CI/review still pending.
-- Illinois #988 latest independent review completed using both existing models, but reported HIGH findings requiring actual code-based triage; complete AI responses are not automatic approval.
+- Illinois #988 has no successful exact-head independent approval. Different earlier review attempts were either incomplete because a free model returned HTTP 429 or produced HIGH findings needing source-based triage. Completed reports on an earlier commit are not approval for a later head.
 - Workflow #960 is open. Free OpenRouter endpoints have quota/capacity limits and proposed replacement models may share the same account allowance.
 - GitHub Models inference API was retired July 30, 2026 and is not a viable fallback.
 - CodeQL is a different, GitHub-native no-OpenRouter-quota security scan, staged in .github/workflows/ttg-fasttrack-codeql.yml. It cannot independently decide fulfillment truth, SEO quality or form receipt.
