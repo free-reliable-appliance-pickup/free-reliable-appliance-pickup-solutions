@@ -87,13 +87,13 @@
           "city",
           "zip",
           "appliance",
-          "condition"
+          "condition",
+          "address",
+          "location",
+          "stairs"
         ],
         "optional_fields": [
-          "address",
           "brand_model",
-          "location",
-          "stairs",
           "property_type",
           "photos_available",
           "preferred_window",
