@@ -119,13 +119,16 @@ def check_manifest(path, root=ROOT):
         problems.append("manifest must be named STATE.json")
     if batch.get("mode") != "request-only":
         problems.append("only request-only staging supported; activation requires approval")
+    state_slug = ""
     try:
         routing = json.loads((root / "data/market-routing.json").read_text(encoding="utf-8"))
         rows = [row for row in routing["state_defaults"] if row["state_code"] == code]
         if len(rows) != 1:
             problems.append("expected exactly one routing default")
-        elif rows[0]["status"] not in {"request-only", "partner-recruiting"}:
-            problems.append("routing changed: independently verify coverage")
+        else:
+            state_slug = rows[0].get("state", "").strip().lower().replace(" ", "-") + "-appliance-pickup"
+            if rows[0]["status"] not in {"request-only", "partner-recruiting"}:
+                problems.append("routing changed: independently verify coverage")
     except (OSError, ValueError, KeyError, TypeError) as exc:
         problems.append(f"unable to check market routing: {exc}")
     if not isinstance(pages, list) or not pages:
@@ -141,7 +144,7 @@ def check_manifest(path, root=ROOT):
             problems.append("unsafe page path: " + raw)
             continue
         slug = rel.parent.name
-        if f"-{code.lower()}-" not in slug or not slug.endswith("-pickup"):
+        if slug != state_slug and not (f"-{code.lower()}-" in slug and slug.endswith("-pickup")):
             problems.append("wrong state-coded pickup directory: " + raw)
             continue
         page = (root / rel).resolve()
