@@ -1,0 +1,42 @@
+name: TTG Illinois Staged Batch Preflight (No Release)
+on:
+  push:
+    branches:
+      - vgm/ttg-illinois-integrated-preflight-20261108
+
+permissions:
+  contents: read
+
+jobs:
+  test-staged-illinois:
+    name: FastTrack source and Python QA only
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout current staging commit only
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test inventory and preflight safeguards
+        run: python -m unittest discover -s tests -p 'test_ttg_fasttrack_*.py' -v
+      - name: Audit Illinois city pages and state hub
+        run: |
+          python scripts/ttg_fasttrack_inventory.py --state IL --details --output /tmp/ttg-il-cities.json
+          python scripts/ttg_fasttrack_preflight.py --state IL --output /tmp/ttg-il-city-preflight.json
+          python scripts/ttg_fasttrack_preflight.py --state IL --path illinois-appliance-pickup/index.html --output /tmp/ttg-il-hub-preflight.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          inventory = json.loads(Path('/tmp/ttg-il-cities.json').read_text())
+          city = json.loads(Path('/tmp/ttg-il-city-preflight.json').read_text())
+          hub = json.loads(Path('/tmp/ttg-il-hub-preflight.json').read_text())
+          assert len(inventory) >= 12, f'Unexpected candidate inventory: {len(inventory)}'
+          assert city['checked'] == 16 and city['failed'] == 0, city
+          assert hub['checked'] == 1 and hub['failed'] == 0, hub
+          print('Static staging QA passed: 16 Illinois city/category pages + 1 state hub.')
+          print('No live deployment, Formspree delivery or operator coverage is certified.')
+          PY
