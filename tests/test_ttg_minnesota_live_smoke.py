@@ -83,12 +83,14 @@ class SmokeRegression(unittest.TestCase):
             manifest.parent.mkdir(parents=True)
             manifest.write_text(json.dumps({"pages": paths}), encoding="utf-8")
             output = io.StringIO()
-            with patch("scripts.ttg_minnesota_live_smoke.ROOT", Path(directory)), \\
-                 patch("scripts.ttg_minnesota_live_smoke.audit_live_page",
-                       side_effect=fake_audit), \\
-                 patch("scripts.ttg_minnesota_live_smoke.fetch_html",
-                       return_value='<a href="/minnesota-appliance-pickup/">Minnesota</a>'), \\
-                 redirect_stdout(output):
+            with (
+                patch("scripts.ttg_minnesota_live_smoke.ROOT", Path(directory)),
+                patch("scripts.ttg_minnesota_live_smoke.audit_live_page",
+                      side_effect=fake_audit),
+                patch("scripts.ttg_minnesota_live_smoke.fetch_html",
+                      return_value='<a href="/minnesota-appliance-pickup/">Minnesota</a>'),
+                redirect_stdout(output),
+            ):
                 self.assertEqual(main(), 0)
 
         self.assertEqual(peak, 4)
