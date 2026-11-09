@@ -94,7 +94,7 @@ class MinnesotaBatchTests(unittest.TestCase):
         """Keep active service coverage separate from a staging link."""
         service = (ROOT / "service-areas/index.html").read_text(encoding="utf-8")
         self.assertIn("../minnesota-appliance-pickup/", service)
-        self.assertIn("Minnesota — eligibility requests only", service)
+        self.assertIn("Minnesota — free appliance pickup eligibility requests", service)
 
     def test_no_minnesota_staging_page_in_sitemap(self):
         """Request-only pages should not be put into discovery index sitemaps."""
@@ -102,6 +102,21 @@ class MinnesotaBatchTests(unittest.TestCase):
         for path in self.pages:
             slug = path.removesuffix("/index.html")
             self.assertNotIn(f"https://freereliableappliancepickup.com/{slug}/", main)
+
+    def test_free_appliance_pickup_wording_stays_conditional(self):
+        """Use free pickup keywords without promising unverified service."""
+        for path in self.pages:
+            with self.subTest(path=path):
+                html = (ROOT / path).read_text(encoding="utf-8")
+                title = html.split("<title>", 1)[1].split("</title>", 1)[0]
+                heading = html.split("<h1>", 1)[1].split("</h1>", 1)[0]
+                description = html.split('<meta name="description" content="', 1)[1].split('"', 1)[0]
+                self.assertIn("Free ", title)
+                self.assertIn("Free ", heading)
+                self.assertIn("Free appliance pickup eligibility", description)
+                self.assertIn("Looking for free appliance pickup?", html)
+                self.assertIn("Free pickup and local routes are not currently confirmed", html)
+                self.assertIn('content="noindex, follow"', html)
 
     def test_routing_stays_unverified(self):
         """A code release must never mark Minnesota as operational by accident."""
