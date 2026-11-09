@@ -70,6 +70,20 @@ class IllinoisPreflightTests(unittest.TestCase):
         markup = self.sample.replace('rel="canonical"', 'rel="alternate CANONICAL"')
         self.assertEqual(self.check(markup), [])
 
+    def test_negated_guarantee_copy_is_acceptable(self):
+        markup = self.sample.replace("</body>",
+            "<p>No Illinois region is guaranteed free pickup.</p></body>")
+        markup = markup.replace("<h1>Chicago appliance requests</h1>",
+            '<meta name="description" content="no guaranteed free pickup">'
+            "<h1>Chicago appliance requests</h1>")
+        self.assertEqual(self.check(markup), [])
+
+    def test_affirmative_pickup_guarantee_is_rejected(self):
+        markup = self.sample.replace("</body>",
+            "<p>We provide guaranteed free pickup for all applicants.</p></body>")
+        failures = self.check(markup)
+        self.assertTrue(any("affirmative free pickup" in e for e in failures))
+
     def test_reject_broken_photo(self):
         """An HTML photo path without the actual asset is not accepted."""
         failures = self.check(self.sample.replace("/photo.webp", "/not-found.webp"))
