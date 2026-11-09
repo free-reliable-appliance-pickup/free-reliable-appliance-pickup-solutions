@@ -115,8 +115,12 @@ def parse_review(content):
         raise ModelOutputError("invalid_json") from exc
     if not isinstance(obj, dict) or not isinstance(obj.get("findings"), list):
         raise ModelOutputError("invalid_findings_schema")
+    # Never silently discard the 21st or later finding: a critical issue could
+    # otherwise be omitted while the review is marked successful.
+    if len(obj["findings"]) > 20:
+        raise ModelOutputError("too_many_findings")
     findings = []
-    for f in obj["findings"][:20]:
+    for f in obj["findings"]:
         if not isinstance(f, dict) or f.get("severity") not in ("critical", "high", "medium", "low"):
             raise ModelOutputError("invalid_finding")
         findings.append({k: str(f.get(k, ""))[:700] for k in ("severity", "file", "issue", "evidence", "recommendation")})
