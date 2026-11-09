@@ -94,6 +94,16 @@ def collect(root: Path) -> tuple[list[dict], list[dict]]:
 
     for city in lookup["cities"]:
         register(city)
+    # Additional market research is a planning input, never fulfillment evidence.
+    # IL/GA were not yet listed in cities.json when FastTrack was introduced.
+    candidates_file = root / "data/ttg-market-candidates.json"
+    if candidates_file.is_file():
+        with candidates_file.open(encoding="utf-8") as stream:
+            candidates = json.load(stream)
+        if not isinstance(candidates.get("cities"), list):
+            raise ValueError("FastTrack candidates must include a cities list")
+        for item in candidates["cities"]:
+            register(item)
     # Exact-market cities absent from cities.json should still appear in inventory.
     for market in routing["markets"]:
         if market.get("city"):
