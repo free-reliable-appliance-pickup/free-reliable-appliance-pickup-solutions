@@ -1,7 +1,13 @@
 """Offline regressions for the Minnesota live read-only smoke parser."""
+import io
+import json
+import tempfile
+import threading
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
-from scripts.ttg_minnesota_live_smoke import BASE, FORM, REQUIRED, check_page, has_minnesota_hub_link
+from unittest.mock import patch
+from scripts.ttg_minnesota_live_smoke import BASE, FORM, REQUIRED, audit_live_page, check_page, has_minnesota_hub_link, main
 
 
 def fixture(slug="minnesota-appliance-pickup", robots="noindex, follow"):
@@ -29,6 +35,71 @@ class SmokeRegression(unittest.TestCase):
         workflow = path.read_text(encoding="utf-8")
         self.assertIn("--state MN --report ttg-minnesota-readiness.json", workflow)
         self.assertNotIn("--state IL", workflow)
+
+    def test_audit_page_is_read_only(self):
+        """Read a page exactly once through the GET-only fetch helper."""
+        with patch("scripts.ttg_minnesota_live_smoke.fetch_html",
+                   return_value=fixture()) as get:
+            slug, errors = audit_live_page("minnesota-appliance-pickup/index.html", [])
+        self.assertEqual(slug, "minnesota-appliance-pickup")
+        self.assertEqual(errors, [])
+        get.assert_called_once_with("minnesota-appliance-pickup/")
+
+    def test_audit_page_reports_timeout(self):
+        """Record network timeouts as failures without stopping other checks."""
+        with patch("scripts.ttg_minnesota_live_smoke.fetch_html",
+                   side_effect=RuntimeError("timed out")):
+            slug, errors = audit_live_page("minneapolis-mn-appliance-pickup/index.html", [])
+        self.assertEqual(slug, "minneapolis-mn-appliance-pickup")
+        self.assertEqual(errors, ["timed out"])
+
+    def test_main_limits_get_workers_and_preserves_manifest_order(self):
+        """Six mocked pages overlap at four workers while reporting in input order."""
+        paths = [f"city-{i}-mn-appliance-pickup/index.html" for i in range(6)]
+        barrier = threading.Barrier(4)
+        first_can_finish = threading.Event()
+        lock = threading.Lock()
+        active = 0
+        peak = 0
+        completed = []
+
+        def fake_audit(path, manifest_pages):
+            """Synchronize four GET workers and deliberately finish page two first."""
+            nonlocal active, peak
+            self.assertEqual(manifest_pages, paths)
+            with lock:
+                active += 1
+                peak = max(peak, active)
+            if path in paths[:4]:
+                barrier.wait(timeout=5)
+            if path == paths[0]:
+                self.assertTrue(first_can_finish.wait(timeout=5))
+            with lock:
+                completed.append(path)
+                active -= 1
+            if path == paths[1]:
+                first_can_finish.set()
+            return path.removesuffix("/index.html"), []
+
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = Path(directory) / "data/ttg-state-batches/MN.json"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(json.dumps({"pages": paths}), encoding="utf-8")
+            output = io.StringIO()
+            with (
+                patch("scripts.ttg_minnesota_live_smoke.ROOT", Path(directory)),
+                patch("scripts.ttg_minnesota_live_smoke.audit_live_page",
+                      side_effect=fake_audit),
+                patch("scripts.ttg_minnesota_live_smoke.fetch_html",
+                      return_value='<a href="/minnesota-appliance-pickup/">Minnesota</a>'),
+                redirect_stdout(output),
+            ):
+                self.assertEqual(main(), 0)
+
+        self.assertEqual(peak, 4)
+        self.assertLess(completed.index(paths[1]), completed.index(paths[0]))
+        reported = [line for line in output.getvalue().splitlines() if line.startswith("PASS ")]
+        self.assertEqual(reported, [f"PASS {BASE}{p.removesuffix('/index.html')}/" for p in paths])
 
     def test_valid_request_only(self):
         """Accept a fully valid request-only page."""
