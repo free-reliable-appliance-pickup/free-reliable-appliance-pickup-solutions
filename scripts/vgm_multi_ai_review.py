@@ -43,6 +43,28 @@ def fetch_json(url, token):
     with urlopen(request, timeout=25) as response:
         return json.load(response)
 
+def current_release_head(repo, pr, token):
+    """Validate live open same-repository release metadata and pin its head SHA."""
+    metadata = fetch_json(f"{GITHUB_API}/repos/{repo}/pulls/{pr}", token)
+    if not isinstance(metadata, dict) or metadata.get("state") != "open":
+        raise ModelOutputError("pr_not_open_or_unverifiable")
+    head = metadata.get("head") or {}
+    base = metadata.get("base") or {}
+    head_repo = head.get("repo") if isinstance(head, dict) else None
+    base_repo = base.get("repo") if isinstance(base, dict) else None
+    if (not isinstance(head_repo, dict) or head_repo.get("full_name") != repo
+            or not isinstance(base_repo, dict) or base_repo.get("full_name") != repo):
+        raise ModelOutputError("pr_not_same_repository")
+    labels = metadata.get("labels")
+    if not isinstance(labels, list) or "vgm-release-review" not in [
+            item.get("name") for item in labels if isinstance(item, dict)]:
+        raise ModelOutputError("pr_not_selected")
+    sha = head.get("sha")
+    if not isinstance(sha, str) or not re.fullmatch(r"[a-fA-F0-9]{40}", sha):
+        raise ModelOutputError("pr_head_missing_or_invalid")
+    return sha.lower()
+
+
 def eligible_path(path):
     lower = path.lower()
     if not lower.endswith(SAFE_EXTENSIONS):
@@ -196,6 +218,13 @@ def main():
         raise SystemExit("Missing valid PR number")
     if not token:
         raise SystemExit("Missing GitHub token")
+    try:
+        pinned_head = current_release_head(repo, pr, token)
+    except (HTTPError, URLError, ValueError, KeyError, TimeoutError) as exc:
+        raise SystemExit("Cannot verify selected current PR head; FAIL CLOSED.") from exc
+    event_head = os.environ.get("REVIEW_PR_HEAD_SHA", "").strip().lower()
+    if event_head and event_head != pinned_head:
+        raise SystemExit("PR head differs from triggering commit; FAIL CLOSED.")
     raw_files = []
     for page in range(1, 3):
         page_files = fetch_json(f"{GITHUB_API}/repos/{repo}/pulls/{pr}/files?per_page=100&page={page}", token)
@@ -230,6 +259,19 @@ def main():
                 result["error"] = type(exc).__name__
         results[label] = result
     markdown, status = report_markdown(pr, results, skipped, truncated, bool(patch))
+    # Reviews are for one exact PR head. A changed/closed/unselected PR is not approved.
+    # Recheck after model calls; never count reviews from an obsolete head as complete.
+    try:
+        current_head = current_release_head(repo, pr, token)
+    except (HTTPError, URLError, ValueError, KeyError, TimeoutError):
+        current_head = None
+    if current_head != pinned_head:
+        status = "INCOMPLETE — PR head changed or release eligibility revoked during review"
+        markdown = markdown.replace(
+            next((line for line in markdown.splitlines() if line.startswith("**Status: ")), ""),
+            f"**Status: {status}**",
+            1,
+        )
     Path("vgm-multi-ai-review.md").write_text(markdown, encoding="utf-8")
     Path("vgm-multi-ai-review.json").write_text(json.dumps({
         "pr": int(pr), "status": status, "results": results,
