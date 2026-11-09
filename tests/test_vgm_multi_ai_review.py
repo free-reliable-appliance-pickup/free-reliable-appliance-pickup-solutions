@@ -46,6 +46,19 @@ class MultiAITests(unittest.TestCase):
         raw = '{"findings": [{"severity": "high", "file": "index.html", "issue": "form gone", "evidence": "-<form>", "recommendation": "restore form"}]}'
         self.assertEqual(review.parse_review(raw)[0]["severity"], "high")
 
+    def test_overlong_findings_must_not_hide_late_critical_issue(self):
+        findings = [
+            {"severity": "low", "file": "index.html", "issue": "note",
+             "evidence": "x", "recommendation": "review"}
+            for _ in range(20)
+        ]
+        findings.append({"severity": "critical", "file": "index.html",
+                         "issue": "unsafe form", "evidence": "x",
+                         "recommendation": "fix"})
+        with self.assertRaises(review.ModelOutputError) as err:
+            review.parse_review(json.dumps({"findings": findings}))
+        self.assertEqual(err.exception.category, "too_many_findings")
+
     def test_parse_fenced_json(self):
         self.assertEqual(review.parse_review('```json\n{"findings": []}\n```'), [])
 
