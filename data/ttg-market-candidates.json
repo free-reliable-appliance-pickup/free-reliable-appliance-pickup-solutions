@@ -1,9 +1,9 @@
 {
-  "version": "2026-11-08.1",
+  "version": "2026-11-08.2",
   "purpose": "FastTrack research candidates absent from canonical data/cities.json; NOT proof of local coverage or approved indexable pages.",
   "policy": "Read-only discovery input; never publish, index, assign routes or recruit partners from these records. Canonical market-routing.json remains the source of operating truth.",
   "sources": {
-    "IL": "TTG Illinois issue #990 and 17 staged page inventory",
+    "IL": "TTG Illinois #990 and confirmed municipal sources: cityofevanston.org special pickups, oak-park.us garbage collection, skokie.gov trash collection",
     "GA": "Georgia statewide hub PR #986 linking 17 original request-only city guides"
   },
   "cities": [
@@ -179,6 +179,24 @@
       "state_code": "GA",
       "city": "Macon",
       "region": "Macon Metro",
+      "priority": 2
+    },
+    {
+      "state_code": "IL",
+      "city": "Evanston",
+      "region": "North Shore",
+      "priority": 2
+    },
+    {
+      "state_code": "IL",
+      "city": "Oak Park",
+      "region": "Near-West Suburbs",
+      "priority": 2
+    },
+    {
+      "state_code": "IL",
+      "city": "Skokie",
+      "region": "North Suburbs",
       "priority": 2
     }
   ]
