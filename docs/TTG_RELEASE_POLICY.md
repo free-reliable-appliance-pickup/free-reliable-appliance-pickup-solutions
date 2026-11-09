@@ -27,6 +27,6 @@ Record PR, exact SHA, test and CodeQL run links, review findings resolution, res
 
 ## Rollout order
 
-First merge/review infrastructure changes (CodeQL and deterministic batch QA). Next stage all 17 Illinois request-only pages as **one coherent package**, checking that the integrated branch includes the latest statewide/Chicago form fixes. Only publish after project QA and explicit maintainer review. Then apply the exact same tested workflow to the next state.
+CodeQL and Illinois QA infrastructure merged in [PR #997](https://github.com/free-reliable-appliance-pickup/free-reliable-appliance-pickup-solutions/pull/997), with 14 successful checks and resolved CodeRabbit findings. Merge the deterministic state-batch QA and on-demand advisory configuration only after its exact-head checks succeed. Next stage all 17 Illinois request-only pages as **one coherent package**, checking that the integrated branch includes the latest statewide/Chicago form fixes. Only publish after project QA and explicit maintainer review. Then apply the exact same tested workflow to the next state.
 
 No automatic deployment, false coverage, fake approvals or Google ranking guarantee is authorized by this document.
