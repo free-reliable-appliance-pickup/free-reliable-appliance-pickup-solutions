@@ -106,6 +106,23 @@ class MinnesotaBatchTests(unittest.TestCase):
         self.assertIn("../minnesota-appliance-pickup/", service)
         self.assertIn("Minnesota — free appliance pickup eligibility requests", service)
 
+    def test_minneapolis_and_saint_paul_official_disposal_resources(self):
+        """Keep city disposal guidance useful, source-linked and distinct from our unconfirmed request."""
+        minneapolis = (ROOT / "minneapolis-mn-appliance-pickup/index.html").read_text(encoding="utf-8")
+        saint_paul = (ROOT / "saint-paul-mn-appliance-pickup/index.html").read_text(encoding="utf-8")
+        self.assertIn("minneapolismn.gov/resident-services/garbage-recycling-cleanup/large-items/", minneapolis)
+        self.assertIn("hennepincounty.gov/green-disposal-guide/items/appliances", minneapolis)
+        self.assertIn("stpaul.gov/departments/public-works/garbage-and-recycling/residential-collection/bulky-item-collection", saint_paul)
+        self.assertIn("July 1, 2026", saint_paul)
+        for html, disclosure in (
+            (minneapolis, "this program is separate from our conditional private pickup request"),
+            (saint_paul, "City collection is separate from our unconfirmed private appliance pickup request"),
+        ):
+            self.assertIn('content="noindex, follow"', html)
+            section = html.partition("<h2>Alternative recycling and removal options</h2>")[2].partition("</section>")[0]
+            self.assertTrue(section, "Alternative options section must be present")
+            self.assertIn(disclosure, section)
+
     def test_no_minnesota_staging_page_in_sitemap(self):
         """Request-only pages should not be put into discovery index sitemaps."""
         main = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
