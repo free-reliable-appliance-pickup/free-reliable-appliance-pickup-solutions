@@ -41,17 +41,26 @@ jobs:
           print('No live deployment, Formspree delivery or operator coverage is certified.')
           PY
 
-      - name: Generate and validate source-backed Evanston draft in isolated workspace
+      - name: Generate and validate three source-backed Illinois pilot drafts
         run: |
-          python scripts/ttg_fasttrack_generate.py --manifest data/ttg-curated-draft-pages.json --output-dir /tmp/ttg-fasttrack-evanston
-          cp home-six-appliance-garage.webp /tmp/ttg-fasttrack-evanston/home-six-appliance-garage.webp
+          python scripts/ttg_fasttrack_generate.py --manifest data/ttg-curated-draft-pages.json --output-dir /tmp/ttg-fasttrack-pilots
+          cp home-six-appliance-garage.webp /tmp/ttg-fasttrack-pilots/home-six-appliance-garage.webp
+          cp salem-group-appliances.webp /tmp/ttg-fasttrack-pilots/salem-group-appliances.webp
+          cp tacoma-group-appliances.webp /tmp/ttg-fasttrack-pilots/tacoma-group-appliances.webp
           python - <<'PY'
+          import json
           from pathlib import Path
           from scripts.ttg_fasttrack_preflight import inspect_page
-          root = Path('/tmp/ttg-fasttrack-evanston')
-          result = inspect_page(root, 'evanston-il-appliance-pickup/index.html', 'IL', request_only=True)
-          assert result['passed'] and not result['errors'], result
-          assert result['publication_approved'] is False
-          print('Evanston generated noindex draft passed source preflight in isolated directory.')
-          print('No page was copied into main, published, or submitted to Formspree.')
+          root = Path('/tmp/ttg-fasttrack-pilots')
+          slugs = ('evanston', 'oak-park', 'skokie')
+          for slug in slugs:
+              path = f'{slug}-il-appliance-pickup/index.html'
+              result = inspect_page(root, path, 'IL', request_only=True)
+              assert result['passed'] and not result['errors'], result
+              assert result['publication_approved'] is False
+              print(f'Passed: {path}')
+          manifest = json.loads(Path('data/ttg-curated-draft-pages.json').read_text())
+          assert len(manifest['pages']) == len(slugs), 'Manifest changed without review'
+          print('Three source-backed Illinois drafts generated, all passed static source QA.')
+          print('No page was copied into main, published, indexed, or submitted to Formspree.')
           PY
