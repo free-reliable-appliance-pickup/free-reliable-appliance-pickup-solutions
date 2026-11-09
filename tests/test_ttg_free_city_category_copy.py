@@ -74,7 +74,10 @@ class HighIntentFreeCityCopy(unittest.TestCase):
                 self.assertRegex(plain_title, free_pattern)
                 self.assertRegex(plain_h1, free_pattern)
                 self.assertIn("formspree.io/f/mvzeapzd", raw)
-                self.assertIn("Free pickup", raw)
+                self.assertRegex(
+                    raw.lower(),
+                    r"(eligibility|qualifying|qualification|not guaranteed|not confirmed|local operator|route availability)"
+                )
                 slug = path.removesuffix("/index.html")
                 self.assertIn("https://freereliableappliancepickup.com/" + slug + "/", raw)
                 self.assertEqual(len(re.findall(r"<h1\b", raw, re.I)), 1)
