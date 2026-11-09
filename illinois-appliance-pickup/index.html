@@ -12,27 +12,43 @@ document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('form[action="https://formspree.io/f/mvzeapzd"]');
   const status = document.getElementById('pickup-form-status');
   if (!form || !status) return;
+  let posting = false;
   form.addEventListener('submit', async function (event) {
-    // Shared routing may prevent the first submit and resubmit after qualification.
-    // A missing routing script still leaves the form fully usable.
-    if (event.defaultPrevented) return; // Respect any earlier routing/validation handler.
-    if (!window.fetch || !window.FormData) return; // Native Formspree POST fallback.
+    // The shared router may prevent the first submit, enrich routing, and resubmit.
+    if (event.defaultPrevented) return;
+    // Preserve native Formspree POST when modern browser APIs are unavailable.
+    if (!window.fetch || !window.FormData || !window.AbortController) return;
     event.preventDefault();
+    if (posting) {
+      status.textContent = 'Your request is already being sent. Please do not submit again.';
+      return;
+    }
+    posting = true;
     const button = form.querySelector('button[type="submit"]');
     if (button) button.disabled = true;
     status.textContent = 'Sending your request for review…';
+    const controller = new AbortController();
+    const deadline = setTimeout(() => controller.abort(), 15000);
     try {
       const response = await fetch(form.action, {
-        method: 'POST', body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' },
+        signal: controller.signal
       });
       if (!response.ok) throw new Error('Request not accepted');
       status.textContent = 'Your request was submitted for eligibility review. This is not a confirmed pickup appointment.';
       form.reset();
       delete form.dataset.customerRoutingQualified;
     } catch (error) {
-      status.textContent = 'Submission could not be confirmed. Please retry or use our Contact page. Do not assume your request was received.';
+      if (error && error.name === 'AbortError') {
+        status.textContent = 'We could not confirm whether your request was received. Please contact us before submitting again to avoid duplicates.';
+      } else {
+        status.textContent = 'Submission could not be confirmed. Please use our Contact page if the problem continues.';
+      }
     } finally {
+      clearTimeout(deadline);
+      posting = false;
       if (button) button.disabled = false;
     }
   });
