@@ -18,6 +18,7 @@ The current repository policy requires two successful independent free-model rev
       "state_code": "IL",
       "mode": "request-only",
       "pages": [
+        "illinois-appliance-pickup/index.html",
         "chicago-il-appliance-pickup/index.html",
         "aurora-il-appliance-pickup/index.html"
       ]
