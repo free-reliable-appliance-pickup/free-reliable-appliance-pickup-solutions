@@ -1,7 +1,8 @@
 """Offline regressions for the Minnesota live read-only smoke parser."""
 import unittest
 from pathlib import Path
-from scripts.ttg_minnesota_live_smoke import BASE, FORM, REQUIRED, check_page, has_minnesota_hub_link
+from unittest.mock import patch
+from scripts.ttg_minnesota_live_smoke import BASE, FORM, REQUIRED, audit_live_page, check_page, has_minnesota_hub_link
 
 
 def fixture(slug="minnesota-appliance-pickup", robots="noindex, follow"):
@@ -29,6 +30,23 @@ class SmokeRegression(unittest.TestCase):
         workflow = path.read_text(encoding="utf-8")
         self.assertIn("--state MN --report ttg-minnesota-readiness.json", workflow)
         self.assertNotIn("--state IL", workflow)
+
+    def test_audit_page_is_read_only(self):
+        """Read a page exactly once through the GET-only fetch helper."""
+        with patch("scripts.ttg_minnesota_live_smoke.fetch_html",
+                   return_value=fixture()) as get:
+            slug, errors = audit_live_page("minnesota-appliance-pickup/index.html", [])
+        self.assertEqual(slug, "minnesota-appliance-pickup")
+        self.assertEqual(errors, [])
+        get.assert_called_once_with("minnesota-appliance-pickup/")
+
+    def test_audit_page_reports_timeout(self):
+        """Record network timeouts as failures without stopping other checks."""
+        with patch("scripts.ttg_minnesota_live_smoke.fetch_html",
+                   side_effect=RuntimeError("timed out")):
+            slug, errors = audit_live_page("minneapolis-mn-appliance-pickup/index.html", [])
+        self.assertEqual(slug, "minneapolis-mn-appliance-pickup")
+        self.assertEqual(errors, ["timed out"])
 
     def test_valid_request_only(self):
         """Accept a fully valid request-only page."""
