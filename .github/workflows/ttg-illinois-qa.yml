@@ -6,6 +6,7 @@ on:
     paths:
       - "illinois-appliance-pickup/**"
       - "*-il-*-pickup/**"
+      - "data/market-routing.json"
       - "scripts/ttg_validate_illinois.py"
       - "tests/test_ttg_validate_illinois.py"
       - ".github/workflows/ttg-illinois-qa.yml"
