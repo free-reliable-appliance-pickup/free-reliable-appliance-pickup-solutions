@@ -68,6 +68,12 @@ class OperationalGate(unittest.TestCase):
         self.assertEqual(verified, [])
         self.assertTrue(any("Incomplete" in x for x in issues))
 
+    def test_unknown_city_does_not_pass_technical_preflight(self):
+        result = assess("IL", city="invented-illinois-city")
+        self.assertFalse(result["request_only_safe"])
+        self.assertTrue(any("not in the stage manifest" in e
+                            for e in result["technical_errors"]))
+
     def test_missing_manifest_is_blocked(self):
         with tempfile.TemporaryDirectory() as t:
             result = assess("IL", root=Path(t))
