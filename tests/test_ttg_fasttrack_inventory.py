@@ -46,7 +46,10 @@ class FastTrackInventoryTests(unittest.TestCase):
         self.assertGreater(len(cities["cities"]), 0)
         summaries, details = collect(ROOT)
         self.assertEqual(len(summaries), 50)
-        self.assertTrue(any(x["state_code"] == "IL" for x in details))
+        # Research-only IL/GA candidate records must not vanish because
+        # they are absent from the older canonical cities.json directory.
+        self.assertGreaterEqual(sum(x["state_code"] == "IL" for x in details), 12)
+        self.assertGreaterEqual(sum(x["state_code"] == "GA" for x in details), 17)
         self.assertTrue(all(x["index_permission"].startswith("manual_") for x in details))
         self.assertTrue(all(x["release_status"] == "not_determined_by_source_inventory"
                             for x in summaries))
