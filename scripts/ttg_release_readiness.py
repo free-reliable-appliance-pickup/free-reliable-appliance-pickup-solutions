@@ -125,6 +125,9 @@ def assess(state_code, root=ROOT, city=None):
     except (OSError, ValueError) as exc:
         ledger = {}
         technical.append("Missing or unreadable operational evidence ledger: " + type(exc).__name__)
+    if not isinstance(ledger, dict):
+        technical.append("Readiness ledger must be a JSON object")
+        ledger = {}
     if ledger.get("state_code") != state_code:
         technical.append("Readiness ledger state_code does not match batch")
     verified, blockers = evidence_check(ledger, cities, city)

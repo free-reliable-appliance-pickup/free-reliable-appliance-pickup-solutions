@@ -22,6 +22,7 @@ class OperationalGate(unittest.TestCase):
         self.assertTrue(any("operator" in x for x in result["operational_blockers"]))
 
     def test_recognize_only_owner_city_pages(self):
+        """Category and statewide hub pages are not separately operated cities."""
         pages = [
             "illinois-appliance-pickup/index.html",
             "chicago-il-appliance-pickup/index.html",
@@ -31,6 +32,7 @@ class OperationalGate(unittest.TestCase):
         self.assertEqual(staged_cities(pages, "IL"), ["aurora", "chicago"])
 
     def test_no_operator_or_receipt_blocks_launch(self):
+        """Missing operator, receipt and signoff remain visible blockers."""
         verified, issues = evidence_check(
             {"verified_cities": [], "form_receipt": {"verified": False},
              "owner_release_approval": {"approved": False}},
@@ -39,6 +41,7 @@ class OperationalGate(unittest.TestCase):
         self.assertGreaterEqual(len(issues), 3)
 
     def test_complete_evidence_does_not_auto_index(self):
+        """Synthetic proof tests syntax only and cannot authorize publication."""
         evidence = {
             "form_receipt": {"verified": True, "verified_on": "2026-11-09",
                              "receipt_reference": "owner-inbox-check"},
@@ -57,6 +60,7 @@ class OperationalGate(unittest.TestCase):
         self.assertFalse(assess("IL")["index_activation_authorized"])
 
     def test_invalid_zip_and_invalid_calendar_date_rejected(self):
+        """Reject incomplete ZIP coverage and invalid calendar dates."""
         self.assertFalse(dated("2026-13-77"))
         verified, issues = evidence_check({
             "verified_cities": [{
@@ -69,12 +73,20 @@ class OperationalGate(unittest.TestCase):
         self.assertTrue(any("Incomplete" in x for x in issues))
 
     def test_unknown_city_does_not_pass_technical_preflight(self):
+        """A city absent from the manifest cannot get release clearance."""
         result = assess("IL", city="invented-illinois-city")
         self.assertFalse(result["request_only_safe"])
         self.assertTrue(any("not in the stage manifest" in e
                             for e in result["technical_errors"]))
 
+    def test_nonobject_evidence_is_rejected(self):
+        """A JSON list cannot supply release evidence."""
+        verified, errors = evidence_check([], ["chicago"])
+        self.assertEqual(verified, [])
+        self.assertTrue(any("invalid readiness ledger" in e for e in errors))
+
     def test_missing_manifest_is_blocked(self):
+        """Require a real page manifest instead of passing an empty batch."""
         with tempfile.TemporaryDirectory() as t:
             result = assess("IL", root=Path(t))
         self.assertFalse(result["request_only_safe"])
