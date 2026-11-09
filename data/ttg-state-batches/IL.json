@@ -21,5 +21,6 @@
     "waukegan-il-appliance-pickup/index.html"
   ],
   "release_intent": "staging-only; no confirmed Illinois pickup operator or appointment guarantee",
-  "source_reference": "illinois-integrated-preflight-20261108 with latest Chicago general #989"
+  "source_reference": "illinois-integrated-preflight-20261108 with latest Chicago general #989",
+  "preflight_note": "Revalidate all 17 pages against merged negated-guarantee fix #1000; not permission to index"
 }
