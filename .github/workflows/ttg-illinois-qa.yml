@@ -1,0 +1,26 @@
+# Deterministic Illinois release preflight: no external AI API or quota.
+name: TTG Illinois Request Page QA
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "illinois-appliance-pickup/**"
+      - "*-il-*-pickup/**"
+      - "scripts/ttg_validate_illinois.py"
+      - "tests/test_ttg_validate_illinois.py"
+      - ".github/workflows/ttg-illinois-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test Illinois page checks
+        run: python -m unittest discover -s tests -p test_ttg_validate_illinois.py -v
+      - name: Check all Illinois pages in this branch
+        run: python scripts/ttg_validate_illinois.py
