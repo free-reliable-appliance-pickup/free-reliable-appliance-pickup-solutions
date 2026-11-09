@@ -4,13 +4,6 @@ name: TTG FastTrack 2.1 State Batch QA
 on:
   pull_request:
     branches: [main]
-    paths:
-      - "data/ttg-state-batches/**"
-      - "**/index.html"
-      - "data/market-routing.json"
-      - "scripts/ttg_state_batch_qa.py"
-      - "tests/test_ttg_state_batch_qa.py"
-      - ".github/workflows/ttg-state-batch-qa.yml"
   workflow_dispatch:
 
 permissions:
