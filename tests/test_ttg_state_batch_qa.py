@@ -71,6 +71,29 @@ class StateBatchTests(unittest.TestCase):
         self.page.write_text(self.html.replace("noindex, follow", "index, follow"))
         self.assertTrue(any("noindex" in e for e in self.errors()))
 
+    def test_negative_guarantee_disclosures_are_accepted(self):
+        self.page.write_text(self.html.replace("</body>",
+            "<p>No Illinois region is guaranteed free pickup.</p></body>").replace(
+            "<h1>Chicago used appliance request</h1>",
+            '<meta name="description" content="no guaranteed free pickup">'
+            "<h1>Chicago used appliance request</h1>"))
+        self.assertEqual(self.errors(), [])
+
+    def test_affirmative_guarantee_is_rejected(self):
+        self.page.write_text(self.html.replace(
+            "</body>", "<p>We offer guaranteed free pickup in Chicago.</p></body>"))
+        self.assertTrue(any("affirmative guaranteed pickup" in e for e in self.errors()))
+
+    def test_disclaimer_cannot_mask_later_guarantee(self):
+        self.page.write_text(self.html.replace("</body>",
+            "<p>No pickup is guaranteed. We offer guaranteed free pickup.</p></body>"))
+        self.assertTrue(any("affirmative guaranteed pickup" in e for e in self.errors()))
+
+    def test_reverse_wording_guarantee_is_rejected(self):
+        self.page.write_text(self.html.replace("</body>",
+            "<p>Free pickup is guaranteed for all units.</p></body>"))
+        self.assertTrue(any("affirmative guaranteed pickup" in e for e in self.errors()))
+
     def test_reject_missing_image(self):
         self.page.write_text(self.html.replace("/used-appliances.webp", "/gone.webp"))
         self.assertTrue(any("image asset" in e for e in self.errors()))
