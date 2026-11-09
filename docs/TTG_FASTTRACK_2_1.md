@@ -31,13 +31,13 @@ The current repository policy requires two successful independent free-model rev
 
 The manifest describes only staging pages; the absence of a route and a live operator means the site must not promise free pickup or booking. No blanket city radius or #1 ranking is promised.
 
-## Release approval change recommended, NOT yet active
-A sustainable owner-approved policy would require (1) passing deterministic page QA and established site CI; (2) CodeQL security checks; (3) a documented independent human or CodeRabbit review of the complete consequential changes and high findings; (4) named maintainer sign-off; (5) independent real pickup capacity evidence and live form QA before any indexability change. A free AI review can be supplementary, not a quota-dependent prerequisite under that future policy.
+## Release governance adopted for FastTrack 2.1
+The owner requested a quota-independent release process; the operative requirements are documented in [TTG_RELEASE_POLICY.md](TTG_RELEASE_POLICY.md). Deterministic exact-head QA, CodeQL where applicable, substantive independent review for consequential changes, and accountable maintainer approval replace an unconditional requirement for two limited free-model responses. A free model call remains a manually requested advisory only. No project policy grants false operator activation or bypasses an actual GitHub branch protection rule.
 
-**Until an owner-approved governance change is adopted and GitHub required checks/branch protections are updated transparently, the existing two-independent-free-model review rule remains in force.** This commit does not disable that workflow, pretend an AI reviewer approved a PR, remove noindex, merge a release, or activate Illinois without operators.
+The project does **not** mark Illinois published merely because the new testing engine passes. Publish only reviewed code, test owner-controlled Formspree delivery and live mobile rendering, and retain request-only/noindex until confirmed fulfillment supports other claims.
 
 ## Status ledger
 Keep separate evidence for: drafted, staged, structural QA passed, security reviewed, release approved, merged, deployed, form receipt verified and index eligible. Record commit SHA, operator evidence, reviewer, actual deployed URL and GSC results. A passing preflight is only one step of the state pipeline.
 
 ## Existing Illinois dependency
-Illinois hub #988 and Chicago guide #989 remain open, and category drafts #993–#996 are not live. The CodeQL alternative is staged in #997 and the quota-safe model workflow in #960. Decide how to legitimately adopt the new review policy before expecting those pages to publish.
+Illinois hub #988 and Chicago guide #989 remain open, and category drafts #993–#996 are not live. CodeQL is staged in #997; the new policy in this PR supersedes the quota-dependent rule. Open reviewer-hardening PR #960 needs separate reconsideration so it does not reintroduce automatic rate-limited failures.
