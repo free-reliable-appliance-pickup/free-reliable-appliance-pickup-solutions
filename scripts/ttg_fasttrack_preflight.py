@@ -137,15 +137,22 @@ def inspect_page(root: Path, path: str, state_code: str, *, request_only: bool) 
     if "source_page" not in facts.fields or not any(
             (f.get("value") or "").strip() for f in facts.fields["source_page"]):
         errors.append("source_page_missing_or_empty")
+    elif not any(
+            (f.get("value") or "").strip() == file_path.parent.name
+            for f in facts.fields["source_page"]):
+        # Never attribute an Illinois lead to another city's source identifier.
+        errors.append("source_page_mismatch")
     if "privacy_acknowledgment" not in facts.fields or not any(
             "required" in f for f in facts.fields["privacy_acknowledgment"]):
         errors.append("privacy_acknowledgment_must_be_required")
     if "photo_link" not in facts.fields:
         warnings.append("no_photo_url_or_native_upload_assessed")
     state_field = facts.fields.get("state", [])
-    values = [str(f.get("value") or "").upper() for f in state_field]
-    values.extend(x.upper() for x in facts.state_options)
-    if state_code.upper() not in values:
+    values = {str(f.get("value") or "").strip().upper() for f in state_field}
+    values.update(x.strip().upper() for x in facts.state_options)
+    # A selector accepting IL *and* another state is not an IL-only intake form.
+    allowed_values = values - {""}
+    if allowed_values != {state_code.upper()}:
         errors.append("form_state_must_be_restricted_to_target_code")
     text = " ".join(facts.visible_text).lower()
     if request_only and not any(x in text for x in
