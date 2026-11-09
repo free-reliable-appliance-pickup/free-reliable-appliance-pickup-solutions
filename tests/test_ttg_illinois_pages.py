@@ -43,6 +43,21 @@ class IllinoisCategoryPages(unittest.TestCase):
                 with self.subTest(city=city, category=category):
                     self.assertIn(f"/{city}-il-{category}-pickup/", html)
 
+    def test_stove_fuel_and_connection_intake(self):
+        """Require fuel and connection status for all Illinois stove requests."""
+        for city in (*CITIES[:2], "chicago", *CITIES[2:]):
+            slug = f"{city}-il-stove-oven-pickup"
+            html = (ROOT / slug / "index.html").read_text(encoding="utf-8")
+            parser = Extract()
+            parser.feed(html)
+            for field in ("fuel_type", "connection_status"):
+                with self.subTest(city=city, field=field):
+                    elements = parser.fields.get(field, [])
+                    self.assertEqual(len(elements), 1)
+                    self.assertIn("required", elements[0])
+            self.assertIn("noindex, follow", html)
+            self.assertIn("Do not loosen or disconnect a gas line", html)
+
     def test_category_hero_assets(self):
         """Prevent broken image paths in all 44 new category pages."""
         for city in CITIES:
