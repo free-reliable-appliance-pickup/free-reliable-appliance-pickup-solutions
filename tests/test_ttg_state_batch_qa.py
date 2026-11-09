@@ -12,7 +12,7 @@ class StateBatchTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         (self.root / "data/ttg-state-batches").mkdir(parents=True)
         (self.root / "data/market-routing.json").write_text(json.dumps({
-            "state_defaults": [{"state_code": "IL", "status": "request-only"}]
+            "state_defaults": [{"state": "Illinois", "state_code": "IL", "status": "request-only"}]
         }))
         self.slug = "chicago-il-appliance-pickup"
         folder = self.root / self.slug
@@ -52,6 +52,15 @@ class StateBatchTests(unittest.TestCase):
         return check_manifest(self.manifest, self.root)
 
     def test_valid_manifest(self):
+        self.assertEqual(self.errors(), [])
+
+    def test_statewide_hub_and_city_in_same_batch(self):
+        hub_slug = "illinois-appliance-pickup"
+        hub_folder = self.root / hub_slug
+        hub_folder.mkdir()
+        (hub_folder / "index.html").write_text(self.html.replace(self.slug, hub_slug))
+        self.batch["pages"].append(hub_slug + "/index.html")
+        self.save()
         self.assertEqual(self.errors(), [])
 
     def test_reject_other_state_in_form(self):
