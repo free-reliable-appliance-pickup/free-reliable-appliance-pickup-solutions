@@ -40,6 +40,9 @@ class HTMLFacts(HTMLParser):
         self.h1_count = 0
         self.title_count = 0
         self._in_title = False
+        self._in_form = False
+        self._in_state_select = False
+        self.state_options: set[str] = set()
         self.title_text: list[str] = []
         self.visible_text: list[str] = []
 
@@ -47,10 +50,15 @@ class HTMLFacts(HTMLParser):
         attrs = dict(pairs)
         if tag == "form":
             self.forms.append(attrs)
+            self._in_form = True
         elif tag == "img":
             self.images.append(attrs)
-        elif tag in ("input", "select", "textarea") and attrs.get("name"):
+        elif tag in ("input", "select", "textarea") and self._in_form and attrs.get("name"):
             self.fields.setdefault(attrs["name"], []).append(attrs)
+            if tag == "select" and attrs["name"] == "state":
+                self._in_state_select = True
+        elif tag == "option" and self._in_state_select:
+            self.state_options.add(attrs.get("value") or "")
         elif tag == "h1":
             self.h1_count += 1
         elif tag == "title":
@@ -64,6 +72,10 @@ class HTMLFacts(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         if tag == "title":
             self._in_title = False
+        elif tag == "form":
+            self._in_form = False
+        elif tag == "select":
+            self._in_state_select = False
 
     def handle_data(self, data: str) -> None:
         if self._in_title:
@@ -122,16 +134,19 @@ def inspect_page(root: Path, path: str, state_code: str, *, request_only: bool) 
             errors.append("canonical_mismatch:" + facts.canonicals[0])
     if request_only and not any("noindex" in value.lower() for value in facts.robots):
         errors.append("request_only_must_be_noindex")
-    if "source_page" not in facts.fields:
-        errors.append("source_page_missing")
-    if "privacy_acknowledgment" not in facts.fields:
-        warnings.append("privacy_acknowledgment_not_detected")
+    if "source_page" not in facts.fields or not any(
+            (f.get("value") or "").strip() for f in facts.fields["source_page"]):
+        errors.append("source_page_missing_or_empty")
+    if "privacy_acknowledgment" not in facts.fields or not any(
+            "required" in f for f in facts.fields["privacy_acknowledgment"]):
+        errors.append("privacy_acknowledgment_must_be_required")
     if "photo_link" not in facts.fields:
         warnings.append("no_photo_url_or_native_upload_assessed")
     state_field = facts.fields.get("state", [])
-    if state_field and state_code not in markup:
-        # Basic source check only: option-value semantics need browser-level validation.
-        warnings.append("state_code_not_visible_in_html_source")
+    values = [str(f.get("value") or "").upper() for f in state_field]
+    values.extend(x.upper() for x in facts.state_options)
+    if state_code.upper() not in values:
+        errors.append("form_state_must_be_restricted_to_target_code")
     text = " ".join(facts.visible_text).lower()
     if request_only and not any(x in text for x in
                                 ("not guaranteed", "not confirmed", "request-only",
