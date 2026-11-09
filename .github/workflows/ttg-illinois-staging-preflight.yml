@@ -40,3 +40,18 @@ jobs:
           print('Static staging QA passed: 16 Illinois city/category pages + 1 state hub.')
           print('No live deployment, Formspree delivery or operator coverage is certified.')
           PY
+
+      - name: Generate and validate source-backed Evanston draft in isolated workspace
+        run: |
+          python scripts/ttg_fasttrack_generate.py --manifest data/ttg-curated-draft-pages.json --output-dir /tmp/ttg-fasttrack-evanston
+          cp home-six-appliance-garage.webp /tmp/ttg-fasttrack-evanston/home-six-appliance-garage.webp
+          python - <<'PY'
+          from pathlib import Path
+          from scripts.ttg_fasttrack_preflight import inspect_page
+          root = Path('/tmp/ttg-fasttrack-evanston')
+          result = inspect_page(root, 'evanston-il-appliance-pickup/index.html', 'IL', request_only=True)
+          assert result['passed'] and not result['errors'], result
+          assert result['publication_approved'] is False
+          print('Evanston generated noindex draft passed source preflight in isolated directory.')
+          print('No page was copied into main, published, or submitted to Formspree.')
+          PY
