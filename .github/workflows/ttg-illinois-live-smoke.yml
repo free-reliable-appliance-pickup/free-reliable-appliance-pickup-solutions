@@ -1,0 +1,33 @@
+# Quota-free, read-only monitoring of all 17 Illinois request pages on production.
+# PRs run local parser unit tests only; they never race a GitHub Pages deployment.
+name: TTG Illinois Live Read-Only Smoke
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/ttg_illinois_live_smoke.py'
+      - 'tests/test_ttg_illinois_live_smoke.py'
+      - '.github/workflows/ttg-illinois-live-smoke.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '31 13 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  parser-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m unittest discover -s tests -p test_ttg_illinois_live_smoke.py -v
+  production-pages:
+    if: github.event_name != 'pull_request'
+    needs: parser-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: GET-only production checks (no form submits)
+        run: python scripts/ttg_illinois_live_smoke.py
