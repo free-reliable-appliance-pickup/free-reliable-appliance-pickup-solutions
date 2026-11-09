@@ -1,0 +1,26 @@
+{
+  "state_code": "IL",
+  "mode": "request-only",
+  "pages": [
+    "aurora-il-appliance-pickup/index.html",
+    "champaign-il-appliance-pickup/index.html",
+    "chicago-il-appliance-pickup/index.html",
+    "chicago-il-freezer-pickup/index.html",
+    "chicago-il-refrigerator-pickup/index.html",
+    "chicago-il-stove-oven-pickup/index.html",
+    "chicago-il-washer-dryer-pickup/index.html",
+    "cicero-il-appliance-pickup/index.html",
+    "elgin-il-appliance-pickup/index.html",
+    "illinois-appliance-pickup/index.html",
+    "joliet-il-appliance-pickup/index.html",
+    "naperville-il-appliance-pickup/index.html",
+    "peoria-il-appliance-pickup/index.html",
+    "rockford-il-appliance-pickup/index.html",
+    "schaumburg-il-appliance-pickup/index.html",
+    "springfield-il-appliance-pickup/index.html",
+    "waukegan-il-appliance-pickup/index.html"
+  ],
+  "release_intent": "staging-only; no confirmed Illinois pickup operator or appointment guarantee",
+  "source_reference": "illinois-integrated-preflight-20261108 with latest Chicago general #989",
+  "preflight_note": "Revalidate all 17 pages against merged negated-guarantee fix #1000; not permission to index"
+}
