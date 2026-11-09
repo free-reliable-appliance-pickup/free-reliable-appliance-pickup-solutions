@@ -95,6 +95,34 @@ class PreflightTests(unittest.TestCase):
             result = inspect_page(root, path, "IL", request_only=True)
             self.assertIn("form_state_must_be_restricted_to_target_code", result["errors"])
 
+    def test_state_must_reject_an_additional_non_target_option(self):
+        """An Illinois form must never also accept a different state."""
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = create_page(root)
+            location = root / path
+            markup = location.read_text(encoding="utf-8").replace(
+                '<option value="IL">Illinois</option>',
+                '<option value="IL">Illinois</option><option value="GA">Georgia</option>'
+            )
+            location.write_text(markup, encoding="utf-8")
+            result = inspect_page(root, path, "IL", request_only=True)
+            self.assertIn("form_state_must_be_restricted_to_target_code", result["errors"])
+
+    def test_source_page_cannot_attrib_to_another_city(self):
+        """Misattributed source_page values must fail before lead launch."""
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = create_page(root)
+            location = root / path
+            markup = location.read_text(encoding="utf-8").replace(
+                'value="chicago-il-appliance-pickup"',
+                'value="aurora-il-appliance-pickup"'
+            )
+            location.write_text(markup, encoding="utf-8")
+            result = inspect_page(root, path, "IL", request_only=True)
+            self.assertIn("source_page_mismatch", result["errors"])
+
     def test_privacy_acknowledgment_must_be_required(self):
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)
