@@ -146,6 +146,39 @@ class MultiAITests(unittest.TestCase):
                     self.assertEqual(body["max_tokens"], 5000)
                     self.assertEqual(body["reasoning"], {"enabled": False})
 
+    def test_current_head_requires_open_selected_same_repo(self):
+        repo = "owner/repo"
+        valid = {
+            "state": "open",
+            "head": {"sha": "a" * 40, "repo": {"full_name": repo}},
+            "base": {"repo": {"full_name": repo}},
+            "labels": [{"name": "vgm-release-review"}],
+        }
+        with patch.object(review, "fetch_json", return_value=valid) as fetch:
+            self.assertEqual(review.current_release_head(repo, "993", "fake"), "a" * 40)
+            self.assertTrue(fetch.called)
+        for variant in (
+            {"state": "closed"},
+            {"labels": []},
+            {"head": {"sha": "a" * 40, "repo": {"full_name": "fork/repo"}}},
+            {"base": {"repo": {"full_name": "other/repo"}}},
+            {"head": {"sha": "bad", "repo": {"full_name": repo}}},
+        ):
+            changed = {**valid, **variant}
+            with self.subTest(variant=variant):
+                with patch.object(review, "fetch_json", return_value=changed):
+                    with self.assertRaises(review.ModelOutputError):
+                        review.current_release_head(repo, "993", "fake")
+
+    def test_review_step_pins_triggering_pull_request_sha(self):
+        workflow_text = (ROOT / ".github/workflows/vgm-independent-multi-ai.yml").read_text()
+        self.assertIn("REVIEW_PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}",
+                      workflow_text)
+        source = (ROOT / "scripts/vgm_multi_ai_review.py").read_text()
+        self.assertIn("if event_head and event_head != pinned_head:", source)
+        self.assertIn("current_head != pinned_head", source)
+        self.assertIn("INCOMPLETE — PR head changed", source)
+
     def test_no_credentials_does_not_count_as_review(self):
         statuses = {label: {"model": model, "status": "not configured"} for label, model in review.REVIEWERS.items()}
         _, state = review.report_markdown(1, statuses, [], False, True)
