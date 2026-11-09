@@ -68,8 +68,8 @@ class MultiAITests(unittest.TestCase):
 
     def test_report_discloses_http_code_not_secret_or_upstream_body(self):
         statuses = {
-            "Independent code reviewer (Nemotron 3.5 Super VL)": {
-                "model": review.REVIEWERS["Independent code reviewer (Nemotron 3.5 Super VL)"],
+            "Independent code reviewer (North Mini Code)": {
+                "model": review.REVIEWERS["Independent code reviewer (North Mini Code)"],
                 "status": "unavailable",
                 "error": "ModelOutputError",
                 "output_issue": "invalid_json",
@@ -111,14 +111,15 @@ class MultiAITests(unittest.TestCase):
                     review.parse_review(bad)
 
     def test_paid_or_unknown_models_rejected(self):
-        for model in ("qwen/qwen3.8-27b", "openai/gpt-4o", "nvidia/nemotron-3-ultra:free"):
+        for model in ("qwen/qwen3.8-27b", "openai/gpt-4o", "nvidia/nemotron-3-ultra:free",
+                      "nvidia/nemotron-3.5-super-vl:free"):
             with self.subTest(model=model):
                 with self.assertRaises(ValueError):
                     review.call_free_model("fake", model, "test")
 
     def test_two_distinct_verified_free_reviewers(self):
         self.assertEqual(review.REVIEWERS, {
-            "Independent code reviewer (Nemotron 3.5 Super VL)": "nvidia/nemotron-3.5-super-vl:free",
+            "Independent code reviewer (North Mini Code)": "cohere/north-mini-code:free",
             "Independent site/SEO reviewer (Dots Studio)": "dots-studio/dots-3-note-preview:free",
         })
         self.assertEqual(len(set(review.REVIEWERS.values())), 2)
@@ -133,7 +134,14 @@ class MultiAITests(unittest.TestCase):
                     request = mock.call_args[0][0]
                     body = json.loads(request.data)
                     self.assertEqual(body["model"], model)
-                    self.assertEqual(body["response_format"], {"type": "json_object"})
+                    if model == review.REVIEWERS["Independent site/SEO reviewer (Dots Studio)"]:
+                        self.assertEqual(body["response_format"], {"type": "json_object"})
+                    else:
+                        self.assertEqual(model, "cohere/north-mini-code:free")
+                        self.assertNotIn("response_format", body)
+                    # Both are required to return valid JSON, enforced by parse_review
+                    # regardless of whether the provider supports response_format.
+                    self.assertEqual(review.parse_review('{"findings":[]}'), [])
                     self.assertEqual(body["messages"][1]["content"], "patch")
                     self.assertEqual(body["max_tokens"], 5000)
                     self.assertEqual(body["reasoning"], {"enabled": False})

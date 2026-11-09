@@ -15,7 +15,7 @@ from urllib.request import Request, urlopen
 GITHUB_API = "https://api.github.com"
 OPENROUTER_API = "https://openrouter.ai/api/v1/chat/completions"
 REVIEWERS = {
-    "Independent code reviewer (Nemotron 3.5 Super VL)": "nvidia/nemotron-3.5-super-vl:free",
+    "Independent code reviewer (North Mini Code)": "cohere/north-mini-code:free",
     "Independent site/SEO reviewer (Dots Studio)": "dots-studio/dots-3-note-preview:free",
 }
 SAFE_EXTENSIONS = (".html", ".css", ".js", ".json", ".md", ".py", ".yml", ".yaml")
@@ -104,19 +104,19 @@ def call_free_model(key, model, prompt):
     # Strict allow-list and :free suffix ensure no paid fallback or accidental billed model.
     if model not in REVIEWERS.values() or not model.endswith(":free"):
         raise ValueError("paid or unapproved model forbidden")
-    payload = json.dumps({
+    # Cohere's free code-focused model has no enforced response_format.
+    # Both outputs are still parsed with the same strict, fail-closed JSON schema.
+    request_body = {
         "model": model,
         "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}],
-        # Both allowed free models exhausted 5,000 completion tokens on
-        # reasoning without producing final JSON (verified finish_reason=length).
-        # Request direct final answers; this never accepts partial reviews.
         "max_tokens": 5000,
         "reasoning": {"enabled": False},
         "temperature": 0.1,
-        # Both specifically allow JSON response formatting; never rely on
-        # model promises alone — parse_review still validates every finding.
-        "response_format": {"type": "json_object"},
-    }).encode()
+    }
+    if model == REVIEWERS["Independent site/SEO reviewer (Dots Studio)"]:
+        # Dots supports strict JSON response formatting.
+        request_body["response_format"] = {"type": "json_object"}
+    payload = json.dumps(request_body).encode()
     req = Request(OPENROUTER_API, data=payload, method="POST", headers={
         "Authorization": "Bearer " + key, "Content-Type": "application/json",
         "HTTP-Referer": "https://freereliableappliancepickup.com/",
