@@ -58,6 +58,29 @@ class IllinoisCategoryPages(unittest.TestCase):
             self.assertIn("noindex, follow", html)
             self.assertIn("Do not loosen or disconnect a gas line", html)
 
+    def test_category_ctas_and_pickup_photo_checklists(self):
+        """Make the 48 category calls to action specific and explain photo review."""
+        cities = (*CITIES, "chicago")
+        labels = {
+            "washer-dryer": "washer and dryer",
+            "refrigerator": "refrigerator",
+            "stove-oven": "stove",
+            "freezer": "freezer",
+        }
+        for city in cities:
+            for category in CATEGORIES:
+                path = ROOT / f"{city}-il-{category}-pickup/index.html"
+                html = path.read_text(encoding="utf-8")
+                name = city.capitalize()
+                with self.subTest(city=city, category=category):
+                    self.assertIn("Photos needed before pickup approval:", html)
+                    self.assertIn(
+                        f'Submit {name} {labels[category]} pickup request', html
+                    )
+                    self.assertNotIn(f"Submit a {name} request", html)
+                    self.assertIn("noindex, follow", html)
+
+
     def test_category_hero_assets(self):
         """Prevent broken image paths in all 44 new category pages."""
         for city in CITIES:
