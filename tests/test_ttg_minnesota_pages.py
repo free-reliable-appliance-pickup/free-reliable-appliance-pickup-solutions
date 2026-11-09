@@ -63,6 +63,16 @@ class MinnesotaBatchTests(unittest.TestCase):
                 self.assertIn("/privacy/", html)
                 self.assertNotIn('content="index, follow"', html)
 
+    def test_statewide_privacy_acknowledgment_and_photo_are_accurate(self):
+        """Preserve explicit privacy consent and avoid invented Minnesota pickup proof."""
+        html = (ROOT / "minnesota-appliance-pickup/index.html").read_text(encoding="utf-8")
+        self.assertIn("I acknowledge the privacy notice above", html)
+        self.assertIn("does not book or guarantee free pickup", html)
+        self.assertIn('name="privacy_acknowledgment" value="acknowledged" required', html)
+        self.assertIn("illustrative only; not a documented Minnesota pickup", html)
+        self.assertIn("<h1>Minnesota Free Appliance Pickup", html)
+        self.assertIn('content="noindex, follow"', html)
+
     def test_hub_links_to_every_city_and_category(self):
         """Ensure Google/crawl navigation has no orphaned staged pages."""
         hub = (ROOT / "minnesota-appliance-pickup/index.html").read_text(encoding="utf-8")
