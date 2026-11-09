@@ -17,12 +17,12 @@ class StateFreePickupHeadings(unittest.TestCase):
             with self.subTest(state=state):
                 html = (ROOT / f"{state}-appliance-pickup/index.html").read_text(encoding="utf-8")
                 title = re.search(r"<title>([^<]+)</title>", html, re.I)
-                h1 = re.search(r"<h1[^>]*>([\\s\\S]*?)</h1>", html, re.I)
+                h1 = re.search(r"<h1[^>]*>([\s\S]*?)</h1>", html, re.I)
                 self.assertIsNotNone(title)
                 self.assertIsNotNone(h1)
                 self.assertIn("Free Appliance Pickup", title.group(1))
                 clean_h1 = re.sub(r"<[^>]+>", "", h1.group(1))
-                clean_h1 = re.sub(r"\\s+", " ", clean_h1).strip()
+                clean_h1 = re.sub(r"\s+", " ", clean_h1).strip()
                 self.assertIn("Free Appliance Pickup", clean_h1)
 
     def test_new_phrasing_does_not_guarantee_coverage(self):
@@ -33,7 +33,7 @@ class StateFreePickupHeadings(unittest.TestCase):
                 self.assertIn("Free appliance pickup eligibility:", html)
                 self.assertIn("Free pickup is not guaranteed", html)
                 self.assertIn("confirmed local pickup option", html)
-                self.assertEqual(len(re.findall(r"<h1\\b", html, re.I)), 1)
+                self.assertEqual(len(re.findall(r"<h1\b", html, re.I)), 1)
                 self.assertIn(f"https://freereliableappliancepickup.com/{state}-appliance-pickup/", html)
 
     def test_illinois_and_minnesota_remain_unverified(self):
