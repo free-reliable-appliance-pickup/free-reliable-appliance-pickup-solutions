@@ -178,10 +178,12 @@ def inspect_page(root: Path, path: str, state_code: str, *, request_only: bool) 
     # A native async submit handler + the shared capture-phase router can queue
     # duplicate requestSubmit() events while routing metadata is loading.
     # Require a document-capture guard before approving this staged source.
-    async_handler = re.search(
-        r"form\\.addEventListener\\(\\s*['\\\"]submit['\\\"]\\s*,\\s*async\\b",
-        markup,
-    )
+    async_handler = any(fragment in markup for fragment in (
+        "form.addEventListener('submit', async",
+        'form.addEventListener("submit", async',
+        "form.addEventListener('submit',async",
+        'form.addEventListener("submit",async',
+    ))
     if async_handler and "customer-routing.js" in markup:
         markers = (
             "document.addEventListener('submit'",
