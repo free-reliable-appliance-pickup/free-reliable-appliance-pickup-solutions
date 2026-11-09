@@ -1,0 +1,43 @@
+# TTG FastTrack 2.0: independent GitHub-native security analysis.
+# Unlike an external LLM review, CodeQL runs without an OpenRouter key or quota.
+# This workflow supplements, but does not silently replace, required release approvals.
+name: TTG FastTrack CodeQL
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '23 9 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+concurrency:
+  group: ttg-codeql-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: CodeQL security (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript, python]
+    steps:
+      - name: Checkout the exact GitHub event revision
+        uses: actions/checkout@v4
+      - name: Initialize independent CodeQL analysis
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
+      - name: Analyze for security findings
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"
