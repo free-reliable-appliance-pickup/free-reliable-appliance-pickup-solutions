@@ -132,6 +132,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           REVIEW_PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+          REVIEW_PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: python scripts/vgm_multi_ai_review.py
       - name: Archive review and explicit completeness status
         if: always()
