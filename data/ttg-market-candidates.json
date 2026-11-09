@@ -1,0 +1,185 @@
+{
+  "version": "2026-11-08.1",
+  "purpose": "FastTrack research candidates absent from canonical data/cities.json; NOT proof of local coverage or approved indexable pages.",
+  "policy": "Read-only discovery input; never publish, index, assign routes or recruit partners from these records. Canonical market-routing.json remains the source of operating truth.",
+  "sources": {
+    "IL": "TTG Illinois issue #990 and 17 staged page inventory",
+    "GA": "Georgia statewide hub PR #986 linking 17 original request-only city guides"
+  },
+  "cities": [
+    {
+      "state_code": "IL",
+      "city": "Chicago",
+      "region": "Chicago Metro",
+      "priority": 1
+    },
+    {
+      "state_code": "IL",
+      "city": "Aurora",
+      "region": "Fox Valley",
+      "priority": 1
+    },
+    {
+      "state_code": "IL",
+      "city": "Naperville",
+      "region": "West Suburbs",
+      "priority": 1
+    },
+    {
+      "state_code": "IL",
+      "city": "Joliet",
+      "region": "Will County",
+      "priority": 1
+    },
+    {
+      "state_code": "IL",
+      "city": "Elgin",
+      "region": "Fox Valley",
+      "priority": 1
+    },
+    {
+      "state_code": "IL",
+      "city": "Rockford",
+      "region": "Rockford Metro",
+      "priority": 2
+    },
+    {
+      "state_code": "IL",
+      "city": "Waukegan",
+      "region": "Lake County",
+      "priority": 2
+    },
+    {
+      "state_code": "IL",
+      "city": "Schaumburg",
+      "region": "Northwest Suburbs",
+      "priority": 2
+    },
+    {
+      "state_code": "IL",
+      "city": "Cicero",
+      "region": "Near-West Suburbs",
+      "priority": 2
+    },
+    {
+      "state_code": "IL",
+      "city": "Springfield",
+      "region": "Springfield Metro",
+      "priority": 2
+    },
+    {
+      "state_code": "IL",
+      "city": "Peoria",
+      "region": "Peoria Metro",
+      "priority": 2
+    },
+    {
+      "state_code": "IL",
+      "city": "Champaign",
+      "region": "Champaign-Urbana",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Atlanta",
+      "region": "Atlanta Metro",
+      "priority": 1
+    },
+    {
+      "state_code": "GA",
+      "city": "Marietta",
+      "region": "Atlanta Metro",
+      "priority": 1
+    },
+    {
+      "state_code": "GA",
+      "city": "Lawrenceville",
+      "region": "Gwinnett County",
+      "priority": 1
+    },
+    {
+      "state_code": "GA",
+      "city": "Alpharetta",
+      "region": "North Atlanta",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Decatur",
+      "region": "DeKalb County",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Douglasville",
+      "region": "West Atlanta",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Duluth",
+      "region": "Gwinnett County",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Norcross",
+      "region": "Gwinnett County",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Roswell",
+      "region": "North Atlanta",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Smyrna",
+      "region": "Cobb County",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Conyers",
+      "region": "East Atlanta",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "McDonough",
+      "region": "South Atlanta",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Savannah",
+      "region": "Savannah Metro",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Augusta",
+      "region": "Augusta Metro",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Athens",
+      "region": "Athens Metro",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Columbus",
+      "region": "Columbus Metro",
+      "priority": 2
+    },
+    {
+      "state_code": "GA",
+      "city": "Macon",
+      "region": "Macon Metro",
+      "priority": 2
+    }
+  ]
+}
