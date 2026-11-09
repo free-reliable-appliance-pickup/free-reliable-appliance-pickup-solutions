@@ -42,6 +42,8 @@ class HTMLFacts(HTMLParser):
         self._in_title = False
         self._in_form = False
         self._in_state_select = False
+        self._state_option_value: str | None = None
+        self._state_option_text: list[str] | None = None
         self.state_options: set[str] = set()
         self.title_text: list[str] = []
         self.visible_text: list[str] = []
@@ -58,7 +60,11 @@ class HTMLFacts(HTMLParser):
             if tag == "select" and attrs["name"] == "state":
                 self._in_state_select = True
         elif tag == "option" and self._in_state_select:
-            self.state_options.add(attrs.get("value") or "")
+            # An option with no value submits its visible text as its value.
+            self._state_option_value = attrs.get("value")
+            self._state_option_text = []
+            if self._state_option_value is not None:
+                self.state_options.add(self._state_option_value)
         elif tag == "h1":
             self.h1_count += 1
         elif tag == "title":
@@ -74,12 +80,19 @@ class HTMLFacts(HTMLParser):
             self._in_title = False
         elif tag == "form":
             self._in_form = False
+        elif tag == "option" and self._state_option_text is not None:
+            if self._state_option_value is None:
+                self.state_options.add("".join(self._state_option_text))
+            self._state_option_value = None
+            self._state_option_text = None
         elif tag == "select":
             self._in_state_select = False
 
     def handle_data(self, data: str) -> None:
         if self._in_title:
             self.title_text.append(data)
+        if self._state_option_text is not None:
+            self._state_option_text.append(data)
         self.visible_text.append(data)
 
 
@@ -105,6 +118,9 @@ def inspect_page(root: Path, path: str, state_code: str, *, request_only: bool) 
     facts.feed(markup)
     if len(facts.forms) != 1 or facts.forms[0].get("action") != EXPECTED_FORM_ACTION:
         errors.append("expected_exactly_one_existing_formspree_form")
+    if len(facts.forms) == 1 and facts.forms[0].get("method", "").strip().lower() != "post":
+        # GET would expose a customer's phone and street address in URL/query logs.
+        errors.append("form_must_use_post")
     missing = sorted(REQUIRED_FIELDS.difference(facts.fields))
     if missing:
         errors.append("required_fields_missing:" + ",".join(missing))
@@ -134,16 +150,16 @@ def inspect_page(root: Path, path: str, state_code: str, *, request_only: bool) 
             errors.append("canonical_mismatch:" + facts.canonicals[0])
     if request_only and not any("noindex" in value.lower() for value in facts.robots):
         errors.append("request_only_must_be_noindex")
-    if "source_page" not in facts.fields or not any(
-            (f.get("value") or "").strip() for f in facts.fields["source_page"]):
+    source_fields = facts.fields.get("source_page", [])
+    if len(source_fields) != 1 or not (source_fields[0].get("value") or "").strip():
         errors.append("source_page_missing_or_empty")
-    elif not any(
-            (f.get("value") or "").strip() == file_path.parent.name
-            for f in facts.fields["source_page"]):
-        # Never attribute an Illinois lead to another city's source identifier.
+    elif source_fields[0].get("value", "").strip() != file_path.parent.name:
+        # Duplicate or misattributed identifiers would corrupt city-level lead data.
         errors.append("source_page_mismatch")
-    if "privacy_acknowledgment" not in facts.fields or not any(
-            "required" in f for f in facts.fields["privacy_acknowledgment"]):
+    privacy_fields = facts.fields.get("privacy_acknowledgment", [])
+    if (len(privacy_fields) != 1
+            or "required" not in privacy_fields[0]
+            or privacy_fields[0].get("type", "").lower() != "checkbox"):
         errors.append("privacy_acknowledgment_must_be_required")
     if "photo_link" not in facts.fields:
         warnings.append("no_photo_url_or_native_upload_assessed")
