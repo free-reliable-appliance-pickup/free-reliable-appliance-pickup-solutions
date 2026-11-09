@@ -1,5 +1,6 @@
 """Offline regressions for the Minnesota live read-only smoke parser."""
 import unittest
+from pathlib import Path
 from scripts.ttg_minnesota_live_smoke import BASE, FORM, REQUIRED, check_page, has_minnesota_hub_link
 
 
@@ -22,6 +23,13 @@ def fixture(slug="minnesota-appliance-pickup", robots="noindex, follow"):
 
 class SmokeRegression(unittest.TestCase):
     """Verify Minnesota form, canonical, robots, and navigation requirements."""
+    def test_minnesota_workflow_readiness_target(self):
+        """Prevent the Minnesota workflow from auditing a different state."""
+        path = Path(__file__).resolve().parents[1] / ".github/workflows/ttg-minnesota-live-smoke.yml"
+        workflow = path.read_text(encoding="utf-8")
+        self.assertIn("--state MN --report ttg-minnesota-readiness.json", workflow)
+        self.assertNotIn("--state IL", workflow)
+
     def test_valid_request_only(self):
         """Accept a fully valid request-only page."""
         self.assertEqual(check_page("minnesota-appliance-pickup", fixture()), [])
@@ -34,12 +42,12 @@ class SmokeRegression(unittest.TestCase):
     def test_missing_hub_link(self):
         """Report missing city links on the statewide Minnesota hub."""
         errors = check_page("minnesota-appliance-pickup", fixture(), [
-            "minnesota-appliance-pickup/index.html", "chicago-il-appliance-pickup/index.html"])
+            "minnesota-appliance-pickup/index.html", "minneapolis-mn-appliance-pickup/index.html"])
         self.assertTrue(any("missing Minnesota hub link" in s for s in errors))
 
     def test_source_page_mismatch(self):
         """Reject attribution to an unrelated Minnesota landing page."""
-        errors = check_page("chicago-il-appliance-pickup", fixture())
+        errors = check_page("minneapolis-mn-appliance-pickup", fixture())
         self.assertTrue(any("source_page mismatch" in s for s in errors))
 
     def test_no_required_field_failure(self):
