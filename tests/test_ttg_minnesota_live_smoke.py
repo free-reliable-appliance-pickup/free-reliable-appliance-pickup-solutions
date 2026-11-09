@@ -3,7 +3,6 @@ import io
 import json
 import tempfile
 import threading
-import time
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
@@ -58,24 +57,28 @@ class SmokeRegression(unittest.TestCase):
         """Six mocked pages overlap at four workers while reporting in input order."""
         paths = [f"city-{i}-mn-appliance-pickup/index.html" for i in range(6)]
         barrier = threading.Barrier(4)
+        first_can_finish = threading.Event()
         lock = threading.Lock()
         active = 0
         peak = 0
         completed = []
 
         def fake_audit(path, manifest_pages):
+            """Synchronize four GET workers and deliberately finish page two first."""
             nonlocal active, peak
             self.assertEqual(manifest_pages, paths)
             with lock:
                 active += 1
                 peak = max(peak, active)
             if path in paths[:4]:
-                barrier.wait(timeout=3)
-            # Force the first manifest page to finish later than the others.
-            time.sleep(0.08 if path == paths[0] else 0.005)
+                barrier.wait(timeout=5)
+            if path == paths[0]:
+                self.assertTrue(first_can_finish.wait(timeout=5))
             with lock:
                 completed.append(path)
                 active -= 1
+            if path == paths[1]:
+                first_can_finish.set()
             return path.removesuffix("/index.html"), []
 
         with tempfile.TemporaryDirectory() as directory:
@@ -94,7 +97,7 @@ class SmokeRegression(unittest.TestCase):
                 self.assertEqual(main(), 0)
 
         self.assertEqual(peak, 4)
-        self.assertNotEqual(completed, paths)
+        self.assertLess(completed.index(paths[1]), completed.index(paths[0]))
         reported = [line for line in output.getvalue().splitlines() if line.startswith("PASS ")]
         self.assertEqual(reported, [f"PASS {BASE}{p.removesuffix('/index.html')}/" for p in paths])
 
