@@ -1,0 +1,57 @@
+# Quota-free, read-only monitoring of all manifest-listed Minnesota request pages on production.
+# PRs run local parser unit tests only; they never race a GitHub Pages deployment.
+name: TTG Minnesota Live Read-Only Smoke
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/ttg_minnesota_live_smoke.py'
+      - 'tests/test_ttg_minnesota_live_smoke.py'
+      - '.github/workflows/ttg-minnesota-live-smoke.yml'
+      - 'data/ttg-state-batches/MN.json'
+      - 'data/ttg-release-readiness/MN.json'
+      - 'scripts/ttg_release_readiness.py'
+      - 'tests/test_ttg_release_readiness.py'
+      - 'scripts/ttg_state_batch_qa.py'
+      - 'data/market-routing.json'
+      - 'tests/test_ttg_minnesota_pages.py'
+      - 'minnesota-appliance-pickup/index.html'
+      - '*-mn-*/index.html'
+  workflow_dispatch:
+  schedule:
+    - cron: '41 14 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  parser-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: python -m unittest discover -s tests -p 'test_ttg_minnesota*.py' -v
+      - name: Offline activation-evidence gate regressions
+        run: python -m unittest discover -s tests -p 'test_ttg_release_readiness.py' -v
+      - name: Report staged versus operational readiness (no form POST)
+        id: readiness_report
+        run: python -m scripts.ttg_release_readiness --state IL --report ttg-minnesota-readiness.json
+      - uses: actions/upload-artifact@v4
+        if: ${{ success() || (failure() && steps.readiness_report.outcome == 'failure') }}
+        with:
+          name: ttg-minnesota-readiness
+          path: ttg-minnesota-readiness.json
+          if-no-files-found: error
+  production-pages:
+    if: github.event_name != 'pull_request'
+    needs: parser-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: GET-only production checks (no form submits)
+        run: python scripts/ttg_minnesota_live_smoke.py
