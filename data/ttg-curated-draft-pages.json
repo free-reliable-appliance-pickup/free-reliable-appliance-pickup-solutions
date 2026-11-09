@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-08.2",
+  "version": "2026-11-08.3",
   "policy": "Manual evidence, real existing image, noindex, request-only pilot drafts in isolated review only. No local operators or guaranteed free pickup.",
   "pages": [
     {
@@ -49,6 +49,38 @@
       "official_resource_label": "Village of Skokie official trash and recycling collection rules",
       "photo": "/tacoma-group-appliances.webp",
       "photo_alt": "Used household washers, dryers and other appliances in storage; illustrative photo only, not a Skokie job"
+    },
+    {
+      "city": "Sandy Springs",
+      "state_code": "GA",
+      "category": "appliance",
+      "mode": "request-only",
+      "title": "Sandy Springs, GA Used Appliance Pickup Eligibility Requests",
+      "description": "Request evaluation of used washers, dryers, refrigerators and stoves in Sandy Springs, Georgia. Provide working condition and access; no collection service is guaranteed.",
+      "local_context": "The City of Sandy Springs says it does not provide municipal garbage pickup. Households and businesses contract directly with private waste haulers, and the city publishes lists of approved residential and specialty providers. That matters when a resident is clearing a laundry room during a move: a regular household waste bill does not promise someone will remove a heavy refrigerator. Our page only collects reusable-appliance eligibility information, with no claim of an assigned Free Reliable Appliance Pickup operator in Sandy Springs.",
+      "access_guidance": "For a Sandy Springs townhome or hillside property, specify whether a washing machine is in a lower-level laundry area with stairs or behind a narrow garage door. For apartments and HOA-managed communities, check who controls the service gate, elevator, loading-dock times and authorization for outside movers. The city lists some haulers for HOA-only arrangements, so do not treat a company on the approved list as permission to enter a particular building or move an appliance.",
+      "condition_guidance": "Report whether the washer fills, drains and spins and whether the dryer tumbles and heats; identify natural gas versus 240V electric dryers. With refrigerators and freezers, confirm cooling and note the exact door clearance, shelves, dispenser issues and leaks. With ranges, describe burner and oven performance plus any missing controls. A working reusable major appliance is prioritized, but no submitted request guarantees acceptance, a free quote or dispatch.",
+      "official_resource_note": "Sandy Springs' Garbage & Recycling page explicitly explains that the city itself does not collect household trash and publishes residential, commercial and specialty waste-hauler categories. Residents should contact their own private provider about appliance acceptance, haul-away rates and scheduling, and should not place a machine outside unless instructed. The listed providers are independent of our request-review service, and their listing does not mean they are our partners.",
+      "official_resource_url": "https://www.sandyspringsga.gov/garbage-recycling/",
+      "official_resource_label": "City of Sandy Springs official Garbage and Recycling guidance",
+      "photo": "/seattle-group-appliances.webp",
+      "photo_alt": "Real used large household appliances in storage, illustrative only; not a Sandy Springs pickup"
+    },
+    {
+      "city": "Dunwoody",
+      "state_code": "GA",
+      "category": "appliance",
+      "mode": "request-only",
+      "title": "Dunwoody, GA Used Appliance Pickup Request | Condition Review",
+      "description": "Share Dunwoody, Georgia appliance condition, photo availability, address and building access for a reuse-eligibility request; no local crew or free pickup is promised.",
+      "local_context": "Dunwoody's municipal government directs residents to DeKalb County Sanitation for garbage, yard waste and recycling services. The city does not operate its own separate sanitation collection crew, and questions about an oversized refrigerator or stove should be checked with the county's Solid Waste Management service. That public collection route is unrelated to Free Reliable Appliance Pickup; we have not verified any Dunwoody partner or guaranteed free removal territory and only collect information to review possible reuse eligibility.",
+      "access_guidance": "Dunwoody properties range from single-family homes with garage exits to apartment and condominium buildings near Ashford Dunwoody Road. Give the actual floor, stairs, elevator availability, tightest doorway and any HOA or property-manager approval needed for a bulky move. For private multifamily collection, identify the building's refuse contractor first rather than assuming a county collection crew can enter the property or collect from a loading dock.",
+      "condition_guidance": "A washer and dryer set should be described separately, including whether the washer fills, drains and spins and whether dryer heat works. For refrigerators and freezers, explain whether both compartments cool and provide an exterior and interior photo when available. For stoves or ranges, identify gas versus electric, missing burners and oven operation. Working major appliances are preferred; damaged and repairable items are reviewed individually and might be declined.",
+      "official_resource_note": "The City of Dunwoody's Sanitation: DeKalb County guidance states that DeKalb County Solid Waste Management is responsible for the city's sanitation and recycling. It directs general questions to county Customer Care, including 404-294-2900. Ask the county or your authorized building hauler whether your exact large appliance qualifies for a separately arranged collection and what fees or preparation are involved. County waste collection is independent of our reuse request.",
+      "official_resource_url": "https://www.dunwoodyga.gov/government/sanitation-dekalb-county",
+      "official_resource_label": "City of Dunwoody official DeKalb County sanitation guide",
+      "photo": "/spokane-group-appliances.webp",
+      "photo_alt": "Used washers, dryers and other household appliances pictured in storage as an illustration, not a Dunwoody job"
     }
   ]
 }
