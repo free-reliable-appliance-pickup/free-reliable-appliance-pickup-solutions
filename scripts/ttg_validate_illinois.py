@@ -6,6 +6,7 @@ Read only. Does not approve releases, certify local pickup service or index page
 import argparse
 from html.parser import HTMLParser
 import json
+import re
 from pathlib import Path
 import sys
 from urllib.parse import urlsplit
@@ -73,6 +74,21 @@ def is_illinois_page(path):
     )
 
 
+
+def has_affirmative_pickup_guarantee(html):
+    """Keep negated service disclaimers while rejecting affirmative promises."""
+    phrases = (r"\bguaranteed\s+free\s+pickup\b",
+               r"\bfree\s+pickup\s+is\s+guaranteed\b")
+    for phrase in phrases:
+        for match in re.finditer(phrase, html, flags=re.IGNORECASE):
+            clause = re.split(r"[.!?;<>]", html[max(0, match.start() - 140):match.start()])[-1]
+            if not re.search(r"\b(?:no|not|never|without|cannot|can't|isn't|aren't)\b",
+                             clause, flags=re.IGNORECASE):
+                return True
+    return False
+
+
+
 def validate(path, root=ROOT, request_only=True):
     """Return precise preflight failures for an Illinois HTML page."""
     errors = []
@@ -130,8 +146,8 @@ def validate(path, root=ROOT, request_only=True):
         asset = (root / p.path.lstrip("/")).resolve()
         if not asset.is_relative_to(root.resolve()) or not asset.is_file():
             errors.append(f"photo missing from repository: {src}")
-    if "guaranteed free pickup" in html.casefold():
-        errors.append("unsupported unconditional free pickup claim")
+    if has_affirmative_pickup_guarantee(html):
+        errors.append("unsupported affirmative free pickup guarantee")
     return [f"{path}: {e}" for e in errors]
 
 
