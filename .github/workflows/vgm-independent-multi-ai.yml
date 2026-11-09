@@ -1,10 +1,9 @@
-name: VGM Independent Multi-AI Review (Free Models)
+name: VGM Independent Multi-AI Review (On-Demand Advisory)
 
-# Read-only. Executes only the trusted default-branch reviewer code, NEVER PR code.
-# Automatic for new/updated PRs after this workflow is merged and a key is configured.
+# Read-only. Executes only trusted default-branch reviewer code, NEVER PR code.
+# TTG 2.1: optional on-demand advisory only. Auto PR triggers exhausted free-model
+# quotas and are no longer a required release-approval gate (see TTG_RELEASE_POLICY).
 on:
-  pull_request_target:
-    types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
       pr_number:
@@ -17,12 +16,11 @@ permissions:
   pull-requests: read
 
 concurrency:
-  group: vgm-multi-ai-${{ github.event.pull_request.number || inputs.pr_number }}
+  group: vgm-multi-ai-${{ inputs.pr_number }}
   cancel-in-progress: true
 
 jobs:
   independent-review:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
@@ -41,7 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          REVIEW_PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+          REVIEW_PR_NUMBER: ${{ inputs.pr_number }}
         run: python scripts/vgm_multi_ai_review.py
       - name: Archive review and explicit completeness status
         if: always()
