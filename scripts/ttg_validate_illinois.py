@@ -44,7 +44,7 @@ class Page(HTMLParser):
             self.form_depth += 1
         if tag == "meta" and attrs.get("name", "").lower() == "robots":
             self.robots.append(attrs.get("content", ""))
-        if tag == "link" and attrs.get("rel") == "canonical":
+        if tag == "link" and "canonical" in (attrs.get("rel") or "").casefold().split():
             self.canonicals.append(attrs.get("href"))
         if tag == "img":
             self.images.append(attrs)
@@ -105,7 +105,7 @@ def validate(path, root=ROOT, request_only=True):
         fields = parsed.fields.get(name, [])
         if len(fields) != 1:
             errors.append(f"missing or duplicate field: {name}")
-        elif name not in {"state"} and "required" not in fields[0]:
+        elif "required" not in fields[0]:
             errors.append(f"required customer field not enforced: {name}")
     if parsed.state_values != ["", "IL"]:
         errors.append("pickup state must be restricted to Illinois")
@@ -146,10 +146,10 @@ def main():
     if not request_only:
         print("Illinois route status changed: verify actual coverage before altering index controls.", file=sys.stderr)
         return 1
-    paths = args.paths or sorted(
-        [ROOT / "illinois-appliance-pickup" / "index.html"]
-        + list(ROOT.glob("*-il-*-pickup/index.html"))
-    )
+    paths = args.paths or sorted([
+        ROOT / "illinois-appliance-pickup" / "index.html",
+        *ROOT.glob("*-il-*-pickup/index.html"),
+    ])
     paths = [p for p in paths if p.exists() and is_illinois_page(p)]
     errors = []
     for path in paths:
