@@ -123,6 +123,24 @@ class MinnesotaBatchTests(unittest.TestCase):
             self.assertTrue(section, "Alternative options section must be present")
             self.assertIn(disclosure, section)
 
+    def test_official_duluth_rochester_bloomington_options(self):
+        """Official disposal alternatives must not imply confirmed private pickup coverage."""
+        cases = (
+            ("duluth", ("https://wlssd.com/disposal-guide/", "https://wlssd.com/hours-facilities/"), "WLSSD recycling is separate from our unconfirmed private appliance pickup request"),
+            ("rochester", ("https://www.olmstedcounty.gov/residents/garbage-recycling/recycling-center-plus", "https://www.olmstedcounty.gov/residents/garbage-recycling/disposal-options"), "County drop-off is separate from our conditional private appliance pickup request"),
+            ("bloomington", ("https://www.hennepincounty.gov/green-disposal-guide/items/appliances", "https://www.bloomingtonmn.gov/cob/briefing/get-know-your-options-bulky-item-disposal-2025-04-22"), "separate from our unconfirmed private appliance pickup request"),
+        )
+        for city, urls, disclosure in cases:
+            with self.subTest(city=city):
+                html = (ROOT / f"{city}-mn-appliance-pickup/index.html").read_text(encoding="utf-8")
+                self.assertIn('content="noindex, follow"', html)
+                section = html.partition("<h2>Alternative recycling and removal options</h2>")[2].partition("</section>")[0]
+                self.assertTrue(section, "Missing alternatives section")
+                for url in urls:
+                    self.assertIn(url, section)
+                self.assertIn(disclosure, section)
+                self.assertIn("Free pickup and local routes are not currently confirmed", html)
+
     def test_no_minnesota_staging_page_in_sitemap(self):
         """Request-only pages should not be put into discovery index sitemaps."""
         main = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
