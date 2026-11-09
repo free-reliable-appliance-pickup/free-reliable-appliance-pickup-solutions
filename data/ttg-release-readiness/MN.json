@@ -1,0 +1,15 @@
+{
+  "state_code": "MN",
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "verified_cities": [],
+  "instructions": "Keep private operator and customer details outside GitHub. Do not claim active pickup coverage or remove noindex until operator, exact ZIP list, terms, consented Formspree inbox test and owner approval have real evidence."
+}

@@ -18,5 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Test routing and page validator
         run: python -m unittest discover -s tests -p 'test_ttg_state_batch_qa.py' -v
+      - name: Validate Minnesota state, city and appliance link integrity
+        run: python -m unittest discover -s tests -p 'test_ttg_minnesota_pages.py' -v
       - name: Validate state manifests and every listed page
         run: python scripts/ttg_state_batch_qa.py
