@@ -9,6 +9,11 @@ on:
       - 'tests/test_ttg_illinois_live_smoke.py'
       - '.github/workflows/ttg-illinois-live-smoke.yml'
       - 'data/ttg-state-batches/IL.json'
+      - 'data/ttg-release-readiness/IL.json'
+      - 'scripts/ttg_release_readiness.py'
+      - 'tests/test_ttg_release_readiness.py'
+      - 'scripts/ttg_state_batch_qa.py'
+      - 'data/market-routing.json'
       - 'tests/test_ttg_illinois_pages.py'
       - 'illinois-appliance-pickup/index.html'
       - '*-il-*/index.html'
@@ -28,6 +33,17 @@ jobs:
         with:
           persist-credentials: false
       - run: python -m unittest discover -s tests -p 'test_ttg_illinois*.py' -v
+      - name: Offline activation-evidence gate regressions
+        run: python -m unittest discover -s tests -p 'test_ttg_release_readiness.py' -v
+      - name: Report staged versus operational readiness (no form POST)
+        id: readiness_report
+        run: python -m scripts.ttg_release_readiness --state IL --report ttg-illinois-readiness.json
+      - uses: actions/upload-artifact@v4
+        if: ${{ success() || (failure() && steps.readiness_report.outcome == 'failure') }}
+        with:
+          name: ttg-illinois-readiness
+          path: ttg-illinois-readiness.json
+          if-no-files-found: error
   production-pages:
     if: github.event_name != 'pull_request'
     needs: parser-tests

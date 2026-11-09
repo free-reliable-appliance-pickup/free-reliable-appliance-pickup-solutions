@@ -1,0 +1,15 @@
+{
+  "state_code": "IL",
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "verified_cities": [],
+  "instructions": "Keep customer and partner PII out of this public repo. Operator reference may point to a restricted internal verification record. A recorded value is not itself independent confirmation. Never remove noindex until real coverage, allowed ZIPs, pickup terms, Formspree receipt and maintainer release review are separately verified."
+}
