@@ -54,6 +54,25 @@ class Page(HTMLParser):
             self.in_state = False
 
 
+
+def has_affirmative_pickup_guarantee(html):
+    """Detect unconditional free-pickup copy, not explicit negated disclaimers."""
+    forms = (
+        r"\bguaranteed\s+free\s+pickup\b",
+        r"\bfree\s+pickup\s+is\s+guaranteed\b",
+    )
+    for pattern in forms:
+        for match in re.finditer(pattern, html, flags=re.IGNORECASE):
+            # Inspect only this sentence/element; earlier disclaimer sentences
+            # must not excuse a later affirmative promise.
+            prefix = html[max(0, match.start() - 140):match.start()]
+            clause = re.split(r"[.!?;<>]", prefix)[-1]
+            if not re.search(r"\b(?:no|not|never|without|cannot|can't|isn't|aren't)\b",
+                             clause, flags=re.IGNORECASE):
+                return True
+    return False
+
+
 def check_page(path, root, code):
     failures = []
     parsed = Page()
@@ -101,8 +120,8 @@ def check_page(path, root, code):
             photo = (root / url.path.lstrip("/")).resolve()
             if not photo.is_relative_to(root.resolve()) or not photo.is_file():
                 failures.append("image asset does not exist: " + src)
-    if "guaranteed free pickup" in html.casefold():
-        failures.append("unsupported guaranteed pickup claim")
+    if has_affirmative_pickup_guarantee(html):
+        failures.append("unsupported affirmative guaranteed pickup claim")
     return failures
 
 
