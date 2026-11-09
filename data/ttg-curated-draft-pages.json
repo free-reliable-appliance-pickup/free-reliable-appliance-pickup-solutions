@@ -1,6 +1,6 @@
 {
-  "version": "2026-11-08",
-  "policy": "source-backed, noindex, request-only candidates for offline review; no local partner, route or job promises",
+  "version": "2026-11-08.2",
+  "policy": "Manual evidence, real existing image, noindex, request-only pilot drafts in isolated review only. No local operators or guaranteed free pickup.",
   "pages": [
     {
       "city": "Evanston",
@@ -9,14 +9,46 @@
       "mode": "request-only",
       "title": "Evanston, IL Used Appliance Pickup Requests | Eligibility Review",
       "description": "Submit an Evanston, Illinois used appliance pickup eligibility request with working condition, address and access details. No free collection or local route is guaranteed.",
-      "local_context": "Evanston handles appliance disposal separately from ordinary bulky rubbish collection. Residents can ask Evanston 311 about city-arranged appliance removal; the city says these items are not included in regular bulk limits. Our form is different: we assess whether a reusable washer, dryer, refrigerator or stove might qualify for collection by an independently approved operator, if one becomes available. This page does not claim a crew works in Evanston.",
+      "local_context": "Evanston expanded its on-demand special and bulk-waste program starting April 2026, ending the prior twice-yearly scheduled bulk collections. Appliances are handled separately from bulk volume limits, and residents are directed to Evanston 311 for an appliance-specific collection arrangement. Our request is different: we review the condition of a used washer, dryer, refrigerator, freezer or stove for possible reuse if an operator is confirmed. No active Free Reliable crew or free appointment is promised in Evanston.",
       "access_guidance": "Evanston residents in multifamily and condominium buildings should check their building rules before requesting any bulky-appliance move. Tell us whether the machine is in a basement, upstairs apartment or ground-floor utility room; note stair turns, doorway clearance and whether a lift, loading bay or alley can actually be used. The city's condo refuse arrangements vary with building participation, so never assume an appliance can be left with routine bins.",
       "condition_guidance": "For laundry sets, test the washer's fill, drain and spin functions and the dryer's tumble and heat; describe gas versus electric dryers. For refrigerators and freezers, tell us whether each compartment cools and whether shelves, seals or doors are damaged. For a stove, report fuel type, burner and oven operation. Fully working units are prioritized; repairable or nonworking units need individual review and are not automatically approved for free pickup.",
-      "official_resource_note": "The City of Evanston describes ordinary bulk waste separately from appliances and directs residents to call or contact 311 to arrange appliance removal. For a privately managed condominium or apartment building, confirm eligible city service and access rules with property management or 311 before placing anything outside. The city program is independent of our request process, and any price, eligibility and collection appointment must be confirmed directly with the city.",
-      "official_resource_url": "https://www.cityofevanston.org/departments/public_works/services/waste_services/special_pick_ups_and_bulk_collection.php",
+      "official_resource_note": "The City of Evanston's current special-pickups guidance asks residents to contact 311 or the Public Works Agency for separately scheduled appliance collection; refrigerators and other appliances are not included in the normal bulk-volume limits. The April 2026 pilot changed general special-pickup rules, so do not rely on an old 2025 bulk-calendar date. Verify eligibility, address, any charges and safe placement directly with 311. That municipal collection is independent of this website.",
+      "official_resource_url": "https://www.cityofevanston.org/departments/public_works/services/waste_services/special_pick_ups.php",
       "official_resource_label": "City of Evanston — special pickups, appliance collection and bulk waste",
       "photo": "/home-six-appliance-garage.webp",
       "photo_alt": "Real used washers, dryers, refrigerators and stoves in a garage; illustrative only, not an Evanston pickup"
+    },
+    {
+      "city": "Oak Park",
+      "state_code": "IL",
+      "category": "appliance",
+      "mode": "request-only",
+      "title": "Oak Park, IL Used Appliance Pickup Request | Eligibility Review",
+      "description": "Review potential appliance pickup in Oak Park, Illinois. Share working condition, household access and address; neither a free pickup nor a local route is confirmed.",
+      "local_context": "Oak Park's municipal refuse arrangements use Lakeshore Recycling Systems for homes and buildings of five units or fewer, while larger multifamily and commercial buildings arrange their own private hauler. The Village's appliance guidance is more specific than its ordinary weekly bulk-item sticker rules: residents must contact LRS about special handling before discarding a refrigerator, stove or similar large household machine. Our request form instead screens reusable appliances; we have not confirmed a local free-pickup route in Oak Park.",
+      "access_guidance": "For an Oak Park bungalow, note a basement laundry room, a narrow back stairwell and the closest door or garage exit. Condo and apartment residents should identify the building's authorized hauling provider and any reserved elevator, alley or loading-dock restrictions. The village's collection program for smaller residential buildings does not automatically apply to larger properties; do not move a refrigerator to the curb or common area without instructions from your actual service provider.",
+      "condition_guidance": "For a washer and dryer, describe whether the washer fills, drains and spins and whether the dryer tumbles and heats; specify gas or electric. For a refrigerator, include cooling performance of both compartments, size and door-seal damage, and do not tamper with refrigerant equipment. For a stove, describe gas or electric burners, oven function and missing parts. Photos of the real appliance and stair access make reuse assessment more accurate, but neither working status nor a submitted form guarantees acceptance.",
+      "official_resource_note": "Oak Park states that eligible household appliances such as refrigerators and stoves require special disposal even when a home otherwise receives the village's regular trash collection. Its current guidance instructs residents to contact Lakeshore Recycling Systems at least two days before disposal to arrange a special collection; residents in buildings outside the village contract should ask their separate hauler. Confirm any charges and instructions directly with LRS rather than assuming that ordinary bulky-item stickers or this website book the pickup.",
+      "official_resource_url": "https://www.oak-park.us/Services-Parking/Waste-Recycling/Garbage-Collection",
+      "official_resource_label": "Village of Oak Park official garbage and appliance collection guidance",
+      "photo": "/salem-group-appliances.webp",
+      "photo_alt": "Real used mixed major appliances in storage, shown for illustration only; not a completed Oak Park collection"
+    },
+    {
+      "city": "Skokie",
+      "state_code": "IL",
+      "category": "appliance",
+      "mode": "request-only",
+      "title": "Skokie, IL Appliance Pickup Eligibility | Used Washer, Fridge & Stove",
+      "description": "Ask for a Skokie, Illinois appliance reuse-eligibility review. Provide the actual city, ZIP, machine condition and building access; no local service is guaranteed.",
+      "local_context": "Skokie distinguishes its village trash program for single-family houses and residential buildings with four or fewer units from collection contracted through Lakeshore Recycling Systems for larger apartment and condominium buildings. That distinction matters to anyone clearing out a kitchen or laundry room during a move: ordinary garbage service and a booked large-item pickup are not the same. Our company has no confirmed Skokie pickup route, and this request only explores whether a used major appliance may qualify for reuse when a local operator is verified.",
+      "access_guidance": "For a single-family Skokie home, record whether the machine is in a basement, garage or upstairs utility area and measure the narrowest passage to the outside. For a building with more than four units, contact the landlord or management about its contracted refuse provider, elevator reservation, insurance and dock requirements. Skokie's Public Works guidance says small move-out bulk collections need prior scheduling; do not leave appliances or other oversized items at the curb without a provider's explicit collection instructions.",
+      "condition_guidance": "For washers, note fill, drain, spin, leaks and whether a matching dryer heats and tumbles. For refrigerators, identify top-freezer, side-by-side or French-door style and whether both temperature compartments work; disclose compressor problems, broken handles or missing shelves. For freezers and stoves, give power or gas type and working faults. Fully working, reusable appliances have priority, while repairable and nonworking machines require individual acceptance and may need an independently agreed paid removal quote.",
+      "official_resource_note": "Skokie's official Trash & Recycling Collection page explains that houses and buildings of up to four units receive village residential refuse service, while larger condominium and apartment properties have contractor arrangements. It says a few bulky move-out items require a prior call to Public Works and directs residents with larger loads to their authorized hauler. The page does not confirm that any specific appliance is automatically collected. Check your exact appliance, address and safe collection rules with Skokie Public Works or the responsible contractor; neither service is affiliated with our request process.",
+      "official_resource_url": "https://www.skokie.gov/704/Trash-Recycling-Collection",
+      "official_resource_label": "Village of Skokie official trash and recycling collection rules",
+      "photo": "/tacoma-group-appliances.webp",
+      "photo_alt": "Used household washers, dryers and other appliances in storage; illustrative photo only, not a Skokie job"
     }
   ]
 }
