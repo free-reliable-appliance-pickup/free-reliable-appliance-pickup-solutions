@@ -258,6 +258,7 @@ class QuotaGateWorkflowTests(unittest.TestCase):
             "        raise urllib.error.URLError('synthetic error')\n"
             "    data = {'state': os.getenv('FAKE_PR_STATE', 'open'),\n"
             "            'head': {'repo': {'full_name': os.getenv('FAKE_HEAD', 'owner/repo')}},\n"
+            "            'base': {'repo': {'full_name': os.getenv('FAKE_BASE', 'owner/repo')}},\n"
             "            'labels': [{'name': x} for x in json.loads(os.getenv('FAKE_LABELS', '[]'))]}\n"
             "    return io.BytesIO(json.dumps(data).encode())\n"
             "urllib.request.urlopen = fake_open\n"
@@ -266,6 +267,7 @@ class QuotaGateWorkflowTests(unittest.TestCase):
             ("selected", '["vgm-release-review"]', "owner/repo", "open", "31", "0", 0),
             ("unlabeled", '[]', "owner/repo", "open", "31", "0", 1),
             ("fork", '["vgm-release-review"]', "other/repo", "open", "31", "0", 1),
+            ("wrong base", '["vgm-release-review"]', "owner/repo", "open", "31", "0", 1),
             ("closed", '["vgm-release-review"]', "owner/repo", "closed", "31", "0", 1),
             ("bad number", '["vgm-release-review"]', "owner/repo", "open", "nope", "0", 1),
             ("unreachable metadata", '["vgm-release-review"]', "owner/repo", "open", "31", "1", 1),
@@ -275,8 +277,8 @@ class QuotaGateWorkflowTests(unittest.TestCase):
                 env = {"EVENT_NAME": "workflow_dispatch",
                        "TRUSTED_REPO": "owner/repo", "GITHUB_TOKEN": "synthetic-token",
                        "REVIEW_PR_NUMBER": number, "FAKE_LABELS": labels,
-                       "FAKE_HEAD": head, "FAKE_PR_STATE": state,
-                       "FAKE_API_ERROR": error}
+                       "FAKE_HEAD": head, "FAKE_BASE": "other/repo" if name == "wrong base" else "owner/repo",
+                       "FAKE_PR_STATE": state, "FAKE_API_ERROR": error}
                 proc = subprocess.run([sys.executable, "-c", prefix + script], env=env,
                                       capture_output=True, text=True, timeout=5)
                 self.assertEqual(proc.returncode, expected,
