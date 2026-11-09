@@ -13,9 +13,28 @@ document.addEventListener('DOMContentLoaded', function () {
   const status = document.getElementById('pickup-form-status');
   if (!form || !status) return;
   let posting = false;
+  let routingPending = false;
+  // Capture on document before the shared router's form-level capture handler.
+  // This blocks duplicate first submits while asynchronous route data loads.
+  document.addEventListener('submit', function (event) {
+    if (event.target !== form) return;
+    if (form.dataset.customerRoutingQualified === '1') {
+      routingPending = false;
+      return;
+    }
+    if (routingPending) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      status.textContent = 'We are preparing your request. Please submit only once.';
+      return;
+    }
+    routingPending = true;
+  }, true);
   form.addEventListener('submit', async function (event) {
     // The shared router may prevent the first submit, enrich routing, and resubmit.
     if (event.defaultPrevented) return;
+    // The router was unavailable or completed; allow a retry after a failure.
+    routingPending = false;
     // Preserve native Formspree POST when modern browser APIs are unavailable.
     if (!window.fetch || !window.FormData || !window.AbortController) return;
     event.preventDefault();
