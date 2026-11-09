@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const status = document.getElementById('pickup-form-status');
   if (!form || !status) return;
   form.addEventListener('submit', async function (event) {
-    // Shared routing may prevent the first submit and resubmit after qualification.\n    // A missing routing script still leaves the form fully usable.
+    // Shared routing may prevent the first submit and resubmit after qualification.
+    // A missing routing script still leaves the form fully usable.
     if (event.defaultPrevented) return; // Respect any earlier routing/validation handler.
     if (!window.fetch || !window.FormData) return; // Native Formspree POST fallback.
     event.preventDefault();
