@@ -7,6 +7,7 @@ Never sends a form, tests a phone number, confirms local operators, or indexes p
 import json
 from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import urljoin
 import sys
 import time
 from urllib.request import Request, urlopen
@@ -19,7 +20,10 @@ REQUIRED = ("name", "phone", "address", "city", "state", "zip", "appliance",
 
 
 class Extract(HTMLParser):
+    """Read Illinois page metadata, navigation, and intake form elements."""
+
     def __init__(self):
+        """Initialize a fresh set of extracted HTML elements."""
         super().__init__(convert_charrefs=True)
         self.robots, self.canonical, self.forms, self.images = [], [], [], []
         self.fields, self.scripts, self.links, self.state_options = {}, [], [], []
@@ -28,6 +32,7 @@ class Extract(HTMLParser):
         self.h1 = 0
 
     def handle_starttag(self, tag, attrs):
+        """Collect relevant tags and form control attributes."""
         a = dict(attrs)
         if tag == "h1":
             self.h1 += 1
@@ -52,6 +57,7 @@ class Extract(HTMLParser):
             self.fields.setdefault(a["name"], []).append(a)
 
     def handle_endtag(self, tag):
+        """Reset form/select tracking at closing tags."""
         if tag == "select":
             self.in_state_select = False
         if tag == "form":
@@ -60,6 +66,7 @@ class Extract(HTMLParser):
 
 
 def check_page(slug, content, manifest_pages=()):
+    """Report structural and request-only safety errors for an Illinois page."""
     p = Extract()
     p.feed(content)
     errors = []
@@ -98,6 +105,7 @@ def check_page(slug, content, manifest_pages=()):
 
 
 def fetch_html(path):
+    """GET a public page with one retry, without submitting any customer form."""
     url = BASE + path
     error = None
     for attempt in range(2):
@@ -114,7 +122,17 @@ def fetch_html(path):
     raise RuntimeError(str(error))
 
 
+def has_illinois_hub_link(content):
+    """Accept relative, root-relative, and same-site absolute Illinois hub links."""
+    parser = Extract()
+    parser.feed(content)
+    expected = BASE + "illinois-appliance-pickup/"
+    service_base = BASE + "service-areas/"
+    return any(urljoin(service_base, href) == expected for href in parser.links if href)
+
+
 def main():
+    """Check the manifest-listed URLs and the service-area directory."""
     manifest = json.loads((ROOT / "data/ttg-state-batches/IL.json").read_text(encoding="utf-8"))
     pages = manifest["pages"]
     failures = []
@@ -128,7 +146,7 @@ def main():
         print(f"{'FAIL' if problems else 'PASS'} {BASE}{slug}/")
     try:
         directory = fetch_html("service-areas/")
-        if 'href="../illinois-appliance-pickup/"' not in directory:
+        if not has_illinois_hub_link(directory):
             failures.append("service-areas/: Illinois hub is not linked")
     except RuntimeError as exc:
         failures.append("service-areas/: " + str(exc))
