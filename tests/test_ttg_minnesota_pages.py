@@ -104,10 +104,14 @@ class MinnesotaBatchTests(unittest.TestCase):
         self.assertIn("hennepincounty.gov/green-disposal-guide/items/appliances", minneapolis)
         self.assertIn("stpaul.gov/departments/public-works/garbage-and-recycling/residential-collection/bulky-item-collection", saint_paul)
         self.assertIn("July 1, 2026", saint_paul)
-        for html in (minneapolis, saint_paul):
+        for html, disclosure in (
+            (minneapolis, "this program is separate from our conditional private pickup request"),
+            (saint_paul, "City collection is separate from our unconfirmed private appliance pickup request"),
+        ):
             self.assertIn('content="noindex, follow"', html)
-            self.assertIn("our ", html.lower())
-            self.assertIn("separate from", html)
+            section = html.partition("<h2>Alternative recycling and removal options</h2>")[2].partition("</section>")[0]
+            self.assertTrue(section, "Alternative options section must be present")
+            self.assertIn(disclosure, section)
 
     def test_no_minnesota_staging_page_in_sitemap(self):
         """Request-only pages should not be put into discovery index sitemaps."""
