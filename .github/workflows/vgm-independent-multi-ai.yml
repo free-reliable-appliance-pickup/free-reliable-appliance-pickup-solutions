@@ -83,17 +83,21 @@ jobs:
                   print("Invalid PR metadata; FAIL CLOSED.")
                   sys.exit(1)
               head = metadata.get("head") or {}
+              base = metadata.get("base") or {}
               head_repo = head.get("repo") if isinstance(head, dict) else {}
+              base_repo = base.get("repo") if isinstance(base, dict) else {}
               head_repo = head_repo or {}
+              base_repo = base_repo or {}
               raw_labels = metadata.get("labels")
               if not isinstance(raw_labels, list):
                   print("Missing PR labels; FAIL CLOSED.")
                   sys.exit(1)
               labels = [x.get("name") for x in raw_labels if isinstance(x, dict)]
               is_same_repo = isinstance(head_repo, dict) and head_repo.get("full_name") == trusted
+              is_same_base = isinstance(base_repo, dict) and base_repo.get("full_name") == trusted
               is_selected = "vgm-release-review" in labels
               is_open = metadata.get("state") == "open"
-              if not (is_same_repo and is_selected and is_open):
+              if not (is_same_base and is_same_repo and is_selected and is_open):
                   print("Manual review PR is not an open trusted release candidate; FAIL CLOSED.")
                   sys.exit(1)
           elif event == "pull_request_target":
