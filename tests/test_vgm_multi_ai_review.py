@@ -231,5 +231,49 @@ class QuotaGateWorkflowTests(unittest.TestCase):
                                  msg=f"{name}: {proc.stdout} {proc.stderr}")
 
 
+    def test_manual_dispatch_gate_checks_live_pr_metadata(self):
+        """Manual review must fail closed for unlabeled, fork, closed, or unverifiable PRs."""
+        text = (ROOT / ".github/workflows/vgm-independent-multi-ai.yml").read_text()
+        self.assertIn('EVENT_NAME: ${{ github.event_name }}', text)
+        self.assertIn('"https://api.github.com/repos/" + trusted + "/pulls/" + number', text)
+        self.assertLess(text.index("Refuse non-selected"), text.index("Checkout TRUSTED"))
+        marker = "          python3 - <<'PY'\n"
+        snippet = text.split(marker, 1)[1].split("\n          PY", 1)[0]
+        script = "\n".join(line[10:] if line.startswith("          ") else line
+                           for line in snippet.splitlines())
+        # Intercept the GitHub GET entirely inside this subprocess; no network
+        # or paid/free-model requests are used in these tests.
+        prefix = (
+            "import io, json, os, urllib.request, urllib.error\n"
+            "def fake_open(request, timeout=None):\n"
+            "    if os.getenv('FAKE_API_ERROR') == '1':\n"
+            "        raise urllib.error.URLError('synthetic error')\n"
+            "    data = {'state': os.getenv('FAKE_PR_STATE', 'open'),\n"
+            "            'head': {'repo': {'full_name': os.getenv('FAKE_HEAD', 'owner/repo')}},\n"
+            "            'labels': [{'name': x} for x in json.loads(os.getenv('FAKE_LABELS', '[]'))]}\n"
+            "    return io.BytesIO(json.dumps(data).encode())\n"
+            "urllib.request.urlopen = fake_open\n"
+        )
+        cases = [
+            ("selected", '["vgm-release-review"]', "owner/repo", "open", "31", "0", 0),
+            ("unlabeled", '[]', "owner/repo", "open", "31", "0", 1),
+            ("fork", '["vgm-release-review"]', "other/repo", "open", "31", "0", 1),
+            ("closed", '["vgm-release-review"]', "owner/repo", "closed", "31", "0", 1),
+            ("bad number", '["vgm-release-review"]', "owner/repo", "open", "nope", "0", 1),
+            ("unreachable metadata", '["vgm-release-review"]', "owner/repo", "open", "31", "1", 1),
+        ]
+        for name, labels, head, state, number, error, expected in cases:
+            with self.subTest(name=name):
+                env = {"EVENT_NAME": "workflow_dispatch",
+                       "TRUSTED_REPO": "owner/repo", "GITHUB_TOKEN": "synthetic-token",
+                       "REVIEW_PR_NUMBER": number, "FAKE_LABELS": labels,
+                       "FAKE_HEAD": head, "FAKE_PR_STATE": state,
+                       "FAKE_API_ERROR": error}
+                proc = subprocess.run([sys.executable, "-c", prefix + script], env=env,
+                                      capture_output=True, text=True, timeout=5)
+                self.assertEqual(proc.returncode, expected,
+                                 msg=f"{name}: {proc.stdout} {proc.stderr}")
+
+
 if __name__ == "__main__":
     unittest.main()
