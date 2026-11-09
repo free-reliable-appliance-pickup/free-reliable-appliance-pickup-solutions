@@ -85,6 +85,24 @@ class StateBatchTests(unittest.TestCase):
         self.save()
         self.assertTrue(any("page missing" in e for e in self.errors()))
 
+    def test_reject_other_state_embedded_in_city_slug(self):
+        wrong_slug = "chicago-il-ga-appliance-pickup"
+        folder = self.root / wrong_slug
+        folder.mkdir()
+        (folder / "index.html").write_text(self.html.replace(self.slug, wrong_slug))
+        self.batch["pages"] = [wrong_slug + "/index.html"]
+        self.save()
+        self.assertTrue(any("wrong state-coded" in e for e in self.errors()))
+
+    def test_reject_unknown_appliance_category_slug(self):
+        wrong_slug = "chicago-il-garbage-pickup"
+        folder = self.root / wrong_slug
+        folder.mkdir()
+        (folder / "index.html").write_text(self.html.replace(self.slug, wrong_slug))
+        self.batch["pages"] = [wrong_slug + "/index.html"]
+        self.save()
+        self.assertTrue(any("wrong state-coded" in e for e in self.errors()))
+
     def test_reject_path_traversal(self):
         self.batch["pages"] = ["../chicago-il-appliance-pickup/index.html"]
         self.save()
