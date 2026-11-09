@@ -1,0 +1,29 @@
+# Reusable offline preflight for manifest-listed state batches.
+# Not a production approval or substitute for existing required reviews.
+name: TTG FastTrack 2.1 State Batch QA
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "data/ttg-state-batches/**"
+      - "**/index.html"
+      - "data/market-routing.json"
+      - "scripts/ttg_state_batch_qa.py"
+      - "tests/test_ttg_state_batch_qa.py"
+      - ".github/workflows/ttg-state-batch-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    name: State page structure (no external AI quota)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test routing and page validator
+        run: python -m unittest discover -s tests -p 'test_ttg_state_batch_qa.py' -v
+      - name: Validate state manifests and every listed page
+        run: python scripts/ttg_state_batch_qa.py
