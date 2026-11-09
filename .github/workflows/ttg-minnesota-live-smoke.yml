@@ -37,7 +37,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ttg_release_readiness.py' -v
       - name: Report staged versus operational readiness (no form POST)
         id: readiness_report
-        run: python -m scripts.ttg_release_readiness --state IL --report ttg-minnesota-readiness.json
+        run: python -m scripts.ttg_release_readiness --state MN --report ttg-minnesota-readiness.json
       - uses: actions/upload-artifact@v4
         if: ${{ success() || (failure() && steps.readiness_report.outcome == 'failure') }}
         with:
