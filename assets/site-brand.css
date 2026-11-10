@@ -48,50 +48,50 @@ position:fixed;left:0;right:0;bottom:0;z-index:9999;display:grid;grid-template-c
 @media(max-width:650px){.site-branded .site-request-next-grid{grid-template-columns:1fr}}
 
 
-/* sc-mobile-intake-v1: South Carolina staged pickup forms only.
-   These pages do not use body.site-branded; preserve all other page layouts. */
-html.sc-pickup-page .site-request-next-steps{
+/* sc-mobile-intake-v2: CSS-only South Carolina pickup-form improvements.
+   Scope through existing hidden source_page; no changes to shared JS or other states. */
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-steps{
   margin:18px 0 22px;padding:18px;background:#f7fbf8;
   border:1px solid #cddfd3;border-radius:12px
 }
-html.sc-pickup-page .site-request-next-steps h3{margin:0 0 14px;line-height:1.3}
-html.sc-pickup-page .site-request-next-grid{
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-steps h3{margin:0 0 14px;line-height:1.3}
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-grid{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px
 }
-html.sc-pickup-page .site-request-next-grid>div{
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-grid>div{
   min-width:0;padding:13px;border:1px solid #d4e4d9;
   background:#fff;border-radius:9px
 }
-html.sc-pickup-page .site-request-next-grid strong,
-html.sc-pickup-page .site-request-next-grid span{display:block;overflow-wrap:break-word}
-html.sc-pickup-page .site-request-next-grid strong{
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-grid strong,
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-grid span{display:block;overflow-wrap:break-word}
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-grid strong{
   margin:0 0 7px;line-height:1.35;color:#15372a
 }
-html.sc-pickup-page .site-request-next-grid span{
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-grid span{
   margin:0;line-height:1.5;color:#355d49
 }
-html.sc-pickup-page .site-photo-first-intake{
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-photo-first-intake{
   margin:18px 0;padding:16px;background:#eff8f2;
   border-left:4px solid #087443;border-radius:10px
 }
-html.sc-pickup-page .site-photo-first-intake strong{display:block;margin-bottom:6px}
-html.sc-pickup-page .site-photo-first-intake p{margin:0}
-html.sc-pickup-page .site-photo-text-button{
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-photo-first-intake strong{display:block;margin-bottom:6px}
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-photo-first-intake p{margin:0}
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-photo-text-button{
   display:inline-block;margin-top:10px;padding:9px 13px;
   border-radius:8px;background:#087443;color:#fff;text-decoration:none;font-weight:700
 }
-html.sc-pickup-page .form-grid label.sc-privacy-ack{
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .form-grid label:has(> input[name="privacy_acknowledgment"]){
   display:flex!important;align-items:flex-start;justify-content:flex-start;
   gap:10px;margin:14px 0!important;line-height:1.45;font-weight:650
 }
-html.sc-pickup-page .form-grid label.sc-privacy-ack input[type="checkbox"]{
+html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .form-grid label:has(> input[name="privacy_acknowledgment"]) input[type="checkbox"]{
   display:block!important;flex:0 0 22px;width:22px!important;
   min-width:22px!important;height:22px!important;min-height:22px!important;
   margin:3px 0 0!important;padding:0!important;accent-color:#075d3b
 }
 @media(max-width:720px){
-  html.sc-pickup-page .site-request-next-grid{grid-template-columns:1fr}
-  html.sc-pickup-page .site-request-next-steps{padding:14px}
-  html.sc-pickup-page .site-photo-first-intake{padding:14px}
-  html.sc-pickup-page .site-photo-text-button{display:block;text-align:center}
+  html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-grid{grid-template-columns:1fr}
+  html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-request-next-steps{padding:14px}
+  html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-photo-first-intake{padding:14px}
+  html:has(form input[name="source_page"]:is([value*="-sc-"],[value="south-carolina-appliance-pickup"])) .site-photo-text-button{display:block;text-align:center}
 }
