@@ -1,0 +1,16 @@
+{
+  "state_code": "NY",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "existing_hub": "new-york-appliance-pickup/index.html",
+  "instructions": "Do not index unverified NY locality pages. Verify local operator per ZIP, phone and Formspree receipt, then obtain explicit owner approval."
+}
