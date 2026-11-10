@@ -1,0 +1,15 @@
+name: TTG New York Gold 300-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  new-york:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit 300 New York Free Appliance Pickup request pages
+        run: python -m unittest discover -s tests -p 'test_ttg_new_york_pages.py' -v

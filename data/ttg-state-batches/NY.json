@@ -1,0 +1,611 @@
+{
+  "state_code": "NY",
+  "mode": "request-only",
+  "existing_indexed_state_hub_preserved": "new-york-appliance-pickup/index.html",
+  "operator_coverage_verified": false,
+  "communities": [
+    {
+      "name": "Manhattan",
+      "slug": "manhattan",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Brooklyn",
+      "slug": "brooklyn",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Queens",
+      "slug": "queens",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Bronx",
+      "slug": "bronx",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Staten Island",
+      "slug": "staten-island",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Astoria",
+      "slug": "astoria",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Flushing",
+      "slug": "flushing",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Jamaica",
+      "slug": "jamaica",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Long Island City",
+      "slug": "long-island-city",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Bay Ridge",
+      "slug": "bay-ridge",
+      "region": "New York City boroughs and neighborhoods"
+    },
+    {
+      "name": "Hempstead",
+      "slug": "hempstead",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Garden City",
+      "slug": "garden-city",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Freeport",
+      "slug": "freeport",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Valley Stream",
+      "slug": "valley-stream",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Hicksville",
+      "slug": "hicksville",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Levittown",
+      "slug": "levittown",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Mineola",
+      "slug": "mineola",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Great Neck",
+      "slug": "great-neck",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Massapequa",
+      "slug": "massapequa",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Huntington",
+      "slug": "huntington",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Babylon",
+      "slug": "babylon",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Islip",
+      "slug": "islip",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Smithtown",
+      "slug": "smithtown",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Brookhaven",
+      "slug": "brookhaven",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Southampton",
+      "slug": "southampton",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "East Hampton",
+      "slug": "east-hampton",
+      "region": "Long Island — Nassau and Suffolk"
+    },
+    {
+      "name": "Yonkers",
+      "slug": "yonkers",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "New Rochelle",
+      "slug": "new-rochelle",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Mount Vernon",
+      "slug": "mount-vernon",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "White Plains",
+      "slug": "white-plains",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Scarsdale",
+      "slug": "scarsdale",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Rye",
+      "slug": "rye",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Port Chester",
+      "slug": "port-chester",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Harrison",
+      "slug": "harrison",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Ossining",
+      "slug": "ossining",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Tarrytown",
+      "slug": "tarrytown",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Peekskill",
+      "slug": "peekskill",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Poughkeepsie",
+      "slug": "poughkeepsie",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Newburgh",
+      "slug": "newburgh",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Middletown",
+      "slug": "middletown",
+      "region": "Westchester and Lower Hudson Valley"
+    },
+    {
+      "name": "Albany",
+      "slug": "albany",
+      "region": "Capital District and Saratoga"
+    },
+    {
+      "name": "Schenectady",
+      "slug": "schenectady",
+      "region": "Capital District and Saratoga"
+    },
+    {
+      "name": "Troy",
+      "slug": "troy",
+      "region": "Capital District and Saratoga"
+    },
+    {
+      "name": "Saratoga Springs",
+      "slug": "saratoga-springs",
+      "region": "Capital District and Saratoga"
+    },
+    {
+      "name": "Colonie",
+      "slug": "colonie",
+      "region": "Capital District and Saratoga"
+    },
+    {
+      "name": "Clifton Park",
+      "slug": "clifton-park",
+      "region": "Capital District and Saratoga"
+    },
+    {
+      "name": "Latham",
+      "slug": "latham",
+      "region": "Capital District and Saratoga"
+    },
+    {
+      "name": "Ballston Spa",
+      "slug": "ballston-spa",
+      "region": "Capital District and Saratoga"
+    },
+    {
+      "name": "Buffalo",
+      "slug": "buffalo",
+      "region": "Western and Central New York"
+    },
+    {
+      "name": "Rochester",
+      "slug": "rochester",
+      "region": "Western and Central New York"
+    },
+    {
+      "name": "Syracuse",
+      "slug": "syracuse",
+      "region": "Western and Central New York"
+    },
+    {
+      "name": "Utica",
+      "slug": "utica",
+      "region": "Western and Central New York"
+    },
+    {
+      "name": "Binghamton",
+      "slug": "binghamton",
+      "region": "Western and Central New York"
+    },
+    {
+      "name": "Ithaca",
+      "slug": "ithaca",
+      "region": "Western and Central New York"
+    },
+    {
+      "name": "Elmira",
+      "slug": "elmira",
+      "region": "Western and Central New York"
+    },
+    {
+      "name": "Niagara Falls",
+      "slug": "niagara-falls",
+      "region": "Western and Central New York"
+    },
+    {
+      "name": "Cheektowaga",
+      "slug": "cheektowaga",
+      "region": "Western and Central New York"
+    },
+    {
+      "name": "Kingston",
+      "slug": "kingston",
+      "region": "Mid-Hudson Valley"
+    },
+    {
+      "name": "Beacon",
+      "slug": "beacon",
+      "region": "Mid-Hudson Valley"
+    },
+    {
+      "name": "Fishkill",
+      "slug": "fishkill",
+      "region": "Mid-Hudson Valley"
+    }
+  ],
+  "pages": [
+    "manhattan-ny-appliance-pickup/index.html",
+    "manhattan-ny-washer-dryer-pickup/index.html",
+    "manhattan-ny-refrigerator-pickup/index.html",
+    "manhattan-ny-stove-oven-pickup/index.html",
+    "manhattan-ny-freezer-pickup/index.html",
+    "brooklyn-ny-appliance-pickup/index.html",
+    "brooklyn-ny-washer-dryer-pickup/index.html",
+    "brooklyn-ny-refrigerator-pickup/index.html",
+    "brooklyn-ny-stove-oven-pickup/index.html",
+    "brooklyn-ny-freezer-pickup/index.html",
+    "queens-ny-appliance-pickup/index.html",
+    "queens-ny-washer-dryer-pickup/index.html",
+    "queens-ny-refrigerator-pickup/index.html",
+    "queens-ny-stove-oven-pickup/index.html",
+    "queens-ny-freezer-pickup/index.html",
+    "bronx-ny-appliance-pickup/index.html",
+    "bronx-ny-washer-dryer-pickup/index.html",
+    "bronx-ny-refrigerator-pickup/index.html",
+    "bronx-ny-stove-oven-pickup/index.html",
+    "bronx-ny-freezer-pickup/index.html",
+    "staten-island-ny-appliance-pickup/index.html",
+    "staten-island-ny-washer-dryer-pickup/index.html",
+    "staten-island-ny-refrigerator-pickup/index.html",
+    "staten-island-ny-stove-oven-pickup/index.html",
+    "staten-island-ny-freezer-pickup/index.html",
+    "astoria-ny-appliance-pickup/index.html",
+    "astoria-ny-washer-dryer-pickup/index.html",
+    "astoria-ny-refrigerator-pickup/index.html",
+    "astoria-ny-stove-oven-pickup/index.html",
+    "astoria-ny-freezer-pickup/index.html",
+    "flushing-ny-appliance-pickup/index.html",
+    "flushing-ny-washer-dryer-pickup/index.html",
+    "flushing-ny-refrigerator-pickup/index.html",
+    "flushing-ny-stove-oven-pickup/index.html",
+    "flushing-ny-freezer-pickup/index.html",
+    "jamaica-ny-appliance-pickup/index.html",
+    "jamaica-ny-washer-dryer-pickup/index.html",
+    "jamaica-ny-refrigerator-pickup/index.html",
+    "jamaica-ny-stove-oven-pickup/index.html",
+    "jamaica-ny-freezer-pickup/index.html",
+    "long-island-city-ny-appliance-pickup/index.html",
+    "long-island-city-ny-washer-dryer-pickup/index.html",
+    "long-island-city-ny-refrigerator-pickup/index.html",
+    "long-island-city-ny-stove-oven-pickup/index.html",
+    "long-island-city-ny-freezer-pickup/index.html",
+    "bay-ridge-ny-appliance-pickup/index.html",
+    "bay-ridge-ny-washer-dryer-pickup/index.html",
+    "bay-ridge-ny-refrigerator-pickup/index.html",
+    "bay-ridge-ny-stove-oven-pickup/index.html",
+    "bay-ridge-ny-freezer-pickup/index.html",
+    "hempstead-ny-appliance-pickup/index.html",
+    "hempstead-ny-washer-dryer-pickup/index.html",
+    "hempstead-ny-refrigerator-pickup/index.html",
+    "hempstead-ny-stove-oven-pickup/index.html",
+    "hempstead-ny-freezer-pickup/index.html",
+    "garden-city-ny-appliance-pickup/index.html",
+    "garden-city-ny-washer-dryer-pickup/index.html",
+    "garden-city-ny-refrigerator-pickup/index.html",
+    "garden-city-ny-stove-oven-pickup/index.html",
+    "garden-city-ny-freezer-pickup/index.html",
+    "freeport-ny-appliance-pickup/index.html",
+    "freeport-ny-washer-dryer-pickup/index.html",
+    "freeport-ny-refrigerator-pickup/index.html",
+    "freeport-ny-stove-oven-pickup/index.html",
+    "freeport-ny-freezer-pickup/index.html",
+    "valley-stream-ny-appliance-pickup/index.html",
+    "valley-stream-ny-washer-dryer-pickup/index.html",
+    "valley-stream-ny-refrigerator-pickup/index.html",
+    "valley-stream-ny-stove-oven-pickup/index.html",
+    "valley-stream-ny-freezer-pickup/index.html",
+    "hicksville-ny-appliance-pickup/index.html",
+    "hicksville-ny-washer-dryer-pickup/index.html",
+    "hicksville-ny-refrigerator-pickup/index.html",
+    "hicksville-ny-stove-oven-pickup/index.html",
+    "hicksville-ny-freezer-pickup/index.html",
+    "levittown-ny-appliance-pickup/index.html",
+    "levittown-ny-washer-dryer-pickup/index.html",
+    "levittown-ny-refrigerator-pickup/index.html",
+    "levittown-ny-stove-oven-pickup/index.html",
+    "levittown-ny-freezer-pickup/index.html",
+    "mineola-ny-appliance-pickup/index.html",
+    "mineola-ny-washer-dryer-pickup/index.html",
+    "mineola-ny-refrigerator-pickup/index.html",
+    "mineola-ny-stove-oven-pickup/index.html",
+    "mineola-ny-freezer-pickup/index.html",
+    "great-neck-ny-appliance-pickup/index.html",
+    "great-neck-ny-washer-dryer-pickup/index.html",
+    "great-neck-ny-refrigerator-pickup/index.html",
+    "great-neck-ny-stove-oven-pickup/index.html",
+    "great-neck-ny-freezer-pickup/index.html",
+    "massapequa-ny-appliance-pickup/index.html",
+    "massapequa-ny-washer-dryer-pickup/index.html",
+    "massapequa-ny-refrigerator-pickup/index.html",
+    "massapequa-ny-stove-oven-pickup/index.html",
+    "massapequa-ny-freezer-pickup/index.html",
+    "huntington-ny-appliance-pickup/index.html",
+    "huntington-ny-washer-dryer-pickup/index.html",
+    "huntington-ny-refrigerator-pickup/index.html",
+    "huntington-ny-stove-oven-pickup/index.html",
+    "huntington-ny-freezer-pickup/index.html",
+    "babylon-ny-appliance-pickup/index.html",
+    "babylon-ny-washer-dryer-pickup/index.html",
+    "babylon-ny-refrigerator-pickup/index.html",
+    "babylon-ny-stove-oven-pickup/index.html",
+    "babylon-ny-freezer-pickup/index.html",
+    "islip-ny-appliance-pickup/index.html",
+    "islip-ny-washer-dryer-pickup/index.html",
+    "islip-ny-refrigerator-pickup/index.html",
+    "islip-ny-stove-oven-pickup/index.html",
+    "islip-ny-freezer-pickup/index.html",
+    "smithtown-ny-appliance-pickup/index.html",
+    "smithtown-ny-washer-dryer-pickup/index.html",
+    "smithtown-ny-refrigerator-pickup/index.html",
+    "smithtown-ny-stove-oven-pickup/index.html",
+    "smithtown-ny-freezer-pickup/index.html",
+    "brookhaven-ny-appliance-pickup/index.html",
+    "brookhaven-ny-washer-dryer-pickup/index.html",
+    "brookhaven-ny-refrigerator-pickup/index.html",
+    "brookhaven-ny-stove-oven-pickup/index.html",
+    "brookhaven-ny-freezer-pickup/index.html",
+    "southampton-ny-appliance-pickup/index.html",
+    "southampton-ny-washer-dryer-pickup/index.html",
+    "southampton-ny-refrigerator-pickup/index.html",
+    "southampton-ny-stove-oven-pickup/index.html",
+    "southampton-ny-freezer-pickup/index.html",
+    "east-hampton-ny-appliance-pickup/index.html",
+    "east-hampton-ny-washer-dryer-pickup/index.html",
+    "east-hampton-ny-refrigerator-pickup/index.html",
+    "east-hampton-ny-stove-oven-pickup/index.html",
+    "east-hampton-ny-freezer-pickup/index.html",
+    "yonkers-ny-appliance-pickup/index.html",
+    "yonkers-ny-washer-dryer-pickup/index.html",
+    "yonkers-ny-refrigerator-pickup/index.html",
+    "yonkers-ny-stove-oven-pickup/index.html",
+    "yonkers-ny-freezer-pickup/index.html",
+    "new-rochelle-ny-appliance-pickup/index.html",
+    "new-rochelle-ny-washer-dryer-pickup/index.html",
+    "new-rochelle-ny-refrigerator-pickup/index.html",
+    "new-rochelle-ny-stove-oven-pickup/index.html",
+    "new-rochelle-ny-freezer-pickup/index.html",
+    "mount-vernon-ny-appliance-pickup/index.html",
+    "mount-vernon-ny-washer-dryer-pickup/index.html",
+    "mount-vernon-ny-refrigerator-pickup/index.html",
+    "mount-vernon-ny-stove-oven-pickup/index.html",
+    "mount-vernon-ny-freezer-pickup/index.html",
+    "white-plains-ny-appliance-pickup/index.html",
+    "white-plains-ny-washer-dryer-pickup/index.html",
+    "white-plains-ny-refrigerator-pickup/index.html",
+    "white-plains-ny-stove-oven-pickup/index.html",
+    "white-plains-ny-freezer-pickup/index.html",
+    "scarsdale-ny-appliance-pickup/index.html",
+    "scarsdale-ny-washer-dryer-pickup/index.html",
+    "scarsdale-ny-refrigerator-pickup/index.html",
+    "scarsdale-ny-stove-oven-pickup/index.html",
+    "scarsdale-ny-freezer-pickup/index.html",
+    "rye-ny-appliance-pickup/index.html",
+    "rye-ny-washer-dryer-pickup/index.html",
+    "rye-ny-refrigerator-pickup/index.html",
+    "rye-ny-stove-oven-pickup/index.html",
+    "rye-ny-freezer-pickup/index.html",
+    "port-chester-ny-appliance-pickup/index.html",
+    "port-chester-ny-washer-dryer-pickup/index.html",
+    "port-chester-ny-refrigerator-pickup/index.html",
+    "port-chester-ny-stove-oven-pickup/index.html",
+    "port-chester-ny-freezer-pickup/index.html",
+    "harrison-ny-appliance-pickup/index.html",
+    "harrison-ny-washer-dryer-pickup/index.html",
+    "harrison-ny-refrigerator-pickup/index.html",
+    "harrison-ny-stove-oven-pickup/index.html",
+    "harrison-ny-freezer-pickup/index.html",
+    "ossining-ny-appliance-pickup/index.html",
+    "ossining-ny-washer-dryer-pickup/index.html",
+    "ossining-ny-refrigerator-pickup/index.html",
+    "ossining-ny-stove-oven-pickup/index.html",
+    "ossining-ny-freezer-pickup/index.html",
+    "tarrytown-ny-appliance-pickup/index.html",
+    "tarrytown-ny-washer-dryer-pickup/index.html",
+    "tarrytown-ny-refrigerator-pickup/index.html",
+    "tarrytown-ny-stove-oven-pickup/index.html",
+    "tarrytown-ny-freezer-pickup/index.html",
+    "peekskill-ny-appliance-pickup/index.html",
+    "peekskill-ny-washer-dryer-pickup/index.html",
+    "peekskill-ny-refrigerator-pickup/index.html",
+    "peekskill-ny-stove-oven-pickup/index.html",
+    "peekskill-ny-freezer-pickup/index.html",
+    "poughkeepsie-ny-appliance-pickup/index.html",
+    "poughkeepsie-ny-washer-dryer-pickup/index.html",
+    "poughkeepsie-ny-refrigerator-pickup/index.html",
+    "poughkeepsie-ny-stove-oven-pickup/index.html",
+    "poughkeepsie-ny-freezer-pickup/index.html",
+    "newburgh-ny-appliance-pickup/index.html",
+    "newburgh-ny-washer-dryer-pickup/index.html",
+    "newburgh-ny-refrigerator-pickup/index.html",
+    "newburgh-ny-stove-oven-pickup/index.html",
+    "newburgh-ny-freezer-pickup/index.html",
+    "middletown-ny-appliance-pickup/index.html",
+    "middletown-ny-washer-dryer-pickup/index.html",
+    "middletown-ny-refrigerator-pickup/index.html",
+    "middletown-ny-stove-oven-pickup/index.html",
+    "middletown-ny-freezer-pickup/index.html",
+    "albany-ny-appliance-pickup/index.html",
+    "albany-ny-washer-dryer-pickup/index.html",
+    "albany-ny-refrigerator-pickup/index.html",
+    "albany-ny-stove-oven-pickup/index.html",
+    "albany-ny-freezer-pickup/index.html",
+    "schenectady-ny-appliance-pickup/index.html",
+    "schenectady-ny-washer-dryer-pickup/index.html",
+    "schenectady-ny-refrigerator-pickup/index.html",
+    "schenectady-ny-stove-oven-pickup/index.html",
+    "schenectady-ny-freezer-pickup/index.html",
+    "troy-ny-appliance-pickup/index.html",
+    "troy-ny-washer-dryer-pickup/index.html",
+    "troy-ny-refrigerator-pickup/index.html",
+    "troy-ny-stove-oven-pickup/index.html",
+    "troy-ny-freezer-pickup/index.html",
+    "saratoga-springs-ny-appliance-pickup/index.html",
+    "saratoga-springs-ny-washer-dryer-pickup/index.html",
+    "saratoga-springs-ny-refrigerator-pickup/index.html",
+    "saratoga-springs-ny-stove-oven-pickup/index.html",
+    "saratoga-springs-ny-freezer-pickup/index.html",
+    "colonie-ny-appliance-pickup/index.html",
+    "colonie-ny-washer-dryer-pickup/index.html",
+    "colonie-ny-refrigerator-pickup/index.html",
+    "colonie-ny-stove-oven-pickup/index.html",
+    "colonie-ny-freezer-pickup/index.html",
+    "clifton-park-ny-appliance-pickup/index.html",
+    "clifton-park-ny-washer-dryer-pickup/index.html",
+    "clifton-park-ny-refrigerator-pickup/index.html",
+    "clifton-park-ny-stove-oven-pickup/index.html",
+    "clifton-park-ny-freezer-pickup/index.html",
+    "latham-ny-appliance-pickup/index.html",
+    "latham-ny-washer-dryer-pickup/index.html",
+    "latham-ny-refrigerator-pickup/index.html",
+    "latham-ny-stove-oven-pickup/index.html",
+    "latham-ny-freezer-pickup/index.html",
+    "ballston-spa-ny-appliance-pickup/index.html",
+    "ballston-spa-ny-washer-dryer-pickup/index.html",
+    "ballston-spa-ny-refrigerator-pickup/index.html",
+    "ballston-spa-ny-stove-oven-pickup/index.html",
+    "ballston-spa-ny-freezer-pickup/index.html",
+    "buffalo-ny-appliance-pickup/index.html",
+    "buffalo-ny-washer-dryer-pickup/index.html",
+    "buffalo-ny-refrigerator-pickup/index.html",
+    "buffalo-ny-stove-oven-pickup/index.html",
+    "buffalo-ny-freezer-pickup/index.html",
+    "rochester-ny-appliance-pickup/index.html",
+    "rochester-ny-washer-dryer-pickup/index.html",
+    "rochester-ny-refrigerator-pickup/index.html",
+    "rochester-ny-stove-oven-pickup/index.html",
+    "rochester-ny-freezer-pickup/index.html",
+    "syracuse-ny-appliance-pickup/index.html",
+    "syracuse-ny-washer-dryer-pickup/index.html",
+    "syracuse-ny-refrigerator-pickup/index.html",
+    "syracuse-ny-stove-oven-pickup/index.html",
+    "syracuse-ny-freezer-pickup/index.html",
+    "utica-ny-appliance-pickup/index.html",
+    "utica-ny-washer-dryer-pickup/index.html",
+    "utica-ny-refrigerator-pickup/index.html",
+    "utica-ny-stove-oven-pickup/index.html",
+    "utica-ny-freezer-pickup/index.html",
+    "binghamton-ny-appliance-pickup/index.html",
+    "binghamton-ny-washer-dryer-pickup/index.html",
+    "binghamton-ny-refrigerator-pickup/index.html",
+    "binghamton-ny-stove-oven-pickup/index.html",
+    "binghamton-ny-freezer-pickup/index.html",
+    "ithaca-ny-appliance-pickup/index.html",
+    "ithaca-ny-washer-dryer-pickup/index.html",
+    "ithaca-ny-refrigerator-pickup/index.html",
+    "ithaca-ny-stove-oven-pickup/index.html",
+    "ithaca-ny-freezer-pickup/index.html",
+    "elmira-ny-appliance-pickup/index.html",
+    "elmira-ny-washer-dryer-pickup/index.html",
+    "elmira-ny-refrigerator-pickup/index.html",
+    "elmira-ny-stove-oven-pickup/index.html",
+    "elmira-ny-freezer-pickup/index.html",
+    "niagara-falls-ny-appliance-pickup/index.html",
+    "niagara-falls-ny-washer-dryer-pickup/index.html",
+    "niagara-falls-ny-refrigerator-pickup/index.html",
+    "niagara-falls-ny-stove-oven-pickup/index.html",
+    "niagara-falls-ny-freezer-pickup/index.html",
+    "cheektowaga-ny-appliance-pickup/index.html",
+    "cheektowaga-ny-washer-dryer-pickup/index.html",
+    "cheektowaga-ny-refrigerator-pickup/index.html",
+    "cheektowaga-ny-stove-oven-pickup/index.html",
+    "cheektowaga-ny-freezer-pickup/index.html",
+    "kingston-ny-appliance-pickup/index.html",
+    "kingston-ny-washer-dryer-pickup/index.html",
+    "kingston-ny-refrigerator-pickup/index.html",
+    "kingston-ny-stove-oven-pickup/index.html",
+    "kingston-ny-freezer-pickup/index.html",
+    "beacon-ny-appliance-pickup/index.html",
+    "beacon-ny-washer-dryer-pickup/index.html",
+    "beacon-ny-refrigerator-pickup/index.html",
+    "beacon-ny-stove-oven-pickup/index.html",
+    "beacon-ny-freezer-pickup/index.html",
+    "fishkill-ny-appliance-pickup/index.html",
+    "fishkill-ny-washer-dryer-pickup/index.html",
+    "fishkill-ny-refrigerator-pickup/index.html",
+    "fishkill-ny-stove-oven-pickup/index.html",
+    "fishkill-ny-freezer-pickup/index.html"
+  ],
+  "notes": "300 state/city category request pages; noindex/follow and excluded sitemap pending ZIP-specific operator verification, form receipt, owner signoff. Authentic company photos illustrative, not NY field pickup evidence."
+}
