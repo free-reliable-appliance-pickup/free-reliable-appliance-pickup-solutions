@@ -1,0 +1,15 @@
+name: TTG South Dakota Gold 251-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  south-dakota:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify South Dakota state batch, photos and safety
+        run: python -m unittest discover -s tests -p 'test_ttg_south_dakota_pages.py' -v
