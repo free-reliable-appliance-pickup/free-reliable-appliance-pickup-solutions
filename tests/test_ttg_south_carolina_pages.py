@@ -7,7 +7,7 @@ class SouthCarolinaFastTrack(unittest.TestCase):
         self.assertEqual(check_manifest(ROOT/"data/ttg-state-batches/SC.json"),[])
     def test_all_links_and_nonindex(self):
         m=json.loads((ROOT/"data/ttg-state-batches/SC.json").read_text())
-        self.assertEqual(len(m["pages"]),61)
+        self.assertEqual(len(m["pages"]),251)
         hub=(ROOT/"south-carolina-appliance-pickup/index.html").read_text()
         for path in m["pages"]:
             h=(ROOT/path).read_text()
