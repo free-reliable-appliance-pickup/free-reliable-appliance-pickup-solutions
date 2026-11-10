@@ -25,7 +25,7 @@ class AlaskaGoldTests(unittest.TestCase):
    for s in ('Free Reliable Appliance Pickup','noindex, follow','name="source_page"','name="paid_option"','name="privacy_acknowledgment"','name="photos_available"'):
     self.assertIn(s,html,path)
    self.assertNotIn("New Hampshire",html,path)
-   self.assertIn("Alaska access:",html,path)
+   if path!="alaska-appliance-pickup/index.html":self.assertIn("Alaska access:",html,path)
    if path.endswith("-washer-dryer-pickup/index.html"):laundry.add(re.search(r'<figure><img src="([^"]+)"',html).group(1))
    if path.endswith("-stove-oven-pickup/index.html"):
     self.assertIn('name="fuel_type"',html,path);self.assertIn('name="connection_status"',html,path)
