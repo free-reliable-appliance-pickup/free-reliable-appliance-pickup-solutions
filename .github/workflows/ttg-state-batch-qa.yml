@@ -46,5 +46,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ttg_maryland_pages.py' -v
       - name: Validate territory quality math and privacy suppression
         run: python -m unittest discover -s tests -p 'test_ttg_territory_quality.py' -v
+      - name: Validate premium territory candidates and release guardrails
+        run: python -m unittest discover -s tests -p 'test_ttg_premium_markets.py' -v
       - name: Validate state manifests and every listed page
         run: python scripts/ttg_state_batch_qa.py
