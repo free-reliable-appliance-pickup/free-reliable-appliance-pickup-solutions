@@ -1,4 +1,4 @@
-# rerun after existing NC state form verification
+# rerun after NC and SC state-city navigation regression refresh
 name: TTG Recent States Free Pickup Wording Batch
 on:
   push:
