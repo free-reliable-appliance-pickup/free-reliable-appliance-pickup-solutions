@@ -1,0 +1,15 @@
+name: TTG Hawaii Gold 251-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  hawaii:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Hawaii request-only pages and local photo assets
+        run: python -m unittest discover -s tests -p 'test_ttg_hawaii_pages.py' -v
