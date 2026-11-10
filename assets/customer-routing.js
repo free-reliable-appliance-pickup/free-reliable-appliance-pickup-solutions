@@ -286,20 +286,6 @@ function enhanceRequestNextSteps(){
 }
 
 
-/* South Carolina request-only landing pages have their own simple page CSS.
-   Enable matching mobile intake styles without changing California layouts. */
-function enhanceSouthCarolinaMobileIntake(){
-  const path=(location.pathname||'/').replace(/\\/g,'/');
-  if(!(/^\/south-carolina-appliance-pickup\/?$/.test(path)
-    || /^\/[a-z0-9-]+-sc-(?:appliance|washer-dryer|refrigerator|stove-oven|freezer)-pickup\/?$/.test(path)))return;
-  document.documentElement.classList.add('sc-pickup-page');
-  document.querySelectorAll('form[action*="formspree.io"] label').forEach(label=>{
-    if(label.querySelector('input[name="privacy_acknowledgment"]')){
-      label.classList.add('sc-privacy-ack');
-    }
-  });
-}
-
 const GA4_MEASUREMENT_ID='G-X9VMB6GQMF';
 
 function analyticsPageLabel(){
@@ -371,7 +357,7 @@ function initLeadAnalytics(){
 
 initLeadAnalytics();
 load();
-document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();loadPaidRemovalChoice();enhanceRequestNextSteps();enhanceSouthCarolinaMobileIntake();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{recordObservedTrafficSource(form);if(isCustomerPickupForm(form))wireForm(form);});});
+document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();loadPaidRemovalChoice();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{recordObservedTrafficSource(form);if(isCustomerPickupForm(form))wireForm(form);});});
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 
 if(typeof document!=='undefined'&&!document.querySelector('script[data-premium-sharp-hero]')){const sharp=document.createElement('script');sharp.src=siteUrl('assets/premium-sharp-hero-fix.js')+'?v=20261016-pair-only';sharp.async=true;sharp.dataset.premiumSharpHero='1';document.head.appendChild(sharp);}
