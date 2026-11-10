@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
           persist-credentials: true
       - name: Apply Free Appliance Pickup copy across recent states
         run: python3 scripts/ttg_recent_state_free_copy.py --apply
@@ -34,7 +34,10 @@ jobs:
           rm .github/workflows/ttg-recent-free-customer-copy.yml
           git add -u
           git commit -m "TTG California model: Free Appliance Pickup copy across 10 recent states"
+          git fetch origin ttg/recent-states-free-pickup-20261110
           git pull --rebase origin ttg/recent-states-free-pickup-20261110
           git push origin HEAD:ttg/recent-states-free-pickup-20261110
 
 # retry with North Carolina statewide form contract repaired
+
+# Rerun with bounded checkout logs for actionable test error output
