@@ -1,0 +1,15 @@
+{
+  "state_code": "KY",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Do not index Kentucky city pages or advertise an established route until ZIP-specific operator acceptance, real receipt tests and owner release approval."
+}
