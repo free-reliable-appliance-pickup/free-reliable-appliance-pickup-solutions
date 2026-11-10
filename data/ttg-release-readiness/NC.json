@@ -1,0 +1,15 @@
+{
+  "state_code": "NC",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Until real accepting operators, precise ZIP lists, free/paid pickup terms, verified Formspree receipt and owner approval exist, new NC pages must remain noindex and request-only. Do not claim competitor city listings verify service availability."
+}
