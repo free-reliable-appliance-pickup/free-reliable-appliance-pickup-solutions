@@ -1,0 +1,15 @@
+{
+  "state_code": "NH",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Noindex request-only until genuine NH accepting operator coverage by ZIP, Formspree test receipt and owner release approval."
+}
