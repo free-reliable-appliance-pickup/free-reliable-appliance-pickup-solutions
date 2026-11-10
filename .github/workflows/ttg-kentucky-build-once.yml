@@ -1,0 +1,33 @@
+name: TTG Kentucky 251-page California Gold FastTrack
+on:
+  push:
+    paths:
+      - '.github/workflows/ttg-kentucky-build-once.yml'
+permissions:
+  contents: write
+jobs:
+  build-and-verify:
+    if: github.ref == 'refs/heads/ttg/kentucky-california-gold-50city-20261110'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Build Kentucky statewide and 50 cities times five appliance categories
+        run: python3 scripts/ttg_build_kentucky_20261110.py
+      - name: Audit every Kentucky customer page, real image and form
+        run: python3 -m unittest tests.test_ttg_kentucky_pages -v
+      - name: TTG all-state batch preflight
+        run: python3 scripts/ttg_state_batch_qa.py
+      - name: Existing TTG regression suite
+        run: python3 -m unittest discover -s tests -p 'test_ttg_*.py' > /tmp/ttg-kentucky-checks.log 2>&1 || { tail -n 100 /tmp/ttg-kentucky-checks.log; exit 1; }
+      - name: Save only verified Kentucky request pages and remove one-time workflow
+        run: |
+          git config user.name "Free Reliable Website Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -f .github/workflows/ttg-kentucky-build-once.yml
+          git add -A
+          git commit -m "TTG Kentucky: 50 cities and 251 Free Appliance Pickup customer request pages"
+          git pull --rebase origin ttg/kentucky-california-gold-50city-20261110
+          git push origin HEAD:ttg/kentucky-california-gold-50city-20261110
