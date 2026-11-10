@@ -1,0 +1,15 @@
+{
+  "state_code": "AL",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Do not claim pickup availability or index Alabama pages until accepting local operator, real form receipt and owner approval verified."
+}
