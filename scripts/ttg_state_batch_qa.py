@@ -110,7 +110,8 @@ def check_page(path, root, code):
     # The shared business logo is branding, not the page\x27s appliance photo.
     # Require one appliance photo while still validating both image assets below.
     appliance_images = [img for img in parsed.images
-                        if "site-brand-logo" not in (img.get("class") or "").split()]
+                        if "site-brand-logo" not in (img.get("class") or "").split()
+                        and img.get("src") != "/assets/brand/free-reliable-appliance-pickup-logo-236.webp"]
     if len(appliance_images) != 1:
         failures.append("expected one actual appliance image element")
     for img in parsed.images:
