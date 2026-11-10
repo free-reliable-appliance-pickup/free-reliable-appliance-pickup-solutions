@@ -265,7 +265,7 @@ function enhanceApplianceConditionIntake(){
 function loadPaidRemovalChoice(){if(document.querySelector('script[data-paid-removal-choice]'))return;const t=document.createElement('script');t.src=siteUrl('assets/paid-removal-choice.js');t.defer=true;t.dataset.paidRemovalChoice='1';document.head.appendChild(t);}
 function recordPaidRemovalPreference(form){
   const c=findField(form,['paid_option','paid_removal_preference']),v=c&&c.value;
-  const q=v==='quote_ok'||v==='Yes, after seeing the price',f=v==='free_only'||v==='No, free pickup only';
+  const q=v==='quote_ok'||v==='quote_only'||v==='Yes, after seeing the price',f=v==='free_only'||v==='No, free pickup only';
   if(c&&c.name==='paid_option')hidden(form,'paid_removal_preference',q?'quote_ok':f?'free_only':'');
   const choice=q?'QUOTE_REVIEW_ONLY':f?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
   hidden(form,'Paid Removal Quote Gate',choice);
