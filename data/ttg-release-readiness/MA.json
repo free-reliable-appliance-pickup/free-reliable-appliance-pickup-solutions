@@ -1,0 +1,15 @@
+{
+  "state_code": "MA",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Noindex request-only until confirmed local ZIP operators, actual Formspree receipt and explicit owner approval."
+}
