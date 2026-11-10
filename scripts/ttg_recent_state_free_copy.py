@@ -60,7 +60,11 @@ def city_name(slug, code, original):
     current = unescape(title.group(1)) if title else ""
     match = re.search(r"^(.+?),\s*" + code + r"\b", current)
     if match:
-        return match.group(1).strip()
+        candidate = match.group(1).strip()
+        # Some newer titles lead with the appliance intent rather than the city.
+        if " Pickup in " in candidate:
+            candidate = candidate.rsplit(" Pickup in ", 1)[-1].strip()
+        return candidate
     return " ".join(x.capitalize() for x in slug.split("-"))
 
 def clean_copy(raw):
@@ -80,6 +84,9 @@ def clean_copy(raw):
     ]
     for pat, repl in replacements:
         s = re.sub(pat, repl, s, flags=re.I)
+    s = re.sub(r"\bpickup (?:request )?review review\b", "pickup review", s, flags=re.I)
+    s = re.sub(r"\ban pickup\b", "a pickup", s, flags=re.I)
+    s = re.sub(r"\bfree appliance pickup pickup\b", "free appliance pickup", s, flags=re.I)
     return s
 
 def visible_nodes(s):
@@ -105,24 +112,14 @@ def revise(original, rel, code):
     title = heading + " | Free Reliable Appliance Pickup"
     s = original
     if rel == "north-carolina-appliance-pickup/index.html":
-        # Statewide NC template predates the required California intake contract.
-        old = '<input type="hidden" name="state" value="North Carolina">'
-        new = '<div class="site-request-field"><label>Pickup state<select name="state" required><option value="North Carolina" selected>North Carolina</option></select></label></div>'
-        if s.count(old) != 1:
-            raise RuntimeError("NC statewide state field changed unexpectedly")
-        s = s.replace(old, new)
-        s = s.replace('name="access" placeholder=', 'name="access" required placeholder=')
-        s = s.replace('name="message" rows=', 'name="message" required rows=')
-        photo_marker = '<div class="site-request-field full"><label>Access Details'
-        photo_field = '<div class="site-request-field"><label>Photos available?<select name="photos_available" required><option value="">Choose one</option><option>Yes, I can share appliance photos</option><option>No photos yet</option><option>Need help sharing photos</option></select></label></div>'
-        if s.count(photo_marker) != 1:
-            raise RuntimeError("NC access field changed unexpectedly")
-        s = s.replace(photo_marker, photo_field + photo_marker)
-        button_marker = '<div class="site-request-field full"><button class="site-request-submit"'
-        privacy_field = '<div class="site-request-field full"><p class="site-request-note">Privacy: We use your contact, appliance condition and removal details to review this request through Formspree and may share them with a prospective pickup operator. Read our <a href="/privacy/">Privacy Policy</a>.</p><label style="display:flex;align-items:flex-start;gap:10px"><input type="checkbox" name="privacy_acknowledgment" value="acknowledged" required style="width:22px;min-width:22px;height:22px;margin:4px 0 0">I understand this is a request for free appliance pickup, not a confirmed appointment.</label></div>'
-        if s.count(button_marker) != 1:
-            raise RuntimeError("NC submit field changed unexpectedly")
-        s = s.replace(button_marker, privacy_field + button_marker)
+        # North Carolina state form was already upgraded on main; preserve it.
+        for marker in ('<select name="state" required>',
+                       'name="photos_available" required',
+                       'name="privacy_acknowledgment"',
+                       'name="access" required',
+                       'name="message" required'):
+            if marker not in s:
+                raise RuntimeError("NC statewide form field missing: " + marker)
     title_match = re.search(r"<title>[^<]*</title>", s, re.I)
     if not title_match:
         raise RuntimeError("Missing title: " + rel)
@@ -246,6 +243,8 @@ def checks(before, after, rel, code):
     content_no_code = re.sub(r'<(?:script|style)\b[^>]*>[\s\S]*?</(?:script|style)>', "", after, flags=re.I)
     human_text = " ".join(re.findall(r">([^<>]+)<", content_no_code))
     err("eligibilit" in unescape(human_text).lower(), "eligibility wording remains visible")
+    err("pickup in Free " in unescape(human_text), "duplicated city title")
+    err(bool(re.search(r"\bpickup (?:request )?review review\b", human_text, re.I)), "duplicate pickup review")
     err("eligibilit" in unescape(after[after.index("<title>"):after.index("</title>")]).lower(), "eligibility in title")
     for tag in re.findall(r'<script\b[^>]*type="application/ld\+json"[^>]*>([\s\S]*?)</script>', after, re.I):
         try: json.loads(tag)
