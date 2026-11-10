@@ -1,4 +1,4 @@
-"""TTG Minnesota: request-only QA for 216 staged pages, hub navigation and photo assets."""
+"""TTG Minnesota: request-only QA for 251 staged pages, hub navigation and photo assets."""
 from pathlib import Path
 from html.parser import HTMLParser
 import json
@@ -51,6 +51,13 @@ CITIES = (
     "st-michael",
     "stillwater",
     "woodbury",
+    "golden-valley",
+    "hopkins",
+    "hugo",
+    "oakdale",
+    "orono",
+    "wayzata",
+    "white-bear-lake",
 )
 CATEGORY_CITIES = (
     "apple-valley",
@@ -96,6 +103,13 @@ CATEGORY_CITIES = (
     "st-michael",
     "stillwater",
     "woodbury",
+    "golden-valley",
+    "hopkins",
+    "hugo",
+    "oakdale",
+    "orono",
+    "wayzata",
+    "white-bear-lake",
 )
 KINDS = ("washer-dryer", "refrigerator", "stove-oven", "freezer")
 
@@ -109,9 +123,9 @@ class MinnesotaBatchTests(unittest.TestCase):
         cls.manifest = ROOT / "data/ttg-state-batches/MN.json"
         cls.pages = json.loads(cls.manifest.read_text(encoding="utf-8"))["pages"]
 
-    def test_manifest_has_216_pages_with_required_groups(self):
-        """One hub, 43 city guides and four specialty guides per city."""
-        self.assertEqual(len(self.pages), 216)
+    def test_manifest_has_251_pages_with_required_groups(self):
+        """One hub, 50 city guides and four specialty guides per city."""
+        self.assertEqual(len(self.pages), 251)
         self.assertEqual(len(self.pages), len(set(self.pages)))
         self.assertIn("minnesota-appliance-pickup/index.html", self.pages)
         for city in CITIES:
