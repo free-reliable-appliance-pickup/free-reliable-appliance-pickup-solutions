@@ -1,0 +1,16 @@
+name: TTG Maine Gold 251-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  maine:
+    name: Maine 251-page structure
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Maine city matrix and request forms
+        run: python -m unittest discover -s tests -p 'test_ttg_maine_pages.py' -v

@@ -1,0 +1,15 @@
+{
+  "state_code": "ME",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Keep Maine request-only and noindex until actual accepting ZIP-specific operator coverage, Formspree receipt and owner release approval."
+}
