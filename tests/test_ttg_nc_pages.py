@@ -7,7 +7,7 @@ class NorthCarolinaBatchTests(unittest.TestCase):
         self.assertEqual(check_manifest(ROOT / "data/ttg-state-batches/NC.json"), [])
     def test_all_city_pages_in_state_directory(self):
         pages=json.loads((ROOT/"data/ttg-state-batches/NC.json").read_text())["pages"]
-        self.assertEqual(len(pages),68)
+        self.assertEqual(len(pages),250)
         hub=(ROOT/"north-carolina-appliance-pickup/index.html").read_text()
         for path in pages:
             slug=path.removesuffix("/index.html")
@@ -17,7 +17,7 @@ class NorthCarolinaBatchTests(unittest.TestCase):
             self.assertIn('name="privacy_acknowledgment"',html)
             self.assertIn('name="paid_option"',html)
             self.assertIn('not a completed North Carolina pickup',html)
-        self.assertIn('<h2>North Carolina City Appliance Pickup Eligibility Guides</h2>',hub)
+        self.assertIn('<h2>Free Appliance Pickup Locations in North Carolina</h2>',hub)
     def test_stoves_disconnection_fields(self):
         pages=json.loads((ROOT/"data/ttg-state-batches/NC.json").read_text())["pages"]
         for path in pages:
