@@ -44,5 +44,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ttg_new_jersey_pages.py' -v
       - name: Verify Maryland 251-page California Gold request-only rollout
         run: python -m unittest discover -s tests -p 'test_ttg_maryland_pages.py' -v
+      - name: Validate territory quality math and privacy suppression
+        run: python -m unittest discover -s tests -p 'test_ttg_territory_quality.py' -v
       - name: Validate state manifests and every listed page
         run: python scripts/ttg_state_batch_qa.py

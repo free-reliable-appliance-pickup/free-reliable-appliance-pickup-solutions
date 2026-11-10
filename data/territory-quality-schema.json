@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "created_on": "2026-11-10",
+  "purpose": "Private measurement model for territory-quality, working appliance unit flow and paying-partner retention. No public customer records or auto-pricing.",
+  "unit_of_observation": "one appliance item per record; lead_id can repeat for multiple items but item_id must be unique within each lead",
+  "source": "operator-approved export of consented website request and confirmed outcome data, held privately outside website repository",
+  "private_fields": [
+    "lead_id",
+    "item_id",
+    "partner_id",
+    "zip"
+  ],
+  "no_pii_output": true,
+  "required_csv": [
+    "lead_id",
+    "item_id",
+    "received_at",
+    "state_code",
+    "territory_id",
+    "appliance_type",
+    "working_status",
+    "quality_grade",
+    "photos_received",
+    "partner_status",
+    "pickup_status"
+  ],
+  "optional_csv": [
+    "zip",
+    "partner_id",
+    "resale_price_cents",
+    "acquisition_cost_cents",
+    "transport_cost_cents",
+    "repair_cost_cents",
+    "lead_fee_cents"
+  ],
+  "controlled_values": {
+    "working_status": [
+      "reported_working",
+      "verified_working",
+      "needs_repair",
+      "not_working",
+      "unknown"
+    ],
+    "quality_grade": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "unknown"
+    ],
+    "partner_status": [
+      "accepted",
+      "declined",
+      "unoffered"
+    ],
+    "pickup_status": [
+      "completed",
+      "cancelled",
+      "pending",
+      "no_coverage"
+    ],
+    "appliance_type": [
+      "washer",
+      "dryer",
+      "washer_dryer_set",
+      "refrigerator",
+      "freezer",
+      "stove",
+      "range",
+      "oven",
+      "other"
+    ]
+  },
+  "quality_policy": {
+    "reported_working": "Customer self-report; do NOT count as tested and verified without separate evidence",
+    "verified_working": "Function actually checked by operator or documented test. Photos alone do not establish functionality.",
+    "A": "Verified working, clean, high resale readiness after inspection; not assigned solely from ZIP or household income",
+    "B": "Verified working and serviceable condition, normal used wear, commercially reusable",
+    "C": "Needs repair / uncertain resale margin",
+    "D": "Not economic to reuse; route to suitable recycling or paid handling options",
+    "unknown": "No reliable inspection evidence. Do not turn blanks into high-quality counts."
+  },
+  "money_policy": "Use realized SOLD price only; subtract acquisition, transport, repair and lead costs. Do not replace unknown costs with zero. Never treat asking price as revenue.",
+  "retention_policy": "Use a separate complete partner-month ledger, observed next-month renewal only. Do not assume renewal for a not-yet-finished month.",
+  "territory_policy": {
+    "pricing_enabled": false,
+    "auto_partner_billing": false,
+    "auto_index_pages": false,
+    "auto_activate_coverage": false,
+    "auto_claim_exclusivity": false,
+    "requires_owner_approval": true,
+    "pricing_requires_verified_profit_and_retention": true,
+    "default_privacy_min_unique_leads": 5
+  },
+  "readiness": [
+    "Verified operator can actually accept each ZIP",
+    "Private end-to-end form submission receipt",
+    "Representative validated working-appliance counts over multiple months",
+    "Actual pickup outcomes and fulfilled lead acceptance rate",
+    "Realized partner economics, net of all costs",
+    "Observed renewing partners before offering recurring territory subscriptions",
+    "Written customer privacy and partner contract terms",
+    "Explicit owner release decision"
+  ]
+}
