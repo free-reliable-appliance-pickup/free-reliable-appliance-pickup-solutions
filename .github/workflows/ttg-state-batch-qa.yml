@@ -28,5 +28,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ttg_oklahoma_pages.py' -v
       - name: Verify Alabama 50-city Gold request pages
         run: python -m unittest discover -s tests -p 'test_ttg_alabama_pages.py' -v
+      - name: Verify Mississippi Gold 251-page rollout
+        run: python -m unittest discover -s tests -p 'test_ttg_mississippi_pages.py' -v
       - name: Validate state manifests and every listed page
         run: python scripts/ttg_state_batch_qa.py
