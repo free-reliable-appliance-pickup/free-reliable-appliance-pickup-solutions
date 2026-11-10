@@ -17,6 +17,8 @@ jobs:
           fetch-depth: 0
       - name: Apply California-style pickup wording (preserve customer forms and robots)
         run: python3 scripts/ttg_recent_state_free_copy.py --apply
+      - name: Preserve stove fuel and safe disconnect intake on SC and NC pages
+        run: python3 scripts/ttg_recent_stove_safety_fields.py
       - name: Check all updated pages
         run: python3 scripts/ttg_recent_state_free_copy.py --check
       - name: Run state batch QA
