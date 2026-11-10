@@ -1,0 +1,15 @@
+{
+  "state_code": "SD",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Keep South Dakota request-only noindex until confirmed accepting operator by ZIP, real Formspree receipt and owner approval."
+}
