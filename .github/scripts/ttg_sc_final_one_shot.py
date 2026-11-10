@@ -37,11 +37,11 @@ for rel in manifest["pages"]:
                   lambda m: '>' + m.group(1) + ' Free Appliance Pickup</a>', html, flags=re.I)
     html = html.replace("Send " + city + " " + category.lower() + " request",
                         f"Request Free {category} Pickup in {city}")
-    html = re.sub(r'\\beligibility\\b', 'pickup review', html, flags=re.I)
+    html = re.sub('eligibility', 'pickup review', html, flags=re.I)
     html = re.sub(r'<button type="submit">[^<]+</button>',
                   f'<button type="submit">Request Free {category} Pickup</button>', html, count=1)
 
-    section_match = re.search(r'<section id="request">[\\s\\S]*?</section>', html)
+    section_match = re.search(r'<section id="request">.*?</section>', html, flags=re.S)
     if not section_match or "<form " not in section_match.group(0):
         raise ValueError(f"Missing request section: {rel}")
     section = section_match.group(0)
