@@ -1,0 +1,15 @@
+{
+  "state_code": "IN",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Keep new Indiana pages request-only and noindex until real accepting operators, exact ZIP coverage, terms, verified Formspree inbox receipt and owner approval. Competitor listings are not coverage proof."
+}
