@@ -60,7 +60,11 @@ def city_name(slug, code, original):
     current = unescape(title.group(1)) if title else ""
     match = re.search(r"^(.+?),\s*" + code + r"\b", current)
     if match:
-        return match.group(1).strip()
+        candidate = match.group(1).strip()
+        # Some newer titles lead with the appliance intent rather than the city.
+        if " Pickup in " in candidate:
+            candidate = candidate.rsplit(" Pickup in ", 1)[-1].strip()
+        return candidate
     return " ".join(x.capitalize() for x in slug.split("-"))
 
 def clean_copy(raw):
@@ -80,6 +84,9 @@ def clean_copy(raw):
     ]
     for pat, repl in replacements:
         s = re.sub(pat, repl, s, flags=re.I)
+    s = re.sub(r"\bpickup (?:request )?review review\b", "pickup review", s, flags=re.I)
+    s = re.sub(r"\ban pickup\b", "a pickup", s, flags=re.I)
+    s = re.sub(r"\bfree appliance pickup pickup\b", "free appliance pickup", s, flags=re.I)
     return s
 
 def visible_nodes(s):
@@ -236,6 +243,8 @@ def checks(before, after, rel, code):
     content_no_code = re.sub(r'<(?:script|style)\b[^>]*>[\s\S]*?</(?:script|style)>', "", after, flags=re.I)
     human_text = " ".join(re.findall(r">([^<>]+)<", content_no_code))
     err("eligibilit" in unescape(human_text).lower(), "eligibility wording remains visible")
+    err("pickup in Free " in unescape(human_text), "duplicated city title")
+    err(bool(re.search(r"\bpickup (?:request )?review review\b", human_text, re.I)), "duplicate pickup review")
     err("eligibilit" in unescape(after[after.index("<title>"):after.index("</title>")]).lower(), "eligibility in title")
     for tag in re.findall(r'<script\b[^>]*type="application/ld\+json"[^>]*>([\s\S]*?)</script>', after, re.I):
         try: json.loads(tag)
