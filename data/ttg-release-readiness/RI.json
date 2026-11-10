@@ -1,0 +1,15 @@
+{
+  "state_code": "RI",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Request-only, noindex, and omitted from sitemap; no Rhode Island coverage or guaranteed free pickup until actual accepting operators, proven form delivery and explicit owner release approval."
+}
