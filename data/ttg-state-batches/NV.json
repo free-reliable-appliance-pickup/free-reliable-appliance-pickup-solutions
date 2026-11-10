@@ -1,0 +1,510 @@
+{
+  "state_code": "NV",
+  "mode": "request-only",
+  "existing_indexed_state_hub_preserved": "nevada-appliance-pickup/index.html",
+  "operator_coverage_verified": false,
+  "communities": [
+    {
+      "name": "Las Vegas",
+      "slug": "las-vegas",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Henderson",
+      "slug": "henderson",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "North Las Vegas",
+      "slug": "north-las-vegas",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Paradise",
+      "slug": "paradise",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Spring Valley",
+      "slug": "spring-valley",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Enterprise",
+      "slug": "enterprise",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Sunrise Manor",
+      "slug": "sunrise-manor",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Whitney",
+      "slug": "whitney",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Winchester",
+      "slug": "winchester",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Summerlin South",
+      "slug": "summerlin-south",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Boulder City",
+      "slug": "boulder-city",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Mesquite",
+      "slug": "mesquite",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Laughlin",
+      "slug": "laughlin",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Moapa Valley",
+      "slug": "moapa-valley",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Logandale",
+      "slug": "logandale",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Overton",
+      "slug": "overton",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Indian Springs",
+      "slug": "indian-springs",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Searchlight",
+      "slug": "searchlight",
+      "region": "Las Vegas Valley"
+    },
+    {
+      "name": "Reno",
+      "slug": "reno",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Sparks",
+      "slug": "sparks",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Sun Valley",
+      "slug": "sun-valley",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Spanish Springs",
+      "slug": "spanish-springs",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Lemmon Valley",
+      "slug": "lemmon-valley",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Cold Springs",
+      "slug": "cold-springs",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Incline Village",
+      "slug": "incline-village",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Verdi",
+      "slug": "verdi",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Washoe Valley",
+      "slug": "washoe-valley",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Mogul",
+      "slug": "mogul",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Golden Valley",
+      "slug": "golden-valley",
+      "region": "Reno and Sparks"
+    },
+    {
+      "name": "Carson City",
+      "slug": "carson-city",
+      "region": "Carson Valley"
+    },
+    {
+      "name": "Fernley",
+      "slug": "fernley",
+      "region": "Carson Valley"
+    },
+    {
+      "name": "Dayton",
+      "slug": "dayton",
+      "region": "Carson Valley"
+    },
+    {
+      "name": "Minden",
+      "slug": "minden",
+      "region": "Carson Valley"
+    },
+    {
+      "name": "Gardnerville",
+      "slug": "gardnerville",
+      "region": "Carson Valley"
+    },
+    {
+      "name": "Genoa",
+      "slug": "genoa",
+      "region": "Carson Valley"
+    },
+    {
+      "name": "Johnson Lane",
+      "slug": "johnson-lane",
+      "region": "Carson Valley"
+    },
+    {
+      "name": "Silver Springs",
+      "slug": "silver-springs",
+      "region": "Carson Valley"
+    },
+    {
+      "name": "Virginia City",
+      "slug": "virginia-city",
+      "region": "Carson Valley"
+    },
+    {
+      "name": "Pahrump",
+      "slug": "pahrump",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Amargosa Valley",
+      "slug": "amargosa-valley",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Beatty",
+      "slug": "beatty",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Tonopah",
+      "slug": "tonopah",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Ely",
+      "slug": "ely",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Elko",
+      "slug": "elko",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Spring Creek",
+      "slug": "spring-creek",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Winnemucca",
+      "slug": "winnemucca",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Battle Mountain",
+      "slug": "battle-mountain",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Fallon",
+      "slug": "fallon",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "Yerington",
+      "slug": "yerington",
+      "region": "Beyond the main metropolitan areas"
+    },
+    {
+      "name": "West Wendover",
+      "slug": "west-wendover",
+      "region": "Beyond the main metropolitan areas"
+    }
+  ],
+  "pages": [
+    "las-vegas-nv-appliance-pickup/index.html",
+    "las-vegas-nv-washer-dryer-pickup/index.html",
+    "las-vegas-nv-refrigerator-pickup/index.html",
+    "las-vegas-nv-stove-oven-pickup/index.html",
+    "las-vegas-nv-freezer-pickup/index.html",
+    "henderson-nv-appliance-pickup/index.html",
+    "henderson-nv-washer-dryer-pickup/index.html",
+    "henderson-nv-refrigerator-pickup/index.html",
+    "henderson-nv-stove-oven-pickup/index.html",
+    "henderson-nv-freezer-pickup/index.html",
+    "north-las-vegas-nv-appliance-pickup/index.html",
+    "north-las-vegas-nv-washer-dryer-pickup/index.html",
+    "north-las-vegas-nv-refrigerator-pickup/index.html",
+    "north-las-vegas-nv-stove-oven-pickup/index.html",
+    "north-las-vegas-nv-freezer-pickup/index.html",
+    "paradise-nv-appliance-pickup/index.html",
+    "paradise-nv-washer-dryer-pickup/index.html",
+    "paradise-nv-refrigerator-pickup/index.html",
+    "paradise-nv-stove-oven-pickup/index.html",
+    "paradise-nv-freezer-pickup/index.html",
+    "spring-valley-nv-appliance-pickup/index.html",
+    "spring-valley-nv-washer-dryer-pickup/index.html",
+    "spring-valley-nv-refrigerator-pickup/index.html",
+    "spring-valley-nv-stove-oven-pickup/index.html",
+    "spring-valley-nv-freezer-pickup/index.html",
+    "enterprise-nv-appliance-pickup/index.html",
+    "enterprise-nv-washer-dryer-pickup/index.html",
+    "enterprise-nv-refrigerator-pickup/index.html",
+    "enterprise-nv-stove-oven-pickup/index.html",
+    "enterprise-nv-freezer-pickup/index.html",
+    "sunrise-manor-nv-appliance-pickup/index.html",
+    "sunrise-manor-nv-washer-dryer-pickup/index.html",
+    "sunrise-manor-nv-refrigerator-pickup/index.html",
+    "sunrise-manor-nv-stove-oven-pickup/index.html",
+    "sunrise-manor-nv-freezer-pickup/index.html",
+    "whitney-nv-appliance-pickup/index.html",
+    "whitney-nv-washer-dryer-pickup/index.html",
+    "whitney-nv-refrigerator-pickup/index.html",
+    "whitney-nv-stove-oven-pickup/index.html",
+    "whitney-nv-freezer-pickup/index.html",
+    "winchester-nv-appliance-pickup/index.html",
+    "winchester-nv-washer-dryer-pickup/index.html",
+    "winchester-nv-refrigerator-pickup/index.html",
+    "winchester-nv-stove-oven-pickup/index.html",
+    "winchester-nv-freezer-pickup/index.html",
+    "summerlin-south-nv-appliance-pickup/index.html",
+    "summerlin-south-nv-washer-dryer-pickup/index.html",
+    "summerlin-south-nv-refrigerator-pickup/index.html",
+    "summerlin-south-nv-stove-oven-pickup/index.html",
+    "summerlin-south-nv-freezer-pickup/index.html",
+    "boulder-city-nv-appliance-pickup/index.html",
+    "boulder-city-nv-washer-dryer-pickup/index.html",
+    "boulder-city-nv-refrigerator-pickup/index.html",
+    "boulder-city-nv-stove-oven-pickup/index.html",
+    "boulder-city-nv-freezer-pickup/index.html",
+    "mesquite-nv-appliance-pickup/index.html",
+    "mesquite-nv-washer-dryer-pickup/index.html",
+    "mesquite-nv-refrigerator-pickup/index.html",
+    "mesquite-nv-stove-oven-pickup/index.html",
+    "mesquite-nv-freezer-pickup/index.html",
+    "laughlin-nv-appliance-pickup/index.html",
+    "laughlin-nv-washer-dryer-pickup/index.html",
+    "laughlin-nv-refrigerator-pickup/index.html",
+    "laughlin-nv-stove-oven-pickup/index.html",
+    "laughlin-nv-freezer-pickup/index.html",
+    "moapa-valley-nv-appliance-pickup/index.html",
+    "moapa-valley-nv-washer-dryer-pickup/index.html",
+    "moapa-valley-nv-refrigerator-pickup/index.html",
+    "moapa-valley-nv-stove-oven-pickup/index.html",
+    "moapa-valley-nv-freezer-pickup/index.html",
+    "logandale-nv-appliance-pickup/index.html",
+    "logandale-nv-washer-dryer-pickup/index.html",
+    "logandale-nv-refrigerator-pickup/index.html",
+    "logandale-nv-stove-oven-pickup/index.html",
+    "logandale-nv-freezer-pickup/index.html",
+    "overton-nv-appliance-pickup/index.html",
+    "overton-nv-washer-dryer-pickup/index.html",
+    "overton-nv-refrigerator-pickup/index.html",
+    "overton-nv-stove-oven-pickup/index.html",
+    "overton-nv-freezer-pickup/index.html",
+    "indian-springs-nv-appliance-pickup/index.html",
+    "indian-springs-nv-washer-dryer-pickup/index.html",
+    "indian-springs-nv-refrigerator-pickup/index.html",
+    "indian-springs-nv-stove-oven-pickup/index.html",
+    "indian-springs-nv-freezer-pickup/index.html",
+    "searchlight-nv-appliance-pickup/index.html",
+    "searchlight-nv-washer-dryer-pickup/index.html",
+    "searchlight-nv-refrigerator-pickup/index.html",
+    "searchlight-nv-stove-oven-pickup/index.html",
+    "searchlight-nv-freezer-pickup/index.html",
+    "reno-nv-appliance-pickup/index.html",
+    "reno-nv-washer-dryer-pickup/index.html",
+    "reno-nv-refrigerator-pickup/index.html",
+    "reno-nv-stove-oven-pickup/index.html",
+    "reno-nv-freezer-pickup/index.html",
+    "sparks-nv-appliance-pickup/index.html",
+    "sparks-nv-washer-dryer-pickup/index.html",
+    "sparks-nv-refrigerator-pickup/index.html",
+    "sparks-nv-stove-oven-pickup/index.html",
+    "sparks-nv-freezer-pickup/index.html",
+    "sun-valley-nv-appliance-pickup/index.html",
+    "sun-valley-nv-washer-dryer-pickup/index.html",
+    "sun-valley-nv-refrigerator-pickup/index.html",
+    "sun-valley-nv-stove-oven-pickup/index.html",
+    "sun-valley-nv-freezer-pickup/index.html",
+    "spanish-springs-nv-appliance-pickup/index.html",
+    "spanish-springs-nv-washer-dryer-pickup/index.html",
+    "spanish-springs-nv-refrigerator-pickup/index.html",
+    "spanish-springs-nv-stove-oven-pickup/index.html",
+    "spanish-springs-nv-freezer-pickup/index.html",
+    "lemmon-valley-nv-appliance-pickup/index.html",
+    "lemmon-valley-nv-washer-dryer-pickup/index.html",
+    "lemmon-valley-nv-refrigerator-pickup/index.html",
+    "lemmon-valley-nv-stove-oven-pickup/index.html",
+    "lemmon-valley-nv-freezer-pickup/index.html",
+    "cold-springs-nv-appliance-pickup/index.html",
+    "cold-springs-nv-washer-dryer-pickup/index.html",
+    "cold-springs-nv-refrigerator-pickup/index.html",
+    "cold-springs-nv-stove-oven-pickup/index.html",
+    "cold-springs-nv-freezer-pickup/index.html",
+    "incline-village-nv-appliance-pickup/index.html",
+    "incline-village-nv-washer-dryer-pickup/index.html",
+    "incline-village-nv-refrigerator-pickup/index.html",
+    "incline-village-nv-stove-oven-pickup/index.html",
+    "incline-village-nv-freezer-pickup/index.html",
+    "verdi-nv-appliance-pickup/index.html",
+    "verdi-nv-washer-dryer-pickup/index.html",
+    "verdi-nv-refrigerator-pickup/index.html",
+    "verdi-nv-stove-oven-pickup/index.html",
+    "verdi-nv-freezer-pickup/index.html",
+    "washoe-valley-nv-appliance-pickup/index.html",
+    "washoe-valley-nv-washer-dryer-pickup/index.html",
+    "washoe-valley-nv-refrigerator-pickup/index.html",
+    "washoe-valley-nv-stove-oven-pickup/index.html",
+    "washoe-valley-nv-freezer-pickup/index.html",
+    "mogul-nv-appliance-pickup/index.html",
+    "mogul-nv-washer-dryer-pickup/index.html",
+    "mogul-nv-refrigerator-pickup/index.html",
+    "mogul-nv-stove-oven-pickup/index.html",
+    "mogul-nv-freezer-pickup/index.html",
+    "golden-valley-nv-appliance-pickup/index.html",
+    "golden-valley-nv-washer-dryer-pickup/index.html",
+    "golden-valley-nv-refrigerator-pickup/index.html",
+    "golden-valley-nv-stove-oven-pickup/index.html",
+    "golden-valley-nv-freezer-pickup/index.html",
+    "carson-city-nv-appliance-pickup/index.html",
+    "carson-city-nv-washer-dryer-pickup/index.html",
+    "carson-city-nv-refrigerator-pickup/index.html",
+    "carson-city-nv-stove-oven-pickup/index.html",
+    "carson-city-nv-freezer-pickup/index.html",
+    "fernley-nv-appliance-pickup/index.html",
+    "fernley-nv-washer-dryer-pickup/index.html",
+    "fernley-nv-refrigerator-pickup/index.html",
+    "fernley-nv-stove-oven-pickup/index.html",
+    "fernley-nv-freezer-pickup/index.html",
+    "dayton-nv-appliance-pickup/index.html",
+    "dayton-nv-washer-dryer-pickup/index.html",
+    "dayton-nv-refrigerator-pickup/index.html",
+    "dayton-nv-stove-oven-pickup/index.html",
+    "dayton-nv-freezer-pickup/index.html",
+    "minden-nv-appliance-pickup/index.html",
+    "minden-nv-washer-dryer-pickup/index.html",
+    "minden-nv-refrigerator-pickup/index.html",
+    "minden-nv-stove-oven-pickup/index.html",
+    "minden-nv-freezer-pickup/index.html",
+    "gardnerville-nv-appliance-pickup/index.html",
+    "gardnerville-nv-washer-dryer-pickup/index.html",
+    "gardnerville-nv-refrigerator-pickup/index.html",
+    "gardnerville-nv-stove-oven-pickup/index.html",
+    "gardnerville-nv-freezer-pickup/index.html",
+    "genoa-nv-appliance-pickup/index.html",
+    "genoa-nv-washer-dryer-pickup/index.html",
+    "genoa-nv-refrigerator-pickup/index.html",
+    "genoa-nv-stove-oven-pickup/index.html",
+    "genoa-nv-freezer-pickup/index.html",
+    "johnson-lane-nv-appliance-pickup/index.html",
+    "johnson-lane-nv-washer-dryer-pickup/index.html",
+    "johnson-lane-nv-refrigerator-pickup/index.html",
+    "johnson-lane-nv-stove-oven-pickup/index.html",
+    "johnson-lane-nv-freezer-pickup/index.html",
+    "silver-springs-nv-appliance-pickup/index.html",
+    "silver-springs-nv-washer-dryer-pickup/index.html",
+    "silver-springs-nv-refrigerator-pickup/index.html",
+    "silver-springs-nv-stove-oven-pickup/index.html",
+    "silver-springs-nv-freezer-pickup/index.html",
+    "virginia-city-nv-appliance-pickup/index.html",
+    "virginia-city-nv-washer-dryer-pickup/index.html",
+    "virginia-city-nv-refrigerator-pickup/index.html",
+    "virginia-city-nv-stove-oven-pickup/index.html",
+    "virginia-city-nv-freezer-pickup/index.html",
+    "pahrump-nv-appliance-pickup/index.html",
+    "pahrump-nv-washer-dryer-pickup/index.html",
+    "pahrump-nv-refrigerator-pickup/index.html",
+    "pahrump-nv-stove-oven-pickup/index.html",
+    "pahrump-nv-freezer-pickup/index.html",
+    "amargosa-valley-nv-appliance-pickup/index.html",
+    "amargosa-valley-nv-washer-dryer-pickup/index.html",
+    "amargosa-valley-nv-refrigerator-pickup/index.html",
+    "amargosa-valley-nv-stove-oven-pickup/index.html",
+    "amargosa-valley-nv-freezer-pickup/index.html",
+    "beatty-nv-appliance-pickup/index.html",
+    "beatty-nv-washer-dryer-pickup/index.html",
+    "beatty-nv-refrigerator-pickup/index.html",
+    "beatty-nv-stove-oven-pickup/index.html",
+    "beatty-nv-freezer-pickup/index.html",
+    "tonopah-nv-appliance-pickup/index.html",
+    "tonopah-nv-washer-dryer-pickup/index.html",
+    "tonopah-nv-refrigerator-pickup/index.html",
+    "tonopah-nv-stove-oven-pickup/index.html",
+    "tonopah-nv-freezer-pickup/index.html",
+    "ely-nv-appliance-pickup/index.html",
+    "ely-nv-washer-dryer-pickup/index.html",
+    "ely-nv-refrigerator-pickup/index.html",
+    "ely-nv-stove-oven-pickup/index.html",
+    "ely-nv-freezer-pickup/index.html",
+    "elko-nv-appliance-pickup/index.html",
+    "elko-nv-washer-dryer-pickup/index.html",
+    "elko-nv-refrigerator-pickup/index.html",
+    "elko-nv-stove-oven-pickup/index.html",
+    "elko-nv-freezer-pickup/index.html",
+    "spring-creek-nv-appliance-pickup/index.html",
+    "spring-creek-nv-washer-dryer-pickup/index.html",
+    "spring-creek-nv-refrigerator-pickup/index.html",
+    "spring-creek-nv-stove-oven-pickup/index.html",
+    "spring-creek-nv-freezer-pickup/index.html",
+    "winnemucca-nv-appliance-pickup/index.html",
+    "winnemucca-nv-washer-dryer-pickup/index.html",
+    "winnemucca-nv-refrigerator-pickup/index.html",
+    "winnemucca-nv-stove-oven-pickup/index.html",
+    "winnemucca-nv-freezer-pickup/index.html",
+    "battle-mountain-nv-appliance-pickup/index.html",
+    "battle-mountain-nv-washer-dryer-pickup/index.html",
+    "battle-mountain-nv-refrigerator-pickup/index.html",
+    "battle-mountain-nv-stove-oven-pickup/index.html",
+    "battle-mountain-nv-freezer-pickup/index.html",
+    "fallon-nv-appliance-pickup/index.html",
+    "fallon-nv-washer-dryer-pickup/index.html",
+    "fallon-nv-refrigerator-pickup/index.html",
+    "fallon-nv-stove-oven-pickup/index.html",
+    "fallon-nv-freezer-pickup/index.html",
+    "yerington-nv-appliance-pickup/index.html",
+    "yerington-nv-washer-dryer-pickup/index.html",
+    "yerington-nv-refrigerator-pickup/index.html",
+    "yerington-nv-stove-oven-pickup/index.html",
+    "yerington-nv-freezer-pickup/index.html",
+    "west-wendover-nv-appliance-pickup/index.html",
+    "west-wendover-nv-washer-dryer-pickup/index.html",
+    "west-wendover-nv-refrigerator-pickup/index.html",
+    "west-wendover-nv-stove-oven-pickup/index.html",
+    "west-wendover-nv-freezer-pickup/index.html"
+  ]
+}
