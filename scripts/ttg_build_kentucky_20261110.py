@@ -257,6 +257,13 @@ def run():
         "owner_release_approval":{"approved":False,"approved_on":None,"reference":""},
         "instructions":"Do not index Kentucky city pages or advertise an established route until ZIP-specific operator acceptance, real receipt tests and owner release approval."}
     (ROOT/"data/ttg-release-readiness/KY.json").write_text(json.dumps(ledger,indent=2)+"\n",encoding="utf-8")
+    service_areas=ROOT/"service-areas/index.html"
+    directory=service_areas.read_text(encoding="utf-8")
+    anchor='<div class="card"><a href="../south-carolina-appliance-pickup/">'
+    new_link='<div class="card"><a href="../kentucky-appliance-pickup/">Kentucky — Free Appliance Pickup requests (local routes unconfirmed)</a></div>'
+    if anchor not in directory or "kentucky-appliance-pickup/" in directory:
+        raise RuntimeError("Service areas navigation unexpectedly changed; abort")
+    service_areas.write_text(directory.replace(anchor,new_link+anchor,1),encoding="utf-8")
     print("Generated Kentucky California Gold: 50 cities, five page types each plus statewide hub = 251 complete customer-form pages.")
     print("One real appliance photo per page; 50 distinct laundry photos; live Formspree endpoint; noindex pending verified Kentucky service.")
 if __name__=="__main__":
