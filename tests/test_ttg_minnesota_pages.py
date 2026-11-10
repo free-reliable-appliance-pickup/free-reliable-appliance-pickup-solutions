@@ -340,5 +340,24 @@ class MinnesotaBatchTests(unittest.TestCase):
                         self.assertNotIn(fragment + "</p>", html)
 
 
+    def test_minnesota_wave2_official_county_fallbacks(self):
+        """Keep official county links visible when local private collection is unconfirmed."""
+        fallbacks = {
+            "fridley": "anokacountymn.gov/370/Residential-Recycling",
+            "northfield": "ricecountymn.gov/220/Recycling-Center",
+            "stillwater": "co.washington.mn.us/3775/Reuse-and-Donation-Opportunities",
+            "sartell": "stearnscountymn.gov/wastewizard",
+            "sauk-rapids": "bentoncountymn.gov/224/Solid-Waste-Management",
+        }
+        for city, target in fallbacks.items():
+            for kind in ("appliance", *KINDS):
+                with self.subTest(city=city, kind=kind):
+                    html = (ROOT / f"{city}-mn-{kind}-pickup/index.html").read_text(encoding="utf-8")
+                    section = html.partition("<h2>Alternative recycling and removal options</h2>")[2].partition("</section>")[0]
+                    self.assertIn(target, section)
+                    self.assertIn("Official county appliance recycling information", section)
+                    self.assertIn('content="noindex, follow"', html)
+
+
 if __name__ == "__main__":
     unittest.main()
