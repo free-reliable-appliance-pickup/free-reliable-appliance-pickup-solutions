@@ -1,0 +1,25 @@
+name: TTG South Carolina California branding
+on:
+  push:
+    branches:
+      - ttg/sc-california-brand-2026-11-10
+permissions:
+  contents: write
+jobs:
+  apply-city-branding:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Update South Carolina city guides
+        run: python3 scripts/ttg_sc_brand_fix.py
+      - name: Commit resulting pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*-sc-*-pickup/index.html'
+          if ! git diff --cached --quiet; then
+            git commit -m "TTG South Carolina: California-style brand on 250 city guides"
+            git push
+          fi
