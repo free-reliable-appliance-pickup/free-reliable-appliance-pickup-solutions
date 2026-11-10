@@ -1,0 +1,15 @@
+{
+  "state_code": "MD",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Noindex request-only until proven MD ZIP-specific accepting operators, a genuine Formspree test receipt, and explicit owner approval."
+}
