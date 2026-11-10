@@ -29,6 +29,14 @@ class WisconsinBatchTests(unittest.TestCase):
             h=(ROOT/p).read_text()
             self.assertIn('name="fuel_type" required',h)
             self.assertIn('name="connection_status" required',h)
+    def test_nonworking_condition_details_and_dispatch_gate(self):
+        """Nonworking must require a defect explanation and be routed for partner review."""
+        router=(ROOT/"assets/customer-routing.js").read_text()
+        self.assertIn(r"non[\s-]*working|not[\s-]*working",router)
+        self.assertIn("details.required=hasProblem",router)
+        self.assertIn("REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH",router)
+        page=(ROOT/"wisconsin-appliance-pickup/index.html").read_text()
+        self.assertIn("<option>Nonworking</option>",page)
     def test_release_unapproved(self):
         r=json.loads((ROOT/"data/ttg-release-readiness/WI.json").read_text())
         self.assertEqual(r["verified_cities"],[])
