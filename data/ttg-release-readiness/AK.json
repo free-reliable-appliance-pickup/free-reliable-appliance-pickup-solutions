@@ -1,0 +1,15 @@
+{
+  "state_code": "AK",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Alaska pages remain noindex, request-only; require actual ZIP-specific accepting operator, demonstrated form receipt, local transport/access verification and owner approval before releasing."
+}

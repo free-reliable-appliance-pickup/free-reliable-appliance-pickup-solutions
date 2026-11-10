@@ -1,0 +1,15 @@
+name: TTG Alaska Gold 251-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  alaska:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Alaska market, form and release gates
+        run: python -m unittest discover -s tests -p 'test_ttg_alaska_pages.py' -v
