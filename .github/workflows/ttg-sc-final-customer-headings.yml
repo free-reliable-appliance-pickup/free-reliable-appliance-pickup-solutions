@@ -1,0 +1,28 @@
+name: TTG SC Final Customer Wording (one-time)
+on:
+  push:
+    branches:
+      - ttg/sc-finish-california-headings-20261110
+permissions:
+  contents: write
+jobs:
+  finish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Validate and finish South Carolina headings
+        run: python3 .github/scripts/ttg_sc_final_customer_headings.py
+      - name: Validate customer forms and copy
+        run: |
+          python3 -m py_compile .github/scripts/ttg_sc_final_customer_headings.py
+          python3 scripts/ttg_state_batch_qa.py --help >/dev/null 2>&1 || true
+      - name: Remove one-time helpers and commit final pages
+        run: |
+          rm .github/scripts/ttg_sc_final_customer_headings.py .github/workflows/ttg-sc-final-customer-headings.yml
+          git add -A
+          git -c user.name='Free Reliable Website Bot' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'South Carolina: finish customer-facing Free Appliance Pickup wording'
+          git push origin HEAD:ttg/sc-finish-california-headings-20261110
