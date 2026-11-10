@@ -1,0 +1,16 @@
+{
+  "state_code": "GA",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "existing_hub": "georgia-appliance-pickup/index.html",
+  "instructions": "Noindex all newly staged city pages until genuine ZIP-local accepting pickup operator, real form receipt and owner's explicit release approval."
+}

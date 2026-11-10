@@ -1,0 +1,15 @@
+name: TTG Georgia Gold Gapfill QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  georgia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Georgia request pages and noindex release gates
+        run: python -m unittest discover -s tests -p 'test_ttg_georgia_pages.py' -v
