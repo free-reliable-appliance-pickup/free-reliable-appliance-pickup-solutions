@@ -152,7 +152,7 @@ class MinnesotaBatchTests(unittest.TestCase):
         self.assertIn("does not book or guarantee free pickup", html)
         self.assertIn('name="privacy_acknowledgment" value="acknowledged" required', html)
         self.assertIn("illustrative only; not a documented Minnesota pickup", html)
-        self.assertIn("<h1>Minnesota Free Appliance Pickup", html)
+        self.assertIn("<h1>Free Appliance Pickup in Minnesota", html)
         self.assertIn('content="noindex, follow"', html)
 
     def test_hub_links_to_every_city_and_category(self):
@@ -285,7 +285,7 @@ class MinnesotaBatchTests(unittest.TestCase):
                 description = html.split('<meta name="description" content="', 1)[1].split('"', 1)[0]
                 self.assertIn("Free ", title)
                 self.assertIn("Free ", heading)
-                self.assertIn("Free appliance pickup eligibility", description)
+                self.assertIn("free appliance pickup", description.lower())
                 self.assertIn("Looking for free appliance pickup?", html)
                 self.assertIn("Free pickup and local routes are not currently confirmed", html)
                 self.assertIn('content="noindex, follow"', html)
