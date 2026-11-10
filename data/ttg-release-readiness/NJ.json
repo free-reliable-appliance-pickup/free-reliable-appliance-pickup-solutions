@@ -1,0 +1,15 @@
+{
+  "state_code": "NJ",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "No public service coverage claim or index activation for NJ until verified accepting ZIP-level operators, actual Formspree receipt and explicit owner approval."
+}
