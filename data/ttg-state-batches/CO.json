@@ -1,0 +1,714 @@
+{
+  "state_code": "CO",
+  "mode": "request-only",
+  "existing_indexed_state_hub_preserved": "colorado-appliance-pickup/index.html",
+  "operator_coverage_verified": false,
+  "communities": [
+    {
+      "name": "Denver",
+      "slug": "denver",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Aurora",
+      "slug": "aurora",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Lakewood",
+      "slug": "lakewood",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Littleton",
+      "slug": "littleton",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Englewood",
+      "slug": "englewood",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Centennial",
+      "slug": "centennial",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Arvada",
+      "slug": "arvada",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Westminster",
+      "slug": "westminster",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Thornton",
+      "slug": "thornton",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Northglenn",
+      "slug": "northglenn",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Commerce City",
+      "slug": "commerce-city",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Wheat Ridge",
+      "slug": "wheat-ridge",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Golden",
+      "slug": "golden",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Broomfield",
+      "slug": "broomfield",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Federal Heights",
+      "slug": "federal-heights",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Sheridan",
+      "slug": "sheridan",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Glendale",
+      "slug": "glendale",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Edgewater",
+      "slug": "edgewater",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Greenwood Village",
+      "slug": "greenwood-village",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Cherry Hills Village",
+      "slug": "cherry-hills-village",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Lone Tree",
+      "slug": "lone-tree",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Highlands Ranch",
+      "slug": "highlands-ranch",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Ken Caryl",
+      "slug": "ken-caryl",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Parker",
+      "slug": "parker",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Castle Rock",
+      "slug": "castle-rock",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Castle Pines",
+      "slug": "castle-pines",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Brighton",
+      "slug": "brighton",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Lafayette",
+      "slug": "lafayette",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Louisville",
+      "slug": "louisville",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Superior",
+      "slug": "superior",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Erie",
+      "slug": "erie",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Boulder",
+      "slug": "boulder",
+      "region": "Denver Metro and Boulder"
+    },
+    {
+      "name": "Fort Collins",
+      "slug": "fort-collins",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Loveland",
+      "slug": "loveland",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Longmont",
+      "slug": "longmont",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Berthoud",
+      "slug": "berthoud",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Windsor",
+      "slug": "windsor",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Greeley",
+      "slug": "greeley",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Evans",
+      "slug": "evans",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Johnstown",
+      "slug": "johnstown",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Timnath",
+      "slug": "timnath",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Wellington",
+      "slug": "wellington",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Estes Park",
+      "slug": "estes-park",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Firestone",
+      "slug": "firestone",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Frederick",
+      "slug": "frederick",
+      "region": "Northern Front Range"
+    },
+    {
+      "name": "Colorado Springs",
+      "slug": "colorado-springs",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Fountain",
+      "slug": "fountain",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Security-Widefield",
+      "slug": "security-widefield",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Monument",
+      "slug": "monument",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Palmer Lake",
+      "slug": "palmer-lake",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Manitou Springs",
+      "slug": "manitou-springs",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Woodland Park",
+      "slug": "woodland-park",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Falcon",
+      "slug": "falcon",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Black Forest",
+      "slug": "black-forest",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Cimarron Hills",
+      "slug": "cimarron-hills",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Pueblo",
+      "slug": "pueblo",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Pueblo West",
+      "slug": "pueblo-west",
+      "region": "Pikes Peak and Pueblo"
+    },
+    {
+      "name": "Grand Junction",
+      "slug": "grand-junction",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Fruita",
+      "slug": "fruita",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Montrose",
+      "slug": "montrose",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Durango",
+      "slug": "durango",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Cortez",
+      "slug": "cortez",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Glenwood Springs",
+      "slug": "glenwood-springs",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Carbondale",
+      "slug": "carbondale",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Aspen",
+      "slug": "aspen",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Rifle",
+      "slug": "rifle",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Vail",
+      "slug": "vail",
+      "region": "Western Slope"
+    },
+    {
+      "name": "Canon City",
+      "slug": "canon-city",
+      "region": "Southern and Eastern Colorado"
+    },
+    {
+      "name": "Trinidad",
+      "slug": "trinidad",
+      "region": "Southern and Eastern Colorado"
+    },
+    {
+      "name": "La Junta",
+      "slug": "la-junta",
+      "region": "Southern and Eastern Colorado"
+    }
+  ],
+  "pages": [
+    "lakewood-co-refrigerator-pickup/index.html",
+    "lakewood-co-stove-oven-pickup/index.html",
+    "lakewood-co-freezer-pickup/index.html",
+    "littleton-co-appliance-pickup/index.html",
+    "littleton-co-washer-dryer-pickup/index.html",
+    "littleton-co-refrigerator-pickup/index.html",
+    "littleton-co-stove-oven-pickup/index.html",
+    "littleton-co-freezer-pickup/index.html",
+    "englewood-co-appliance-pickup/index.html",
+    "englewood-co-washer-dryer-pickup/index.html",
+    "englewood-co-refrigerator-pickup/index.html",
+    "englewood-co-stove-oven-pickup/index.html",
+    "englewood-co-freezer-pickup/index.html",
+    "centennial-co-washer-dryer-pickup/index.html",
+    "centennial-co-refrigerator-pickup/index.html",
+    "centennial-co-stove-oven-pickup/index.html",
+    "centennial-co-freezer-pickup/index.html",
+    "arvada-co-washer-dryer-pickup/index.html",
+    "arvada-co-refrigerator-pickup/index.html",
+    "arvada-co-stove-oven-pickup/index.html",
+    "arvada-co-freezer-pickup/index.html",
+    "westminster-co-refrigerator-pickup/index.html",
+    "westminster-co-stove-oven-pickup/index.html",
+    "westminster-co-freezer-pickup/index.html",
+    "thornton-co-appliance-pickup/index.html",
+    "thornton-co-washer-dryer-pickup/index.html",
+    "thornton-co-refrigerator-pickup/index.html",
+    "thornton-co-stove-oven-pickup/index.html",
+    "thornton-co-freezer-pickup/index.html",
+    "northglenn-co-appliance-pickup/index.html",
+    "northglenn-co-washer-dryer-pickup/index.html",
+    "northglenn-co-refrigerator-pickup/index.html",
+    "northglenn-co-stove-oven-pickup/index.html",
+    "northglenn-co-freezer-pickup/index.html",
+    "commerce-city-co-appliance-pickup/index.html",
+    "commerce-city-co-washer-dryer-pickup/index.html",
+    "commerce-city-co-refrigerator-pickup/index.html",
+    "commerce-city-co-stove-oven-pickup/index.html",
+    "commerce-city-co-freezer-pickup/index.html",
+    "wheat-ridge-co-appliance-pickup/index.html",
+    "wheat-ridge-co-washer-dryer-pickup/index.html",
+    "wheat-ridge-co-refrigerator-pickup/index.html",
+    "wheat-ridge-co-stove-oven-pickup/index.html",
+    "wheat-ridge-co-freezer-pickup/index.html",
+    "golden-co-appliance-pickup/index.html",
+    "golden-co-washer-dryer-pickup/index.html",
+    "golden-co-refrigerator-pickup/index.html",
+    "golden-co-stove-oven-pickup/index.html",
+    "golden-co-freezer-pickup/index.html",
+    "broomfield-co-appliance-pickup/index.html",
+    "broomfield-co-washer-dryer-pickup/index.html",
+    "broomfield-co-refrigerator-pickup/index.html",
+    "broomfield-co-stove-oven-pickup/index.html",
+    "broomfield-co-freezer-pickup/index.html",
+    "federal-heights-co-appliance-pickup/index.html",
+    "federal-heights-co-washer-dryer-pickup/index.html",
+    "federal-heights-co-refrigerator-pickup/index.html",
+    "federal-heights-co-stove-oven-pickup/index.html",
+    "federal-heights-co-freezer-pickup/index.html",
+    "sheridan-co-appliance-pickup/index.html",
+    "sheridan-co-washer-dryer-pickup/index.html",
+    "sheridan-co-refrigerator-pickup/index.html",
+    "sheridan-co-stove-oven-pickup/index.html",
+    "sheridan-co-freezer-pickup/index.html",
+    "glendale-co-appliance-pickup/index.html",
+    "glendale-co-washer-dryer-pickup/index.html",
+    "glendale-co-refrigerator-pickup/index.html",
+    "glendale-co-stove-oven-pickup/index.html",
+    "glendale-co-freezer-pickup/index.html",
+    "edgewater-co-appliance-pickup/index.html",
+    "edgewater-co-washer-dryer-pickup/index.html",
+    "edgewater-co-refrigerator-pickup/index.html",
+    "edgewater-co-stove-oven-pickup/index.html",
+    "edgewater-co-freezer-pickup/index.html",
+    "greenwood-village-co-appliance-pickup/index.html",
+    "greenwood-village-co-washer-dryer-pickup/index.html",
+    "greenwood-village-co-refrigerator-pickup/index.html",
+    "greenwood-village-co-stove-oven-pickup/index.html",
+    "greenwood-village-co-freezer-pickup/index.html",
+    "cherry-hills-village-co-appliance-pickup/index.html",
+    "cherry-hills-village-co-washer-dryer-pickup/index.html",
+    "cherry-hills-village-co-refrigerator-pickup/index.html",
+    "cherry-hills-village-co-stove-oven-pickup/index.html",
+    "cherry-hills-village-co-freezer-pickup/index.html",
+    "lone-tree-co-appliance-pickup/index.html",
+    "lone-tree-co-washer-dryer-pickup/index.html",
+    "lone-tree-co-refrigerator-pickup/index.html",
+    "lone-tree-co-stove-oven-pickup/index.html",
+    "lone-tree-co-freezer-pickup/index.html",
+    "highlands-ranch-co-appliance-pickup/index.html",
+    "highlands-ranch-co-washer-dryer-pickup/index.html",
+    "highlands-ranch-co-refrigerator-pickup/index.html",
+    "highlands-ranch-co-stove-oven-pickup/index.html",
+    "highlands-ranch-co-freezer-pickup/index.html",
+    "ken-caryl-co-appliance-pickup/index.html",
+    "ken-caryl-co-washer-dryer-pickup/index.html",
+    "ken-caryl-co-refrigerator-pickup/index.html",
+    "ken-caryl-co-stove-oven-pickup/index.html",
+    "ken-caryl-co-freezer-pickup/index.html",
+    "parker-co-washer-dryer-pickup/index.html",
+    "parker-co-refrigerator-pickup/index.html",
+    "parker-co-stove-oven-pickup/index.html",
+    "parker-co-freezer-pickup/index.html",
+    "castle-rock-co-appliance-pickup/index.html",
+    "castle-rock-co-washer-dryer-pickup/index.html",
+    "castle-rock-co-refrigerator-pickup/index.html",
+    "castle-rock-co-stove-oven-pickup/index.html",
+    "castle-rock-co-freezer-pickup/index.html",
+    "castle-pines-co-appliance-pickup/index.html",
+    "castle-pines-co-washer-dryer-pickup/index.html",
+    "castle-pines-co-refrigerator-pickup/index.html",
+    "castle-pines-co-stove-oven-pickup/index.html",
+    "castle-pines-co-freezer-pickup/index.html",
+    "brighton-co-appliance-pickup/index.html",
+    "brighton-co-washer-dryer-pickup/index.html",
+    "brighton-co-refrigerator-pickup/index.html",
+    "brighton-co-stove-oven-pickup/index.html",
+    "brighton-co-freezer-pickup/index.html",
+    "lafayette-co-appliance-pickup/index.html",
+    "lafayette-co-washer-dryer-pickup/index.html",
+    "lafayette-co-refrigerator-pickup/index.html",
+    "lafayette-co-stove-oven-pickup/index.html",
+    "lafayette-co-freezer-pickup/index.html",
+    "louisville-co-appliance-pickup/index.html",
+    "louisville-co-washer-dryer-pickup/index.html",
+    "louisville-co-refrigerator-pickup/index.html",
+    "louisville-co-stove-oven-pickup/index.html",
+    "louisville-co-freezer-pickup/index.html",
+    "superior-co-appliance-pickup/index.html",
+    "superior-co-washer-dryer-pickup/index.html",
+    "superior-co-refrigerator-pickup/index.html",
+    "superior-co-stove-oven-pickup/index.html",
+    "superior-co-freezer-pickup/index.html",
+    "erie-co-appliance-pickup/index.html",
+    "erie-co-washer-dryer-pickup/index.html",
+    "erie-co-refrigerator-pickup/index.html",
+    "erie-co-stove-oven-pickup/index.html",
+    "erie-co-freezer-pickup/index.html",
+    "boulder-co-appliance-pickup/index.html",
+    "boulder-co-washer-dryer-pickup/index.html",
+    "boulder-co-refrigerator-pickup/index.html",
+    "boulder-co-stove-oven-pickup/index.html",
+    "boulder-co-freezer-pickup/index.html",
+    "fort-collins-co-appliance-pickup/index.html",
+    "fort-collins-co-washer-dryer-pickup/index.html",
+    "fort-collins-co-refrigerator-pickup/index.html",
+    "fort-collins-co-stove-oven-pickup/index.html",
+    "fort-collins-co-freezer-pickup/index.html",
+    "loveland-co-appliance-pickup/index.html",
+    "loveland-co-washer-dryer-pickup/index.html",
+    "loveland-co-refrigerator-pickup/index.html",
+    "loveland-co-stove-oven-pickup/index.html",
+    "loveland-co-freezer-pickup/index.html",
+    "longmont-co-appliance-pickup/index.html",
+    "longmont-co-washer-dryer-pickup/index.html",
+    "longmont-co-refrigerator-pickup/index.html",
+    "longmont-co-stove-oven-pickup/index.html",
+    "longmont-co-freezer-pickup/index.html",
+    "berthoud-co-appliance-pickup/index.html",
+    "berthoud-co-washer-dryer-pickup/index.html",
+    "berthoud-co-refrigerator-pickup/index.html",
+    "berthoud-co-stove-oven-pickup/index.html",
+    "berthoud-co-freezer-pickup/index.html",
+    "windsor-co-appliance-pickup/index.html",
+    "windsor-co-washer-dryer-pickup/index.html",
+    "windsor-co-refrigerator-pickup/index.html",
+    "windsor-co-stove-oven-pickup/index.html",
+    "windsor-co-freezer-pickup/index.html",
+    "greeley-co-appliance-pickup/index.html",
+    "greeley-co-washer-dryer-pickup/index.html",
+    "greeley-co-refrigerator-pickup/index.html",
+    "greeley-co-stove-oven-pickup/index.html",
+    "greeley-co-freezer-pickup/index.html",
+    "evans-co-appliance-pickup/index.html",
+    "evans-co-washer-dryer-pickup/index.html",
+    "evans-co-refrigerator-pickup/index.html",
+    "evans-co-stove-oven-pickup/index.html",
+    "evans-co-freezer-pickup/index.html",
+    "johnstown-co-appliance-pickup/index.html",
+    "johnstown-co-washer-dryer-pickup/index.html",
+    "johnstown-co-refrigerator-pickup/index.html",
+    "johnstown-co-stove-oven-pickup/index.html",
+    "johnstown-co-freezer-pickup/index.html",
+    "timnath-co-appliance-pickup/index.html",
+    "timnath-co-washer-dryer-pickup/index.html",
+    "timnath-co-refrigerator-pickup/index.html",
+    "timnath-co-stove-oven-pickup/index.html",
+    "timnath-co-freezer-pickup/index.html",
+    "wellington-co-appliance-pickup/index.html",
+    "wellington-co-washer-dryer-pickup/index.html",
+    "wellington-co-refrigerator-pickup/index.html",
+    "wellington-co-stove-oven-pickup/index.html",
+    "wellington-co-freezer-pickup/index.html",
+    "estes-park-co-appliance-pickup/index.html",
+    "estes-park-co-washer-dryer-pickup/index.html",
+    "estes-park-co-refrigerator-pickup/index.html",
+    "estes-park-co-stove-oven-pickup/index.html",
+    "estes-park-co-freezer-pickup/index.html",
+    "firestone-co-appliance-pickup/index.html",
+    "firestone-co-washer-dryer-pickup/index.html",
+    "firestone-co-refrigerator-pickup/index.html",
+    "firestone-co-stove-oven-pickup/index.html",
+    "firestone-co-freezer-pickup/index.html",
+    "frederick-co-appliance-pickup/index.html",
+    "frederick-co-washer-dryer-pickup/index.html",
+    "frederick-co-refrigerator-pickup/index.html",
+    "frederick-co-stove-oven-pickup/index.html",
+    "frederick-co-freezer-pickup/index.html",
+    "colorado-springs-co-appliance-pickup/index.html",
+    "colorado-springs-co-washer-dryer-pickup/index.html",
+    "colorado-springs-co-refrigerator-pickup/index.html",
+    "colorado-springs-co-stove-oven-pickup/index.html",
+    "colorado-springs-co-freezer-pickup/index.html",
+    "fountain-co-appliance-pickup/index.html",
+    "fountain-co-washer-dryer-pickup/index.html",
+    "fountain-co-refrigerator-pickup/index.html",
+    "fountain-co-stove-oven-pickup/index.html",
+    "fountain-co-freezer-pickup/index.html",
+    "security-widefield-co-appliance-pickup/index.html",
+    "security-widefield-co-washer-dryer-pickup/index.html",
+    "security-widefield-co-refrigerator-pickup/index.html",
+    "security-widefield-co-stove-oven-pickup/index.html",
+    "security-widefield-co-freezer-pickup/index.html",
+    "monument-co-appliance-pickup/index.html",
+    "monument-co-washer-dryer-pickup/index.html",
+    "monument-co-refrigerator-pickup/index.html",
+    "monument-co-stove-oven-pickup/index.html",
+    "monument-co-freezer-pickup/index.html",
+    "palmer-lake-co-appliance-pickup/index.html",
+    "palmer-lake-co-washer-dryer-pickup/index.html",
+    "palmer-lake-co-refrigerator-pickup/index.html",
+    "palmer-lake-co-stove-oven-pickup/index.html",
+    "palmer-lake-co-freezer-pickup/index.html",
+    "manitou-springs-co-appliance-pickup/index.html",
+    "manitou-springs-co-washer-dryer-pickup/index.html",
+    "manitou-springs-co-refrigerator-pickup/index.html",
+    "manitou-springs-co-stove-oven-pickup/index.html",
+    "manitou-springs-co-freezer-pickup/index.html",
+    "woodland-park-co-appliance-pickup/index.html",
+    "woodland-park-co-washer-dryer-pickup/index.html",
+    "woodland-park-co-refrigerator-pickup/index.html",
+    "woodland-park-co-stove-oven-pickup/index.html",
+    "woodland-park-co-freezer-pickup/index.html",
+    "falcon-co-appliance-pickup/index.html",
+    "falcon-co-washer-dryer-pickup/index.html",
+    "falcon-co-refrigerator-pickup/index.html",
+    "falcon-co-stove-oven-pickup/index.html",
+    "falcon-co-freezer-pickup/index.html",
+    "black-forest-co-appliance-pickup/index.html",
+    "black-forest-co-washer-dryer-pickup/index.html",
+    "black-forest-co-refrigerator-pickup/index.html",
+    "black-forest-co-stove-oven-pickup/index.html",
+    "black-forest-co-freezer-pickup/index.html",
+    "cimarron-hills-co-appliance-pickup/index.html",
+    "cimarron-hills-co-washer-dryer-pickup/index.html",
+    "cimarron-hills-co-refrigerator-pickup/index.html",
+    "cimarron-hills-co-stove-oven-pickup/index.html",
+    "cimarron-hills-co-freezer-pickup/index.html",
+    "pueblo-co-appliance-pickup/index.html",
+    "pueblo-co-washer-dryer-pickup/index.html",
+    "pueblo-co-refrigerator-pickup/index.html",
+    "pueblo-co-stove-oven-pickup/index.html",
+    "pueblo-co-freezer-pickup/index.html",
+    "pueblo-west-co-appliance-pickup/index.html",
+    "pueblo-west-co-washer-dryer-pickup/index.html",
+    "pueblo-west-co-refrigerator-pickup/index.html",
+    "pueblo-west-co-stove-oven-pickup/index.html",
+    "pueblo-west-co-freezer-pickup/index.html",
+    "grand-junction-co-appliance-pickup/index.html",
+    "grand-junction-co-washer-dryer-pickup/index.html",
+    "grand-junction-co-refrigerator-pickup/index.html",
+    "grand-junction-co-stove-oven-pickup/index.html",
+    "grand-junction-co-freezer-pickup/index.html",
+    "fruita-co-appliance-pickup/index.html",
+    "fruita-co-washer-dryer-pickup/index.html",
+    "fruita-co-refrigerator-pickup/index.html",
+    "fruita-co-stove-oven-pickup/index.html",
+    "fruita-co-freezer-pickup/index.html",
+    "montrose-co-appliance-pickup/index.html",
+    "montrose-co-washer-dryer-pickup/index.html",
+    "montrose-co-refrigerator-pickup/index.html",
+    "montrose-co-stove-oven-pickup/index.html",
+    "montrose-co-freezer-pickup/index.html",
+    "durango-co-appliance-pickup/index.html",
+    "durango-co-washer-dryer-pickup/index.html",
+    "durango-co-refrigerator-pickup/index.html",
+    "durango-co-stove-oven-pickup/index.html",
+    "durango-co-freezer-pickup/index.html",
+    "cortez-co-appliance-pickup/index.html",
+    "cortez-co-washer-dryer-pickup/index.html",
+    "cortez-co-refrigerator-pickup/index.html",
+    "cortez-co-stove-oven-pickup/index.html",
+    "cortez-co-freezer-pickup/index.html",
+    "glenwood-springs-co-appliance-pickup/index.html",
+    "glenwood-springs-co-washer-dryer-pickup/index.html",
+    "glenwood-springs-co-refrigerator-pickup/index.html",
+    "glenwood-springs-co-stove-oven-pickup/index.html",
+    "glenwood-springs-co-freezer-pickup/index.html",
+    "carbondale-co-appliance-pickup/index.html",
+    "carbondale-co-washer-dryer-pickup/index.html",
+    "carbondale-co-refrigerator-pickup/index.html",
+    "carbondale-co-stove-oven-pickup/index.html",
+    "carbondale-co-freezer-pickup/index.html",
+    "aspen-co-appliance-pickup/index.html",
+    "aspen-co-washer-dryer-pickup/index.html",
+    "aspen-co-refrigerator-pickup/index.html",
+    "aspen-co-stove-oven-pickup/index.html",
+    "aspen-co-freezer-pickup/index.html",
+    "rifle-co-appliance-pickup/index.html",
+    "rifle-co-washer-dryer-pickup/index.html",
+    "rifle-co-refrigerator-pickup/index.html",
+    "rifle-co-stove-oven-pickup/index.html",
+    "rifle-co-freezer-pickup/index.html",
+    "vail-co-appliance-pickup/index.html",
+    "vail-co-washer-dryer-pickup/index.html",
+    "vail-co-refrigerator-pickup/index.html",
+    "vail-co-stove-oven-pickup/index.html",
+    "vail-co-freezer-pickup/index.html",
+    "canon-city-co-appliance-pickup/index.html",
+    "canon-city-co-washer-dryer-pickup/index.html",
+    "canon-city-co-refrigerator-pickup/index.html",
+    "canon-city-co-stove-oven-pickup/index.html",
+    "canon-city-co-freezer-pickup/index.html",
+    "trinidad-co-appliance-pickup/index.html",
+    "trinidad-co-washer-dryer-pickup/index.html",
+    "trinidad-co-refrigerator-pickup/index.html",
+    "trinidad-co-stove-oven-pickup/index.html",
+    "trinidad-co-freezer-pickup/index.html",
+    "la-junta-co-appliance-pickup/index.html",
+    "la-junta-co-washer-dryer-pickup/index.html",
+    "la-junta-co-refrigerator-pickup/index.html",
+    "la-junta-co-stove-oven-pickup/index.html",
+    "la-junta-co-freezer-pickup/index.html"
+  ],
+  "preserved_existing_category_paths": [
+    "denver-appliance-pickup/index.html",
+    "denver-washer-dryer-pickup/index.html",
+    "denver-refrigerator-pickup/index.html",
+    "denver-stove-oven-pickup/index.html",
+    "denver-freezer-pickup/index.html",
+    "aurora-appliance-pickup/index.html",
+    "aurora-washer-dryer-pickup/index.html",
+    "aurora-refrigerator-pickup/index.html",
+    "aurora-stove-oven-pickup/index.html",
+    "aurora-freezer-pickup/index.html",
+    "lakewood-appliance-pickup/index.html",
+    "lakewood-washer-dryer-pickup/index.html",
+    "centennial-appliance-pickup/index.html",
+    "arvada-appliance-pickup/index.html",
+    "westminster-appliance-pickup/index.html",
+    "westminster-washer-dryer-pickup/index.html",
+    "parker-appliance-pickup/index.html"
+  ],
+  "category_matrix_size": 350,
+  "note": "Preserve indexed Denver/Aurora and other existing Colorado pages; Montrose CA and Glendale CA are not Colorado pages. All new CO URL requests noindex/follow, not in sitemap, until ZIP operator, real Formspree receipt, owner release approval."
+}
