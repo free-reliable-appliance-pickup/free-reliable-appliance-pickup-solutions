@@ -1,0 +1,15 @@
+name: TTG Idaho Gold 315-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  idaho:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Idaho pages, photos, forms, original hub safety
+        run: python -m unittest discover -s tests -p 'test_ttg_idaho_pages.py' -v
