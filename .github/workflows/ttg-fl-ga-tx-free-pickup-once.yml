@@ -1,0 +1,33 @@
+name: TTG Florida Georgia Texas Free Pickup Customer Copy
+on:
+  push:
+    paths:
+      - '.github/workflows/ttg-fl-ga-tx-free-pickup-once.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/ttg/fl-ga-tx-free-pickup-copy-final-20261110'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Apply guarded Free Pickup copy to FL GA TX state and category pages
+        run: python3 scripts/ttg_fl_ga_tx_free_pickup.py --apply
+      - name: Audit every updated customer page
+        run: python3 scripts/ttg_fl_ga_tx_free_pickup.py --check
+      - name: Confirm TTG state batches remain safe
+        run: python3 scripts/ttg_state_batch_qa.py
+      - name: Run SEO/regression tests
+        run: python3 -m unittest discover -s tests -p 'test_ttg_*.py' > /tmp/results.log 2>&1 || { tail -n 90 /tmp/results.log; exit 1; }
+      - name: Save approved copy and remove one-time workflow
+        run: |
+          git config user.name "Free Reliable Website Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -f .github/workflows/ttg-fl-ga-tx-free-pickup-once.yml
+          git add -A
+          git commit -m "TTG: Florida Georgia Texas customer Free Appliance Pickup copy"
+          git pull --rebase origin ttg/fl-ga-tx-free-pickup-copy-final-20261110
+          git push origin HEAD:ttg/fl-ga-tx-free-pickup-copy-final-20261110
