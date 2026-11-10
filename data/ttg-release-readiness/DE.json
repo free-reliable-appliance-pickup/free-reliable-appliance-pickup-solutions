@@ -1,0 +1,15 @@
+{
+  "state_code": "DE",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Request-only and noindex. Before activation verify local accepting operators by Delaware ZIP, real Formspree receipt and owner approval."
+}
