@@ -104,6 +104,25 @@ def revise(original, rel, code):
     heading = "Free " + label + " Pickup in " + loc
     title = heading + " | Free Reliable Appliance Pickup"
     s = original
+    if rel == "north-carolina-appliance-pickup/index.html":
+        # Statewide NC template predates the required California intake contract.
+        old = '<input type="hidden" name="state" value="North Carolina">'
+        new = '<div class="site-request-field"><label>Pickup state<select name="state" required><option value="North Carolina" selected>North Carolina</option></select></label></div>'
+        if s.count(old) != 1:
+            raise RuntimeError("NC statewide state field changed unexpectedly")
+        s = s.replace(old, new)
+        s = s.replace('name="access" placeholder=', 'name="access" required placeholder=')
+        s = s.replace('name="message" rows=', 'name="message" required rows=')
+        photo_marker = '<div class="site-request-field full"><label>Access Details'
+        photo_field = '<div class="site-request-field"><label>Photos available?<select name="photos_available" required><option value="">Choose one</option><option>Yes, I can share appliance photos</option><option>No photos yet</option><option>Need help sharing photos</option></select></label></div>'
+        if s.count(photo_marker) != 1:
+            raise RuntimeError("NC access field changed unexpectedly")
+        s = s.replace(photo_marker, photo_field + photo_marker)
+        button_marker = '<div class="site-request-field full"><button class="site-request-submit"'
+        privacy_field = '<div class="site-request-field full"><p class="site-request-note">Privacy: We use your contact, appliance condition and removal details to review this request through Formspree and may share them with a prospective pickup operator. Read our <a href="/privacy/">Privacy Policy</a>.</p><label style="display:flex;align-items:flex-start;gap:10px"><input type="checkbox" name="privacy_acknowledgment" value="acknowledged" required style="width:22px;min-width:22px;height:22px;margin:4px 0 0">I understand this is a request for free appliance pickup, not a confirmed appointment.</label></div>'
+        if s.count(button_marker) != 1:
+            raise RuntimeError("NC submit field changed unexpectedly")
+        s = s.replace(button_marker, privacy_field + button_marker)
     title_match = re.search(r"<title>[^<]*</title>", s, re.I)
     if not title_match:
         raise RuntimeError("Missing title: " + rel)
