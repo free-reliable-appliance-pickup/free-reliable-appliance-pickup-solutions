@@ -158,7 +158,7 @@ class MinnesotaBatchTests(unittest.TestCase):
                 for url in urls:
                     self.assertIn(url, section)
                 self.assertIn(disclosure, section)
-                self.assertIn("conditional private pickup request", section)
+                self.assertRegex(section, r"conditional private (?:appliance )?pickup request")
                 self.assertIn("Free pickup and local routes are not currently confirmed", html)
                 self.assertIn('content="noindex, follow"', html)
 
