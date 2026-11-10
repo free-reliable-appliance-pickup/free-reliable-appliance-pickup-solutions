@@ -37,3 +37,30 @@ For repeat business, maintain a complete partner-month ledger separately; comput
 Use \`data/territory-quality-schema.json\` to map private consented exports. Do **not** commit raw Formspree submissions, customer names, phones, addresses, photos, full ZIP-level small-cell records, or partner personal contact details to GitHub. The analysis script reads a local private CSV and produces aggregated city-group/territory statistics without IDs. Cohorts below the privacy minimum are suppressed. Internal reports are not intended as public proof of lead volume.
 
 No ongoing automation, live Formspree integration, billing, territory purchase or operator agreement is enabled by this change.
+
+## Phase 2: additional county-anchored research corridors (2026-11-10)
+The candidate file now contains **17 corridors** across the first and second research batches. The ten newly added corridors below are hypotheses only. Each income figure is a U.S. Census QuickFacts **2020–2024 median household income** estimate, in 2024 dollars, for the named county—not for each listed city, ZIP, household or appliance.
+
+| Research area (county anchor) | County median income | Initial operating hypothesis |
+| --- | ---: | --- |
+| Denver south / Douglas County, CO | $149,594 | Premium condition may justify costlier longer routes if verified |
+| Nashville south / Williamson County, TN | $135,594 | Test nearby repeat buyers and apartment versus house logistics |
+| Columbus north / Delaware County, OH | $133,540 | Potential quality stock; measure completed working units, not clicks |
+| Philadelphia west / Chester County, PA | $127,208 | Test appliance reuse and reliable pickups across clustered suburbs |
+| Seattle Eastside / King County, WA | $124,746 | Higher travel/labor/building-access expenses may offset quality |
+| Dallas north / Collin County, TX | $121,600 | Compare partner-accepted appliances with established Texas volume areas |
+| Orange County, CA | $116,289 | Existing California operating benchmark for realized margins |
+| North Austin / Williamson County, TX | $111,340 | Fast growth might raise turnover; verify working condition independently |
+| Milwaukee west / Waukesha County, WI | $106,076 | Examine dense practical routes, buyer competition and winter handling |
+| Boise-Meridian / Ada County, ID | $91,502 | **Growth/volume** hypothesis, not automatically a premium-income territory |
+
+Links to the original Census county tables and a short city-level focus shortlist for **each** corridor are stored in `national-premium-territory-candidates.json`; do not infer that every city shares its anchor county's income. The Ohio, Pennsylvania, Tennessee and Wisconsin state-level **research lead priority** is raised from 3 to 2, but their coverage status remains `request-only`. California, Colorado, Idaho, Texas and Washington priorities were already 2; no status or release changes were made.
+
+### Real-world validation before recurring partner subscriptions
+1. **Month 0: map operator and reseller capacity** (who actually buys which major appliance types, ability to serve ZIPs, access constraints, rate of declinations). Candidate businesses are *prospects*, not approved partners.
+2. **30-day intake audit:** log every actual incoming lead/item, reliable photos, source, reported working versus unknown, and missing information. Keep incomplete/no-coverage requests in the denominator.
+3. **60-day fulfillment audit:** independently verify working units, A/B readiness, partner acceptance, completed pickups, damage/cancellation and full per-item costs.
+4. **90-day economics review:** compare medians and totals of observed realized net resale contribution, verified working items, service time, and explicit customer/buyer feedback. Compare territory to matched low-income and mid-income controls; no income-based claims without measurement.
+5. **Renewal review:** observed partner renewals and partner feedback only after a genuine renewal decision. If leads are low quality or travel costs erase profit, revise or withhold territory offering rather than charge for an unproven territory.
+
+**Non-negotiable:** No public demand forecast, exclusive sales territory, published partner profit, guaranteed free pickup, auto billing or indexability comes from demographic research. Explicit owner approval plus proven operational coverage and form receipt remains mandatory.

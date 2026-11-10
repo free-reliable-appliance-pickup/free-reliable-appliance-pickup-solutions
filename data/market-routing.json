@@ -310,7 +310,7 @@
       "region": "Ohio statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "Oklahoma",
@@ -334,7 +334,7 @@
       "region": "Pennsylvania statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "Rhode Island",
@@ -366,7 +366,7 @@
       "region": "Tennessee statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "Texas",
@@ -422,7 +422,7 @@
       "region": "Wisconsin statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "Wyoming",
