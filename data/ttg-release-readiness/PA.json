@@ -1,0 +1,15 @@
+{
+  "state_code": "PA",
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "verified_cities": [],
+  "instructions": "Do not remove noindex until accepting operator, exact ZIP scope, terms, confirmed Formspree receipt and owner approval. Competitor pages and public municipal alternatives are not partner evidence."
+}
