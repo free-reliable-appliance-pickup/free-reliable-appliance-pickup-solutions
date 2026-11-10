@@ -1,0 +1,15 @@
+{
+  "state_code": "OK",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Do not index Oklahoma until local accepting operator, verified form receipt and owner approval; no claim of existing trucks."
+}
