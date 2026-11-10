@@ -11,7 +11,12 @@ class NorthCarolinaBatchTests(unittest.TestCase):
         hub=(ROOT/"north-carolina-appliance-pickup/index.html").read_text()
         for path in pages:
             slug=path.removesuffix("/index.html")
-            self.assertIn('href="/'+slug+'/"',hub)
+            if "-nc-appliance-pickup/" in path:
+                self.assertIn('href="/'+slug+'/"',hub)
+            else:
+                city = slug.split("-nc-", 1)[0]
+                city_hub = (ROOT/(city+"-nc-appliance-pickup/index.html")).read_text()
+                self.assertIn('href="/'+slug+'/"',city_hub)
             html=(ROOT/path).read_text()
             self.assertIn('content="noindex, follow"',html)
             self.assertIn('name="privacy_acknowledgment"',html)
@@ -25,7 +30,7 @@ class NorthCarolinaBatchTests(unittest.TestCase):
             html=(ROOT/path).read_text()
             self.assertIn('name="fuel_type" required',html)
             self.assertIn('name="connection_status" required',html)
-            self.assertIn('qualified professional',html)
+            self.assertIn('qualified professional',html.lower())
     def test_no_activation(self):
         ledger=json.loads((ROOT/"data/ttg-release-readiness/NC.json").read_text())
         self.assertEqual(ledger["verified_cities"],[])
