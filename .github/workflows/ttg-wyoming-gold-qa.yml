@@ -1,0 +1,15 @@
+name: TTG Wyoming Gold 251-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  wyoming:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Wyoming page and release gate
+        run: python -m unittest discover -s tests -p 'test_ttg_wyoming_pages.py' -v
