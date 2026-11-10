@@ -141,6 +141,27 @@ class MinnesotaBatchTests(unittest.TestCase):
                 self.assertIn(disclosure, section)
                 self.assertIn("Free pickup and local routes are not currently confirmed", html)
 
+    def test_additional_official_minnesota_disposal_guidance(self):
+        """Keep three city alternatives linked, accurate and separate from unverified pickup."""
+        cases = (
+            ("st-cloud", ("https://ci.stcloud.mn.us/354/Special-Pickups",), "not accepted in the city's special-pickup program"),
+            ("woodbury", ("https://www.woodburymn.gov/1172/Curbside-Recycling-Event",
+                          "https://www.woodburymn.gov/304/Licensed-Haulers"), "those dates are past"),
+            ("maple-grove", ("https://www.maplegrovemn.gov/386/Garbage-recycling-and-yard-waste",
+                             "https://www.hennepincounty.gov/en/green-disposal-guide/items/appliances"), "customer drop-off"),
+        )
+        for city, urls, disclosure in cases:
+            with self.subTest(city=city):
+                html = (ROOT / f"{city}-mn-appliance-pickup/index.html").read_text(encoding="utf-8")
+                section = html.partition("<h2>Alternative recycling and removal options</h2>")[2].partition("</section>")[0]
+                self.assertTrue(section)
+                for url in urls:
+                    self.assertIn(url, section)
+                self.assertIn(disclosure, section)
+                self.assertRegex(section, r"conditional private (?:appliance )?pickup request")
+                self.assertIn("Free pickup and local routes are not currently confirmed", html)
+                self.assertIn('content="noindex, follow"', html)
+
     def test_no_minnesota_staging_page_in_sitemap(self):
         """Request-only pages should not be put into discovery index sitemaps."""
         main = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
