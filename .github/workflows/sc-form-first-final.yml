@@ -1,0 +1,20 @@
+name: South Carolina one-time Form-First California Gold Model
+on:
+  push:
+    branches: [ttg/sc-form-first-final-20261110]
+permissions:
+  contents: write
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Put the request form first and verify all South Carolina pages
+        run: python3 .github/scripts/sc_form_first_final_one_shot.py
+      - name: Commit verified pages and remove temporary helpers
+        run: |
+          rm .github/scripts/sc_form_first_final_one_shot.py .github/workflows/sc-form-first-final.yml
+          git add -A
+          git -c user.name='Free Reliable Website Bot' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'South Carolina: finalized form-first pickup requests on 251 pages'
+          git push origin HEAD:ttg/sc-form-first-final-20261110
