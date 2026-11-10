@@ -36,3 +36,5 @@ jobs:
           git commit -m "TTG California model: Free Appliance Pickup copy across 10 recent states"
           git pull --rebase origin ttg/recent-states-free-pickup-20261110
           git push origin HEAD:ttg/recent-states-free-pickup-20261110
+
+# retry with North Carolina statewide form contract repaired
