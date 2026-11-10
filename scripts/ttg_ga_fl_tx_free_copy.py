@@ -230,7 +230,7 @@ def checks(before, after, rel, code):
     new_robots = re.findall(r'<meta name="robots"[^>]*>', after, re.I)
     err(old_robots != new_robots, "robot directives modified")
     err(len(re.findall(r"<h1\b", after, re.I)) != 1, "not exactly one H1")
-    err(len(re.findall(r"<form\\b", after, re.I)) != 1, "expected one request form")
+    err(len(re.findall(r"<form\b", after, re.I)) != 1, "expected one request form")
     err('href="/privacy/"' not in after, "privacy policy missing")
     for field in CORE:
         pat = r'<(?:input|select|textarea)\b[^>]*name="' + field + r'"[^>]*required'
