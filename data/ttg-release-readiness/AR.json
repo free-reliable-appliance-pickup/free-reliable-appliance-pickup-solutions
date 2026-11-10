@@ -1,0 +1,15 @@
+{
+  "state_code": "AR",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "No indexing or confirmed free Arkansas pickup claims without ZIP-level operator confirmation, form receipt and owner approval."
+}
