@@ -107,7 +107,11 @@ def check_page(path, root, code):
         failures.append("missing separate optional paid quote preference")
     if "/privacy/" not in html:
         failures.append("missing first-party privacy disclosure link")
-    if len(parsed.images) != 1:
+    # The shared business logo is branding, not the page\x27s appliance photo.
+    # Require one appliance photo while still validating both image assets below.
+    appliance_images = [img for img in parsed.images
+                        if "site-brand-logo" not in (img.get("class") or "").split()]
+    if len(appliance_images) != 1:
         failures.append("expected one actual appliance image element")
     for img in parsed.images:
         src = img.get("src") or ""
