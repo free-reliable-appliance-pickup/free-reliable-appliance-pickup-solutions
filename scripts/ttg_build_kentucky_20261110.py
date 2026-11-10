@@ -96,9 +96,13 @@ GROUP_PHOTOS=[
 "/assets/california/city-heroes/fontana-multi-appliance.webp",
 "/assets/rancho-cucamonga/rancho-cucamonga-multi-appliance-group.webp"]
 SINGLE_PHOTOS={
-"refrigerator":["/assets/california/real-appliances/real-refrigerator.jpg","/assets/rancho-cucamonga/rancho-cucamonga-refrigerator-pickup-real-refrigerator.jpg","/assets/rancho-cucamonga/rancho-cucamonga-refrigerator-real-french-door-20261016.jpg"],
-"freezer":["/assets/california/real-appliances/real-freezer.jpg","/assets/rancho-cucamonga/rancho-cucamonga-freezer-pickup-real-freezer.jpg","/assets/rancho-cucamonga/rancho-cucamonga-freezer-real-upright-20261016.jpg"],
-"stove-oven":["/assets/california/real-appliances/real-stove-range.jpg","/assets/california/real-appliances/fontana-stove-range-hero.jpg","/assets/rancho-cucamonga/rancho-cucamonga-stove-range-oven-pickup-real-stove.jpg"]}
+"refrigerator":["/IMG-20240701-WA0026.jpg","/assets/rancho-cucamonga/rancho-cucamonga-refrigerator-real-french-door-20261016.jpg"],
+"freezer":["/IMG-20240916-WA0063.jpg"],
+"stove-oven":["/IMG-20240920-WA0084.jpg","/assets/california/real-appliances/fontana-stove-range-hero.jpg"]}
+PHOTO_DIMS={"/IMG-20240701-WA0026.jpg":(1200,1600),
+            "/IMG-20240916-WA0063.jpg":(1200,1600),
+            "/IMG-20240920-WA0084.jpg":(1536,2048)}
+
 def slugify(text):
     return re.sub(r"[^a-z0-9]+","-",text.lower()).strip("-")
 def city_url(city,kind):
@@ -109,7 +113,8 @@ def link(url,label):
     return '<a href="'+escape(url,quote=True)+'">'+escape(label)+'</a>'
 def photo(src,alt):
     if not (ROOT/src.lstrip("/")).is_file():raise RuntimeError("Missing real photo: "+src)
-    return '<img src="'+escape(src,quote=True)+'" alt="'+escape(alt,quote=True)+'" width="960" height="720" loading="eager" decoding="async">'
+    width,height=PHOTO_DIMS.get(src,(960,720))
+    return '<img src="'+escape(src,quote=True)+'" alt="'+escape(alt,quote=True)+f'" width="{width}" height="{height}" loading="eager" decoding="async">'
 def unique_washer_photos():
     pool=list((ROOT/"assets/laundry/city-heroes").glob("*washer-dryer*.jpg"))
     pool+=list((ROOT/"assets/laundry/original-user-heroes").glob("*.jpg"))
