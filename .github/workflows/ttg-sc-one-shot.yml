@@ -1,0 +1,20 @@
+name: One-time South Carolina California Model Copy Update
+on:
+  push:
+    branches: [ttg/sc-california-copy-cleanup-20261110]
+permissions:
+  contents: write
+jobs:
+  rewrite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate and update South Carolina guides
+        run: python3 .github/scripts/sc_california_copy_one_shot.py
+      - name: Remove one-time helpers and commit generated page changes
+        run: |
+          rm .github/scripts/sc_california_copy_one_shot.py .github/workflows/ttg-sc-one-shot.yml
+          git add -A
+          git -c user.name='Free Reliable Website Bot' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'South Carolina: California-style customer pickup copy on 251 pages'
+          git push origin HEAD:ttg/sc-california-copy-cleanup-20261110
