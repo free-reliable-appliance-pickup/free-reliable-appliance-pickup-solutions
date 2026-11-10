@@ -1,0 +1,714 @@
+{
+  "state_code": "AZ",
+  "mode": "request-only",
+  "existing_indexed_state_hub_preserved": "arizona-appliance-pickup/index.html",
+  "operator_coverage_verified": false,
+  "communities": [
+    {
+      "name": "Phoenix",
+      "slug": "phoenix",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Mesa",
+      "slug": "mesa",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Chandler",
+      "slug": "chandler",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Gilbert",
+      "slug": "gilbert",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Tempe",
+      "slug": "tempe",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Scottsdale",
+      "slug": "scottsdale",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Glendale",
+      "slug": "glendale",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Peoria",
+      "slug": "peoria",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Surprise",
+      "slug": "surprise",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Goodyear",
+      "slug": "goodyear",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Avondale",
+      "slug": "avondale",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Buckeye",
+      "slug": "buckeye",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Queen Creek",
+      "slug": "queen-creek",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Apache Junction",
+      "slug": "apache-junction",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "San Tan Valley",
+      "slug": "san-tan-valley",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Fountain Hills",
+      "slug": "fountain-hills",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Paradise Valley",
+      "slug": "paradise-valley",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "El Mirage",
+      "slug": "el-mirage",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Tolleson",
+      "slug": "tolleson",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Litchfield Park",
+      "slug": "litchfield-park",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Sun City",
+      "slug": "sun-city",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Sun City West",
+      "slug": "sun-city-west",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Anthem",
+      "slug": "anthem",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Carefree",
+      "slug": "carefree",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Cave Creek",
+      "slug": "cave-creek",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Wickenburg",
+      "slug": "wickenburg",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Maricopa",
+      "slug": "maricopa",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Casa Grande",
+      "slug": "casa-grande",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Florence",
+      "slug": "florence",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Coolidge",
+      "slug": "coolidge",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Gold Canyon",
+      "slug": "gold-canyon",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Guadalupe",
+      "slug": "guadalupe",
+      "region": "Phoenix and East/West Valley"
+    },
+    {
+      "name": "Tucson",
+      "slug": "tucson",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Oro Valley",
+      "slug": "oro-valley",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Marana",
+      "slug": "marana",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Sahuarita",
+      "slug": "sahuarita",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Green Valley",
+      "slug": "green-valley",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Vail",
+      "slug": "vail",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Catalina",
+      "slug": "catalina",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "South Tucson",
+      "slug": "south-tucson",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Flowing Wells",
+      "slug": "flowing-wells",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Casas Adobes",
+      "slug": "casas-adobes",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Tanque Verde",
+      "slug": "tanque-verde",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Nogales",
+      "slug": "nogales",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Rio Rico",
+      "slug": "rio-rico",
+      "region": "Tucson and Southern Arizona"
+    },
+    {
+      "name": "Flagstaff",
+      "slug": "flagstaff",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Sedona",
+      "slug": "sedona",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Cottonwood",
+      "slug": "cottonwood",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Camp Verde",
+      "slug": "camp-verde",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Prescott",
+      "slug": "prescott",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Prescott Valley",
+      "slug": "prescott-valley",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Chino Valley",
+      "slug": "chino-valley",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Dewey-Humboldt",
+      "slug": "dewey-humboldt",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Payson",
+      "slug": "payson",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Show Low",
+      "slug": "show-low",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Pinetop-Lakeside",
+      "slug": "pinetop-lakeside",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Williams",
+      "slug": "williams",
+      "region": "Northern Arizona and Verde Valley"
+    },
+    {
+      "name": "Yuma",
+      "slug": "yuma",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "Somerton",
+      "slug": "somerton",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "San Luis",
+      "slug": "san-luis",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "Wellton",
+      "slug": "wellton",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "Lake Havasu City",
+      "slug": "lake-havasu-city",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "Kingman",
+      "slug": "kingman",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "Bullhead City",
+      "slug": "bullhead-city",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "Fort Mohave",
+      "slug": "fort-mohave",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "Sierra Vista",
+      "slug": "sierra-vista",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "Douglas",
+      "slug": "douglas",
+      "region": "Western Arizona and Border Markets"
+    },
+    {
+      "name": "Safford",
+      "slug": "safford",
+      "region": "Eastern Arizona Communities"
+    },
+    {
+      "name": "Thatcher",
+      "slug": "thatcher",
+      "region": "Eastern Arizona Communities"
+    },
+    {
+      "name": "Globe",
+      "slug": "globe",
+      "region": "Eastern Arizona Communities"
+    }
+  ],
+  "pages": [
+    "mesa-az-refrigerator-pickup/index.html",
+    "mesa-az-freezer-pickup/index.html",
+    "chandler-az-refrigerator-pickup/index.html",
+    "chandler-az-freezer-pickup/index.html",
+    "gilbert-az-refrigerator-pickup/index.html",
+    "gilbert-az-freezer-pickup/index.html",
+    "tempe-az-refrigerator-pickup/index.html",
+    "tempe-az-freezer-pickup/index.html",
+    "scottsdale-az-refrigerator-pickup/index.html",
+    "scottsdale-az-freezer-pickup/index.html",
+    "glendale-az-refrigerator-pickup/index.html",
+    "glendale-az-stove-oven-pickup/index.html",
+    "glendale-az-freezer-pickup/index.html",
+    "peoria-az-refrigerator-pickup/index.html",
+    "peoria-az-stove-oven-pickup/index.html",
+    "peoria-az-freezer-pickup/index.html",
+    "surprise-az-refrigerator-pickup/index.html",
+    "surprise-az-stove-oven-pickup/index.html",
+    "surprise-az-freezer-pickup/index.html",
+    "goodyear-az-refrigerator-pickup/index.html",
+    "goodyear-az-stove-oven-pickup/index.html",
+    "goodyear-az-freezer-pickup/index.html",
+    "avondale-az-refrigerator-pickup/index.html",
+    "avondale-az-stove-oven-pickup/index.html",
+    "avondale-az-freezer-pickup/index.html",
+    "buckeye-az-refrigerator-pickup/index.html",
+    "buckeye-az-stove-oven-pickup/index.html",
+    "buckeye-az-freezer-pickup/index.html",
+    "queen-creek-az-refrigerator-pickup/index.html",
+    "queen-creek-az-stove-oven-pickup/index.html",
+    "queen-creek-az-freezer-pickup/index.html",
+    "apache-junction-az-refrigerator-pickup/index.html",
+    "apache-junction-az-stove-oven-pickup/index.html",
+    "apache-junction-az-freezer-pickup/index.html",
+    "san-tan-valley-az-appliance-pickup/index.html",
+    "san-tan-valley-az-washer-dryer-pickup/index.html",
+    "san-tan-valley-az-refrigerator-pickup/index.html",
+    "san-tan-valley-az-stove-oven-pickup/index.html",
+    "san-tan-valley-az-freezer-pickup/index.html",
+    "fountain-hills-az-appliance-pickup/index.html",
+    "fountain-hills-az-washer-dryer-pickup/index.html",
+    "fountain-hills-az-refrigerator-pickup/index.html",
+    "fountain-hills-az-stove-oven-pickup/index.html",
+    "fountain-hills-az-freezer-pickup/index.html",
+    "paradise-valley-az-appliance-pickup/index.html",
+    "paradise-valley-az-washer-dryer-pickup/index.html",
+    "paradise-valley-az-refrigerator-pickup/index.html",
+    "paradise-valley-az-stove-oven-pickup/index.html",
+    "paradise-valley-az-freezer-pickup/index.html",
+    "el-mirage-az-refrigerator-pickup/index.html",
+    "el-mirage-az-stove-oven-pickup/index.html",
+    "el-mirage-az-freezer-pickup/index.html",
+    "tolleson-az-appliance-pickup/index.html",
+    "tolleson-az-washer-dryer-pickup/index.html",
+    "tolleson-az-refrigerator-pickup/index.html",
+    "tolleson-az-stove-oven-pickup/index.html",
+    "tolleson-az-freezer-pickup/index.html",
+    "litchfield-park-az-appliance-pickup/index.html",
+    "litchfield-park-az-washer-dryer-pickup/index.html",
+    "litchfield-park-az-refrigerator-pickup/index.html",
+    "litchfield-park-az-stove-oven-pickup/index.html",
+    "litchfield-park-az-freezer-pickup/index.html",
+    "sun-city-az-appliance-pickup/index.html",
+    "sun-city-az-washer-dryer-pickup/index.html",
+    "sun-city-az-refrigerator-pickup/index.html",
+    "sun-city-az-stove-oven-pickup/index.html",
+    "sun-city-az-freezer-pickup/index.html",
+    "sun-city-west-az-appliance-pickup/index.html",
+    "sun-city-west-az-washer-dryer-pickup/index.html",
+    "sun-city-west-az-refrigerator-pickup/index.html",
+    "sun-city-west-az-stove-oven-pickup/index.html",
+    "sun-city-west-az-freezer-pickup/index.html",
+    "anthem-az-appliance-pickup/index.html",
+    "anthem-az-washer-dryer-pickup/index.html",
+    "anthem-az-refrigerator-pickup/index.html",
+    "anthem-az-stove-oven-pickup/index.html",
+    "anthem-az-freezer-pickup/index.html",
+    "carefree-az-appliance-pickup/index.html",
+    "carefree-az-washer-dryer-pickup/index.html",
+    "carefree-az-refrigerator-pickup/index.html",
+    "carefree-az-stove-oven-pickup/index.html",
+    "carefree-az-freezer-pickup/index.html",
+    "cave-creek-az-appliance-pickup/index.html",
+    "cave-creek-az-washer-dryer-pickup/index.html",
+    "cave-creek-az-refrigerator-pickup/index.html",
+    "cave-creek-az-stove-oven-pickup/index.html",
+    "cave-creek-az-freezer-pickup/index.html",
+    "wickenburg-az-appliance-pickup/index.html",
+    "wickenburg-az-washer-dryer-pickup/index.html",
+    "wickenburg-az-refrigerator-pickup/index.html",
+    "wickenburg-az-stove-oven-pickup/index.html",
+    "wickenburg-az-freezer-pickup/index.html",
+    "maricopa-az-appliance-pickup/index.html",
+    "maricopa-az-washer-dryer-pickup/index.html",
+    "maricopa-az-refrigerator-pickup/index.html",
+    "maricopa-az-stove-oven-pickup/index.html",
+    "maricopa-az-freezer-pickup/index.html",
+    "casa-grande-az-appliance-pickup/index.html",
+    "casa-grande-az-washer-dryer-pickup/index.html",
+    "casa-grande-az-refrigerator-pickup/index.html",
+    "casa-grande-az-stove-oven-pickup/index.html",
+    "casa-grande-az-freezer-pickup/index.html",
+    "florence-az-appliance-pickup/index.html",
+    "florence-az-washer-dryer-pickup/index.html",
+    "florence-az-refrigerator-pickup/index.html",
+    "florence-az-stove-oven-pickup/index.html",
+    "florence-az-freezer-pickup/index.html",
+    "coolidge-az-appliance-pickup/index.html",
+    "coolidge-az-washer-dryer-pickup/index.html",
+    "coolidge-az-refrigerator-pickup/index.html",
+    "coolidge-az-stove-oven-pickup/index.html",
+    "coolidge-az-freezer-pickup/index.html",
+    "gold-canyon-az-appliance-pickup/index.html",
+    "gold-canyon-az-washer-dryer-pickup/index.html",
+    "gold-canyon-az-refrigerator-pickup/index.html",
+    "gold-canyon-az-stove-oven-pickup/index.html",
+    "gold-canyon-az-freezer-pickup/index.html",
+    "guadalupe-az-refrigerator-pickup/index.html",
+    "guadalupe-az-stove-oven-pickup/index.html",
+    "guadalupe-az-freezer-pickup/index.html",
+    "tucson-az-appliance-pickup/index.html",
+    "tucson-az-washer-dryer-pickup/index.html",
+    "tucson-az-refrigerator-pickup/index.html",
+    "tucson-az-stove-oven-pickup/index.html",
+    "tucson-az-freezer-pickup/index.html",
+    "oro-valley-az-appliance-pickup/index.html",
+    "oro-valley-az-washer-dryer-pickup/index.html",
+    "oro-valley-az-refrigerator-pickup/index.html",
+    "oro-valley-az-stove-oven-pickup/index.html",
+    "oro-valley-az-freezer-pickup/index.html",
+    "marana-az-appliance-pickup/index.html",
+    "marana-az-washer-dryer-pickup/index.html",
+    "marana-az-refrigerator-pickup/index.html",
+    "marana-az-stove-oven-pickup/index.html",
+    "marana-az-freezer-pickup/index.html",
+    "sahuarita-az-appliance-pickup/index.html",
+    "sahuarita-az-washer-dryer-pickup/index.html",
+    "sahuarita-az-refrigerator-pickup/index.html",
+    "sahuarita-az-stove-oven-pickup/index.html",
+    "sahuarita-az-freezer-pickup/index.html",
+    "green-valley-az-appliance-pickup/index.html",
+    "green-valley-az-washer-dryer-pickup/index.html",
+    "green-valley-az-refrigerator-pickup/index.html",
+    "green-valley-az-stove-oven-pickup/index.html",
+    "green-valley-az-freezer-pickup/index.html",
+    "vail-az-appliance-pickup/index.html",
+    "vail-az-washer-dryer-pickup/index.html",
+    "vail-az-refrigerator-pickup/index.html",
+    "vail-az-stove-oven-pickup/index.html",
+    "vail-az-freezer-pickup/index.html",
+    "catalina-az-appliance-pickup/index.html",
+    "catalina-az-washer-dryer-pickup/index.html",
+    "catalina-az-refrigerator-pickup/index.html",
+    "catalina-az-stove-oven-pickup/index.html",
+    "catalina-az-freezer-pickup/index.html",
+    "south-tucson-az-appliance-pickup/index.html",
+    "south-tucson-az-washer-dryer-pickup/index.html",
+    "south-tucson-az-refrigerator-pickup/index.html",
+    "south-tucson-az-stove-oven-pickup/index.html",
+    "south-tucson-az-freezer-pickup/index.html",
+    "flowing-wells-az-appliance-pickup/index.html",
+    "flowing-wells-az-washer-dryer-pickup/index.html",
+    "flowing-wells-az-refrigerator-pickup/index.html",
+    "flowing-wells-az-stove-oven-pickup/index.html",
+    "flowing-wells-az-freezer-pickup/index.html",
+    "casas-adobes-az-appliance-pickup/index.html",
+    "casas-adobes-az-washer-dryer-pickup/index.html",
+    "casas-adobes-az-refrigerator-pickup/index.html",
+    "casas-adobes-az-stove-oven-pickup/index.html",
+    "casas-adobes-az-freezer-pickup/index.html",
+    "tanque-verde-az-appliance-pickup/index.html",
+    "tanque-verde-az-washer-dryer-pickup/index.html",
+    "tanque-verde-az-refrigerator-pickup/index.html",
+    "tanque-verde-az-stove-oven-pickup/index.html",
+    "tanque-verde-az-freezer-pickup/index.html",
+    "nogales-az-appliance-pickup/index.html",
+    "nogales-az-washer-dryer-pickup/index.html",
+    "nogales-az-refrigerator-pickup/index.html",
+    "nogales-az-stove-oven-pickup/index.html",
+    "nogales-az-freezer-pickup/index.html",
+    "rio-rico-az-appliance-pickup/index.html",
+    "rio-rico-az-washer-dryer-pickup/index.html",
+    "rio-rico-az-refrigerator-pickup/index.html",
+    "rio-rico-az-stove-oven-pickup/index.html",
+    "rio-rico-az-freezer-pickup/index.html",
+    "flagstaff-az-appliance-pickup/index.html",
+    "flagstaff-az-washer-dryer-pickup/index.html",
+    "flagstaff-az-refrigerator-pickup/index.html",
+    "flagstaff-az-stove-oven-pickup/index.html",
+    "flagstaff-az-freezer-pickup/index.html",
+    "sedona-az-appliance-pickup/index.html",
+    "sedona-az-washer-dryer-pickup/index.html",
+    "sedona-az-refrigerator-pickup/index.html",
+    "sedona-az-stove-oven-pickup/index.html",
+    "sedona-az-freezer-pickup/index.html",
+    "cottonwood-az-appliance-pickup/index.html",
+    "cottonwood-az-washer-dryer-pickup/index.html",
+    "cottonwood-az-refrigerator-pickup/index.html",
+    "cottonwood-az-stove-oven-pickup/index.html",
+    "cottonwood-az-freezer-pickup/index.html",
+    "camp-verde-az-appliance-pickup/index.html",
+    "camp-verde-az-washer-dryer-pickup/index.html",
+    "camp-verde-az-refrigerator-pickup/index.html",
+    "camp-verde-az-stove-oven-pickup/index.html",
+    "camp-verde-az-freezer-pickup/index.html",
+    "prescott-az-appliance-pickup/index.html",
+    "prescott-az-washer-dryer-pickup/index.html",
+    "prescott-az-refrigerator-pickup/index.html",
+    "prescott-az-stove-oven-pickup/index.html",
+    "prescott-az-freezer-pickup/index.html",
+    "prescott-valley-az-appliance-pickup/index.html",
+    "prescott-valley-az-washer-dryer-pickup/index.html",
+    "prescott-valley-az-refrigerator-pickup/index.html",
+    "prescott-valley-az-stove-oven-pickup/index.html",
+    "prescott-valley-az-freezer-pickup/index.html",
+    "chino-valley-az-appliance-pickup/index.html",
+    "chino-valley-az-washer-dryer-pickup/index.html",
+    "chino-valley-az-refrigerator-pickup/index.html",
+    "chino-valley-az-stove-oven-pickup/index.html",
+    "chino-valley-az-freezer-pickup/index.html",
+    "dewey-humboldt-az-appliance-pickup/index.html",
+    "dewey-humboldt-az-washer-dryer-pickup/index.html",
+    "dewey-humboldt-az-refrigerator-pickup/index.html",
+    "dewey-humboldt-az-stove-oven-pickup/index.html",
+    "dewey-humboldt-az-freezer-pickup/index.html",
+    "payson-az-appliance-pickup/index.html",
+    "payson-az-washer-dryer-pickup/index.html",
+    "payson-az-refrigerator-pickup/index.html",
+    "payson-az-stove-oven-pickup/index.html",
+    "payson-az-freezer-pickup/index.html",
+    "show-low-az-appliance-pickup/index.html",
+    "show-low-az-washer-dryer-pickup/index.html",
+    "show-low-az-refrigerator-pickup/index.html",
+    "show-low-az-stove-oven-pickup/index.html",
+    "show-low-az-freezer-pickup/index.html",
+    "pinetop-lakeside-az-appliance-pickup/index.html",
+    "pinetop-lakeside-az-washer-dryer-pickup/index.html",
+    "pinetop-lakeside-az-refrigerator-pickup/index.html",
+    "pinetop-lakeside-az-stove-oven-pickup/index.html",
+    "pinetop-lakeside-az-freezer-pickup/index.html",
+    "williams-az-appliance-pickup/index.html",
+    "williams-az-washer-dryer-pickup/index.html",
+    "williams-az-refrigerator-pickup/index.html",
+    "williams-az-stove-oven-pickup/index.html",
+    "williams-az-freezer-pickup/index.html",
+    "yuma-az-appliance-pickup/index.html",
+    "yuma-az-washer-dryer-pickup/index.html",
+    "yuma-az-refrigerator-pickup/index.html",
+    "yuma-az-stove-oven-pickup/index.html",
+    "yuma-az-freezer-pickup/index.html",
+    "somerton-az-appliance-pickup/index.html",
+    "somerton-az-washer-dryer-pickup/index.html",
+    "somerton-az-refrigerator-pickup/index.html",
+    "somerton-az-stove-oven-pickup/index.html",
+    "somerton-az-freezer-pickup/index.html",
+    "san-luis-az-appliance-pickup/index.html",
+    "san-luis-az-washer-dryer-pickup/index.html",
+    "san-luis-az-refrigerator-pickup/index.html",
+    "san-luis-az-stove-oven-pickup/index.html",
+    "san-luis-az-freezer-pickup/index.html",
+    "wellton-az-appliance-pickup/index.html",
+    "wellton-az-washer-dryer-pickup/index.html",
+    "wellton-az-refrigerator-pickup/index.html",
+    "wellton-az-stove-oven-pickup/index.html",
+    "wellton-az-freezer-pickup/index.html",
+    "lake-havasu-city-az-appliance-pickup/index.html",
+    "lake-havasu-city-az-washer-dryer-pickup/index.html",
+    "lake-havasu-city-az-refrigerator-pickup/index.html",
+    "lake-havasu-city-az-stove-oven-pickup/index.html",
+    "lake-havasu-city-az-freezer-pickup/index.html",
+    "kingman-az-appliance-pickup/index.html",
+    "kingman-az-washer-dryer-pickup/index.html",
+    "kingman-az-refrigerator-pickup/index.html",
+    "kingman-az-stove-oven-pickup/index.html",
+    "kingman-az-freezer-pickup/index.html",
+    "bullhead-city-az-appliance-pickup/index.html",
+    "bullhead-city-az-washer-dryer-pickup/index.html",
+    "bullhead-city-az-refrigerator-pickup/index.html",
+    "bullhead-city-az-stove-oven-pickup/index.html",
+    "bullhead-city-az-freezer-pickup/index.html",
+    "fort-mohave-az-appliance-pickup/index.html",
+    "fort-mohave-az-washer-dryer-pickup/index.html",
+    "fort-mohave-az-refrigerator-pickup/index.html",
+    "fort-mohave-az-stove-oven-pickup/index.html",
+    "fort-mohave-az-freezer-pickup/index.html",
+    "sierra-vista-az-appliance-pickup/index.html",
+    "sierra-vista-az-washer-dryer-pickup/index.html",
+    "sierra-vista-az-refrigerator-pickup/index.html",
+    "sierra-vista-az-stove-oven-pickup/index.html",
+    "sierra-vista-az-freezer-pickup/index.html",
+    "douglas-az-appliance-pickup/index.html",
+    "douglas-az-washer-dryer-pickup/index.html",
+    "douglas-az-refrigerator-pickup/index.html",
+    "douglas-az-stove-oven-pickup/index.html",
+    "douglas-az-freezer-pickup/index.html",
+    "safford-az-appliance-pickup/index.html",
+    "safford-az-washer-dryer-pickup/index.html",
+    "safford-az-refrigerator-pickup/index.html",
+    "safford-az-stove-oven-pickup/index.html",
+    "safford-az-freezer-pickup/index.html",
+    "thatcher-az-appliance-pickup/index.html",
+    "thatcher-az-washer-dryer-pickup/index.html",
+    "thatcher-az-refrigerator-pickup/index.html",
+    "thatcher-az-stove-oven-pickup/index.html",
+    "thatcher-az-freezer-pickup/index.html",
+    "globe-az-appliance-pickup/index.html",
+    "globe-az-washer-dryer-pickup/index.html",
+    "globe-az-refrigerator-pickup/index.html",
+    "globe-az-stove-oven-pickup/index.html",
+    "globe-az-freezer-pickup/index.html"
+  ],
+  "preserved_existing_category_paths": [
+    "phoenix-appliance-pickup/index.html",
+    "phoenix-washer-dryer-pickup/index.html",
+    "phoenix-refrigerator-pickup/index.html",
+    "phoenix-stove-oven-pickup/index.html",
+    "phoenix-freezer-pickup/index.html",
+    "mesa-appliance-pickup/index.html",
+    "mesa-washer-dryer-pickup/index.html",
+    "mesa-stove-oven-pickup/index.html",
+    "chandler-appliance-pickup/index.html",
+    "chandler-washer-dryer-pickup/index.html",
+    "chandler-stove-oven-pickup/index.html",
+    "gilbert-appliance-pickup/index.html",
+    "gilbert-washer-dryer-pickup/index.html",
+    "gilbert-stove-oven-pickup/index.html",
+    "tempe-appliance-pickup/index.html",
+    "tempe-washer-dryer-pickup/index.html",
+    "tempe-stove-oven-pickup/index.html",
+    "scottsdale-appliance-pickup/index.html",
+    "scottsdale-washer-dryer-pickup/index.html",
+    "scottsdale-stove-oven-pickup/index.html",
+    "glendale-az-appliance-pickup/index.html",
+    "glendale-az-washer-dryer-pickup/index.html",
+    "peoria-az-appliance-pickup/index.html",
+    "peoria-az-washer-dryer-pickup/index.html",
+    "surprise-appliance-pickup/index.html",
+    "surprise-washer-dryer-pickup/index.html",
+    "goodyear-appliance-pickup/index.html",
+    "goodyear-washer-dryer-pickup/index.html",
+    "avondale-appliance-pickup/index.html",
+    "avondale-washer-dryer-pickup/index.html",
+    "buckeye-appliance-pickup/index.html",
+    "buckeye-washer-dryer-pickup/index.html",
+    "queen-creek-appliance-pickup/index.html",
+    "queen-creek-washer-dryer-pickup/index.html",
+    "apache-junction-appliance-pickup/index.html",
+    "apache-junction-washer-dryer-pickup/index.html",
+    "el-mirage-az-appliance-pickup/index.html",
+    "el-mirage-az-washer-dryer-pickup/index.html",
+    "guadalupe-az-appliance-pickup/index.html",
+    "guadalupe-az-washer-dryer-pickup/index.html"
+  ],
+  "category_matrix_size": 350,
+  "note": "Genuine existing Arizona indexed URLs preserved; new category routes use -az- to avoid another state, and remain noindex/follow excluded from sitemap pending verified operator, form receipt and owner release approval."
+}

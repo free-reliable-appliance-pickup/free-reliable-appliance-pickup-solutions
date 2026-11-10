@@ -1,0 +1,15 @@
+name: TTG Arizona Gold Gapfill QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  arizona:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify AZ page matrix, legacy URLs, forms and release
+        run: python -m unittest discover -s tests -p 'test_ttg_arizona_pages.py' -v
