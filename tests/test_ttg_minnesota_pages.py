@@ -1,4 +1,4 @@
-"""TTG Minnesota: request-only QA for 40 staged pages, hub navigation and photo assets."""
+"""TTG Minnesota: request-only QA for 136 staged pages, hub navigation and photo assets."""
 from pathlib import Path
 from html.parser import HTMLParser
 import json
@@ -8,12 +8,62 @@ import unittest
 from scripts.ttg_state_batch_qa import ROOT, check_manifest, Page
 
 CITIES = (
-    "minneapolis", "saint-paul", "bloomington", "brooklyn-park",
-    "maple-grove", "blaine", "woodbury", "lakeville", "rosemount",
-    "plymouth", "eden-prairie", "burnsville", "rochester", "st-cloud", "duluth"
+    "apple-valley",
+    "blaine",
+    "bloomington",
+    "brooklyn-park",
+    "burnsville",
+    "coon-rapids",
+    "cottage-grove",
+    "duluth",
+    "eagan",
+    "eden-prairie",
+    "edina",
+    "lakeville",
+    "mankato",
+    "maple-grove",
+    "maplewood",
+    "minneapolis",
+    "minnetonka",
+    "moorhead",
+    "plymouth",
+    "rochester",
+    "rosemount",
+    "roseville",
+    "saint-paul",
+    "shakopee",
+    "st-cloud",
+    "st-louis-park",
+    "woodbury",
 )
 CATEGORY_CITIES = (
-    "minneapolis", "saint-paul", "bloomington", "brooklyn-park", "maple-grove", "rochester"
+    "apple-valley",
+    "blaine",
+    "bloomington",
+    "brooklyn-park",
+    "burnsville",
+    "coon-rapids",
+    "cottage-grove",
+    "duluth",
+    "eagan",
+    "eden-prairie",
+    "edina",
+    "lakeville",
+    "mankato",
+    "maple-grove",
+    "maplewood",
+    "minneapolis",
+    "minnetonka",
+    "moorhead",
+    "plymouth",
+    "rochester",
+    "rosemount",
+    "roseville",
+    "saint-paul",
+    "shakopee",
+    "st-cloud",
+    "st-louis-park",
+    "woodbury",
 )
 KINDS = ("washer-dryer", "refrigerator", "stove-oven", "freezer")
 
@@ -27,9 +77,9 @@ class MinnesotaBatchTests(unittest.TestCase):
         cls.manifest = ROOT / "data/ttg-state-batches/MN.json"
         cls.pages = json.loads(cls.manifest.read_text(encoding="utf-8"))["pages"]
 
-    def test_manifest_has_40_pages_with_required_groups(self):
-        """One hub, fifteen general city guides and six sets of categories."""
-        self.assertEqual(len(self.pages), 40)
+    def test_manifest_has_136_pages_with_required_groups(self):
+        """One hub, 27 city guides and four specialty guides per city."""
+        self.assertEqual(len(self.pages), 136)
         self.assertEqual(len(self.pages), len(set(self.pages)))
         self.assertIn("minnesota-appliance-pickup/index.html", self.pages)
         for city in CITIES:
@@ -217,6 +267,46 @@ class MinnesotaBatchTests(unittest.TestCase):
         ledger = json.loads((ROOT / "data/ttg-release-readiness/MN.json").read_text(encoding="utf-8"))
         self.assertEqual(ledger["verified_cities"], [])
         self.assertFalse(ledger["form_receipt"]["verified"])
+
+
+    def test_reviewer_access_and_official_fallbacks(self):
+        """Prevent unfinished access fragments and unlinked recycling alternatives."""
+        official = {
+            "blaine": "anokacountymn.gov/370/Residential-Recycling",
+            "coon-rapids": "anokacountymn.gov/370/Residential-Recycling",
+            "cottage-grove": "co.washington.mn.us/3775/Reuse-and-Donation-Opportunities",
+            "duluth": "wlssd.com/disposal-guide/",
+            "mankato": "blueearthcountymn.gov/371/Appliances",
+            "moorhead": "claycountymn.gov/515/Appliances",
+            "shakopee": "scottcountymn.gov/594/What-We-Accept",
+            "st-cloud": "stearnscountymn.gov/wastewizard",
+            "woodbury": "woodburymn.gov/304/Licensed-Haulers",
+        }
+        fragments = (
+            "Northern metro garages and split-level homes",
+            "Condos, apartments and detached houses",
+            "Hillside driveways and older doorways",
+            "Townhouses and basement laundry rooms",
+            "Newer subdivisions and detached homes",
+            "Multi-level homes and garages",
+            "Garage loads and stair access",
+            "Apartment turnover, duplexes and residential garages",
+            "Garage-stored loads and upstairs laundry",
+        )
+        for city in official:
+            paths = [ROOT / f"{city}-mn-{kind}-pickup/index.html" for kind in KINDS]
+            if city in {"coon-rapids", "cottage-grove", "mankato", "moorhead", "shakopee"}:
+                paths.append(ROOT / f"{city}-mn-appliance-pickup/index.html")
+            for page in paths:
+                with self.subTest(page=page):
+                    html = page.read_text(encoding="utf-8")
+                    section = html.partition("<h2>Alternative recycling and removal options</h2>")[2].partition("</section>")[0]
+                    self.assertTrue(section)
+                    self.assertIn(official[city], section)
+                    self.assertIn("https://", section)
+                    self.assertIn('content="noindex, follow"', html)
+                    for fragment in fragments:
+                        self.assertNotIn(fragment + "</p>", html)
 
 
 if __name__ == "__main__":

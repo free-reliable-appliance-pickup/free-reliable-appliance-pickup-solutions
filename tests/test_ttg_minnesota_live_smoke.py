@@ -54,9 +54,9 @@ class SmokeRegression(unittest.TestCase):
         self.assertEqual(errors, ["timed out"])
 
     def test_main_limits_get_workers_and_preserves_manifest_order(self):
-        """Six mocked pages overlap at four workers while reporting in input order."""
-        paths = [f"city-{i}-mn-appliance-pickup/index.html" for i in range(6)]
-        barrier = threading.Barrier(4)
+        """Eight mocked pages overlap at eight workers while reporting in input order."""
+        paths = [f"city-{i}-mn-appliance-pickup/index.html" for i in range(8)]
+        barrier = threading.Barrier(8)
         first_can_finish = threading.Event()
         lock = threading.Lock()
         active = 0
@@ -64,13 +64,13 @@ class SmokeRegression(unittest.TestCase):
         completed = []
 
         def fake_audit(path, manifest_pages):
-            """Synchronize four GET workers and deliberately finish page two first."""
+            """Synchronize eight GET workers and deliberately finish page two first."""
             nonlocal active, peak
             self.assertEqual(manifest_pages, paths)
             with lock:
                 active += 1
                 peak = max(peak, active)
-            if path in paths[:4]:
+            if path in paths[:8]:
                 barrier.wait(timeout=5)
             if path == paths[0]:
                 self.assertTrue(first_can_finish.wait(timeout=5))
@@ -96,7 +96,7 @@ class SmokeRegression(unittest.TestCase):
             ):
                 self.assertEqual(main(), 0)
 
-        self.assertEqual(peak, 4)
+        self.assertEqual(peak, 8)
         self.assertLess(completed.index(paths[1]), completed.index(paths[0]))
         reported = [line for line in output.getvalue().splitlines() if line.startswith("PASS ")]
         self.assertEqual(reported, [f"PASS {BASE}{p.removesuffix('/index.html')}/" for p in paths])

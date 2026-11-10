@@ -147,9 +147,9 @@ def main():
     manifest = json.loads((ROOT / "data/ttg-state-batches/MN.json").read_text(encoding="utf-8"))
     pages = manifest["pages"]
     failures = []
-    # Four bounded GET workers keep slow responses inside the 10-minute job budget.
+    # Eight bounded GET workers cover the expanded city guide inventory within the 10-minute job budget.
     # map() preserves manifest order in the report even when requests finish out of order.
-    with ThreadPoolExecutor(max_workers=4) as executor:
+    with ThreadPoolExecutor(max_workers=8) as executor:
         results = list(executor.map(lambda path: audit_live_page(path, pages), pages))
     for slug, problems in results:
         failures.extend(f"{slug}: {problem}" for problem in problems)
