@@ -107,7 +107,11 @@ def check_page(path, root, code):
         failures.append("missing separate optional paid quote preference")
     if "/privacy/" not in html:
         failures.append("missing first-party privacy disclosure link")
-    if len(parsed.images) != 1:
+    # Brand logos are not appliance photos. Keep exactly one appliance photo
+    # while allowing the California-style visible business logo in the header.
+    appliance_images = [img for img in parsed.images
+                        if "site-brand-logo" not in (img.get("class") or "").split()]
+    if len(appliance_images) != 1:
         failures.append("expected one actual appliance image element")
     for img in parsed.images:
         src = img.get("src") or ""
