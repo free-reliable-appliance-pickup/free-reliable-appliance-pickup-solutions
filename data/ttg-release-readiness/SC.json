@@ -1,0 +1,15 @@
+{
+  "state_code": "SC",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Keep request-only SC pages noindex until actual accepting operator, exact ZIP terms, confirmed Formspree receipt and owner approval. State recycling laws do not imply our availability."
+}
