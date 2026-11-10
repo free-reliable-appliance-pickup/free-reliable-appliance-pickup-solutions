@@ -1,4 +1,4 @@
-# rerun after NC and SC state-city navigation regression refresh
+# rerun after NC photo-disclosure regression update
 name: TTG Recent States Free Pickup Wording Batch
 on:
   push:
