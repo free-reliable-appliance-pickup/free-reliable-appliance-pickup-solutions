@@ -1,0 +1,15 @@
+{
+  "state_code": "ME",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Maine request-only pages remain noindex and out of sitemap until actual accepting operators for ZIP codes, proven intake receipt and owner release approval."
+}

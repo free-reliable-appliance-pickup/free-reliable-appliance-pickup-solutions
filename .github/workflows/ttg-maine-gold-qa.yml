@@ -1,0 +1,24 @@
+name: TTG Maine Gold 50-market QA
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'maine-appliance-pickup/**'
+      - '*-me-*-pickup/**'
+      - 'data/ttg-state-batches/ME.json'
+      - 'data/ttg-release-readiness/ME.json'
+      - 'tests/test_ttg_maine_pages.py'
+      - '.github/workflows/ttg-maine-gold-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Maine customer pages and release gates
+        run: python -m unittest discover -s tests -p 'test_ttg_maine_pages.py' -v
+      - name: Verify all tracked state manifests
+        run: python scripts/ttg_state_batch_qa.py
