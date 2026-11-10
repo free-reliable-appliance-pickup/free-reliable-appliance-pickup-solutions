@@ -14,7 +14,14 @@ class SouthCarolinaFastTrack(unittest.TestCase):
             self.assertIn('content="noindex, follow"',h)
             self.assertIn('name="privacy_acknowledgment"',h)
             self.assertIn('name="paid_option"',h)
-            if path!="south-carolina-appliance-pickup/index.html":self.assertIn('href="/'+path.removesuffix("/index.html")+'/"',hub)
+            if path!="south-carolina-appliance-pickup/index.html":
+                slug=path.removesuffix("/index.html")
+                if "-sc-appliance-pickup" in path:
+                    self.assertIn('href="/'+slug+'/"',hub)
+                else:
+                    city=slug.split("-sc-",1)[0]
+                    city_hub=(ROOT/(city+"-sc-appliance-pickup/index.html")).read_text()
+                    self.assertIn('href="/'+slug+'/"',city_hub)
     def test_public_alternatives(self):
         m=(ROOT/"myrtle-beach-sc-appliance-pickup/index.html").read_text()
         g=(ROOT/"greenville-sc-refrigerator-pickup/index.html").read_text()
