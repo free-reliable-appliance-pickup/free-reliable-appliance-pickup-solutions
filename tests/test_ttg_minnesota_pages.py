@@ -1,4 +1,4 @@
-"""TTG Minnesota: request-only QA for 40 staged pages, hub navigation and photo assets."""
+"""TTG Minnesota: request-only QA for 136 staged pages, hub navigation and photo assets."""
 from pathlib import Path
 from html.parser import HTMLParser
 import json
@@ -8,12 +8,62 @@ import unittest
 from scripts.ttg_state_batch_qa import ROOT, check_manifest, Page
 
 CITIES = (
-    "minneapolis", "saint-paul", "bloomington", "brooklyn-park",
-    "maple-grove", "blaine", "woodbury", "lakeville", "rosemount",
-    "plymouth", "eden-prairie", "burnsville", "rochester", "st-cloud", "duluth"
+    "apple-valley",
+    "blaine",
+    "bloomington",
+    "brooklyn-park",
+    "burnsville",
+    "coon-rapids",
+    "cottage-grove",
+    "duluth",
+    "eagan",
+    "eden-prairie",
+    "edina",
+    "lakeville",
+    "mankato",
+    "maple-grove",
+    "maplewood",
+    "minneapolis",
+    "minnetonka",
+    "moorhead",
+    "plymouth",
+    "rochester",
+    "rosemount",
+    "roseville",
+    "saint-paul",
+    "shakopee",
+    "st-cloud",
+    "st-louis-park",
+    "woodbury",
 )
 CATEGORY_CITIES = (
-    "minneapolis", "saint-paul", "bloomington", "brooklyn-park", "maple-grove", "rochester"
+    "apple-valley",
+    "blaine",
+    "bloomington",
+    "brooklyn-park",
+    "burnsville",
+    "coon-rapids",
+    "cottage-grove",
+    "duluth",
+    "eagan",
+    "eden-prairie",
+    "edina",
+    "lakeville",
+    "mankato",
+    "maple-grove",
+    "maplewood",
+    "minneapolis",
+    "minnetonka",
+    "moorhead",
+    "plymouth",
+    "rochester",
+    "rosemount",
+    "roseville",
+    "saint-paul",
+    "shakopee",
+    "st-cloud",
+    "st-louis-park",
+    "woodbury",
 )
 KINDS = ("washer-dryer", "refrigerator", "stove-oven", "freezer")
 
@@ -27,9 +77,9 @@ class MinnesotaBatchTests(unittest.TestCase):
         cls.manifest = ROOT / "data/ttg-state-batches/MN.json"
         cls.pages = json.loads(cls.manifest.read_text(encoding="utf-8"))["pages"]
 
-    def test_manifest_has_40_pages_with_required_groups(self):
-        """One hub, fifteen general city guides and six sets of categories."""
-        self.assertEqual(len(self.pages), 40)
+    def test_manifest_has_136_pages_with_required_groups(self):
+        """One hub, 27 city guides and four specialty guides per city."""
+        self.assertEqual(len(self.pages), 136)
         self.assertEqual(len(self.pages), len(set(self.pages)))
         self.assertIn("minnesota-appliance-pickup/index.html", self.pages)
         for city in CITIES:
