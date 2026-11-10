@@ -1,0 +1,15 @@
+{
+  "state_code": "IA",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Do not activate indexing or guarantee Iowa service without ZIP-level operator acceptance, live Formspree receipt, and owner approval."
+}
