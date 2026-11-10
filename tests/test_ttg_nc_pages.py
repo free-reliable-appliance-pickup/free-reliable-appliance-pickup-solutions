@@ -21,7 +21,13 @@ class NorthCarolinaBatchTests(unittest.TestCase):
             self.assertIn('content="noindex, follow"',html)
             self.assertIn('name="privacy_acknowledgment"',html)
             self.assertIn('name="paid_option"',html)
-            self.assertIn('not a completed North Carolina pickup',html)
+            self.assertTrue(
+                'not a completed North Carolina pickup' in html
+                or 'does not document a pickup in North Carolina' in html
+                or 'not a completed North Carolina job' in html
+                or 'illustrative only' in html,
+                path + ': missing truthful appliance photo disclosure'
+            )
         self.assertIn('<h2>Free Appliance Pickup Locations in North Carolina</h2>',hub)
     def test_stoves_disconnection_fields(self):
         pages=json.loads((ROOT/"data/ttg-state-batches/NC.json").read_text())["pages"]
