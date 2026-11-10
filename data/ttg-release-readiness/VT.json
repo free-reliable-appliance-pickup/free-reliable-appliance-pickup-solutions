@@ -1,0 +1,15 @@
+{
+  "state_code": "VT",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Request-only noindex until real local accepting operator ZIP, genuine form receipt and owner approval."
+}
