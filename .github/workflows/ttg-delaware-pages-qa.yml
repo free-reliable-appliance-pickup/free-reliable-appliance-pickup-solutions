@@ -1,0 +1,18 @@
+name: TTG Delaware Gold Pages QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  delaware:
+    name: Delaware municipality and photo QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Delaware 57-municipality five-category matrix
+        run: python -m unittest discover -s tests -p 'test_ttg_delaware_pages.py' -v
+      - name: Validate all staged state manifests
+        run: python scripts/ttg_state_batch_qa.py
