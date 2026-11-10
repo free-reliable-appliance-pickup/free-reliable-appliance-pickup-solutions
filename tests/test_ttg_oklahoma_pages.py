@@ -73,6 +73,7 @@ class OklahomaGoldTests(unittest.TestCase):
             if page.endswith("-ok-appliance-pickup/index.html"):
                 self.assertIn('href="/'+page.removesuffix("index.html")+'"',hub)
         self.assertIn("Free pickup is not guaranteed.",hub)
+        self.assertIn("confirmed local pickup option",hub)
         self.assertIn("https://www.okc.gov/Services/Water-Trash-Recycling/Bulky-Waste",hub)
         self.assertIn("https://www.cityoftulsa.org/bulkywaste",hub)
         self.assertNotIn("https://freereliableappliancepickup.com/oklahoma-appliance-pickup/",(ROOT/"sitemap.xml").read_text(encoding="utf-8"))
