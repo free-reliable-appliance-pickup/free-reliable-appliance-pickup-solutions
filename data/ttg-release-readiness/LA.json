@@ -1,0 +1,15 @@
+{
+  "state_code": "LA",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Do not index or advertise guaranteed Louisiana pickup routes without documented operator acceptance, an actual Formspree test receipt and owner approval."
+}
