@@ -1,0 +1,15 @@
+{
+  "state_code": "MI",
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "verified_cities": [],
+  "instructions": "Keep all new MI pages noindex until locally accepting operators, actual ZIP scope, free and paid terms, tested receipt and owner release approval are independently confirmed. Do not treat competitor pages or existing appliance retailers as partners."
+}
