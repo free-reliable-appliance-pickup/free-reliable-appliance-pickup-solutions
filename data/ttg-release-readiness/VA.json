@@ -1,0 +1,15 @@
+{
+  "state_code": "VA",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Do not remove noindex or promise free pickup until real operator acceptance, exact ZIP coverage, terms, consented Formspree inbox receipt and owner approval are independently verified."
+}
