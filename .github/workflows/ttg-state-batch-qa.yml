@@ -34,5 +34,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ttg_louisiana_pages.py' -v
       - name: Validate Arkansas Gold city and category rollout
         run: python -m unittest discover -s tests -p 'test_ttg_arkansas_pages.py' -v
+      - name: Validate Kansas California Gold expansion
+        run: python -m unittest discover -s tests -p 'test_ttg_kansas_pages.py' -v
       - name: Validate state manifests and every listed page
         run: python scripts/ttg_state_batch_qa.py
