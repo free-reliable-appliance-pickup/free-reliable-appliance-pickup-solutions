@@ -1,0 +1,15 @@
+name: TTG New Mexico Gold 250-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  new-mexico:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit New Mexico 250 pages and safe release
+        run: python -m unittest discover -s tests -p 'test_ttg_new_mexico_pages.py' -v

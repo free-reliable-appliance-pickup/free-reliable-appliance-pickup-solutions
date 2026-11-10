@@ -1,0 +1,512 @@
+{
+  "state_code": "NM",
+  "mode": "request-only",
+  "existing_indexed_state_hub_preserved": "new-mexico-appliance-pickup/index.html",
+  "operator_coverage_verified": false,
+  "communities": [
+    {
+      "name": "Albuquerque",
+      "slug": "albuquerque",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Rio Rancho",
+      "slug": "rio-rancho",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Corrales",
+      "slug": "corrales",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Bernalillo",
+      "slug": "bernalillo",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Los Lunas",
+      "slug": "los-lunas",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Belen",
+      "slug": "belen",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Bosque Farms",
+      "slug": "bosque-farms",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Peralta",
+      "slug": "peralta",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Los Ranchos de Albuquerque",
+      "slug": "los-ranchos-de-albuquerque",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "North Valley",
+      "slug": "north-valley",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "South Valley",
+      "slug": "south-valley",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Paradise Hills",
+      "slug": "paradise-hills",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Placitas",
+      "slug": "placitas",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Tijeras",
+      "slug": "tijeras",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Edgewood",
+      "slug": "edgewood",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Moriarty",
+      "slug": "moriarty",
+      "region": "Albuquerque Metro and Middle Rio Grande"
+    },
+    {
+      "name": "Santa Fe",
+      "slug": "santa-fe",
+      "region": "Santa Fe and Northern New Mexico"
+    },
+    {
+      "name": "Espanola",
+      "slug": "espanola",
+      "region": "Santa Fe and Northern New Mexico"
+    },
+    {
+      "name": "Pojoaque",
+      "slug": "pojoaque",
+      "region": "Santa Fe and Northern New Mexico"
+    },
+    {
+      "name": "Eldorado at Santa Fe",
+      "slug": "eldorado-at-santa-fe",
+      "region": "Santa Fe and Northern New Mexico"
+    },
+    {
+      "name": "White Rock",
+      "slug": "white-rock",
+      "region": "Santa Fe and Northern New Mexico"
+    },
+    {
+      "name": "Los Alamos",
+      "slug": "los-alamos",
+      "region": "Santa Fe and Northern New Mexico"
+    },
+    {
+      "name": "Taos",
+      "slug": "taos",
+      "region": "Santa Fe and Northern New Mexico"
+    },
+    {
+      "name": "Ranchos de Taos",
+      "slug": "ranchos-de-taos",
+      "region": "Santa Fe and Northern New Mexico"
+    },
+    {
+      "name": "Chimayo",
+      "slug": "chimayo",
+      "region": "Santa Fe and Northern New Mexico"
+    },
+    {
+      "name": "Las Cruces",
+      "slug": "las-cruces",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Mesilla",
+      "slug": "mesilla",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Sunland Park",
+      "slug": "sunland-park",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Anthony",
+      "slug": "anthony",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Santa Teresa",
+      "slug": "santa-teresa",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Chaparral",
+      "slug": "chaparral",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Hatch",
+      "slug": "hatch",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Deming",
+      "slug": "deming",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Alamogordo",
+      "slug": "alamogordo",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Truth or Consequences",
+      "slug": "truth-or-consequences",
+      "region": "Las Cruces and Southern New Mexico"
+    },
+    {
+      "name": "Roswell",
+      "slug": "roswell",
+      "region": "Southeastern and Eastern New Mexico"
+    },
+    {
+      "name": "Artesia",
+      "slug": "artesia",
+      "region": "Southeastern and Eastern New Mexico"
+    },
+    {
+      "name": "Carlsbad",
+      "slug": "carlsbad",
+      "region": "Southeastern and Eastern New Mexico"
+    },
+    {
+      "name": "Hobbs",
+      "slug": "hobbs",
+      "region": "Southeastern and Eastern New Mexico"
+    },
+    {
+      "name": "Lovington",
+      "slug": "lovington",
+      "region": "Southeastern and Eastern New Mexico"
+    },
+    {
+      "name": "Portales",
+      "slug": "portales",
+      "region": "Southeastern and Eastern New Mexico"
+    },
+    {
+      "name": "Clovis",
+      "slug": "clovis",
+      "region": "Southeastern and Eastern New Mexico"
+    },
+    {
+      "name": "Tucumcari",
+      "slug": "tucumcari",
+      "region": "Southeastern and Eastern New Mexico"
+    },
+    {
+      "name": "Farmington",
+      "slug": "farmington",
+      "region": "Four Corners and Western New Mexico"
+    },
+    {
+      "name": "Aztec",
+      "slug": "aztec",
+      "region": "Four Corners and Western New Mexico"
+    },
+    {
+      "name": "Bloomfield",
+      "slug": "bloomfield",
+      "region": "Four Corners and Western New Mexico"
+    },
+    {
+      "name": "Gallup",
+      "slug": "gallup",
+      "region": "Four Corners and Western New Mexico"
+    },
+    {
+      "name": "Grants",
+      "slug": "grants",
+      "region": "Four Corners and Western New Mexico"
+    },
+    {
+      "name": "Shiprock",
+      "slug": "shiprock",
+      "region": "Four Corners and Western New Mexico"
+    },
+    {
+      "name": "Kirtland",
+      "slug": "kirtland",
+      "region": "Four Corners and Western New Mexico"
+    }
+  ],
+  "pages": [
+    "albuquerque-nm-appliance-pickup/index.html",
+    "albuquerque-nm-washer-dryer-pickup/index.html",
+    "albuquerque-nm-refrigerator-pickup/index.html",
+    "albuquerque-nm-stove-oven-pickup/index.html",
+    "albuquerque-nm-freezer-pickup/index.html",
+    "rio-rancho-nm-appliance-pickup/index.html",
+    "rio-rancho-nm-washer-dryer-pickup/index.html",
+    "rio-rancho-nm-refrigerator-pickup/index.html",
+    "rio-rancho-nm-stove-oven-pickup/index.html",
+    "rio-rancho-nm-freezer-pickup/index.html",
+    "corrales-nm-appliance-pickup/index.html",
+    "corrales-nm-washer-dryer-pickup/index.html",
+    "corrales-nm-refrigerator-pickup/index.html",
+    "corrales-nm-stove-oven-pickup/index.html",
+    "corrales-nm-freezer-pickup/index.html",
+    "bernalillo-nm-appliance-pickup/index.html",
+    "bernalillo-nm-washer-dryer-pickup/index.html",
+    "bernalillo-nm-refrigerator-pickup/index.html",
+    "bernalillo-nm-stove-oven-pickup/index.html",
+    "bernalillo-nm-freezer-pickup/index.html",
+    "los-lunas-nm-appliance-pickup/index.html",
+    "los-lunas-nm-washer-dryer-pickup/index.html",
+    "los-lunas-nm-refrigerator-pickup/index.html",
+    "los-lunas-nm-stove-oven-pickup/index.html",
+    "los-lunas-nm-freezer-pickup/index.html",
+    "belen-nm-appliance-pickup/index.html",
+    "belen-nm-washer-dryer-pickup/index.html",
+    "belen-nm-refrigerator-pickup/index.html",
+    "belen-nm-stove-oven-pickup/index.html",
+    "belen-nm-freezer-pickup/index.html",
+    "bosque-farms-nm-appliance-pickup/index.html",
+    "bosque-farms-nm-washer-dryer-pickup/index.html",
+    "bosque-farms-nm-refrigerator-pickup/index.html",
+    "bosque-farms-nm-stove-oven-pickup/index.html",
+    "bosque-farms-nm-freezer-pickup/index.html",
+    "peralta-nm-appliance-pickup/index.html",
+    "peralta-nm-washer-dryer-pickup/index.html",
+    "peralta-nm-refrigerator-pickup/index.html",
+    "peralta-nm-stove-oven-pickup/index.html",
+    "peralta-nm-freezer-pickup/index.html",
+    "los-ranchos-de-albuquerque-nm-appliance-pickup/index.html",
+    "los-ranchos-de-albuquerque-nm-washer-dryer-pickup/index.html",
+    "los-ranchos-de-albuquerque-nm-refrigerator-pickup/index.html",
+    "los-ranchos-de-albuquerque-nm-stove-oven-pickup/index.html",
+    "los-ranchos-de-albuquerque-nm-freezer-pickup/index.html",
+    "north-valley-nm-appliance-pickup/index.html",
+    "north-valley-nm-washer-dryer-pickup/index.html",
+    "north-valley-nm-refrigerator-pickup/index.html",
+    "north-valley-nm-stove-oven-pickup/index.html",
+    "north-valley-nm-freezer-pickup/index.html",
+    "south-valley-nm-appliance-pickup/index.html",
+    "south-valley-nm-washer-dryer-pickup/index.html",
+    "south-valley-nm-refrigerator-pickup/index.html",
+    "south-valley-nm-stove-oven-pickup/index.html",
+    "south-valley-nm-freezer-pickup/index.html",
+    "paradise-hills-nm-appliance-pickup/index.html",
+    "paradise-hills-nm-washer-dryer-pickup/index.html",
+    "paradise-hills-nm-refrigerator-pickup/index.html",
+    "paradise-hills-nm-stove-oven-pickup/index.html",
+    "paradise-hills-nm-freezer-pickup/index.html",
+    "placitas-nm-appliance-pickup/index.html",
+    "placitas-nm-washer-dryer-pickup/index.html",
+    "placitas-nm-refrigerator-pickup/index.html",
+    "placitas-nm-stove-oven-pickup/index.html",
+    "placitas-nm-freezer-pickup/index.html",
+    "tijeras-nm-appliance-pickup/index.html",
+    "tijeras-nm-washer-dryer-pickup/index.html",
+    "tijeras-nm-refrigerator-pickup/index.html",
+    "tijeras-nm-stove-oven-pickup/index.html",
+    "tijeras-nm-freezer-pickup/index.html",
+    "edgewood-nm-appliance-pickup/index.html",
+    "edgewood-nm-washer-dryer-pickup/index.html",
+    "edgewood-nm-refrigerator-pickup/index.html",
+    "edgewood-nm-stove-oven-pickup/index.html",
+    "edgewood-nm-freezer-pickup/index.html",
+    "moriarty-nm-appliance-pickup/index.html",
+    "moriarty-nm-washer-dryer-pickup/index.html",
+    "moriarty-nm-refrigerator-pickup/index.html",
+    "moriarty-nm-stove-oven-pickup/index.html",
+    "moriarty-nm-freezer-pickup/index.html",
+    "santa-fe-nm-appliance-pickup/index.html",
+    "santa-fe-nm-washer-dryer-pickup/index.html",
+    "santa-fe-nm-refrigerator-pickup/index.html",
+    "santa-fe-nm-stove-oven-pickup/index.html",
+    "santa-fe-nm-freezer-pickup/index.html",
+    "espanola-nm-appliance-pickup/index.html",
+    "espanola-nm-washer-dryer-pickup/index.html",
+    "espanola-nm-refrigerator-pickup/index.html",
+    "espanola-nm-stove-oven-pickup/index.html",
+    "espanola-nm-freezer-pickup/index.html",
+    "pojoaque-nm-appliance-pickup/index.html",
+    "pojoaque-nm-washer-dryer-pickup/index.html",
+    "pojoaque-nm-refrigerator-pickup/index.html",
+    "pojoaque-nm-stove-oven-pickup/index.html",
+    "pojoaque-nm-freezer-pickup/index.html",
+    "eldorado-at-santa-fe-nm-appliance-pickup/index.html",
+    "eldorado-at-santa-fe-nm-washer-dryer-pickup/index.html",
+    "eldorado-at-santa-fe-nm-refrigerator-pickup/index.html",
+    "eldorado-at-santa-fe-nm-stove-oven-pickup/index.html",
+    "eldorado-at-santa-fe-nm-freezer-pickup/index.html",
+    "white-rock-nm-appliance-pickup/index.html",
+    "white-rock-nm-washer-dryer-pickup/index.html",
+    "white-rock-nm-refrigerator-pickup/index.html",
+    "white-rock-nm-stove-oven-pickup/index.html",
+    "white-rock-nm-freezer-pickup/index.html",
+    "los-alamos-nm-appliance-pickup/index.html",
+    "los-alamos-nm-washer-dryer-pickup/index.html",
+    "los-alamos-nm-refrigerator-pickup/index.html",
+    "los-alamos-nm-stove-oven-pickup/index.html",
+    "los-alamos-nm-freezer-pickup/index.html",
+    "taos-nm-appliance-pickup/index.html",
+    "taos-nm-washer-dryer-pickup/index.html",
+    "taos-nm-refrigerator-pickup/index.html",
+    "taos-nm-stove-oven-pickup/index.html",
+    "taos-nm-freezer-pickup/index.html",
+    "ranchos-de-taos-nm-appliance-pickup/index.html",
+    "ranchos-de-taos-nm-washer-dryer-pickup/index.html",
+    "ranchos-de-taos-nm-refrigerator-pickup/index.html",
+    "ranchos-de-taos-nm-stove-oven-pickup/index.html",
+    "ranchos-de-taos-nm-freezer-pickup/index.html",
+    "chimayo-nm-appliance-pickup/index.html",
+    "chimayo-nm-washer-dryer-pickup/index.html",
+    "chimayo-nm-refrigerator-pickup/index.html",
+    "chimayo-nm-stove-oven-pickup/index.html",
+    "chimayo-nm-freezer-pickup/index.html",
+    "las-cruces-nm-appliance-pickup/index.html",
+    "las-cruces-nm-washer-dryer-pickup/index.html",
+    "las-cruces-nm-refrigerator-pickup/index.html",
+    "las-cruces-nm-stove-oven-pickup/index.html",
+    "las-cruces-nm-freezer-pickup/index.html",
+    "mesilla-nm-appliance-pickup/index.html",
+    "mesilla-nm-washer-dryer-pickup/index.html",
+    "mesilla-nm-refrigerator-pickup/index.html",
+    "mesilla-nm-stove-oven-pickup/index.html",
+    "mesilla-nm-freezer-pickup/index.html",
+    "sunland-park-nm-appliance-pickup/index.html",
+    "sunland-park-nm-washer-dryer-pickup/index.html",
+    "sunland-park-nm-refrigerator-pickup/index.html",
+    "sunland-park-nm-stove-oven-pickup/index.html",
+    "sunland-park-nm-freezer-pickup/index.html",
+    "anthony-nm-appliance-pickup/index.html",
+    "anthony-nm-washer-dryer-pickup/index.html",
+    "anthony-nm-refrigerator-pickup/index.html",
+    "anthony-nm-stove-oven-pickup/index.html",
+    "anthony-nm-freezer-pickup/index.html",
+    "santa-teresa-nm-appliance-pickup/index.html",
+    "santa-teresa-nm-washer-dryer-pickup/index.html",
+    "santa-teresa-nm-refrigerator-pickup/index.html",
+    "santa-teresa-nm-stove-oven-pickup/index.html",
+    "santa-teresa-nm-freezer-pickup/index.html",
+    "chaparral-nm-appliance-pickup/index.html",
+    "chaparral-nm-washer-dryer-pickup/index.html",
+    "chaparral-nm-refrigerator-pickup/index.html",
+    "chaparral-nm-stove-oven-pickup/index.html",
+    "chaparral-nm-freezer-pickup/index.html",
+    "hatch-nm-appliance-pickup/index.html",
+    "hatch-nm-washer-dryer-pickup/index.html",
+    "hatch-nm-refrigerator-pickup/index.html",
+    "hatch-nm-stove-oven-pickup/index.html",
+    "hatch-nm-freezer-pickup/index.html",
+    "deming-nm-appliance-pickup/index.html",
+    "deming-nm-washer-dryer-pickup/index.html",
+    "deming-nm-refrigerator-pickup/index.html",
+    "deming-nm-stove-oven-pickup/index.html",
+    "deming-nm-freezer-pickup/index.html",
+    "alamogordo-nm-appliance-pickup/index.html",
+    "alamogordo-nm-washer-dryer-pickup/index.html",
+    "alamogordo-nm-refrigerator-pickup/index.html",
+    "alamogordo-nm-stove-oven-pickup/index.html",
+    "alamogordo-nm-freezer-pickup/index.html",
+    "truth-or-consequences-nm-appliance-pickup/index.html",
+    "truth-or-consequences-nm-washer-dryer-pickup/index.html",
+    "truth-or-consequences-nm-refrigerator-pickup/index.html",
+    "truth-or-consequences-nm-stove-oven-pickup/index.html",
+    "truth-or-consequences-nm-freezer-pickup/index.html",
+    "roswell-nm-appliance-pickup/index.html",
+    "roswell-nm-washer-dryer-pickup/index.html",
+    "roswell-nm-refrigerator-pickup/index.html",
+    "roswell-nm-stove-oven-pickup/index.html",
+    "roswell-nm-freezer-pickup/index.html",
+    "artesia-nm-appliance-pickup/index.html",
+    "artesia-nm-washer-dryer-pickup/index.html",
+    "artesia-nm-refrigerator-pickup/index.html",
+    "artesia-nm-stove-oven-pickup/index.html",
+    "artesia-nm-freezer-pickup/index.html",
+    "carlsbad-nm-appliance-pickup/index.html",
+    "carlsbad-nm-washer-dryer-pickup/index.html",
+    "carlsbad-nm-refrigerator-pickup/index.html",
+    "carlsbad-nm-stove-oven-pickup/index.html",
+    "carlsbad-nm-freezer-pickup/index.html",
+    "hobbs-nm-appliance-pickup/index.html",
+    "hobbs-nm-washer-dryer-pickup/index.html",
+    "hobbs-nm-refrigerator-pickup/index.html",
+    "hobbs-nm-stove-oven-pickup/index.html",
+    "hobbs-nm-freezer-pickup/index.html",
+    "lovington-nm-appliance-pickup/index.html",
+    "lovington-nm-washer-dryer-pickup/index.html",
+    "lovington-nm-refrigerator-pickup/index.html",
+    "lovington-nm-stove-oven-pickup/index.html",
+    "lovington-nm-freezer-pickup/index.html",
+    "portales-nm-appliance-pickup/index.html",
+    "portales-nm-washer-dryer-pickup/index.html",
+    "portales-nm-refrigerator-pickup/index.html",
+    "portales-nm-stove-oven-pickup/index.html",
+    "portales-nm-freezer-pickup/index.html",
+    "clovis-nm-appliance-pickup/index.html",
+    "clovis-nm-washer-dryer-pickup/index.html",
+    "clovis-nm-refrigerator-pickup/index.html",
+    "clovis-nm-stove-oven-pickup/index.html",
+    "clovis-nm-freezer-pickup/index.html",
+    "tucumcari-nm-appliance-pickup/index.html",
+    "tucumcari-nm-washer-dryer-pickup/index.html",
+    "tucumcari-nm-refrigerator-pickup/index.html",
+    "tucumcari-nm-stove-oven-pickup/index.html",
+    "tucumcari-nm-freezer-pickup/index.html",
+    "farmington-nm-appliance-pickup/index.html",
+    "farmington-nm-washer-dryer-pickup/index.html",
+    "farmington-nm-refrigerator-pickup/index.html",
+    "farmington-nm-stove-oven-pickup/index.html",
+    "farmington-nm-freezer-pickup/index.html",
+    "aztec-nm-appliance-pickup/index.html",
+    "aztec-nm-washer-dryer-pickup/index.html",
+    "aztec-nm-refrigerator-pickup/index.html",
+    "aztec-nm-stove-oven-pickup/index.html",
+    "aztec-nm-freezer-pickup/index.html",
+    "bloomfield-nm-appliance-pickup/index.html",
+    "bloomfield-nm-washer-dryer-pickup/index.html",
+    "bloomfield-nm-refrigerator-pickup/index.html",
+    "bloomfield-nm-stove-oven-pickup/index.html",
+    "bloomfield-nm-freezer-pickup/index.html",
+    "gallup-nm-appliance-pickup/index.html",
+    "gallup-nm-washer-dryer-pickup/index.html",
+    "gallup-nm-refrigerator-pickup/index.html",
+    "gallup-nm-stove-oven-pickup/index.html",
+    "gallup-nm-freezer-pickup/index.html",
+    "grants-nm-appliance-pickup/index.html",
+    "grants-nm-washer-dryer-pickup/index.html",
+    "grants-nm-refrigerator-pickup/index.html",
+    "grants-nm-stove-oven-pickup/index.html",
+    "grants-nm-freezer-pickup/index.html",
+    "shiprock-nm-appliance-pickup/index.html",
+    "shiprock-nm-washer-dryer-pickup/index.html",
+    "shiprock-nm-refrigerator-pickup/index.html",
+    "shiprock-nm-stove-oven-pickup/index.html",
+    "shiprock-nm-freezer-pickup/index.html",
+    "kirtland-nm-appliance-pickup/index.html",
+    "kirtland-nm-washer-dryer-pickup/index.html",
+    "kirtland-nm-refrigerator-pickup/index.html",
+    "kirtland-nm-stove-oven-pickup/index.html",
+    "kirtland-nm-freezer-pickup/index.html"
+  ],
+  "photo_note": "One original used-appliance company photo per page plus company logo; not evidence of prior New Mexico pickups.",
+  "operational_note": "Statewide hub stays indexed. New city URLs are noindex until verified ZIP-specific accepting operator, working form and explicit owner release."
+}

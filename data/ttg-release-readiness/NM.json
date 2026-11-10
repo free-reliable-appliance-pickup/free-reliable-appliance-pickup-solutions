@@ -1,0 +1,16 @@
+{
+  "state_code": "NM",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "existing_hub": "new-mexico-appliance-pickup/index.html",
+  "instructions": "Do not index city pages before specific accepting local ZIP operator, end-to-end Formspree delivery confirmation and owner release approval."
+}
