@@ -170,7 +170,7 @@ def alternative(city):
     if city=="Lexington":
         return ('<p>The <a href="https://www.lexingtonky.gov/living/waste-collection/appliances">City of Lexington appliance collection program</a> accepts appointment requests from households with city waste collection service at no charge. It has its own rules, and it is not part of Free Reliable Appliance Pickup.</p>')
     if city=="Louisville":
-        return ('<p><a href="https://louisvilleky.gov/government/public-works/large-items">Louisville Metro large-item options</a> describe appointments for city-waste customers and the separate Waste Reduction Center. Refrigerant-containing appliances require appropriate handling; the city's options are independent of our pickup inquiries.</p>')
+        return ('<p><a href="https://louisvilleky.gov/government/public-works/large-items">Louisville Metro large-item options</a> describe appointments for city-waste customers and the separate Waste Reduction Center. Refrigerant-containing appliances require appropriate handling; municipal options are independent of our pickup inquiries.</p>')
     if city in {"Elizabethtown","Radcliff"}:
         return ('<p><a href="https://www.hardincountyky.gov/360/Solid-Waste-Recycling-Landfill">Hardin County Solid Waste</a> describes its separate bulky-item collection program for eligible unincorporated-county households. Confirm which program applies to the pickup address and check restrictions directly with the county.</p>')
     return ('<p>For appliances not accepted for reuse, check your local public works department, county solid waste office, retailer take-back or licensed recycler. These are independent options; availability, fees and restrictions vary by municipality and provider.</p>')
