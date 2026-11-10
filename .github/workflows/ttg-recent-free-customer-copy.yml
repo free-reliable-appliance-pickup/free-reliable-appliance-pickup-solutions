@@ -24,9 +24,7 @@ jobs:
           python3 scripts/ttg_state_batch_qa.py
       - name: Customer-focused state and city regression tests
         run: |
-          python3 tests/test_ttg_free_pickup_state_hubs.py
-          python3 tests/test_ttg_minnesota_pages.py
-          python3 tests/test_ttg_free_city_category_copy.py
+          PYTHONPATH=. python3 -m unittest tests.test_ttg_free_pickup_state_hubs tests.test_ttg_minnesota_pages tests.test_ttg_free_city_category_copy
       - name: Record verified changes and remove one-time workflow
         run: |
           git config user.name "Free Reliable Website Bot"
@@ -41,3 +39,5 @@ jobs:
 # retry with North Carolina statewide form contract repaired
 
 # Rerun with bounded checkout logs for actionable test error output
+
+# Use module imports for regression suites
