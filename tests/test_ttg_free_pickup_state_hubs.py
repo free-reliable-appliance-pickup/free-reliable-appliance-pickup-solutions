@@ -30,7 +30,7 @@ class StateFreePickupHeadings(unittest.TestCase):
         for state in STATES_UPDATED:
             with self.subTest(state=state):
                 html = (ROOT / f"{state}-appliance-pickup/index.html").read_text(encoding="utf-8")
-                self.assertIn("Free appliance pickup eligibility:", html)
+                self.assertNotIn("eligibility", re.search(r"<h1[^>]*>(.*?)</h1>", html, re.I).group(1).lower())
                 self.assertIn("Free pickup is not guaranteed", html)
                 self.assertIn("confirmed local pickup option", html)
                 self.assertEqual(len(re.findall(r"<h1\b", html, re.I)), 1)
