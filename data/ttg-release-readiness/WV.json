@@ -1,0 +1,15 @@
+{
+  "state_code": "WV",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Request-only noindex; verify accepting local operator by ZIP and actual Formspree receipt before owner-authorized public indexing."
+}
