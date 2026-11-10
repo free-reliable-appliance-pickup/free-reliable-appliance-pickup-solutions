@@ -1,0 +1,16 @@
+{
+  "state_code": "FL",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "existing_hub": "florida-appliance-pickup/index.html",
+  "instructions": "New FL pages remain noindex and out of sitemap; qualify accepting operators by ZIP, test end-to-end live Formspree, owner release approval before indexing."
+}
