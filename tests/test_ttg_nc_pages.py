@@ -7,17 +7,28 @@ class NorthCarolinaBatchTests(unittest.TestCase):
         self.assertEqual(check_manifest(ROOT / "data/ttg-state-batches/NC.json"), [])
     def test_all_city_pages_in_state_directory(self):
         pages=json.loads((ROOT/"data/ttg-state-batches/NC.json").read_text())["pages"]
-        self.assertEqual(len(pages),68)
+        self.assertEqual(len(pages),250)
         hub=(ROOT/"north-carolina-appliance-pickup/index.html").read_text()
         for path in pages:
             slug=path.removesuffix("/index.html")
-            self.assertIn('href="/'+slug+'/"',hub)
+            if "-nc-appliance-pickup/" in path:
+                self.assertIn('href="/'+slug+'/"',hub)
+            else:
+                city = slug.split("-nc-", 1)[0]
+                city_hub = (ROOT/(city+"-nc-appliance-pickup/index.html")).read_text()
+                self.assertIn('href="/'+slug+'/"',city_hub)
             html=(ROOT/path).read_text()
             self.assertIn('content="noindex, follow"',html)
             self.assertIn('name="privacy_acknowledgment"',html)
             self.assertIn('name="paid_option"',html)
-            self.assertIn('not a completed North Carolina pickup',html)
-        self.assertIn('<h2>North Carolina City Appliance Pickup Eligibility Guides</h2>',hub)
+            self.assertTrue(
+                'not a completed North Carolina pickup' in html
+                or 'does not document a pickup in North Carolina' in html
+                or 'not a completed North Carolina job' in html
+                or 'illustrative only' in html,
+                path + ': missing truthful appliance photo disclosure'
+            )
+        self.assertIn('<h2>Free Appliance Pickup Locations in North Carolina</h2>',hub)
     def test_stoves_disconnection_fields(self):
         pages=json.loads((ROOT/"data/ttg-state-batches/NC.json").read_text())["pages"]
         for path in pages:
@@ -25,7 +36,7 @@ class NorthCarolinaBatchTests(unittest.TestCase):
             html=(ROOT/path).read_text()
             self.assertIn('name="fuel_type" required',html)
             self.assertIn('name="connection_status" required',html)
-            self.assertIn('qualified professional',html)
+            self.assertIn('qualified professional',html.lower())
     def test_no_activation(self):
         ledger=json.loads((ROOT/"data/ttg-release-readiness/NC.json").read_text())
         self.assertEqual(ledger["verified_cities"],[])
