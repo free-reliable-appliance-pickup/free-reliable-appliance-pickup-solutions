@@ -1,0 +1,954 @@
+{
+  "state_code": "FL",
+  "mode": "request-only",
+  "existing_indexed_state_hub_preserved": "florida-appliance-pickup/index.html",
+  "operator_coverage_verified": false,
+  "communities": [
+    {
+      "slug": "altamonte-springs",
+      "name": "Altamonte Springs",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "apopka",
+      "name": "Apopka",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "boca-raton",
+      "name": "Boca Raton",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "bonita-springs",
+      "name": "Bonita Springs",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "boynton-beach",
+      "name": "Boynton Beach",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "bradenton",
+      "name": "Bradenton",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "brandon",
+      "name": "Brandon",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "cape-coral",
+      "name": "Cape Coral",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "clearwater",
+      "name": "Clearwater",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "clermont",
+      "name": "Clermont",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "coral-springs",
+      "name": "Coral Springs",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "crawfordville",
+      "name": "Crawfordville",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "crestview",
+      "name": "Crestview",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "daytona-beach",
+      "name": "Daytona Beach",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "delray-beach",
+      "name": "Delray Beach",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "deltona",
+      "name": "Deltona",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "destin",
+      "name": "Destin",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "doral",
+      "name": "Doral",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "fort-lauderdale",
+      "name": "Fort Lauderdale",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "fort-myers",
+      "name": "Fort Myers",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "fort-walton-beach",
+      "name": "Fort Walton Beach",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "gainesville",
+      "name": "Gainesville",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "haines-city",
+      "name": "Haines City",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "hialeah",
+      "name": "Hialeah",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "hollywood",
+      "name": "Hollywood",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "homestead",
+      "name": "Homestead",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "jacksonville",
+      "name": "Jacksonville",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "jacksonville-beach",
+      "name": "Jacksonville Beach",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "kissimmee",
+      "name": "Kissimmee",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "lakeland",
+      "name": "Lakeland",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "melbourne",
+      "name": "Melbourne",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "miami",
+      "name": "Miami",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "miami-gardens",
+      "name": "Miami Gardens",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "milton",
+      "name": "Milton",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "miramar",
+      "name": "Miramar",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "naples",
+      "name": "Naples",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "navarre",
+      "name": "Navarre",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "north-port",
+      "name": "North Port",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "ocala",
+      "name": "Ocala",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "orange-park",
+      "name": "Orange Park",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "orlando",
+      "name": "Orlando",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "ormond-beach",
+      "name": "Ormond Beach",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "palm-bay",
+      "name": "Palm Bay",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "palm-coast",
+      "name": "Palm Coast",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "pembroke-pines",
+      "name": "Pembroke Pines",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "pensacola",
+      "name": "Pensacola",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "plant-city",
+      "name": "Plant City",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "pompano-beach",
+      "name": "Pompano Beach",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "port-st-lucie",
+      "name": "Port St Lucie",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "quincy",
+      "name": "Quincy",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "riverview",
+      "name": "Riverview",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "sanford",
+      "name": "Sanford",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "sarasota",
+      "name": "Sarasota",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "st-augustine",
+      "name": "St Augustine",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "st-cloud",
+      "name": "St Cloud",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "st-petersburg",
+      "name": "St Petersburg",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "tallahassee",
+      "name": "Tallahassee",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "tampa",
+      "name": "Tampa",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "the-villages",
+      "name": "The Villages",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "titusville",
+      "name": "Titusville",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "wesley-chapel",
+      "name": "Wesley Chapel",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "west-palm-beach",
+      "name": "West Palm Beach",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "winter-garden",
+      "name": "Winter Garden",
+      "region": "Established Florida coverage"
+    },
+    {
+      "slug": "winter-haven",
+      "name": "Winter Haven",
+      "region": "Established Florida coverage"
+    },
+    {
+      "name": "Coral Gables",
+      "slug": "coral-gables",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Miami Beach",
+      "slug": "miami-beach",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Aventura",
+      "slug": "aventura",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Sunny Isles Beach",
+      "slug": "sunny-isles-beach",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Key Biscayne",
+      "slug": "key-biscayne",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Kendall",
+      "slug": "kendall",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Pinecrest",
+      "slug": "pinecrest",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Palmetto Bay",
+      "slug": "palmetto-bay",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Miami Lakes",
+      "slug": "miami-lakes",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Cutler Bay",
+      "slug": "cutler-bay",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "North Miami",
+      "slug": "north-miami",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "North Miami Beach",
+      "slug": "north-miami-beach",
+      "region": "Miami-Dade and South Florida"
+    },
+    {
+      "name": "Winter Park",
+      "slug": "winter-park",
+      "region": "Orlando and Central Florida"
+    },
+    {
+      "name": "Maitland",
+      "slug": "maitland",
+      "region": "Orlando and Central Florida"
+    },
+    {
+      "name": "Oviedo",
+      "slug": "oviedo",
+      "region": "Orlando and Central Florida"
+    },
+    {
+      "name": "Winter Springs",
+      "slug": "winter-springs",
+      "region": "Orlando and Central Florida"
+    },
+    {
+      "name": "Lake Mary",
+      "slug": "lake-mary",
+      "region": "Orlando and Central Florida"
+    },
+    {
+      "name": "Ocoee",
+      "slug": "ocoee",
+      "region": "Orlando and Central Florida"
+    },
+    {
+      "name": "Largo",
+      "slug": "largo",
+      "region": "Tampa Bay and Pasco"
+    },
+    {
+      "name": "Pinellas Park",
+      "slug": "pinellas-park",
+      "region": "Tampa Bay and Pasco"
+    },
+    {
+      "name": "Dunedin",
+      "slug": "dunedin",
+      "region": "Tampa Bay and Pasco"
+    },
+    {
+      "name": "Palm Harbor",
+      "slug": "palm-harbor",
+      "region": "Tampa Bay and Pasco"
+    },
+    {
+      "name": "Lutz",
+      "slug": "lutz",
+      "region": "Tampa Bay and Pasco"
+    },
+    {
+      "name": "Land O Lakes",
+      "slug": "land-o-lakes",
+      "region": "Tampa Bay and Pasco"
+    },
+    {
+      "name": "New Port Richey",
+      "slug": "new-port-richey",
+      "region": "Tampa Bay and Pasco"
+    },
+    {
+      "name": "Estero",
+      "slug": "estero",
+      "region": "Southwest Florida"
+    },
+    {
+      "name": "Lehigh Acres",
+      "slug": "lehigh-acres",
+      "region": "Southwest Florida"
+    },
+    {
+      "name": "Marco Island",
+      "slug": "marco-island",
+      "region": "Southwest Florida"
+    },
+    {
+      "name": "Ponte Vedra Beach",
+      "slug": "ponte-vedra-beach",
+      "region": "Northeast Florida"
+    },
+    {
+      "name": "St Johns",
+      "slug": "st-johns",
+      "region": "Northeast Florida"
+    }
+  ],
+  "pages": [
+    "coral-gables-fl-appliance-pickup/index.html",
+    "coral-gables-fl-washer-dryer-pickup/index.html",
+    "coral-gables-fl-refrigerator-pickup/index.html",
+    "coral-gables-fl-stove-oven-pickup/index.html",
+    "coral-gables-fl-freezer-pickup/index.html",
+    "miami-beach-fl-appliance-pickup/index.html",
+    "miami-beach-fl-washer-dryer-pickup/index.html",
+    "miami-beach-fl-refrigerator-pickup/index.html",
+    "miami-beach-fl-stove-oven-pickup/index.html",
+    "miami-beach-fl-freezer-pickup/index.html",
+    "aventura-fl-appliance-pickup/index.html",
+    "aventura-fl-washer-dryer-pickup/index.html",
+    "aventura-fl-refrigerator-pickup/index.html",
+    "aventura-fl-stove-oven-pickup/index.html",
+    "aventura-fl-freezer-pickup/index.html",
+    "sunny-isles-beach-fl-appliance-pickup/index.html",
+    "sunny-isles-beach-fl-washer-dryer-pickup/index.html",
+    "sunny-isles-beach-fl-refrigerator-pickup/index.html",
+    "sunny-isles-beach-fl-stove-oven-pickup/index.html",
+    "sunny-isles-beach-fl-freezer-pickup/index.html",
+    "key-biscayne-fl-appliance-pickup/index.html",
+    "key-biscayne-fl-washer-dryer-pickup/index.html",
+    "key-biscayne-fl-refrigerator-pickup/index.html",
+    "key-biscayne-fl-stove-oven-pickup/index.html",
+    "key-biscayne-fl-freezer-pickup/index.html",
+    "kendall-fl-appliance-pickup/index.html",
+    "kendall-fl-washer-dryer-pickup/index.html",
+    "kendall-fl-refrigerator-pickup/index.html",
+    "kendall-fl-stove-oven-pickup/index.html",
+    "kendall-fl-freezer-pickup/index.html",
+    "pinecrest-fl-appliance-pickup/index.html",
+    "pinecrest-fl-washer-dryer-pickup/index.html",
+    "pinecrest-fl-refrigerator-pickup/index.html",
+    "pinecrest-fl-stove-oven-pickup/index.html",
+    "pinecrest-fl-freezer-pickup/index.html",
+    "palmetto-bay-fl-appliance-pickup/index.html",
+    "palmetto-bay-fl-washer-dryer-pickup/index.html",
+    "palmetto-bay-fl-refrigerator-pickup/index.html",
+    "palmetto-bay-fl-stove-oven-pickup/index.html",
+    "palmetto-bay-fl-freezer-pickup/index.html",
+    "miami-lakes-fl-appliance-pickup/index.html",
+    "miami-lakes-fl-washer-dryer-pickup/index.html",
+    "miami-lakes-fl-refrigerator-pickup/index.html",
+    "miami-lakes-fl-stove-oven-pickup/index.html",
+    "miami-lakes-fl-freezer-pickup/index.html",
+    "cutler-bay-fl-appliance-pickup/index.html",
+    "cutler-bay-fl-washer-dryer-pickup/index.html",
+    "cutler-bay-fl-refrigerator-pickup/index.html",
+    "cutler-bay-fl-stove-oven-pickup/index.html",
+    "cutler-bay-fl-freezer-pickup/index.html",
+    "north-miami-fl-appliance-pickup/index.html",
+    "north-miami-fl-washer-dryer-pickup/index.html",
+    "north-miami-fl-refrigerator-pickup/index.html",
+    "north-miami-fl-stove-oven-pickup/index.html",
+    "north-miami-fl-freezer-pickup/index.html",
+    "north-miami-beach-fl-appliance-pickup/index.html",
+    "north-miami-beach-fl-washer-dryer-pickup/index.html",
+    "north-miami-beach-fl-refrigerator-pickup/index.html",
+    "north-miami-beach-fl-stove-oven-pickup/index.html",
+    "north-miami-beach-fl-freezer-pickup/index.html",
+    "winter-park-fl-appliance-pickup/index.html",
+    "winter-park-fl-washer-dryer-pickup/index.html",
+    "winter-park-fl-refrigerator-pickup/index.html",
+    "winter-park-fl-stove-oven-pickup/index.html",
+    "winter-park-fl-freezer-pickup/index.html",
+    "maitland-fl-appliance-pickup/index.html",
+    "maitland-fl-washer-dryer-pickup/index.html",
+    "maitland-fl-refrigerator-pickup/index.html",
+    "maitland-fl-stove-oven-pickup/index.html",
+    "maitland-fl-freezer-pickup/index.html",
+    "oviedo-fl-appliance-pickup/index.html",
+    "oviedo-fl-washer-dryer-pickup/index.html",
+    "oviedo-fl-refrigerator-pickup/index.html",
+    "oviedo-fl-stove-oven-pickup/index.html",
+    "oviedo-fl-freezer-pickup/index.html",
+    "winter-springs-fl-appliance-pickup/index.html",
+    "winter-springs-fl-washer-dryer-pickup/index.html",
+    "winter-springs-fl-refrigerator-pickup/index.html",
+    "winter-springs-fl-stove-oven-pickup/index.html",
+    "winter-springs-fl-freezer-pickup/index.html",
+    "lake-mary-fl-appliance-pickup/index.html",
+    "lake-mary-fl-washer-dryer-pickup/index.html",
+    "lake-mary-fl-refrigerator-pickup/index.html",
+    "lake-mary-fl-stove-oven-pickup/index.html",
+    "lake-mary-fl-freezer-pickup/index.html",
+    "ocoee-fl-appliance-pickup/index.html",
+    "ocoee-fl-washer-dryer-pickup/index.html",
+    "ocoee-fl-refrigerator-pickup/index.html",
+    "ocoee-fl-stove-oven-pickup/index.html",
+    "ocoee-fl-freezer-pickup/index.html",
+    "largo-fl-appliance-pickup/index.html",
+    "largo-fl-washer-dryer-pickup/index.html",
+    "largo-fl-refrigerator-pickup/index.html",
+    "largo-fl-stove-oven-pickup/index.html",
+    "largo-fl-freezer-pickup/index.html",
+    "pinellas-park-fl-appliance-pickup/index.html",
+    "pinellas-park-fl-washer-dryer-pickup/index.html",
+    "pinellas-park-fl-refrigerator-pickup/index.html",
+    "pinellas-park-fl-stove-oven-pickup/index.html",
+    "pinellas-park-fl-freezer-pickup/index.html",
+    "dunedin-fl-appliance-pickup/index.html",
+    "dunedin-fl-washer-dryer-pickup/index.html",
+    "dunedin-fl-refrigerator-pickup/index.html",
+    "dunedin-fl-stove-oven-pickup/index.html",
+    "dunedin-fl-freezer-pickup/index.html",
+    "palm-harbor-fl-appliance-pickup/index.html",
+    "palm-harbor-fl-washer-dryer-pickup/index.html",
+    "palm-harbor-fl-refrigerator-pickup/index.html",
+    "palm-harbor-fl-stove-oven-pickup/index.html",
+    "palm-harbor-fl-freezer-pickup/index.html",
+    "lutz-fl-appliance-pickup/index.html",
+    "lutz-fl-washer-dryer-pickup/index.html",
+    "lutz-fl-refrigerator-pickup/index.html",
+    "lutz-fl-stove-oven-pickup/index.html",
+    "lutz-fl-freezer-pickup/index.html",
+    "land-o-lakes-fl-appliance-pickup/index.html",
+    "land-o-lakes-fl-washer-dryer-pickup/index.html",
+    "land-o-lakes-fl-refrigerator-pickup/index.html",
+    "land-o-lakes-fl-stove-oven-pickup/index.html",
+    "land-o-lakes-fl-freezer-pickup/index.html",
+    "new-port-richey-fl-appliance-pickup/index.html",
+    "new-port-richey-fl-washer-dryer-pickup/index.html",
+    "new-port-richey-fl-refrigerator-pickup/index.html",
+    "new-port-richey-fl-stove-oven-pickup/index.html",
+    "new-port-richey-fl-freezer-pickup/index.html",
+    "estero-fl-appliance-pickup/index.html",
+    "estero-fl-washer-dryer-pickup/index.html",
+    "estero-fl-refrigerator-pickup/index.html",
+    "estero-fl-stove-oven-pickup/index.html",
+    "estero-fl-freezer-pickup/index.html",
+    "lehigh-acres-fl-appliance-pickup/index.html",
+    "lehigh-acres-fl-washer-dryer-pickup/index.html",
+    "lehigh-acres-fl-refrigerator-pickup/index.html",
+    "lehigh-acres-fl-stove-oven-pickup/index.html",
+    "lehigh-acres-fl-freezer-pickup/index.html",
+    "marco-island-fl-appliance-pickup/index.html",
+    "marco-island-fl-washer-dryer-pickup/index.html",
+    "marco-island-fl-refrigerator-pickup/index.html",
+    "marco-island-fl-stove-oven-pickup/index.html",
+    "marco-island-fl-freezer-pickup/index.html",
+    "ponte-vedra-beach-fl-appliance-pickup/index.html",
+    "ponte-vedra-beach-fl-washer-dryer-pickup/index.html",
+    "ponte-vedra-beach-fl-refrigerator-pickup/index.html",
+    "ponte-vedra-beach-fl-stove-oven-pickup/index.html",
+    "ponte-vedra-beach-fl-freezer-pickup/index.html",
+    "st-johns-fl-appliance-pickup/index.html",
+    "st-johns-fl-washer-dryer-pickup/index.html",
+    "st-johns-fl-refrigerator-pickup/index.html",
+    "st-johns-fl-stove-oven-pickup/index.html",
+    "st-johns-fl-freezer-pickup/index.html"
+  ],
+  "preserved_existing_category_paths": [
+    "altamonte-springs-fl-appliance-pickup/index.html",
+    "altamonte-springs-fl-freezer-pickup/index.html",
+    "altamonte-springs-fl-refrigerator-pickup/index.html",
+    "altamonte-springs-fl-stove-oven-pickup/index.html",
+    "altamonte-springs-fl-washer-dryer-pickup/index.html",
+    "apopka-fl-appliance-pickup/index.html",
+    "apopka-fl-freezer-pickup/index.html",
+    "apopka-fl-refrigerator-pickup/index.html",
+    "apopka-fl-stove-oven-pickup/index.html",
+    "apopka-fl-washer-dryer-pickup/index.html",
+    "boca-raton-fl-appliance-pickup/index.html",
+    "boca-raton-fl-freezer-pickup/index.html",
+    "boca-raton-fl-refrigerator-pickup/index.html",
+    "boca-raton-fl-stove-oven-pickup/index.html",
+    "boca-raton-fl-washer-dryer-pickup/index.html",
+    "bonita-springs-fl-appliance-pickup/index.html",
+    "bonita-springs-fl-freezer-pickup/index.html",
+    "bonita-springs-fl-refrigerator-pickup/index.html",
+    "bonita-springs-fl-stove-oven-pickup/index.html",
+    "bonita-springs-fl-washer-dryer-pickup/index.html",
+    "boynton-beach-fl-appliance-pickup/index.html",
+    "boynton-beach-fl-freezer-pickup/index.html",
+    "boynton-beach-fl-refrigerator-pickup/index.html",
+    "boynton-beach-fl-stove-oven-pickup/index.html",
+    "boynton-beach-fl-washer-dryer-pickup/index.html",
+    "bradenton-fl-appliance-pickup/index.html",
+    "bradenton-fl-freezer-pickup/index.html",
+    "bradenton-fl-refrigerator-pickup/index.html",
+    "bradenton-fl-stove-oven-pickup/index.html",
+    "bradenton-fl-washer-dryer-pickup/index.html",
+    "brandon-fl-appliance-pickup/index.html",
+    "brandon-fl-freezer-pickup/index.html",
+    "brandon-fl-refrigerator-pickup/index.html",
+    "brandon-fl-stove-oven-pickup/index.html",
+    "brandon-fl-washer-dryer-pickup/index.html",
+    "cape-coral-fl-appliance-pickup/index.html",
+    "cape-coral-fl-freezer-pickup/index.html",
+    "cape-coral-fl-refrigerator-pickup/index.html",
+    "cape-coral-fl-stove-oven-pickup/index.html",
+    "cape-coral-fl-washer-dryer-pickup/index.html",
+    "clearwater-fl-appliance-pickup/index.html",
+    "clearwater-fl-freezer-pickup/index.html",
+    "clearwater-fl-refrigerator-pickup/index.html",
+    "clearwater-fl-stove-oven-pickup/index.html",
+    "clearwater-fl-washer-dryer-pickup/index.html",
+    "clermont-fl-appliance-pickup/index.html",
+    "clermont-fl-freezer-pickup/index.html",
+    "clermont-fl-refrigerator-pickup/index.html",
+    "clermont-fl-stove-oven-pickup/index.html",
+    "clermont-fl-washer-dryer-pickup/index.html",
+    "coral-springs-fl-appliance-pickup/index.html",
+    "coral-springs-fl-freezer-pickup/index.html",
+    "coral-springs-fl-refrigerator-pickup/index.html",
+    "coral-springs-fl-stove-oven-pickup/index.html",
+    "coral-springs-fl-washer-dryer-pickup/index.html",
+    "crawfordville-fl-appliance-pickup/index.html",
+    "crawfordville-fl-freezer-pickup/index.html",
+    "crawfordville-fl-refrigerator-pickup/index.html",
+    "crawfordville-fl-stove-oven-pickup/index.html",
+    "crawfordville-fl-washer-dryer-pickup/index.html",
+    "crestview-fl-appliance-pickup/index.html",
+    "crestview-fl-freezer-pickup/index.html",
+    "crestview-fl-refrigerator-pickup/index.html",
+    "crestview-fl-stove-oven-pickup/index.html",
+    "crestview-fl-washer-dryer-pickup/index.html",
+    "daytona-beach-fl-appliance-pickup/index.html",
+    "daytona-beach-fl-freezer-pickup/index.html",
+    "daytona-beach-fl-refrigerator-pickup/index.html",
+    "daytona-beach-fl-stove-oven-pickup/index.html",
+    "daytona-beach-fl-washer-dryer-pickup/index.html",
+    "delray-beach-fl-appliance-pickup/index.html",
+    "delray-beach-fl-freezer-pickup/index.html",
+    "delray-beach-fl-refrigerator-pickup/index.html",
+    "delray-beach-fl-stove-oven-pickup/index.html",
+    "delray-beach-fl-washer-dryer-pickup/index.html",
+    "deltona-fl-appliance-pickup/index.html",
+    "deltona-fl-freezer-pickup/index.html",
+    "deltona-fl-refrigerator-pickup/index.html",
+    "deltona-fl-stove-oven-pickup/index.html",
+    "deltona-fl-washer-dryer-pickup/index.html",
+    "destin-fl-appliance-pickup/index.html",
+    "destin-fl-freezer-pickup/index.html",
+    "destin-fl-refrigerator-pickup/index.html",
+    "destin-fl-stove-oven-pickup/index.html",
+    "destin-fl-washer-dryer-pickup/index.html",
+    "doral-fl-appliance-pickup/index.html",
+    "doral-fl-freezer-pickup/index.html",
+    "doral-fl-refrigerator-pickup/index.html",
+    "doral-fl-stove-oven-pickup/index.html",
+    "doral-fl-washer-dryer-pickup/index.html",
+    "fort-lauderdale-fl-appliance-pickup/index.html",
+    "fort-lauderdale-fl-freezer-pickup/index.html",
+    "fort-lauderdale-fl-refrigerator-pickup/index.html",
+    "fort-lauderdale-fl-stove-oven-pickup/index.html",
+    "fort-lauderdale-fl-washer-dryer-pickup/index.html",
+    "fort-myers-fl-appliance-pickup/index.html",
+    "fort-myers-fl-freezer-pickup/index.html",
+    "fort-myers-fl-refrigerator-pickup/index.html",
+    "fort-myers-fl-stove-oven-pickup/index.html",
+    "fort-myers-fl-washer-dryer-pickup/index.html",
+    "fort-walton-beach-fl-appliance-pickup/index.html",
+    "fort-walton-beach-fl-freezer-pickup/index.html",
+    "fort-walton-beach-fl-refrigerator-pickup/index.html",
+    "fort-walton-beach-fl-stove-oven-pickup/index.html",
+    "fort-walton-beach-fl-washer-dryer-pickup/index.html",
+    "gainesville-fl-appliance-pickup/index.html",
+    "gainesville-fl-freezer-pickup/index.html",
+    "gainesville-fl-refrigerator-pickup/index.html",
+    "gainesville-fl-stove-oven-pickup/index.html",
+    "gainesville-fl-washer-dryer-pickup/index.html",
+    "haines-city-fl-appliance-pickup/index.html",
+    "haines-city-fl-freezer-pickup/index.html",
+    "haines-city-fl-refrigerator-pickup/index.html",
+    "haines-city-fl-stove-oven-pickup/index.html",
+    "haines-city-fl-washer-dryer-pickup/index.html",
+    "hialeah-fl-appliance-pickup/index.html",
+    "hialeah-fl-freezer-pickup/index.html",
+    "hialeah-fl-refrigerator-pickup/index.html",
+    "hialeah-fl-stove-oven-pickup/index.html",
+    "hialeah-fl-washer-dryer-pickup/index.html",
+    "hollywood-fl-appliance-pickup/index.html",
+    "hollywood-fl-freezer-pickup/index.html",
+    "hollywood-fl-refrigerator-pickup/index.html",
+    "hollywood-fl-stove-oven-pickup/index.html",
+    "hollywood-fl-washer-dryer-pickup/index.html",
+    "homestead-fl-appliance-pickup/index.html",
+    "homestead-fl-freezer-pickup/index.html",
+    "homestead-fl-refrigerator-pickup/index.html",
+    "homestead-fl-stove-oven-pickup/index.html",
+    "homestead-fl-washer-dryer-pickup/index.html",
+    "jacksonville-beach-fl-appliance-pickup/index.html",
+    "jacksonville-beach-fl-freezer-pickup/index.html",
+    "jacksonville-beach-fl-refrigerator-pickup/index.html",
+    "jacksonville-beach-fl-stove-oven-pickup/index.html",
+    "jacksonville-beach-fl-washer-dryer-pickup/index.html",
+    "jacksonville-fl-appliance-pickup/index.html",
+    "jacksonville-fl-freezer-pickup/index.html",
+    "jacksonville-fl-refrigerator-pickup/index.html",
+    "jacksonville-fl-stove-oven-pickup/index.html",
+    "jacksonville-fl-washer-dryer-pickup/index.html",
+    "kissimmee-fl-appliance-pickup/index.html",
+    "kissimmee-fl-freezer-pickup/index.html",
+    "kissimmee-fl-refrigerator-pickup/index.html",
+    "kissimmee-fl-stove-oven-pickup/index.html",
+    "kissimmee-fl-washer-dryer-pickup/index.html",
+    "lakeland-fl-appliance-pickup/index.html",
+    "lakeland-fl-freezer-pickup/index.html",
+    "lakeland-fl-refrigerator-pickup/index.html",
+    "lakeland-fl-stove-oven-pickup/index.html",
+    "lakeland-fl-washer-dryer-pickup/index.html",
+    "melbourne-fl-appliance-pickup/index.html",
+    "melbourne-fl-freezer-pickup/index.html",
+    "melbourne-fl-refrigerator-pickup/index.html",
+    "melbourne-fl-stove-oven-pickup/index.html",
+    "melbourne-fl-washer-dryer-pickup/index.html",
+    "miami-fl-appliance-pickup/index.html",
+    "miami-fl-freezer-pickup/index.html",
+    "miami-fl-refrigerator-pickup/index.html",
+    "miami-fl-stove-oven-pickup/index.html",
+    "miami-fl-washer-dryer-pickup/index.html",
+    "miami-gardens-fl-appliance-pickup/index.html",
+    "miami-gardens-fl-freezer-pickup/index.html",
+    "miami-gardens-fl-refrigerator-pickup/index.html",
+    "miami-gardens-fl-stove-oven-pickup/index.html",
+    "miami-gardens-fl-washer-dryer-pickup/index.html",
+    "milton-fl-appliance-pickup/index.html",
+    "milton-fl-freezer-pickup/index.html",
+    "milton-fl-refrigerator-pickup/index.html",
+    "milton-fl-stove-oven-pickup/index.html",
+    "milton-fl-washer-dryer-pickup/index.html",
+    "miramar-fl-appliance-pickup/index.html",
+    "miramar-fl-freezer-pickup/index.html",
+    "miramar-fl-refrigerator-pickup/index.html",
+    "miramar-fl-stove-oven-pickup/index.html",
+    "miramar-fl-washer-dryer-pickup/index.html",
+    "naples-fl-appliance-pickup/index.html",
+    "naples-fl-freezer-pickup/index.html",
+    "naples-fl-refrigerator-pickup/index.html",
+    "naples-fl-stove-oven-pickup/index.html",
+    "naples-fl-washer-dryer-pickup/index.html",
+    "navarre-fl-appliance-pickup/index.html",
+    "navarre-fl-freezer-pickup/index.html",
+    "navarre-fl-refrigerator-pickup/index.html",
+    "navarre-fl-stove-oven-pickup/index.html",
+    "navarre-fl-washer-dryer-pickup/index.html",
+    "north-port-fl-appliance-pickup/index.html",
+    "north-port-fl-freezer-pickup/index.html",
+    "north-port-fl-refrigerator-pickup/index.html",
+    "north-port-fl-stove-oven-pickup/index.html",
+    "north-port-fl-washer-dryer-pickup/index.html",
+    "ocala-fl-appliance-pickup/index.html",
+    "ocala-fl-freezer-pickup/index.html",
+    "ocala-fl-refrigerator-pickup/index.html",
+    "ocala-fl-stove-oven-pickup/index.html",
+    "ocala-fl-washer-dryer-pickup/index.html",
+    "orange-park-fl-appliance-pickup/index.html",
+    "orange-park-fl-freezer-pickup/index.html",
+    "orange-park-fl-refrigerator-pickup/index.html",
+    "orange-park-fl-stove-oven-pickup/index.html",
+    "orange-park-fl-washer-dryer-pickup/index.html",
+    "orlando-fl-appliance-pickup/index.html",
+    "orlando-fl-freezer-pickup/index.html",
+    "orlando-fl-refrigerator-pickup/index.html",
+    "orlando-fl-stove-oven-pickup/index.html",
+    "orlando-fl-washer-dryer-pickup/index.html",
+    "ormond-beach-fl-appliance-pickup/index.html",
+    "ormond-beach-fl-freezer-pickup/index.html",
+    "ormond-beach-fl-refrigerator-pickup/index.html",
+    "ormond-beach-fl-stove-oven-pickup/index.html",
+    "ormond-beach-fl-washer-dryer-pickup/index.html",
+    "palm-bay-fl-appliance-pickup/index.html",
+    "palm-bay-fl-freezer-pickup/index.html",
+    "palm-bay-fl-refrigerator-pickup/index.html",
+    "palm-bay-fl-stove-oven-pickup/index.html",
+    "palm-bay-fl-washer-dryer-pickup/index.html",
+    "palm-coast-fl-appliance-pickup/index.html",
+    "palm-coast-fl-freezer-pickup/index.html",
+    "palm-coast-fl-refrigerator-pickup/index.html",
+    "palm-coast-fl-stove-oven-pickup/index.html",
+    "palm-coast-fl-washer-dryer-pickup/index.html",
+    "pembroke-pines-fl-appliance-pickup/index.html",
+    "pembroke-pines-fl-freezer-pickup/index.html",
+    "pembroke-pines-fl-refrigerator-pickup/index.html",
+    "pembroke-pines-fl-stove-oven-pickup/index.html",
+    "pembroke-pines-fl-washer-dryer-pickup/index.html",
+    "pensacola-fl-appliance-pickup/index.html",
+    "pensacola-fl-freezer-pickup/index.html",
+    "pensacola-fl-refrigerator-pickup/index.html",
+    "pensacola-fl-stove-oven-pickup/index.html",
+    "pensacola-fl-washer-dryer-pickup/index.html",
+    "plant-city-fl-appliance-pickup/index.html",
+    "plant-city-fl-freezer-pickup/index.html",
+    "plant-city-fl-refrigerator-pickup/index.html",
+    "plant-city-fl-stove-oven-pickup/index.html",
+    "plant-city-fl-washer-dryer-pickup/index.html",
+    "pompano-beach-fl-appliance-pickup/index.html",
+    "pompano-beach-fl-freezer-pickup/index.html",
+    "pompano-beach-fl-refrigerator-pickup/index.html",
+    "pompano-beach-fl-stove-oven-pickup/index.html",
+    "pompano-beach-fl-washer-dryer-pickup/index.html",
+    "port-st-lucie-fl-appliance-pickup/index.html",
+    "port-st-lucie-fl-freezer-pickup/index.html",
+    "port-st-lucie-fl-refrigerator-pickup/index.html",
+    "port-st-lucie-fl-stove-oven-pickup/index.html",
+    "port-st-lucie-fl-washer-dryer-pickup/index.html",
+    "quincy-fl-appliance-pickup/index.html",
+    "quincy-fl-freezer-pickup/index.html",
+    "quincy-fl-refrigerator-pickup/index.html",
+    "quincy-fl-stove-oven-pickup/index.html",
+    "quincy-fl-washer-dryer-pickup/index.html",
+    "riverview-fl-appliance-pickup/index.html",
+    "riverview-fl-freezer-pickup/index.html",
+    "riverview-fl-refrigerator-pickup/index.html",
+    "riverview-fl-stove-oven-pickup/index.html",
+    "riverview-fl-washer-dryer-pickup/index.html",
+    "sanford-fl-appliance-pickup/index.html",
+    "sanford-fl-freezer-pickup/index.html",
+    "sanford-fl-refrigerator-pickup/index.html",
+    "sanford-fl-stove-oven-pickup/index.html",
+    "sanford-fl-washer-dryer-pickup/index.html",
+    "sarasota-fl-appliance-pickup/index.html",
+    "sarasota-fl-freezer-pickup/index.html",
+    "sarasota-fl-refrigerator-pickup/index.html",
+    "sarasota-fl-stove-oven-pickup/index.html",
+    "sarasota-fl-washer-dryer-pickup/index.html",
+    "st-augustine-fl-appliance-pickup/index.html",
+    "st-augustine-fl-freezer-pickup/index.html",
+    "st-augustine-fl-refrigerator-pickup/index.html",
+    "st-augustine-fl-stove-oven-pickup/index.html",
+    "st-augustine-fl-washer-dryer-pickup/index.html",
+    "st-cloud-fl-appliance-pickup/index.html",
+    "st-cloud-fl-freezer-pickup/index.html",
+    "st-cloud-fl-refrigerator-pickup/index.html",
+    "st-cloud-fl-stove-oven-pickup/index.html",
+    "st-cloud-fl-washer-dryer-pickup/index.html",
+    "st-petersburg-fl-appliance-pickup/index.html",
+    "st-petersburg-fl-freezer-pickup/index.html",
+    "st-petersburg-fl-refrigerator-pickup/index.html",
+    "st-petersburg-fl-stove-oven-pickup/index.html",
+    "st-petersburg-fl-washer-dryer-pickup/index.html",
+    "tallahassee-fl-appliance-pickup/index.html",
+    "tallahassee-fl-freezer-pickup/index.html",
+    "tallahassee-fl-refrigerator-pickup/index.html",
+    "tallahassee-fl-stove-oven-pickup/index.html",
+    "tallahassee-fl-washer-dryer-pickup/index.html",
+    "tampa-fl-appliance-pickup/index.html",
+    "tampa-fl-freezer-pickup/index.html",
+    "tampa-fl-refrigerator-pickup/index.html",
+    "tampa-fl-stove-oven-pickup/index.html",
+    "tampa-fl-washer-dryer-pickup/index.html",
+    "the-villages-fl-appliance-pickup/index.html",
+    "the-villages-fl-freezer-pickup/index.html",
+    "the-villages-fl-refrigerator-pickup/index.html",
+    "the-villages-fl-stove-oven-pickup/index.html",
+    "the-villages-fl-washer-dryer-pickup/index.html",
+    "titusville-fl-appliance-pickup/index.html",
+    "titusville-fl-freezer-pickup/index.html",
+    "titusville-fl-refrigerator-pickup/index.html",
+    "titusville-fl-stove-oven-pickup/index.html",
+    "titusville-fl-washer-dryer-pickup/index.html",
+    "wesley-chapel-fl-appliance-pickup/index.html",
+    "wesley-chapel-fl-freezer-pickup/index.html",
+    "wesley-chapel-fl-refrigerator-pickup/index.html",
+    "wesley-chapel-fl-stove-oven-pickup/index.html",
+    "wesley-chapel-fl-washer-dryer-pickup/index.html",
+    "west-palm-beach-fl-appliance-pickup/index.html",
+    "west-palm-beach-fl-freezer-pickup/index.html",
+    "west-palm-beach-fl-refrigerator-pickup/index.html",
+    "west-palm-beach-fl-stove-oven-pickup/index.html",
+    "west-palm-beach-fl-washer-dryer-pickup/index.html",
+    "winter-garden-fl-appliance-pickup/index.html",
+    "winter-garden-fl-freezer-pickup/index.html",
+    "winter-garden-fl-refrigerator-pickup/index.html",
+    "winter-garden-fl-stove-oven-pickup/index.html",
+    "winter-garden-fl-washer-dryer-pickup/index.html",
+    "winter-haven-fl-appliance-pickup/index.html",
+    "winter-haven-fl-freezer-pickup/index.html",
+    "winter-haven-fl-refrigerator-pickup/index.html",
+    "winter-haven-fl-stove-oven-pickup/index.html",
+    "winter-haven-fl-washer-dryer-pickup/index.html"
+  ],
+  "category_matrix_size": 470,
+  "notes": "64 x5 existing FL city/category pages preserved unchanged including their current intake fields; 30 new higher-value communities x5 added with California gold customer model, noindex/follow until operator and form verification."
+}

@@ -1,0 +1,15 @@
+name: TTG Florida Gapfill 150-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  florida:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test Florida 64 existing plus 30 new market matrix
+        run: python -m unittest discover -s tests -p 'test_ttg_florida_gapfill.py' -v
