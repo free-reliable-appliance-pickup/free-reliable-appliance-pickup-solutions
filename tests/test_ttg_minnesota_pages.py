@@ -162,6 +162,30 @@ class MinnesotaBatchTests(unittest.TestCase):
                 self.assertIn("Free pickup and local routes are not currently confirmed", html)
                 self.assertIn('content="noindex, follow"', html)
 
+    def test_brooklyn_park_and_plymouth_county_alternatives(self):
+        """Keep official drop-off and non-acceptance instructions linked and honest."""
+        cases = (
+            ("brooklyn-park", (
+                "https://www.brooklynpark.org/recycle/electronics-and-hazardous-materials/",
+                "https://www.hennepincounty.gov/green-disposal-guide/items/appliances",
+            ), "8100 Jefferson Highway"),
+            ("plymouth", (
+                "https://www.plymouthmn.gov/departments/public-works/recycling-disposal/recycling-drop-off-center?locale=en",
+                "https://www.hennepincounty.gov/green-disposal-guide/items/appliances",
+            ), "not</strong> accept bulky household items"),
+        )
+        for city, urls, key_fact in cases:
+            with self.subTest(city=city):
+                html = (ROOT / f"{city}-mn-appliance-pickup/index.html").read_text(encoding="utf-8")
+                section = html.partition("<h2>Alternative recycling and removal options</h2>")[2].partition("</section>")[0]
+                self.assertTrue(section)
+                for url in urls:
+                    self.assertIn(url, section)
+                self.assertIn(key_fact, section)
+                self.assertIn("different", section) if city == "brooklyn-park" else self.assertIn("independent", section)
+                self.assertIn('content="noindex, follow"', html)
+                self.assertIn("Free pickup and local routes are not currently confirmed", html)
+
     def test_no_minnesota_staging_page_in_sitemap(self):
         """Request-only pages should not be put into discovery index sitemaps."""
         main = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
