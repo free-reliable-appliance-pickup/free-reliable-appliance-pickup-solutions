@@ -1,0 +1,16 @@
+{
+  "state_code": "ID",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "existing_hub": "idaho-appliance-pickup/index.html",
+  "instructions": "Do not change already-indexed Idaho hub in this draft. Activate only after verified city/ZIP operator coverage, genuine form receipt and owner approval."
+}
