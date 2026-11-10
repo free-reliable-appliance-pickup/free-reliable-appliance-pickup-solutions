@@ -36,6 +36,7 @@ class AlabamaGoldTests(unittest.TestCase):
                 self.assertNotIn("eligibilit",heading.lower())
                 self.assertEqual(pg.state_options,["","AL"])
                 self.assertEqual(len(pg.forms),1)
+                self.assertEqual(pg.fields["source_page"][0].get("value"),p.split("/")[0])
                 self.assertEqual(len(pg.images),2)
                 self.assertIn("noindex, follow",h)
                 self.assertIn('name="privacy_acknowledgment"',h)
