@@ -1,0 +1,15 @@
+{
+  "state_code": "OH",
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "verified_cities": [],
+  "instructions": "Do not index these new Ohio pages until accepting local operators, exact ZIPs, current free/paid terms, actual Formspree receipt and owner approval are verified. Columbus legacy pages remain separate."
+}
