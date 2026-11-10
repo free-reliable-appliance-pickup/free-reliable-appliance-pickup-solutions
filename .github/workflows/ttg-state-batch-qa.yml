@@ -50,6 +50,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ttg_connecticut_pages.py' -v
       - name: Validate Rhode Island 39-municipality California Gold request pages
         run: python -m unittest discover -s tests -p 'test_ttg_rhode_island_pages.py' -v
+      - name: Verify New Hampshire 50-city Gold request pages
+        run: python -m unittest discover -s tests -p 'test_ttg_new_hampshire_pages.py' -v
       - name: Validate territory quality math and privacy suppression
         run: python -m unittest discover -s tests -p 'test_ttg_territory_quality.py' -v
       - name: Validate premium territory candidates and release guardrails
