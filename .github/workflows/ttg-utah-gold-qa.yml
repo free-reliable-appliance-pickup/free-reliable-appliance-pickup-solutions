@@ -1,0 +1,15 @@
+name: TTG Utah Gold 415-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  utah:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit Utah requests, original appliance photos, and release gates
+        run: python -m unittest discover -s tests -p 'test_ttg_utah_pages.py' -v
