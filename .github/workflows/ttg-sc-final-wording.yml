@@ -1,0 +1,29 @@
+name: South Carolina California Model Final Copy Pass
+on:
+  push:
+    paths:
+      - '.github/workflows/ttg-sc-final-wording.yml'
+permissions:
+  contents: write
+jobs:
+  correct:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Correct all 251 South Carolina pages
+        run: python3 scripts/ttg_sc_final_wording.py
+      - name: Check every state manifest and page
+        run: python3 scripts/ttg_state_batch_qa.py
+      - name: Commit only after tests and remove one-time workflow
+        run: |
+          git config user.name "Free Reliable Website Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/ttg-sc-final-wording.yml
+          git add -u
+          git commit -m "South Carolina: final California free pickup wording across 251 pages"
+          git pull --rebase origin main
+          git push origin HEAD:main
