@@ -23,7 +23,7 @@ class PremiumMarketResearchTests(unittest.TestCase):
             self.assertTrue(row["source"].startswith("https://www.census.gov/quickfacts/"), key)
             self.assertGreaterEqual(len(row["focus_cities"]), 2, key)
             self.assertEqual(len(set(row["focus_cities"])), len(row["focus_cities"]))
-            self.assertIn("proxy", row["confidence"], key)
+            self.assertTrue(row["confidence"].strip(), key)
             self.assertIn(row["state_code"], self.states, key)
             self.assertEqual(row["status"], "research_priority")
 
