@@ -1,4 +1,4 @@
-"""TTG Minnesota: request-only QA for 136 staged pages, hub navigation and photo assets."""
+"""TTG Minnesota: request-only QA for 216 staged pages, hub navigation and photo assets."""
 from pathlib import Path
 from html.parser import HTMLParser
 import json
@@ -11,14 +11,20 @@ CITIES = (
     "apple-valley",
     "blaine",
     "bloomington",
+    "brooklyn-center",
     "brooklyn-park",
     "burnsville",
+    "chanhassen",
+    "chaska",
     "coon-rapids",
     "cottage-grove",
     "duluth",
     "eagan",
     "eden-prairie",
     "edina",
+    "fridley",
+    "hastings",
+    "inver-grove-heights",
     "lakeville",
     "mankato",
     "maple-grove",
@@ -26,28 +32,44 @@ CITIES = (
     "minneapolis",
     "minnetonka",
     "moorhead",
+    "new-brighton",
+    "northfield",
     "plymouth",
+    "prior-lake",
+    "richfield",
     "rochester",
+    "rogers",
     "rosemount",
     "roseville",
     "saint-paul",
+    "sartell",
+    "sauk-rapids",
+    "savage",
     "shakopee",
     "st-cloud",
     "st-louis-park",
+    "st-michael",
+    "stillwater",
     "woodbury",
 )
 CATEGORY_CITIES = (
     "apple-valley",
     "blaine",
     "bloomington",
+    "brooklyn-center",
     "brooklyn-park",
     "burnsville",
+    "chanhassen",
+    "chaska",
     "coon-rapids",
     "cottage-grove",
     "duluth",
     "eagan",
     "eden-prairie",
     "edina",
+    "fridley",
+    "hastings",
+    "inver-grove-heights",
     "lakeville",
     "mankato",
     "maple-grove",
@@ -55,14 +77,24 @@ CATEGORY_CITIES = (
     "minneapolis",
     "minnetonka",
     "moorhead",
+    "new-brighton",
+    "northfield",
     "plymouth",
+    "prior-lake",
+    "richfield",
     "rochester",
+    "rogers",
     "rosemount",
     "roseville",
     "saint-paul",
+    "sartell",
+    "sauk-rapids",
+    "savage",
     "shakopee",
     "st-cloud",
     "st-louis-park",
+    "st-michael",
+    "stillwater",
     "woodbury",
 )
 KINDS = ("washer-dryer", "refrigerator", "stove-oven", "freezer")
@@ -77,9 +109,9 @@ class MinnesotaBatchTests(unittest.TestCase):
         cls.manifest = ROOT / "data/ttg-state-batches/MN.json"
         cls.pages = json.loads(cls.manifest.read_text(encoding="utf-8"))["pages"]
 
-    def test_manifest_has_136_pages_with_required_groups(self):
-        """One hub, 27 city guides and four specialty guides per city."""
-        self.assertEqual(len(self.pages), 136)
+    def test_manifest_has_216_pages_with_required_groups(self):
+        """One hub, 43 city guides and four specialty guides per city."""
+        self.assertEqual(len(self.pages), 216)
         self.assertEqual(len(self.pages), len(set(self.pages)))
         self.assertIn("minnesota-appliance-pickup/index.html", self.pages)
         for city in CITIES:
