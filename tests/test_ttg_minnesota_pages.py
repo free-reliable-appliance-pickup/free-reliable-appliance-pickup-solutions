@@ -269,5 +269,45 @@ class MinnesotaBatchTests(unittest.TestCase):
         self.assertFalse(ledger["form_receipt"]["verified"])
 
 
+    def test_reviewer_access_and_official_fallbacks(self):
+        """Prevent unfinished access fragments and unlinked recycling alternatives."""
+        official = {
+            "blaine": "anokacountymn.gov/370/Residential-Recycling",
+            "coon-rapids": "anokacountymn.gov/370/Residential-Recycling",
+            "cottage-grove": "co.washington.mn.us/3775/Reuse-and-Donation-Opportunities",
+            "duluth": "wlssd.com/disposal-guide/",
+            "mankato": "blueearthcountymn.gov/371/Appliances",
+            "moorhead": "claycountymn.gov/515/Appliances",
+            "shakopee": "scottcountymn.gov/594/What-We-Accept",
+            "st-cloud": "stearnscountymn.gov/wastewizard",
+            "woodbury": "woodburymn.gov/304/Licensed-Haulers",
+        }
+        fragments = (
+            "Northern metro garages and split-level homes",
+            "Condos, apartments and detached houses",
+            "Hillside driveways and older doorways",
+            "Townhouses and basement laundry rooms",
+            "Newer subdivisions and detached homes",
+            "Multi-level homes and garages",
+            "Garage loads and stair access",
+            "Apartment turnover, duplexes and residential garages",
+            "Garage-stored loads and upstairs laundry",
+        )
+        for city in official:
+            paths = [ROOT / f"{city}-mn-{kind}-pickup/index.html" for kind in KINDS]
+            if city in {"coon-rapids", "cottage-grove", "mankato", "moorhead", "shakopee"}:
+                paths.append(ROOT / f"{city}-mn-appliance-pickup/index.html")
+            for page in paths:
+                with self.subTest(page=page):
+                    html = page.read_text(encoding="utf-8")
+                    section = html.partition("<h2>Alternative recycling and removal options</h2>")[2].partition("</section>")[0]
+                    self.assertTrue(section)
+                    self.assertIn(official[city], section)
+                    self.assertIn("https://", section)
+                    self.assertIn('content="noindex, follow"', html)
+                    for fragment in fragments:
+                        self.assertNotIn(fragment + "</p>", html)
+
+
 if __name__ == "__main__":
     unittest.main()
