@@ -1,0 +1,16 @@
+{
+  "state_code": "CO",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "existing_hub": "colorado-appliance-pickup/index.html",
+  "instructions": "Keep new Colorado city pages noindex/follow until true accepting ZIP operator, Formspree receipt and owner authorization; don't infer pickup from municipal alternatives."
+}
