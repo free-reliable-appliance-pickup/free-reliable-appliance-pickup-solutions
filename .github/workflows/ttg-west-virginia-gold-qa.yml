@@ -1,0 +1,15 @@
+name: TTG West Virginia Gold 251-page QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  wv:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate WV pages and release safeguards
+        run: python -m unittest discover -s tests -p 'test_ttg_west_virginia_pages.py' -v
