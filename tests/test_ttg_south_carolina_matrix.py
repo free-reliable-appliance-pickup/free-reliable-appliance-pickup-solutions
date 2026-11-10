@@ -18,10 +18,10 @@ class SCMatrixTests(unittest.TestCase):
     raw=(ROOT/rel).read_text(encoding="utf-8")
     parsed=Page(); parsed.feed(raw)
     self.assertIn("noindex",",".join(parsed.robots))
-    self.assertEqual(len(parsed.images),1)
+    self.assertEqual(len([img for img in parsed.images if "site-brand-logo" not in (img.get("class") or "").split()]),1)
     self.assertEqual(parsed.state_options,["","SC"])
     self.assertEqual(parsed.fields["source_page"][0]["value"],rel.split("/")[0])
-    self.assertTrue((ROOT/parsed.images[0]["src"].lstrip("/")).is_file())
+    self.assertTrue(all((ROOT/img["src"].lstrip("/")).is_file() for img in parsed.images))
   self.assertEqual(check_manifest(manifest),[])
  def test_hub_and_legacy_categories(self):
   hub=(ROOT/"south-carolina-appliance-pickup/index.html").read_text()
