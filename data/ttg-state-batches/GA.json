@@ -1,0 +1,714 @@
+{
+  "state_code": "GA",
+  "mode": "request-only",
+  "existing_indexed_state_hub_preserved": "georgia-appliance-pickup/index.html",
+  "operator_coverage_verified": false,
+  "communities": [
+    {
+      "name": "Atlanta",
+      "slug": "atlanta",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Sandy Springs",
+      "slug": "sandy-springs",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Roswell",
+      "slug": "roswell",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Alpharetta",
+      "slug": "alpharetta",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Johns Creek",
+      "slug": "johns-creek",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Milton",
+      "slug": "milton",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Dunwoody",
+      "slug": "dunwoody",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Brookhaven",
+      "slug": "brookhaven",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Chamblee",
+      "slug": "chamblee",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Doraville",
+      "slug": "doraville",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Decatur",
+      "slug": "decatur",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Tucker",
+      "slug": "tucker",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Stone Mountain",
+      "slug": "stone-mountain",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Clarkston",
+      "slug": "clarkston",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Smyrna",
+      "slug": "smyrna",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Marietta",
+      "slug": "marietta",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Kennesaw",
+      "slug": "kennesaw",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Acworth",
+      "slug": "acworth",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Powder Springs",
+      "slug": "powder-springs",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Austell",
+      "slug": "austell",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Mableton",
+      "slug": "mableton",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Vinings",
+      "slug": "vinings",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "East Point",
+      "slug": "east-point",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "College Park",
+      "slug": "college-park",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Hapeville",
+      "slug": "hapeville",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "South Fulton",
+      "slug": "south-fulton",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Union City",
+      "slug": "union-city",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Fairburn",
+      "slug": "fairburn",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Peachtree City",
+      "slug": "peachtree-city",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Fayetteville",
+      "slug": "fayetteville",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Newnan",
+      "slug": "newnan",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Douglasville",
+      "slug": "douglasville",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Lithia Springs",
+      "slug": "lithia-springs",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Lithonia",
+      "slug": "lithonia",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Conyers",
+      "slug": "conyers",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Covington",
+      "slug": "covington",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "McDonough",
+      "slug": "mcdonough",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Stockbridge",
+      "slug": "stockbridge",
+      "region": "Atlanta and South Metro"
+    },
+    {
+      "name": "Lawrenceville",
+      "slug": "lawrenceville",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Duluth",
+      "slug": "duluth",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Suwanee",
+      "slug": "suwanee",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Norcross",
+      "slug": "norcross",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Peachtree Corners",
+      "slug": "peachtree-corners",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Buford",
+      "slug": "buford",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Sugar Hill",
+      "slug": "sugar-hill",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Snellville",
+      "slug": "snellville",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Lilburn",
+      "slug": "lilburn",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Loganville",
+      "slug": "loganville",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Grayson",
+      "slug": "grayson",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Dacula",
+      "slug": "dacula",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Cumming",
+      "slug": "cumming",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Gainesville",
+      "slug": "gainesville",
+      "region": "Gwinnett and Northeast Atlanta"
+    },
+    {
+      "name": "Canton",
+      "slug": "canton",
+      "region": "North Georgia"
+    },
+    {
+      "name": "Woodstock",
+      "slug": "woodstock",
+      "region": "North Georgia"
+    },
+    {
+      "name": "Holly Springs",
+      "slug": "holly-springs",
+      "region": "North Georgia"
+    },
+    {
+      "name": "Ball Ground",
+      "slug": "ball-ground",
+      "region": "North Georgia"
+    },
+    {
+      "name": "Cartersville",
+      "slug": "cartersville",
+      "region": "North Georgia"
+    },
+    {
+      "name": "Rome",
+      "slug": "rome",
+      "region": "North Georgia"
+    },
+    {
+      "name": "Calhoun",
+      "slug": "calhoun",
+      "region": "North Georgia"
+    },
+    {
+      "name": "Savannah",
+      "slug": "savannah",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Augusta",
+      "slug": "augusta",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Macon",
+      "slug": "macon",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Columbus",
+      "slug": "columbus",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Athens",
+      "slug": "athens",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Warner Robins",
+      "slug": "warner-robins",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Valdosta",
+      "slug": "valdosta",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Albany",
+      "slug": "albany",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Statesboro",
+      "slug": "statesboro",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Brunswick",
+      "slug": "brunswick",
+      "region": "Georgia Regional Cities"
+    },
+    {
+      "name": "Hinesville",
+      "slug": "hinesville",
+      "region": "Georgia Regional Cities"
+    }
+  ],
+  "pages": [
+    "sandy-springs-ga-appliance-pickup/index.html",
+    "sandy-springs-ga-washer-dryer-pickup/index.html",
+    "sandy-springs-ga-refrigerator-pickup/index.html",
+    "sandy-springs-ga-stove-oven-pickup/index.html",
+    "sandy-springs-ga-freezer-pickup/index.html",
+    "roswell-ga-washer-dryer-pickup/index.html",
+    "roswell-ga-refrigerator-pickup/index.html",
+    "roswell-ga-stove-oven-pickup/index.html",
+    "roswell-ga-freezer-pickup/index.html",
+    "alpharetta-ga-washer-dryer-pickup/index.html",
+    "alpharetta-ga-refrigerator-pickup/index.html",
+    "alpharetta-ga-stove-oven-pickup/index.html",
+    "alpharetta-ga-freezer-pickup/index.html",
+    "johns-creek-ga-appliance-pickup/index.html",
+    "johns-creek-ga-washer-dryer-pickup/index.html",
+    "johns-creek-ga-refrigerator-pickup/index.html",
+    "johns-creek-ga-stove-oven-pickup/index.html",
+    "johns-creek-ga-freezer-pickup/index.html",
+    "milton-ga-appliance-pickup/index.html",
+    "milton-ga-washer-dryer-pickup/index.html",
+    "milton-ga-refrigerator-pickup/index.html",
+    "milton-ga-stove-oven-pickup/index.html",
+    "milton-ga-freezer-pickup/index.html",
+    "dunwoody-ga-appliance-pickup/index.html",
+    "dunwoody-ga-washer-dryer-pickup/index.html",
+    "dunwoody-ga-refrigerator-pickup/index.html",
+    "dunwoody-ga-stove-oven-pickup/index.html",
+    "dunwoody-ga-freezer-pickup/index.html",
+    "brookhaven-ga-appliance-pickup/index.html",
+    "brookhaven-ga-washer-dryer-pickup/index.html",
+    "brookhaven-ga-refrigerator-pickup/index.html",
+    "brookhaven-ga-stove-oven-pickup/index.html",
+    "brookhaven-ga-freezer-pickup/index.html",
+    "chamblee-ga-appliance-pickup/index.html",
+    "chamblee-ga-washer-dryer-pickup/index.html",
+    "chamblee-ga-refrigerator-pickup/index.html",
+    "chamblee-ga-stove-oven-pickup/index.html",
+    "chamblee-ga-freezer-pickup/index.html",
+    "doraville-ga-appliance-pickup/index.html",
+    "doraville-ga-washer-dryer-pickup/index.html",
+    "doraville-ga-refrigerator-pickup/index.html",
+    "doraville-ga-stove-oven-pickup/index.html",
+    "doraville-ga-freezer-pickup/index.html",
+    "decatur-ga-washer-dryer-pickup/index.html",
+    "decatur-ga-refrigerator-pickup/index.html",
+    "decatur-ga-stove-oven-pickup/index.html",
+    "decatur-ga-freezer-pickup/index.html",
+    "tucker-ga-appliance-pickup/index.html",
+    "tucker-ga-washer-dryer-pickup/index.html",
+    "tucker-ga-refrigerator-pickup/index.html",
+    "tucker-ga-stove-oven-pickup/index.html",
+    "tucker-ga-freezer-pickup/index.html",
+    "stone-mountain-ga-appliance-pickup/index.html",
+    "stone-mountain-ga-washer-dryer-pickup/index.html",
+    "stone-mountain-ga-refrigerator-pickup/index.html",
+    "stone-mountain-ga-stove-oven-pickup/index.html",
+    "stone-mountain-ga-freezer-pickup/index.html",
+    "clarkston-ga-appliance-pickup/index.html",
+    "clarkston-ga-washer-dryer-pickup/index.html",
+    "clarkston-ga-refrigerator-pickup/index.html",
+    "clarkston-ga-stove-oven-pickup/index.html",
+    "clarkston-ga-freezer-pickup/index.html",
+    "smyrna-ga-washer-dryer-pickup/index.html",
+    "smyrna-ga-refrigerator-pickup/index.html",
+    "smyrna-ga-stove-oven-pickup/index.html",
+    "smyrna-ga-freezer-pickup/index.html",
+    "kennesaw-ga-appliance-pickup/index.html",
+    "kennesaw-ga-washer-dryer-pickup/index.html",
+    "kennesaw-ga-refrigerator-pickup/index.html",
+    "kennesaw-ga-stove-oven-pickup/index.html",
+    "kennesaw-ga-freezer-pickup/index.html",
+    "acworth-ga-appliance-pickup/index.html",
+    "acworth-ga-washer-dryer-pickup/index.html",
+    "acworth-ga-refrigerator-pickup/index.html",
+    "acworth-ga-stove-oven-pickup/index.html",
+    "acworth-ga-freezer-pickup/index.html",
+    "powder-springs-ga-appliance-pickup/index.html",
+    "powder-springs-ga-washer-dryer-pickup/index.html",
+    "powder-springs-ga-refrigerator-pickup/index.html",
+    "powder-springs-ga-stove-oven-pickup/index.html",
+    "powder-springs-ga-freezer-pickup/index.html",
+    "austell-ga-appliance-pickup/index.html",
+    "austell-ga-washer-dryer-pickup/index.html",
+    "austell-ga-refrigerator-pickup/index.html",
+    "austell-ga-stove-oven-pickup/index.html",
+    "austell-ga-freezer-pickup/index.html",
+    "mableton-ga-appliance-pickup/index.html",
+    "mableton-ga-washer-dryer-pickup/index.html",
+    "mableton-ga-refrigerator-pickup/index.html",
+    "mableton-ga-stove-oven-pickup/index.html",
+    "mableton-ga-freezer-pickup/index.html",
+    "vinings-ga-appliance-pickup/index.html",
+    "vinings-ga-washer-dryer-pickup/index.html",
+    "vinings-ga-refrigerator-pickup/index.html",
+    "vinings-ga-stove-oven-pickup/index.html",
+    "vinings-ga-freezer-pickup/index.html",
+    "east-point-ga-appliance-pickup/index.html",
+    "east-point-ga-washer-dryer-pickup/index.html",
+    "east-point-ga-refrigerator-pickup/index.html",
+    "east-point-ga-stove-oven-pickup/index.html",
+    "east-point-ga-freezer-pickup/index.html",
+    "college-park-ga-appliance-pickup/index.html",
+    "college-park-ga-washer-dryer-pickup/index.html",
+    "college-park-ga-refrigerator-pickup/index.html",
+    "college-park-ga-stove-oven-pickup/index.html",
+    "college-park-ga-freezer-pickup/index.html",
+    "hapeville-ga-appliance-pickup/index.html",
+    "hapeville-ga-washer-dryer-pickup/index.html",
+    "hapeville-ga-refrigerator-pickup/index.html",
+    "hapeville-ga-stove-oven-pickup/index.html",
+    "hapeville-ga-freezer-pickup/index.html",
+    "south-fulton-ga-appliance-pickup/index.html",
+    "south-fulton-ga-washer-dryer-pickup/index.html",
+    "south-fulton-ga-refrigerator-pickup/index.html",
+    "south-fulton-ga-stove-oven-pickup/index.html",
+    "south-fulton-ga-freezer-pickup/index.html",
+    "union-city-ga-appliance-pickup/index.html",
+    "union-city-ga-washer-dryer-pickup/index.html",
+    "union-city-ga-refrigerator-pickup/index.html",
+    "union-city-ga-stove-oven-pickup/index.html",
+    "union-city-ga-freezer-pickup/index.html",
+    "fairburn-ga-appliance-pickup/index.html",
+    "fairburn-ga-washer-dryer-pickup/index.html",
+    "fairburn-ga-refrigerator-pickup/index.html",
+    "fairburn-ga-stove-oven-pickup/index.html",
+    "fairburn-ga-freezer-pickup/index.html",
+    "peachtree-city-ga-appliance-pickup/index.html",
+    "peachtree-city-ga-washer-dryer-pickup/index.html",
+    "peachtree-city-ga-refrigerator-pickup/index.html",
+    "peachtree-city-ga-stove-oven-pickup/index.html",
+    "peachtree-city-ga-freezer-pickup/index.html",
+    "fayetteville-ga-appliance-pickup/index.html",
+    "fayetteville-ga-washer-dryer-pickup/index.html",
+    "fayetteville-ga-refrigerator-pickup/index.html",
+    "fayetteville-ga-stove-oven-pickup/index.html",
+    "fayetteville-ga-freezer-pickup/index.html",
+    "newnan-ga-appliance-pickup/index.html",
+    "newnan-ga-washer-dryer-pickup/index.html",
+    "newnan-ga-refrigerator-pickup/index.html",
+    "newnan-ga-stove-oven-pickup/index.html",
+    "newnan-ga-freezer-pickup/index.html",
+    "douglasville-ga-washer-dryer-pickup/index.html",
+    "douglasville-ga-refrigerator-pickup/index.html",
+    "douglasville-ga-stove-oven-pickup/index.html",
+    "douglasville-ga-freezer-pickup/index.html",
+    "lithia-springs-ga-appliance-pickup/index.html",
+    "lithia-springs-ga-washer-dryer-pickup/index.html",
+    "lithia-springs-ga-refrigerator-pickup/index.html",
+    "lithia-springs-ga-stove-oven-pickup/index.html",
+    "lithia-springs-ga-freezer-pickup/index.html",
+    "lithonia-ga-appliance-pickup/index.html",
+    "lithonia-ga-washer-dryer-pickup/index.html",
+    "lithonia-ga-refrigerator-pickup/index.html",
+    "lithonia-ga-stove-oven-pickup/index.html",
+    "lithonia-ga-freezer-pickup/index.html",
+    "conyers-ga-washer-dryer-pickup/index.html",
+    "conyers-ga-refrigerator-pickup/index.html",
+    "conyers-ga-stove-oven-pickup/index.html",
+    "conyers-ga-freezer-pickup/index.html",
+    "covington-ga-appliance-pickup/index.html",
+    "covington-ga-washer-dryer-pickup/index.html",
+    "covington-ga-refrigerator-pickup/index.html",
+    "covington-ga-stove-oven-pickup/index.html",
+    "covington-ga-freezer-pickup/index.html",
+    "mcdonough-ga-washer-dryer-pickup/index.html",
+    "mcdonough-ga-refrigerator-pickup/index.html",
+    "mcdonough-ga-stove-oven-pickup/index.html",
+    "mcdonough-ga-freezer-pickup/index.html",
+    "stockbridge-ga-appliance-pickup/index.html",
+    "stockbridge-ga-washer-dryer-pickup/index.html",
+    "stockbridge-ga-refrigerator-pickup/index.html",
+    "stockbridge-ga-stove-oven-pickup/index.html",
+    "stockbridge-ga-freezer-pickup/index.html",
+    "duluth-ga-washer-dryer-pickup/index.html",
+    "duluth-ga-refrigerator-pickup/index.html",
+    "duluth-ga-stove-oven-pickup/index.html",
+    "duluth-ga-freezer-pickup/index.html",
+    "suwanee-ga-appliance-pickup/index.html",
+    "suwanee-ga-washer-dryer-pickup/index.html",
+    "suwanee-ga-refrigerator-pickup/index.html",
+    "suwanee-ga-stove-oven-pickup/index.html",
+    "suwanee-ga-freezer-pickup/index.html",
+    "norcross-ga-washer-dryer-pickup/index.html",
+    "norcross-ga-refrigerator-pickup/index.html",
+    "norcross-ga-stove-oven-pickup/index.html",
+    "norcross-ga-freezer-pickup/index.html",
+    "peachtree-corners-ga-appliance-pickup/index.html",
+    "peachtree-corners-ga-washer-dryer-pickup/index.html",
+    "peachtree-corners-ga-refrigerator-pickup/index.html",
+    "peachtree-corners-ga-stove-oven-pickup/index.html",
+    "peachtree-corners-ga-freezer-pickup/index.html",
+    "buford-ga-appliance-pickup/index.html",
+    "buford-ga-washer-dryer-pickup/index.html",
+    "buford-ga-refrigerator-pickup/index.html",
+    "buford-ga-stove-oven-pickup/index.html",
+    "buford-ga-freezer-pickup/index.html",
+    "sugar-hill-ga-appliance-pickup/index.html",
+    "sugar-hill-ga-washer-dryer-pickup/index.html",
+    "sugar-hill-ga-refrigerator-pickup/index.html",
+    "sugar-hill-ga-stove-oven-pickup/index.html",
+    "sugar-hill-ga-freezer-pickup/index.html",
+    "snellville-ga-appliance-pickup/index.html",
+    "snellville-ga-washer-dryer-pickup/index.html",
+    "snellville-ga-refrigerator-pickup/index.html",
+    "snellville-ga-stove-oven-pickup/index.html",
+    "snellville-ga-freezer-pickup/index.html",
+    "lilburn-ga-appliance-pickup/index.html",
+    "lilburn-ga-washer-dryer-pickup/index.html",
+    "lilburn-ga-refrigerator-pickup/index.html",
+    "lilburn-ga-stove-oven-pickup/index.html",
+    "lilburn-ga-freezer-pickup/index.html",
+    "loganville-ga-appliance-pickup/index.html",
+    "loganville-ga-washer-dryer-pickup/index.html",
+    "loganville-ga-refrigerator-pickup/index.html",
+    "loganville-ga-stove-oven-pickup/index.html",
+    "loganville-ga-freezer-pickup/index.html",
+    "grayson-ga-appliance-pickup/index.html",
+    "grayson-ga-washer-dryer-pickup/index.html",
+    "grayson-ga-refrigerator-pickup/index.html",
+    "grayson-ga-stove-oven-pickup/index.html",
+    "grayson-ga-freezer-pickup/index.html",
+    "dacula-ga-appliance-pickup/index.html",
+    "dacula-ga-washer-dryer-pickup/index.html",
+    "dacula-ga-refrigerator-pickup/index.html",
+    "dacula-ga-stove-oven-pickup/index.html",
+    "dacula-ga-freezer-pickup/index.html",
+    "cumming-ga-appliance-pickup/index.html",
+    "cumming-ga-washer-dryer-pickup/index.html",
+    "cumming-ga-refrigerator-pickup/index.html",
+    "cumming-ga-stove-oven-pickup/index.html",
+    "cumming-ga-freezer-pickup/index.html",
+    "gainesville-ga-appliance-pickup/index.html",
+    "gainesville-ga-washer-dryer-pickup/index.html",
+    "gainesville-ga-refrigerator-pickup/index.html",
+    "gainesville-ga-stove-oven-pickup/index.html",
+    "gainesville-ga-freezer-pickup/index.html",
+    "canton-ga-appliance-pickup/index.html",
+    "canton-ga-washer-dryer-pickup/index.html",
+    "canton-ga-refrigerator-pickup/index.html",
+    "canton-ga-stove-oven-pickup/index.html",
+    "canton-ga-freezer-pickup/index.html",
+    "woodstock-ga-appliance-pickup/index.html",
+    "woodstock-ga-washer-dryer-pickup/index.html",
+    "woodstock-ga-refrigerator-pickup/index.html",
+    "woodstock-ga-stove-oven-pickup/index.html",
+    "woodstock-ga-freezer-pickup/index.html",
+    "holly-springs-ga-appliance-pickup/index.html",
+    "holly-springs-ga-washer-dryer-pickup/index.html",
+    "holly-springs-ga-refrigerator-pickup/index.html",
+    "holly-springs-ga-stove-oven-pickup/index.html",
+    "holly-springs-ga-freezer-pickup/index.html",
+    "ball-ground-ga-appliance-pickup/index.html",
+    "ball-ground-ga-washer-dryer-pickup/index.html",
+    "ball-ground-ga-refrigerator-pickup/index.html",
+    "ball-ground-ga-stove-oven-pickup/index.html",
+    "ball-ground-ga-freezer-pickup/index.html",
+    "cartersville-ga-appliance-pickup/index.html",
+    "cartersville-ga-washer-dryer-pickup/index.html",
+    "cartersville-ga-refrigerator-pickup/index.html",
+    "cartersville-ga-stove-oven-pickup/index.html",
+    "cartersville-ga-freezer-pickup/index.html",
+    "rome-ga-appliance-pickup/index.html",
+    "rome-ga-washer-dryer-pickup/index.html",
+    "rome-ga-refrigerator-pickup/index.html",
+    "rome-ga-stove-oven-pickup/index.html",
+    "rome-ga-freezer-pickup/index.html",
+    "calhoun-ga-appliance-pickup/index.html",
+    "calhoun-ga-washer-dryer-pickup/index.html",
+    "calhoun-ga-refrigerator-pickup/index.html",
+    "calhoun-ga-stove-oven-pickup/index.html",
+    "calhoun-ga-freezer-pickup/index.html",
+    "savannah-ga-washer-dryer-pickup/index.html",
+    "savannah-ga-refrigerator-pickup/index.html",
+    "savannah-ga-stove-oven-pickup/index.html",
+    "savannah-ga-freezer-pickup/index.html",
+    "augusta-ga-washer-dryer-pickup/index.html",
+    "augusta-ga-refrigerator-pickup/index.html",
+    "augusta-ga-stove-oven-pickup/index.html",
+    "augusta-ga-freezer-pickup/index.html",
+    "macon-ga-washer-dryer-pickup/index.html",
+    "macon-ga-refrigerator-pickup/index.html",
+    "macon-ga-stove-oven-pickup/index.html",
+    "macon-ga-freezer-pickup/index.html",
+    "columbus-ga-washer-dryer-pickup/index.html",
+    "columbus-ga-refrigerator-pickup/index.html",
+    "columbus-ga-stove-oven-pickup/index.html",
+    "columbus-ga-freezer-pickup/index.html",
+    "athens-ga-washer-dryer-pickup/index.html",
+    "athens-ga-refrigerator-pickup/index.html",
+    "athens-ga-stove-oven-pickup/index.html",
+    "athens-ga-freezer-pickup/index.html",
+    "warner-robins-ga-appliance-pickup/index.html",
+    "warner-robins-ga-washer-dryer-pickup/index.html",
+    "warner-robins-ga-refrigerator-pickup/index.html",
+    "warner-robins-ga-stove-oven-pickup/index.html",
+    "warner-robins-ga-freezer-pickup/index.html",
+    "valdosta-ga-appliance-pickup/index.html",
+    "valdosta-ga-washer-dryer-pickup/index.html",
+    "valdosta-ga-refrigerator-pickup/index.html",
+    "valdosta-ga-stove-oven-pickup/index.html",
+    "valdosta-ga-freezer-pickup/index.html",
+    "albany-ga-appliance-pickup/index.html",
+    "albany-ga-washer-dryer-pickup/index.html",
+    "albany-ga-refrigerator-pickup/index.html",
+    "albany-ga-stove-oven-pickup/index.html",
+    "albany-ga-freezer-pickup/index.html",
+    "statesboro-ga-appliance-pickup/index.html",
+    "statesboro-ga-washer-dryer-pickup/index.html",
+    "statesboro-ga-refrigerator-pickup/index.html",
+    "statesboro-ga-stove-oven-pickup/index.html",
+    "statesboro-ga-freezer-pickup/index.html",
+    "brunswick-ga-appliance-pickup/index.html",
+    "brunswick-ga-washer-dryer-pickup/index.html",
+    "brunswick-ga-refrigerator-pickup/index.html",
+    "brunswick-ga-stove-oven-pickup/index.html",
+    "brunswick-ga-freezer-pickup/index.html",
+    "hinesville-ga-appliance-pickup/index.html",
+    "hinesville-ga-washer-dryer-pickup/index.html",
+    "hinesville-ga-refrigerator-pickup/index.html",
+    "hinesville-ga-stove-oven-pickup/index.html",
+    "hinesville-ga-freezer-pickup/index.html"
+  ],
+  "preserved_existing_category_paths": [
+    "atlanta-ga-appliance-pickup/index.html",
+    "atlanta-ga-washer-dryer-pickup/index.html",
+    "atlanta-ga-refrigerator-pickup/index.html",
+    "atlanta-ga-stove-oven-pickup/index.html",
+    "atlanta-ga-freezer-pickup/index.html",
+    "roswell-ga-appliance-pickup/index.html",
+    "alpharetta-ga-appliance-pickup/index.html",
+    "decatur-ga-appliance-pickup/index.html",
+    "smyrna-ga-appliance-pickup/index.html",
+    "marietta-ga-appliance-pickup/index.html",
+    "marietta-ga-washer-dryer-pickup/index.html",
+    "marietta-ga-refrigerator-pickup/index.html",
+    "marietta-ga-stove-oven-pickup/index.html",
+    "marietta-ga-freezer-pickup/index.html",
+    "douglasville-ga-appliance-pickup/index.html",
+    "conyers-ga-appliance-pickup/index.html",
+    "mcdonough-ga-appliance-pickup/index.html",
+    "lawrenceville-ga-appliance-pickup/index.html",
+    "lawrenceville-ga-washer-dryer-pickup/index.html",
+    "lawrenceville-ga-refrigerator-pickup/index.html",
+    "lawrenceville-ga-stove-oven-pickup/index.html",
+    "lawrenceville-ga-freezer-pickup/index.html",
+    "duluth-ga-appliance-pickup/index.html",
+    "norcross-ga-appliance-pickup/index.html",
+    "savannah-ga-appliance-pickup/index.html",
+    "augusta-ga-appliance-pickup/index.html",
+    "macon-ga-appliance-pickup/index.html",
+    "columbus-ga-appliance-pickup/index.html",
+    "athens-ga-appliance-pickup/index.html"
+  ],
+  "category_matrix_size": 350,
+  "notes": "Keep Atlanta and existing Georgia indexed landing pages unchanged; GA-coded new pages are noindex/follow excluded from sitemap until specific operator ZIP, Formspree receipt, and owner release."
+}
