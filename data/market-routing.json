@@ -86,7 +86,7 @@
       "region": "Connecticut statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "Delaware",
@@ -110,7 +110,7 @@
       "region": "Georgia statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "Hawaii",
@@ -198,7 +198,7 @@
       "region": "Massachusetts statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "Michigan",
@@ -214,7 +214,7 @@
       "region": "Minnesota statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "Mississippi",
@@ -270,7 +270,7 @@
       "region": "New Jersey statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "New Mexico",
@@ -294,7 +294,7 @@
       "region": "North Carolina statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "North Dakota",
@@ -398,7 +398,7 @@
       "region": "Virginia statewide intake",
       "status": "request-only",
       "territory_status": "available",
-      "lead_priority": 3
+      "lead_priority": 2
     },
     {
       "state": "Washington",
