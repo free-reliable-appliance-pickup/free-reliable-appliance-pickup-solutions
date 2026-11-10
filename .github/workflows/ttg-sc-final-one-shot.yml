@@ -1,0 +1,20 @@
+name: One-time SC Free Appliance Pickup California Model Finalization
+on:
+  push:
+    branches: [ttg/sc-final-customer-copy-20261110]
+permissions:
+  contents: write
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply and validate all 251 South Carolina pages
+        run: python3 .github/scripts/ttg_sc_final_one_shot.py
+      - name: Remove temporary helpers and commit final pages
+        run: |
+          rm .github/scripts/ttg_sc_final_one_shot.py .github/workflows/ttg-sc-final-one-shot.yml
+          git add -A
+          git -c user.name='Free Reliable Website Bot' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'SC final: California Gold Model free appliance pickup across 251 pages'
+          git push origin HEAD:ttg/sc-final-customer-copy-20261110
