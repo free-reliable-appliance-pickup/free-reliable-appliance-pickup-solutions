@@ -24,5 +24,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ttg_free_pickup_state_hubs.py' -v
       - name: Verify conditional free-pickup titles and schema across city batches
         run: python -m unittest discover -s tests -p 'test_ttg_free_city_category_copy.py' -v
+      - name: Validate Oklahoma 50-city Gold rollout
+        run: python -m unittest discover -s tests -p 'test_ttg_oklahoma_pages.py' -v
       - name: Validate state manifests and every listed page
         run: python scripts/ttg_state_batch_qa.py
