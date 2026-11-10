@@ -1,0 +1,15 @@
+{
+  "state_code": "ND",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Keep North Dakota request-only pages noindex and outside sitemap until verified accepting operators by ZIP, actual form delivery, owner release."
+}

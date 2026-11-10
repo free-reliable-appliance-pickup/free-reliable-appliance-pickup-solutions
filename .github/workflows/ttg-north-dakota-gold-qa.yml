@@ -1,0 +1,25 @@
+name: TTG North Dakota Gold 50-market QA
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'north-dakota-appliance-pickup/**'
+      - '*-nd-*-pickup/**'
+      - 'data/ttg-state-batches/ND.json'
+      - 'data/ttg-release-readiness/ND.json'
+      - 'tests/test_ttg_north_dakota_pages.py'
+      - '.github/workflows/ttg-north-dakota-gold-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: North Dakota state and customer page tests
+        run: python -m unittest discover -s tests -p 'test_ttg_north_dakota_pages.py' -v
+      - name: Validate all TTG batch manifests
+        run: python scripts/ttg_state_batch_qa.py
