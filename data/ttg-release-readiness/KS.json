@@ -1,0 +1,15 @@
+{
+  "state_code": "KS",
+  "verified_cities": [],
+  "form_receipt": {
+    "verified": false,
+    "verified_on": null,
+    "receipt_reference": ""
+  },
+  "owner_release_approval": {
+    "approved": false,
+    "approved_on": null,
+    "reference": ""
+  },
+  "instructions": "Kansas pages are request-only and noindex. Verify local accepting operators by ZIP, Formspree receipt, and owner approval before activation."
+}
