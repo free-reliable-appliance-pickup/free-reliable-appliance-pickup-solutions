@@ -1,4 +1,4 @@
-"""TTG Minnesota: request-only QA for 136 staged pages, hub navigation and photo assets."""
+"""TTG Minnesota: request-only QA for 216 staged pages, hub navigation and photo assets."""
 from pathlib import Path
 from html.parser import HTMLParser
 import json
@@ -11,14 +11,20 @@ CITIES = (
     "apple-valley",
     "blaine",
     "bloomington",
+    "brooklyn-center",
     "brooklyn-park",
     "burnsville",
+    "chanhassen",
+    "chaska",
     "coon-rapids",
     "cottage-grove",
     "duluth",
     "eagan",
     "eden-prairie",
     "edina",
+    "fridley",
+    "hastings",
+    "inver-grove-heights",
     "lakeville",
     "mankato",
     "maple-grove",
@@ -26,28 +32,44 @@ CITIES = (
     "minneapolis",
     "minnetonka",
     "moorhead",
+    "new-brighton",
+    "northfield",
     "plymouth",
+    "prior-lake",
+    "richfield",
     "rochester",
+    "rogers",
     "rosemount",
     "roseville",
     "saint-paul",
+    "sartell",
+    "sauk-rapids",
+    "savage",
     "shakopee",
     "st-cloud",
     "st-louis-park",
+    "st-michael",
+    "stillwater",
     "woodbury",
 )
 CATEGORY_CITIES = (
     "apple-valley",
     "blaine",
     "bloomington",
+    "brooklyn-center",
     "brooklyn-park",
     "burnsville",
+    "chanhassen",
+    "chaska",
     "coon-rapids",
     "cottage-grove",
     "duluth",
     "eagan",
     "eden-prairie",
     "edina",
+    "fridley",
+    "hastings",
+    "inver-grove-heights",
     "lakeville",
     "mankato",
     "maple-grove",
@@ -55,14 +77,24 @@ CATEGORY_CITIES = (
     "minneapolis",
     "minnetonka",
     "moorhead",
+    "new-brighton",
+    "northfield",
     "plymouth",
+    "prior-lake",
+    "richfield",
     "rochester",
+    "rogers",
     "rosemount",
     "roseville",
     "saint-paul",
+    "sartell",
+    "sauk-rapids",
+    "savage",
     "shakopee",
     "st-cloud",
     "st-louis-park",
+    "st-michael",
+    "stillwater",
     "woodbury",
 )
 KINDS = ("washer-dryer", "refrigerator", "stove-oven", "freezer")
@@ -77,9 +109,9 @@ class MinnesotaBatchTests(unittest.TestCase):
         cls.manifest = ROOT / "data/ttg-state-batches/MN.json"
         cls.pages = json.loads(cls.manifest.read_text(encoding="utf-8"))["pages"]
 
-    def test_manifest_has_136_pages_with_required_groups(self):
-        """One hub, 27 city guides and four specialty guides per city."""
-        self.assertEqual(len(self.pages), 136)
+    def test_manifest_has_216_pages_with_required_groups(self):
+        """One hub, 43 city guides and four specialty guides per city."""
+        self.assertEqual(len(self.pages), 216)
         self.assertEqual(len(self.pages), len(set(self.pages)))
         self.assertIn("minnesota-appliance-pickup/index.html", self.pages)
         for city in CITIES:
@@ -268,7 +300,6 @@ class MinnesotaBatchTests(unittest.TestCase):
         self.assertEqual(ledger["verified_cities"], [])
         self.assertFalse(ledger["form_receipt"]["verified"])
 
-
     def test_reviewer_access_and_official_fallbacks(self):
         """Prevent unfinished access fragments and unlinked recycling alternatives."""
         official = {
@@ -307,6 +338,25 @@ class MinnesotaBatchTests(unittest.TestCase):
                     self.assertIn('content="noindex, follow"', html)
                     for fragment in fragments:
                         self.assertNotIn(fragment + "</p>", html)
+
+
+    def test_minnesota_wave2_official_county_fallbacks(self):
+        """Keep official county links visible when local private collection is unconfirmed."""
+        fallbacks = {
+            "fridley": "anokacountymn.gov/370/Residential-Recycling",
+            "northfield": "ricecountymn.gov/220/Recycling-Center",
+            "stillwater": "co.washington.mn.us/3775/Reuse-and-Donation-Opportunities",
+            "sartell": "stearnscountymn.gov/wastewizard",
+            "sauk-rapids": "bentoncountymn.gov/224/Solid-Waste-Management",
+        }
+        for city, target in fallbacks.items():
+            for kind in ("appliance", *KINDS):
+                with self.subTest(city=city, kind=kind):
+                    html = (ROOT / f"{city}-mn-{kind}-pickup/index.html").read_text(encoding="utf-8")
+                    section = html.partition("<h2>Alternative recycling and removal options</h2>")[2].partition("</section>")[0]
+                    self.assertIn(target, section)
+                    self.assertIn("Official county appliance recycling information", section)
+                    self.assertIn('content="noindex, follow"', html)
 
 
 if __name__ == "__main__":
