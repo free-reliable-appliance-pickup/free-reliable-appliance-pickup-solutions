@@ -6,7 +6,6 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 SLUGS = (
     "california",
-    "rancho-cucamonga",
     "fontana",
     "upland",
     "ontario",
@@ -43,11 +42,17 @@ class CaliforniaLaundryIntakeTests(unittest.TestCase):
                 self.assertIn("Free pickup is not guaranteed", html)
                 self.assertRegex(html, r'(?i)name="robots" content="index,\s*follow')
 
-    def test_rancho_hero_cta_leads_to_its_own_form(self):
-        html = (ROOT / "rancho-cucamonga-washer-dryer-pickup/index.html").read_text(encoding="utf-8")
-        self.assertIn('href="#request">Check Pickup Availability', html)
-        self.assertIn('href="#request">Request Pickup', html)
-        self.assertIn('name="source_page" value="rancho-cucamonga-washer-dryer-pickup"', html)
+    def test_rancho_laundry_uses_single_shared_city_intake(self):
+        laundry = (ROOT / "rancho-cucamonga-washer-dryer-pickup/index.html").read_text(encoding="utf-8")
+        city = (ROOT / "rancho-cucamonga-appliance-pickup/index.html").read_text(encoding="utf-8")
+        self.assertEqual(len(re.findall(r"<form\\b", laundry, re.I)), 0)
+        self.assertEqual(len(re.findall(r"<form\\b", city, re.I)), 1)
+        self.assertIn('href="/rancho-cucamonga-appliance-pickup/#request"', laundry)
+        self.assertIn('name="washer_test"', city)
+        self.assertIn('name="dryer_test"', city)
+        self.assertIn('name="dryer_type"', city)
+        self.assertIn('name="photo_link"', city)
+        self.assertIn('name="appliance"', city)
 
     def test_form_has_exactly_one_submit_button(self):
         for slug in SLUGS:
