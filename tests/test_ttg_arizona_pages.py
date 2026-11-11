@@ -36,4 +36,13 @@ class ArizonaGold(unittest.TestCase):
   for path in self.pages:self.assertNotIn("https://freereliableappliancepickup.com/"+path.replace("index.html",""),sitemap)
   l=json.loads((ROOT/"data/ttg-release-readiness/AZ.json").read_text());self.assertEqual(l["verified_cities"],[])
   self.assertFalse(l["form_receipt"]["verified"]);self.assertFalse(l["owner_release_approval"]["approved"])
+ def test_state_hub_customer_intake_first(self):
+  h=(ROOT/"arizona-appliance-pickup/index.html").read_text()
+  self.assertIn("Arizona Free Appliance Pickup",h)
+  self.assertIn('Free Reliable Appliance Pickup',h)
+  self.assertEqual(h.index('<section id="request"'),h.index('<main>')+len('<main>\n'))
+  for text in ('name="photos_available" required','name="access" required','name="message" required','name="privacy_acknowledgment" value="acknowledged" required','name="paid_option"'):
+   self.assertIn(text,h)
+  self.assertIn('action="https://formspree.io/f/mvzeapzd"',h)
+  self.assertIn('content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"',h)
 if __name__=="__main__":unittest.main()
