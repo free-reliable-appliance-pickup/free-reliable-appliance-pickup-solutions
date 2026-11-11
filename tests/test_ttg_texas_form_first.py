@@ -6,7 +6,7 @@ HTML = (ROOT / "texas-appliance-pickup" / "index.html").read_text(encoding="utf-
 
 def test_texas_customer_request_form_is_first_main_section():
     main_start = HTML.index("<main>")
-    first_section = re.search(r"<section\\b[^>]*>", HTML[main_start:])
+    first_section = re.search(r"<section\b[^>]*>", HTML[main_start:])
     assert first_section
     assert 'id="request"' in first_section.group()
     assert HTML.index('id="request"') < HTML.index('id="texas-city-shortcut"')
