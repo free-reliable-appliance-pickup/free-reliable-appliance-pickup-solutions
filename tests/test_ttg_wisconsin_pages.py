@@ -9,7 +9,7 @@ class WisconsinBatchTests(unittest.TestCase):
         self.assertEqual(check_manifest(ROOT/"data/ttg-state-batches/WI.json"),[])
     def test_all_pages_and_hub_links(self):
         pages=json.loads((ROOT/"data/ttg-state-batches/WI.json").read_text())["pages"]
-        self.assertEqual(len(pages),61)
+        self.assertEqual(len(pages),151)
         hub=(ROOT/"wisconsin-appliance-pickup/index.html").read_text()
         for p in pages:
             html=(ROOT/p).read_text()
@@ -42,5 +42,31 @@ class WisconsinBatchTests(unittest.TestCase):
         self.assertEqual(r["verified_cities"],[])
         self.assertFalse(r["form_receipt"]["verified"])
         self.assertFalse(r["owner_release_approval"]["approved"])
+
+    def test_new_wisconsin_gold_grid(self):
+        """Validate 18 cities with complete category-specific request pages."""
+        manifest=json.loads((ROOT/"data/ttg-state-batches/WI.json").read_text())
+        areas=["wauwatosa","oak-creek","franklin","menomonee-falls","germantown",
+               "mequon","new-berlin","greenfield","west-bend","middleton","verona",
+               "neenah","de-pere","fond-du-lac","manitowoc","hudson","stevens-point","beloit"]
+        cat=["appliance","washer-dryer","refrigerator","stove-oven","freezer"]
+        photos=set()
+        for city in areas:
+            for suffix in cat:
+                slug=f"{city}-wi-{suffix}-pickup"
+                path=f"{slug}/index.html"
+                self.assertIn(path,manifest["pages"])
+                page=(ROOT/path).read_text()
+                self.assertTrue(page.index('<section id="request"')>page.index("<main>"))
+                self.assertIn('content="noindex, follow"',page)
+                self.assertIn('name="photos_available" required',page)
+                self.assertIn('name="privacy_acknowledgment" value="acknowledged" required',page)
+                self.assertIn('name="source_page" value="'+slug+'"',page)
+                if suffix=="washer-dryer":
+                    import re
+                    image=re.search(r'<figure><img src="([^"]+)"',page)
+                    self.assertIsNotNone(image)
+                    photos.add(image.group(1))
+        self.assertEqual(len(photos),18)
 
 if __name__=="__main__":unittest.main()
