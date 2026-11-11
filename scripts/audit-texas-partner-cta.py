@@ -58,11 +58,13 @@ if '<meta name="robots" content="index, follow' not in page:
     errors.append('Texas statewide index directive was changed')
 if '<link rel="canonical" href="https://freereliableappliancepickup.com/texas-appliance-pickup/">' not in page:
     errors.append('Texas statewide canonical URL changed')
-if 'Free Appliance Pickup Texas | Request Eligibility Review' not in page:
-    errors.append('Texas title must describe customer eligibility rather than recruiting')
+if '<title>Free Appliance Pickup in Texas | Free Reliable Appliance Pickup</title>' not in page:
+    errors.append('Texas title must preserve Free Appliance Pickup branding')
 if not ('id="texas-city-shortcut"' in page and 'id="request"' in page
-        and page.index('id="texas-city-shortcut"') < page.index('id="request"')):
-    errors.append('Pickup-city selector or intake form placement changed')
+        and 'id="texas-population-priority"' in page
+        and page.index('id="request"') < page.index('id="texas-city-shortcut"')
+        and page.index('id="texas-city-shortcut"') < page.index('id="texas-population-priority"')):
+    errors.append('Texas intake form must appear before the city selector and market directory')
 fields = dict(parsed.fields)
 for required in ('name','phone','address','city','zip','appliance','condition','floor','stairs','photos_available','state','source_page'):
     if required not in fields:
