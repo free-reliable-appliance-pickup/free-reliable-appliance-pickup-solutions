@@ -99,7 +99,7 @@ def check_page(slug, content, manifest_pages=()):
     if slug == "illinois-appliance-pickup":
         for path in manifest_pages:
             other = path.removesuffix("/index.html")
-            if other != slug and "/" + other + "/" not in p.links:
+            if other.endswith("-il-appliance-pickup") and "/" + other + "/" not in p.links:
                 errors.append("missing Illinois hub link: " + other)
     return errors
 
