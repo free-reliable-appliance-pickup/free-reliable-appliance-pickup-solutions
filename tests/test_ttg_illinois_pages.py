@@ -1,4 +1,4 @@
-"""Offline QA for the 61 manifest-listed, request-only Illinois pages."""
+"""Offline QA for the 251 manifest-listed, request-only Illinois pages."""
 import json
 import unittest
 from scripts.ttg_illinois_live_smoke import ROOT, check_page, Extract
@@ -19,11 +19,17 @@ class IllinoisCategoryPages(unittest.TestCase):
             (ROOT / "data/ttg-state-batches/IL.json").read_text(encoding="utf-8")
         )["pages"]
 
-    def test_expected_61_pages(self):
-        """Keep all 17 original guides and 44 new categories."""
-        self.assertEqual(len(self.pages), 61)
-        for city in CITIES:
-            for category in CATEGORIES:
+    def test_expected_251_pages(self):
+        """Keep 50 city owners with five appliance intents, plus statewide hub."""
+        self.assertEqual(len(self.pages), 251)
+        self.assertIn("illinois-appliance-pickup/index.html", self.pages)
+        cities = sorted(path.removesuffix("-il-appliance-pickup/index.html")
+                        for path in self.pages
+                        if path.endswith("-il-appliance-pickup/index.html"))
+        self.assertEqual(len(cities), 50)
+        self.assertEqual(len(set(cities)), 50)
+        for city in cities:
+            for category in ("appliance", *CATEGORIES):
                 with self.subTest(city=city, category=category):
                     self.assertIn(f"{city}-il-{category}-pickup/index.html", self.pages)
 
@@ -36,8 +42,11 @@ class IllinoisCategoryPages(unittest.TestCase):
                 self.assertEqual(check_page(slug, text, self.pages), [])
 
     def test_parent_city_links(self):
-        """Make each original city page link to all four of its category guides."""
-        for city in CITIES:
+        """Make every city page link to all four of its category guides."""
+        cities = sorted(path.removesuffix("-il-appliance-pickup/index.html")
+                        for path in self.pages
+                        if path.endswith("-il-appliance-pickup/index.html"))
+        for city in cities:
             html = (ROOT / f"{city}-il-appliance-pickup/index.html").read_text(encoding="utf-8")
             for category in CATEGORIES:
                 with self.subTest(city=city, category=category):
@@ -45,7 +54,7 @@ class IllinoisCategoryPages(unittest.TestCase):
 
     def test_stove_fuel_and_connection_intake(self):
         """Require fuel and connection status for all Illinois stove requests."""
-        for city in (*CITIES[:2], "chicago", *CITIES[2:]):
+        for city in sorted(path.removesuffix("-il-stove-oven-pickup/index.html") for path in self.pages if path.endswith("-il-stove-oven-pickup/index.html")):
             slug = f"{city}-il-stove-oven-pickup"
             html = (ROOT / slug / "index.html").read_text(encoding="utf-8")
             parser = Extract()
@@ -82,8 +91,11 @@ class IllinoisCategoryPages(unittest.TestCase):
 
 
     def test_category_hero_assets(self):
-        """Prevent broken image paths in all 44 new category pages."""
-        for city in CITIES:
+        """Prevent broken category image paths across all 50 city groups."""
+        cities = sorted(path.removesuffix("-il-appliance-pickup/index.html")
+                        for path in self.pages
+                        if path.endswith("-il-appliance-pickup/index.html"))
+        for city in cities:
             for category in CATEGORIES:
                 slug = f"{city}-il-{category}-pickup"
                 with self.subTest(slug=slug):
