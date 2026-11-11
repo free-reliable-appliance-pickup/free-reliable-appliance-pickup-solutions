@@ -8,7 +8,7 @@ class OhioStateBatchTests(unittest.TestCase):
         self.assertEqual(check_manifest(ROOT / "data/ttg-state-batches/OH.json"), [])
     def test_ohio_rollout_count_and_columbus_protection(self):
         rows=json.loads((ROOT / "data/ttg-state-batches/OH.json").read_text())["pages"]
-        self.assertEqual(len(rows),26)
+        self.assertEqual(len(rows),246)
         self.assertNotIn("columbus-appliance-pickup/index.html",rows)
         hub=(ROOT / "ohio-appliance-pickup/index.html").read_text()
         for r in rows:
@@ -38,4 +38,29 @@ class OhioStateBatchTests(unittest.TestCase):
                 if kind=="stove-oven":
                     self.assertIn('name="fuel_type" required',h)
                     self.assertIn('name="connection_status" required',h)
+
+    def test_50_city_golds_and_distinct_photo_sources(self):
+        import re
+        rows=json.loads((ROOT/"data/ttg-state-batches/OH.json").read_text())["pages"]
+        bycity={}
+        laundry=[]
+        for path in rows:
+            m=re.fullmatch(r"(.+)-oh-(appliance|washer-dryer|refrigerator|stove-oven|freezer)-pickup/index.html",path)
+            if not m:continue
+            city,category=m.groups()
+            bycity.setdefault(city,set()).add(category)
+            if city in {"dublin","hilliard","upper-arlington","worthington","westerville","gahanna","new-albany","reynoldsburg","pickerington","grove-city","powell","delaware","lewis-center","sunbury","canal-winchester","lancaster","newark","pataskala","marysville","lakewood","parma","strongsville","westlake","rocky-river","north-olmsted","north-royalton","solon","beachwood","mentor","mason","west-chester","fairfield","hamilton","blue-ash","loveland","cuyahoga-falls","stow","kent","kettering","centerville","beavercreek","perrysburg","sylvania","canton"} and category=="washer-dryer":
+                h=(ROOT/path).read_text()
+                mimg=re.search(r'<figure><img src="([^"]+)"',h)
+                self.assertIsNotNone(mimg,path)
+                laundry.append(mimg.group(1))
+        self.assertEqual(len(bycity),49)
+        self.assertTrue(all(len(v)==5 for v in bycity.values()))
+        self.assertEqual(len(laundry),44)
+        self.assertEqual(len(set(laundry)),44)
+        # Columbus already has five owned legacy landing pages; avoid new duplicate city-intent URLs.
+        for kind in ("appliance","washer-dryer","refrigerator","stove","freezer"):
+            self.assertTrue((ROOT/f"columbus-{kind}-pickup/index.html").is_file())
+        self.assertEqual(len(bycity)+1,50)
+
 if __name__=="__main__": unittest.main()
