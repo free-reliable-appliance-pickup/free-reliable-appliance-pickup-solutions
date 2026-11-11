@@ -15,7 +15,7 @@ class ApartmentLeadIntakeTests(unittest.TestCase):
             with self.subTest(slug=slug):
                 html = (ROOT / slug / "index.html").read_text(encoding="utf-8")
                 self.assertRegex(html, r'(?is)<main>\s*<section id="request"')
-                self.assertEqual(len(re.findall(r"<form\\b", html, re.I)), 1)
+                self.assertEqual(len(re.findall(r"<form\b", html, re.I)), 1)
                 self.assertIn('action="https://formspree.io/f/mvzeapzd"', html)
                 self.assertIn('name="photos_available" required', html)
                 self.assertIn('name="photo_link"', html)
