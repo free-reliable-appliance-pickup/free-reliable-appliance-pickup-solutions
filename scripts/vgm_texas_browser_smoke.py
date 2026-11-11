@@ -42,6 +42,61 @@ class QuietHandler(SimpleHTTPRequestHandler):
         return super().send_head()
 
 
+
+def check_statewide_hub(browser, base, preview_dir):
+    """Verify the statewide form is genuinely first in rendered mobile/desktop DOM."""
+    for mode, viewport in VIEWPORTS:
+        context = browser.new_context(viewport=viewport)
+        page = context.new_page()
+        try:
+            page.route("https://formspree.io/**", lambda route: route.abort())
+            response = page.goto(
+                base + "/texas-appliance-pickup/",
+                wait_until="domcontentloaded",
+                timeout=30000,
+            )
+            if not response or response.status != 200:
+                raise AssertionError("Texas statewide hub not HTTP 200")
+            page.wait_for_function(
+                "() => !!window.FreeReliableCustomerRouting && "
+                "!!document.querySelector('#request .site-request-next-steps')",
+                timeout=15000,
+            )
+            if page.locator("main > section").first.get_attribute("id") != "request":
+                raise AssertionError("Texas statewide request is not the first main section")
+            form = page.locator('#request form[action="https://formspree.io/f/mvzeapzd"]')
+            if form.count() != 1:
+                raise AssertionError("Texas statewide request form missing or duplicated")
+            for name in ("name", "phone", "address", "city", "zip", "appliance",
+                         "condition", "floor", "stairs", "photos_available"):
+                control = form.locator('[name="' + name + '"]')
+                if control.count() != 1 or control.get_attribute("required") is None:
+                    raise AssertionError("Texas statewide required field: " + name)
+            if page.locator("#request .site-photo-first-intake").count():
+                raise AssertionError("Photo instructions were inserted ahead of statewide inputs")
+            steps = page.locator("#request > .site-request-next-steps")
+            if steps.count() != 1:
+                raise AssertionError("Statewide next steps missing or duplicated")
+            steps_after_form = steps.evaluate(
+                "(node) => Boolean(node.previousElementSibling && "
+                "node.previousElementSibling.tagName === 'FORM')"
+            )
+            if not steps_after_form:
+                raise AssertionError("Statewide next-step cards appear before form fields")
+            if preview_dir:
+                page.screenshot(
+                    path=str(preview_dir / (mode + "-texas-statewide-form-first.png")),
+                    full_page=False,
+                    animations="disabled",
+                )
+            page.locator("#texas-quick-city").fill("Katy")
+            page.locator("#texas-quick-continue").click()
+            if form.locator('[name="city"]').input_value() != "Katy":
+                raise AssertionError("Texas city shortcut failed to populate main form")
+            print("PASS", mode, "Texas statewide real form first; city shortcut fills city")
+        finally:
+            context.close()
+
 def run():
     """Check rendered draft images, form selectors, route labels and quote consent."""
     server = ThreadingHTTPServer(
@@ -81,6 +136,7 @@ def run():
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
             try:
+                check_statewide_hub(browser, base, preview_dir)
                 for mode, viewport in VIEWPORTS:
                     context = browser.new_context(viewport=viewport)
                     try:
