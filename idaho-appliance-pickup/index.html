@@ -60,6 +60,35 @@
 <a class="btn" href="../service-areas/">Service Areas</a>
 </div><div class="site-hero-art"><img src="/assets/optimized/20241112_145206-1600.jpg" alt="Real appliance from our Idaho pickup work" fetchpriority="high"></div></div></section>
 <main>
+<section id="request" class="site-request-panel">
+<h2>Request Free Appliance Pickup in Idaho</h2>
+<p class="site-request-intro">Enter your actual Idaho pickup city, ZIP, appliance condition, photo availability, and removal access. We review local coverage before confirming pickup.</p>
+<form action="https://formspree.io/f/mvzeapzd" method="POST" data-photo-first-enhanced="1">
+<input type="hidden" name="_subject" value="Idaho Appliance Pickup Request">
+<input type="hidden" name="state" value="Idaho">
+<input type="hidden" name="source_page" value="idaho-appliance-pickup">
+<input type="hidden" name="service" value="General major appliance pickup">
+<div class="site-request-grid">
+<div class="site-request-field"><label>Full Name<input type="text" name="name" required autocomplete="name"></label></div>
+<div class="site-request-field"><label>Phone<input type="tel" name="phone" required autocomplete="tel"></label></div>
+<div class="site-request-field"><label>Email<input type="email" name="email" autocomplete="email"></label></div>
+<div class="site-request-field"><label>Street Address<input type="text" name="address" required autocomplete="street-address"></label></div>
+<div class="site-request-field"><label>City<input type="text" name="city" required autocomplete="address-level2"></label></div>
+<div class="site-request-field"><label>ZIP Code<input type="text" name="zip" required autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" title="Enter your five-digit ZIP code"></label></div>
+<div class="site-request-field"><label>Appliance Type<select name="appliance" required><option value="">Select appliance</option><option>Refrigerator</option><option>Washer</option><option>Dryer</option><option>Washer &amp; Dryer Set</option><option>Stove / Range</option><option>Oven</option><option>Freezer</option><option>Dishwasher with qualifying appliances</option><option>Multiple Appliances</option><option>Other Major Appliance</option></select></label></div>
+<div class="site-request-field"><label>Condition<select name="condition" required><option value="">Select condition</option><option>Fully working</option><option>Needs minor repair</option><option>Not working</option><option>Unknown</option><option>Mixed load - majority working</option></select></label></div>
+<div class="site-request-field"><label>Location / Floor<select name="floor" required><option value="">Select location</option><option>1st floor</option><option>2nd floor</option><option>3rd floor or higher</option><option>Basement</option><option>Garage</option><option>Outside / Driveway</option><option>Other</option></select></label></div>
+<div class="site-request-field"><label>Stairs<select name="stairs" required><option value="">Select stairs</option><option>No stairs</option><option>1 flight</option><option>2 flights</option><option>3+ flights</option><option>Unknown</option></select></label></div>
+<div class="site-request-field full"><label>Can you provide current inside and outside appliance photos?<select name="photos_available" required><option value="">Select photo availability</option><option>Yes, I can send photos</option><option>I need help sending photos</option></select></label></div>
+<div class="site-request-field full"><label>Photo link (optional)<input type="url" name="photo_link" placeholder="https://..."></label><p class="site-request-note">Current appliance photos help confirm condition. If you cannot provide a link, choose the help option and we can explain how to send photos before pickup is confirmed.</p></div>
+<div class="site-request-field full"><label>Access Details<input type="text" name="access" placeholder="Gate, elevator, narrow hallway, parking, doorway, long carry, etc."></label></div>
+<div class="site-request-field full"><label>Appliance Details / Message<textarea name="message" rows="5" placeholder="List every appliance, whether each one works, brand/model if known, and whether photos are available."></textarea></label></div>
+<div class="site-request-field full"><button class="site-request-submit" type="submit">Request Free Appliance Pickup</button><p class="site-request-note">Sending a pickup request is free. Free pickup is not guaranteed until appliance condition, safe access and accepting local coverage are confirmed.</p></div>
+</div>
+</form>
+<div class="site-request-next-steps"><h3>What happens after you submit?</h3><div class="site-request-next-grid"><div><strong>1. Appliance review</strong><span>We check condition and photos.</span></div><div><strong>2. Access review</strong><span>We check stairs, parking and local availability.</span></div><div><strong>3. Pickup confirmation</strong><span>If eligible, we confirm by call or text.</span></div></div></div>
+</section>
+
 <section>
   <h2>Treasure Valley request area</h2>
   <p>Boise and the Treasure Valley are the priority region for Idaho requests. Common request areas include Boise, Meridian, Nampa, Caldwell, Eagle, Kuna and Star.</p>
@@ -108,31 +137,7 @@
     <li><a href="../old-appliance-disposal-options/">Explore disposal alternatives</a> when an appliance or location does not qualify.</li>
   </ul>
 </section>
-<section id="request" class="site-request-panel">
-<h2>Request Appliance Pickup</h2>
-<p class="site-request-intro">Submit the appliance condition, exact pickup location, stairs and access details. Free pickup is qualification-based and route availability must be confirmed.</p>
-<form action="https://formspree.io/f/mvzeapzd" method="POST">
-<input type="hidden" name="_subject" value="Idaho Appliance Pickup Request">
-<input type="hidden" name="state" value="Idaho">
-<input type="hidden" name="source_page" value="idaho-appliance-pickup">
-<input type="hidden" name="service" value="General major appliance pickup">
-<div class="site-request-grid">
-<div class="site-request-field"><label>Full Name<input type="text" name="name" required autocomplete="name"></label></div>
-<div class="site-request-field"><label>Phone<input type="tel" name="phone" required autocomplete="tel"></label></div>
-<div class="site-request-field"><label>Email<input type="email" name="email" autocomplete="email"></label></div>
-<div class="site-request-field"><label>Street Address<input type="text" name="address" required autocomplete="street-address"></label></div>
-<div class="site-request-field"><label>City<input type="text" name="city" required autocomplete="address-level2"></label></div>
-<div class="site-request-field"><label>ZIP Code<input type="text" name="zip" required autocomplete="postal-code" inputmode="numeric"></label></div>
-<div class="site-request-field"><label>Appliance Type<select name="appliance" required><option value="">Select appliance</option><option>Refrigerator</option><option>Washer</option><option>Dryer</option><option>Washer &amp; Dryer Set</option><option>Stove / Range</option><option>Oven</option><option>Freezer</option><option>Dishwasher with qualifying appliances</option><option>Multiple Appliances</option><option>Other Major Appliance</option></select></label></div>
-<div class="site-request-field"><label>Condition<select name="condition" required><option value="">Select condition</option><option>Fully working</option><option>Needs minor repair</option><option>Not working</option><option>Unknown</option><option>Mixed load - majority working</option></select></label></div>
-<div class="site-request-field"><label>Location / Floor<select name="floor" required><option value="">Select location</option><option>1st floor</option><option>2nd floor</option><option>3rd floor or higher</option><option>Basement</option><option>Garage</option><option>Outside / Driveway</option><option>Other</option></select></label></div>
-<div class="site-request-field"><label>Stairs<select name="stairs" required><option value="">Select stairs</option><option>No stairs</option><option>1 flight</option><option>2 flights</option><option>3+ flights</option><option>Unknown</option></select></label></div>
-<div class="site-request-field full"><label>Access Details<input type="text" name="access" placeholder="Gate, elevator, narrow hallway, parking, doorway, long carry, etc."></label></div>
-<div class="site-request-field full"><label>Appliance Details / Message<textarea name="message" rows="5" placeholder="List every appliance, whether each one works, brand/model if known, and whether photos are available."></textarea></label></div>
-<div class="site-request-field full"><button class="site-request-submit" type="submit">Submit Pickup Request</button><p class="site-request-note">Submitting a request does not guarantee free pickup. Eligibility and route availability must be confirmed.</p></div>
-</div>
-</form>
-</section>
+
 
 
 <section class="facebook-entity-bridge-20260928" style="background:#f4fbf6;border:1px solid #d7e5dc;border-radius:12px;padding:22px;margin:22px 0"><h2>Idaho Pickup Updates on Facebook</h2><p><strong>Free Appliance Pickup Across USA</strong> is our public Facebook page. We use it for appliance pickup and service-area updates that support the same Idaho service information published on this website.</p><p><a href="https://www.facebook.com/p/Free-Appliance-Pickup-Across-USA-61592285785763/" rel="me noopener"><strong>Visit Free Appliance Pickup Across USA on Facebook</strong></a></p></section>

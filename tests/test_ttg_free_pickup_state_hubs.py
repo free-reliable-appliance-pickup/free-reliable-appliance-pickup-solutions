@@ -100,5 +100,38 @@ class StateFreePickupHeadings(unittest.TestCase):
         self.assertIn("Free Reliable Appliance Pickup", html)
         self.assertIn("Free pickup is not guaranteed", html)
 
+
+    def test_eight_legacy_state_hubs_have_form_first_and_photo_questions(self):
+        """The eight older state hubs must show their existing request form above guides."""
+        state_names = ("florida", "georgia", "colorado", "idaho",
+                       "nevada", "new-mexico", "new-york", "utah")
+        for slug in state_names:
+            with self.subTest(state=slug):
+                html = (ROOT / f"{slug}-appliance-pickup/index.html").read_text(encoding="utf-8")
+                state_label = slug.replace("-", " ").title()
+                main = re.split(r"<main\b[^>]*>", html, maxsplit=1)[1]
+                first_section = re.search(r"<section\b[^>]*>", main)
+                self.assertIsNotNone(first_section)
+                self.assertIn('id="request"', first_section.group(0))
+                self.assertIn(f"<h2>Request Free Appliance Pickup in {state_label}</h2>", html)
+                self.assertEqual(len(re.findall(r"<form\b", html)), 1)
+                form = re.split(r"<form\b", html, maxsplit=1)[1].split("</form>", 1)[0]
+                self.assertIn('action="https://formspree.io/f/mvzeapzd"', form)
+                self.assertIn('data-photo-first-enhanced="1"', form)
+                for name in ("name", "phone", "address", "city", "zip",
+                             "appliance", "condition", "floor", "stairs",
+                             "photos_available"):
+                    field = re.search(r'<(?:input|select)\b[^>]*\bname="' + name + r'"[^>]*>', form)
+                    self.assertIsNotNone(field, name)
+                    self.assertIn("required", field.group(0), name)
+                self.assertIn('pattern="[0-9]{5}"', form)
+                self.assertIn('name="photo_link"', form)
+                self.assertIn(f'name="source_page" value="{slug}-appliance-pickup"', form)
+                self.assertIn('<div class="site-request-next-steps">', html)
+                self.assertLess(html.index("</form>"), html.index('class="site-request-next-steps"'))
+                self.assertIn('name="robots" content="index, follow', html)
+                self.assertIn("Free Reliable Appliance Pickup", html)
+                self.assertEqual(len(re.findall(r"<h1\b", html, re.I)), 1)
+
 if __name__ == "__main__":
     unittest.main()
