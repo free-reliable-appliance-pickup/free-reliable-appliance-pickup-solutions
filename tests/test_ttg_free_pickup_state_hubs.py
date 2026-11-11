@@ -44,5 +44,33 @@ class StateFreePickupHeadings(unittest.TestCase):
                 self.assertIn('content="noindex, follow"', html)
 
 
+    def test_california_request_form_is_first_and_photo_ready(self):
+        """Keep California's active statewide pickup form visible before long city guides."""
+        html = (ROOT / "california-appliance-pickup/index.html").read_text(encoding="utf-8")
+        main = html.split("<main>", 1)[1]
+        first_section = re.search(r"<section\b[^>]*>", main)
+        self.assertIsNotNone(first_section)
+        self.assertIn('id="request"', first_section.group(0))
+        self.assertEqual(html.count('<form '), 1)
+        self.assertIn("<h2>Request Free Appliance Pickup in California</h2>", html)
+        form = html.split("<form ", 1)[1].split("</form>", 1)[0]
+        self.assertIn('action="https://formspree.io/f/mvzeapzd"', form)
+        for name in ("name", "phone", "address", "city", "zip",
+                     "appliance", "condition", "floor", "stairs",
+                     "photos_available"):
+            field = re.search(r'<(?:input|select)\b[^>]*\bname="' + name + r'"[^>]*>', form)
+            self.assertIsNotNone(field, name)
+            self.assertIn("required", field.group(0), name)
+        self.assertIn('name="photo_link"', form)
+        self.assertIn('name="source_page" value="california-appliance-pickup"', form)
+        self.assertIn('name="state" value="California"', form)
+        self.assertIn('<div class="site-request-next-steps">', html)
+        self.assertLess(html.index("</form>"), html.index('class="site-request-next-steps"'))
+        self.assertIn('name="robots" content="index, follow', html)
+        self.assertIn("Free Reliable Appliance Pickup", html)
+        self.assertIn("Free pickup is not guaranteed", html)
+
+
+
 if __name__ == "__main__":
     unittest.main()
