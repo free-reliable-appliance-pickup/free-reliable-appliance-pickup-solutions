@@ -6,6 +6,7 @@ on:
       - '.github/workflows/vgm-browser-smoke.yml'
       - 'scripts/vgm_browser_smoke.py'
       - 'index.html'
+      - 'california-appliance-pickup/index.html'
       - 'los-angeles-appliance-pickup/index.html'
       - 'rancho-cucamonga-appliance-pickup/index.html'
       - 'fontana-appliance-pickup/index.html'

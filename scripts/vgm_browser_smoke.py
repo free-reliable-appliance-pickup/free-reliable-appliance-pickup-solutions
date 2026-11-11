@@ -14,6 +14,7 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = [
     ("/", "Home"),
+    ("/california-appliance-pickup/", "California statewide"),
     ("/los-angeles-appliance-pickup/", "Los Angeles"),
     ("/rancho-cucamonga-appliance-pickup/", "Rancho Cucamonga"),
     ("/fontana-appliance-pickup/", "Fontana"),
@@ -79,6 +80,29 @@ def run():
                                     raise AssertionError("pickup request form is missing")
                                 if not page.locator("form[action*='formspree.io']").count():
                                     raise AssertionError("no Formspree form action found")
+
+                                if path == "/california-appliance-pickup/":
+                                    if page.locator("main > section").first.get_attribute("id") != "request":
+                                        raise AssertionError("California statewide form is not first")
+                                    form = page.locator("#request form")
+                                    if form.count() != 1:
+                                        raise AssertionError("duplicate or missing California form")
+                                    for field_name in ("name", "phone", "address", "city", "zip",
+                                                       "appliance", "condition", "floor", "stairs",
+                                                       "photos_available"):
+                                        field = form.locator('[name="' + field_name + '"]')
+                                        if field.count() != 1 or field.get_attribute("required") is None:
+                                            raise AssertionError("California form field missing: " + field_name)
+                                    if form.locator('select[name="photos_available"]').count() != 1:
+                                        raise AssertionError("California photo availability selector missing")
+                                    if page.locator("#request .site-request-next-steps").count() != 1:
+                                        raise AssertionError("California next steps missing or duplicated")
+                                    if page.locator("#request .site-photo-first-intake").count():
+                                        raise AssertionError("Photo panel inserted ahead of California fields")
+                                    page.locator("#request input[name=city]").fill("Rancho Cucamonga")
+                                    if form.locator('[name="city"]').input_value() != "Rancho Cucamonga":
+                                        raise AssertionError("California customer city cannot be entered")
+                                    print("PASS California statewide form first on", viewport_name)
                                 # Decode the hero appliance photo (which may precede <main>), not only its HTML src.
                                 # This detects missing, corrupt or unreachable local image files.
                                 hero_image = page.locator(".site-hero-art img, main img").first
