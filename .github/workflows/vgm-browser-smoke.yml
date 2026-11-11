@@ -50,6 +50,10 @@ jobs:
       - name: Install free Playwright browser test tool
         run: |
           python -m pip install playwright==1.57.0
-          python -m playwright install --with-deps chromium
+          # Hosted Ubuntu already includes browser system libraries; do not run
+          # Playwright's apt-get --with-deps step on every PR. The Ubuntu
+          # mirror DNS outage prevented browser tests from even starting.
+          # The actual Chromium launch below still fails if libraries are absent.
+          python -m playwright install chromium
       - name: Test priority pages and forms on desktop and mobile
         run: python scripts/vgm_browser_smoke.py
