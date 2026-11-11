@@ -54,7 +54,7 @@ class IllinoisCategoryPages(unittest.TestCase):
 
     def test_stove_fuel_and_connection_intake(self):
         """Require fuel and connection status for all Illinois stove requests."""
-        for city in (*CITIES[:2], "chicago", *CITIES[2:]):
+        for city in sorted(path.removesuffix("-il-stove-oven-pickup/index.html") for path in self.pages if path.endswith("-il-stove-oven-pickup/index.html")):
             slug = f"{city}-il-stove-oven-pickup"
             html = (ROOT / slug / "index.html").read_text(encoding="utf-8")
             parser = Extract()
@@ -91,8 +91,11 @@ class IllinoisCategoryPages(unittest.TestCase):
 
 
     def test_category_hero_assets(self):
-        """Prevent broken image paths in all 44 new category pages."""
-        for city in CITIES:
+        """Prevent broken category image paths across all 50 city groups."""
+        cities = sorted(path.removesuffix("-il-appliance-pickup/index.html")
+                        for path in self.pages
+                        if path.endswith("-il-appliance-pickup/index.html"))
+        for city in cities:
             for category in CATEGORIES:
                 slug = f"{city}-il-{category}-pickup"
                 with self.subTest(slug=slug):
