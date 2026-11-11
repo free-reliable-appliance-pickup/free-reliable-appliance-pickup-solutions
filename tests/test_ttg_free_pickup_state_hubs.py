@@ -77,7 +77,7 @@ class StateFreePickupHeadings(unittest.TestCase):
         """Preserve Oregon's statewide one-form, real-city intake above local guides."""
         html = (ROOT / "oregon-appliance-pickup/index.html").read_text(encoding="utf-8")
         main = html.split("<main>", 1)[1]
-        first_section = re.search(r"<section\\b[^>]*>", main)
+        first_section = re.search(r"<section\b[^>]*>", main)
         self.assertIsNotNone(first_section)
         self.assertIn('id="request"', first_section.group(0))
         self.assertEqual(html.count('<form '), 1)
@@ -87,7 +87,7 @@ class StateFreePickupHeadings(unittest.TestCase):
         self.assertIn('data-photo-first-enhanced="1"', form)
         for name in ("name", "phone", "address", "city", "zip",
                      "appliance", "condition", "floor", "stairs", "photos_available"):
-            field = re.search(r'<(?:input|select)\\b[^>]*\\bname="' + name + r'"[^>]*>', form)
+            field = re.search(r'<(?:input|select)\b[^>]*\bname="' + name + r'"[^>]*>', form)
             self.assertIsNotNone(field, name)
             self.assertIn("required", field.group(0), name)
         self.assertIn('pattern="[0-9]{5}"', form)
