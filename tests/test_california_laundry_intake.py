@@ -45,8 +45,8 @@ class CaliforniaLaundryIntakeTests(unittest.TestCase):
     def test_rancho_laundry_uses_single_shared_city_intake(self):
         laundry = (ROOT / "rancho-cucamonga-washer-dryer-pickup/index.html").read_text(encoding="utf-8")
         city = (ROOT / "rancho-cucamonga-appliance-pickup/index.html").read_text(encoding="utf-8")
-        self.assertEqual(len(re.findall(r"<form\\b", laundry, re.I)), 0)
-        self.assertEqual(len(re.findall(r"<form\\b", city, re.I)), 1)
+        self.assertEqual(len(re.findall(r"<form\b", laundry, re.I)), 0)
+        self.assertEqual(len(re.findall(r"<form\b", city, re.I)), 1)
         self.assertIn('href="/rancho-cucamonga-appliance-pickup/#request"', laundry)
         self.assertIn('name="washer_test"', city)
         self.assertIn('name="dryer_test"', city)
