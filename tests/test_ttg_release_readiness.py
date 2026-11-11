@@ -11,10 +11,10 @@ class OperationalGate(unittest.TestCase):
     """The technical stage can pass while operational launch stays blocked."""
 
     def test_real_il_staging_stays_request_only(self):
-        """Current 61 live-stage pages do not imply an accepting local operator."""
+        """Current 251 staged pages do not imply an accepting local operator."""
         result = assess("IL")
-        self.assertEqual(result["pages"], 61)
-        self.assertEqual(len(result["cities"]), 12)
+        self.assertEqual(result["pages"], 251)
+        self.assertEqual(len(result["cities"]), 50)
         self.assertTrue(result["request_only_safe"], result["technical_errors"])
         self.assertFalse(result["operational_prerequisites_recorded"])
         self.assertFalse(result["index_activation_authorized"])
