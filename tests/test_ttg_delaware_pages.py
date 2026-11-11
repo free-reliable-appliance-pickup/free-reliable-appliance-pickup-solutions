@@ -55,7 +55,7 @@ class DelawareGoldTests(unittest.TestCase):
   """Prevent the statewide form from silently supplying Delaware as a customer city."""
   html=(ROOT/"delaware-appliance-pickup/index.html").read_text(encoding="utf-8")
   form=html.split("<form",1)[1].split("</form>",1)[0]
-  field=re.search(r'<input\\b[^>]*\\bname="city"[^>]*>',form)
+  field=re.search(r'<input\b[^>]*\bname="city"[^>]*>',form)
   self.assertIsNotNone(field)
   self.assertIn('required',field.group())
   self.assertIn('placeholder="Enter actual pickup city or town"',field.group())
