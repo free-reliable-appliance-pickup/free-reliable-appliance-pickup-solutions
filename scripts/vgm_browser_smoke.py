@@ -18,6 +18,8 @@ PAGES = [
     ("/los-angeles-appliance-pickup/", "Los Angeles"),
     ("/rancho-cucamonga-appliance-pickup/", "Rancho Cucamonga"),
     ("/rancho-cucamonga-washer-dryer-pickup/", "Rancho Cucamonga washer/dryer"),
+    ("/corona-appliance-pickup/", "Corona general pickup"),
+    ("/corona-washer-dryer-pickup/", "Corona washer/dryer"),
     ("/fontana-appliance-pickup/", "Fontana"),
     ("/san-fernando-appliance-pickup/", "San Fernando"),
     ("/van-nuys-appliance-pickup/", "Van Nuys"),
@@ -174,6 +176,28 @@ def run():
                                 quote_choice.select_option("free_only")
                                 if quote_choice.input_value() != "free_only":
                                     raise AssertionError("free-only preference did not persist")
+                                # Corona's two real-lead pages require an exact pickup address
+                                # and only one genuine appliance photo alongside the business logo.
+                                if path in ("/corona-appliance-pickup/",
+                                            "/corona-washer-dryer-pickup/"):
+                                    if page.locator("img").count() != 2:
+                                        raise AssertionError(
+                                            "Corona page must have one appliance image plus logo"
+                                        )
+                                    if page.locator(
+                                        '#request form input[name="address"][required]'
+                                    ).count() != 1:
+                                        raise AssertionError(
+                                            "Corona street address is not required for route review"
+                                        )
+                                    if page.locator(
+                                        'a[href="tel:+19093756685"]'
+                                    ).count() == 0:
+                                        raise AssertionError("Corona 909 call link is missing")
+                                    if page.locator('link[rel="canonical"]').get_attribute(
+                                        "href"
+                                    ) != ("https://freereliableappliancepickup.com" + path):
+                                        raise AssertionError("Corona self-canonical is incorrect")
                                 # We deliberately do not submit any form or use customer data.
                                 if path == "/":
                                     zip_input = page.locator("#hero-zip")
