@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-24",
+  "updated": "2026-11-03",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,40 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-03-salem-stove-useful-information",
+      "market": "Salem, OR",
+      "hypothesis": "Replacing generic stove-only repetition with a practical, original Salem stove/range condition-and-access checklist will improve the relevance of the existing stove page for qualifying free stove pickup and stove removal searches while preserving Salem general-page ownership.",
+      "pagesChanged": [
+        "/salem-stove-pickup/"
+      ],
+      "protectedOwner": "/salem-stove-pickup/",
+      "lastChanged": "2026-11-03",
+      "baselinePeriod": {
+        "start": "2026-10-30",
+        "end": "2026-11-01"
+      },
+      "baseline": {
+        "freeGscThreeDayWindow": {
+          "reportedPageRows": 0,
+          "note": "No rows returned in this limited view; this does not establish not indexed or a zero for any longer period"
+        },
+        "sourceAudit": {
+          "contentSimilarityToSalemLaundry": "about 45% shared eight-word sequences after excluding common navigation/forms/scripts; experimental audit, not Google's duplication metric",
+          "preChangeVisibleWordCountApprox": 460
+        }
+      },
+      "change": "One existing text section expanded to describe stove/range type, known condition, photographs, access and utility safety; existing hero image retained. All form fields, hours, phone, page title, description, structured data and canonical unchanged.",
+      "successSignals": [
+        "After 14 complete days of settled post-deployment Search Console data, compare impressions and query relevance for free stove pickup Salem, stove removal Salem OR, and similar local queries against equivalent pre-deployment days if accessible.",
+        "The Salem general pickup page remains the primary owner for broad appliance pickup terms, with no relevant loss of clicks or impressions.",
+        "No unrelated claim of local completed jobs, guaranteed removal or unsafe gas disconnection is introduced."
+      ],
+      "evaluateNotBefore": "2026-11-20",
+      "preferredReview": "2026-11-24",
+      "status": "running",
+      "freezeRule": "Do not make another speculative SEO copy, title or schema change to /salem-stove-pickup/ during the observation window. If deployment occurs later than 2026-11-03, reset review dates from deployment before merge."
+    },
     {
       "id": "2026-10-03-el-monte-city-parity",
       "market": "El Monte, CA",
