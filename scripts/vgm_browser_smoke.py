@@ -34,6 +34,7 @@ PAGES = [
     ("/garden-grove-appliance-pickup/", "Garden Grove"),
     ("/fullerton-appliance-pickup/", "Fullerton"),
     ("/fresno-appliance-pickup/", "Fresno"),
+    ("/fresno-washer-dryer-pickup/", "Fresno washer & dryer"),
     ("/portland-appliance-pickup/", "Portland"),
     ("/salem-appliance-pickup/", "Salem"),
     ("/columbus-appliance-pickup/", "columbus appliance pickup"),
