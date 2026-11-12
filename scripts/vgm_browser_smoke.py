@@ -17,6 +17,7 @@ PAGES = [
     ("/california-appliance-pickup/", "California statewide"),
     ("/los-angeles-appliance-pickup/", "Los Angeles"),
     ("/rancho-cucamonga-appliance-pickup/", "Rancho Cucamonga"),
+    ("/rancho-cucamonga-washer-dryer-pickup/", "Rancho Cucamonga washer/dryer"),
     ("/fontana-appliance-pickup/", "Fontana"),
     ("/san-fernando-appliance-pickup/", "San Fernando"),
     ("/van-nuys-appliance-pickup/", "Van Nuys"),
@@ -75,6 +76,50 @@ def run():
                                 if response is None or response.status != 200:
                                     raise AssertionError("page did not return HTTP 200")
                                 page.locator("h1").first.wait_for(state="visible", timeout=15000)
+                                # Specialist Rancho laundry page intentionally links to the city's shared
+                                # Formspree intake rather than embedding another form. Follow the actual
+                                # desktop/mobile CTA; never submit a lead or alter production content.
+                                if path == "/rancho-cucamonga-washer-dryer-pickup/":
+                                    canonical = page.locator('link[rel="canonical"]')
+                                    expected = "https://freereliableappliancepickup.com" + path
+                                    if canonical.count() != 1 or canonical.get_attribute("href") != expected:
+                                        raise AssertionError("specialist self-canonical is incorrect")
+                                    robots = page.locator('meta[name="robots"]')
+                                    if robots.count() != 1 or "index" not in (
+                                        robots.get_attribute("content") or ""
+                                    ).split(",")[0].strip():
+                                        raise AssertionError("specialist index directive is missing")
+                                    appliance_image = page.locator("img:not(.site-brand-logo)")
+                                    if appliance_image.count() != 1:
+                                        raise AssertionError("specialist should display exactly one appliance photo")
+                                    appliance_image.scroll_into_view_if_needed(timeout=10000)
+                                    photo_width = appliance_image.evaluate(
+                                        "(img) => img.decode().then(() => img.naturalWidth).catch(() => 0)"
+                                    )
+                                    if photo_width < 100:
+                                        raise AssertionError("specialist real appliance photo cannot decode")
+                                    if page.locator('a[href="tel:+19093756685"]').count() == 0:
+                                        raise AssertionError("Rancho laundry 909 phone link is missing")
+                                    cta = page.locator(
+                                        'a.btn[href="/rancho-cucamonga-appliance-pickup/#request"]'
+                                    ).first
+                                    if cta.count() == 0:
+                                        raise AssertionError("laundry-to-city request CTA is missing")
+                                    cta.click(timeout=15000)
+                                    page.locator("#request form[action*='formspree.io']").wait_for(
+                                        state="attached", timeout=15000
+                                    )
+                                    if not page.url.endswith("/rancho-cucamonga-appliance-pickup/#request"):
+                                        raise AssertionError("CTA did not navigate to city request anchor")
+                                    options = page.locator('#request select[name="appliance"] option')
+                                    values = [label.strip() for label in options.all_text_contents()]
+                                    if not all(value in values for value in
+                                               ("Washer", "Dryer", "Washer and Dryer")):
+                                        raise AssertionError("shared form lost washer/dryer selections")
+                                    checks += 1
+                                    print("PASS:", label, viewport_name,
+                                          "canonical, one photo, 909 phone, live CTA-to-city-form navigation")
+                                    continue
                                 if page.locator("#request").count() == 0:
                                     raise AssertionError("pickup request target #request is missing")
                                 if page.locator("#request form").count() == 0:
