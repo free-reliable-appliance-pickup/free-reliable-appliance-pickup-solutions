@@ -105,7 +105,7 @@ def run():
                                     print("PASS California statewide form first on", viewport_name)
                                 # Decode the hero appliance photo (which may precede <main>), not only its HTML src.
                                 # This detects missing, corrupt or unreachable local image files.
-                                hero_image = page.locator(".site-hero-art img, main img").first
+                                hero_image = page.locator(".site-hero-art img, .hero .hero-in > img, main img").first
                                 if hero_image.count() == 0:
                                     raise AssertionError("no main appliance image found")
                                 hero_image.scroll_into_view_if_needed(timeout=10000)
