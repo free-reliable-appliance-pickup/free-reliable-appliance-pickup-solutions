@@ -136,9 +136,8 @@ function enhanceWasherDryerPhotos(){
   const hero=document.querySelector('.site-hero-art img');
   if(!hero)return;
   const current=String(hero.getAttribute('src')||'');
-  if(current.includes('/assets/laundry/original-user-heroes/') ||
-     hero.dataset.userProvidedHero==='1' ||
-     current.includes('exact-user-hero='))return;
+  // Preserve audited HTML hero photos; fall back only if src is missing.
+  if(current.trim())return;
   const src=siteUrl('assets/laundry/'+config.hero);
   hero.src=src+(src.includes('?')?'&':'?')+'premium-set=20260916';
   hero.alt=config.alt;
