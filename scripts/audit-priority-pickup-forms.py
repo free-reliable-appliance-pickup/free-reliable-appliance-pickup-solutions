@@ -903,6 +903,9 @@ encinitas vista poway del-mar
 oakland richmond san-francisco palm-springs
 """.split()
 
+# Native HTML validation requires a standalone required attribute, not aria-required.
+FASTTRACK3_NATIVE_REQUIRED = re.compile(r"(?<=\s)required(?=[\s=/>])", re.I)
+
 for city in FASTTRACK3_ACCESS_CITIES:
     slug = f"{city}-appliance-pickup"
     path = Path(slug) / "index.html"
@@ -912,21 +915,25 @@ for city in FASTTRACK3_ACCESS_CITIES:
     source = path.read_text(encoding="utf-8", errors="replace")
     forms = [
         f for f in re.findall(r"<form\b[^>]*>.*?</form>", source, re.I | re.S)
-        if "formspree.io/f/mvzeapzd" in f
+        if re.search(r'\saction="https://formspree\.io/f/mvzeapzd"(?=\s|$)', f.split(">", 1)[0], re.I)
     ]
     if len(forms) != 1:
         errors.append(f"{slug}: expected exactly one customer intake form")
         continue
     form = forms[0]
     for field in ("location", "stairs"):
-        if len(re.findall(rf'\bname="{field}"', form)) != 1 or not select_ok(form, field):
+        select_tag = re.search(rf'<select\b[^>]*\bname="{field}"[^>]*>', form, re.I)
+        if (len(re.findall(rf'\bname="{field}"', form)) != 1
+                or not select_ok(form, field)
+                or not select_tag
+                or not FASTTRACK3_NATIVE_REQUIRED.search(select_tag.group(0))):
             errors.append(f"{slug}: {field} must be a unique, blank-first required dropdown")
     for field in ("phone", "address", "appliance", "condition"):
         tags = re.findall(
             rf'<(?:input|select|textarea)\b[^>]*\bname="{field}"[^>]*>',
             form, re.I
         )
-        if len(tags) != 1 or not re.search(r"\brequired\b", tags[0], re.I):
+        if len(tags) != 1 or not FASTTRACK3_NATIVE_REQUIRED.search(tags[0]):
             errors.append(f"{slug}: {field} must remain uniquely required")
     if form.count('name="source_page"') != 1:
         errors.append(f"{slug}: missing or duplicated request source attribution")
