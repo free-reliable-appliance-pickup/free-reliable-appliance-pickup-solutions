@@ -801,6 +801,47 @@ for city in CALIFORNIA_FASTTRACK_LAUNDRY:
         errors.append(f"{slug}: invalid nested/unbalanced form labels")
 print("CALIFORNIA_FASTTRACK_LAUNDRY_CHECKED", len(CALIFORNIA_FASTTRACK_LAUNDRY))
 
+# FastTrack 3.0: regional request intake must preserve address, access and photo readiness.
+FASTTRACK_REGIONAL_HUB_INTAKE = {
+    "inland-empire-appliance-pickup": "location",
+    "san-bernardino-county-appliance-pickup": "location",
+    "riverside-county-appliance-pickup": "location",
+    "southern-california-washer-dryer-pickup": "access",
+    "california-washer-dryer-pickup": "access",
+    "san-bernardino-county-washer-dryer-pickup": "access_level",
+}
+for slug, access_field in FASTTRACK_REGIONAL_HUB_INTAKE.items():
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing regional request page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    forms = [v for v in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+             if 'formspree.io/f/mvzeapzd' in v]
+    if len(forms) != 1:
+        errors.append(f"{slug}: missing/duplicated regional Formspree form")
+        continue
+    form = forms[0]
+    required = ("name", "phone", "address", "city", "zip", "appliance",
+                "condition", access_field, "stairs", "photos_available")
+    for field in required:
+        tags = re.findall(rf'<(?:input|select|textarea)\b[^>]*\bname="{re.escape(field)}"[^>]*>', form, re.I)
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: missing or optional required {field}")
+    for field in ("appliance", "condition", access_field, "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: invalid blank-first required {field} selector")
+    for field in ("source_page", "service"):
+        if form.count(f'name="{field}"') != 1:
+            errors.append(f"{slug}: missing or duplicated static {field}")
+    if f'name="source_page" value="{slug}"' not in form:
+        errors.append(f"{slug}: wrong pickup source")
+    label_audit = LabelAudit()
+    label_audit.feed(form)
+    if label_audit.depth or label_audit.errors:
+        errors.append(f"{slug}: unbalanced/nested form labels")
+print("FASTTRACK_REGIONAL_HUBS_CHECKED", len(FASTTRACK_REGIONAL_HUB_INTAKE))
+
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
 
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
