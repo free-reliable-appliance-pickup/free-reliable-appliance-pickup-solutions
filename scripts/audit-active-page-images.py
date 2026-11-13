@@ -62,6 +62,9 @@ IMAGE_LAYOUT_PRIORITY_SLUGS = {
 # Protect human-reviewed priority pages from returning to multi-photo layouts.
 # Other active pages are inventoried as review findings, not blocked yet.
 PROTECTED_SINGLE_CONTENT_PHOTO_PAGES = {
+    'westminster-ca-washer-dryer-pickup',
+    'bradbury-appliance-pickup',
+    'reviews',
     'city-of-industry-washer-dryer-pickup',
     'signal-hill-washer-dryer-pickup',
     'bell-gardens-washer-dryer-pickup',
