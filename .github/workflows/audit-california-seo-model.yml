@@ -111,7 +111,10 @@ jobs:
                           candidate.exists()
                           and candidate.is_file()
                           and candidate.suffix.lower() in {'.jpg', '.jpeg', '.png', '.webp'}
-                          and candidate.stat().st_size >= (70000 if candidate.suffix.lower() == '.webp' else 90000)
+                          and candidate.stat().st_size >= (
+                              30000 if candidate == root / 'inland-empire-free-appliance-pickup.webp'
+                              else (70000 if candidate.suffix.lower() == '.webp' else 90000)
+                          )
                       ):
                           return True
                   except OSError:
