@@ -901,6 +901,7 @@ inglewood lawndale manhattan-beach redondo-beach signal-hill
 chula-vista national-city la-mesa santee escondido oceanside carlsbad
 encinitas vista poway del-mar
 oakland richmond san-francisco palm-springs
+artesia bell cudahy hawaiian-gardens la-palma los-alamitos maywood
 """.split()
 
 # Native HTML validation requires a standalone required attribute, not aria-required.
@@ -937,6 +938,31 @@ for city in FASTTRACK3_ACCESS_CITIES:
             errors.append(f"{slug}: {field} must remain uniquely required")
     if form.count('name="source_page"') != 1:
         errors.append(f"{slug}: missing or duplicated request source attribution")
+
+# These additional southeast LA city pages newly collect photo availability.
+FASTTRACK3_PHOTO_RESPONSE_CITIES = """artesia bell cudahy hawaiian-gardens
+la-palma los-alamitos maywood""".split()
+for city in FASTTRACK3_PHOTO_RESPONSE_CITIES:
+    slug = f"{city}-appliance-pickup"
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing photo-response request page")
+        continue
+    source = path.read_text(encoding="utf-8", errors="replace")
+    form_matches = [
+        f for f in re.findall(r"<form\b[^>]*>.*?</form>", source, re.I | re.S)
+        if re.search(r'\saction="https://formspree\.io/f/mvzeapzd"(?=\s|$)', f.split(">", 1)[0], re.I)
+    ]
+    if len(form_matches) != 1:
+        errors.append(f"{slug}: expected one exact-action request form")
+        continue
+    form = form_matches[0]
+    field = "photos_available"
+    tags = re.findall(rf'<select\b[^>]*\bname="{field}"[^>]*>', form, re.I)
+    if len(tags) != 1 or not FASTTRACK3_NATIVE_REQUIRED.search(tags[0]) or not select_ok(form, field):
+        errors.append(f"{slug}: photo availability must be a native-required, blank-first dropdown")
+print("FASTTRACK3_SE_LA_PHOTO_FORMS_CHECKED", len(FASTTRACK3_PHOTO_RESPONSE_CITIES))
+
 print("FASTTRACK3_REQUIRED_ACCESS_FORMS_CHECKED", len(FASTTRACK3_ACCESS_CITIES))
 
 
