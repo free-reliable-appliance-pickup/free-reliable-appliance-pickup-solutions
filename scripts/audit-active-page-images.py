@@ -475,8 +475,8 @@ def main():
             problems.append(
                 f'Rancho city page should use exactly one non-logo appliance photo, found {len(content_images)}'
             )
-        elif content_images[0]['src'] != '/assets/rancho-cucamonga/rancho-cucamonga-multi-appliance-group.webp':
-            problems.append('Rancho city page hero is not the verified multi-appliance group photo')
+        elif content_images[0]['src'] != '/assets/rancho-cucamonga/rancho-cucamonga-six-appliance-garage.webp':
+            problems.append('Rancho city page hero is not the verified six-appliance garage photo')
         elif not all(term in content_images[0].get('alt', '').lower() for term in ('washer', 'dryer', 'refrigerator')):
             problems.append('Rancho city page hero alt text must accurately describe the multi-appliance group')
         for invalid_src in ('/assets/california/real-appliances/real-refrigerator.jpg',
