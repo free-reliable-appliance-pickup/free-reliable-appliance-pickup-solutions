@@ -659,7 +659,7 @@ for slug in GENERAL_FORM_ATTRIBUTION:
             errors.append(f"{slug}: missing, duplicated, or wrong static {field}")
 print("GENERAL_FORM_ATTRIBUTION_CHECKED", len(GENERAL_FORM_ATTRIBUTION))
 
-# FastTrack 3.0: protect first-contact access facts across nine priority markets.
+# FastTrack 3.0: protect first-contact access facts across eleven priority markets.
 # Static source checks only: never submit customer information.
 FASTTRACK_REQUIRED_ACCESS = {
     "rancho-cucamonga-appliance-pickup": "location",
@@ -671,6 +671,8 @@ FASTTRACK_REQUIRED_ACCESS = {
     "orange-county-appliance-pickup": "location",
     "los-angeles-appliance-pickup": "floor",
     "vancouver-appliance-pickup": "floor",
+    "portland-appliance-pickup": "location",
+    "los-angeles-county-appliance-pickup": "location",
 }
 for slug, location_field in FASTTRACK_REQUIRED_ACCESS.items():
     path = Path(slug) / "index.html"
