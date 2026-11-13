@@ -659,8 +659,8 @@ for slug in GENERAL_FORM_ATTRIBUTION:
             errors.append(f"{slug}: missing, duplicated, or wrong static {field}")
 print("GENERAL_FORM_ATTRIBUTION_CHECKED", len(GENERAL_FORM_ATTRIBUTION))
 
-# FastTrack 3.0: protect required first-contact pickup facts on priority owner pages.
-# This checks source HTML only and never sends a request or exposes customer data.
+# FastTrack 3.0: protect first-contact access facts across nine priority markets.
+# Static source checks only: never submit customer information.
 FASTTRACK_REQUIRED_ACCESS = {
     "rancho-cucamonga-appliance-pickup": "location",
     "fontana-appliance-pickup": "location",
@@ -673,27 +673,26 @@ FASTTRACK_REQUIRED_ACCESS = {
     "vancouver-appliance-pickup": "floor",
 }
 for slug, location_field in FASTTRACK_REQUIRED_ACCESS.items():
-    p = Path(slug) / "index.html"
-    if not p.is_file():
-        errors.append(f"{slug}: FastTrack owner page missing")
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing FastTrack owner page")
         continue
-    raw = p.read_text(encoding="utf-8", errors="replace")
-    intakes = [f for f in re.findall(r'<form\\b[^>]*>.*?</form>', raw, re.I | re.S)
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    intakes = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
                if 'action="https://formspree.io/f/mvzeapzd"' in f]
     if len(intakes) != 1:
-        errors.append(f"{slug}: expected one local Formspree intake")
+        errors.append(f"{slug}: expected exactly one Formspree intake")
         continue
     form = intakes[0]
     for field in ("name", "phone", "address", "stairs", "photos_available", location_field):
-        tags = re.findall(r'<(?:input|select|textarea)\\b[^>]*\\bname=["\\']' +
-                          re.escape(field) + r'["\\'][^>]*>', form, re.I)
-        if len(tags) != 1 or not re.search(r'\\brequired\\b', tags[0], re.I):
-            errors.append(f"{slug}: {field} must exist exactly once and be required")
+        tags = re.findall(rf'<(?:input|select|textarea)\b[^>]*\bname="{re.escape(field)}"[^>]*>', form, re.I)
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {field} must be present exactly once and required")
     for field in ("stairs", "photos_available", location_field):
         if not select_ok(form, field):
-            errors.append(f"{slug}: {field} needs a required blank-first dropdown")
+            errors.append(f"{slug}: {field} must have a required blank-first dropdown")
     if form.count('name="source_page"') != 1:
-        errors.append(f"{slug}: source_page attribution must be unique")
+        errors.append(f"{slug}: source_page attribution is not unique")
 print("FASTTRACK_REQUIRED_ACCESS_FORMS_CHECKED", len(FASTTRACK_REQUIRED_ACCESS))
 
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
