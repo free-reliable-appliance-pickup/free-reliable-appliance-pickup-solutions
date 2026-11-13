@@ -734,6 +734,38 @@ for slug, location_name in FASTTRACK_LAUNDRY_ACCESS.items():
         errors.append(f"{slug}: incorrect laundry source attribution")
 print("FASTTRACK_LAUNDRY_FORMS_CHECKED", len(FASTTRACK_LAUNDRY_ACCESS))
 
+# FastTrack 3.0: regional Washington intake quality regression guard.
+WASHINGTON_FASTTRACK_PHOTO_FORMS = {
+    "washington-washer-dryer-pickup": "location",
+    "puget-sound-washer-dryer-pickup": "location",
+    "puget-sound-appliance-pickup": "floor",
+}
+for slug, floor_name in WASHINGTON_FASTTRACK_PHOTO_FORMS.items():
+    file = Path(slug) / "index.html"
+    if not file.is_file():
+        errors.append(f"{slug}: Washington intake page missing")
+        continue
+    raw = file.read_text(encoding="utf-8", errors="replace")
+    forms = [v for v in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+             if "formspree.io/f/mvzeapzd" in v]
+    if len(forms) != 1:
+        errors.append(f"{slug}: missing or duplicated Formspree form")
+        continue
+    form = forms[0]
+    for field in ("name", "phone", "address", "city", "zip", "appliance", "condition", floor_name, "stairs", "photos_available"):
+        tags = re.findall(rf'<(?:input|select|textarea)\b[^>]*\bname="{re.escape(field)}"[^>]*>', form, re.I)
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {field} required input missing or duplicated")
+    for field in ("appliance", "condition", floor_name, "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: invalid required {field} dropdown")
+    for field in ("source_page", "service"):
+        if form.count(f'name="{field}"') != 1:
+            errors.append(f"{slug}: incorrect attribution for {field}")
+    if f'name="source_page" value="{slug}"' not in form:
+        errors.append(f"{slug}: wrong source page")
+print("WASHINGTON_FASTTRACK_PHOTO_FORMS_CHECKED", len(WASHINGTON_FASTTRACK_PHOTO_FORMS))
+
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
 
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
