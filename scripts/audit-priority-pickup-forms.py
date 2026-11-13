@@ -766,6 +766,41 @@ for slug, floor_name in WASHINGTON_FASTTRACK_PHOTO_FORMS.items():
         errors.append(f"{slug}: wrong source page")
 print("WASHINGTON_FASTTRACK_PHOTO_FORMS_CHECKED", len(WASHINGTON_FASTTRACK_PHOTO_FORMS))
 
+# FastTrack 3.0: validate existing California washer/dryer page intake.
+CALIFORNIA_FASTTRACK_LAUNDRY = (
+    "anaheim", "irvine", "pasadena", "pomona", "sacramento",
+    "san-bernardino", "corona", "san-diego", "stockton", "clovis",
+)
+for city in CALIFORNIA_FASTTRACK_LAUNDRY:
+    slug = f"{city}-washer-dryer-pickup"
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing California laundry page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    forms = [x for x in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+             if "formspree.io/f/mvzeapzd" in x]
+    if len(forms) != 1:
+        errors.append(f"{slug}: missing or duplicated laundry form")
+        continue
+    form = forms[0]
+    for field in ("name", "phone", "address", "zip", "appliance", "condition", "location", "stairs", "photos_available"):
+        tags = re.findall(rf'<(?:input|select|textarea)\b[^>]*\bname="{re.escape(field)}"[^>]*>', form, re.I)
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: missing or optional {field}")
+    for field in ("appliance", "condition", "location", "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: invalid required {field} choice")
+    if form.count('name="source_page"') != 1 or f'name="source_page" value="{slug}"' not in form:
+        errors.append(f"{slug}: missing source attribution")
+    if form.count('name="service"') != 1:
+        errors.append(f"{slug}: missing service classification")
+    labels = LabelAudit()
+    labels.feed(form)
+    if labels.depth or labels.errors:
+        errors.append(f"{slug}: invalid nested/unbalanced form labels")
+print("CALIFORNIA_FASTTRACK_LAUNDRY_CHECKED", len(CALIFORNIA_FASTTRACK_LAUNDRY))
+
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
 
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
