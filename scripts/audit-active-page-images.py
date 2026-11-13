@@ -62,6 +62,23 @@ IMAGE_LAYOUT_PRIORITY_SLUGS = {
 # Protect human-reviewed priority pages from returning to multi-photo layouts.
 # Other active pages are inventoried as review findings, not blocked yet.
 PROTECTED_SINGLE_CONTENT_PHOTO_PAGES = {
+    'diamond-bar-appliance-pickup',
+    'la-puente-appliance-pickup',
+    'walnut-appliance-pickup',
+    'hacienda-heights-appliance-pickup',
+    'south-san-jose-hills-appliance-pickup',
+    'avocado-heights-appliance-pickup',
+    'rowland-heights-appliance-pickup',
+    'san-fernando-appliance-pickup',
+    'burbank-appliance-pickup',
+    'glendale-appliance-pickup',
+    'san-diego-appliance-pickup',
+    'oxnard-appliance-pickup',
+    'palm-springs-appliance-pickup',
+    'palm-desert-appliance-pickup',
+    'la-quinta-appliance-pickup',
+    'victorville-appliance-pickup',
+    'hesperia-appliance-pickup',
     'pico-rivera-appliance-pickup',
     'montebello-appliance-pickup',
     'la-crescenta-appliance-pickup',
