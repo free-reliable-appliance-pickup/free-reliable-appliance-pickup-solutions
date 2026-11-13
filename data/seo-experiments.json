@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-24",
+  "updated": "2026-11-12",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,61 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-12-rancho-laundry-exact-city-title",
+      "market": "Rancho Cucamonga, CA — washer & dryer",
+      "hypothesis": "Aligning the dedicated washer/dryer page's overly long title link with the page's clear H1 may help Google and local searchers recognize it as the appropriate result for the exact Rancho Cucamonga laundry-pickup query, without changing the general appliance page.",
+      "pagesChanged": [
+        "/rancho-cucamonga-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/rancho-cucamonga-washer-dryer-pickup/",
+      "ownerQuery": "free washer and dryer pickup rancho cucamonga",
+      "lastChanged": "2026-11-12",
+      "baselinePeriod": {
+        "start": "2026-10-14",
+        "end": "2026-11-10"
+      },
+      "baseline": {
+        "dataSource": "Connected first-party Google Search Console through Windsor.ai, Search Analytics query+page, US Google web search; 28-day source snapshot taken November 12, 2026",
+        "exactQuery": {
+          "dedicatedPage": {
+            "url": "/rancho-cucamonga-washer-dryer-pickup/",
+            "clicks": 0,
+            "impressions": 8,
+            "avgPosition": 14
+          },
+          "generalPage": {
+            "url": "/rancho-cucamonga-appliance-pickup/",
+            "clicks": 0,
+            "impressions": 17,
+            "avgPosition": 8.0588
+          }
+        },
+        "pageOverall": {
+          "dedicatedPage": {
+            "clicks": 0,
+            "impressions": 8,
+            "avgPosition": 14
+          },
+          "generalPage": {
+            "clicks": 4,
+            "impressions": 480,
+            "avgPosition": 11.1479
+          }
+        },
+        "caveat": "Google Search Console shows impressions and average position, not guaranteed rank for every searcher or real-time local-map placement; use finalized 14-28-day comparison."
+      },
+      "change": "One title-link variable: replace \"Free Washer & Dryer Pickup Rancho Cucamonga CA | Laundry Removal & Recycling\" with \"Free Washer & Dryer Pickup in Rancho Cucamonga, CA\" in the dedicated page's HTML title, matching Open Graph title and WebPage name. Do not change H1, body, description, canonical, indexing, image, request path or general city page.",
+      "successSignals": [
+        "Exact-city washer/dryer query increasingly surfaces the dedicated laundry URL, not only the general appliance page.",
+        "Dedicated washer/dryer page impressions, qualified organic clicks and average position improve against the 28-day baseline, while the general page keeps broad-appliance traffic.",
+        "No regression in customer form access, photo, city qualification or lead delivery."
+      ],
+      "evaluateNotBefore": "2026-11-29",
+      "preferredReview": "2026-12-03",
+      "status": "running",
+      "freezeRule": "After this one-variable title test, no speculative title, OG title, WebPage name, H1, body, internal-link, schema-intent or canonical changes to the dedicated page before November 29. Only verified technical, factual, contact, indexing, safety fixes are allowed and should be logged."
+    },
     {
       "id": "2026-10-03-el-monte-city-parity",
       "market": "El Monte, CA",
