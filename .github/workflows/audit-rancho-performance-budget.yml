@@ -71,8 +71,8 @@ jobs:
               size=p.stat().st_size
               rows.append((src,size,tag))
 
-          hero='/assets/rancho-cucamonga/rancho-cucamonga-multi-appliance-group.webp'
-          # One 143 KB optimized WebP serves all viewports; avoid a redundant mobile download.
+          hero='/assets/rancho-cucamonga/rancho-cucamonga-six-appliance-garage.webp'
+          # One 86 KB optimized WebP serves all viewports; avoid a redundant mobile download.
           mobile_hero=hero
           logo='/assets/brand/free-reliable-appliance-pickup-logo-236.webp'
           legacy_logo='/file_00000000b7c082308dccc73e5bd3acd2.png'
@@ -120,7 +120,7 @@ jobs:
               if 'width=' not in low or 'height=' not in low:
                   failures.append(f'image missing width/height: {src}')
 
-          hero_preload='<link rel="preload" as="image" href="/assets/rancho-cucamonga/rancho-cucamonga-multi-appliance-group.webp" type="image/webp" fetchpriority="high">'
+          hero_preload='<link rel="preload" as="image" href="/assets/rancho-cucamonga/rancho-cucamonga-six-appliance-garage.webp" type="image/webp" fetchpriority="high">'
           if hero_preload not in raw:
               failures.append('Rancho optimized WebP hero preload is missing')
 
