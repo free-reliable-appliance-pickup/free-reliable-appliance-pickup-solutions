@@ -79,8 +79,9 @@ def main():
     show("DUPLICATE_HTML_ATTRIBUTES", duplicate_attrs)
     show("DUPLICATE_HTML_IDS", duplicate_ids)
     show("BROKEN_SAME_PAGE_FRAGMENTS", missing_fragments)
-    # Informational only, including when issues are found; change review is separate.
     print("FASTTRACK_HTML_INTEGRITY_INVENTORY_COMPLETE")
+    if missing or duplicate_attrs or duplicate_ids or missing_fragments:
+        raise SystemExit("FASTTRACK_HTML_INTEGRITY_FAILED: fix HTML defects before merge")
 
 if __name__ == "__main__":
     main()
