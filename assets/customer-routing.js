@@ -136,9 +136,7 @@ function enhanceWasherDryerPhotos(){
   const hero=document.querySelector('.site-hero-art img');
   if(!hero)return;
   const current=String(hero.getAttribute('src')||'');
-  // An image explicitly chosen in page HTML is authoritative. Do not
-  // replace real city photos on DOMContentLoaded or window.load.
-  // Only use the configured fallback when the HTML hero has no src.
+  // Preserve audited HTML hero photos; fall back only if src is missing.
   if(current.trim())return;
   const src=siteUrl('assets/laundry/'+config.hero);
   hero.src=src+(src.includes('?')?'&':'?')+'premium-set=20260916';
