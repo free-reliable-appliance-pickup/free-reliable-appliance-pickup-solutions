@@ -842,6 +842,38 @@ for slug, access_field in FASTTRACK_REGIONAL_HUB_INTAKE.items():
         errors.append(f"{slug}: unbalanced/nested form labels")
 print("FASTTRACK_REGIONAL_HUBS_CHECKED", len(FASTTRACK_REGIONAL_HUB_INTAKE))
 
+# FastTrack: priority owner cities use visible, structured access and photo fields.
+FASTTRACK_OWNER_CITY_PHOTOS = {
+    "corona-appliance-pickup": "location",
+    "salem-appliance-pickup": "location",
+    "phoenix-appliance-pickup": "floor",
+    "sacramento-appliance-pickup": "location",
+}
+for slug, floor_field in FASTTRACK_OWNER_CITY_PHOTOS.items():
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing priority pickup page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    matches = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+               if 'formspree.io/f/mvzeapzd' in f]
+    if len(matches) != 1:
+        errors.append(f"{slug}: expected one customer request form")
+        continue
+    form = matches[0]
+    for field in ("name", "phone", "address", "zip", "appliance", "condition", floor_field, "stairs", "photos_available"):
+        tags = re.findall(rf'<(?:input|select|textarea)\b[^>]*\bname="{re.escape(field)}"[^>]*>', form, re.I)
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {field} must be required and unique")
+    for field in ("appliance", "condition", floor_field, "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: {field} dropdown must be blank-first and required")
+    if re.search(r'<details\b[^>]*>.*?name="photos_available"', form, re.I | re.S):
+        errors.append(f"{slug}: photo availability is incorrectly hidden in optional details")
+    if form.count('name="source_page"') != 1 or form.count('name="service"') != 1:
+        errors.append(f"{slug}: missing or duplicated routing fields")
+print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
+
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
 
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
