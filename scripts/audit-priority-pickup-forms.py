@@ -697,6 +697,43 @@ for slug, location_field in FASTTRACK_REQUIRED_ACCESS.items():
         errors.append(f"{slug}: source_page attribution is not unique")
 print("FASTTRACK_REQUIRED_ACCESS_FORMS_CHECKED", len(FASTTRACK_REQUIRED_ACCESS))
 
+# FastTrack 3.0: ensure washer/dryer pickup forms have first-contact access facts.
+# This reads static HTML only; it does not send a customer request.
+FASTTRACK_LAUNDRY_ACCESS = {
+    "fontana-washer-dryer-pickup": "location",
+    "upland-washer-dryer-pickup": "location",
+    "fresno-washer-dryer-pickup": "location",
+    "orange-county-washer-dryer-pickup": "access_level",
+    "portland-washer-dryer-pickup": "location",
+    "salem-washer-dryer-pickup": "location",
+    "phoenix-washer-dryer-pickup": "floor",
+}
+for slug, location_name in FASTTRACK_LAUNDRY_ACCESS.items():
+    path = Path(slug) / "index.html"
+    if not path.exists():
+        errors.append(f"{slug}: missing FastTrack laundry page")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    forms = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in f]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected exactly one laundry intake")
+        continue
+    form = forms[0]
+    for name in ("name", "phone", "address", "appliance", "condition", location_name, "stairs", "photos_available"):
+        tags = re.findall(rf'<(?:input|select|textarea)\b[^>]*\bname="{re.escape(name)}"[^>]*>', form, re.I)
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {name} must be required exactly once")
+    for name in ("appliance", "condition", location_name, "stairs", "photos_available"):
+        if not select_ok(form, name):
+            errors.append(f"{slug}: required dropdown {name} must have a blank first option")
+    for name in ("source_page", "service"):
+        if form.count(f'name="{name}"') != 1:
+            errors.append(f"{slug}: missing or duplicated {name} attribution")
+    if f'name="source_page" value="{slug}"' not in form:
+        errors.append(f"{slug}: incorrect laundry source attribution")
+print("FASTTRACK_LAUNDRY_FORMS_CHECKED", len(FASTTRACK_LAUNDRY_ACCESS))
+
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
 
 print("HIGH_DESERT_FORMS_CHECKED",len(HIGH_DESERT_FORMS))
