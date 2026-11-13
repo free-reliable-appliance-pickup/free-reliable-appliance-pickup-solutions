@@ -96,6 +96,18 @@ PROTECTED_SINGLE_CONTENT_PHOTO_PAGES = {
     'pasadena-appliance-pickup',
     'san-dimas-appliance-pickup',
     'west-covina-appliance-pickup',
+    'rosemead-appliance-pickup',
+    'el-monte-appliance-pickup',
+    'stockton-appliance-pickup',
+    'redlands-appliance-pickup',
+    'eastvale-appliance-pickup',
+    'tustin-appliance-pickup',
+    'rialto-appliance-pickup',
+    'whittier-appliance-pickup',
+    'pico-rivera-appliance-pickup',
+    'temple-city-appliance-pickup',
+    'walnut-appliance-pickup',
+    'diamond-bar-appliance-pickup',
 }
 
 class ImageRefs(HTMLParser):
