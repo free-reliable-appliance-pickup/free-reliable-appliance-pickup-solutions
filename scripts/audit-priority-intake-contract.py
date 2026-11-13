@@ -313,6 +313,10 @@ def main():
 
     pages = [("home", Path("index.html"))]
     pages.extend((f"{city}-appliance-pickup", Path(city + "-appliance-pickup") / "index.html") for city in CITIES)
+    # Scan every strict SGV/IE form, including cities outside the general CITIES tuple.
+    listed_cities = {f"{city}-appliance-pickup" for city in CITIES}
+    for slug in sorted(STRICT_SGV_IE_INTAKE - listed_cities):
+        pages.append((slug, Path(slug) / "index.html"))
     # Existing California regional hubs also use this request contract.
     for hub in ("inland-empire-appliance-pickup", "san-gabriel-valley-appliance-pickup"):
         pages.append((hub, Path(hub) / "index.html"))
