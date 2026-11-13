@@ -49,6 +49,16 @@ jobs:
               'fresno-appliance-pickup':'310-774-4304',
               'sacramento-appliance-pickup':'310-774-4304',
               'stockton-appliance-pickup':'310-774-4304',
+              'bell-gardens-appliance-pickup':'310-774-4304',
+              'bell-gardens-washer-dryer-pickup':'310-774-4304',
+              'commerce-appliance-pickup':'310-774-4304',
+              'commerce-washer-dryer-pickup':'310-774-4304',
+              'huntington-park-appliance-pickup':'310-774-4304',
+              'huntington-park-washer-dryer-pickup':'310-774-4304',
+              'south-gate-appliance-pickup':'310-774-4304',
+              'south-gate-washer-dryer-pickup':'310-774-4304',
+              'vernon-appliance-pickup':'310-774-4304',
+              'vernon-washer-dryer-pickup':'310-774-4304',
 
               # California 909 routing
               'rancho-cucamonga-appliance-pickup':'909-375-6685',
