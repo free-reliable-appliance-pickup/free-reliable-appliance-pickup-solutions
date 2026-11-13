@@ -63,6 +63,7 @@ IMAGE_LAYOUT_PRIORITY_SLUGS = {
 # Other active pages are inventoried as review findings, not blocked yet.
 PROTECTED_SINGLE_CONTENT_PHOTO_PAGES = {
     'anaheim-hills-washer-dryer-pickup',
+    'stockton-washer-dryer-pickup',
     'banning-washer-dryer-pickup',
     'beaumont-washer-dryer-pickup',
     'beaverton-appliance-pickup',
