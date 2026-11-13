@@ -255,7 +255,16 @@ def self_test():
     assert not inspect(ie_good, "colton-appliance-pickup"), "valid IE mobile fixture rejected"
     assert inspect(ie_good.replace('inputmode="numeric"', 'inputmode="text"'), "colton-appliance-pickup"), "bad IE ZIP keypad passed"
     assert inspect(ie_good.replace('autocomplete="tel"', 'autocomplete="off"'), "colton-appliance-pickup"), "bad IE phone autofill passed"
-    sgv_good = oc_good.replace("orange-appliance-pickup", "arcadia-appliance-pickup")
+    # Original mobile examples now also need valid mandatory SGV/IE access controls.
+    strict_extra = (
+        '<input name="address" required>'
+        '<select name="location" required><option value="">Choose floor</option></select>'
+        '<select name="stairs" required><option value="">Choose stairs</option></select>'
+        '<select name="photos_available" required><option value="">Choose photos</option></select>'
+    )
+    sgv_good = oc_good.replace("orange-appliance-pickup", "arcadia-appliance-pickup").replace(
+        '</form>', strict_extra + '</form>'
+    )
     assert not inspect(sgv_good, "arcadia-appliance-pickup"), "valid SGV mobile fixture rejected"
     assert inspect(sgv_good.replace('inputmode="tel"', 'inputmode="text"'), "arcadia-appliance-pickup"), "bad SGV phone keypad passed"
     assert inspect(sgv_good.replace('autocomplete="postal-code"', 'autocomplete="off"'), "arcadia-appliance-pickup"), "bad SGV ZIP autofill passed"
@@ -265,7 +274,9 @@ def self_test():
     ie5_good = oc_good.replace("orange-appliance-pickup", "fontana-appliance-pickup")
     assert not inspect(ie5_good, "fontana-appliance-pickup"), "valid CA telephone fixture rejected"
     assert inspect(ie5_good.replace('inputmode="tel"', 'inputmode="text"'), "fontana-appliance-pickup"), "missing CA phone keypad passed"
-    ie6_good = oc_good.replace("orange-appliance-pickup", "chino-appliance-pickup")
+    ie6_good = oc_good.replace("orange-appliance-pickup", "chino-appliance-pickup").replace(
+        '</form>', strict_extra + '</form>'
+    )
     assert not inspect(ie6_good, "chino-appliance-pickup"), "valid Chino mobile fixture rejected"
     assert inspect(ie6_good.replace('inputmode="tel"', 'inputmode="text"'), "chino-appliance-pickup"), "bad Chino phone keypad passed"
     upland_good = oc_good.replace("orange-appliance-pickup", "upland-appliance-pickup")
