@@ -78,6 +78,9 @@ def main():
     checked_images = 0
     inspected_assets = {}
     layout_findings = []
+    multi_photo_findings = []
+    non_logo_missing_alt = []
+    non_logo_aspect_mismatches = []
     for url in urls:
         if not url.startswith(BASE):
             continue
@@ -89,6 +92,21 @@ def main():
         checked_pages += 1
         parser = ImageRefs()
         parser.feed(page.read_text(encoding='utf-8', errors='replace'))
+
+        # Inventory actual content images, excluding the site logo. This is
+        # read-only for all sitemap pages; avoid mass-deleting genuine photos.
+        content_photos = [image for image in parser.images
+                          if image.get('src') and not image['src'].startswith('data:')
+                          and 'logo' not in image.get('src', '').lower()
+                          and 'logo' not in image.get('alt', '').lower()
+                          and 'site-brand-logo' not in image.get('class', '').lower()]
+        if len(content_photos) > 1:
+            multi_photo_findings.append((slug, [image['src'] for image in content_photos]))
+        for image in content_photos:
+            if not image.get('alt', '').strip():
+                non_logo_missing_alt.append((slug, image['src']))
+        if slug == 'west-covina-appliance-pickup' and len(content_photos) != 1:
+            problems.append(f'{slug}: must have exactly one representative content photo, found {len(content_photos)}')
 
         # Keep the four national appliance hubs semantically aligned with
         # their primary content image. This prevents a future image swap from
@@ -133,6 +151,15 @@ def main():
                     except (OSError, ValueError):
                         inspected_assets[asset] = None
                 size = inspected_assets[asset]
+                if size is not None and 'logo' not in src.lower() and src.startswith('/'):
+                    declared_w, declared_h = attrs.get('width'), attrs.get('height')
+                    try:
+                        declared_ratio = int(declared_w) / int(declared_h)
+                        real_ratio = size[0] / size[1]
+                        if abs(declared_ratio / real_ratio - 1) > 0.03:
+                            non_logo_aspect_mismatches.append((slug, src, f'{declared_w}x{declared_h}', f'{size[0]}x{size[1]}'))
+                    except (ValueError, TypeError, ZeroDivisionError):
+                        pass
                 if size is not None and slug in IMAGE_LAYOUT_PRIORITY_SLUGS:
                     declared_width = attrs.get('width')
                     declared_height = attrs.get('height')
@@ -672,6 +699,13 @@ def main():
         if f'from our {slug.split("-appliance-pickup")[0].replace("-", " ").title()} pickup work' in raw:
             problems.append(f'{slug}: unsupported local completed-pickup photo claim')
 
+    print(f'CONTENT_PHOTO_POLICY_REVIEW pages_with_multiple_images={len(multi_photo_findings)} non_logo_missing_alt={len(non_logo_missing_alt)} aspect_ratio_mismatches={len(non_logo_aspect_mismatches)}')
+    for slug, sources in multi_photo_findings[:50]:
+        print('MULTI_PHOTO_REVIEW', slug, '|', ' | '.join(sources[:6]))
+    for slug, src in non_logo_missing_alt[:25]:
+        print('MISSING_CONTENT_ALT_REVIEW', slug, src)
+    for slug, src, declared, actual in non_logo_aspect_mismatches[:50]:
+        print('IMAGE_ASPECT_REVIEW', slug, src, f'declared={declared}', f'actual={actual}')
     print(f'IMAGE_LAYOUT_PRIORITY_MISMATCHES {len(layout_findings)}')
     for finding in layout_findings:
         print('IMAGE_LAYOUT_REVIEW', finding)
