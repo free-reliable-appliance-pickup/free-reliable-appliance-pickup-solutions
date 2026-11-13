@@ -1,0 +1,24 @@
+name: VGM Keizer 97303 ZIP Routing
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'keizer-appliance-pickup/index.html'
+      - 'tests/vgm-keizer-zip-97303.js'
+      - '.github/workflows/vgm-keizer-zip-97303.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'keizer-appliance-pickup/index.html'
+      - 'tests/vgm-keizer-zip-97303.js'
+      - '.github/workflows/vgm-keizer-zip-97303.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: node tests/vgm-keizer-zip-97303.js
