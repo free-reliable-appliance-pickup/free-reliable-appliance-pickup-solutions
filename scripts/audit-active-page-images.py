@@ -59,6 +59,42 @@ IMAGE_LAYOUT_PRIORITY_SLUGS = {
     'bloomington-appliance-pickup'
 }
 
+# Protect human-reviewed priority pages from returning to multi-photo layouts.
+# Other active pages are inventoried as review findings, not blocked yet.
+PROTECTED_SINGLE_CONTENT_PHOTO_PAGES = {
+    'anaheim-hills-washer-dryer-pickup',
+    'banning-washer-dryer-pickup',
+    'beaumont-washer-dryer-pickup',
+    'beaverton-appliance-pickup',
+    'brea-appliance-pickup',
+    'calimesa-washer-dryer-pickup',
+    'cherry-valley-washer-dryer-pickup',
+    'chino-appliance-pickup',
+    'chino-hills-appliance-pickup',
+    'costa-mesa-appliance-pickup',
+    'covina-appliance-pickup',
+    'denver-appliance-pickup',
+    'denver-washer-dryer-pickup',
+    'fountain-valley-appliance-pickup',
+    'fullerton-appliance-pickup',
+    'highland-washer-dryer-pickup',
+    'hillsboro-appliance-pickup',
+    'huntington-beach-appliance-pickup',
+    'la-canada-flintridge-washer-dryer-pickup',
+    'la-verne-appliance-pickup',
+    'lake-forest-appliance-pickup',
+    'lakewood-washer-dryer-pickup',
+    'loma-linda-washer-dryer-pickup',
+    'long-beach-appliance-pickup',
+    'montclair-appliance-pickup',
+    'montrose-washer-dryer-pickup',
+    'newport-beach-appliance-pickup',
+    'oregon-city-appliance-pickup',
+    'pasadena-appliance-pickup',
+    'san-dimas-appliance-pickup',
+    'west-covina-appliance-pickup',
+}
+
 class ImageRefs(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -105,8 +141,8 @@ def main():
         for image in content_photos:
             if not image.get('alt', '').strip():
                 non_logo_missing_alt.append((slug, image['src']))
-        if slug == 'west-covina-appliance-pickup' and len(content_photos) != 1:
-            problems.append(f'{slug}: must have exactly one representative content photo, found {len(content_photos)}')
+        if slug in PROTECTED_SINGLE_CONTENT_PHOTO_PAGES and len(content_photos) != 1:
+            problems.append(f'{slug}: protected one-photo page must have exactly one content photo, found {len(content_photos)}')
 
         # Keep the four national appliance hubs semantically aligned with
         # their primary content image. This prevents a future image swap from
