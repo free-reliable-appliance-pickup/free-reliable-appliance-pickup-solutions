@@ -5066,7 +5066,10 @@
       ],
       "evaluateNotBefore": "2026-10-14",
       "preferredReview": "2026-10-20",
-      "status": "running",
+      "status": "superseded",
+      "supersededOn": "2026-11-12",
+      "supersededReason": "The previously proposed per-specialty Formspree design was replaced by the approved single-city-intake architecture. Confirmed in 2026-11-12 CI: Approved Request Actions, California City Gold Model, and California Laundry Gold Standard prohibit a second local Formspree form on Rancho specialty guides. Closed unmerged PR #1191 after all three checks failed. Do not repeat that change without a reviewed architecture migration.",
+      "currentApprovedIntake": "One Formspree intake on /rancho-cucamonga-appliance-pickup/#request; Rancho washer/dryer specialty page links directly to that shared request anchor. Preserve dedicated page title, H1, canonical, real photo, 909 contact and inquiry details.",
       "freezeRule": "Do not make further speculative title/meta/body/internal-link/schema-intent edits to these four Rancho appliance-specific pages before 2026-10-14 unless there is verified technical, factual, contact, indexability or safety breakage."
     },
     {
