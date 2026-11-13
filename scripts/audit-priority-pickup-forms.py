@@ -902,6 +902,7 @@ chula-vista national-city la-mesa santee escondido oceanside carlsbad
 encinitas vista poway del-mar
 oakland richmond san-francisco palm-springs
 artesia bell cudahy hawaiian-gardens la-palma los-alamitos maywood
+bell-gardens southern-california
 """.split()
 
 # Native HTML validation requires a standalone required attribute, not aria-required.
@@ -941,7 +942,7 @@ for city in FASTTRACK3_ACCESS_CITIES:
 
 # These additional southeast LA city pages newly collect photo availability.
 FASTTRACK3_PHOTO_RESPONSE_CITIES = """artesia bell cudahy hawaiian-gardens
-la-palma los-alamitos maywood""".split()
+la-palma los-alamitos maywood bell-gardens southern-california""".split()
 for city in FASTTRACK3_PHOTO_RESPONSE_CITIES:
     slug = f"{city}-appliance-pickup"
     path = Path(slug) / "index.html"
