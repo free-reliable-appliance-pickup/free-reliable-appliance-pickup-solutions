@@ -7,6 +7,7 @@ a live GitHub Pages deployment, indexing, or organic rankings.
 from html.parser import HTMLParser
 from pathlib import Path
 import argparse
+import re
 import sys
 
 FORM_ACTION = "https://formspree.io/f/mvzeapzd"
@@ -101,6 +102,25 @@ CITIES = (
     "van-nuys", "granada-hills", "pacoima", "northridge", "mission-hills",
 )
 
+# FastTrack 3.0: confirmed SGV/IE forms must collect accessible pickup details.
+STRICT_SGV_IE_INTAKE = {
+    "pasadena-appliance-pickup",
+    "monrovia-appliance-pickup",
+    "arcadia-appliance-pickup",
+    "west-covina-appliance-pickup",
+    "whittier-appliance-pickup",
+    "glendora-appliance-pickup",
+    "la-verne-appliance-pickup",
+    "walnut-appliance-pickup",
+    "chino-appliance-pickup",
+    "chino-hills-appliance-pickup",
+    "montclair-appliance-pickup",
+    "rialto-appliance-pickup",
+    "redlands-appliance-pickup",
+    "hacienda-heights-appliance-pickup",
+    "covina-appliance-pickup",
+}
+
 
 class FormReader(HTMLParser):
     def __init__(self):
@@ -178,6 +198,25 @@ def inspect(page_html, page_label):
         if len(messages) != 1 or messages[0][0] != "textarea" or "required" in messages[0][1]:
             errors.append(f"{page_label}: long access-details message must remain optional")
 
+    if page_label in STRICT_SGV_IE_INTAKE:
+        for field in ("address", "location", "stairs", "photos_available"):
+            values = fields.get(field, [])
+            if len(values) != 1 or "required" not in values[0][1]:
+                errors.append(f"{page_label}: {field} must be present, unique and required")
+
+        # Detect a photo selector inside collapsed details without crossing a closing tag.
+        raw_forms = re.findall(r'<form\b[^>]*>.*?</form>', page_html, re.I | re.S)
+        raw_form = next((item for item in raw_forms if FORM_ACTION in item), "")
+        photo_index = raw_form.find('name="photos_available"')
+        if photo_index < 0:
+            errors.append(f"{page_label}: missing photo availability field")
+        else:
+            prefix = raw_form[:photo_index]
+            opened = len(re.findall(r'<details\b', prefix, re.I))
+            closed = len(re.findall(r'</details>', prefix, re.I))
+            if opened > closed:
+                errors.append(f"{page_label}: photo availability hidden inside collapsible details")
+
     return errors
 
 
@@ -216,7 +255,16 @@ def self_test():
     assert not inspect(ie_good, "colton-appliance-pickup"), "valid IE mobile fixture rejected"
     assert inspect(ie_good.replace('inputmode="numeric"', 'inputmode="text"'), "colton-appliance-pickup"), "bad IE ZIP keypad passed"
     assert inspect(ie_good.replace('autocomplete="tel"', 'autocomplete="off"'), "colton-appliance-pickup"), "bad IE phone autofill passed"
-    sgv_good = oc_good.replace("orange-appliance-pickup", "arcadia-appliance-pickup")
+    # Original mobile examples now also need valid mandatory SGV/IE access controls.
+    strict_extra = (
+        '<input name="address" required>'
+        '<select name="location" required><option value="">Choose floor</option></select>'
+        '<select name="stairs" required><option value="">Choose stairs</option></select>'
+        '<select name="photos_available" required><option value="">Choose photos</option></select>'
+    )
+    sgv_good = oc_good.replace("orange-appliance-pickup", "arcadia-appliance-pickup").replace(
+        '</form>', strict_extra + '</form>'
+    )
     assert not inspect(sgv_good, "arcadia-appliance-pickup"), "valid SGV mobile fixture rejected"
     assert inspect(sgv_good.replace('inputmode="tel"', 'inputmode="text"'), "arcadia-appliance-pickup"), "bad SGV phone keypad passed"
     assert inspect(sgv_good.replace('autocomplete="postal-code"', 'autocomplete="off"'), "arcadia-appliance-pickup"), "bad SGV ZIP autofill passed"
@@ -226,12 +274,32 @@ def self_test():
     ie5_good = oc_good.replace("orange-appliance-pickup", "fontana-appliance-pickup")
     assert not inspect(ie5_good, "fontana-appliance-pickup"), "valid CA telephone fixture rejected"
     assert inspect(ie5_good.replace('inputmode="tel"', 'inputmode="text"'), "fontana-appliance-pickup"), "missing CA phone keypad passed"
-    ie6_good = oc_good.replace("orange-appliance-pickup", "chino-appliance-pickup")
+    ie6_good = oc_good.replace("orange-appliance-pickup", "chino-appliance-pickup").replace(
+        '</form>', strict_extra + '</form>'
+    )
     assert not inspect(ie6_good, "chino-appliance-pickup"), "valid Chino mobile fixture rejected"
     assert inspect(ie6_good.replace('inputmode="tel"', 'inputmode="text"'), "chino-appliance-pickup"), "bad Chino phone keypad passed"
     upland_good = oc_good.replace("orange-appliance-pickup", "upland-appliance-pickup")
     assert not inspect(upland_good, "upland-appliance-pickup"), "valid Upland mobile fixture rejected"
     assert inspect(upland_good.replace('inputmode="tel"', 'inputmode="text"'), "upland-appliance-pickup"), "bad Upland phone keypad passed"
+    # Regression fixtures for a previously hidden/optional California intake.
+    strict_form = good.replace('value="home"', 'value="glendora-appliance-pickup"').replace(
+        '</form>',
+        '<input name="address" required>'
+        '<select name="location" required><option value="">Choose floor</option></select>'
+        '<select name="stairs" required><option value="">Choose stairs</option></select>'
+        '<select name="photos_available" required><option value="">Choose photos</option></select>'
+        '</form>',
+    )
+    assert not inspect(strict_form, "glendora-appliance-pickup"), "correct required form rejected"
+    missing_required = strict_form.replace('name="address" required', 'name="address"')
+    assert inspect(missing_required, "glendora-appliance-pickup"), "optional street address was accepted"
+    hidden_photo = strict_form.replace(
+        '<select name="photos_available" required>',
+        '<details><select name="photos_available" required>',
+    ).replace('</select></form>', '</select></details></form>')
+    assert inspect(hidden_photo, "glendora-appliance-pickup"), "hidden required photos passed"
+
     print(f"FIXTURE_TESTS_PASSED 8 positive + {len(negative) + 10} negative")
 
 
@@ -245,6 +313,10 @@ def main():
 
     pages = [("home", Path("index.html"))]
     pages.extend((f"{city}-appliance-pickup", Path(city + "-appliance-pickup") / "index.html") for city in CITIES)
+    # Scan every strict SGV/IE form, including cities outside the general CITIES tuple.
+    listed_cities = {f"{city}-appliance-pickup" for city in CITIES}
+    for slug in sorted(STRICT_SGV_IE_INTAKE - listed_cities):
+        pages.append((slug, Path(slug) / "index.html"))
     # Existing California regional hubs also use this request contract.
     for hub in ("inland-empire-appliance-pickup", "san-gabriel-valley-appliance-pickup"):
         pages.append((hub, Path(hub) / "index.html"))
