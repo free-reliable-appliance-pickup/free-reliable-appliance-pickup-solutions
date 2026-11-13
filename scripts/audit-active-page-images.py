@@ -62,6 +62,21 @@ IMAGE_LAYOUT_PRIORITY_SLUGS = {
 # Protect human-reviewed priority pages from returning to multi-photo layouts.
 # Other active pages are inventoried as review findings, not blocked yet.
 PROTECTED_SINGLE_CONTENT_PHOTO_PAGES = {
+    'arvada-appliance-pickup',
+    'centennial-appliance-pickup',
+    'central-coast-appliance-pickup',
+    'central-valley-appliance-pickup',
+    'happy-valley-appliance-pickup',
+    'lakewood-appliance-pickup',
+    'las-vegas-valley-appliance-pickup',
+    'nevada-appliance-pickup',
+    'parker-appliance-pickup',
+    'san-diego-county-appliance-pickup',
+    'temecula-appliance-pickup',
+    'thornton-appliance-pickup',
+    'tigard-appliance-pickup',
+    'westminster-appliance-pickup',
+    'adelanto-appliance-pickup',
     'diamond-bar-appliance-pickup',
     'la-puente-appliance-pickup',
     'walnut-appliance-pickup',
