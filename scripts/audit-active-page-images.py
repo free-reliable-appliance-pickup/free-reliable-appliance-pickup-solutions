@@ -62,6 +62,20 @@ IMAGE_LAYOUT_PRIORITY_SLUGS = {
 # Protect human-reviewed priority pages from returning to multi-photo layouts.
 # Other active pages are inventoried as review findings, not blocked yet.
 PROTECTED_SINGLE_CONTENT_PHOTO_PAGES = {
+    'san-marino-washer-dryer-pickup',
+    'sierra-madre-washer-dryer-pickup',
+    'yucaipa-washer-dryer-pickup',
+    'irwindale-washer-dryer-pickup',
+    'south-san-jose-hills-washer-dryer-pickup',
+    'avocado-heights-washer-dryer-pickup',
+    'pico-rivera-washer-dryer-pickup',
+    'montebello-washer-dryer-pickup',
+    'monterey-park-washer-dryer-pickup',
+    'alhambra-washer-dryer-pickup',
+    'rosemead-washer-dryer-pickup',
+    'south-el-monte-washer-dryer-pickup',
+    'temple-city-washer-dryer-pickup',
+    'la-habra-heights-washer-dryer-pickup',
     'arvada-appliance-pickup',
     'centennial-appliance-pickup',
     'central-coast-appliance-pickup',
