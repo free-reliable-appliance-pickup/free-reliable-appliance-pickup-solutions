@@ -62,6 +62,12 @@ IMAGE_LAYOUT_PRIORITY_SLUGS = {
 # Protect human-reviewed priority pages from returning to multi-photo layouts.
 # Other active pages are inventoried as review findings, not blocked yet.
 PROTECTED_SINGLE_CONTENT_PHOTO_PAGES = {
+    'pico-rivera-appliance-pickup',
+    'montebello-appliance-pickup',
+    'la-crescenta-appliance-pickup',
+    'la-canada-flintridge-appliance-pickup',
+    'irwindale-appliance-pickup',
+    'sierra-madre-appliance-pickup',
     'baldwin-park-appliance-pickup',
     'bakersfield-appliance-pickup',
     'modesto-appliance-pickup',
