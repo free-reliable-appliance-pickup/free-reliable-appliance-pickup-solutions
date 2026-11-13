@@ -848,6 +848,20 @@ FASTTRACK_OWNER_CITY_PHOTOS = {
     "salem-appliance-pickup": "location",
     "phoenix-appliance-pickup": "floor",
     "sacramento-appliance-pickup": "location",
+    # FastTrack 3.0: guard the corrected California pickup forms.
+    "claremont-appliance-pickup": "location",
+    "pomona-appliance-pickup": "location",
+    "san-bernardino-appliance-pickup": "location",
+    "duarte-appliance-pickup": "location",
+    "irvine-appliance-pickup": "location",
+    "san-dimas-appliance-pickup": "location",
+    "azusa-appliance-pickup": "location",
+    "huntington-beach-appliance-pickup": "location",
+    "newport-beach-appliance-pickup": "location",
+    "costa-mesa-appliance-pickup": "location",
+    "santa-ana-appliance-pickup": "location",
+    "fullerton-appliance-pickup": "location",
+    "eastvale-appliance-pickup": "location",
 }
 for slug, floor_field in FASTTRACK_OWNER_CITY_PHOTOS.items():
     path = Path(slug) / "index.html"
@@ -868,8 +882,14 @@ for slug, floor_field in FASTTRACK_OWNER_CITY_PHOTOS.items():
     for field in ("appliance", "condition", floor_field, "stairs", "photos_available"):
         if not select_ok(form, field):
             errors.append(f"{slug}: {field} dropdown must be blank-first and required")
-    if re.search(r'<details\b[^>]*>.*?name="photos_available"', form, re.I | re.S):
-        errors.append(f"{slug}: photo availability is incorrectly hidden in optional details")
+    # Check the actual nesting at the field; regex alone incorrectly crosses </details>.
+    photo_field = re.search(r'\bname="photos_available"', form, re.I)
+    if photo_field:
+        details_depth = 0
+        for tag in re.finditer(r'</?details\b[^>]*>', form[:photo_field.start()], re.I):
+            details_depth += -1 if tag.group(0).startswith("</") else 1
+        if details_depth > 0:
+            errors.append(f"{slug}: photo availability is incorrectly hidden in optional details")
     if form.count('name="source_page"') != 1 or form.count('name="service"') != 1:
         errors.append(f"{slug}: missing or duplicated routing fields")
 print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
