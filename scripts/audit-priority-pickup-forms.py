@@ -892,6 +892,46 @@ for slug, floor_field in FASTTRACK_OWNER_CITY_PHOTOS.items():
             errors.append(f"{slug}: photo availability is incorrectly hidden in optional details")
     if form.count('name="source_page"') != 1 or form.count('name="service"') != 1:
         errors.append(f"{slug}: missing or duplicated routing fields")
+
+# FastTrack 3.0: keep the approved required-access answers on active CA forms.
+# Source-only regression audit; does not submit any customer data.
+FASTTRACK3_ACCESS_CITIES = """
+bellflower carson compton downey el-segundo gardena hawthorne hermosa-beach
+inglewood lawndale manhattan-beach redondo-beach signal-hill
+chula-vista national-city la-mesa santee escondido oceanside carlsbad
+encinitas vista poway del-mar
+oakland richmond san-francisco palm-springs
+""".split()
+
+for city in FASTTRACK3_ACCESS_CITIES:
+    slug = f"{city}-appliance-pickup"
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing FastTrack 3.0 form page")
+        continue
+    source = path.read_text(encoding="utf-8", errors="replace")
+    forms = [
+        f for f in re.findall(r"<form\b[^>]*>.*?</form>", source, re.I | re.S)
+        if "formspree.io/f/mvzeapzd" in f
+    ]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected exactly one customer intake form")
+        continue
+    form = forms[0]
+    for field in ("location", "stairs"):
+        if len(re.findall(rf'\bname="{field}"', form)) != 1 or not select_ok(form, field):
+            errors.append(f"{slug}: {field} must be a unique, blank-first required dropdown")
+    for field in ("phone", "address", "appliance", "condition"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{field}"[^>]*>',
+            form, re.I
+        )
+        if len(tags) != 1 or not re.search(r"\brequired\b", tags[0], re.I):
+            errors.append(f"{slug}: {field} must remain uniquely required")
+    if form.count('name="source_page"') != 1:
+        errors.append(f"{slug}: missing or duplicated request source attribution")
+print("FASTTRACK3_REQUIRED_ACCESS_FORMS_CHECKED", len(FASTTRACK3_ACCESS_CITIES))
+
 print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
 
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
