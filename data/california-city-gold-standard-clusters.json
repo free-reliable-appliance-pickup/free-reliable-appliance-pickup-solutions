@@ -87,15 +87,15 @@
           "city",
           "zip",
           "appliance",
-          "condition"
-        ],
-        "optional_fields": [
+          "condition",
           "address",
-          "brand_model",
           "location",
           "stairs",
+          "photos_available"
+        ],
+        "optional_fields": [
+          "brand_model",
           "property_type",
-          "photos_available",
           "preferred_window",
           "message",
           "condition_details"
