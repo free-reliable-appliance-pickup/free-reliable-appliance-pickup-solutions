@@ -205,14 +205,14 @@ def inspect(page_html, page_label):
                 errors.append(f"{page_label}: {field} must be present, unique and required")
 
         # Detect a photo selector inside collapsed details without crossing a closing tag.
-        raw_forms = re.findall(r'<form\\b[^>]*>.*?</form>', page_html, re.I | re.S)
+        raw_forms = re.findall(r'<form\b[^>]*>.*?</form>', page_html, re.I | re.S)
         raw_form = next((item for item in raw_forms if FORM_ACTION in item), "")
         photo_index = raw_form.find('name="photos_available"')
         if photo_index < 0:
             errors.append(f"{page_label}: missing photo availability field")
         else:
             prefix = raw_form[:photo_index]
-            opened = len(re.findall(r'<details\\b', prefix, re.I))
+            opened = len(re.findall(r'<details\b', prefix, re.I))
             closed = len(re.findall(r'</details>', prefix, re.I))
             if opened > closed:
                 errors.append(f"{page_label}: photo availability hidden inside collapsible details")
