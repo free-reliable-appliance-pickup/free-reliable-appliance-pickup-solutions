@@ -939,6 +939,42 @@ for city in FASTTRACK3_ACCESS_CITIES:
         errors.append(f"{slug}: missing or duplicated request source attribution")
 print("FASTTRACK3_REQUIRED_ACCESS_FORMS_CHECKED", len(FASTTRACK3_ACCESS_CITIES))
 
+
+# Guard the real regional forms used by 10 Antelope Valley support-page links.
+FASTTRACK3_ANTELOPE_HUBS = (
+    "antelope-valley-appliance-pickup",
+    "antelope-valley-washer-dryer-pickup",
+)
+for slug in FASTTRACK3_ANTELOPE_HUBS:
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing regional customer intake page")
+        continue
+    source = path.read_text(encoding="utf-8", errors="replace")
+    forms = [
+        f for f in re.findall(r"<form\b[^>]*>.*?</form>", source, re.I | re.S)
+        if re.search(r'\saction="https://formspree\.io/f/mvzeapzd"(?=\s|$)', f.split(">", 1)[0], re.I)
+    ]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected one form with exact Formspree action")
+        continue
+    form = forms[0]
+    for field in ("name", "phone", "city", "state", "address", "zip",
+                  "appliance", "condition", "location", "stairs",
+                  "photos_available", "message"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{field}"[^>]*>',
+            form, re.I
+        )
+        if len(tags) != 1 or not FASTTRACK3_NATIVE_REQUIRED.search(tags[0]):
+            errors.append(f"{slug}: {field} must remain uniquely and natively required")
+    for field in ("appliance", "condition", "location", "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: {field} must keep a required blank-first dropdown")
+    if form.count(f'name="source_page" value="{slug}"') != 1:
+        errors.append(f"{slug}: missing correct source-page attribution")
+print("FASTTRACK3_ANTELOPE_HUB_FORMS_CHECKED", len(FASTTRACK3_ANTELOPE_HUBS))
+
 print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
 
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
