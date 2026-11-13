@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check homepage link concentration and first-step conversion
+      - name: Check homepage link concentration and required pickup intake
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -51,13 +51,22 @@ jobs:
                   n=re.search(r'name=["\']([^"\']+)',tag,re.I)
                   required.append(n.group(1) if n else '?')
               print('HOMEPAGE_REQUIRED_FIELDS',required)
-              allowed={'name','phone','city','state','zip','appliance','condition'}
-              unexpected=sorted(set(required)-allowed)
+              expected={'name','phone','address','city','state','zip','appliance','condition','photos_available','floor','stairs'}
+              unexpected=sorted(set(required)-expected)
+              missing=sorted(expected-set(required))
               if unexpected:
-                  failures.append('unexpected required first-step fields: '+', '.join(unexpected))
-              for optional in ['address','floor','stairs','access','message','brand_model','preferred_window']:
+                  failures.append('unexpected required fields: '+', '.join(unexpected))
+              if missing:
+                  failures.append('missing required intake fields: '+', '.join(missing))
+              # The three request-quality selectors must stay visible outside the optional-details drawer.
+              details_start=form.find('<details class="optional-details">')
+              for field in ('photos_available','floor','stairs'):
+                  selector=re.search(r'<select\b[^>]*name=["\']'+field+r'["\'][^>]*\brequired\b[^>]*>\s*<option value=["\']["\']',form,re.I)
+                  if not selector or details_start<0 or selector.start()>details_start:
+                      failures.append(f'{field} must remain visible, required, and blank-first')
+              for optional in ['access','message','brand_model','preferred_window']:
                   if re.search(r'<(?:input|select|textarea)\b[^>]*name=["\']'+re.escape(optional)+r'["\'][^>]*\brequired\b',form,re.I):
-                      failures.append(f'{optional} must remain optional on homepage first step')
+                      failures.append(f'{optional} must remain optional')
 
           required_links=[
             'service-areas',
@@ -100,5 +109,5 @@ jobs:
               print('FAILURES')
               for f in failures: print('-',f)
               sys.exit(1)
-          print('PASS: homepage link authority stays concentrated and first-step conversion remains low-friction.')
+          print('PASS: homepage link authority stays concentrated and required pickup intake remains visible.')
           PY
