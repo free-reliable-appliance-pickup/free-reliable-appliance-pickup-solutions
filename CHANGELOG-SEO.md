@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-10-30 — Foothill/SGV laundry request attribution (VGM factual intake exception)
+- **Verified main-branch defect:** The existing La Cañada Flintridge washer/dryer request form omitted both `source_page` and `service`; the Walnut and Diamond Bar washer/dryer forms had `source_page` but omitted `service`. Missing hidden attribution is not proof of failed submissions or lost leads.
+- **Scoped, reversible correction:** Add `source_page=la-canada-flintridge-washer-dryer-pickup` and `service=Washer and dryer pickup` to La Cañada Flintridge, and the same static service value to Walnut and Diamond Bar. Preserve all existing Formspree endpoints, required customer fields, phone numbers, photos, eligibility, copy, navigation, canonicals, metadata and schema.
+- **Ownership/freeze:** `data/seo-experiments.json` protects Walnut and Diamond Bar laundry pages (review gate 2026-10-16) and three general city pages (2026-10-14). This is a verified technical attribution exception only; Daily SEO Ranking Countermove retains speculative ranking experiments and Website Technical Repair retains emergency defects.
+- **Search Console:** SMEPost free finalized 2026-10-25 through 2026-10-27 returned no reportable specialty-page rows for these three URLs. No ranking, indexing or lead-conversion conclusions.
+- **Verification and release gate:** Source invariants checked before commit. Require PR CI and independent desktop/mobile form validation before merge. No production deployment or Formspree receipt is claimed. Roll back by reverting this scoped PR if regression occurs.
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
