@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-10-30 — Montclair and Irwindale laundry request service attribution (VGM technical intake exception)
+- **Verified source defect:** The existing Montclair and Irwindale washer/dryer Formspree forms had `source_page` but lacked a hidden `service` identifier. This may complicate lead classification; it does not establish failed delivery or lost requests.
+- **Scoped reversible fix:** Add only `service=Washer and dryer pickup` to each existing form. Preserve Formspree destination, telephone numbers, required fields, eligibility, images, visible content, navigation, canonical, metadata and schema.
+- **Experiment ownership:** The registry protects Montclair and Irwindale laundry cleanup experiments until 2026-10-16, now elapsed. No speculative SEO variables are changed; Daily SEO Ranking Countermove owns ranking experiments and Website Technical Repair owns emergency breakage.
+- **GSC:** SMEPost finalized 2026-10-25 through 2026-10-27 reports no specialty-page rows for either URL; no ranking, indexing or lead conclusions are inferred.
+- **Release gate:** Draft PR; require applicable GitHub CI, independent desktop/mobile form review, and controlled Formspree receipt confirmation before merge. No live deployment claimed. Roll back by reverting the scoped commit if regression occurs.
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
