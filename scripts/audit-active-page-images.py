@@ -390,7 +390,7 @@ def main():
     # State request pages should show representative appliance examples,
     # not logo-only heroes, and must never imply an unverified local pickup.
     state_photo_contract = {
-        'texas-appliance-pickup': '/assets/california/city-heroes/fontana-multi-appliance.webp',
+        'texas-appliance-pickup': '/home-six-appliance-garage.webp',
         'florida-appliance-pickup': '/home-six-appliance-garage.webp',
     }
     for state_slug, expected_src in state_photo_contract.items():
