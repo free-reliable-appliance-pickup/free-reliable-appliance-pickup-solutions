@@ -509,8 +509,8 @@ async function main(){
     global.location.pathname='/phoenix-appliance-pickup/';
     const azSourceForm=mockForm({city:'Phoenix',state:'AZ',appliance:'Washer',condition:'Fully working'});
     api.qualify(azSourceForm);
-    assertEqual(!!azSourceForm.nodes['Traffic Source (Observed)'],false,
-      'Non-targeted states remain unchanged');
+    assertEqual(azSourceForm.nodes['Traffic Source (Observed)'].value,
+      'Direct / unknown','All genuine customer pickup markets receive provenance without invented referrals');
   } finally {
     global.location.pathname=provenancePath;
   }
