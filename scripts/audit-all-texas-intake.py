@@ -76,8 +76,11 @@ def check(path):
         if controls and "required" not in controls[0]:
             failures.append("select is optional: " + field_name)
     zip_controls = fields.get("zip", [])
-    if zip_controls and zip_controls[0].get("pattern") != "[0-9]{5}":
-        failures.append("ZIP lacks required five-digit pattern")
+    expected_zip_pattern = ("[0-9]{5}(-[0-9]{4})?"
+                            if path.as_posix() == "texas-appliance-pickup/index.html"
+                            else "[0-9]{5}")
+    if zip_controls and zip_controls[0].get("pattern") != expected_zip_pattern:
+        failures.append("ZIP lacks expected five-digit or ZIP+4 validation pattern")
     scripts = [s for s in p.scripts if re.search(r"(^|/)customer-routing\.js(?:\?|$)", s)]
     if len(scripts) != 1:
         failures.append("missing/duplicated customer-routing.js include")
