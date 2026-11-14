@@ -214,6 +214,29 @@ async function main(){
   }
   console.log('PASS: Florida city and statewide access both included in safe routing summary');
 
+  // Newer city intake names must not disappear from the dispatch summary.
+  const ranchoDetails=mockForm({
+    city:'Rancho Cucamonga',state:'CA',appliance:'Washer',
+    condition:'Working With Issues',stairs:'1 Flight',
+    access:'Gated driveway',appliance_details:'Fills but will not spin',condition_details:''
+  });
+  api.qualify(ranchoDetails);
+  assertEqual(ranchoDetails.nodes['Qualification Snapshot'].value.includes('Fills but will not spin'),true,
+    'Rancho required appliance details retained in qualification snapshot');
+  assertEqual(ranchoDetails.nodes['Customer Defect Explanation'].value.includes('Fills but will not spin'),true,
+    'Rancho defect summary retains required details when optional notes are empty');
+  const vancouverAccess=mockForm({
+    city:'Vancouver',state:'WA',appliance:'Dryer',condition:'Needs Repair',
+    access_details:'Gated garage with elevator'
+  });
+  api.qualify(vancouverAccess);
+  assertEqual(vancouverAccess.nodes['Qualification Snapshot'].value.includes('Gated garage with elevator'),true,
+    'Vancouver access_details alias retained for dispatch');
+  assertEqual(vancouverAccess.nodes['Customer Defect Explanation'].value.includes('Gated garage with elevator'),true,
+    'Vancouver repair-condition dispatch retains access notes');
+  console.log('PASS: new California and Washington intake details appear in dispatch summaries');
+
+
   // Partner recruitment is an internal market catalog state, never a customer-form label.
   // Preserve route phones/regions while ensuring the submitted Formspree fields reflect pickup review.
   for(const [city,state] of [
