@@ -1017,7 +1017,7 @@ for slug in FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES:
         continue
     html = path.read_text(encoding="utf-8", errors="replace")
     forms = [
-        form for form in re.findall(r"<form\\b[^>]*>.*?</form>", html, re.I | re.S)
+        form for form in re.findall(r"<form\b[^>]*>.*?</form>", html, re.I | re.S)
         if 'action="https://formspree.io/f/mvzeapzd"' in form.split(">", 1)[0]
     ]
     if len(forms) != 1:
@@ -1027,7 +1027,7 @@ for slug in FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES:
     for field in ("name", "phone", "city", "address", "zip", "appliance",
                   "condition", "floor", "stairs", "photos_available", "message"):
         tags = re.findall(
-            rf'<(?:input|select|textarea)\\b[^>]*\\bname="{field}"[^>]*>',
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{field}"[^>]*>',
             form, re.I
         )
         if len(tags) != 1 or not FASTTRACK3_NATIVE_REQUIRED.search(tags[0]):
