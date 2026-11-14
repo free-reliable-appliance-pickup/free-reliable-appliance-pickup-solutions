@@ -124,7 +124,9 @@ class StateFreePickupHeadings(unittest.TestCase):
                     field = re.search(r'<(?:input|select)\b[^>]*\bname="' + name + r'"[^>]*>', form)
                     self.assertIsNotNone(field, name)
                     self.assertIn("required", field.group(0), name)
-                self.assertIn('pattern="[0-9]{5}"', form)
+                expected_pattern = ("[0-9]{5}(-[0-9]{4})?"
+                                    if slug in ("florida", "georgia") else "[0-9]{5}")
+                self.assertIn(f'pattern="{expected_pattern}"', form)
                 self.assertIn('name="photo_link"', form)
                 self.assertIn(f'name="source_page" value="{slug}-appliance-pickup"', form)
                 self.assertIn('<div class="site-request-next-steps">', html)
