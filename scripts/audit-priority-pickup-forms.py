@@ -1002,6 +1002,45 @@ for slug in FASTTRACK3_ANTELOPE_HUBS:
         errors.append(f"{slug}: missing correct source-page attribution")
 print("FASTTRACK3_ANTELOPE_HUB_FORMS_CHECKED", len(FASTTRACK3_ANTELOPE_HUBS))
 
+# Protect the four corrected California laundry request paths. These fields must
+# be present in source HTML without relying on scripts to invent dispatch data.
+FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES = (
+    "bakersfield-washer-dryer-pickup",
+    "sf-bay-area-washer-dryer-pickup",
+    "central-valley-washer-dryer-pickup",
+    "central-coast-washer-dryer-pickup",
+)
+for slug in FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES:
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing California laundry intake page")
+        continue
+    html = path.read_text(encoding="utf-8", errors="replace")
+    forms = [
+        form for form in re.findall(r"<form\\b[^>]*>.*?</form>", html, re.I | re.S)
+        if 'action="https://formspree.io/f/mvzeapzd"' in form.split(">", 1)[0]
+    ]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected exactly one active pickup form")
+        continue
+    form = forms[0]
+    for field in ("name", "phone", "city", "address", "zip", "appliance",
+                  "condition", "floor", "stairs", "photos_available", "message"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\\b[^>]*\\bname="{field}"[^>]*>',
+            form, re.I
+        )
+        if len(tags) != 1 or not FASTTRACK3_NATIVE_REQUIRED.search(tags[0]):
+            errors.append(f"{slug}: {field} must be uniquely and natively required")
+    for field in ("appliance", "condition", "floor", "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: {field} needs a required blank-first dropdown")
+    if form.count(f'name="source_page" value="{slug}"') != 1:
+        errors.append(f"{slug}: missing accurate source page for dispatch")
+    if 'name="state"' not in form or 'California' not in form:
+        errors.append(f"{slug}: expected California route attribution")
+print("FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES_CHECKED", len(FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES))
+
 print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
 
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
