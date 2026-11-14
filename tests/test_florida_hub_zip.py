@@ -53,23 +53,23 @@ class FloridaHubZipTests(unittest.TestCase):
         self.assertEqual(form["attrs"].get("method", "").lower(), "post")
         self.assertEqual(len(form["fields"].get("zip", [])), 1)
 
-    def test_zip_input_uses_five_ascii_digits_and_mobile_keyboard(self):
+    def test_zip_input_accepts_five_ascii_digits_or_zip4_and_mobile_keyboard(self):
         fields = self.parser.forms[0]["fields"]
         zipfield = fields["zip"][0]
         self.assertEqual(zipfield.get("type"), "text")
         self.assertIn("required", zipfield)
         self.assertEqual(zipfield.get("inputmode"), "numeric")
         self.assertEqual(zipfield.get("autocomplete"), "postal-code")
-        self.assertEqual(zipfield.get("pattern"), "[0-9]{5}")
+        self.assertEqual(zipfield.get("pattern"), "[0-9]{5}(-[0-9]{4})?")
         self.assertEqual(zipfield.get("aria-describedby"), "florida-zip-help")
-        self.assertIn('id="florida-zip-help">Enter a five-digit pickup ZIP code', self.markup)
+        self.assertIn('id="florida-zip-help">Enter a five-digit pickup ZIP (33101) or ZIP+4', self.markup)
         self.assertIn("required for routing, not a guaranteed appointment", self.markup)
         self.assertEqual(zipfield.get("minlength"), "5")
-        self.assertEqual(zipfield.get("maxlength"), "5")
-        for valid in ("33101", "32801", "02108"):
+        self.assertEqual(zipfield.get("maxlength"), "10")
+        for valid in ("33101", "32801", "02108", "33101-1234"):
             with self.subTest(valid=valid):
                 self.assertIsNotNone(re.fullmatch(zipfield["pattern"], valid))
-        for invalid in ("", "3310", "331011", "ABCDE", "3310A", "33 01"):
+        for invalid in ("", "3310", "331011", "331011234", "33101-12", "33101-12345", "ABCDE", "3310A", "33 01"):
             with self.subTest(invalid=invalid):
                 self.assertIsNone(re.fullmatch(zipfield["pattern"], invalid))
 
