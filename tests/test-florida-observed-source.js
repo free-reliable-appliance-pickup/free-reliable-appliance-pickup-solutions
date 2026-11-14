@@ -22,12 +22,13 @@ const storageKey = "frap_observed_traffic_source";
  */
 function visit({
   state = "FL",
+  appliance = "Refrigerator",
   page = "/florida-appliance-pickup/",
   search = "",
   referrer = "",
   storage = new Map()
 } = {}) {
-  const form = { state, submitted: {} };
+  const form = { state, appliance, submitted: {} };
   const context = {
     URL,
     URLSearchParams,
@@ -52,6 +53,11 @@ function visit({
       return v === "FLORIDA" ? "FL" : v === "TEXAS" ? "TX" : v;
     },
     pagePath: () => page,
+    // The source extraction excludes the separately declared production eligibility helper.
+    // Mirror its required state + appliance eligibility for this focused unit test.
+    isCustomerPickupForm(target) {
+      return Boolean(target.state && target.appliance);
+    },
     findField(target, names) {
       return target.state && names.includes("state")
         ? { value: target.state }
@@ -129,7 +135,9 @@ assert.equal(ilChicago[observedField], "UTM: facebook");
 assert.equal(visit({ state: "IL", page: "/rockford-il-appliance-pickup/" })[observedField],
   "Direct / unknown");
 
-// Do not add observed-source fields to other markets or missing-state forms.
-assert.deepEqual(Object.keys(visit({ state: "CA", search: "?utm_source=google" })), []);
+// Attribution now works across all customer pickup markets, without tracking non-pickup forms.
+assert.equal(visit({ state: "CA", search: "?utm_source=google" })[observedField], "UTM: google");
+assert.equal(visit({ state: "AZ" })[observedField], "Direct / unknown");
 assert.deepEqual(Object.keys(visit({ state: null, search: "?utm_source=google" })), []);
+assert.deepEqual(Object.keys(visit({ appliance: null, search: "?utm_source=google" })), []);
 console.log("PASS: actual Florida URL/referrer capture, session navigation, and legacy markets");
