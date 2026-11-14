@@ -84,7 +84,9 @@ const CURRENT_OBSERVED_SOURCE=observedVisitSource();
 try{if(CURRENT_OBSERVED_SOURCE)sessionStorage.setItem('frap_observed_traffic_source',CURRENT_OBSERVED_SOURCE);}catch(e){}
 function recordObservedTrafficSource(form){
   const state=findField(form,['state','State','pickup_state','Primary State']);
-  const supported=state&&['TX','FL','IL'].includes(stateCode(state.value));
+  // Track source on every customer pickup form, not only the original TX/FL/IL pilot.
+  // Never add lead tracking fields to unrelated Formspree forms.
+  const supported=Boolean(state&&isCustomerPickupForm(form));
   const salem=/^\/salem-(?:appliance|washer-dryer|refrigerator-freezer|stove)-pickup\/$/.test(pagePath());
   if(!supported&&!salem)return;
   let source=CURRENT_OBSERVED_SOURCE;
