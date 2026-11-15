@@ -34,63 +34,63 @@ function stateCode(value){const raw=String(value||'').trim();if(raw.length===2)r
 function priorityCalifornia(city,state){const sc=stateCode(state),cn=n(city);if(sc!=='CA')return null;const region909=CA_909_PRIORITY[cn];if(region909)return {state:'California',state_code:'CA',city:String(city||'').trim(),region:region909,status:'partner-recruiting',territory_status:'available',lead_priority:1,partner_id:null,backup_partner_id:null,phone:PRIORITY_909_PHONE,pricing_status:'collect_data',monthly_price_cents:null,resolution_level:'priority-california-city'};const region310=CA_310_PRIORITY[cn];if(region310)return {state:'California',state_code:'CA',city:String(city||'').trim(),region:region310,status:cn==='fresno'?'buyer-review':'partner-recruiting',territory_status:'available',lead_priority:1,partner_id:null,backup_partner_id:null,phone:PRIORITY_310_PHONE,pricing_status:'collect_data',monthly_price_cents:null,resolution_level:'priority-california-city'};return null;}
 function priority909(city,state){const info=priorityCalifornia(city,state);return info&&info.phone===PRIORITY_909_PHONE?info:null;}
 function classify(city,state){
-  const sc=stateCode(state),cn=n(city),priority=priorityCalifornia(city,state);
-  if(priority){
-    const explicit=routing&&Array.isArray(routing.markets)
-      ?routing.markets.find(m=>m.city&&stateCode(m.state_code||m.state)===sc&&n(m.city)===cn)
-      :null;
-    if(explicit)return {...explicit,phone:priority.phone,resolution_level:'exact-city'};
-    return priority;
-  }
-  if(!routing||!Array.isArray(routing.markets))return {...FALLBACK,state_code:sc,city,resolution_level:'fallback'};const exact=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&m.city&&n(m.city)===cn);if(exact)return {...exact,resolution_level:'exact-city'};const namedRegion=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&!m.city&&n(m.region)===cn);if(namedRegion)return {...namedRegion,resolution_level:'regional'};let region=null;if(cities&&Array.isArray(cities.cities)){const c=cities.cities.find(x=>stateCode(x.state_code||x.state)===sc&&n(x.city)===cn);if(c)region=c.region||null;}if(region){const m=routing.markets.find(x=>stateCode(x.state_code||x.state)===sc&&!x.city&&n(x.region)===n(region));if(m)return {...m,resolution_level:'regional'};}if(Array.isArray(routing.state_defaults)){const s=routing.state_defaults.find(x=>stateCode(x.state_code||x.state)===sc);if(s)return {...s,city,region:s.region||((s.state||sc)+' statewide intake'),resolution_level:'statewide'};}return {...FALLBACK,state_code:sc,city,resolution_level:'fallback'};}
+const sc=stateCode(state),cn=n(city),priority=priorityCalifornia(city,state);
+if(priority){
+const explicit=routing&&Array.isArray(routing.markets)
+?routing.markets.find(m=>m.city&&stateCode(m.state_code||m.state)===sc&&n(m.city)===cn)
+:null;
+if(explicit)return {...explicit,phone:priority.phone,resolution_level:'exact-city'};
+return priority;
+}
+if(!routing||!Array.isArray(routing.markets))return {...FALLBACK,state_code:sc,city,resolution_level:'fallback'};const exact=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&m.city&&n(m.city)===cn);if(exact)return {...exact,resolution_level:'exact-city'};const namedRegion=routing.markets.find(m=>stateCode(m.state_code||m.state)===sc&&!m.city&&n(m.region)===cn);if(namedRegion)return {...namedRegion,resolution_level:'regional'};let region=null;if(cities&&Array.isArray(cities.cities)){const c=cities.cities.find(x=>stateCode(x.state_code||x.state)===sc&&n(x.city)===cn);if(c)region=c.region||null;}if(region){const m=routing.markets.find(x=>stateCode(x.state_code||x.state)===sc&&!x.city&&n(x.region)===n(region));if(m)return {...m,resolution_level:'regional'};}if(Array.isArray(routing.state_defaults)){const s=routing.state_defaults.find(x=>stateCode(x.state_code||x.state)===sc);if(s)return {...s,city,region:s.region||((s.state||sc)+' statewide intake'),resolution_level:'statewide'};}return {...FALLBACK,state_code:sc,city,resolution_level:'fallback'};}
 function routingDecision(info){const status=String(info&&info.status||FALLBACK.status),territory=String(info&&info.territory_status||FALLBACK.territory_status);if(status==='direct')return {decision:'DIRECT_OPERATION',tier:'direct-operations',action:'Review qualification and dispatch through the established company market.'};if(status==='partner-supported'||territory==='assigned')return {decision:'PARTNER_NETWORK',tier:'assigned-partner',action:'Review qualification and route to the assigned approved partner.'};if(status==='buyer-review')return {decision:'BUYER_REVIEW',tier:'buyer-review',action:'Review photos, condition and access, then check interest with available Fresno appliance buyers. Do not promise pickup until a buyer accepts the request.'};if(status==='partner-recruiting')return {decision:'RECRUITING_QUEUE',tier:'partner-recruiting',action:'Keep as an intake lead while local partner coverage is being recruited; do not promise pickup.'};return {decision:'NATIONAL_INTAKE',tier:'request-only',action:'Accept for review only; confirm local coverage before offering or scheduling pickup.'};}
 function findField(form,names){for(const name of names){const el=form.querySelector(`[name="${name}"]`)||form.querySelector('#'+name);if(el)return el;}return null;}
 function hidden(form,name,value){let el=form.querySelector(`input[type="hidden"][name="${name}"]`);if(!el){el=document.createElement('input');el.type='hidden';el.name=name;form.appendChild(el);}el.value=value==null?'':String(value);return el;}
 function ensureRequestAttribution(form){
-  if(!findField(form,['source_page']))hidden(form,'source_page',pagePath().replace(/^\/+|\/+$/g,'')||'home');
-  if(findField(form,['city','City','pickup_city','Primary City']))return;
-  const state=findField(form,['state','State','pickup_state','Primary State']);
-  const appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']);
-  if(!state||!appliance)return;
-  const m=pagePath().match(/^\/([a-z0-9-]+)-(?:appliance|washer-dryer|refrigerator|stove-oven|freezer)-pickup\/$/);
-  if(!m)return;
-  const cityName=m[1].replace(/-/g,' '),sc=stateCode(state.value);
-  const knownCA=sc==='CA'&&priorityCalifornia(cityName,sc);
-  const listed=cities&&Array.isArray(cities.cities)
-    ?cities.cities.find(x=>stateCode(x.state_code||x.state)===sc&&n(x.city)===n(cityName)):null;
-  const direct=routing&&Array.isArray(routing.markets)
-    ?routing.markets.find(x=>x.city&&stateCode(x.state_code||x.state)===sc&&n(x.city)===n(cityName)):null;
-  if(!knownCA&&!listed&&!direct)return;
-  hidden(form,'city',listed&&listed.city||direct&&direct.city||cityName.replace(/\b\w/g,ch=>ch.toUpperCase()));
+if(!findField(form,['source_page']))hidden(form,'source_page',pagePath().replace(/^\/+|\/+$/g,'')||'home');
+if(findField(form,['city','City','pickup_city','Primary City']))return;
+const state=findField(form,['state','State','pickup_state','Primary State']);
+const appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']);
+if(!state||!appliance)return;
+const m=pagePath().match(/^\/([a-z0-9-]+)-(?:appliance|washer-dryer|refrigerator|stove-oven|freezer)-pickup\/$/);
+if(!m)return;
+const cityName=m[1].replace(/-/g,' '),sc=stateCode(state.value);
+const knownCA=sc==='CA'&&priorityCalifornia(cityName,sc);
+const listed=cities&&Array.isArray(cities.cities)
+?cities.cities.find(x=>stateCode(x.state_code||x.state)===sc&&n(x.city)===n(cityName)):null;
+const direct=routing&&Array.isArray(routing.markets)
+?routing.markets.find(x=>x.city&&stateCode(x.state_code||x.state)===sc&&n(x.city)===n(cityName)):null;
+if(!knownCA&&!listed&&!direct)return;
+hidden(form,'city',listed&&listed.city||direct&&direct.city||cityName.replace(/\b\w/g,ch=>ch.toUpperCase()));
 }
 function observedVisitSource(){
-  try{
-    const tag=new URLSearchParams(location.search).get('utm_source');
-    if(tag)return 'UTM: '+tag.trim().replace(/[^a-zA-Z0-9 ._-]/g,'').slice(0,60);
-  }catch(e){}
-  try{
-    if(!document.referrer)return '';
-    const host=new URL(document.referrer).hostname.toLowerCase();
-    if(!host||host===location.hostname.toLowerCase())return '';
-    if(/(^|\.)google\.[a-z.]+$/.test(host))return 'Google referrer';
-    if(/(^|\.)facebook\.com$/.test(host)||host==='fb.com')return 'Facebook referrer';
-    if(/(^|\.)instagram\.com$/.test(host))return 'Instagram referrer';
-    if(/(^|\.)bing\.com$/.test(host))return 'Bing referrer';
-    if(/(^|\.)yahoo\.com$/.test(host))return 'Yahoo referrer';
-    return 'Other referral: '+host.slice(0,80);
-  }catch(e){return '';}
+try{
+const tag=new URLSearchParams(location.search).get('utm_source');
+if(tag)return 'UTM: '+tag.trim().replace(/[^a-zA-Z0-9 ._-]/g,'').slice(0,60);
+}catch(e){}
+try{
+if(!document.referrer)return '';
+const host=new URL(document.referrer).hostname.toLowerCase();
+if(!host||host===location.hostname.toLowerCase())return '';
+if(/(^|\.)google\.[a-z.]+$/.test(host))return 'Google referrer';
+if(/(^|\.)facebook\.com$/.test(host)||host==='fb.com')return 'Facebook referrer';
+if(/(^|\.)instagram\.com$/.test(host))return 'Instagram referrer';
+if(/(^|\.)bing\.com$/.test(host))return 'Bing referrer';
+if(/(^|\.)yahoo\.com$/.test(host))return 'Yahoo referrer';
+return 'Other referral: '+host.slice(0,80);
+}catch(e){return '';}
 }
 const CURRENT_OBSERVED_SOURCE=observedVisitSource();
 try{if(CURRENT_OBSERVED_SOURCE)sessionStorage.setItem('frap_observed_traffic_source',CURRENT_OBSERVED_SOURCE);}catch(e){}
 function recordObservedTrafficSource(form){
-  const state=findField(form,['state','State','pickup_state','Primary State']);
-  const supported=Boolean(state&&isCustomerPickupForm(form));
-  const salem=/^\/salem-(?:appliance|washer-dryer|refrigerator-freezer|stove)-pickup\/$/.test(pagePath());
-  if(!supported&&!salem)return;
-  let source=CURRENT_OBSERVED_SOURCE;
-  if(!source){try{source=sessionStorage.getItem('frap_observed_traffic_source')||'';}catch(e){}}
-  hidden(form,'Traffic Source (Observed)',source||'Direct / unknown');
-  hidden(form,'Traffic Source Method',source?'UTM tag or website referrer':'No UTM or external referrer available');
+const state=findField(form,['state','State','pickup_state','Primary State']);
+const supported=Boolean(state&&isCustomerPickupForm(form));
+const salem=/^\/salem-(?:appliance|washer-dryer|refrigerator-freezer|stove)-pickup\/$/.test(pagePath());
+if(!supported&&!salem)return;
+let source=CURRENT_OBSERVED_SOURCE;
+if(!source){try{source=sessionStorage.getItem('frap_observed_traffic_source')||'';}catch(e){}}
+hidden(form,'Traffic Source (Observed)',source||'Direct / unknown');
+hidden(form,'Traffic Source Method',source?'UTM tag or website referrer':'No UTM or external referrer available');
 }
 function qualify(form){recordPaidRemovalPreference(form);recordObservedTrafficSource(form);const city=findField(form,['city','City','pickup_city','Primary City']),state=findField(form,['state','State','pickup_state','Primary State']);if(!city||!state)return;if(!findField(form,['source_page']))hidden(form,'source_page',pagePath().replace(/^\/+|\/+$/g,'')||'home');const info=classify(city.value,state.value),customerStatus=info.status==='partner-recruiting'?'request-only':info.status,route=routingDecision({...info,status:customerStatus});hidden(form,'Routing City',city.value.trim());hidden(form,'Routing State Code',stateCode(state.value));hidden(form,'Routing Region',info.region||FALLBACK.region);hidden(form,'Routing Resolution Level',info.resolution_level||'fallback');hidden(form,'Routing Market Status',customerStatus||FALLBACK.status);hidden(form,'Routing Territory Status',info.territory_status||FALLBACK.territory_status);hidden(form,'Routing Priority',info.lead_priority||FALLBACK.lead_priority);hidden(form,'Routing Phone',info.phone||'');hidden(form,'Routing Partner ID',info.partner_id||'');hidden(form,'Routing Backup Partner ID',info.backup_partner_id||'');hidden(form,'Routing Decision',route.decision);hidden(form,'Routing Network Tier',route.tier);hidden(form,'Routing Next Action',route.action);hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed');hidden(form,'Routing Source',info.resolution_level==='priority-california-city'?'Priority California customer-routing override':'Canonical market-routing.json');hidden(form,'SEO Page Creation','Disabled');const condition=findField(form,['condition','Condition','Appliance Condition']),appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']),stairs=findField(form,['stairs','Stairs']),access=findField(form,['access','Access','Access Notes','access_notes','access_details']),details=findField(form,['appliance_details','message']);hidden(form,'Qualification Snapshot',[appliance&&appliance.value,condition&&condition.value,stairs&&stairs.value,access&&access.value,details?.value].filter(Boolean).join(' | '));const faultDetails=findField(form,['condition_details']);const conditionValue=String(condition&&condition.value||'');const requiresReview=/(?:\b(?:issues?|problems?|repairs?|broken|damaged|unknown|mixed|faulty|load)\b|non[\s-]*working|not[\s-]*working)/i.test(conditionValue);hidden(form,'Customer Defect Explanation',[faultDetails?.value,requiresReview&&access?.value,requiresReview&&details?.value].filter(Boolean).join(' | '));hidden(form,'Dispatch Condition Gate',requiresReview?'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH':'CONFIRM CONDITION AND AVAILABILITY BEFORE DISPATCH');}
 function load(){if(loadPromise)return loadPromise;loadPromise=Promise.all([fetch(siteUrl('data/market-routing.json'),{cache:'no-store'}),fetch(siteUrl('data/cities.json'),{cache:'no-store'})]).then(async([r,c])=>{if(r.ok)routing=await r.json();if(c.ok)cities=await c.json();}).catch(()=>{});return loadPromise;}
@@ -131,232 +131,232 @@ function ensureRegionalState(form){if(findField(form,['state','State','pickup_st
 function preferLocalRequestForm(){const forms=Array.from(document.querySelectorAll('form[action*="formspree.io"]'));forms.forEach(ensureRegionalState);const form=forms.find(isCustomerPickupForm);if(!form)return;let target=form.closest('section');if(!target)target=form;if(!target.id)target.id='request';const localHref='#'+target.id,selectors=['a[href="/#request"]','a[href="../#request"]','a[href="./#request"]','a[href="https://freereliableappliancepickup.com/#request"]'];document.querySelectorAll(selectors.join(',')).forEach(link=>link.setAttribute('href',localHref));}
 function buildLaundryGallery(path){if(document.querySelector('.site-laundry-photo-showcase'))return;const main=document.querySelector('main');if(!main)return;const pageIndex=Math.max(0,Object.keys(WASHER_DRYER_PHOTOS).indexOf(path)),picks=[LAUNDRY_GALLERY[pageIndex%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+3)%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+6)%LAUNDRY_GALLERY.length]],section=document.createElement('section');section.className='site-laundry-photo-showcase';const h2=document.createElement('h2');h2.textContent='Real Washer & Dryer Set Photos';const p=document.createElement('p');p.textContent='Real used washer and dryer set photos. Send photos of your machines for condition, access and route review.';const grid=document.createElement('div');picks.forEach(([file,alt])=>{const figure=document.createElement('figure'),img=document.createElement('img');figure.style.margin='0';img.src=siteUrl('assets/laundry/'+file);img.alt=alt;img.loading='lazy';img.decoding='async';figure.appendChild(img);grid.appendChild(figure);});section.append(h2,p,grid);main.insertBefore(section,main.firstChild);}
 function enhanceWasherDryerPhotos(){
-  const path=pagePath(),config=WASHER_DRYER_PHOTOS[path];
-  if(!config)return;
-  const hero=document.querySelector('.site-hero-art img');
-  if(!hero)return;
-  const current=String(hero.getAttribute('src')||'');
-  if(current.trim())return;
-  const src=siteUrl('assets/laundry/'+config.hero);
-  hero.src=src+(src.includes('?')?'&':'?')+'premium-set=20260916';
-  hero.alt=config.alt;
-  hero.removeAttribute('width');
-  hero.removeAttribute('height');
-  hero.decoding='async';
-  hero.style.width='100%';
-  hero.style.height='auto';
-  hero.style.maxHeight='520px';
-  hero.style.objectFit='contain';
-  hero.style.background='#f5f7f6';
-  hero.style.borderRadius='16px';
-  hero.style.boxShadow='0 12px 28px rgba(0,0,0,.18)';
+const path=pagePath(),config=WASHER_DRYER_PHOTOS[path];
+if(!config)return;
+const hero=document.querySelector('.site-hero-art img');
+if(!hero)return;
+const current=String(hero.getAttribute('src')||'');
+if(current.trim())return;
+const src=siteUrl('assets/laundry/'+config.hero);
+hero.src=src+(src.includes('?')?'&':'?')+'premium-set=20260916';
+hero.alt=config.alt;
+hero.removeAttribute('width');
+hero.removeAttribute('height');
+hero.decoding='async';
+hero.style.width='100%';
+hero.style.height='auto';
+hero.style.maxHeight='520px';
+hero.style.objectFit='contain';
+hero.style.background='#f5f7f6';
+hero.style.borderRadius='16px';
+hero.style.boxShadow='0 12px 28px rgba(0,0,0,.18)';
 }
 function enhanceCityLaundrySearchTerms(){if(document.querySelector('.site-city-laundry-search'))return;const path=pagePath(),config=WASHER_DRYER_PHOTOS[path];if(!config)return;const slug=path.replace(/^\//,'').replace(/-washer-dryer-pickup\/$/,'');if(['california','southern-california','san-gabriel-inland-empire','los-angeles-county','orange-county','south-orange-county','riverside-county','san-bernardino-county'].includes(slug))return;const city=slugLabel(slug),main=document.querySelector('main');if(!main)return;const section=document.createElement('section');section.className='site-city-laundry-search';const h2=document.createElement('h2');h2.textContent='Free Washer, Dryer & Laundry Set Pickup in '+city;const lead=document.createElement('p');lead.textContent='Customers in '+city+' can submit washers, dryers and complete laundry sets for pickup review. Qualification depends on appliance condition, safe access and current route availability.';const grid=document.createElement('div');grid.className='grid';[['Free Washer Pickup in '+city,'Send clear photos and describe whether the washer fills, washes, drains and spins.'],['Free Dryer Pickup in '+city,'Identify gas or electric service and whether the drum turns and produces heat.'],['Free Washer & Dryer Pickup in '+city,'Complete working washer and dryer sets receive especially strong consideration because both machines can often be routed together for reuse.']].forEach(([title,text])=>{const card=document.createElement('div'),h3=document.createElement('h3'),p=document.createElement('p');card.className='card';h3.textContent=title;p.textContent=text;card.append(h3,p);grid.appendChild(card);});const note=document.createElement('div');note.className='note';note.innerHTML='<strong>Best chance for free pickup:</strong> fully working appliances or sets. Send clear appliance and access photos for review.';section.append(h2,lead,grid,note);const first=main.querySelector('section');if(first&&first.nextSibling)main.insertBefore(section,first.nextSibling);else main.appendChild(section);}
 
 
 function pagePhone(){
-  const tel=document.querySelector('a[href^="tel:"]');
-  if(tel){
-    const digits=String(tel.getAttribute('href')||'').replace(/\D/g,'');
-    if(digits.length>=10)return {digits:digits.slice(-10),display:digits.slice(-10,-7)+'-'+digits.slice(-7,-4)+'-'+digits.slice(-4)};
-  }
-  return null;
+const tel=document.querySelector('a[href^="tel:"]');
+if(tel){
+const digits=String(tel.getAttribute('href')||'').replace(/\D/g,'');
+if(digits.length>=10)return {digits:digits.slice(-10),display:digits.slice(-10,-7)+'-'+digits.slice(-7,-4)+'-'+digits.slice(-4)};
+}
+return null;
 }
 function ensurePriorityMobileCta(){
-  if(document.querySelector('.priority-mobile-cta')){
-    document.body.classList.add('has-priority-mobile-cta');
-    return;
-  }
-  const request=document.querySelector('#request, form[action*="formspree.io"]');
-  const phone=pagePhone();
-  if(!request||!phone)return;
-  document.body.classList.add('has-priority-mobile-cta');
-  const bar=document.createElement('nav');
-  bar.className='priority-mobile-cta';
-  bar.setAttribute('aria-label','Quick pickup actions');
-  const call=document.createElement('a');call.href='tel:+1'+phone.digits;call.textContent='Call';
-  const textLink=document.createElement('a');textLink.href='sms:+1'+phone.digits;textLink.textContent='Text Photos';
-  const requestLink=document.createElement('a');requestLink.href='#request';requestLink.textContent='Request Pickup';
-  bar.append(call,textLink,requestLink);
-  document.body.appendChild(bar);
+if(document.querySelector('.priority-mobile-cta')){
+document.body.classList.add('has-priority-mobile-cta');
+return;
+}
+const request=document.querySelector('#request, form[action*="formspree.io"]');
+const phone=pagePhone();
+if(!request||!phone)return;
+document.body.classList.add('has-priority-mobile-cta');
+const bar=document.createElement('nav');
+bar.className='priority-mobile-cta';
+bar.setAttribute('aria-label','Quick pickup actions');
+const call=document.createElement('a');call.href='tel:+1'+phone.digits;call.textContent='Call';
+const textLink=document.createElement('a');textLink.href='sms:+1'+phone.digits;textLink.textContent='Text Photos';
+const requestLink=document.createElement('a');requestLink.href='#request';requestLink.textContent='Request Pickup';
+bar.append(call,textLink,requestLink);
+document.body.appendChild(bar);
 }
 function enhancePhotoFirstIntake(){
-  const phone=pagePhone();
-  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
-    if(form.dataset.photoFirstEnhanced==='1')return;
-    form.dataset.photoFirstEnhanced='1';
-    const box=document.createElement('div');
-    box.className='site-photo-first-intake';
-    const title=document.createElement('strong');
-    title.textContent='Photos help us review your pickup faster.';
-    const copy=document.createElement('p');
-    const isSingleWasher=pagePath()==='/free-washer-pickup/';
-    const laundryRequest=/(?:^\/washer-dryer-pickup\/|-washer-dryer-pickup\/$)/.test(pagePath());
-    copy.textContent=isSingleWasher
-      ? 'Share a photo of the whole washing machine, its control panel and interior tub, plus the removal path. Tell us whether it fills, washes, drains and spins.'
-      : laundryRequest
-      ? 'Text clear washer/dryer photos or share a link. Show each machine, its controls and the removal path. Tell us whether the washer fills, drains and spins, and whether the dryer tumbles and heats.'
-      : 'Text clear appliance and access photos or share a link. For refrigerators or freezers, include interior photos; for other appliances, show the relevant tested condition.';
-    box.append(title,copy);
-    if(phone){
-      const sms=document.createElement('a');
-      sms.href='sms:+1'+phone.digits;
-      sms.textContent='Text photos to '+phone.display;
-      sms.className='site-photo-text-button';
-      box.appendChild(sms);
-    }
-    form.insertBefore(box,form.firstChild);
-    if(!form.querySelector('[name="Photo Link"],[name="photo_link"]')){
-      const wrap=document.createElement('label');
-      wrap.className='site-photo-link-field';
-      wrap.textContent='Optional photo share link (Google Photos, iCloud, Dropbox, etc.)';
-      const input=document.createElement('input');
-      input.type='url';
-      input.name='Photo Link';
-      input.inputMode='url';
-      input.placeholder='https://';
-      input.autocomplete='url';
-      wrap.appendChild(input);
-      const submit=form.querySelector('button[type="submit"],input[type="submit"]');
-      if(submit&&submit.parentNode)submit.parentNode.insertBefore(wrap,submit);else form.appendChild(wrap);
-    }
-  });
+const phone=pagePhone();
+document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
+if(form.dataset.photoFirstEnhanced==='1')return;
+form.dataset.photoFirstEnhanced='1';
+const box=document.createElement('div');
+box.className='site-photo-first-intake';
+const title=document.createElement('strong');
+title.textContent='Photos help us review your pickup faster.';
+const copy=document.createElement('p');
+const isSingleWasher=pagePath()==='/free-washer-pickup/';
+const laundryRequest=/(?:^\/washer-dryer-pickup\/|-washer-dryer-pickup\/$)/.test(pagePath());
+copy.textContent=isSingleWasher
+? 'Share a photo of the whole washing machine, its control panel and interior tub, plus the removal path. Tell us whether it fills, washes, drains and spins.'
+: laundryRequest
+? 'Text clear washer/dryer photos or share a link. Show each machine, its controls and the removal path. Tell us whether the washer fills, drains and spins, and whether the dryer tumbles and heats.'
+: 'Text clear appliance and access photos or share a link. For refrigerators or freezers, include interior photos; for other appliances, show the relevant tested condition.';
+box.append(title,copy);
+if(phone){
+const sms=document.createElement('a');
+sms.href='sms:+1'+phone.digits;
+sms.textContent='Text photos to '+phone.display;
+sms.className='site-photo-text-button';
+box.appendChild(sms);
+}
+form.insertBefore(box,form.firstChild);
+if(!form.querySelector('[name="Photo Link"],[name="photo_link"]')){
+const wrap=document.createElement('label');
+wrap.className='site-photo-link-field';
+wrap.textContent='Optional photo share link (Google Photos, iCloud, Dropbox, etc.)';
+const input=document.createElement('input');
+input.type='url';
+input.name='Photo Link';
+input.inputMode='url';
+input.placeholder='https://';
+input.autocomplete='url';
+wrap.appendChild(input);
+const submit=form.querySelector('button[type="submit"],input[type="submit"]');
+if(submit&&submit.parentNode)submit.parentNode.insertBefore(wrap,submit);else form.appendChild(wrap);
+}
+});
 }
 
 
 function enhanceApplianceConditionIntake(){
-    const additions=[
-    ['Working With Issues','Working, but has a problem (explain below)'],
-    ['Mixed Load - Majority Working','Mixed load (about 80% of major appliances working)']
-  ];
-  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
-    const select=form.querySelector('select[name="condition"]');
-    if(!select)return;
-    const existing=new Set(Array.from(select.options,option=>String(option.value||'').trim().toLowerCase()));
-    additions.forEach(([value,label])=>{
-      if(existing.has(value.toLowerCase()))return;
-      const option=document.createElement('option');
-      option.value=value;
-      option.textContent=label;
-      select.appendChild(option);
-      existing.add(value.toLowerCase());
-    });
-    let details=form.querySelector('[name="condition_details"]');
-    if(!details){
-      const label=document.createElement('label');
-      label.className='site-condition-details';
-      label.style.cssText='display:block;margin:12px 0;font-weight:600';
-      label.textContent='Please explain any problem with the appliance';
-      details=document.createElement('textarea');
-      details.name='condition_details';
-      details.rows=3;
-      details.placeholder='Example: washing machine works but makes a loud noise.';
-      details.style.cssText='display:block;width:100%;box-sizing:border-box;margin-top:6px;font-weight:400';
-      label.appendChild(details);
-      const holder=select.closest('label')||select.closest('.field')||select;
-      holder.insertAdjacentElement('afterend',label);
-    }
-    const update=()=>{
-      const hasProblem=/issues|problems|repair|non[\s-]*working|not[\s-]*working|mixed|multi-appliance load|broken|damaged|faulty/i.test(select.value);
-      details.required=hasProblem;
-      details.setAttribute('aria-required',String(hasProblem));
-    };
-    select.addEventListener('change',update);
-    update();
-  });
+const additions=[
+['Working With Issues','Working, but has a problem (explain below)'],
+['Mixed Load - Majority Working','Mixed load (about 80% of major appliances working)']
+];
+document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
+const select=form.querySelector('select[name="condition"]');
+if(!select)return;
+const existing=new Set(Array.from(select.options,option=>String(option.value||'').trim().toLowerCase()));
+additions.forEach(([value,label])=>{
+if(existing.has(value.toLowerCase()))return;
+const option=document.createElement('option');
+option.value=value;
+option.textContent=label;
+select.appendChild(option);
+existing.add(value.toLowerCase());
+});
+let details=form.querySelector('[name="condition_details"]');
+if(!details){
+const label=document.createElement('label');
+label.className='site-condition-details';
+label.style.cssText='display:block;margin:12px 0;font-weight:600';
+label.textContent='Please explain any problem with the appliance';
+details=document.createElement('textarea');
+details.name='condition_details';
+details.rows=3;
+details.placeholder='Example: washing machine works but makes a loud noise.';
+details.style.cssText='display:block;width:100%;box-sizing:border-box;margin-top:6px;font-weight:400';
+label.appendChild(details);
+const holder=select.closest('label')||select.closest('.field')||select;
+holder.insertAdjacentElement('afterend',label);
+}
+const update=()=>{
+const hasProblem=/issues|problems|repair|non[\s-]*working|not[\s-]*working|mixed|multi-appliance load|broken|damaged|faulty/i.test(select.value);
+details.required=hasProblem;
+details.setAttribute('aria-required',String(hasProblem));
+};
+select.addEventListener('change',update);
+update();
+});
 }
 
 function loadPaidRemovalChoice(){if(document.querySelector('script[data-paid-removal-choice]'))return;const t=document.createElement('script');t.src=siteUrl('assets/paid-removal-choice.js');t.defer=true;t.dataset.paidRemovalChoice='1';document.head.appendChild(t);}
 function recordPaidRemovalPreference(form){
-  const c=findField(form,['paid_option','paid_removal_preference']),v=c&&c.value;
-  const q=v==='quote_ok'||v==='quote_only'||v==='Yes, after seeing the price',f=v==='free_only'||v==='No, free pickup only';
-  if(c&&c.name==='paid_option')hidden(form,'paid_removal_preference',q?'quote_ok':f?'free_only':'');
-  const choice=q?'QUOTE_REVIEW_ONLY':f?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
-  hidden(form,'Paid Removal Quote Gate',choice);
-  hidden(form,'Paid Removal Next Step',choice==='QUOTE_REVIEW_ONLY'?'Offer a separate quote only if free pickup is unavailable, subject to approved local capacity and explicit customer price acceptance. Do not charge or book automatically.':'Do not offer paid removal without new explicit customer permission.');
+const c=findField(form,['paid_option','paid_removal_preference']),v=c&&c.value;
+const q=v==='quote_ok'||v==='quote_only'||v==='Yes, after seeing the price',f=v==='free_only'||v==='No, free pickup only';
+if(c&&c.name==='paid_option')hidden(form,'paid_removal_preference',q?'quote_ok':f?'free_only':'');
+const choice=q?'QUOTE_REVIEW_ONLY':f?'FREE_PICKUP_ONLY':'NO_PAID_QUOTE_AUTHORIZATION';
+hidden(form,'Paid Removal Quote Gate',choice);
+hidden(form,'Paid Removal Next Step',choice==='QUOTE_REVIEW_ONLY'?'Offer a separate quote only if free pickup is unavailable, subject to approved local capacity and explicit customer price acceptance. Do not charge or book automatically.':'Do not offer paid removal without new explicit customer permission.');
 }
 
 function enhanceRequestNextSteps(){
-  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
-    const host=form.closest('section')||form.parentElement;
-    if(!host||host.querySelector('.site-request-next-steps'))return;
-    const text=(host.textContent||'').toLowerCase();
-    if(text.includes('what happens after you submit'))return;
-    const box=document.createElement('div');
-    box.className='site-request-next-steps';
-    box.innerHTML='<h3>What happens after you submit?</h3><div class="site-request-next-grid"><div><strong>1. Appliance review</strong><span>We check condition and photos.</span></div><div><strong>2. Access review</strong><span>We check stairs, parking and available routes.</span></div><div><strong>3. Pickup confirmation</strong><span>If eligible, we confirm by call or text.</span></div></div>';
-    host.insertBefore(box,form);
-  });
+document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
+const host=form.closest('section')||form.parentElement;
+if(!host||host.querySelector('.site-request-next-steps'))return;
+const text=(host.textContent||'').toLowerCase();
+if(text.includes('what happens after you submit'))return;
+const box=document.createElement('div');
+box.className='site-request-next-steps';
+box.innerHTML='<h3>What happens after you submit?</h3><div class="site-request-next-grid"><div><strong>1. Appliance review</strong><span>We check condition and photos.</span></div><div><strong>2. Access review</strong><span>We check stairs, parking and available routes.</span></div><div><strong>3. Pickup confirmation</strong><span>If eligible, we confirm by call or text.</span></div></div>';
+host.insertBefore(box,form);
+});
 }
 
 
 const GA4_MEASUREMENT_ID='G-X9VMB6GQMF';
 
 function analyticsPageLabel(){
-  const p=(location.pathname||'/').replace(/^\/+|\/+$/g,'');
-  return p || 'home';
+const p=(location.pathname||'/').replace(/^\/+|\/+$/g,'');
+return p || 'home';
 }
 function gaEvent(name,params){
-  if(typeof window.gtag!=='function')return;
-  window.gtag('event',name,Object.assign({
-    page_path:location.pathname||'/',
-    page_title:document.title||'',
-    page_label:analyticsPageLabel()
-  },params||{}));
+if(typeof window.gtag!=='function')return;
+window.gtag('event',name,Object.assign({
+page_path:location.pathname||'/',
+page_title:document.title||'',
+page_label:analyticsPageLabel()
+},params||{}));
 }
 function initLeadAnalytics(){
-  if(typeof window==='undefined'||typeof document==='undefined'||window.__freeReliableGa4Loaded)return;
-  window.__freeReliableGa4Loaded=true;
-  window.dataLayer=window.dataLayer||[];
-  window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
-  window.gtag('js',new Date());
-  window.gtag('config',GA4_MEASUREMENT_ID,{send_page_view:true});
+if(typeof window==='undefined'||typeof document==='undefined'||window.__freeReliableGa4Loaded)return;
+window.__freeReliableGa4Loaded=true;
+window.dataLayer=window.dataLayer||[];
+window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+window.gtag('js',new Date());
+window.gtag('config',GA4_MEASUREMENT_ID,{send_page_view:true});
 
-  function loadGa4Library(){
-    if(document.querySelector('script[data-free-reliable-ga4]'))return;
-    const tag=document.createElement('script');
-    tag.async=true;
-    tag.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(GA4_MEASUREMENT_ID);
-    tag.dataset.freeReliableGa4='1';
-    document.head.appendChild(tag);
-  }
-  function scheduleGa4Library(){
-    if(typeof window.addEventListener!=='function')return;
-    const afterLoad=function(){
-      if('requestIdleCallback' in window)window.requestIdleCallback(loadGa4Library,{timeout:2000});
-      else window.setTimeout(loadGa4Library,0);
-    };
-    if(document.readyState==='complete')afterLoad();
-    else window.addEventListener('load',afterLoad,{once:true});
-    window.addEventListener('pointerdown',loadGa4Library,{once:true,passive:true});
-    window.addEventListener('keydown',loadGa4Library,{once:true});
-  }
-  scheduleGa4Library();
+function loadGa4Library(){
+if(document.querySelector('script[data-free-reliable-ga4]'))return;
+const tag=document.createElement('script');
+tag.async=true;
+tag.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(GA4_MEASUREMENT_ID);
+tag.dataset.freeReliableGa4='1';
+document.head.appendChild(tag);
+}
+function scheduleGa4Library(){
+if(typeof window.addEventListener!=='function')return;
+const afterLoad=function(){
+if('requestIdleCallback' in window)window.requestIdleCallback(loadGa4Library,{timeout:2000});
+else window.setTimeout(loadGa4Library,0);
+};
+if(document.readyState==='complete')afterLoad();
+else window.addEventListener('load',afterLoad,{once:true});
+window.addEventListener('pointerdown',loadGa4Library,{once:true,passive:true});
+window.addEventListener('keydown',loadGa4Library,{once:true});
+}
+scheduleGa4Library();
 
-  document.addEventListener('click',function(event){
-    const link=event.target&&event.target.closest?event.target.closest('a[href]'):null;
-    if(!link)return;
-    const href=String(link.getAttribute('href')||'').trim().toLowerCase();
-    let eventName=null;
-    if(href.startsWith('tel:'))eventName='click_call';
-    else if(href.startsWith('sms:'))eventName='click_text';
-    if(!eventName)return;
-    gaEvent(eventName,{
-      link_text:String(link.textContent||'').trim().slice(0,100),
-      button_location:link.closest('.priority-mobile-cta')?'mobile_sticky':'page',
-      transport_type:'beacon'
-    });
-  },true);
+document.addEventListener('click',function(event){
+const link=event.target&&event.target.closest?event.target.closest('a[href]'):null;
+if(!link)return;
+const href=String(link.getAttribute('href')||'').trim().toLowerCase();
+let eventName=null;
+if(href.startsWith('tel:'))eventName='click_call';
+else if(href.startsWith('sms:'))eventName='click_text';
+if(!eventName)return;
+gaEvent(eventName,{
+link_text:String(link.textContent||'').trim().slice(0,100),
+button_location:link.closest('.priority-mobile-cta')?'mobile_sticky':'page',
+transport_type:'beacon'
+});
+},true);
 
-  document.addEventListener('submit',function(event){
-    const form=event.target;
-    if(!form||!form.matches||!form.matches('form[action*="formspree.io"]'))return;
-    if(form.dataset.customerRoutingWired==='1'&&form.dataset.customerRoutingQualified!=='1')return;
-    gaEvent('pickup_form_submit',{
-      form_id:form.id||'pickup_form',
-      transport_type:'beacon'
-    });
-  },true);
+document.addEventListener('submit',function(event){
+const form=event.target;
+if(!form||!form.matches||!form.matches('form[action*="formspree.io"]'))return;
+if(form.dataset.customerRoutingWired==='1'&&form.dataset.customerRoutingQualified!=='1')return;
+gaEvent('pickup_form_submit',{
+form_id:form.id||'pickup_form',
+transport_type:'beacon'
+});
+},true);
 }
 
 initLeadAnalytics();
