@@ -50,7 +50,10 @@ jobs:
               if not cluster.get('single_city_intake'):
                   continue
               main_slug = cluster.get('main')
-              for child_slug in (cluster.get('children') or {}).values():
+              dedicated_types = set(cluster.get('dedicated_intake_children') or [])
+              for child_type, child_slug in (cluster.get('children') or {}).items():
+                  if child_type in dedicated_types:
+                      continue
                   if main_slug and child_slug:
                       shared_intake_children[child_slug] = main_slug
 
