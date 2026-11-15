@@ -190,8 +190,11 @@ function enhancePhotoFirstIntake(){
     const title=document.createElement('strong');
     title.textContent='Photos help us review your pickup faster.';
     const copy=document.createElement('p');
-    const laundryRequest=/(?:^\/free-washer-pickup\/|^\/washer-dryer-pickup\/|-washer-dryer-pickup\/$)/.test(pagePath());
-    copy.textContent=laundryRequest
+    const isSingleWasher=pagePath()==='/free-washer-pickup/';
+    const laundryRequest=/(?:^\/washer-dryer-pickup\/|-washer-dryer-pickup\/$)/.test(pagePath());
+    copy.textContent=isSingleWasher
+      ? 'Share a photo of the whole washing machine, its control panel and interior tub, plus the removal path. Tell us whether it fills, washes, drains and spins.'
+      : laundryRequest
       ? 'Text clear washer/dryer photos or share a link. Show each machine, its controls and the removal path. Tell us whether the washer fills, drains and spins, and whether the dryer tumbles and heats.'
       : 'Text clear appliance and access photos or share a link. For refrigerators or freezers, include interior photos; for other appliances, show the relevant tested condition.';
     box.append(title,copy);
