@@ -133,7 +133,7 @@ function ensureRegionalState(form){if(findField(form,['state','State','pickup_st
 // Florida city request guides share a single ZIP+4 enhancement instead of
 // duplicating the validation patch across hundreds of request-only pages.
 function enhanceFloridaCityZip4(){
-  if(!/^\\/[a-z0-9-]+-fl-(?:appliance|washer-dryer|refrigerator|freezer|stove-oven)-pickup\\/$/.test(pagePath()))return;
+  if(!/^\/[a-z0-9-]+-fl-(?:appliance|washer-dryer|refrigerator|freezer|stove-oven)-pickup\/$/.test(pagePath()))return;
   document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
     const zip=form.querySelector('input[name="zip"]');
     if(!zip||zip.getAttribute('pattern')!=='[0-9]{5}')return;
