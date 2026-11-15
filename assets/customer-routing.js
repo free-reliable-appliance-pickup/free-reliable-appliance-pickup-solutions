@@ -130,6 +130,23 @@ const COMPRESSED_LAUNDRY_REPLACEMENTS={'washer-dryer-pickup-frontload-set.jpg':'
 
 function replaceCompressedLaundryPhotos(){document.querySelectorAll('img[src*="/assets/washer-dryer-photos/"]').forEach(img=>{const raw=String(img.getAttribute('src')||''),file=raw.split('?')[0].split('/').pop(),replacement=COMPRESSED_LAUNDRY_REPLACEMENTS[file];if(!replacement)return;img.src=siteUrl('assets/laundry/'+replacement);img.removeAttribute('width');img.removeAttribute('height');img.decoding='async';});}
 function ensureRegionalState(form){if(findField(form,['state','State','pickup_state','Primary State']))return;if(CA_WASHER_DRYER_PAGES.has(pagePath()))hidden(form,'state','CA');}
+// Florida city request guides share a single ZIP+4 enhancement instead of
+// duplicating the validation patch across hundreds of request-only pages.
+function enhanceFloridaCityZip4(){
+  if(!/^\\/[a-z0-9-]+-fl-(?:appliance|washer-dryer|refrigerator|freezer|stove-oven)-pickup\\/$/.test(pagePath()))return;
+  document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{
+    const zip=form.querySelector('input[name="zip"]');
+    if(!zip||zip.getAttribute('pattern')!=='[0-9]{5}')return;
+    zip.setAttribute('pattern','[0-9]{5}(-[0-9]{4})?');
+    zip.setAttribute('minlength','5');
+    zip.setAttribute('maxlength','10');
+    zip.setAttribute('title','Enter a five-digit ZIP or ZIP+4 (e.g. 33101-1234)');
+    const label=zip.closest('label');
+    if(label&&label.firstChild&&label.firstChild.nodeType===3){
+      label.firstChild.textContent='ZIP code (5 digits or ZIP+4)';
+    }
+  });
+}
 function preferLocalRequestForm(){const forms=Array.from(document.querySelectorAll('form[action*="formspree.io"]'));forms.forEach(ensureRegionalState);const form=forms.find(isCustomerPickupForm);if(!form)return;let target=form.closest('section');if(!target)target=form;if(!target.id)target.id='request';const localHref='#'+target.id,selectors=['a[href="/#request"]','a[href="../#request"]','a[href="./#request"]','a[href="https://freereliableappliancepickup.com/#request"]'];document.querySelectorAll(selectors.join(',')).forEach(link=>link.setAttribute('href',localHref));}
 function buildLaundryGallery(path){if(document.querySelector('.site-laundry-photo-showcase'))return;const main=document.querySelector('main');if(!main)return;const pageIndex=Math.max(0,Object.keys(WASHER_DRYER_PHOTOS).indexOf(path)),picks=[LAUNDRY_GALLERY[pageIndex%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+3)%LAUNDRY_GALLERY.length],LAUNDRY_GALLERY[(pageIndex+6)%LAUNDRY_GALLERY.length]],section=document.createElement('section');section.className='site-laundry-photo-showcase';const h2=document.createElement('h2');h2.textContent='Real Washer & Dryer Set Photos';const p=document.createElement('p');p.textContent='Real used washer and dryer set photos. Send photos of your machines for condition, access and route review.';const grid=document.createElement('div');picks.forEach(([file,alt])=>{const figure=document.createElement('figure'),img=document.createElement('img');figure.style.margin='0';img.src=siteUrl('assets/laundry/'+file);img.alt=alt;img.loading='lazy';img.decoding='async';figure.appendChild(img);grid.appendChild(figure);});section.append(h2,p,grid);main.insertBefore(section,main.firstChild);}
 function enhanceWasherDryerPhotos(){
@@ -359,7 +376,7 @@ function initLeadAnalytics(){
 initLeadAnalytics();
 load();
 if(typeof window!=='undefined'&&window.location&&window.location.pathname.includes('-nv-'))import('/assets/nv-subject.js');
-document.addEventListener('DOMContentLoaded',()=>{ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();loadPaidRemovalChoice();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{recordObservedTrafficSource(form);if(isCustomerPickupForm(form))wireForm(form);});});
+document.addEventListener('DOMContentLoaded',()=>{enhanceFloridaCityZip4();ensurePriorityMobileCta();enhancePhotoFirstIntake();enhanceApplianceConditionIntake();loadPaidRemovalChoice();enhanceRequestNextSteps();replaceCompressedLaundryPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(ensureRegionalState);preferLocalRequestForm();enhanceWasherDryerPhotos();document.querySelectorAll('form[action*="formspree.io"]').forEach(form=>{recordObservedTrafficSource(form);if(isCustomerPickupForm(form))wireForm(form);});});
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){window.addEventListener('load',()=>{enhanceWasherDryerPhotos();});}
 
 if(typeof document!=='undefined'&&!document.querySelector('script[data-premium-sharp-hero]')){const sharp=document.createElement('script');sharp.src=siteUrl('assets/premium-sharp-hero-fix.js')+'?v=20261016-pair-only';sharp.async=true;sharp.dataset.premiumSharpHero='1';document.head.appendChild(sharp);}
