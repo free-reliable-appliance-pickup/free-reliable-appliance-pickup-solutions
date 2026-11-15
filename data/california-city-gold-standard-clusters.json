@@ -130,6 +130,7 @@
       },
       "require_official_contact_on_children": true,
       "single_city_intake": true,
+      "dedicated_intake_children": ["washer_dryer"],
       "acceptance_boundaries": {
         "required_terms": [
           "dishwasher",
