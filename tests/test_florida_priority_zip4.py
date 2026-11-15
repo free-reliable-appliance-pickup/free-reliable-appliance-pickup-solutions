@@ -15,6 +15,24 @@ ZIP_PATTERN = r"[0-9]{5}(-[0-9]{4})?"
 
 
 class FloridaPriorityZipTests(unittest.TestCase):
+    def test_remaining_florida_city_guides_have_shared_zip4_enhancement(self):
+        routing = (ROOT / "assets" / "customer-routing.js").read_text(encoding="utf-8")
+        self.assertLessEqual(len(routing.encode("utf-8")), 40000)
+        self.assertIn("window.location.pathname.includes('-fl-')", routing)
+        self.assertIn("import('/assets/florida-zip4.js')", routing)
+        script = (ROOT / "assets" / "florida-zip4.js").read_text(encoding="utf-8")
+        self.assertIn("function improve(){", script)
+        self.assertIn("DOMContentLoaded',improve", script)
+        self.assertIn("[0-9]{5}(-[0-9]{4})?", script)
+        self.assertIn("ZIP code (5 digits or ZIP+4)", script)
+        self.assertIn("-fl-(?:appliance|washer-dryer|refrigerator|freezer|stove-oven)-pickup", script)
+        for city in ("hialeah", "fort-lauderdale", "west-palm-beach"):
+            with self.subTest(city=city):
+                html = (ROOT / f"{city}-fl-appliance-pickup" / "index.html").read_text(encoding="utf-8")
+                self.assertIn('<meta name="robots" content="noindex, follow">', html)
+                self.assertIn('src="/assets/customer-routing.js"', html)
+                self.assertIn('name="zip"', html)
+
     def test_priority_guides_accept_zip4_and_keep_request_only_safeguards(self):
         for city in CITIES:
             for appliance_type in TYPES:
