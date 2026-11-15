@@ -63,8 +63,9 @@ jobs:
           for cluster in city_gold.get('clusters', []):
               if cluster.get('single_city_intake'):
                   main_slug = cluster.get('main', '')
-                  for child_slug in (cluster.get('children') or {}).values():
-                      if child_slug and main_slug:
+                  dedicated_types = set(cluster.get('dedicated_intake_children') or [])
+                  for child_type, child_slug in (cluster.get('children') or {}).items():
+                      if child_type not in dedicated_types and child_slug and main_slug:
                           single_intake_children[child_slug] = main_slug
           seen_descriptions = defaultdict(list)
           seen_h1s = defaultdict(list)
