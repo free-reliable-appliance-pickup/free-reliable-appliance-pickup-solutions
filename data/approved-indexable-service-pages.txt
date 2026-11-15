@@ -118,6 +118,7 @@ fontana-washer-dryer-pickup
 fountain-hills-washer-dryer-pickup
 fountain-valley-washer-dryer-pickup
 fremont-washer-dryer-pickup
+free-washer-pickup
 fresno-county-appliance-pickup
 fresno-freezer-pickup
 fresno-refrigerator-pickup
