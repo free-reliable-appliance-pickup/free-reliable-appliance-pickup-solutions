@@ -24,7 +24,7 @@ class FloridaPriorityZipTests(unittest.TestCase):
                     self.assertIn('<meta name="robots" content="noindex, follow">', html)
                     self.assertIn('https://formspree.io/f/mvzeapzd', html)
                     self.assertIn('name="photos_available" required', html)
-                    zip_inputs = re.findall(r'<input\\b[^>]*\\bname="zip"[^>]*>', html)
+                    zip_inputs = re.findall(r'<input\b[^>]*\bname="zip"[^>]*>', html)
                     self.assertEqual(len(zip_inputs), 1, "One required ZIP input per page")
                     zip_input = zip_inputs[0]
                     self.assertIn("required", zip_input)
