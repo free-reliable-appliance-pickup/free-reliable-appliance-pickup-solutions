@@ -114,5 +114,26 @@
 
 </main>
 <footer><strong>Free Reliable Appliance Pickup</strong><br>Rancho Cucamonga, CA service-area requests · Mon–Sun 8AM–8PM<br><a href="tel:+19093756685">909-375-6685</a> · <a href="../contact/">Contact</a> · <a href="../inland-empire-appliance-pickup/">Inland Empire Service Area</a></footer>
-<!-- priority-mobile-cta-v1 --><nav class="priority-mobile-cta" aria-label="Quick pickup contact"><a href="tel:+19093756685">Call 909-375-6685</a><a href="sms:+19093756685">Text Photos</a><a href="#request">Request Free Pickup</a></nav></body>
+<!-- priority-mobile-cta-v1 --><nav class="priority-mobile-cta" aria-label="Quick pickup contact"><a href="tel:+19093756685">Call 909-375-6685</a><a href="sms:+19093756685">Text Photos</a><a href="#request">Request Free Pickup</a></nav><!-- Set the laundry selection only for visitors coming from the dedicated local washer/dryer guide. -->
+<script>(function(){
+if(new URLSearchParams(location.search).get('appliance')!=='washer-dryer')return;
+function prefill(){
+ var form=document.querySelector('#request form[action*="formspree.io"]');
+ if(!form)return;
+ var select=form.querySelector('select[name="appliance"]');
+ if(!select)return;
+ for(var i=0;i<select.options.length;i++){
+  if(select.options[i].textContent.trim()==='Washer and Dryer'){
+   select.selectedIndex=i;
+   select.dispatchEvent(new Event('change',{bubbles:true}));
+   break;
+  }
+ }
+ var origin=form.querySelector('input[name="request_origin"]');
+ if(!origin){origin=document.createElement('input');origin.type='hidden';origin.name='request_origin';form.appendChild(origin);}
+ origin.value='rancho-cucamonga-washer-dryer-pickup';
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',prefill,{once:true});else prefill();
+})();</script>
+</body>
 </html>
