@@ -96,24 +96,7 @@ def normalize_image(src: str):
         return None
     return urlunsplit(("https", "freereliableappliancepickup.com", parts.path, "", ""))
 
-# Preserve the homepage's preferred garage-appliance image in every automated rebuild.
-# The homepage is an index.html at the repository root, not a /slug/index.html page.
 entries = []
-homepage = ROOT / "index.html"
-if not homepage.is_file():
-    raise SystemExit("Homepage index.html missing; refusing to generate image sitemap")
-home_source = homepage.read_text(encoding="utf-8", errors="replace")
-home_images = re.findall(
-    r"""<meta\b[^>]*property=['"]og:image['"][^>]*content=['"]([^'"]+)['"]""",
-    home_source,
-    re.I,
-)
-if len(home_images) != 1:
-    raise SystemExit("Expected exactly one homepage og:image for sitemap")
-home_image = normalize_image(home_images[0])
-if not home_image or not (ROOT / urlsplit(home_image).path.lstrip("/")).is_file():
-    raise SystemExit("Homepage preferred image is missing or not a valid local image")
-entries.append((f"{BASE}/", [home_image]))
 
 for slug in slugs:
     is_home = slug == "__home__"
