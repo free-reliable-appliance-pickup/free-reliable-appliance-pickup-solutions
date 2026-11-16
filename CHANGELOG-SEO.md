@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-11-16 — Five California general-form intake accuracy updates (draft)
+- **Source verified**: Bay Area hub lacked street address, ZIP and structured appliance-location/stairs; San Jose and Bakersfield city general forms lacked structured location/stairs; Visalia and Modesto had optional address plus location/stairs hidden in optional details (#742, #745).
+- **Technical correction**: Add visible native-required blank-first fields only where missing; move existing Visalia/Modesto dropdowns outside optional property details and require existing address. Add one general major appliance service label per form, superseding stale draft #575 without discarding its requested attribution.
+- **Stable boundaries**: Keep all other named fields, Formspree endpoint, contact routing, page SEO title, canonical, robots, hero assets, FAQ and pickup eligibility descriptions unchanged. Bay Area statewide hub still cannot guarantee partner route availability; no new indexable pages.
+- **Verification**: Exact latest-main source preflight with required/negative fixtures, before/after non-form byte comparison, no duplicate service field, blank first selection, no collapsed required control. Draft release only until all GitHub Actions, independent review, owner merge approval and authorized inbox/browser checks.
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
