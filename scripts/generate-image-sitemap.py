@@ -47,6 +47,8 @@ extra = [
     "fresno-refrigerator-pickup",
     "fresno-freezer-pickup",
     "fresno-stove-oven-pickup",
+    # Nationwide service directory: use its visible multi-appliance garage hero.
+    "service-areas",
 ]
 
 slugs = []
