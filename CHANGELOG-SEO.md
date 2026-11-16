@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-11-16 — El Monte / Baldwin Park pickup access validation (draft technical exception)
+- Verified intake defect (#721): El Monte permitted blank pickup street address, appliance location and stairs; Baldwin Park permitted blank location/stairs. The two selects were in collapsed optional details.
+- Staged repair: El Monte address required, and both cities' existing location and stairs controls visible and native-required, with blank first options and honest Unknown values. The remaining property/photo details stay optional.
+- Preserved: all original field names, Formspree endpoint, city/source tags, phone/SMS, canonical/robots, visible SEO copy outside the form, original image, fee consent, and active experiment registry.
+- Source QA: positive and negative required-control fixtures, unchanged field-name inventory, unchanged HTML outside each form, unchanged disclosure count.
+- Status: branch/PR only, not merged or live; exact-head CI, independent form review, accountable owner merge approval, mobile validation and owner-authorized Formspree receipt remain mandatory. Rollback: revert two form edits.
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
