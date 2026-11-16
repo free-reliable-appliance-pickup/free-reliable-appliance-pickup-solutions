@@ -97,6 +97,23 @@ def normalize_image(src: str):
 
 entries = []
 
+# Preserve the homepage's real garage-appliance photo independently of city slugs.
+home_path = ROOT / "index.html"
+if not home_path.is_file():
+    raise SystemExit("Homepage index.html missing")
+home_source = home_path.read_text(encoding="utf-8", errors="replace")
+home_images = re.findall(
+    r"""<meta\b[^>]*property=['"]og:image['"][^>]*content=['"]([^'"]+)['"]""",
+    home_source,
+    re.I,
+)
+if len(home_images) != 1:
+    raise SystemExit("Exactly one homepage og:image required for image sitemap")
+home_image = normalize_image(home_images[0])
+if not home_image or not (ROOT / urlsplit(home_image).path.lstrip("/")).is_file():
+    raise SystemExit("Homepage hero image is not a valid local image")
+entries.append((f"{BASE}/", [home_image]))
+
 for slug in slugs:
     page_path = ROOT / slug / "index.html"
     if not page_path.exists():
