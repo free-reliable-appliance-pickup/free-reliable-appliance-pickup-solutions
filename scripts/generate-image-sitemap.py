@@ -125,8 +125,9 @@ for slug in slugs:
 home_page_path = ROOT / "index.html"
 if home_page_path.exists():
     home_html = home_page_path.read_text(encoding="utf-8", errors="replace")
-    home_candidates = re.findall(r'<img\\b[^>]*\\bsrc=["\\']([^"\\']+)["\\']', home_html, re.I)
-    home_candidates += re.findall(r'<meta\\b[^>]*property=["\\']og:image["\\'][^>]*content=["\\']([^"\\']+)["\\']', home_html, re.I)
+    home_candidates = []
+    home_candidates.extend(re.findall(r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']', html, re.I))
+    home_candidates.extend(re.findall(r'<meta\b[^>]*property=["\']og:image["\'][^>]*content=["\']([^"\']+)["\']', html, re.I))
     home_images = []
     seen_home_images = set()
     for src in home_candidates:
