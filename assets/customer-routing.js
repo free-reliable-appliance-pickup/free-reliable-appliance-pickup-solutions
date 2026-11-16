@@ -348,9 +348,29 @@ transport_type:'beacon'
 });
 },true);
 
+// Record one non-PII form-start signal per form, to distinguish friction from low traffic.
+function recordPickupFormStart(event){
+const target=event.target;
+const form=target&&target.closest?target.closest('form[action*="formspree.io"]'):null;
+if(!form||form.dataset.pickupFormStartTracked==='1')return;
+form.dataset.pickupFormStartTracked='1';
+gaEvent('pickup_form_start',{
+form_id:form.id||'pickup_form',
+transport_type:'beacon'
+});
+}
+document.addEventListener('input',recordPickupFormStart,true);
+document.addEventListener('change',recordPickupFormStart,true);
+
 document.addEventListener('submit',function(event){
 const form=event.target;
-if(!form||!form.matches||!form.matches('form[action*="formspree.io"]'))return;
+if(!form||!form.matches)return;
+if(form.id==='hero-zip-form'){
+  // Do not send customer ZIP or other personally identifying data to analytics.
+  gaEvent('pickup_zip_check',{form_id:'hero-zip-form',transport_type:'beacon'});
+  return;
+}
+if(!form.matches('form[action*="formspree.io"]'))return;
 if(form.dataset.customerRoutingWired==='1'&&form.dataset.customerRoutingQualified!=='1')return;
 gaEvent('pickup_form_submit',{
 form_id:form.id||'pickup_form',
