@@ -194,8 +194,8 @@ def main():
     # statewide intake form, which collects the actual pickup city and ZIP.
     for r in data["cities"]:
         k=re.sub(r"[^a-z0-9]+","-",r["city"].lower()).strip("-")
-        pattern = rf'<details class="florida-city-choice" data-florida-city="{re.escape(k)}">([\\s\\S]*?)</details>'
-        sections = re.findall(pattern, hub)
+        pattern = rf'<details class="florida-city-choice" data-florida-city="{re.escape(k)}">(.*?)</details>'
+        sections = re.findall(pattern, hub, flags=re.S)
         if len(sections) != 1:
             errors.append(f"hub missing or duplicated city selector for {r['city']}: {len(sections)}")
             continue
