@@ -209,8 +209,15 @@ jobs:
               'san francisco':'san francisco bay area',
               'fresno':'central valley',
           }
+          # Route aliases are declared as constant strings (for example
+          # SGV='San Gabriel Valley',OC='Orange County') to reduce JS size.
+          # Resolve those aliases rather than treating valid routes as missing.
+          region_aliases=dict(re.findall(r"\b([a-z_][a-z0-9_]*)\s*=\s*'([^']+)'",routing))
           for city,region in strategic.items():
-              if f"'{city}':'{region}'" not in routing:
+              direct=f"'{city}':'{region}'" in routing
+              match=re.search(rf"'{re.escape(city)}'\s*:\s*([a-z_][a-z0-9_]*)\b",routing)
+              aliased=bool(match and region_aliases.get(match.group(1)) == region)
+              if not (direct or aliased):
                   failures.append(f'customer routing missing strategic city: {city} -> {region}')
 
           print('LAUNCH_PAGES_CHECKED',pages_checked)
