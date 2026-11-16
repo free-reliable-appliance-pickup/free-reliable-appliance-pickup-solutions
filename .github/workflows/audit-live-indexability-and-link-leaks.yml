@@ -5,6 +5,25 @@ on:
     branches: [main]
     paths:
       - 'sitemap.xml'
+      - 'service-areas/index.html'
+      - 'texas-appliance-pickup/index.html'
+      - 'florida-appliance-pickup/index.html'
+      - 'north-carolina-appliance-pickup/index.html'
+      - 'georgia-appliance-pickup/index.html'
+      - 'appliance-buyers-resellers/index.html'
+      - 'nationwide-appliance-pickup/index.html'
+      - '.github/workflows/audit-live-indexability-and-link-leaks.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'sitemap.xml'
+      - 'service-areas/index.html'
+      - 'texas-appliance-pickup/index.html'
+      - 'florida-appliance-pickup/index.html'
+      - 'north-carolina-appliance-pickup/index.html'
+      - 'georgia-appliance-pickup/index.html'
+      - 'appliance-buyers-resellers/index.html'
+      - 'nationwide-appliance-pickup/index.html'
       - '.github/workflows/audit-live-indexability-and-link-leaks.yml'
   workflow_dispatch:
 

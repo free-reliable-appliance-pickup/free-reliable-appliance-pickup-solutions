@@ -188,14 +188,27 @@ def main():
         errors.append("Florida hub must not promise unsupported Formspree Free file uploads")
     if "can apply for the markets they can actually cover" in hub:
         errors.append("Florida hub retains unapproved recruiting invitation")
+    # Each city selector keeps its own four detailed request-only guides,
+    # but the retired/noindex *general appliance* guide must not be linked
+    # from the indexable statewide hub. Its visible option opens the active
+    # statewide intake form, which collects the actual pickup city and ZIP.
     for r in data["cities"]:
         k=re.sub(r"[^a-z0-9]+","-",r["city"].lower()).strip("-")
-        if f'<details class="florida-city-choice" data-florida-city="{k}">' not in hub:
-            errors.append(f"hub lacks five-guide selector for {r['city']}")
-        for kind in TYPES:
+        pattern = rf'<details class="florida-city-choice" data-florida-city="{re.escape(k)}">(.*?)</details>'
+        sections = re.findall(pattern, hub, flags=re.S)
+        if len(sections) != 1:
+            errors.append(f"hub missing or duplicated city selector for {r['city']}: {len(sections)}")
+            continue
+        section = sections[0]
+        general = '<a href="#request">General appliance pickup</a>'
+        if section.count(general) != 1:
+            errors.append(f"hub missing active general-appliance form link for {r['city']}")
+        if f'href="/{k}-fl-appliance-pickup/"' in hub:
+            errors.append(f"hub still links retired general appliance page for {r['city']}")
+        for kind in TYPES[1:]:
             link = f'href="/{k}-fl-{kind}-pickup/"'
-            if hub.count(link) != 1:
-                errors.append(f"hub missing or duplicated {kind} guide for {r['city']}: {hub.count(link)}")
+            if section.count(link) != 1:
+                errors.append(f"hub missing or duplicated {kind} guide for {r['city']}: {section.count(link)}")
     # Regression gate: major metro and Lee/Collier neighbors link to same appliance type.
     priority_neighbors = {
         "fort-lauderdale": ("hollywood", "pompano-beach", "pembroke-pines", "miramar", "coral-springs"),

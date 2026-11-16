@@ -199,8 +199,13 @@ class MinnesotaBatchTests(unittest.TestCase):
     def test_service_areas_has_request_only_minnesota_link(self):
         """Keep active service coverage separate from a staging link."""
         service = (ROOT / "service-areas/index.html").read_text(encoding="utf-8")
-        self.assertIn('href="/minnesota-appliance-pickup/"', service)
-        self.assertIn("Minnesota Free Appliance Pickup requests", service)
+        # Minnesota's statewide page is request-only/noindex; the public
+        # directory must route the visible Minnesota option to a usable form.
+        self.assertIn('<a href="/nationwide-appliance-pickup/#request">Minnesota Free Appliance Pickup requests</a>', service)
+        self.assertNotIn('href="/minnesota-appliance-pickup/"', service)
+        nationwide = (ROOT / "nationwide-appliance-pickup/index.html").read_text(encoding="utf-8")
+        self.assertIn('id="request"', nationwide)
+        self.assertIn('name="city"', nationwide)
 
     def test_minneapolis_and_saint_paul_official_disposal_resources(self):
         """Keep city disposal guidance useful, source-linked and distinct from our unconfirmed request."""
