@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - 'sitemap.xml'
+      - 'index.html'
+      - 'free-washer-pickup/index.html'
       - '*-appliance-pickup/index.html'
       - '*-washer-dryer-pickup/index.html'
       - '*-refrigerator-pickup/index.html'
@@ -56,6 +58,10 @@ jobs:
               "https://freereliableappliancepickup.com/rancho-cucamonga-freezer-pickup/",
               "https://freereliableappliancepickup.com/rancho-cucamonga-stove-oven-pickup/",
           }
+          required_rancho.update({
+              "https://freereliableappliancepickup.com/",
+              "https://freereliableappliancepickup.com/free-washer-pickup/",
+          })
           missing=sorted(required_rancho-page_locs)
           if missing:
               raise SystemExit("Rancho gold-model image pages missing: "+", ".join(missing))
