@@ -103,10 +103,10 @@ def run():
                                     if page.locator('a[href="tel:+19093756685"]').count() == 0:
                                         raise AssertionError("Rancho laundry 909 phone link is missing")
                                     cta = page.locator(
-                                        'a.btn[href="/rancho-cucamonga-appliance-pickup/#request"]'
+                                        'a[href="/rancho-cucamonga-appliance-pickup/#request"]'
                                     ).first
                                     if cta.count() == 0:
-                                        raise AssertionError("laundry-to-city request CTA is missing")
+                                        raise AssertionError("laundry-to-general-pickup request link is missing")
                                     cta.click(timeout=15000)
                                     page.locator("#request form[action*='formspree.io']").wait_for(
                                         state="attached", timeout=15000
