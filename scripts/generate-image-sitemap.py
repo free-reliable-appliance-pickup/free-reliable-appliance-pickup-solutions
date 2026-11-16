@@ -101,7 +101,7 @@ if not homepage.is_file():
     raise SystemExit("Homepage index.html missing; refusing to generate image sitemap")
 home_source = homepage.read_text(encoding="utf-8", errors="replace")
 home_images = re.findall(
-    r'<meta\\b[^>]*property=["\\']og:image["\\'][^>]*content=["\\']([^"\\']+)["\\']',
+    r"""<meta\b[^>]*property=['"]og:image['"][^>]*content=['"]([^'"]+)['"]""",
     home_source,
     re.I,
 )
