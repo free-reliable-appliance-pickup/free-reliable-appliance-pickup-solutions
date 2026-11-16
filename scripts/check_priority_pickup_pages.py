@@ -80,6 +80,12 @@ def load_sitemaps() -> tuple[set[str], dict[str, list[str]]]:
         record("homepage", "missing from sitemap.xml")
     if images.get(home_url) != [home_expected]:
         record("homepage", "garage hero image is missing from image sitemap or duplicated")
+    washer_url = f"https://{DOMAIN}/free-washer-pickup/"
+    washer_expected = f"https://{DOMAIN}/assets/laundry/real-laundry-pickup-4.jpg"
+    if washer_url not in pages:
+        record("free-washer-pickup", "missing from sitemap.xml")
+    if images.get(washer_url) != [washer_expected]:
+        record("free-washer-pickup", "single washer hero missing or duplicated in image sitemap")
     return pages, images
 
 
