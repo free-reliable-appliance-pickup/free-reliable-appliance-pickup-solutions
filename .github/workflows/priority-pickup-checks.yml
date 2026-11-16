@@ -1,0 +1,33 @@
+name: Priority pickup page checks
+
+on:
+  pull_request:
+    paths:
+      - 'fontana-*/index.html'
+      - 'rancho-cucamonga-*/index.html'
+      - 'ontario-*/index.html'
+      - 'upland-*/index.html'
+      - 'scripts/check_priority_pickup_pages.py'
+      - '.github/workflows/priority-pickup-checks.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'fontana-*/index.html'
+      - 'rancho-cucamonga-*/index.html'
+      - 'ontario-*/index.html'
+      - 'upland-*/index.html'
+      - 'scripts/check_priority_pickup_pages.py'
+      - '.github/workflows/priority-pickup-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-priority-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website source
+        uses: actions/checkout@v4
+      - name: Validate the eight priority city/intent pages
+        run: python3 scripts/check_priority_pickup_pages.py
