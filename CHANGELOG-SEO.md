@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-11-16 — Fresno satellite pickup form access and service labels (draft)
+- **Verified source defect (#742):** Clovis/Sanger pickup street address and existing location/stairs dropdowns were optional (location/stairs collapsed); Selma/Fowler have required addresses but lacked structured location/stairs.
+- **Staged technical correction:** Make Clovis/Sanger address required; make their existing location/stairs visible and required with blank placeholders. Add visible blank-first required location/stairs dropdowns to Selma/Fowler, using the same accepted choices and honest Unknown option. Add exactly one hidden general pickup `service` attribution to each form, superseding the stale source-only draft #577.
+- **Preserved:** Original named fields, source/region metadata, 310 contact links, Formspree action, phone/ZIP/appliance/condition rules, free eligibility, optional property details, image, URLs, all SEO copy outside form, metadata, schema, and experiment status.
+- **Verification:** Local source-positive checks and negative fixtures for mandatory address/location/stairs, field inventory, Formspree action, unchanged markup outside form; CI, independent review, owner approval, mobile browser and real receipt tests must follow.
+- **Status:** Draft PR branch only; no live deployment, indexing or conversion ranking claims. Rollback via PR revert.
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
