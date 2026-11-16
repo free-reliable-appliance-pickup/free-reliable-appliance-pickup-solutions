@@ -8,6 +8,7 @@ on:
       - 'data/market-routing.json'
       - 'data/cities.json'
       - 'scripts/test-customer-routing.js'
+      - 'scripts/test-coarse-lead-attribution.js'
       - '.github/workflows/test-customer-routing.yml'
   pull_request:
     paths:
@@ -15,6 +16,7 @@ on:
       - 'data/market-routing.json'
       - 'data/cities.json'
       - 'scripts/test-customer-routing.js'
+      - 'scripts/test-coarse-lead-attribution.js'
       - '.github/workflows/test-customer-routing.yml'
   workflow_dispatch:
 
@@ -31,3 +33,5 @@ jobs:
           node-version: '22'
       - name: Run customer routing regression tests
         run: node scripts/test-customer-routing.js
+      - name: Run coarse lead-source regression tests
+        run: node scripts/test-coarse-lead-attribution.js
