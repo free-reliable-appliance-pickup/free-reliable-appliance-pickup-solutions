@@ -8,6 +8,8 @@ on:
       - 'ontario-*/index.html'
       - 'upland-*/index.html'
       - 'scripts/check_priority_pickup_pages.py'
+      - 'scripts/generate-image-sitemap.py'
+      - 'sitemap-images.xml'
       - '.github/workflows/priority-pickup-checks.yml'
   push:
     branches: [main]
@@ -17,6 +19,8 @@ on:
       - 'ontario-*/index.html'
       - 'upland-*/index.html'
       - 'scripts/check_priority_pickup_pages.py'
+      - 'scripts/generate-image-sitemap.py'
+      - 'sitemap-images.xml'
       - '.github/workflows/priority-pickup-checks.yml'
   workflow_dispatch:
 
@@ -29,5 +33,9 @@ jobs:
     steps:
       - name: Check out website source
         uses: actions/checkout@v4
+      - name: Verify generated image sitemap is up to date
+        run: |
+          python3 scripts/generate-image-sitemap.py
+          git diff --exit-code -- sitemap-images.xml
       - name: Validate the eight priority city/intent pages
         run: python3 scripts/check_priority_pickup_pages.py
