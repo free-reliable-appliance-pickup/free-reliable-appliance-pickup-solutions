@@ -275,7 +275,19 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
     var route=routeForZip(zip);
     if(result){
       if(route){
-        result.innerHTML='<strong>'+route.region+' pickup contact</strong><br><a href="tel:'+route.tel+'">Call '+route.phone+'</a> · <a href="sms:'+route.tel+'">Text appliance photos</a> · <a href="'+route.href+'">See local pickup information</a> · <a href="#request">Send pickup request</a><br><small>Pickup still depends on appliance condition, access and current route availability.</small>';
+        // Offer both existing service paths for the four verified ZIP-to-city intake routes.
+        // Neither link confirms pickup availability; qualification and route review still apply.
+        var laundryLinks={
+          '/rancho-cucamonga-appliance-pickup/':'/rancho-cucamonga-washer-dryer-pickup/#request',
+          '/fontana-appliance-pickup/':'/fontana-washer-dryer-pickup/#request',
+          '/ontario-appliance-pickup/':'/ontario-washer-dryer-pickup/#request',
+          '/upland-appliance-pickup/':'/upland-washer-dryer-pickup/#request'
+        };
+        var laundryHref=laundryLinks[route.href];
+        var serviceLinks=laundryHref
+          ? '<a href="'+route.href+'">Free appliance pickup (all major appliances)</a> · <a href="'+laundryHref+'">Free washer &amp; dryer pickup</a>'
+          : '<a href="'+route.href+'">See local pickup information</a>';
+        result.innerHTML='<strong>'+route.region+' pickup contact</strong><br><a href="tel:'+route.tel+'">Call '+route.phone+'</a> · <a href="sms:'+route.tel+'">Text appliance photos</a> · '+serviceLinks+' · <a href="#request">Send pickup request</a><br><small>Pickup still depends on appliance condition, access and current route availability.</small>';
       }else{
         result.innerHTML='<strong>Request review available</strong><br>We could not match this ZIP to a dedicated regional line yet. Continue with the request form below and we will review local coverage.';
       }
