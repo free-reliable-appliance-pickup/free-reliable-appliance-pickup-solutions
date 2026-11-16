@@ -119,6 +119,24 @@ for slug in slugs:
         page_url = f"{BASE}/{slug}/"
         entries.append((page_url, images[:12]))
 
+# The homepage lives at the repository root, not in a slug/index.html
+# directory. Include its real hero in every regenerated image sitemap so
+# scheduled rebuilds cannot erase the manually indexed garage photo.
+home_page_path = ROOT / "index.html"
+if home_page_path.exists():
+    home_html = home_page_path.read_text(encoding="utf-8", errors="replace")
+    home_candidates = re.findall(r'<img\\b[^>]*\\bsrc=["\\']([^"\\']+)["\\']', home_html, re.I)
+    home_candidates += re.findall(r'<meta\\b[^>]*property=["\\']og:image["\\'][^>]*content=["\\']([^"\\']+)["\\']', home_html, re.I)
+    home_images = []
+    seen_home_images = set()
+    for src in home_candidates:
+        image_url = normalize_image(src)
+        if image_url and image_url not in seen_home_images:
+            seen_home_images.add(image_url)
+            home_images.append(image_url)
+    if home_images:
+        entries.insert(0, (BASE + "/", home_images[:12]))
+
 page_urls = [page_url for page_url, _ in entries]
 if len(page_urls) != len(set(page_urls)):
     raise SystemExit("Duplicate page URLs detected while generating image sitemap")
