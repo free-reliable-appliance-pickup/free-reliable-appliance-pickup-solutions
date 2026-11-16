@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+"""Check the priority Inland Empire appliance and laundry landing pages.
+
+Run from the repository root: python3 scripts/check_priority_pickup_pages.py
+Uses only the Python standard library. No Search Console rank assumptions.
+"""
+from __future__ import annotations
+
+import html
+import json
+import re
+import sys
+from pathlib import Path
+from urllib.parse import unquote, urlparse
+
+ROOT = Path(__file__).resolve().parents[1]
+DOMAIN = "freereliableappliancepickup.com"
+CITIES = ("fontana", "rancho-cucamonga", "ontario", "upland")
+KINDS = ("appliance-pickup", "washer-dryer-pickup")
+ERRORS = []
+CHECKED = 0
+
+
+def record(page: str, message: str) -> None:
+    ERRORS.append(f"{page}: {message}")
+
+
+def tag_attr(tag: str, attr: str) -> str:
+    pattern = r'\b' + re.escape(attr) + r'\s*=\s*(["\'])(.*?)\1'
+    found = re.search(pattern, tag, re.I | re.S)
+    return html.unescape(found.group(2).strip()) if found else ""
+
+
+def tags(source: str, name: str) -> list[str]:
+    return re.findall(r"<" + name + r"\b[^>]*>", source, flags=re.I | re.S)
+
+
+def select_tag(source: str, name: str, attr: str, value: str) -> list[str]:
+    return [tag for tag in tags(source, name) if tag_attr(tag, attr).lower() == value]
+
+
+def local_asset(value: str) -> str | None:
+    parsed = urlparse(value)
+    if parsed.netloc and parsed.netloc != DOMAIN:
+        return None
+    if parsed.scheme and parsed.scheme != "https":
+        return None
+    return unquote(parsed.path).lstrip("/")
+
+
+def check(city: str, kind: str) -> None:
+    global CHECKED
+    slug = f"{city}-{kind}"
+    path = ROOT / slug / "index.html"
+    if not path.is_file():
+        record(slug, "page file is missing")
+        return
+    source = path.read_text(encoding="utf-8")
+    CHECKED += 1
+
+    expected_url = f"https://{DOMAIN}/{slug}/"
+    canonical_tags = select_tag(source, "link", "rel", "canonical")
+    if len(canonical_tags) != 1 or tag_attr(canonical_tags[0], "href") != expected_url:
+        record(slug, "missing, duplicate, or incorrect self-canonical URL")
+
+    desc = select_tag(source, "meta", "name", "description")
+    if len(desc) != 1 or not tag_attr(desc[0], "content"):
+        record(slug, "missing or duplicate meta description")
+
+    robots_tags = select_tag(source, "meta", "name", "robots")
+    if any("noindex" in tag_attr(tag, "content").lower() for tag in robots_tags):
+        record(slug, "page is marked noindex")
+
+    title_match = re.findall(r"<title\b[^>]*>(.*?)</title>", source, re.I | re.S)
+    title = html.unescape(re.sub(r"<[^>]+>", "", title_match[0])) if title_match else ""
+    h1 = re.findall(r"<h1\b[^>]*>(.*?)</h1>", source, re.I | re.S)
+    heading = html.unescape(re.sub(r"<[^>]+>", "", h1[0])) if h1 else ""
+    city_name = city.replace("-", " ")
+    if len(title_match) != 1 or city_name not in title.lower():
+        record(slug, "title is missing, duplicated, or not city-specific")
+    if len(h1) != 1 or city_name not in heading.lower():
+        record(slug, "expected exactly one city-specific H1")
+
+    target_words = ("washer", "dryer", "pickup") if kind == "washer-dryer-pickup" else ("appliance", "pickup")
+    for word in target_words:
+        if word not in title.lower() or word not in heading.lower():
+            record(slug, f"missing primary intent word in title/H1: {word}")
+    if "Free Reliable" not in source or "Appliance Pickup" not in source:
+        record(slug, "business branding missing from visible page markup")
+
+    hero_match = re.search(
+        r'<div\b[^>]*class=["\']site-hero-art["\'][^>]*>[\s\S]*?<img\b[^>]*>',
+        source, re.I
+    )
+    hero_tag = hero_match.group() if hero_match else ""
+    hero_img = re.search(r"<img\b[^>]*>", hero_tag, re.I | re.S)
+    hero_image = tag_attr(hero_img.group(), "src") if hero_img else ""
+    if not hero_image or not tag_attr(hero_img.group(), "alt"):
+        record(slug, "hero image or descriptive alt text is missing")
+
+    og = select_tag(source, "meta", "property", "og:image")
+    og_image = tag_attr(og[0], "content") if len(og) == 1 else ""
+    if not og_image:
+        record(slug, "exactly one og:image is required")
+    if hero_image and og_image:
+        hero_path = local_asset(hero_image)
+        og_path = local_asset(og_image)
+        if not hero_path or not og_path or hero_path != og_path:
+            record(slug, "hero image and social preview image do not match")
+        for asset in {hero_path, og_path}:
+            if asset and not (ROOT / asset).is_file():
+                record(slug, f"missing image asset: {asset}")
+
+    if not re.search(r'<form\b[^>]*action=["\']https://formspree\.io/f/[^"\']+["\']', source, re.I):
+        record(slug, "pickup request form is missing or has a different action")
+    if not re.search(r'\bid=["\']request["\']', source, re.I):
+        record(slug, "request section anchor is missing")
+    if "href=\"#request\"" not in source and "href='#request'" not in source:
+        record(slug, "no direct hero-to-request anchor link")
+    if "+19093756685" not in source:
+        record(slug, "priority 909 phone number is missing")
+
+    sibling = "washer-dryer-pickup" if kind == "appliance-pickup" else "appliance-pickup"
+    if f"/{city}-{sibling}/" not in source:
+        record(slug, "missing direct link to companion service page")
+
+    for match in re.finditer(
+        r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+        source, re.I | re.S
+    ):
+        try:
+            json.loads(match.group(1))
+        except json.JSONDecodeError as exc:
+            record(slug, f"invalid JSON-LD: {exc.msg}")
+
+
+def main() -> int:
+    for city in CITIES:
+        for kind in KINDS:
+            check(city, kind)
+    if ERRORS:
+        for error in ERRORS:
+            print("FAIL:", error)
+        print(f"FAILED: {len(ERRORS)} issue(s) found across {CHECKED} page(s)")
+        return 1
+    print(f"PASS: all {CHECKED} city/intent pages pass canonical, title, photo, form, phone, link and schema checks")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
