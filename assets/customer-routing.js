@@ -98,14 +98,14 @@ function observedCoarseTrafficSource(){
     if(utm==='instagram'||utm==='ig')return {channel:'instagram_tagged',basis:'utm_source'};
     if(utm==='google')return {channel:'google_tagged_unverified',basis:'utm_source'};
     if(utm)return {channel:'other_tagged',basis:'utm_source'};
-    const host=new URL(document.referrer||'').hostname.toLowerCase().replace(/^www\\./,'');
-    const own=String(location.hostname||'').toLowerCase().replace(/^www\\./,'');
+    const host=new URL(document.referrer||'').hostname.toLowerCase().replace(/^www\./,'');
+    const own=String(location.hostname||'').toLowerCase().replace(/^www\./,'');
     if(!host||host===own||host==='free-reliable-appliance-pickup.github.io')return null;
     if(host==='facebook.com'||host.endsWith('.facebook.com')||host==='fb.com'||host.endsWith('.fb.com'))
       return {channel:'facebook_referral',basis:'referrer_host'};
     if(host==='instagram.com'||host.endsWith('.instagram.com'))
       return {channel:'instagram_referral',basis:'referrer_host'};
-    if(host==='google.com'||host.endsWith('.google.com')||/^google\\.[a-z]{2,3}(?:\\.[a-z]{2})?$/.test(host))
+    if(host==='google.com'||host.endsWith('.google.com')||/^google\.[a-z]{2,3}(?:\.[a-z]{2})?$/.test(host))
       return {channel:'google_referral_unverified',basis:'referrer_host'};
     if(host==='bing.com'||host.endsWith('.bing.com'))return {channel:'bing_referral',basis:'referrer_host'};
     return {channel:'other_referral',basis:'referrer_host'};
