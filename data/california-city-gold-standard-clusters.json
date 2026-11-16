@@ -34,13 +34,10 @@
       "required_title_terms": [
         "Free Appliance Pickup",
         "Rancho Cucamonga",
-        "Removal",
-        "Recycling"
+        "Removal"
       ],
       "required_description_terms": [
         "appliance pickup",
-        "removal",
-        "recycling",
         "refrigerators",
         "washers",
         "dryers",
@@ -130,7 +127,9 @@
       },
       "require_official_contact_on_children": true,
       "single_city_intake": true,
-      "dedicated_intake_children": ["washer_dryer"],
+      "dedicated_intake_children": [
+        "washer_dryer"
+      ],
       "acceptance_boundaries": {
         "required_terms": [
           "dishwasher",
