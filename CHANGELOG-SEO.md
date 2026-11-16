@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-11-02 — Santa Fe Springs and West Hollywood required access intake ([technical-fix], issue #739)
+- **Source-verified defect:** Existing general pickup forms for `/santa-fe-springs-appliance-pickup/` and `/west-hollywood-appliance-pickup/` permit requests without structured appliance location or stairs; optional access notes can be blank. Baseline `main` `9d7df0b1e27ba9fcb0d274d6cb1c39cb1ecd315a`; blobs `3f6a97d328fff13e4f2612eca024c8c2d76f46eb`, `c4624853e523f6fcad6db19d4bc012a64614c454`.
+- **Narrow reversible correction (draft):** Insert visible native `required` blank-first `location` and `stairs` selects after the existing condition selector in each form. All original HTML preserved byte-for-byte outside these insertions. Existing Formspree endpoint, contact/address/condition, hidden attribution, optional notes, 909/310 telephone links, photos, schema, eligibility, metadata and navigation unchanged. No new pages.
+- **SEO gate:** Reviewed authoritative 263-entry `data/seo-experiments.json` registry (updated 2026-10-24); no matching running experiment for either target URL. This is verified customer-intake maintenance, not a ranking/content experiment.
+- **Verification/release:** Source positive/negative fixtures assert one Formspree form, unique visible required blank-first access selects, and byte preservation. Exact-head CI pending. Independent-review issue #705, mobile/keyboard validation, explicit owner approval and authorized Formspree inbox receipt test remain release blockers. No merge/deployment, receipt, indexing or ranking claim. Roll back by reverting branch commits.
+
+
 ## 2026-10-25 — Coastal Orange County laundry intake accuracy (VGM factual exception)
 - **Verified existing defects:** Lake Forest, Laguna Niguel, San Clemente and Newport Beach washer/dryer forms required a condition but lacked an accurate nondefault response for machines that still run with known faults. Newport Beach also omitted static `source_page` attribution, mobile telephone keypad hint, and the owner-approved optional no-JavaScript paid-removal quote choice.
 - **Reversible correction:** Added exactly one `Working With Issues` choice to each existing required condition selector. Newport Beach now sends its existing city/service along with a static source-page tag, provides `inputmode="tel"`, and offers an optional unselected `free_only` / `quote_ok` fallback. The shared source-only regression audit now checks all four pages and includes positive/negative fixtures.
