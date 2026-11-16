@@ -83,49 +83,6 @@ return 'Other referral: '+host.slice(0,80);
 }
 const CURRENT_OBSERVED_SOURCE=observedVisitSource();
 try{if(CURRENT_OBSERVED_SOURCE)sessionStorage.setItem('frap_observed_traffic_source',CURRENT_OBSERVED_SOURCE);}catch(e){}
-// Coarse evidence only: never collect raw referral URLs, search terms or click IDs.
-const COARSE_SOURCE_KEY='frap_coarse_lead_source_v1';
-function observedCoarseTrafficSource(){
-  try{
-    const params=new URLSearchParams(location.search||'');
-    const utm=String(params.get('utm_source')||'').trim().toLowerCase();
-    const medium=String(params.get('utm_medium')||'').trim().toLowerCase();
-    if(params.has('gclid')||params.has('gbraid')||params.has('wbraid')||
-      ((utm==='google'||utm==='googleads')&&/^(cpc|ppc|paid|paid_search)$/.test(medium)))
-      return {channel:'google_paid_tagged',basis:'paid_click_tag'};
-    if(params.has('fbclid'))return {channel:'facebook_link_tagged',basis:'fbclid'};
-    if(utm==='facebook'||utm==='fb'||utm==='meta')return {channel:'facebook_tagged',basis:'utm_source'};
-    if(utm==='instagram'||utm==='ig')return {channel:'instagram_tagged',basis:'utm_source'};
-    if(utm==='google')return {channel:'google_tagged_unverified',basis:'utm_source'};
-    if(utm)return {channel:'other_tagged',basis:'utm_source'};
-    const host=new URL(document.referrer||'').hostname.toLowerCase().replace(/^www\./,'');
-    const own=String(location.hostname||'').toLowerCase().replace(/^www\./,'');
-    if(!host||host===own||host==='free-reliable-appliance-pickup.github.io')return null;
-    if(host==='facebook.com'||host.endsWith('.facebook.com')||host==='fb.com'||host.endsWith('.fb.com'))
-      return {channel:'facebook_referral',basis:'referrer_host'};
-    if(host==='instagram.com'||host.endsWith('.instagram.com'))
-      return {channel:'instagram_referral',basis:'referrer_host'};
-    if(host==='google.com'||host.endsWith('.google.com')||/^google\.[a-z]{2,3}(?:\.[a-z]{2})?$/.test(host))
-      return {channel:'google_referral_unverified',basis:'referrer_host'};
-    if(host==='bing.com'||host.endsWith('.bing.com'))return {channel:'bing_referral',basis:'referrer_host'};
-    return {channel:'other_referral',basis:'referrer_host'};
-  }catch(_){return null;}
-}
-function coarseTrafficSource(){
-  const observed=observedCoarseTrafficSource(),now=Date.now();
-  if(observed){
-    try{sessionStorage.setItem(COARSE_SOURCE_KEY,JSON.stringify({...observed,at:now}));}catch(_){}
-    return observed;
-  }
-  try{
-    const cached=JSON.parse(sessionStorage.getItem(COARSE_SOURCE_KEY)||'null');
-    if(cached&&typeof cached.channel==='string'&&typeof cached.basis==='string'&&
-      Number.isFinite(cached.at)&&now>=cached.at&&now-cached.at<=1800000)
-      return {channel:cached.channel,basis:cached.basis};
-  }catch(_){}
-  return {channel:'unknown',basis:'no_external_source_signal'};
-}
-coarseTrafficSource();
 function recordObservedTrafficSource(form){
 const state=findField(form,['state','State','pickup_state','Primary State']);
 const supported=Boolean(state&&isCustomerPickupForm(form));
@@ -135,9 +92,6 @@ let source=CURRENT_OBSERVED_SOURCE;
 if(!source){try{source=sessionStorage.getItem('frap_observed_traffic_source')||'';}catch(e){}}
 hidden(form,'Traffic Source (Observed)',source||'Direct / unknown');
 hidden(form,'Traffic Source Method',source?'UTM tag or website referrer':'No UTM or external referrer available');
-const coarse=coarseTrafficSource();
-hidden(form,'traffic_source_channel',coarse.channel);
-hidden(form,'traffic_source_basis',coarse.basis);
 }
 function qualify(form){recordPaidRemovalPreference(form);recordObservedTrafficSource(form);const city=findField(form,['city','City','pickup_city','Primary City']),state=findField(form,['state','State','pickup_state','Primary State']);if(!city||!state)return;if(!findField(form,['source_page']))hidden(form,'source_page',pagePath().replace(/^\/+|\/+$/g,'')||'home');const info=classify(city.value,state.value),customerStatus=info.status==='partner-recruiting'?'request-only':info.status,route=routingDecision({...info,status:customerStatus});hidden(form,'Routing City',city.value.trim());hidden(form,'Routing State Code',stateCode(state.value));hidden(form,'Routing Region',info.region||FALLBACK.region);hidden(form,'Routing Resolution Level',info.resolution_level||'fallback');hidden(form,'Routing Market Status',customerStatus||FALLBACK.status);hidden(form,'Routing Territory Status',info.territory_status||FALLBACK.territory_status);hidden(form,'Routing Priority',info.lead_priority||FALLBACK.lead_priority);hidden(form,'Routing Phone',info.phone||'');hidden(form,'Routing Partner ID',info.partner_id||'');hidden(form,'Routing Backup Partner ID',info.backup_partner_id||'');hidden(form,'Routing Decision',route.decision);hidden(form,'Routing Network Tier',route.tier);hidden(form,'Routing Next Action',route.action);hidden(form,'Coverage Promise','None until qualification and local coverage are confirmed');hidden(form,'Routing Source',info.resolution_level==='priority-california-city'?'Priority California customer-routing override':'Canonical market-routing.json');hidden(form,'SEO Page Creation','Disabled');const condition=findField(form,['condition','Condition','Appliance Condition']),appliance=findField(form,['appliance','appliances','Appliance','Appliances','Appliance Type']),stairs=findField(form,['stairs','Stairs']),access=findField(form,['access','Access','Access Notes','access_notes','access_details']),details=findField(form,['appliance_details','message']);hidden(form,'Qualification Snapshot',[appliance&&appliance.value,condition&&condition.value,stairs&&stairs.value,access&&access.value,details?.value].filter(Boolean).join(' | '));const faultDetails=findField(form,['condition_details']);const conditionValue=String(condition&&condition.value||'');const requiresReview=/(?:\b(?:issues?|problems?|repairs?|broken|damaged|unknown|mixed|faulty|load)\b|non[\s-]*working|not[\s-]*working)/i.test(conditionValue);hidden(form,'Customer Defect Explanation',[faultDetails?.value,requiresReview&&access?.value,requiresReview&&details?.value].filter(Boolean).join(' | '));hidden(form,'Dispatch Condition Gate',requiresReview?'REVIEW REPORTED CONDITION WITH PARTNER BEFORE DISPATCH':'CONFIRM CONDITION AND AVAILABILITY BEFORE DISPATCH');}
 function load(){if(loadPromise)return loadPromise;loadPromise=Promise.all([fetch(siteUrl('data/market-routing.json'),{cache:'no-store'}),fetch(siteUrl('data/cities.json'),{cache:'no-store'})]).then(async([r,c])=>{if(r.ok)routing=await r.json();if(c.ok)cities=await c.json();}).catch(()=>{});return loadPromise;}
@@ -426,6 +380,7 @@ transport_type:'beacon'
 },true);
 }
 
+if(typeof document!=='undefined'&&!document.querySelector('script[data-lead-source-evidence]')){const t=document.createElement('script');t.src=siteUrl('assets/lead-source-evidence.js');t.async=true;t.dataset.leadSourceEvidence='1';document.head.appendChild(t);}
 initLeadAnalytics();
 load();
 if(typeof window!=='undefined'&&window.location){if(window.location.pathname.includes('-nv-'))import('/assets/nv-subject.js');if(window.location.pathname.includes('-fl-'))import('/assets/florida-zip4.js');}
