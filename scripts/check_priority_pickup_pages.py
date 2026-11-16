@@ -74,6 +74,12 @@ def load_sitemaps() -> tuple[set[str], dict[str, list[str]]]:
                 )
             else:
                 pages.add(loc)
+    home_url = f"https://{DOMAIN}/"
+    home_expected = f"https://{DOMAIN}/home-six-appliance-garage.webp"
+    if home_url not in pages:
+        record("homepage", "missing from sitemap.xml")
+    if images.get(home_url) != [home_expected]:
+        record("homepage", "garage hero image is missing from image sitemap or duplicated")
     return pages, images
 
 
