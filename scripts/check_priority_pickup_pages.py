@@ -12,6 +12,7 @@ import re
 import sys
 from pathlib import Path
 from urllib.parse import unquote, urlparse
+from xml.etree import ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "freereliableappliancepickup.com"
@@ -48,7 +49,35 @@ def local_asset(value: str) -> str | None:
     return unquote(parsed.path).lstrip("/")
 
 
-def check(city: str, kind: str) -> None:
+def load_sitemaps() -> tuple[set[str], dict[str, list[str]]]:
+    """Read the indexed URLs and preferred image per URL from both XML files."""
+    ns = {
+        "s": "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "i": "http://www.google.com/schemas/sitemap-image/1.1",
+    }
+    pages: set[str] = set()
+    images: dict[str, list[str]] = {}
+    for filename, collect_images in (("sitemap.xml", False), ("sitemap-images.xml", True)):
+        try:
+            root = ET.parse(ROOT / filename).getroot()
+        except (OSError, ET.ParseError) as exc:
+            record(filename, f"missing or invalid XML: {exc}")
+            continue
+        for item in root.findall("s:url", ns):
+            loc = (item.findtext("s:loc", default="", namespaces=ns) or "").strip()
+            if not loc:
+                continue
+            if collect_images:
+                images.setdefault(loc, []).extend(
+                    (element.text or "").strip()
+                    for element in item.findall("i:image/i:loc", ns)
+                )
+            else:
+                pages.add(loc)
+    return pages, images
+
+
+def check(city: str, kind: str, sitemap_urls: set[str], sitemap_images: dict[str, list[str]]) -> None:
     global CHECKED
     slug = f"{city}-{kind}"
     path = ROOT / slug / "index.html"
@@ -59,6 +88,8 @@ def check(city: str, kind: str) -> None:
     CHECKED += 1
 
     expected_url = f"https://{DOMAIN}/{slug}/"
+    if expected_url not in sitemap_urls:
+        record(slug, "priority page missing from sitemap.xml")
     canonical_tags = select_tag(source, "link", "rel", "canonical")
     if len(canonical_tags) != 1 or tag_attr(canonical_tags[0], "href") != expected_url:
         record(slug, "missing, duplicate, or incorrect self-canonical URL")
@@ -110,6 +141,9 @@ def check(city: str, kind: str) -> None:
         for asset in {hero_path, og_path}:
             if asset and not (ROOT / asset).is_file():
                 record(slug, f"missing image asset: {asset}")
+        listed = [local_asset(url) for url in sitemap_images.get(expected_url, [])]
+        if hero_path and listed != [hero_path]:
+            record(slug, "image sitemap must list exactly the same one primary hero photo")
 
     if not re.search(r'<form\b[^>]*action=["\']https://formspree\.io/f/[^"\']+["\']', source, re.I):
         record(slug, "pickup request form is missing or has a different action")
@@ -124,26 +158,38 @@ def check(city: str, kind: str) -> None:
     if f"/{city}-{sibling}/" not in source:
         record(slug, "missing direct link to companion service page")
 
+    structured_nodes = []
     for match in re.finditer(
         r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
         source, re.I | re.S
     ):
         try:
-            json.loads(match.group(1))
+            data = json.loads(match.group(1))
+            structured_nodes.extend(data.get("@graph", [data]) if isinstance(data, dict) else [])
         except json.JSONDecodeError as exc:
             record(slug, f"invalid JSON-LD: {exc.msg}")
+    webpages = [node for node in structured_nodes if node.get("@type") == "WebPage"]
+    if len(webpages) != 1:
+        record(slug, "expected one WebPage structured-data entry")
+    else:
+        preferred = webpages[0].get("primaryImageOfPage")
+        if isinstance(preferred, dict):
+            preferred = preferred.get("url") or preferred.get("contentUrl")
+        if local_asset(preferred or "") != local_asset(hero_image):
+            record(slug, "WebPage primaryImageOfPage does not match the real hero image")
 
 
 def main() -> int:
+    sitemap_urls, sitemap_images = load_sitemaps()
     for city in CITIES:
         for kind in KINDS:
-            check(city, kind)
+            check(city, kind, sitemap_urls, sitemap_images)
     if ERRORS:
         for error in ERRORS:
             print("FAIL:", error)
         print(f"FAILED: {len(ERRORS)} issue(s) found across {CHECKED} page(s)")
         return 1
-    print(f"PASS: all {CHECKED} city/intent pages pass canonical, title, photo, form, phone, link and schema checks")
+    print(f"PASS: all {CHECKED} city/intent pages pass canonical, title, photo/sitemap consistency, form, phone, link and schema checks")
     return 0
 
 
