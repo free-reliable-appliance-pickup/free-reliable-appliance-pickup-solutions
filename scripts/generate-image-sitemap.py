@@ -16,6 +16,9 @@ lists = [
     ROOT / "data" / "approved-indexable-locations.txt",
 ]
 extra = [
+    # Explicit top-level landing pages, not captured by the location slug lists.
+    "__home__",
+    "free-washer-pickup",
     "refrigerator-pickup",
     "freezer-pickup",
     "stove-oven-pickup",
@@ -95,7 +98,8 @@ def normalize_image(src: str):
 
 entries = []
 for slug in slugs:
-    page_path = ROOT / slug / "index.html"
+    is_home = slug == "__home__"
+    page_path = ROOT / "index.html" if is_home else ROOT / slug / "index.html"
     if not page_path.exists():
         continue
     html = page_path.read_text(encoding="utf-8", errors="replace")
@@ -113,7 +117,8 @@ for slug in slugs:
             images.append(img)
 
     if images:
-        entries.append((f"{BASE}/{slug}/", images[:12]))
+        page_url = f"{BASE}/" if is_home else f"{BASE}/{slug}/"
+        entries.append((page_url, images[:12]))
 
 ET.register_namespace("", "http://www.sitemaps.org/schemas/sitemap/0.9")
 ET.register_namespace("image", "http://www.google.com/schemas/sitemap-image/1.1")
