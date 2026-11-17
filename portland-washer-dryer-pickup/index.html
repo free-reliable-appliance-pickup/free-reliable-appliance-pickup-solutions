@@ -48,7 +48,7 @@ main{max-width:1080px;margin:auto;padding:0 18px 38px}section{padding:24px 0}.gr
 <label>Phone Number<input type="tel" name="phone" required autocomplete="tel" inputmode="tel"></label>
 <label>Pickup Address<input type="text" name="address" required autocomplete="street-address"></label>
 <label>City<input type="text" name="city" value="Portland" required autocomplete="address-level2"></label>
-<label>ZIP Code<input type="text" name="zip" required autocomplete="postal-code" inputmode="numeric"></label>
+<label>ZIP Code<input type="text" name="zip" required autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" title="Enter a five-digit ZIP code"></label>
 <label>Laundry Appliance<select name="appliance" required><option value="">Select</option><option>Washer</option><option>Dryer</option><option>Washer and Dryer Set</option><option>Stacked Laundry Center</option><option>Multiple Washers / Dryers</option></select></label>
 <label>Condition<select name="condition" required><option value="">Select condition</option><option>Fully Working</option><option value="Working With Issues">Working, but has a problem (explain below)</option><option>Needs Repair</option><option>Not Working</option><option>Unknown</option></select></label>
 <label>Appliance Location<select name="location" required><option value="">Select location</option><option>Garage</option><option>First Floor</option><option>Second Floor</option><option>Third Floor or Higher</option><option>Basement</option><option>Outside / Staged</option><option>Other</option></select></label>
