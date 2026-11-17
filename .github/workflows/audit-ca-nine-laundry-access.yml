@@ -1,0 +1,28 @@
+name: Audit California Nine Laundry Access Forms
+on:
+  pull_request:
+    paths:
+      - '*-washer-dryer-pickup/index.html'
+      - 'scripts/audit-ca-nine-laundry-access.py'
+      - '.github/workflows/audit-ca-nine-laundry-access.yml'
+  push:
+    branches: [main]
+    paths:
+      - '*-washer-dryer-pickup/index.html'
+      - 'scripts/audit-ca-nine-laundry-access.py'
+      - '.github/workflows/audit-ca-nine-laundry-access.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-nine-forms:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify nine California washer and dryer intake forms
+        run: python3 scripts/audit-ca-nine-laundry-access.py
