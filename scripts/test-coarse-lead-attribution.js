@@ -59,6 +59,30 @@ assert.equal(carried.channel,'facebook_tagged','early routing evidence survives 
 assert.equal(carried.basis,'routing_entry_evidence');
 assert.equal(run({store:{frap_observed_traffic_source:'Google referrer',frap_observed_source_at:'5000000'},now:5000001}).channel,'google_referral_unverified');
 assert.equal(run({store:{frap_observed_traffic_source:'UTM: facebook',frap_observed_source_at:'5000000'},now:5000000+1800001}).channel,'unknown','early routing source expires');
+// Regression: a newer routing signal must outrank stale cached evidence.
+const newerRouting={
+  frap_coarse_lead_source_v1:JSON.stringify({channel:'facebook_referral',basis:'referrer_host',at:5000000}),
+  frap_observed_traffic_source:'Google referrer',
+  frap_observed_source_at:'5000100'
+};
+const latest=run({store:newerRouting,now:5000101});
+assert.equal(latest.channel,'google_referral_unverified','newer Google evidence overrides older Facebook cache');
+assert.equal(latest.basis,'routing_entry_evidence');
+assert.equal(JSON.parse(newerRouting.frap_coarse_lead_source_v1).channel,'google_referral_unverified','cache is refreshed to newer evidence');
+const newerCached={
+  frap_coarse_lead_source_v1:JSON.stringify({channel:'google_referral_unverified',basis:'referrer_host',at:5000100}),
+  frap_observed_traffic_source:'Facebook referrer',
+  frap_observed_source_at:'5000000'
+};
+const preserved=run({store:newerCached,now:5000101});
+assert.equal(preserved.channel,'google_referral_unverified','newer cached Google evidence beats old Facebook routing evidence');
+assert.equal(preserved.basis,'referrer_host');
+const expiredCached={
+  frap_coarse_lead_source_v1:JSON.stringify({channel:'facebook_referral',basis:'referrer_host',at:5000000}),
+  frap_observed_traffic_source:'Google referrer',
+  frap_observed_source_at:'5001800001'
+};
+assert.equal(run({store:expiredCached,now:5001800002}).channel,'google_referral_unverified','expired cache must yield to fresh routing evidence');
 assert.match(routing,/sessionStorage\.setItem\('frap_observed_source_at',String\(Date\.now\(\)\)\)/,'early routing source timestamp is captured');
 assert.match(js,/putLeadSourceField\(form,'traffic_source_channel',source\.channel\)/);
 assert.match(js,/putLeadSourceField\(form,'traffic_source_basis',source\.basis\)/);
