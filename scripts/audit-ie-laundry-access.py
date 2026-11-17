@@ -52,6 +52,7 @@ class FormReader(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.forms = []
+        self.external_bypass = []
         self.current = None
         self.select = None
         self.option = None
@@ -71,6 +72,10 @@ class FormReader(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
+        if ("formnovalidate" in attrs and attrs.get("form") and
+            ((tag == "button" and attrs.get("type", "submit").lower() == "submit") or
+             (tag == "input" and attrs.get("type", "").lower() in ("submit", "image")))):
+            self.external_bypass.append((attrs["form"], tag))
         if tag == "form":
             self.current = {"attrs": attrs, "fields": [], "bypass_controls": []}
             self.forms.append(self.current)
@@ -113,6 +118,7 @@ class FormReader(HTMLParser):
             self.option = None
         elif tag == "select":
             self.select = None
+            self.option = None
         elif tag == "form":
             self.current = None
             self.ancestors = []
@@ -136,9 +142,10 @@ def check_form(html, slug, city):
     if (attribute(opening_tag, "method") or "").lower() != "post":
         problems.append(f"{slug}: pickup requests must be submitted via POST")
     reader = FormReader()
-    reader.feed(form)
+    reader.feed(html)
     parsed_form = reader.forms[0]
-    if "novalidate" in parsed_form["attrs"] or parsed_form["bypass_controls"]:
+    if ("novalidate" in parsed_form["attrs"] or parsed_form["bypass_controls"] or
+        any(form_id == parsed_form["attrs"].get("id") for form_id, _ in reader.external_bypass)):
         problems.append(f"{slug}: native required field validation must be enabled")
     for item in parsed_form["fields"]:
         if item["attrs"].get("name") in {
@@ -242,6 +249,9 @@ def self_test():
         fixed.replace(' method="POST"', ''),
         fixed.replace('method="POST"', 'method="POST" novalidate'),
         fixed.replace('</form>', '<button type="submit" formnovalidate>Send</button></form>'),
+        fixed.replace('<form action="https://formspree.io/f/mvzeapzd" method="POST">',
+                      '<form id="pickup" action="https://formspree.io/f/mvzeapzd" method="POST">')
+             + '<button type="submit" form="pickup" formnovalidate>Send</button>',
         fixed.replace('<select name="location" required>', '<select name="location" title="required field">'),
         fixed.replace('name="location" required', 'name="location" required disabled'),
         fixed.replace('<select name="location" required>',
@@ -258,6 +268,8 @@ def self_test():
         fixed.replace('<option>Unknown / not sure</option></select><select name="stairs"',
                       '<optgroup disabled label="Other"><option>Unknown / not sure</option></optgroup></select><select name="stairs"'),
 
+        fixed.replace('<select name="location" required><option value="">Select</option><option>Unknown / not sure</option></select>',
+                      '<select name="location" required><option value="">Select</option><option value="ground">Ground floor</select><p>Unknown / not sure</p>'),
         fixed.replace('name="location" required', 'name="location"'),
         fixed.replace('<select name="stairs" required><option value="">',
                       '<select name="stairs" required><option value="none">'),
