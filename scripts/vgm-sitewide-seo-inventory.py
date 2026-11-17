@@ -54,8 +54,12 @@ class PickupFormParser(HTMLParser):
         super().__init__()
         self.forms = []
         self.current = None
+        self.ids = set()
 
     def handle_starttag(self, tag, attrs):
+        element_attrs = dict(attrs)
+        if element_attrs.get('id') is not None:
+            self.ids.add(element_attrs['id'])
         if tag == 'form' and self.current is None:
             self.current = {'attrs': dict(attrs), 'names': []}
         elif tag in ('input', 'select', 'textarea') and self.current is not None:
@@ -102,6 +106,13 @@ def local_request_link(href):
     return href.startswith('/') and not url.scheme and not url.netloc and url.fragment == 'request'
 
 
+def has_native_request_target(html):
+    """Check an actual id attribute; data-id and HTML comments do not count."""
+    parser = PickupFormParser()
+    parser.feed(html)
+    return 'request' in parser.ids
+
+
 # Source regression fixtures: invisible commented markup is not a pickup form.
 assert pickup_intake_source_evidence(
     '<!-- <form action="https://formspree.io/f/mvzeapzd" method="post"></form> -->'
@@ -112,6 +123,9 @@ assert pickup_intake_source_evidence(
 )['post']
 assert local_request_link('/city/#request')
 assert not local_request_link('//example.org/city/#request')
+assert has_native_request_target('<section id="request"></section>')
+assert not has_native_request_target('<section data-id="request"></section>')
+assert not has_native_request_target('<!-- <section id="request"></section> -->')
 
 
 def inspect():
@@ -205,7 +219,7 @@ def write_report():
                 continue
             destination_html = destination_path.read_text(encoding='utf-8', errors='replace')
             # A #request link is not sufficient if the section or form is absent.
-            if not re.search(r'\bid\s*=\s*["\']request["\']', destination_html, re.I):
+            if not has_native_request_target(destination_html):
                 continue
             evidence = pickup_intake_source_evidence(destination_html)
             if evidence['form_count'] == 1 and evidence['post']:
