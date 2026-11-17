@@ -10,18 +10,19 @@ const end=js.indexOf('function putLeadSourceField(form,name,value){',begin);
 assert.ok(begin>=0 && end>begin,'coarse attribution helpers must exist');
 const section=js.slice(begin,end);
 assert.ok(section.includes('function coarseTrafficSource()'));
-function run({query='',referrer='',store={},now=Date.now(),hostname='freereliableappliancepickup.com'}={}){
+function run({query='',referrer='',store={},now=Date.now(),elapsed=0,hostname='freereliableappliancepickup.com'}={}){
+  let clock=now;
   const context={
     location:{search:query,hostname},
     document:{referrer},
     URL,URLSearchParams,JSON,String,Number,
-    Date:{now:()=>now},
+    Date:{now:()=>clock,advance:()=>{clock+=elapsed}},
     sessionStorage:{
       getItem:k=>store[k]??null,
       setItem:(k,v)=>{store[k]=v}
     }
   };
-  return vm.runInNewContext(section+'\ncoarseTrafficSource();',context,{timeout:1500});
+  return vm.runInNewContext(section+'\nDate.advance();coarseTrafficSource();',context,{timeout:1500});
 }
 for(const [query,referrer,channel,basis] of [
   ['', '', 'unknown', 'no_external_source_signal'],
@@ -50,6 +51,15 @@ assert.equal(run({referrer:'https://facebook.com/',store,now:5000000}).channel,'
 assert.equal(run({referrer:'https://freereliableappliancepickup.com/other/',store,now:5000001}).channel,'facebook_referral');
 assert.equal(run({store,now:5000000+1800001}).channel,'unknown','session evidence expires after 30 minutes');
 assert.equal(run({store:{},now:5000000}).channel,'unknown','private/no-referrer visit remains unknown');
+
+assert.equal(run({query:'?gclid=opaque',now:5000000,elapsed:1800001}).channel,'unknown','unchanged landing query must expire after 30 minutes');
+const legacy={frap_observed_traffic_source:'UTM: facebook',frap_observed_source_at:'5000000'};
+const carried=run({referrer:'https://freereliableappliancepickup.com/rancho-cucamonga-appliance-pickup/',store:legacy,now:5000001});
+assert.equal(carried.channel,'facebook_tagged','early routing evidence survives a delayed helper load on the previous page');
+assert.equal(carried.basis,'routing_entry_evidence');
+assert.equal(run({store:{frap_observed_traffic_source:'Google referrer',frap_observed_source_at:'5000000'},now:5000001}).channel,'google_referral_unverified');
+assert.equal(run({store:{frap_observed_traffic_source:'UTM: facebook',frap_observed_source_at:'5000000'},now:5000000+1800001}).channel,'unknown','early routing source expires');
+assert.match(routing,/sessionStorage\.setItem\('frap_observed_source_at',String\(Date\.now\(\)\)\)/,'early routing source timestamp is captured');
 assert.match(js,/putLeadSourceField\(form,'traffic_source_channel',source\.channel\)/);
 assert.match(js,/putLeadSourceField\(form,'traffic_source_basis',source\.basis\)/);
 assert.match(routing,/hidden\(form,'Traffic Source \(Observed\)'/,'existing attribution remains');
