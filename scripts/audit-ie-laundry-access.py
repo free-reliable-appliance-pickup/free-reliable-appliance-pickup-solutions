@@ -49,12 +49,18 @@ def check_form(html, slug, city):
     for field, value in (
         ("source_page", slug + "-washer-dryer-pickup"),
         ("state", "California"),
-        ("city", city),
         ("service", "Washer and dryer pickup"),
     ):
         matches = [tag for tag in inputs if attribute(tag, "name") == field]
         if len(matches) != 1 or attribute(matches[0], "value") != value or attribute(matches[0], "type") != "hidden":
             problems.append(f"{slug}: missing or incorrect hidden {field} attribution")
+    # Some pages use a static hidden city; Banning/Beaumont already have a
+    # native required visible city with the correct default. Preserve both.
+    city_inputs = [tag for tag in inputs if attribute(tag, "name") == "city"]
+    if len(city_inputs) != 1 or attribute(city_inputs[0], "value") != city or (
+        attribute(city_inputs[0], "type") != "hidden" and not required(city_inputs[0])
+    ):
+        problems.append(f"{slug}: missing or incorrect city attribution")
     for field in ("name", "phone", "address", "zip"):
         matches = [tag for tag in inputs if attribute(tag, "name") == field]
         if len(matches) != 1 or not required(matches[0]):
