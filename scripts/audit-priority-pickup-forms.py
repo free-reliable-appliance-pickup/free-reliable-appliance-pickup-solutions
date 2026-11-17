@@ -1056,6 +1056,42 @@ OBSERVED_LEAD_CITY_FORMS = {
     "garden-grove": "Garden Grove",
     "encinitas": "Encinitas",
 }
+class ObservedLeadFieldParser(HTMLParser):
+    """Read actual HTML attribute names, not substrings in data-required."""
+    def __init__(self):
+        super().__init__()
+        self.controls = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("input", "select", "textarea"):
+            self.controls.append({"tag": tag, "attrs": dict(attrs)})
+
+
+def observed_controls(controls, name):
+    return [c for c in controls if c["attrs"].get("name") == name]
+
+
+def observed_single_value(controls, name, value):
+    values = observed_controls(controls, name)
+    return len(values) == 1 and values[0]["attrs"].get("value") == value
+
+
+def observed_native_required(control):
+    return "required" in control["attrs"]
+
+
+# Negative regressions: duplicate city fields and data-required must not pass.
+_probe = ObservedLeadFieldParser()
+_probe.feed('<input name="city" value="Fremont"><input name="city" value="Elsewhere">'
+            '<select name="photos_available" data-required="true"><option value=""></option></select>'
+            '<select name="stairs" required><option value=""></option></select>')
+if observed_single_value(_probe.controls, "city", "Fremont"):
+    errors.append("observed-city test: duplicate city inputs incorrectly accepted")
+if any(observed_native_required(c) for c in observed_controls(_probe.controls, "photos_available")):
+    errors.append("observed-city test: data-required incorrectly treated as native required")
+if not all(observed_native_required(c) for c in observed_controls(_probe.controls, "stairs")):
+    errors.append("observed-city test: native required attribute rejected")
+
 for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
     slug = city_slug + "-appliance-pickup"
     path = Path(slug) / "index.html"
@@ -1071,31 +1107,31 @@ for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
     form = forms[0]
     if not re.search(r'<form\b[^>]*\bmethod="POST"', form, re.I):
         errors.append(f"{slug}: form must submit with POST")
+    parsed = ObservedLeadFieldParser()
+    parsed.feed(form)
+    controls = parsed.controls
     for name, value in (("source_page", slug), ("state", "California"), ("city", city_name)):
-        if form.count(f'name="{name}" value="{value}"') != 1:
-            errors.append(f"{slug}: incorrect or repeated {name} market attribution")
+        if not observed_single_value(controls, name, value):
+            errors.append(f"{slug}: incorrect or duplicate {name} market attribution")
     for field in ("name", "phone", "address", "zip", "appliance", "condition",
                   "location", "stairs", "photos_available"):
-        tags = re.findall(
-            rf'<(?:input|select|textarea)\b[^>]*\bname="{field}"[^>]*>', form, re.I
-        )
-        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+        matches = observed_controls(controls, field)
+        if len(matches) != 1 or not observed_native_required(matches[0]):
             errors.append(f"{slug}: {field} must be unique and natively required")
     for field in ("appliance", "condition", "location", "stairs", "photos_available"):
-        if not select_ok(form, field):
+        matches = observed_controls(controls, field)
+        if not select_ok(form, field) or len(matches) != 1 or not observed_native_required(matches[0]):
             errors.append(f"{slug}: {field} needs a required blank-first selection")
-    phone = re.search(r'<input\b[^>]*\bname="phone"[^>]*>', form, re.I)
-    if not phone or any(hint not in phone.group(0) for hint in
-                        ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"')):
+    phone = observed_controls(controls, "phone")
+    if len(phone) != 1 or any(phone[0]["attrs"].get(key) != val for key, val in
+                            (("type", "tel"), ("autocomplete", "tel"), ("inputmode", "tel"))):
         errors.append(f"{slug}: mobile-friendly phone field changed")
-    zip_field = re.search(r'<input\b[^>]*\bname="zip"[^>]*>', form, re.I)
-    if not zip_field or 'inputmode="numeric"' not in zip_field.group(0):
+    zip_field = observed_controls(controls, "zip")
+    if len(zip_field) != 1 or zip_field[0]["attrs"].get("inputmode") != "numeric":
         errors.append(f"{slug}: ZIP must open a numeric keyboard")
     for optional in ("paid_removal_preference", "photo_link"):
-        tags = re.findall(
-            rf'<(?:input|select|textarea)\b[^>]*\bname="{optional}"[^>]*>', form, re.I
-        )
-        if len(tags) != 1 or re.search(r'\brequired\b', tags[0], re.I):
+        matches = observed_controls(controls, optional)
+        if len(matches) != 1 or observed_native_required(matches[0]):
             errors.append(f"{slug}: {optional} must be present, unique and optional")
     if 'This form does not upload photos directly' not in form:
         errors.append(f"{slug}: required photo handoff must not promise file upload")
