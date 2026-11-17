@@ -27,18 +27,51 @@ function observedCoarseTrafficSource(){
     return {channel:'other_referral',basis:'referrer_host'};
   }catch(_){return null;}
 }
+const DOCUMENT_SOURCE=observedCoarseTrafficSource();
+const DOCUMENT_SOURCE_TIME=Date.now();
+function isRecentSource(at,now){return Number.isFinite(at)&&at>0&&now>=at&&now-at<=1800000;}
+function earlyRoutingSource(now){
+  // The already-loaded routing script records early entry evidence before this helper downloads.
+  try{
+    const at=Number(sessionStorage.getItem('frap_observed_source_at')||0);
+    if(!isRecentSource(at,now))return null;
+    const raw=String(sessionStorage.getItem('frap_observed_traffic_source')||'').trim().toLowerCase();
+    let channel='';
+    if(raw==='google referrer')channel='google_referral_unverified';
+    else if(raw==='facebook referrer')channel='facebook_referral';
+    else if(raw==='instagram referrer')channel='instagram_referral';
+    else if(raw==='bing referrer')channel='bing_referral';
+    else if(raw==='yahoo referrer')channel='other_referral';
+    else if(raw.startsWith('other referral: '))channel='other_referral';
+    else if(raw.startsWith('utm: ')){
+      const tag=raw.slice(5);
+      if(tag==='facebook'||tag==='fb'||tag==='meta')channel='facebook_tagged';
+      else if(tag==='instagram'||tag==='ig')channel='instagram_tagged';
+      else if(tag==='google')channel='google_tagged_unverified';
+      else channel='other_tagged';
+    }
+    if(!channel)return null;
+    return {channel,basis:'routing_entry_evidence',at};
+  }catch(_){return null;}
+}
 function coarseTrafficSource(){
-  const observed=observedCoarseTrafficSource(),now=Date.now();
-  if(observed){
-    try{sessionStorage.setItem(COARSE_SOURCE_KEY,JSON.stringify({...observed,at:now}));}catch(_){}
-    return observed;
+  const now=Date.now();
+  if(DOCUMENT_SOURCE&&isRecentSource(DOCUMENT_SOURCE_TIME,now)){
+    // Use original entry time, not submit time; never renew evidence on a long-open page.
+    const entry={...DOCUMENT_SOURCE,at:DOCUMENT_SOURCE_TIME};
+    try{sessionStorage.setItem(COARSE_SOURCE_KEY,JSON.stringify(entry));}catch(_){}
+    return {channel:entry.channel,basis:entry.basis};
   }
   try{
     const cached=JSON.parse(sessionStorage.getItem(COARSE_SOURCE_KEY)||'null');
-    if(cached&&typeof cached.channel==='string'&&typeof cached.basis==='string'&&
-      Number.isFinite(cached.at)&&now>=cached.at&&now-cached.at<=1800000)
+    if(cached&&typeof cached.channel==='string'&&typeof cached.basis==='string'&&isRecentSource(cached.at,now))
       return {channel:cached.channel,basis:cached.basis};
   }catch(_){}
+  const prior=earlyRoutingSource(now);
+  if(prior){
+    try{sessionStorage.setItem(COARSE_SOURCE_KEY,JSON.stringify(prior));}catch(_){}
+    return {channel:prior.channel,basis:prior.basis};
+  }
   return {channel:'unknown',basis:'no_external_source_signal'};
 }
 coarseTrafficSource();
