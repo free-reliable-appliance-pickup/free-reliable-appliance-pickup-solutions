@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only guard for essential address, ZIP and photo intake in sixteen Orange County pages.
+"""Read-only guard for essential address, ZIP and photo intake in seventeen Orange County pages.
 
 Does not send requests, verify live deployment, or establish operator coverage.
 """
@@ -11,6 +11,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 LAUNDRY = {
+    "newport-beach": "Newport Beach",
     "costa-mesa": "Costa Mesa",
     "huntington-beach": "Huntington Beach",
     "dana-point": "Dana Point",
