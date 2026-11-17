@@ -1,0 +1,28 @@
+name: VGM Arizona Laundry Form Contract
+
+on:
+  pull_request:
+    paths:
+      - '*-washer-dryer-pickup/index.html'
+      - 'scripts/audit-arizona-laundry-handoff.py'
+      - '.github/workflows/audit-arizona-laundry-handoff.yml'
+  push:
+    branches: [main]
+    paths:
+      - '*-washer-dryer-pickup/index.html'
+      - 'scripts/audit-arizona-laundry-handoff.py'
+      - '.github/workflows/audit-arizona-laundry-handoff.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  arizona-laundry-intake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Test required-field and attribution regressions
+        run: python3 scripts/audit-arizona-laundry-handoff.py --self-test
+      - name: Validate six Arizona customer pickup forms
+        run: python3 scripts/audit-arizona-laundry-handoff.py
