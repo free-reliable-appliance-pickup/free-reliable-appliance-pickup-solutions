@@ -1,0 +1,42 @@
+name: VGM Orange County Essential Intake
+
+on:
+  pull_request:
+    paths:
+      - 'costa-mesa-washer-dryer-pickup/index.html'
+      - 'huntington-beach-washer-dryer-pickup/index.html'
+      - 'dana-point-washer-dryer-pickup/index.html'
+      - 'ladera-ranch-washer-dryer-pickup/index.html'
+      - 'coto-de-caza-washer-dryer-pickup/index.html'
+      - 'laguna-beach-washer-dryer-pickup/index.html'
+      - 'costa-mesa-refrigerator-pickup/index.html'
+      - 'huntington-beach-refrigerator-pickup/index.html'
+      - 'scripts/audit-oc-essential-pickup-fields.py'
+      - '.github/workflows/audit-oc-essential-pickup-fields.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'costa-mesa-washer-dryer-pickup/index.html'
+      - 'huntington-beach-washer-dryer-pickup/index.html'
+      - 'dana-point-washer-dryer-pickup/index.html'
+      - 'ladera-ranch-washer-dryer-pickup/index.html'
+      - 'coto-de-caza-washer-dryer-pickup/index.html'
+      - 'laguna-beach-washer-dryer-pickup/index.html'
+      - 'costa-mesa-refrigerator-pickup/index.html'
+      - 'huntington-beach-refrigerator-pickup/index.html'
+      - 'scripts/audit-oc-essential-pickup-fields.py'
+      - '.github/workflows/audit-oc-essential-pickup-fields.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  orange-county-intake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Negative regression tests for required address and ZIP
+        run: python3 scripts/audit-oc-essential-pickup-fields.py --self-test
+      - name: Validate eight Orange County pickup form contracts
+        run: python3 scripts/audit-oc-essential-pickup-fields.py
