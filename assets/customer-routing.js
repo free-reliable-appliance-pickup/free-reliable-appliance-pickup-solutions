@@ -82,7 +82,7 @@ return 'Other referral: '+host.slice(0,80);
 }catch(e){return '';}
 }
 const CURRENT_OBSERVED_SOURCE=observedVisitSource();
-try{if(CURRENT_OBSERVED_SOURCE)sessionStorage.setItem('frap_observed_traffic_source',CURRENT_OBSERVED_SOURCE);}catch(e){}
+try{if(CURRENT_OBSERVED_SOURCE){sessionStorage.setItem('frap_observed_traffic_source',CURRENT_OBSERVED_SOURCE);sessionStorage.setItem('frap_observed_source_at',String(Date.now()));}}catch(e){}
 function recordObservedTrafficSource(form){
 const state=findField(form,['state','State','pickup_state','Primary State']);
 const supported=Boolean(state&&isCustomerPickupForm(form));
