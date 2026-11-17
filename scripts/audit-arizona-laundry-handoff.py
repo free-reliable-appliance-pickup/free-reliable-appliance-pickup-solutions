@@ -47,7 +47,8 @@ def one(fields, name):
 
 
 def required(field):
-    return field is not None and "required" in field["attrs"]
+    return (field is not None and "required" in field["attrs"]
+            and "disabled" not in field["attrs"])
 
 
 def blank_first(field):
@@ -132,6 +133,8 @@ def self_test():
                      'name="city" value="Goodyear"><input name="city" value="Phoenix"'),
         good.replace('name="photos_available" required',
                      'name="photos_available" data-required="true"'),
+        good.replace('name="photos_available" required',
+                     'name="photos_available" required disabled'),
         good.replace('<option value=""></option><option>Garage</option>',
                      '<option value="garage"></option><option>Garage</option>'),
     ]
