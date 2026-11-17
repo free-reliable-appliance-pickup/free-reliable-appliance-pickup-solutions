@@ -16,27 +16,61 @@ ENDPOINT = "https://formspree.io/f/mvzeapzd"
 
 
 class FormReader(HTMLParser):
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+            "link", "meta", "param", "source", "track", "wbr"}
+
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.forms = []
         self.current = None
         self.select = None
         self.option = None
+        self.ancestors = []
+
+    def _disabled_by_fieldset(self):
+        """Disabled fieldsets exempt controls inside their first direct legend."""
+        for ancestor in self.ancestors:
+            if ancestor["tag"] != "fieldset" or "disabled" not in ancestor["attrs"]:
+                continue
+            first_legend = ancestor.get("first_legend")
+            if first_legend is None or not any(
+                node is first_legend for node in self.ancestors
+            ):
+                return True
+        return False
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "form":
             self.current = {"attrs": attrs, "fields": []}
             self.forms.append(self.current)
+            self.ancestors = []
         elif self.current is not None:
+            node = {"tag": tag, "attrs": attrs}
+            parent = self.ancestors[-1] if self.ancestors else None
+            if tag == "legend" and parent and parent["tag"] == "fieldset":
+                if "first_legend" not in parent:
+                    parent["first_legend"] = node
+            effectively_disabled = (
+                "disabled" in attrs or self._disabled_by_fieldset()
+            )
             if tag in ("input", "select", "textarea"):
-                field = {"tag": tag, "attrs": attrs, "options": []}
+                field = {"tag": tag, "attrs": attrs, "options": [],
+                         "effectively_disabled": effectively_disabled}
                 self.current["fields"].append(field)
                 if tag == "select":
                     self.select = field
             elif tag == "option" and self.select is not None:
-                self.option = {"attrs": attrs, "text": ""}
+                disabled_group = any(
+                    ancestor["tag"] == "optgroup"
+                    and "disabled" in ancestor["attrs"]
+                    for ancestor in self.ancestors
+                )
+                self.option = {"attrs": attrs, "text": "",
+                               "effectively_disabled": effectively_disabled or disabled_group}
                 self.select["options"].append(self.option)
+            if tag not in self.VOID:
+                self.ancestors.append(node)
 
     def handle_data(self, data):
         if self.option is not None:
@@ -49,6 +83,12 @@ class FormReader(HTMLParser):
             self.select = None
         elif tag == "form":
             self.current = None
+            self.ancestors = []
+            return
+        for i in range(len(self.ancestors) - 1, -1, -1):
+            if self.ancestors[i]["tag"] == tag:
+                del self.ancestors[i:]
+                break
 
 
 def check(html, slug, city, city_mode, service):
@@ -106,7 +146,7 @@ def check(html, slug, city, city_mode, service):
             continue
         if "required" not in el["attrs"]:
             faults.append(f"{slug}: {field} select missing required")
-        if "disabled" in el["attrs"]:
+        if el["effectively_disabled"]:
             faults.append(f"{slug}: {field} select cannot be disabled")
         options = el["options"]
         if not options or options[0]["attrs"].get("value") != "":
@@ -115,7 +155,7 @@ def check(html, slug, city, city_mode, service):
             faults.append(f"{slug}: {field} has nonempty preselected default")
         if field in ("location", "stairs") and not any(
             ("unknown" in o["text"].lower() or "not sure" in o["text"].lower())
-            and "disabled" not in o["attrs"]
+            and not o["effectively_disabled"]
             and (o["attrs"].get("value", o["text"].strip()) != "")
             for o in options[1:]
         ):
@@ -168,15 +208,41 @@ def self_test():
                       '<select name="location" required><option value="">Unknown / not sure</option></select>'),
         valid.replace('<select name="location" required><option value="">Select</option><option>Unknown / not sure</option></select>',
                       '<select name="location" required><option value="">Select</option><option disabled>Unknown / not sure</option></select>'),
+        # A disabled ancestor fieldset makes a required select unusable.
+        valid.replace('<select name="location" required>',
+                      '<fieldset disabled><select name="location" required>')
+             .replace('</select><select name="stairs" required>',
+                      '</select></fieldset><select name="stairs" required>'),
+        # A disabled fieldset's second legend is NOT exempt.
+        valid.replace('<select name="location" required>',
+                      '<fieldset disabled><legend>First</legend><legend><select name="location" required>')
+             .replace('</select><select name="stairs" required>',
+                      '</select></legend></fieldset><select name="stairs" required>'),
+        # A first legend does not exempt a select placed after it.
+        valid.replace('<select name="location" required>',
+                      '<fieldset disabled><legend>Location</legend><select name="location" required>')
+             .replace('</select><select name="stairs" required>',
+                      '</select></fieldset><select name="stairs" required>'),
+        # An Unknown answer inside a disabled optgroup cannot be chosen.
+        valid.replace('<option>Unknown / not sure</option></select><select name="stairs"',
+                      '<optgroup disabled label="Other"><option>Unknown / not sure</option></optgroup></select><select name="stairs"'),
     ]
     for i, altered in enumerate(broken, 1):
         assert check(altered, "visalia", city, mode, service), f"negative fixture {i} escaped"
+    # Controls within a disabled fieldset's FIRST direct legend remain enabled.
+    legend_form = valid.replace('<select name="location" required>',
+                                '<fieldset disabled><legend><select name="location" required>')
+    legend_form = legend_form.replace('</select><select name="stairs" required>',
+                                      '</select></legend></fieldset><select name="stairs" required>')
+    assert not check(legend_form, "visalia", city, mode, service), (
+        "first-legend exception incorrectly rejected"
+    )
     metro, m, s = CITIES["sacramento-metro"]
     metro_form = fixture("sacramento-metro", metro, m, s)
     assert check(metro_form.replace('name="city" required',
                                     'name="city" value="Sacramento" required'),
                  "sacramento-metro", metro, m, s), "fixed metro city escaped"
-    print("PASS: three positive and thirteen negative offline intake fixtures")
+    print("PASS: four positive and seventeen negative offline intake fixtures")
 
 
 def main():
