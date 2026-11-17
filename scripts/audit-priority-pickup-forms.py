@@ -1099,6 +1099,7 @@ def observed_blank_first(controls, name):
         return False
     options = matches[0]["options"]
     return (len(options) > 1 and options[0].get("value") == ""
+            and ("disabled" not in options[0] or "selected" in options[0])
             and not any("selected" in opt for opt in options[1:]))
 
 
@@ -1128,6 +1129,18 @@ _preselected_probe.feed('<select name="condition" required><option value="">Choo
                         '<option value="working" selected>Working</option></select>')
 if observed_blank_first(_preselected_probe.controls, "condition"):
     errors.append("observed-city test: preselected nonblank answer accepted")
+_disabled_blank_probe = ObservedLeadFieldParser()
+_disabled_blank_probe.feed('<select name="condition" required>'
+                           '<option value="" disabled>Choose</option>'
+                           '<option value="working">Working</option></select>')
+if observed_blank_first(_disabled_blank_probe.controls, "condition"):
+    errors.append("observed-city test: implicit nonblank selection accepted")
+_selected_blank_probe = ObservedLeadFieldParser()
+_selected_blank_probe.feed('<select name="condition" required>'
+                           '<option value="" disabled selected>Choose</option>'
+                           '<option value="working">Working</option></select>')
+if not observed_blank_first(_selected_blank_probe.controls, "condition"):
+    errors.append("observed-city test: selected disabled blank incorrectly rejected")
 
 for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
     slug = city_slug + "-appliance-pickup"
