@@ -25,22 +25,49 @@ class NativeFormParser(HTMLParser):
         self.forms = []
         self.current = None
         self.active_select = None
+        self.disabled_optgroup = False
+        self.current_note = None
+        self.hidden_text_depth = 0
 
     def handle_starttag(self, tag, pairs):
         attrs = dict(pairs)
         if tag == "form":
-            self.current = {"attrs": attrs, "fields": []}
+            self.current = {"attrs": attrs, "fields": [], "notes": []}
+        elif self.current is not None and tag in ("script", "style", "noscript", "template"):
+            self.hidden_text_depth += 1
+        elif self.current is not None and tag == "p":
+            # The actual customer-facing photo handoff is a visible paragraph.
+            self.current_note = (None if "hidden" in attrs or
+                                 "display:none" in attrs.get("style", "").replace(" ", "").lower()
+                                 else [])
         elif self.current is not None and tag in ("input", "select", "textarea"):
             control = {"tag": tag, "attrs": attrs, "options": []}
             self.current["fields"].append(control)
             if tag == "select":
                 self.active_select = control
+        elif self.current is not None and tag == "optgroup" and self.active_select is not None:
+            self.disabled_optgroup = "disabled" in attrs
         elif self.current is not None and tag == "option" and self.active_select is not None:
-            self.active_select["options"].append(attrs)
+            option = dict(attrs)
+            option["_group_disabled"] = self.disabled_optgroup
+            self.active_select["options"].append(option)
+
+    def handle_data(self, data):
+        if self.current is not None and self.current_note is not None and not self.hidden_text_depth:
+            self.current_note.append(data)
 
     def handle_endtag(self, tag):
-        if tag == "select":
+        if tag in ("script", "style", "noscript", "template") and self.hidden_text_depth:
+            self.hidden_text_depth -= 1
+        elif tag == "p" and self.current is not None:
+            if self.current_note is not None:
+                self.current["notes"].append(" ".join("".join(self.current_note).split()))
+            self.current_note = None
+        elif tag == "optgroup":
+            self.disabled_optgroup = False
+        elif tag == "select":
             self.active_select = None
+            self.disabled_optgroup = False
         elif tag == "form" and self.current is not None:
             self.forms.append(self.current)
             self.current = None
@@ -61,7 +88,8 @@ def blank_first(field):
         return False
     opts = field["options"]
     return (len(opts) > 1 and opts[0].get("value") == ""
-            and ("disabled" not in opts[0] or "selected" in opts[0])
+            and (("disabled" not in opts[0] and not opts[0]["_group_disabled"])
+                 or "selected" in opts[0])
             and not any("selected" in option for option in opts[1:]))
 
 
@@ -84,12 +112,14 @@ def validate(source, slug):
             errors.append(f"{slug}: {name} must have a real blank-first selection")
     for name, value in (("source_page", slug), ("state", "California")):
         field = exactly_one(fields, name)
-        if field is None or field["attrs"].get("value") != value:
-            errors.append(f"{slug}: missing or incorrect {name} attribution")
+        if (field is None or field["attrs"].get("value") != value
+                or "disabled" in field["attrs"]):
+            errors.append(f"{slug}: missing, disabled, or incorrect {name} attribution")
     photo = exactly_one(fields, "photos_available")
     if photo is None or not PHOTO_CHOICES.issubset(
-            {opt.get("value") for opt in photo["options"]}):
-        errors.append(f"{slug}: incomplete photo-sharing choices")
+            {opt.get("value") for opt in photo["options"]
+             if "disabled" not in opt and not opt["_group_disabled"]}):
+        errors.append(f"{slug}: missing or disabled photo-sharing choices")
     photo_link = exactly_one(fields, "photo_link")
     if (photo_link is None or photo_link["attrs"].get("type") != "url"
             or browser_required(photo_link)):
@@ -102,8 +132,15 @@ def validate(source, slug):
         errors.append(f"{slug}: paid quote preference must remain optional")
     if any(field["attrs"].get("type") == "file" for field in fields):
         errors.append(f"{slug}: direct file upload is unsupported in this form")
-    if "This form does not upload files" not in source:
-        errors.append(f"{slug}: missing truthful photo-upload disclosure")
+    notes = [note.lower() for note in form["notes"]]
+    if not any("this form does not upload files" in note for note in notes):
+        errors.append(f"{slug}: missing visible photo-upload disclosure")
+    if not any(
+            "photos" in note and ("actual machine" in note or "appliance" in note)
+            and ("pickup access" in note or "removal path" in note)
+            and ("before confirming" in note or "before pickup confirmation" in note)
+            for note in notes):
+        errors.append(f"{slug}: missing visible appliance/access-photo requirement before pickup")
     return errors
 
 
@@ -119,7 +156,8 @@ def self_test():
                       for n in DROPDOWNS if n != "photos_available")
             + '<select name="photos_available" required><option value=""></option>'
             + choices + '</select><input name="photo_link" type="url">'
-            + 'This form does not upload files</form>')
+            + '<p>Clear photos of the actual machine and pickup access are needed '
+              'before pickup confirmation. This form does not upload files.</p></form>')
     if validate(good, "chino-washer-dryer-pickup"):
         raise AssertionError("valid form rejected: " + str(validate(good, "chino-washer-dryer-pickup")))
     mutations = (
@@ -129,6 +167,18 @@ def self_test():
         good.replace('<option value=""></option>', '<option value="" disabled></option>', 1),
         good.replace('<option value="working"></option>', '<option value="working" selected></option>', 1),
         good.replace('name="source_page"', 'name="data-source_page"'),
+        good.replace('name="source_page" value=', 'name="source_page" disabled value='),
+        good.replace('name="state" value=', 'name="state" disabled value='),
+        good.replace('<option value="not_ready"></option>',
+                     '<option value="not_ready" disabled></option>'),
+        good.replace('<option value="not_ready"></option>',
+                     '<optgroup disabled><option value="not_ready"></option></optgroup>'),
+        good.replace('This form does not upload files',
+                     '<!-- This form does not upload files -->'),
+        good.replace('This form does not upload files',
+                     '<script>This form does not upload files</script>'),
+        good.replace('Clear photos of the actual machine and pickup access are needed '
+                     'before pickup confirmation. ', ''),
         good.replace('name="photo_link" type="url"', 'name="photo_link" type="url" required'),
         '<!-- ' + good + ' -->',
     )
