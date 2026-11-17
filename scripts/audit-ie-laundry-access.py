@@ -94,7 +94,17 @@ def self_test():
     for field in ("appliance", "condition", "location", "stairs"):
         fixed += f'<select name="{field}" required><option value="">Select</option><option>Unknown / not sure</option></select>'
     fixed += '</form>'
-    assert check_form(fixed, slug, city) == [], "positive fixture failed"
+    assert check_form(fixed, slug, city) == [], "hidden-city positive fixture failed"
+    visible_city = fixed.replace(
+        '<input type="hidden" name="city" value="Eastvale">',
+        '<input name="city" value="Eastvale" required>',
+    )
+    assert check_form(visible_city, slug, city) == [], "visible-required-city positive fixture failed"
+    assert check_form(
+        visible_city.replace('<input name="city" value="Eastvale" required>',
+                             '<input name="city" value="Eastvale">'),
+        slug, city,
+    ), "optional visible city escaped"
     negative = [
         fixed.replace('name="location" required', 'name="location"'),
         fixed.replace('<select name="stairs" required><option value="">',
@@ -105,7 +115,7 @@ def self_test():
     ]
     for i, broken in enumerate(negative, 1):
         assert check_form(broken, slug, city), f"negative fixture {i} escaped"
-    print("PASS: one valid fixture and five negative intake regressions")
+    print("PASS: two valid city-layout fixtures and six negative intake regressions")
 
 
 def main():
