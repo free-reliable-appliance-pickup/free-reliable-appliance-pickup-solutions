@@ -1041,6 +1041,60 @@ for slug in FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES:
         errors.append(f"{slug}: expected California route attribution")
 print("FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES_CHECKED", len(FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES))
 
+# Real customer requests were received on these four California city pages.
+# Guard access and photo handoff so the website can qualify these leads without
+# JavaScript or direct photo uploads on the Formspree free plan.
+OBSERVED_LEAD_CITY_FORMS = {
+    "fremont": "Fremont",
+    "concord": "Concord",
+    "lynwood": "Lynwood",
+    "gardena": "Gardena",
+}
+for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
+    slug = city_slug + "-appliance-pickup"
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing observed customer pickup page")
+        continue
+    source = path.read_text(encoding="utf-8", errors="replace")
+    forms = [form for form in re.findall(r'<form\b[^>]*>.*?</form>', source, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in form.split(">", 1)[0]]
+    if len(forms) != 1:
+        errors.append(f"{slug}: must retain one native customer Formspree POST form")
+        continue
+    form = forms[0]
+    if not re.search(r'<form\b[^>]*\bmethod="POST"', form, re.I):
+        errors.append(f"{slug}: form must submit with POST")
+    for name, value in (("source_page", slug), ("state", "California"), ("city", city_name)):
+        if form.count(f'name="{name}" value="{value}"') != 1:
+            errors.append(f"{slug}: incorrect or repeated {name} market attribution")
+    for field in ("name", "phone", "address", "zip", "appliance", "condition",
+                  "location", "stairs", "photos_available"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{field}"[^>]*>', form, re.I
+        )
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {field} must be unique and natively required")
+    for field in ("appliance", "condition", "location", "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: {field} needs a required blank-first selection")
+    phone = re.search(r'<input\b[^>]*\bname="phone"[^>]*>', form, re.I)
+    if not phone or any(hint not in phone.group(0) for hint in
+                        ('type="tel"', 'autocomplete="tel"', 'inputmode="tel"')):
+        errors.append(f"{slug}: mobile-friendly phone field changed")
+    zip_field = re.search(r'<input\b[^>]*\bname="zip"[^>]*>', form, re.I)
+    if not zip_field or 'inputmode="numeric"' not in zip_field.group(0):
+        errors.append(f"{slug}: ZIP must open a numeric keyboard")
+    for optional in ("paid_removal_preference", "photo_link"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{optional}"[^>]*>', form, re.I
+        )
+        if len(tags) != 1 or re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {optional} must be present, unique and optional")
+    if 'This form does not upload photos directly' not in form:
+        errors.append(f"{slug}: required photo handoff must not promise file upload")
+print("OBSERVED_LEAD_CITY_FORMS_CHECKED", len(OBSERVED_LEAD_CITY_FORMS))
+
 print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
 
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
