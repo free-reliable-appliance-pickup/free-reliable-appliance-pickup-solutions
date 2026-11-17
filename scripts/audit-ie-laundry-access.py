@@ -251,8 +251,10 @@ def self_test():
         fixed.replace('name="source_page"', 'name="source_page" disabled'),
         fixed.replace('name="phone" required', 'name="phone" required disabled'),
         fixed.replace('<option value="">Select</option>', '<option value="" disabled>Select</option>', 1),
-        fixed.replace('<option>Unknown / not sure</option>', '<option disabled>Unknown / not sure</option>', 1),
-        fixed.replace('<option>Unknown / not sure</option>', '<option value="">Unknown / not sure</option>', 1),
+        fixed.replace('<select name="location" required><option value="">Select</option><option>Unknown / not sure</option></select>',
+                      '<select name="location" required><option value="">Select</option><option disabled>Unknown / not sure</option></select>'),
+        fixed.replace('<select name="location" required><option value="">Select</option><option>Unknown / not sure</option></select>',
+                      '<select name="location" required><option value="">Select</option><option value="">Unknown / not sure</option></select>'),
         fixed.replace('<option>Unknown / not sure</option></select><select name="stairs"',
                       '<optgroup disabled label="Other"><option>Unknown / not sure</option></optgroup></select><select name="stairs"'),
 
