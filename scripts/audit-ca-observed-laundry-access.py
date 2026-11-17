@@ -166,7 +166,8 @@ def self_test():
         valid.replace('name="location" required', 'name="location" required disabled'),
         valid.replace('<select name="location" required><option value="">Select</option><option>Unknown / not sure</option></select>',
                       '<select name="location" required><option value="">Unknown / not sure</option></select>'),
-        valid.replace('<option>Unknown / not sure</option>', '<option disabled>Unknown / not sure</option>', 1),
+        valid.replace('<select name="location" required><option value="">Select</option><option>Unknown / not sure</option></select>',
+                      '<select name="location" required><option value="">Select</option><option disabled>Unknown / not sure</option></select>'),
     ]
     for i, altered in enumerate(broken, 1):
         assert check(altered, "visalia", city, mode, service), f"negative fixture {i} escaped"
