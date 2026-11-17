@@ -62,16 +62,19 @@ function coarseTrafficSource(){
     try{sessionStorage.setItem(COARSE_SOURCE_KEY,JSON.stringify(entry));}catch(_){}
     return {channel:entry.channel,basis:entry.basis};
   }
+  let cached=null;
   try{
-    const cached=JSON.parse(sessionStorage.getItem(COARSE_SOURCE_KEY)||'null');
-    if(cached&&typeof cached.channel==='string'&&typeof cached.basis==='string'&&isRecentSource(cached.at,now))
-      return {channel:cached.channel,basis:cached.basis};
+    const entry=JSON.parse(sessionStorage.getItem(COARSE_SOURCE_KEY)||'null');
+    if(entry&&typeof entry.channel==='string'&&typeof entry.basis==='string'&&isRecentSource(entry.at,now))
+      cached=entry;
   }catch(_){}
   const prior=earlyRoutingSource(now);
-  if(prior){
+  // A newer visit must override an older cached channel, even if the helper loaded late.
+  if(prior&&(!cached||prior.at>cached.at)){
     try{sessionStorage.setItem(COARSE_SOURCE_KEY,JSON.stringify(prior));}catch(_){}
     return {channel:prior.channel,basis:prior.basis};
   }
+  if(cached)return {channel:cached.channel,basis:cached.basis};
   return {channel:'unknown',basis:'no_external_source_signal'};
 }
 coarseTrafficSource();
