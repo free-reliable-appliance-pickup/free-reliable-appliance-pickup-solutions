@@ -380,7 +380,7 @@ transport_type:'beacon'
 },true);
 }
 
-if(typeof document!=='undefined'&&!document.querySelector('script[data-lead-source-evidence]')){const t=document.createElement('script');t.src=siteUrl('assets/lead-source-evidence.js');t.async=true;t.dataset.leadSourceEvidence='1';document.head.appendChild(t);}
+if(typeof document!=='undefined'&&typeof document.createElement==='function'&&document.head&&typeof document.head.appendChild==='function'&&!document.querySelector('script[data-lead-source-evidence]')){const t=document.createElement('script');t.src=siteUrl('assets/lead-source-evidence.js');t.async=true;t.dataset.leadSourceEvidence='1';document.head.appendChild(t);}
 initLeadAnalytics();
 load();
 if(typeof window!=='undefined'&&window.location){if(window.location.pathname.includes('-nv-'))import('/assets/nv-subject.js');if(window.location.pathname.includes('-fl-'))import('/assets/florida-zip4.js');}
