@@ -40,7 +40,88 @@ def attribute(tag, name):
 
 
 def required(tag):
-    return bool(re.search(r"(?<![\w:-])required(?=\s|=|>|$)", tag, re.I))
+    # Ignore text in quoted attribute values such as title="required field".
+    without_values = re.sub(r"""=\s*(?:"[^"]*"|'[^']*')""", '=""', tag)
+    return bool(re.search(r"(?<![\w:-])required(?=\s|=|>|$)", without_values, re.I))
+
+
+class FormReader(HTMLParser):
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+            "link", "meta", "param", "source", "track", "wbr"}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.forms = []
+        self.current = None
+        self.select = None
+        self.option = None
+        self.ancestors = []
+
+    def _disabled_by_fieldset(self):
+        """Disabled fieldsets exempt controls inside their first direct legend."""
+        for ancestor in self.ancestors:
+            if ancestor["tag"] != "fieldset" or "disabled" not in ancestor["attrs"]:
+                continue
+            first_legend = ancestor.get("first_legend")
+            if first_legend is None or not any(
+                node is first_legend for node in self.ancestors
+            ):
+                return True
+        return False
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == "form":
+            self.current = {"attrs": attrs, "fields": [], "bypass_controls": []}
+            self.forms.append(self.current)
+            self.ancestors = []
+        elif self.current is not None:
+            if "formnovalidate" in attrs and (tag == "button" and attrs.get("type", "submit").lower() == "submit" or tag == "input" and attrs.get("type", "").lower() in ("submit", "image")):
+                self.current["bypass_controls"].append(tag)
+            node = {"tag": tag, "attrs": attrs}
+            parent = self.ancestors[-1] if self.ancestors else None
+            if tag == "legend" and parent and parent["tag"] == "fieldset":
+                if "first_legend" not in parent:
+                    parent["first_legend"] = node
+            effectively_disabled = (
+                "disabled" in attrs or self._disabled_by_fieldset()
+            )
+            if tag in ("input", "select", "textarea"):
+                field = {"tag": tag, "attrs": attrs, "options": [],
+                         "effectively_disabled": effectively_disabled}
+                self.current["fields"].append(field)
+                if tag == "select":
+                    self.select = field
+            elif tag == "option" and self.select is not None:
+                disabled_group = any(
+                    ancestor["tag"] == "optgroup"
+                    and "disabled" in ancestor["attrs"]
+                    for ancestor in self.ancestors
+                )
+                self.option = {"attrs": attrs, "text": "",
+                               "effectively_disabled": effectively_disabled or disabled_group}
+                self.select["options"].append(self.option)
+            if tag not in self.VOID:
+                self.ancestors.append(node)
+
+    def handle_data(self, data):
+        if self.option is not None:
+            self.option["text"] += data
+
+    def handle_endtag(self, tag):
+        if tag == "option":
+            self.option = None
+        elif tag == "select":
+            self.select = None
+        elif tag == "form":
+            self.current = None
+            self.ancestors = []
+            return
+        for i in range(len(self.ancestors) - 1, -1, -1):
+            if self.ancestors[i]["tag"] == tag:
+                del self.ancestors[i:]
+                break
+
 
 
 def check_form(html, slug, city):
@@ -52,6 +133,20 @@ def check_form(html, slug, city):
     opening_tag = form.split(">", 1)[0] + ">"
     if attribute(opening_tag, "action") != "https://formspree.io/f/mvzeapzd":
         problems.append(f"{slug}: form action must match the exact Formspree endpoint")
+    if (attribute(opening_tag, "method") or "").lower() != "post":
+        problems.append(f"{slug}: pickup requests must be submitted via POST")
+    reader = FormReader()
+    reader.feed(form)
+    parsed_form = reader.forms[0]
+    if "novalidate" in parsed_form["attrs"] or parsed_form["bypass_controls"]:
+        problems.append(f"{slug}: native required field validation must be enabled")
+    for item in parsed_form["fields"]:
+        if item["attrs"].get("name") in {
+            "source_page", "state", "service", "city", "name", "phone",
+            "address", "zip", "appliance", "condition", "location", "stairs"
+        } and item["effectively_disabled"]:
+            problems.append(f"{slug}: {item['attrs'].get('name')} is disabled and omitted from submissions")
+    parsed_fields = {field["attrs"].get("name"): field for field in parsed_form["fields"] if field["tag"] == "select"}
     inputs = INPUT_RE.findall(form)
     selects = [(attrs, options) for attrs, options in SELECT_RE.findall(form)]
     fields = [attribute(tag, "name") for tag in inputs]
@@ -97,8 +192,21 @@ def check_form(html, slug, city):
         parsed_options.feed(options)
         if any("selected" in attrs for attrs in parsed_options.options[1:]):
             problems.append(f"{slug}: {field} has a nonblank selected default")
-        if field in ("location", "stairs") and "not sure" not in options.lower() and "unknown" not in options.lower():
-            problems.append(f"{slug}: {field} must allow an honest unknown answer")
+        parsed_select = parsed_fields.get(field)
+        if parsed_select:
+            options_data = parsed_select["options"]
+            if options_data and options_data[0]["attrs"].get("value") == "" and (
+                options_data[0]["effectively_disabled"]
+                and "selected" not in options_data[0]["attrs"]
+            ):
+                problems.append(f"{slug}: disabled blank prompt must be explicitly selected")
+            if field in ("location", "stairs") and not any(
+                ("unknown" in op["text"].lower() or "not sure" in op["text"].lower())
+                and not op["effectively_disabled"]
+                and op["attrs"].get("value", op["text"].strip()) != ""
+                for op in options_data[1:]
+            ):
+                problems.append(f"{slug}: {field} needs an enabled nonblank unknown option")
     return problems
 
 
@@ -130,6 +238,24 @@ def self_test():
         slug, city,
     ), "optional visible city escaped"
     negative = [
+        fixed.replace('method="POST"', 'method="GET"'),
+        fixed.replace(' method="POST"', ''),
+        fixed.replace('method="POST"', 'method="POST" novalidate'),
+        fixed.replace('</form>', '<button type="submit" formnovalidate>Send</button></form>'),
+        fixed.replace('<select name="location" required>', '<select name="location" title="required field">'),
+        fixed.replace('name="location" required', 'name="location" required disabled'),
+        fixed.replace('<select name="location" required>',
+                      '<fieldset disabled><select name="location" required>')
+             .replace('</select><select name="stairs" required>',
+                      '</select></fieldset><select name="stairs" required>'),
+        fixed.replace('name="source_page"', 'name="source_page" disabled'),
+        fixed.replace('name="phone" required', 'name="phone" required disabled'),
+        fixed.replace('<option value="">Select</option>', '<option value="" disabled>Select</option>', 1),
+        fixed.replace('<option>Unknown / not sure</option>', '<option disabled>Unknown / not sure</option>', 1),
+        fixed.replace('<option>Unknown / not sure</option>', '<option value="">Unknown / not sure</option>', 1),
+        fixed.replace('<option>Unknown / not sure</option></select><select name="stairs"',
+                      '<optgroup disabled label="Other"><option>Unknown / not sure</option></optgroup></select><select name="stairs"'),
+
         fixed.replace('name="location" required', 'name="location"'),
         fixed.replace('<select name="stairs" required><option value="">',
                       '<select name="stairs" required><option value="none">'),
@@ -150,7 +276,7 @@ def self_test():
     ]
     for i, broken in enumerate(negative, 1):
         assert check_form(broken, slug, city), f"negative fixture {i} escaped"
-    print("PASS: three positive fixtures and eleven negative intake regressions")
+    print(f"PASS: three positive fixtures and {len(negative)+1} negative intake regressions")
 
 
 def main():
