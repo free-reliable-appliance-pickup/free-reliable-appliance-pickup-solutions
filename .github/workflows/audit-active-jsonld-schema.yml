@@ -42,26 +42,36 @@ jobs:
 
           class VisibleText(HTMLParser):
               EXCLUDED={'head','script','style','template','noscript'}
+              VOID={'area','base','br','col','embed','hr','img','input',
+                    'link','meta','param','source','track','wbr'}
               BLOCK={'p','div','section','h1','h2','h3','h4','br','li','ul','ol','td','tr',
                      'header','footer','main','article','blockquote','table'}
               def __init__(self):
                   super().__init__(convert_charrefs=True)
-                  self.skip=0
+                  self.stack=[]
                   self.parts=[]
               def handle_starttag(self,tag,attrs):
-                  if tag in self.EXCLUDED:
-                      self.skip+=1
-                  elif not self.skip and tag in self.BLOCK:
+                  ancestor_hidden=bool(self.stack and self.stack[-1][1])
+                  own_hidden=tag in self.EXCLUDED or any(key.lower()=='hidden' for key,_ in attrs)
+                  suppressed=ancestor_hidden or own_hidden
+                  if not suppressed and tag in self.BLOCK:
                       self.parts.append(' ')
+                  if tag not in self.VOID:
+                      self.stack.append((tag,suppressed))
               def handle_endtag(self,tag):
-                  if tag in self.EXCLUDED and self.skip:
-                      self.skip-=1
-                  elif not self.skip and tag in self.BLOCK:
-                      self.parts.append(' ')
+                  # Pop through the matching opener; this also handles imperfect
+                  # markup with a missing nested closing tag conservatively.
+                  for i in range(len(self.stack)-1,-1,-1):
+                      if self.stack[i][0]==tag:
+                          suppressed=self.stack[i][1]
+                          del self.stack[i:]
+                          if not suppressed and tag in self.BLOCK:
+                              self.parts.append(' ')
+                          break
               def handle_data(self,data):
-                  if not self.skip:
+                  if not self.stack or not self.stack[-1][1]:
                       self.parts.append(data)
-              # HTMLParser's default handle_comment ignores comments; attrs never enter handle_data.
+              # HTMLParser ignores HTML comments; attribute values are never text nodes.
 
           def normalize_text(value):
               return ' '.join(html.unescape(str(value)).split())
@@ -80,6 +90,13 @@ jobs:
               '<p title="Working washers qualify.">Unrelated text</p>'
               '<!-- Working washers qualify. -->'
               '<script>Working washers qualify.</script>')
+          # A hidden ancestor suppresses all nested text, not just its opening tag.
+          assert 'Working washers qualify.' not in visible_page_text(
+              '<section hidden><p>Working <strong>washers</strong> qualify.</p></section>')
+          assert 'Working washers qualify.' not in visible_page_text(
+              '<p hidden>Working washers qualify.</p><p>Visible unrelated text</p>')
+          assert 'Working washers qualify.' in visible_page_text(
+              '<div hidden>Working washers qualify.</div><p>Working washers qualify.</p>')
 
           # Regression guard for the California laundry pages corrected in PR #1389.
           # Other site pages remain governed by existing JSON-LD checks until separately reviewed.
