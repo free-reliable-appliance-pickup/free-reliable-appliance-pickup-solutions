@@ -28,18 +28,32 @@ class NativeFormParser(HTMLParser):
         self.disabled_optgroup = False
         self.current_note = None
         self.hidden_text_depth = 0
+        self.visibility_stack = []
+        self.hidden_container_depth = 0
 
     def handle_starttag(self, tag, pairs):
         attrs = dict(pairs)
+        # HTMLParser does not track ancestor visibility. Exclude instructions
+        # hidden by a wrapper, not just by the paragraph's own attributes.
+        void = {"area", "base", "br", "col", "embed", "hr", "img",
+                "input", "link", "meta", "param", "source", "track", "wbr"}
+        if self.current is not None and tag not in void and tag != "form":
+            style = attrs.get("style", "").replace(" ", "").lower()
+            hidden = ("hidden" in attrs or "inert" in attrs
+                      or attrs.get("aria-hidden") == "true"
+                      or "display:none" in style or "visibility:hidden" in style)
+            self.visibility_stack.append((tag, hidden))
+            if hidden:
+                self.hidden_container_depth += 1
         if tag == "form":
             self.current = {"attrs": attrs, "fields": [], "notes": []}
+            self.visibility_stack = []
+            self.hidden_container_depth = 0
         elif self.current is not None and tag in ("script", "style", "noscript", "template"):
             self.hidden_text_depth += 1
         elif self.current is not None and tag == "p":
             # The actual customer-facing photo handoff is a visible paragraph.
-            self.current_note = (None if "hidden" in attrs or
-                                 "display:none" in attrs.get("style", "").replace(" ", "").lower()
-                                 else [])
+            self.current_note = None if self.hidden_container_depth else []
         elif self.current is not None and tag in ("input", "select", "textarea"):
             control = {"tag": tag, "attrs": attrs, "options": []}
             self.current["fields"].append(control)
@@ -53,7 +67,8 @@ class NativeFormParser(HTMLParser):
             self.active_select["options"].append(option)
 
     def handle_data(self, data):
-        if self.current is not None and self.current_note is not None and not self.hidden_text_depth:
+        if (self.current is not None and self.current_note is not None
+                and not self.hidden_text_depth and not self.hidden_container_depth):
             self.current_note.append(data)
 
     def handle_endtag(self, tag):
@@ -71,6 +86,17 @@ class NativeFormParser(HTMLParser):
         elif tag == "form" and self.current is not None:
             self.forms.append(self.current)
             self.current = None
+            self.visibility_stack = []
+            self.hidden_container_depth = 0
+        if self.current is not None and tag != "form":
+            # Close this tag and any still-open nested descendants; conservatively
+            # suppress hidden text even when source markup is imperfect.
+            for i in range(len(self.visibility_stack) - 1, -1, -1):
+                if self.visibility_stack[i][0] == tag:
+                    self.hidden_container_depth -= sum(
+                        int(hidden) for _, hidden in self.visibility_stack[i:])
+                    del self.visibility_stack[i:]
+                    break
 
 
 def exactly_one(fields, name):
@@ -138,7 +164,9 @@ def validate(source, slug):
     if not any(
             "photos" in note and ("actual machine" in note or "appliance" in note)
             and ("pickup access" in note or "removal path" in note)
-            and ("before confirming" in note or "before pickup confirmation" in note)
+            and ("before pickup confirmation" in note
+                 or "before confirming a pickup" in note
+                 or "before confirming pickup" in note)
             for note in notes):
         errors.append(f"{slug}: missing visible appliance/access-photo requirement before pickup")
     return errors
@@ -179,6 +207,13 @@ def self_test():
                      '<script>This form does not upload files</script>'),
         good.replace('Clear photos of the actual machine and pickup access are needed '
                      'before pickup confirmation. ', ''),
+        good.replace('<p>Clear photos', '<div hidden><p>Clear photos')
+            .replace('</p></form>', '</p></div></form>'),
+        good.replace('<p>Clear photos', '<div style="display:none"><p>Clear photos')
+            .replace('</p></form>', '</p></div></form>'),
+        good.replace('before pickup confirmation', 'before confirming submission of this request'),
+        good.replace('This form does not upload files.',
+                     '<span hidden>This form does not upload files.</span>'),
         good.replace('name="photo_link" type="url"', 'name="photo_link" type="url" required'),
         '<!-- ' + good + ' -->',
     )
