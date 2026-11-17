@@ -24,6 +24,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import html, json, re, sys
+          from html.parser import HTMLParser
           import xml.etree.ElementTree as ET
 
           BASE='https://freereliableappliancepickup.com/'
@@ -38,6 +39,109 @@ jobs:
           def types(node):
               t=node.get('@type')
               return t if isinstance(t,list) else [t]
+
+          class VisibleText(HTMLParser):
+              EXCLUDED={'head','script','style','template','noscript'}
+              VOID={'area','base','br','col','embed','hr','img','input',
+                    'link','meta','param','source','track','wbr'}
+              BLOCK={'p','div','section','h1','h2','h3','h4','br','li','ul','ol','td','tr',
+                     'header','footer','main','article','blockquote','table'}
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.stack=[]
+                  self.parts=[]
+              def handle_starttag(self,tag,attrs):
+                  # HTML implicitly closes a paragraph when a paragraph-ending
+                  # block starts (not just another <p>). A hidden open paragraph
+                  # must not suppress the following visible div or section.
+                  P_CLOSERS={'p','address','article','aside','blockquote','details',
+                             'dialog','div','dl','fieldset','figcaption','figure',
+                             'footer','form','h1','h2','h3','h4','h5','h6',
+                             'header','hgroup','hr','main','menu','nav','ol','pre',
+                             'search','section','table','ul'}
+                  if tag in P_CLOSERS:
+                      for i in range(len(self.stack)-1,-1,-1):
+                          if self.stack[i][0]=='p':
+                              del self.stack[i:]
+                              break
+                  ancestor_hidden=bool(self.stack and self.stack[-1][1])
+                  style=next((value or '' for key,value in attrs if key.lower()=='style'), '')
+                  # Inline CSS may hide text without the HTML hidden attribute.
+                  css_hidden=bool(re.search(r'(?i)(?:^|;)\s*(?:display\s*:\s*none|visibility\s*:\s*hidden)\s*(?:!important)?\s*(?:;|$)',style))
+                  own_hidden=(tag in self.EXCLUDED
+                              or any(key.lower()=='hidden' for key,_ in attrs)
+                              or css_hidden)
+                  suppressed=ancestor_hidden or own_hidden
+                  if not suppressed and tag in self.BLOCK:
+                      self.parts.append(' ')
+                  if tag not in self.VOID:
+                      self.stack.append((tag,suppressed))
+              def handle_endtag(self,tag):
+                  # Pop through the matching opener; this also handles imperfect
+                  # markup with a missing nested closing tag conservatively.
+                  for i in range(len(self.stack)-1,-1,-1):
+                      if self.stack[i][0]==tag:
+                          suppressed=self.stack[i][1]
+                          del self.stack[i:]
+                          if not suppressed and tag in self.BLOCK:
+                              self.parts.append(' ')
+                          break
+              def handle_data(self,data):
+                  if not self.stack or not self.stack[-1][1]:
+                      self.parts.append(data)
+              # HTMLParser ignores HTML comments; attribute values are never text nodes.
+
+          def normalize_text(value):
+              return ' '.join(html.unescape(str(value)).split())
+
+          def visible_page_text(value):
+              parser=VisibleText()
+              parser.feed(value)
+              return normalize_text(''.join(parser.parts))
+
+          # Positive: inline markup and whitespace preserve visible sentence.
+          assert 'Working washers qualify.' in visible_page_text(
+              '<p>Working <strong>washers</strong>   qualify.</p>')
+          # Negative: head, attributes, comments and scripts cannot spoof visible FAQ answers.
+          assert 'Working washers qualify.' not in visible_page_text(
+              '<head><title>Working washers qualify.</title></head>'
+              '<p title="Working washers qualify.">Unrelated text</p>'
+              '<!-- Working washers qualify. -->'
+              '<script>Working washers qualify.</script>')
+          # A hidden ancestor suppresses all nested text, not just its opening tag.
+          assert 'Working washers qualify.' not in visible_page_text(
+              '<section hidden><p>Working <strong>washers</strong> qualify.</p></section>')
+          assert 'Working washers qualify.' not in visible_page_text(
+              '<p hidden>Working washers qualify.</p><p>Visible unrelated text</p>')
+          assert 'Working washers qualify.' in visible_page_text(
+              '<div hidden>Working washers qualify.</div><p>Working washers qualify.</p>')
+          # A new paragraph or another paragraph-ending block implicitly
+          # closes a hidden paragraph before rendering visible content.
+          assert 'Working washers qualify.' in visible_page_text(
+              '<p hidden>Unrelated<p>Working washers qualify.</p>')
+          assert 'Working washers qualify.' in visible_page_text(
+              '<p hidden>Unrelated<div>Working washers qualify.</div>')
+          # Inline CSS display:none / visibility:hidden must not spoof FAQ text.
+          assert 'Working washers qualify.' not in visible_page_text(
+              '<section style="display: none"><p>Working washers qualify.</p></section>')
+          assert 'Working washers qualify.' not in visible_page_text(
+              '<div style="visibility: hidden">Working washers qualify.</div>')
+          assert 'Working washers qualify.' in visible_page_text(
+              '<div style="display:none">Unrelated</div><p>Working washers qualify.</p>')
+
+          # Regression guard for the California laundry pages corrected in PR #1389.
+          # Other site pages remain governed by existing JSON-LD checks until separately reviewed.
+          VGM_LAUNDRY_FAQ_PAGES={
+              'fontana-washer-dryer-pickup', 'upland-washer-dryer-pickup',
+              'ontario-washer-dryer-pickup', 'chino-washer-dryer-pickup',
+              'chino-hills-washer-dryer-pickup', 'claremont-washer-dryer-pickup',
+              'corona-washer-dryer-pickup', 'glendora-washer-dryer-pickup',
+              'los-angeles-county-washer-dryer-pickup',
+              'orange-county-washer-dryer-pickup', 'pomona-washer-dryer-pickup',
+              'redlands-washer-dryer-pickup', 'riverside-washer-dryer-pickup',
+              'san-bernardino-washer-dryer-pickup',
+              'west-covina-washer-dryer-pickup'
+          }
 
           errors=[]
           checked_pages=0
@@ -63,6 +167,9 @@ jobs:
               tm=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
               title=html.unescape(re.sub(r'\s+',' ',tm.group(1))).strip() if tm else ''
 
+              # For reviewed laundry pages, inspect parsed visible text nodes only.
+              # Comments, attributes, scripts, styles and metadata do not count.
+              visible_html=visible_page_text(raw) if p.parent.name in VGM_LAUNDRY_FAQ_PAGES else ''
               matches=list(SCRIPT_RE.finditer(raw))
               webpage_count=0
               for m in matches:
@@ -85,6 +192,19 @@ jobs:
                       node_types=[str(x).lower() for x in types(node) if x is not None]
                       if 'service' in node_types and 'telephone' in node:
                           errors.append(f'INVALID SERVICE TELEPHONE PROPERTY {p}')
+
+                      if 'faqpage' in node_types and p.parent.name in VGM_LAUNDRY_FAQ_PAGES:
+                          for q in node.get('mainEntity', []):
+                              if not isinstance(q, dict):
+                                  errors.append(f'INVALID FAQ QUESTION {p}')
+                                  continue
+                              question=html.unescape(str(q.get('name',''))).strip()
+                              answer_node=q.get('acceptedAnswer') or {}
+                              answer=html.unescape(str(answer_node.get('text',''))).strip() if isinstance(answer_node,dict) else ''
+                              if not question or normalize_text(question) not in visible_html:
+                                  errors.append(f'FAQ QUESTION NOT VISIBLE {p}: {question!r}')
+                              if not answer or normalize_text(answer) not in visible_html:
+                                  errors.append(f'FAQ ANSWER NOT VISIBLE {p}: {question!r}')
 
                       if 'webpage' in node_types:
                           webpage_count += 1

@@ -1,0 +1,28 @@
+name: Audit Inland Empire Laundry Intake
+on:
+  pull_request:
+    paths:
+      - '*-washer-dryer-pickup/index.html'
+      - 'scripts/audit-ie-laundry-access.py'
+      - '.github/workflows/audit-ie-laundry-access.yml'
+  push:
+    branches: [main]
+    paths:
+      - '*-washer-dryer-pickup/index.html'
+      - 'scripts/audit-ie-laundry-access.py'
+      - '.github/workflows/audit-ie-laundry-access.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-intake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run offline California laundry access regression test
+        run: python3 scripts/audit-ie-laundry-access.py
