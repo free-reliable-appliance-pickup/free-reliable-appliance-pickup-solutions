@@ -59,7 +59,8 @@ def native_required(control):
 def blank_first(control):
     return (control is not None and control["tag"] == "select"
             and len(control["options"]) > 1
-            and control["options"][0].get("value") == "")
+            and control["options"][0].get("value") == ""
+            and not any("selected" in opt for opt in control["options"][1:]))
 
 
 def validate_source(slug, city, source):
@@ -112,13 +113,12 @@ def validate_source(slug, city, source):
         issues.append(f"{slug}: ZIP numeric keyboard changed")
     if "This form does not upload photos directly" not in form:
         issues.append(f"{slug}: photo handoff statement absent")
-    if "A quote is not a booking or" not in form:
-        # Existing forms use slightly different quote copy; their opt-in
-        # choices are verified separately without forcing rewrite.
-        quotes = field(parsed.fields, "paid_removal_preference")
-        if quotes is None or not {"free_only", "quote_ok"}.issubset(
-                {o.get("value") for o in quotes["options"]}):
-            issues.append(f"{slug}: paid removal consent choice changed")
+    # Validate customer consent choices independently of the quote disclosure.
+    # Some existing pages use different but equivalent disclosure wording.
+    quotes = field(parsed.fields, "paid_removal_preference")
+    if quotes is None or not {"free_only", "quote_ok"}.issubset(
+            {o.get("value") for o in quotes["options"]}):
+        issues.append(f"{slug}: paid removal consent choice changed")
     if any('type="file"' in tag for tag in re.findall(r"<input\b[^>]*>", form, re.I)):
         issues.append(f"{slug}: unexpected photo file upload control")
     return issues
@@ -151,11 +151,15 @@ def self_test():
                      'name="photos_available" data-required="true"'),
         good.replace('<option value=""></option><option>Garage</option>',
                      '<option value="garage"></option><option>Garage</option>'),
+        good.replace('<option>Garage</option>',
+                     '<option selected>Garage</option>'),
+        good.replace('<option value="free_only"></option><option value="quote_ok"></option>',
+                     '<option value="removed"></option>'),
     )
     for changed in changes:
         if not validate_source("la-verne", "La Verne", changed):
             raise AssertionError("negative fixture incorrectly accepted")
-    print("CALIFORNIA_LAUNDRY_NEGATIVE_TESTS_PASSED 3")
+    print("CALIFORNIA_LAUNDRY_NEGATIVE_TESTS_PASSED", len(changes))
 
 
 def main():
