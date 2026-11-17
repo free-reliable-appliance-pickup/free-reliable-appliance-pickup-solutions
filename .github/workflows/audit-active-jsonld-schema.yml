@@ -51,16 +51,26 @@ jobs:
                   self.stack=[]
                   self.parts=[]
               def handle_starttag(self,tag,attrs):
-                  # HTML implicitly closes an open <p> when another <p> starts.
-                  # Without this, a hidden first paragraph can incorrectly
-                  # suppress the next visible paragraph in source HTML.
-                  if tag=='p':
+                  # HTML implicitly closes a paragraph when a paragraph-ending
+                  # block starts (not just another <p>). A hidden open paragraph
+                  # must not suppress the following visible div or section.
+                  P_CLOSERS={'p','address','article','aside','blockquote','details',
+                             'dialog','div','dl','fieldset','figcaption','figure',
+                             'footer','form','h1','h2','h3','h4','h5','h6',
+                             'header','hgroup','hr','main','menu','nav','ol','pre',
+                             'search','section','table','ul'}
+                  if tag in P_CLOSERS:
                       for i in range(len(self.stack)-1,-1,-1):
                           if self.stack[i][0]=='p':
                               del self.stack[i:]
                               break
                   ancestor_hidden=bool(self.stack and self.stack[-1][1])
-                  own_hidden=tag in self.EXCLUDED or any(key.lower()=='hidden' for key,_ in attrs)
+                  style=next((value or '' for key,value in attrs if key.lower()=='style'), '')
+                  # Inline CSS may hide text without the HTML hidden attribute.
+                  css_hidden=bool(re.search(r'(?i)(?:^|;)\\s*(?:display\\s*:\\s*none|visibility\\s*:\\s*hidden)\\s*(?:!important)?\\s*(?:;|$)',style))
+                  own_hidden=(tag in self.EXCLUDED
+                              or any(key.lower()=='hidden' for key,_ in attrs)
+                              or css_hidden)
                   suppressed=ancestor_hidden or own_hidden
                   if not suppressed and tag in self.BLOCK:
                       self.parts.append(' ')
@@ -105,9 +115,19 @@ jobs:
               '<p hidden>Working washers qualify.</p><p>Visible unrelated text</p>')
           assert 'Working washers qualify.' in visible_page_text(
               '<div hidden>Working washers qualify.</div><p>Working washers qualify.</p>')
-          # The second <p> implicitly closes the first hidden <p>.
+          # A new paragraph or another paragraph-ending block implicitly
+          # closes a hidden paragraph before rendering visible content.
           assert 'Working washers qualify.' in visible_page_text(
               '<p hidden>Unrelated<p>Working washers qualify.</p>')
+          assert 'Working washers qualify.' in visible_page_text(
+              '<p hidden>Unrelated<div>Working washers qualify.</div>')
+          # Inline CSS display:none / visibility:hidden must not spoof FAQ text.
+          assert 'Working washers qualify.' not in visible_page_text(
+              '<section style="display: none"><p>Working washers qualify.</p></section>')
+          assert 'Working washers qualify.' not in visible_page_text(
+              '<div style="visibility: hidden">Working washers qualify.</div>')
+          assert 'Working washers qualify.' in visible_page_text(
+              '<div style="display:none">Unrelated</div><p>Working washers qualify.</p>')
 
           # Regression guard for the California laundry pages corrected in PR #1389.
           # Other site pages remain governed by existing JSON-LD checks until separately reviewed.
