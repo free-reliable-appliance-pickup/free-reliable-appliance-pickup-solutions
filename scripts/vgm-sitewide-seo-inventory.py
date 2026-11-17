@@ -5,6 +5,7 @@ Not a Google indexing/ranking/lead delivery measurement or deployment audit.
 import argparse
 from collections import Counter, defaultdict
 from html import unescape
+from html.parser import HTMLParser
 from pathlib import Path
 import re
 from urllib.parse import urlsplit
@@ -47,17 +48,35 @@ def category(path):
         if path.endswith(ending):return label
     return 'hubs, guides, other'
 
+class PickupFormParser(HTMLParser):
+    """Count real form elements and controls; comments are not live markup."""
+    def __init__(self):
+        super().__init__()
+        self.forms = []
+        self.current = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'form' and self.current is None:
+            self.current = {'attrs': dict(attrs), 'names': []}
+        elif tag in ('input', 'select', 'textarea') and self.current is not None:
+            self.current['names'].append(dict(attrs).get('name', ''))
+
+    def handle_endtag(self, tag):
+        if tag == 'form' and self.current is not None:
+            self.forms.append(self.current)
+            self.current = None
+
+
 def pickup_intake_source_evidence(html):
     """Source-only check of native pickup forms, not delivery or live availability."""
-    candidates = re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+    parser = PickupFormParser()
+    parser.feed(html)
     forms = []
-    for form in candidates:
-        opening = form.split('>', 1)[0] + '>'
-        form_attrs = attributes(opening)
+    for form in parser.forms:
+        form_attrs = form['attrs']
         if form_attrs.get('action', '').rstrip('/') != 'https://formspree.io/f/mvzeapzd':
             continue
-        inputs = re.findall(r'<(?:input|select|textarea)\b[^>]*>', form, re.I)
-        names = [attributes(tag).get('name', '') for tag in inputs]
+        names = form['names']
         missing = [x for x in ('name', 'phone', 'address', 'zip', 'appliance',
                                'condition', 'source_page') if x not in names]
         if not any(x in names for x in ('photos_available', 'photo_method')):
@@ -75,6 +94,25 @@ def pickup_intake_source_evidence(html):
         'missing_fields': forms[0]['missing_fields'] if len(forms) == 1 else [],
         'post': len(forms) == 1 and forms[0]['method'] == 'post',
     }
+
+
+def local_request_link(href):
+    """Accept only root-relative request anchors with no external authority."""
+    url = urlsplit(href)
+    return href.startswith('/') and not url.scheme and not url.netloc and url.fragment == 'request'
+
+
+# Source regression fixtures: invisible commented markup is not a pickup form.
+assert pickup_intake_source_evidence(
+    '<!-- <form action="https://formspree.io/f/mvzeapzd" method="post"></form> -->'
+)['form_count'] == 0
+assert pickup_intake_source_evidence(
+    '<form action="https://formspree.io/f/mvzeapzd" method="post">'
+    '<input name="phone"></form>'
+)['post']
+assert local_request_link('/city/#request')
+assert not local_request_link('//example.org/city/#request')
+
 
 def inspect():
     root=ET.parse(ROOT/'sitemap.xml')
@@ -160,7 +198,7 @@ def write_report():
         hrefs = [attributes(tag).get('href', '')
                  for tag in re.findall(r'<a\b[^>]*>', page_html, re.I)]
         for href in hrefs:
-            if not href.startswith('/') or not href.endswith('#request'):
+            if not local_request_link(href):
                 continue
             destination_path = ROOT / (slug(href).lstrip('/') + 'index.html')
             if not destination_path.is_file():
