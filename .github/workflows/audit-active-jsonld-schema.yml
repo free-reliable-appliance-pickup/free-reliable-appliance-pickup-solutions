@@ -39,6 +39,20 @@ jobs:
               t=node.get('@type')
               return t if isinstance(t,list) else [t]
 
+          # Regression guard for the California laundry pages corrected in PR #1389.
+          # Other site pages remain governed by existing JSON-LD checks until separately reviewed.
+          VGM_LAUNDRY_FAQ_PAGES={
+              'fontana-washer-dryer-pickup', 'upland-washer-dryer-pickup',
+              'ontario-washer-dryer-pickup', 'chino-washer-dryer-pickup',
+              'chino-hills-washer-dryer-pickup', 'claremont-washer-dryer-pickup',
+              'corona-washer-dryer-pickup', 'glendora-washer-dryer-pickup',
+              'los-angeles-county-washer-dryer-pickup',
+              'orange-county-washer-dryer-pickup', 'pomona-washer-dryer-pickup',
+              'redlands-washer-dryer-pickup', 'riverside-washer-dryer-pickup',
+              'san-bernardino-washer-dryer-pickup',
+              'west-covina-washer-dryer-pickup'
+          }
+
           errors=[]
           checked_pages=0
           checked_scripts=0
@@ -63,6 +77,10 @@ jobs:
               tm=re.search(r'<title>(.*?)</title>',raw,re.I|re.S)
               title=html.unescape(re.sub(r'\s+',' ',tm.group(1))).strip() if tm else ''
 
+              # FAQ question and answer text must be present in user-visible markup.
+              # Exclude head, scripts and styles so invisible metadata is not mistaken for content.
+              visible_html=re.sub(r'<head\b[\s\S]*?</head\s*>|<script\b[\s\S]*?</script\s*>|<style\b[\s\S]*?</style\s*>', ' ', raw, flags=re.I)
+              visible_html=html.unescape(visible_html)
               matches=list(SCRIPT_RE.finditer(raw))
               webpage_count=0
               for m in matches:
@@ -85,6 +103,19 @@ jobs:
                       node_types=[str(x).lower() for x in types(node) if x is not None]
                       if 'service' in node_types and 'telephone' in node:
                           errors.append(f'INVALID SERVICE TELEPHONE PROPERTY {p}')
+
+                      if 'faqpage' in node_types and p.parent.name in VGM_LAUNDRY_FAQ_PAGES:
+                          for q in node.get('mainEntity', []):
+                              if not isinstance(q, dict):
+                                  errors.append(f'INVALID FAQ QUESTION {p}')
+                                  continue
+                              question=html.unescape(str(q.get('name',''))).strip()
+                              answer_node=q.get('acceptedAnswer') or {}
+                              answer=html.unescape(str(answer_node.get('text',''))).strip() if isinstance(answer_node,dict) else ''
+                              if not question or question not in visible_html:
+                                  errors.append(f'FAQ QUESTION NOT VISIBLE {p}: {question!r}')
+                              if not answer or answer not in visible_html:
+                                  errors.append(f'FAQ ANSWER NOT VISIBLE {p}: {question!r}')
 
                       if 'webpage' in node_types:
                           webpage_count += 1
