@@ -1,0 +1,29 @@
+name: Audit California Observed Laundry Forms
+
+on:
+  pull_request:
+    paths:
+      - '*-washer-dryer-pickup/index.html'
+      - 'scripts/audit-ca-observed-laundry-access.py'
+      - '.github/workflows/audit-ca-observed-laundry-access.yml'
+  push:
+    branches: [main]
+    paths:
+      - '*-washer-dryer-pickup/index.html'
+      - 'scripts/audit-ca-observed-laundry-access.py'
+      - '.github/workflows/audit-ca-observed-laundry-access.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-intake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify six observed California washer/dryer pickup forms
+        run: python3 scripts/audit-ca-observed-laundry-access.py
