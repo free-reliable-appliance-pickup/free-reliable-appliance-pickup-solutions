@@ -1041,6 +1041,310 @@ for slug in FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES:
         errors.append(f"{slug}: expected California route attribution")
 print("FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES_CHECKED", len(FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES))
 
+# Guard the repaired Mission Viejo and Torrance washer/dryer intake controls.
+# Static source validation only: never submit customer data to Formspree.
+CALIFORNIA_MV_TORRANCE_LAUNDRY = (
+    "mission-viejo-washer-dryer-pickup",
+    "torrance-washer-dryer-pickup",
+)
+for slug in CALIFORNIA_MV_TORRANCE_LAUNDRY:
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: pickup form page missing")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    forms = [
+        f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+        if 'action="https://formspree.io/f/mvzeapzd"' in f.split(">", 1)[0]
+    ]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected one Formspree pickup form")
+        continue
+    form = forms[0]
+    for field in ("name", "phone", "address", "city", "zip", "appliance",
+                  "condition", "location", "stairs", "photos_available"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{re.escape(field)}"[^>]*>',
+            form, re.I
+        )
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {field} must be uniquely required")
+    for field in ("appliance", "condition", "location", "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: {field} must remain a blank-first required select")
+    photo_link = re.findall(
+        r'<input\b[^>]*\bname="photo_link"[^>]*>', form, re.I
+    )
+    if (len(photo_link) != 1
+            or not re.search(r'\btype="url"', photo_link[0], re.I)
+            or re.search(r'\brequired\b', photo_link[0], re.I)):
+        errors.append(f"{slug}: photo_link must be a unique optional URL input")
+    if form.count(f'name="source_page" value="{slug}"') != 1:
+        errors.append(f"{slug}: inaccurate request source attribution")
+    if "This form does not upload files" not in form:
+        errors.append(f"{slug}: missing accurate photo-upload disclosure")
+    label_check = LabelAudit()
+    label_check.feed(form)
+    if label_check.depth or label_check.errors:
+        errors.append(f"{slug}: invalid nested or unbalanced form labels")
+print("CALIFORNIA_MV_TORRANCE_LAUNDRY_CHECKED", len(CALIFORNIA_MV_TORRANCE_LAUNDRY))
+
+# Preserve safe-access and photo-readiness fields on South Pasadena / Alhambra.
+# Source-only QA; do not send test customers or photos to Formspree.
+SGV_COMPLETE_LAUNDRY_INTAKES = (
+    "south-pasadena-washer-dryer-pickup",
+    "alhambra-washer-dryer-pickup",
+)
+for slug in SGV_COMPLETE_LAUNDRY_INTAKES:
+    page = Path(slug) / "index.html"
+    if not page.is_file():
+        errors.append(f"{slug}: missing SGV laundry page")
+        continue
+    raw = page.read_text(encoding="utf-8", errors="replace")
+    forms = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in f.split(">", 1)[0]]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected exactly one Formspree request form")
+        continue
+    form = forms[0]
+    for field in ("name", "phone", "address", "zip", "appliance", "condition",
+                  "location", "stairs", "photos_available"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{field}"[^>]*>',
+            form, re.I
+        )
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {field} must be uniquely required")
+    for field in ("appliance", "condition", "location", "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: {field} needs a blank-first required select")
+    if form.count(f'name="source_page" value="{slug}"') != 1:
+        errors.append(f"{slug}: invalid source_page attribution")
+    if form.count('name="city"') != 1 or form.count('name="state"') != 1:
+        errors.append(f"{slug}: city/state attribution is missing or duplicated")
+    if form.count('name="service"') != 1:
+        errors.append(f"{slug}: service attribution missing or duplicated")
+    album = re.findall(r'<input\b[^>]*\bname="photo_link"[^>]*>', form, re.I)
+    if (len(album) != 1 or not re.search(r'\btype="url"', album[0], re.I)
+            or re.search(r'\brequired\b', album[0], re.I)):
+        errors.append(f"{slug}: photo_link must be optional URL field")
+    if "This form does not upload files" not in form:
+        errors.append(f"{slug}: photo uploading disclosure missing")
+    label_check = LabelAudit()
+    label_check.feed(form)
+    if label_check.depth or label_check.errors:
+        errors.append(f"{slug}: invalid or unbalanced field labels")
+print("SGV_COMPLETE_LAUNDRY_INTAKES_CHECKED", len(SGV_COMPLETE_LAUNDRY_INTAKES))
+
+# Real customer requests were received on these four California city pages.
+# Guard access and photo handoff so the website can qualify these leads without
+# JavaScript or direct photo uploads on the Formspree free plan.
+OBSERVED_LEAD_CITY_FORMS = {
+    "fremont": "Fremont",
+    "concord": "Concord",
+    "lynwood": "Lynwood",
+    "gardena": "Gardena",
+    "downey": "Downey",
+    "escondido": "Escondido",
+    "san-marcos": "San Marcos",
+    "calimesa": "Calimesa",
+    "garden-grove": "Garden Grove",
+    "encinitas": "Encinitas",
+}
+class ObservedLeadFieldParser(HTMLParser):
+    """Read native form, control, and option attributes, ignoring comments."""
+    def __init__(self):
+        super().__init__()
+        self.controls = []
+        self.form_attrs = None
+        self.current_select = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "form":
+            self.form_attrs = dict(attrs)
+        elif tag in ("input", "select", "textarea"):
+            control = {"tag": tag, "attrs": dict(attrs), "options": []}
+            self.controls.append(control)
+            if tag == "select":
+                self.current_select = control
+        elif tag == "option" and self.current_select is not None:
+            self.current_select["options"].append(dict(attrs))
+
+    def handle_endtag(self, tag):
+        if tag == "select":
+            self.current_select = None
+
+
+def observed_controls(controls, name):
+    return [c for c in controls if c["attrs"].get("name") == name]
+
+
+def observed_single_value(controls, name, value):
+    values = observed_controls(controls, name)
+    return len(values) == 1 and values[0]["attrs"].get("value") == value
+
+
+def observed_native_required(control):
+    return "required" in control["attrs"]
+
+
+def observed_blank_first(controls, name):
+    matches = observed_controls(controls, name)
+    if len(matches) != 1 or matches[0]["tag"] != "select":
+        return False
+    options = matches[0]["options"]
+    return (len(options) > 1 and options[0].get("value") == ""
+            and ("disabled" not in options[0] or "selected" in options[0])
+            and not any("selected" in opt for opt in options[1:]))
+
+
+# Negative regressions: duplicate city fields and data-required must not pass.
+_probe = ObservedLeadFieldParser()
+_probe.feed('<input name="city" value="Fremont"><input name="city" value="Elsewhere">'
+            '<select name="photos_available" data-required="true"><option value=""></option></select>'
+            '<select name="stairs" required><option value=""></option></select>')
+if observed_single_value(_probe.controls, "city", "Fremont"):
+    errors.append("observed-city test: duplicate city inputs incorrectly accepted")
+if any(observed_native_required(c) for c in observed_controls(_probe.controls, "photos_available")):
+    errors.append("observed-city test: data-required incorrectly treated as native required")
+if not all(observed_native_required(c) for c in observed_controls(_probe.controls, "stairs")):
+    errors.append("observed-city test: native required attribute rejected")
+_method_probe = ObservedLeadFieldParser()
+_method_probe.feed('<form method="GET" data-method="POST"></form>')
+if (_method_probe.form_attrs or {}).get("method", "").upper() == "POST":
+    errors.append("observed-city test: spoofed data-method accepted as POST")
+_blank_probe = ObservedLeadFieldParser()
+_blank_probe.feed('<select name="condition" required>'
+                  '<option data-value="" value="working">Working</option>'
+                  '<option value="other">Other</option></select>')
+if observed_blank_first(_blank_probe.controls, "condition"):
+    errors.append("observed-city test: spoofed data-value accepted as blank choice")
+_preselected_probe = ObservedLeadFieldParser()
+_preselected_probe.feed('<select name="condition" required><option value="">Choose</option>'
+                        '<option value="working" selected>Working</option></select>')
+if observed_blank_first(_preselected_probe.controls, "condition"):
+    errors.append("observed-city test: preselected nonblank answer accepted")
+_disabled_blank_probe = ObservedLeadFieldParser()
+_disabled_blank_probe.feed('<select name="condition" required>'
+                           '<option value="" disabled>Choose</option>'
+                           '<option value="working">Working</option></select>')
+if observed_blank_first(_disabled_blank_probe.controls, "condition"):
+    errors.append("observed-city test: implicit nonblank selection accepted")
+_selected_blank_probe = ObservedLeadFieldParser()
+_selected_blank_probe.feed('<select name="condition" required>'
+                           '<option value="" disabled selected>Choose</option>'
+                           '<option value="working">Working</option></select>')
+if not observed_blank_first(_selected_blank_probe.controls, "condition"):
+    errors.append("observed-city test: selected disabled blank incorrectly rejected")
+
+for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
+    slug = city_slug + "-appliance-pickup"
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: missing observed customer pickup page")
+        continue
+    source = path.read_text(encoding="utf-8", errors="replace")
+    forms = [form for form in re.findall(r'<form\b[^>]*>.*?</form>', source, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in form.split(">", 1)[0]]
+    if len(forms) != 1:
+        errors.append(f"{slug}: must retain one native customer Formspree POST form")
+        continue
+    form = forms[0]
+    parsed = ObservedLeadFieldParser()
+    parsed.feed(form)
+    if (parsed.form_attrs or {}).get("method", "").upper() != "POST":
+        errors.append(f"{slug}: form must submit with POST")
+    controls = parsed.controls
+    for name, value in (("source_page", slug), ("state", "California"), ("city", city_name)):
+        if not observed_single_value(controls, name, value):
+            errors.append(f"{slug}: incorrect or duplicate {name} market attribution")
+    for field in ("name", "phone", "address", "zip", "appliance", "condition",
+                  "location", "stairs", "photos_available"):
+        matches = observed_controls(controls, field)
+        if len(matches) != 1 or not observed_native_required(matches[0]):
+            errors.append(f"{slug}: {field} must be unique and natively required")
+    for field in ("appliance", "condition", "location", "stairs", "photos_available"):
+        matches = observed_controls(controls, field)
+        if not observed_blank_first(controls, field) or len(matches) != 1 or not observed_native_required(matches[0]):
+            errors.append(f"{slug}: {field} needs a required blank-first selection")
+    phone = observed_controls(controls, "phone")
+    if len(phone) != 1 or any(phone[0]["attrs"].get(key) != val for key, val in
+                            (("type", "tel"), ("autocomplete", "tel"), ("inputmode", "tel"))):
+        errors.append(f"{slug}: mobile-friendly phone field changed")
+    zip_field = observed_controls(controls, "zip")
+    if len(zip_field) != 1 or zip_field[0]["attrs"].get("inputmode") != "numeric":
+        errors.append(f"{slug}: ZIP must open a numeric keyboard")
+    for optional in ("paid_removal_preference", "photo_link"):
+        matches = observed_controls(controls, optional)
+        if len(matches) != 1 or observed_native_required(matches[0]):
+            errors.append(f"{slug}: {optional} must be present, unique and optional")
+    if 'This form does not upload photos directly' not in form:
+        errors.append(f"{slug}: required photo handoff must not promise file upload")
+
+# Two additional real customer sources use different native form templates.
+# Preserve their original service identifiers and existing pickup fields.
+OBSERVED_SPECIALTY_FORM_CONTRACTS = {
+    "yucaipa-appliance-pickup": {
+        "source_page": "yucaipa-appliance-pickup",
+        "city": "Yucaipa",
+        "required": ("name", "phone", "address", "city", "zip", "appliance",
+                     "condition", "location", "stairs", "photos_available"),
+    },
+    "los-angeles-refrigerator-pickup": {
+        "source_page": "Los Angeles refrigerator page",
+        "city": "Los Angeles",
+        "required": ("name", "phone", "address", "zip", "condition",
+                     "floor", "stairs", "photos_available"),
+    },
+}
+for specialty_slug, expected in OBSERVED_SPECIALTY_FORM_CONTRACTS.items():
+    specialty_path = Path(specialty_slug) / "index.html"
+    if not specialty_path.is_file():
+        errors.append(f"{specialty_slug}: real-lead specialty intake page missing")
+        continue
+    specialty_source = specialty_path.read_text(encoding="utf-8", errors="replace")
+    forms = [v for v in re.findall(r'<form\b[^>]*>.*?</form>', specialty_source, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in v.split(">", 1)[0]]
+    if len(forms) != 1:
+        errors.append(f"{specialty_slug}: expected exactly one Formspree pickup form")
+        continue
+    form = forms[0]
+    parsed = ObservedLeadFieldParser()
+    parsed.feed(form)
+    if (parsed.form_attrs or {}).get("method", "").upper() != "POST":
+        errors.append(f"{specialty_slug}: Formspree form must POST")
+    controls = parsed.controls
+    for name, value in (("state", "California"),
+                        ("city", expected["city"]),
+                        ("source_page", expected["source_page"])):
+        if not observed_single_value(controls, name, value):
+            errors.append(f"{specialty_slug}: missing or duplicate {name} attribution")
+    for name in expected["required"]:
+        matches = observed_controls(controls, name)
+        if len(matches) != 1 or not observed_native_required(matches[0]):
+            errors.append(f"{specialty_slug}: {name} must be uniquely and natively required")
+    for name in ("condition", "photos_available"):
+        matches = observed_controls(controls, name)
+        if len(matches) != 1 or not observed_blank_first(controls, name) or not observed_native_required(matches[0]):
+            errors.append(f"{specialty_slug}: {name} selection must be blank-first and required")
+    for name in ("paid_removal_preference", "photo_link"):
+        matches = observed_controls(controls, name)
+        if len(matches) != 1 or observed_native_required(matches[0]):
+            errors.append(f"{specialty_slug}: {name} must be uniquely present and optional")
+    if "This form does not upload photos directly" not in form:
+        errors.append(f"{specialty_slug}: photo handoff must not imply upload availability")
+    if specialty_slug == "yucaipa-appliance-pickup":
+        photo_index = form.find('name="photos_available"')
+        before_photo = form[:photo_index] if photo_index >= 0 else ""
+        if before_photo.count("<details") != before_photo.count("</details>"):
+            errors.append("Yucaipa: required photo field hidden inside optional details")
+    else:
+        if not observed_single_value(controls, "appliance", "Refrigerator"):
+            errors.append("Los Angeles refrigerator: preserve original refrigerator-only appliance")
+print("OBSERVED_SPECIALTY_FORMS_CHECKED", len(OBSERVED_SPECIALTY_FORM_CONTRACTS))
+
+print("OBSERVED_LEAD_CITY_FORMS_CHECKED", len(OBSERVED_LEAD_CITY_FORMS))
+
 print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
 
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
