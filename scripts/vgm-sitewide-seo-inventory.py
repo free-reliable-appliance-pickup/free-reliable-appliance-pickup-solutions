@@ -47,6 +47,35 @@ def category(path):
         if path.endswith(ending):return label
     return 'hubs, guides, other'
 
+def pickup_intake_source_evidence(html):
+    """Source-only check of native pickup forms, not delivery or live availability."""
+    candidates = re.findall(r'<form\b[^>]*>.*?</form>', html, re.I | re.S)
+    forms = []
+    for form in candidates:
+        opening = form.split('>', 1)[0] + '>'
+        form_attrs = attributes(opening)
+        if form_attrs.get('action', '').rstrip('/') != 'https://formspree.io/f/mvzeapzd':
+            continue
+        inputs = re.findall(r'<(?:input|select|textarea)\b[^>]*>', form, re.I)
+        names = [attributes(tag).get('name', '') for tag in inputs]
+        missing = [x for x in ('name', 'phone', 'address', 'zip', 'appliance',
+                               'condition', 'source_page') if x not in names]
+        if not any(x in names for x in ('photos_available', 'photo_method')):
+            missing.append('photo_method/photos_available')
+        if not any(x in names for x in ('floor', 'location')):
+            missing.append('floor/location')
+        if 'stairs' not in names:
+            missing.append('stairs')
+        forms.append({
+            'missing_fields': missing,
+            'method': form_attrs.get('method', '').lower(),
+        })
+    return {
+        'form_count': len(forms),
+        'missing_fields': forms[0]['missing_fields'] if len(forms) == 1 else [],
+        'post': len(forms) == 1 and forms[0]['method'] == 'post',
+    }
+
 def inspect():
     root=ET.parse(ROOT/'sitemap.xml')
     urls=[x.text.strip() for x in root.findall('.//{*}loc') if x.text]
@@ -71,7 +100,8 @@ def inspect():
             canonical=attr_tag(html,'link','rel','canonical','href'),
             h1=len(re.findall(r'<h1\b[^>]*>',html,re.I)),
             words=len(clean(body).split()),
-            paragraphs=paragraphs,category=category(path)))
+            paragraphs=paragraphs,category=category(path),
+            intake=pickup_intake_source_evidence(html)))
     # Pages outside the sitemap can still be public, intentionally excluded, or
     # noindex. Scan their HTML source without assuming the files are deployed.
     sitemap_paths={slug(u) for u in urls if urlsplit(u).hostname=='freereliableappliancepickup.com'}
@@ -116,6 +146,17 @@ def write_report():
         if n>=5 and repeated>=3 and repeated/n>=.35:
             copied.append((repeated/n,repeated,n,p['path']))
     copied.sort(reverse=True)
+    # Direct embedded intake is measured separately from all internal CTA links.
+    # A page without its own form may intentionally route to another page; it is
+    # flagged for manual customer-path inspection, not automatically deemed broken.
+    service_types={'washer/dryer','refrigerator','stove/oven','freezer','general appliance'}
+    service_pages=[p for p in active if p['category'] in service_types]
+    with_form=[p for p in service_pages if p['intake']['form_count'] == 1 and p['intake']['post']]
+    missing_form=[p for p in service_pages if p['intake']['form_count'] == 0]
+    duplicate_or_nonpost=[p for p in service_pages
+                          if p['intake']['form_count'] > 1
+                          or (p['intake']['form_count'] == 1 and not p['intake']['post'])]
+    missing_dispatch=[p for p in with_form if p['intake']['missing_fields']]
     counts=Counter(p['category'] for p in pages)
     lines=['# VGM sitemap-wide source quality inventory','',
        'SOURCE ONLY: this report does not establish live Google indexing, organic keyword positions, a spam penalty or lead delivery.','',
@@ -132,6 +173,11 @@ def write_report():
            sum(p['h1']!=1 for p in pages),len(thin)),
        '- Duplicate title clusters: **%d**, description clusters: **%d**'%(len(dt),len(dd)),
        '- Indexable pages with 35%%+ shared long paragraph share: **%d**'%len(copied),
+       '- Source-indexable service-intent pages checked for native intake: **%d**'%len(service_pages),
+       '- Service-intent pages with exactly one native Formspree POST: **%d**'%len(with_form),
+       '- Service-intent pages without embedded Formspree pickup form: **%d**'%len(missing_form),
+       '- Service-intent pages with multiple/non-POST pickup forms: **%d**'%len(duplicate_or_nonpost),
+       '- Single-form service pages missing one or more common intake fields: **%d**'%len(missing_dispatch),
        '',
        '## URL classes','| Class | Count |','|---|---:|']
     lines.extend('| %s | %s |'%(name,n) for name,n in counts.most_common())
@@ -169,6 +215,12 @@ def write_report():
             p['canonical'] or 'missing',
             'yes' if p['pickup_form'] else 'no')
         for p in omitted],100)
+    section('Indexable service pages without embedded pickup form (verify their request link)',[
+        p['path'] for p in missing_form],100)
+    section('Indexable service pages with multiple or non-POST pickup forms',[
+        p['path'] for p in duplicate_or_nonpost],100)
+    section('Service forms missing common intake or source fields (inspect before changes)',[
+        p['path']+' | '+', '.join(p['intake']['missing_fields']) for p in missing_dispatch],100)
     section('Unresolved sitemap URLs',['%s: %s'%(p,why) for p,why in missing])
     section('Sitemap noindex pages',[p['path'] for p in noindex],50)
     section('Non-self canonical',[p['path']+' -> '+p['canonical'] for p in crosscanon])
