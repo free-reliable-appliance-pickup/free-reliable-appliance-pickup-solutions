@@ -42,10 +42,12 @@ class FormReader(HTMLParser):
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "form":
-            self.current = {"attrs": attrs, "fields": []}
+            self.current = {"attrs": attrs, "fields": [], "bypass_controls": []}
             self.forms.append(self.current)
             self.ancestors = []
         elif self.current is not None:
+            if "formnovalidate" in attrs and (tag == "button" and attrs.get("type", "submit").lower() == "submit" or tag == "input" and attrs.get("type", "").lower() in ("submit", "image")):
+                self.current["bypass_controls"].append(tag)
             node = {"tag": tag, "attrs": attrs}
             parent = self.ancestors[-1] if self.ancestors else None
             if tag == "legend" and parent and parent["tag"] == "fieldset":
@@ -100,6 +102,8 @@ def check(html, slug, city, city_mode, service):
     form = parser.forms[0]
     if form["attrs"].get("action") != ENDPOINT or form["attrs"].get("method", "").lower() != "post":
         faults.append(f"{slug}: form must POST to exact known Formspree endpoint")
+    if "novalidate" in form["attrs"] or form["bypass_controls"]:
+        faults.append(f"{slug}: native form validation must not be bypassed")
     fields = form["fields"]
 
     def named(field):
@@ -110,6 +114,8 @@ def check(html, slug, city, city_mode, service):
         if len(matches) != 1 or (tag is not None and matches[0]["tag"] != tag):
             faults.append(f"{slug}: expected exactly one native {tag or 'field'} named {field}")
             return None
+        if matches[0]["effectively_disabled"]:
+            faults.append(f"{slug}: {field} is disabled and excluded from submission")
         return matches[0]
 
     for field, value in (
@@ -151,6 +157,8 @@ def check(html, slug, city, city_mode, service):
         options = el["options"]
         if not options or options[0]["attrs"].get("value") != "":
             faults.append(f"{slug}: {field} must start with an empty-value prompt")
+        elif options[0]["effectively_disabled"] and "selected" not in options[0]["attrs"]:
+            faults.append(f"{slug}: a disabled blank prompt must be explicitly selected")
         if any("selected" in o["attrs"] for o in options[1:]):
             faults.append(f"{slug}: {field} has nonempty preselected default")
         if field in ("location", "stairs") and not any(
@@ -223,6 +231,15 @@ def self_test():
                       '<fieldset disabled><legend>Location</legend><select name="location" required>')
              .replace('</select><select name="stairs" required>',
                       '</select></fieldset><select name="stairs" required>'),
+        valid.replace('<form action="'+ENDPOINT+'" method="POST">',
+                      '<form action="'+ENDPOINT+'" method="POST" novalidate>'),
+        valid.replace('</form>', '<button type="submit" formnovalidate>Send</button></form>'),
+        valid.replace('name="source_page"', 'name="source_page" disabled'),
+        valid.replace('name="phone" type="tel" required', 'name="phone" type="tel" required disabled'),
+        valid.replace('<input name="phone" type="tel" required>',
+                      '<fieldset disabled><input name="phone" type="tel" required></fieldset>'),
+        valid.replace('<option value="">Select</option>',
+                      '<option value="" disabled>Select</option>', 1),
         # An Unknown answer inside a disabled optgroup cannot be chosen.
         valid.replace('<option>Unknown / not sure</option></select><select name="stairs"',
                       '<optgroup disabled label="Other"><option>Unknown / not sure</option></optgroup></select><select name="stairs"'),
@@ -242,7 +259,7 @@ def self_test():
     assert check(metro_form.replace('name="city" required',
                                     'name="city" value="Sacramento" required'),
                  "sacramento-metro", metro, m, s), "fixed metro city escaped"
-    print("PASS: four positive and seventeen negative offline intake fixtures")
+    print(f"PASS: four positive and {len(broken)+1} negative offline intake fixtures")
 
 
 def main():
