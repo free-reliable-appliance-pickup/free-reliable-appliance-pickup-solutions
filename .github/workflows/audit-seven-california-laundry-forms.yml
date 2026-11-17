@@ -1,0 +1,40 @@
+name: VGM Seven California Laundry Form Intake
+
+on:
+  pull_request:
+    paths:
+      - 'chino-washer-dryer-pickup/index.html'
+      - 'covina-washer-dryer-pickup/index.html'
+      - 'glendora-washer-dryer-pickup/index.html'
+      - 'hemet-washer-dryer-pickup/index.html'
+      - 'moreno-valley-washer-dryer-pickup/index.html'
+      - 'perris-washer-dryer-pickup/index.html'
+      - 'rowland-heights-washer-dryer-pickup/index.html'
+      - 'scripts/audit-seven-california-laundry-forms.py'
+      - '.github/workflows/audit-seven-california-laundry-forms.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'chino-washer-dryer-pickup/index.html'
+      - 'covina-washer-dryer-pickup/index.html'
+      - 'glendora-washer-dryer-pickup/index.html'
+      - 'hemet-washer-dryer-pickup/index.html'
+      - 'moreno-valley-washer-dryer-pickup/index.html'
+      - 'perris-washer-dryer-pickup/index.html'
+      - 'rowland-heights-washer-dryer-pickup/index.html'
+      - 'scripts/audit-seven-california-laundry-forms.py'
+      - '.github/workflows/audit-seven-california-laundry-forms.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-seven-laundry-forms:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Reject malformed or misleading pickup forms
+        run: python3 scripts/audit-seven-california-laundry-forms.py --self-test
+      - name: Verify seven real California washer dryer request forms
+        run: python3 scripts/audit-seven-california-laundry-forms.py
