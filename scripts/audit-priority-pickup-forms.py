@@ -1041,6 +1041,53 @@ for slug in FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES:
         errors.append(f"{slug}: expected California route attribution")
 print("FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES_CHECKED", len(FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES))
 
+# Preserve safe-access and photo-readiness fields on South Pasadena / Alhambra.
+# Source-only QA; do not send test customers or photos to Formspree.
+SGV_COMPLETE_LAUNDRY_INTAKES = (
+    "south-pasadena-washer-dryer-pickup",
+    "alhambra-washer-dryer-pickup",
+)
+for slug in SGV_COMPLETE_LAUNDRY_INTAKES:
+    page = Path(slug) / "index.html"
+    if not page.is_file():
+        errors.append(f"{slug}: missing SGV laundry page")
+        continue
+    raw = page.read_text(encoding="utf-8", errors="replace")
+    forms = [f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in f.split(">", 1)[0]]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected exactly one Formspree request form")
+        continue
+    form = forms[0]
+    for field in ("name", "phone", "address", "zip", "appliance", "condition",
+                  "location", "stairs", "photos_available"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{field}"[^>]*>',
+            form, re.I
+        )
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {field} must be uniquely required")
+    for field in ("appliance", "condition", "location", "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: {field} needs a blank-first required select")
+    if form.count(f'name="source_page" value="{slug}"') != 1:
+        errors.append(f"{slug}: invalid source_page attribution")
+    if form.count('name="city"') != 1 or form.count('name="state"') != 1:
+        errors.append(f"{slug}: city/state attribution is missing or duplicated")
+    if form.count('name="service"') != 1:
+        errors.append(f"{slug}: service attribution missing or duplicated")
+    album = re.findall(r'<input\b[^>]*\bname="photo_link"[^>]*>', form, re.I)
+    if (len(album) != 1 or not re.search(r'\btype="url"', album[0], re.I)
+            or re.search(r'\brequired\b', album[0], re.I)):
+        errors.append(f"{slug}: photo_link must be optional URL field")
+    if "This form does not upload files" not in form:
+        errors.append(f"{slug}: photo uploading disclosure missing")
+    label_check = LabelAudit()
+    label_check.feed(form)
+    if label_check.depth or label_check.errors:
+        errors.append(f"{slug}: invalid or unbalanced field labels")
+print("SGV_COMPLETE_LAUNDRY_INTAKES_CHECKED", len(SGV_COMPLETE_LAUNDRY_INTAKES))
+
 print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
 
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
