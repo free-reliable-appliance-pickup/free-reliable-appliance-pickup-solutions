@@ -106,15 +106,20 @@ def check(html, slug, city, city_mode, service):
             continue
         if "required" not in el["attrs"]:
             faults.append(f"{slug}: {field} select missing required")
+        if "disabled" in el["attrs"]:
+            faults.append(f"{slug}: {field} select cannot be disabled")
         options = el["options"]
         if not options or options[0]["attrs"].get("value") != "":
             faults.append(f"{slug}: {field} must start with an empty-value prompt")
         if any("selected" in o["attrs"] for o in options[1:]):
             faults.append(f"{slug}: {field} has nonempty preselected default")
         if field in ("location", "stairs") and not any(
-            "unknown" in o["text"].lower() or "not sure" in o["text"].lower() for o in options
+            ("unknown" in o["text"].lower() or "not sure" in o["text"].lower())
+            and "disabled" not in o["attrs"]
+            and (o["attrs"].get("value", o["text"].strip()) != "")
+            for o in options[1:]
         ):
-            faults.append(f"{slug}: {field} needs an honest unknown option")
+            faults.append(f"{slug}: {field} needs an enabled nonblank unknown option after the prompt")
     return faults
 
 
@@ -158,6 +163,10 @@ def self_test():
         valid.replace('name="city" value="Visalia"', 'name="city" value="Wrong City"'),
         valid.replace('name="service" value="Washer and dryer pickup"',
                       'name="service" value="General pickup"'),
+        valid.replace('name="location" required', 'name="location" required disabled'),
+        valid.replace('<select name="location" required><option value="">Select</option><option>Unknown / not sure</option></select>',
+                      '<select name="location" required><option value="">Unknown / not sure</option></select>'),
+        valid.replace('<option>Unknown / not sure</option>', '<option disabled>Unknown / not sure</option>', 1),
     ]
     for i, altered in enumerate(broken, 1):
         assert check(altered, "visalia", city, mode, service), f"negative fixture {i} escaped"
@@ -166,7 +175,7 @@ def self_test():
     assert check(metro_form.replace('name="city" required',
                                     'name="city" value="Sacramento" required'),
                  "sacramento-metro", metro, m, s), "fixed metro city escaped"
-    print("PASS: three positive and ten negative offline intake fixtures")
+    print("PASS: three positive and thirteen negative offline intake fixtures")
 
 
 def main():
