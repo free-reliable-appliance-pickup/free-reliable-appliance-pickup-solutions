@@ -22,6 +22,7 @@ class FormReader(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.forms = []
+        self.external_bypass = []
         self.current = None
         self.select = None
         self.option = None
@@ -41,6 +42,10 @@ class FormReader(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
+        if ("formnovalidate" in attrs and attrs.get("form") and
+            ((tag == "button" and attrs.get("type", "submit").lower() == "submit") or
+             (tag == "input" and attrs.get("type", "").lower() in ("submit", "image")))):
+            self.external_bypass.append((attrs["form"], tag))
         if tag == "form":
             self.current = {"attrs": attrs, "fields": [], "bypass_controls": []}
             self.forms.append(self.current)
@@ -83,6 +88,7 @@ class FormReader(HTMLParser):
             self.option = None
         elif tag == "select":
             self.select = None
+            self.option = None
         elif tag == "form":
             self.current = None
             self.ancestors = []
@@ -102,7 +108,8 @@ def check(html, slug, city, city_mode, service):
     form = parser.forms[0]
     if form["attrs"].get("action") != ENDPOINT or form["attrs"].get("method", "").lower() != "post":
         faults.append(f"{slug}: form must POST to exact known Formspree endpoint")
-    if "novalidate" in form["attrs"] or form["bypass_controls"]:
+    if ("novalidate" in form["attrs"] or form["bypass_controls"] or
+        any(form_id == form["attrs"].get("id") for form_id, _ in parser.external_bypass)):
         faults.append(f"{slug}: native form validation must not be bypassed")
     fields = form["fields"]
 
@@ -234,6 +241,9 @@ def self_test():
         valid.replace('<form action="'+ENDPOINT+'" method="POST">',
                       '<form action="'+ENDPOINT+'" method="POST" novalidate>'),
         valid.replace('</form>', '<button type="submit" formnovalidate>Send</button></form>'),
+        valid.replace('<form action="'+ENDPOINT+'" method="POST">',
+                      '<form id="pickup" action="'+ENDPOINT+'" method="POST">')
+             + '<button type="submit" form="pickup" formnovalidate>Send</button>',
         valid.replace('name="source_page"', 'name="source_page" disabled'),
         valid.replace('name="phone" type="tel" required', 'name="phone" type="tel" required disabled'),
         valid.replace('<input name="phone" type="tel" required>',
