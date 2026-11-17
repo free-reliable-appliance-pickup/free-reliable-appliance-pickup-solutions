@@ -1041,6 +1041,54 @@ for slug in FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES:
         errors.append(f"{slug}: expected California route attribution")
 print("FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES_CHECKED", len(FASTTRACK3_CALIFORNIA_LAUNDRY_INTAKES))
 
+# Guard the repaired Mission Viejo and Torrance washer/dryer intake controls.
+# Static source validation only: never submit customer data to Formspree.
+CALIFORNIA_MV_TORRANCE_LAUNDRY = (
+    "mission-viejo-washer-dryer-pickup",
+    "torrance-washer-dryer-pickup",
+)
+for slug in CALIFORNIA_MV_TORRANCE_LAUNDRY:
+    path = Path(slug) / "index.html"
+    if not path.is_file():
+        errors.append(f"{slug}: pickup form page missing")
+        continue
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    forms = [
+        f for f in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+        if 'action="https://formspree.io/f/mvzeapzd"' in f.split(">", 1)[0]
+    ]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected one Formspree pickup form")
+        continue
+    form = forms[0]
+    for field in ("name", "phone", "address", "city", "zip", "appliance",
+                  "condition", "location", "stairs", "photos_available"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{re.escape(field)}"[^>]*>',
+            form, re.I
+        )
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {field} must be uniquely required")
+    for field in ("appliance", "condition", "location", "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: {field} must remain a blank-first required select")
+    photo_link = re.findall(
+        r'<input\b[^>]*\bname="photo_link"[^>]*>', form, re.I
+    )
+    if (len(photo_link) != 1
+            or not re.search(r'\btype="url"', photo_link[0], re.I)
+            or re.search(r'\brequired\b', photo_link[0], re.I)):
+        errors.append(f"{slug}: photo_link must be a unique optional URL input")
+    if form.count(f'name="source_page" value="{slug}"') != 1:
+        errors.append(f"{slug}: inaccurate request source attribution")
+    if "This form does not upload files" not in form:
+        errors.append(f"{slug}: missing accurate photo-upload disclosure")
+    label_check = LabelAudit()
+    label_check.feed(form)
+    if label_check.depth or label_check.errors:
+        errors.append(f"{slug}: invalid nested or unbalanced form labels")
+print("CALIFORNIA_MV_TORRANCE_LAUNDRY_CHECKED", len(CALIFORNIA_MV_TORRANCE_LAUNDRY))
+
 print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
 
 print("WASHINGTON_REQUEST_FORMS_CHECKED", len(WASHINGTON_REQUEST_FORMS))
