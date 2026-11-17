@@ -3,6 +3,7 @@
 
 Does not transmit customer data, test live Formspree delivery, or assert service availability.
 """
+from html.parser import HTMLParser
 from pathlib import Path
 import re
 import sys
@@ -21,6 +22,16 @@ FORM_RE = re.compile(r"<form\b[^>]*>[\s\S]*?</form>", re.I)
 SELECT_RE = re.compile(r"<select\b([^>]*)>([\s\S]*?)</select>", re.I)
 INPUT_RE = re.compile(r"<input\b[^>]*>", re.I)
 OPTION_RE = re.compile(r"<option\b[^>]*>", re.I)
+
+
+class OptionAttributes(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.options = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "option":
+            self.options.append(dict(attrs))
 
 
 def attribute(tag, name):
@@ -82,8 +93,9 @@ def check_form(html, slug, city):
             problems.append(f"{slug}: {field} selector must start with a blank-value prompt")
         # A later selected option silently chooses a real answer even if the
         # first option is empty; native required validation would not fire.
-        if any(re.search(r"(?<![\w:-])selected(?=\s|=|>|$)", tag, re.I)
-               for tag in OPTION_RE.findall(options)[1:]):
+        parsed_options = OptionAttributes()
+        parsed_options.feed(options)
+        if any("selected" in attrs for attrs in parsed_options.options[1:]):
             problems.append(f"{slug}: {field} has a nonblank selected default")
         if field in ("location", "stairs") and "not sure" not in options.lower() and "unknown" not in options.lower():
             problems.append(f"{slug}: {field} must allow an honest unknown answer")
@@ -104,6 +116,9 @@ def self_test():
         fixed += f'<select name="{field}" required><option value="">Select</option><option>Unknown / not sure</option></select>'
     fixed += '</form>'
     assert check_form(fixed, slug, city) == [], "hidden-city positive fixture failed"
+    title_only = fixed.replace('<option>Unknown / not sure</option>',
+                               '<option title="Previously selected answer">Unknown / not sure</option>', 1)
+    assert check_form(title_only, slug, city) == [], "quoted selected text is not a selected attribute"
     visible_city = fixed.replace(
         '<input type="hidden" name="city" value="Eastvale">',
         '<input name="city" value="Eastvale" required>',
@@ -135,7 +150,7 @@ def self_test():
     ]
     for i, broken in enumerate(negative, 1):
         assert check_form(broken, slug, city), f"negative fixture {i} escaped"
-    print("PASS: two valid city-layout fixtures and eleven negative intake regressions")
+    print("PASS: three positive fixtures and eleven negative intake regressions")
 
 
 def main():
