@@ -1135,6 +1135,69 @@ for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
             errors.append(f"{slug}: {optional} must be present, unique and optional")
     if 'This form does not upload photos directly' not in form:
         errors.append(f"{slug}: required photo handoff must not promise file upload")
+
+# Two additional real customer sources use different native form templates.
+# Preserve their original service identifiers and existing pickup fields.
+OBSERVED_SPECIALTY_FORM_CONTRACTS = {
+    "yucaipa-appliance-pickup": {
+        "source_page": "yucaipa-appliance-pickup",
+        "city": "Yucaipa",
+        "required": ("name", "phone", "address", "city", "zip", "appliance",
+                     "condition", "location", "stairs", "photos_available"),
+    },
+    "los-angeles-refrigerator-pickup": {
+        "source_page": "Los Angeles refrigerator page",
+        "city": "Los Angeles",
+        "required": ("name", "phone", "address", "zip", "condition",
+                     "floor", "stairs", "photos_available"),
+    },
+}
+for specialty_slug, expected in OBSERVED_SPECIALTY_FORM_CONTRACTS.items():
+    specialty_path = Path(specialty_slug) / "index.html"
+    if not specialty_path.is_file():
+        errors.append(f"{specialty_slug}: real-lead specialty intake page missing")
+        continue
+    specialty_source = specialty_path.read_text(encoding="utf-8", errors="replace")
+    forms = [v for v in re.findall(r'<form\b[^>]*>.*?</form>', specialty_source, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in v.split(">", 1)[0]]
+    if len(forms) != 1:
+        errors.append(f"{specialty_slug}: expected exactly one Formspree pickup form")
+        continue
+    form = forms[0]
+    if not re.search(r'<form\b[^>]*\bmethod="POST"', form, re.I):
+        errors.append(f"{specialty_slug}: Formspree form must POST")
+    parsed = ObservedLeadFieldParser()
+    parsed.feed(form)
+    controls = parsed.controls
+    for name, value in (("state", "California"),
+                        ("city", expected["city"]),
+                        ("source_page", expected["source_page"])):
+        if not observed_single_value(controls, name, value):
+            errors.append(f"{specialty_slug}: missing or duplicate {name} attribution")
+    for name in expected["required"]:
+        matches = observed_controls(controls, name)
+        if len(matches) != 1 or not observed_native_required(matches[0]):
+            errors.append(f"{specialty_slug}: {name} must be uniquely and natively required")
+    for name in ("condition", "photos_available"):
+        matches = observed_controls(controls, name)
+        if len(matches) != 1 or matches[0]["tag"] != "select" or not select_ok(form, name) or not observed_native_required(matches[0]):
+            errors.append(f"{specialty_slug}: {name} selection must be blank-first and required")
+    for name in ("paid_removal_preference", "photo_link"):
+        matches = observed_controls(controls, name)
+        if len(matches) != 1 or observed_native_required(matches[0]):
+            errors.append(f"{specialty_slug}: {name} must be uniquely present and optional")
+    if "This form does not upload photos directly" not in form:
+        errors.append(f"{specialty_slug}: photo handoff must not imply upload availability")
+    if specialty_slug == "yucaipa-appliance-pickup":
+        photo_index = form.find('name="photos_available"')
+        before_photo = form[:photo_index] if photo_index >= 0 else ""
+        if before_photo.count("<details") != before_photo.count("</details>"):
+            errors.append("Yucaipa: required photo field hidden inside optional details")
+    else:
+        if not observed_single_value(controls, "appliance", "Refrigerator"):
+            errors.append("Los Angeles refrigerator: preserve original refrigerator-only appliance")
+print("OBSERVED_SPECIALTY_FORMS_CHECKED", len(OBSERVED_SPECIALTY_FORM_CONTRACTS))
+
 print("OBSERVED_LEAD_CITY_FORMS_CHECKED", len(OBSERVED_LEAD_CITY_FORMS))
 
 print("FASTTRACK_OWNER_CITY_PHOTOS_CHECKED", len(FASTTRACK_OWNER_CITY_PHOTOS))
