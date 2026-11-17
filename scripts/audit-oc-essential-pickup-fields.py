@@ -55,7 +55,8 @@ def exactly_one(fields, name):
 
 
 def required(field):
-    return field is not None and "required" in field["attrs"]
+    return (field is not None and "required" in field["attrs"]
+            and "disabled" not in field["attrs"])
 
 
 def blank_first(field):
@@ -123,6 +124,9 @@ def validate(source, slug, city, service):
     zip_control = exactly_one(fields, "zip")
     if zip_control is None or zip_control["attrs"].get("inputmode") != "numeric":
         issues.append(f"{slug}: numeric ZIP keyboard missing")
+    if (zip_control is None or zip_control["attrs"].get("type") != "text"
+            or zip_control["attrs"].get("pattern") != "[0-9]{5}"):
+        issues.append(f"{slug}: missing effective five-digit ZIP validation")
     if "This form does not upload photos directly" not in form:
         issues.append(f"{slug}: photo handoff disclosure absent")
     if re.search(r'<input\b[^>]*type="file"', form, re.I):
@@ -136,7 +140,7 @@ def self_test():
     <input name="city" value="Costa Mesa"><input name="state" value="California">
     <input name="name" required><input type="tel" name="phone" required autocomplete="tel" inputmode="tel">
     <input name="address" autocomplete="street-address" required>
-    <input name="zip" inputmode="numeric" required>
+    <input name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" required>
     <select name="appliance" required><option value=""></option><option>Washer</option></select>
     <select name="condition" required><option value=""></option><option>Working</option></select>
     <select name="location" required><option value=""></option><option>Garage</option></select>
@@ -154,7 +158,12 @@ def self_test():
     broken = (
         good.replace('name="address" autocomplete="street-address" required',
                      'name="address" autocomplete="street-address" data-required="true"'),
-        good.replace('name="zip" inputmode="numeric" required', 'name="zip" required'),
+        good.replace('name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" required',
+                     'name="zip" type="text" pattern="[0-9]{5}" required'),
+        good.replace('name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" required',
+                     'name="zip" type="text" inputmode="numeric" required'),
+        good.replace('name="address" autocomplete="street-address" required',
+                     'name="address" autocomplete="street-address" required disabled'),
         good.replace('name="city" value="Costa Mesa"',
                      'name="city" value="Costa Mesa"><input name="city" value="Elsewhere"'),
         good.replace('name="location" required><option value="">',
