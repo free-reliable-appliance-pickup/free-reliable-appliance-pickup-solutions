@@ -51,6 +51,14 @@ jobs:
                   self.stack=[]
                   self.parts=[]
               def handle_starttag(self,tag,attrs):
+                  # HTML implicitly closes an open <p> when another <p> starts.
+                  # Without this, a hidden first paragraph can incorrectly
+                  # suppress the next visible paragraph in source HTML.
+                  if tag=='p':
+                      for i in range(len(self.stack)-1,-1,-1):
+                          if self.stack[i][0]=='p':
+                              del self.stack[i:]
+                              break
                   ancestor_hidden=bool(self.stack and self.stack[-1][1])
                   own_hidden=tag in self.EXCLUDED or any(key.lower()=='hidden' for key,_ in attrs)
                   suppressed=ancestor_hidden or own_hidden
@@ -97,6 +105,9 @@ jobs:
               '<p hidden>Working washers qualify.</p><p>Visible unrelated text</p>')
           assert 'Working washers qualify.' in visible_page_text(
               '<div hidden>Working washers qualify.</div><p>Working washers qualify.</p>')
+          # The second <p> implicitly closes the first hidden <p>.
+          assert 'Working washers qualify.' in visible_page_text(
+              '<p hidden>Unrelated<p>Working washers qualify.</p>')
 
           # Regression guard for the California laundry pages corrected in PR #1389.
           # Other site pages remain governed by existing JSON-LD checks until separately reviewed.
