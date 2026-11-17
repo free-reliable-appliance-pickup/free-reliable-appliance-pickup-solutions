@@ -21,24 +21,50 @@ CITIES = {
 
 
 class Fields(HTMLParser):
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+            "link", "meta", "param", "source", "track", "wbr"}
+
     def __init__(self):
         super().__init__()
         self.controls = []
         self.select = None
+        self.parents = []
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
+        first_legend_of = None
+        if tag == "legend" and self.parents and self.parents[-1]["tag"] == "fieldset":
+            fieldset = self.parents[-1]
+            if not fieldset["first_legend_seen"]:
+                fieldset["first_legend_seen"] = True
+                first_legend_of = fieldset
+        disabled_by_fieldset = any(
+            node["tag"] == "fieldset" and node["disabled"]
+            and not any(child["first_legend_of"] is node
+                        for child in self.parents[i + 1:])
+            for i, node in enumerate(self.parents)
+        )
         if tag in ("input", "select", "textarea"):
-            f = {"tag": tag, "attrs": a, "options": []}
+            f = {"tag": tag, "attrs": a, "options": [],
+                 "disabled_by_fieldset": disabled_by_fieldset}
             self.controls.append(f)
             if tag == "select":
                 self.select = f
         elif tag == "option" and self.select is not None:
             self.select["options"].append(a)
+        if tag not in self.VOID:
+            self.parents.append({"tag": tag,
+                                 "disabled": tag == "fieldset" and "disabled" in a,
+                                 "first_legend_seen": False,
+                                 "first_legend_of": first_legend_of})
 
     def handle_endtag(self, tag):
         if tag == "select":
             self.select = None
+        for i in range(len(self.parents) - 1, -1, -1):
+            if self.parents[i]["tag"] == tag:
+                del self.parents[i:]
+                break
 
 
 def one(fields, name):
@@ -48,7 +74,8 @@ def one(fields, name):
 
 def required(field):
     return (field is not None and "required" in field["attrs"]
-            and "disabled" not in field["attrs"])
+            and "disabled" not in field["attrs"]
+            and not field["disabled_by_fieldset"])
 
 
 def blank_first(field):
@@ -87,7 +114,7 @@ def validate(slug, city, html):
         errors.append(f"{slug}: missing photo-sharing help or handoff choice")
     for name in ("photo_link", "paid_removal_preference"):
         f = one(parser.controls, name)
-        if f is None or required(f):
+        if f is None or "required" in f["attrs"]:
             errors.append(f"{slug}: {name} must be unique and optional")
     phone = one(parser.controls, "phone")
     if phone is None or any(phone["attrs"].get(k) != v for k, v in
@@ -128,6 +155,12 @@ def self_test():
     This form does not upload photos directly. A quote is not a booking or a charge.
     </form>'''
     assert not validate("goodyear", "Goodyear", good), "valid form rejected"
+    # HTML permits required controls inside the first legend of a disabled fieldset.
+    exempt = (good.replace('<select name="photos_available" required>',
+                           '<fieldset disabled><legend><select name="photos_available" required>')
+              .replace('<input type="url" name="photo_link">',
+                       '</legend></fieldset><input type="url" name="photo_link">'))
+    assert not validate("goodyear", "Goodyear", exempt), "first-legend exception broken"
     corruptions = [
         good.replace('name="city" value="Goodyear"',
                      'name="city" value="Goodyear"><input name="city" value="Phoenix"'),
@@ -135,6 +168,16 @@ def self_test():
                      'name="photos_available" data-required="true"'),
         good.replace('name="photos_available" required',
                      'name="photos_available" required disabled'),
+        good.replace('<select name="photos_available" required>',
+                     '<fieldset disabled><select name="photos_available" required>')
+            .replace('<input type="url" name="photo_link">',
+                     '</fieldset><input type="url" name="photo_link">'),
+        good.replace('name="photo_link"', 'name="photo_link" required disabled'),
+        good.replace('<select name="photos_available" required>',
+                     '<fieldset disabled><legend>Other</legend>'
+                     '<legend><select name="photos_available" required>')
+            .replace('<input type="url" name="photo_link">',
+                     '</legend></fieldset><input type="url" name="photo_link">'),
         good.replace('<option value=""></option><option>Garage</option>',
                      '<option value="garage"></option><option>Garage</option>'),
     ]
