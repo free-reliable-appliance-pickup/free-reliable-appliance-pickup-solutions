@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only guard for essential address, ZIP and photo intake in eight Orange County pages.
+"""Read-only guard for essential address, ZIP and photo intake in sixteen Orange County pages.
 
 Does not send requests, verify live deployment, or establish operator coverage.
 """
@@ -17,6 +17,14 @@ LAUNDRY = {
     "ladera-ranch": "Ladera Ranch",
     "coto-de-caza": "Coto de Caza",
     "laguna-beach": "Laguna Beach",
+    "laguna-woods": "Laguna Woods",
+    "trabuco-canyon": "Trabuco Canyon",
+    "laguna-niguel": "Laguna Niguel",
+    "rancho-santa-margarita": "Rancho Santa Margarita",
+    "san-juan-capistrano": "San Juan Capistrano",
+    "san-clemente": "San Clemente",
+    "laguna-hills": "Laguna Hills",
+    "aliso-viejo": "Aliso Viejo",
 }
 REFRIGERATORS = {"costa-mesa": "Costa Mesa", "huntington-beach": "Huntington Beach"}
 
