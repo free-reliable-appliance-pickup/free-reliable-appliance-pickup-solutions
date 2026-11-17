@@ -153,6 +153,28 @@ def write_report():
     service_pages=[p for p in active if p['category'] in service_types]
     with_form=[p for p in service_pages if p['intake']['form_count'] == 1 and p['intake']['post']]
     missing_form=[p for p in service_pages if p['intake']['form_count'] == 0]
+    delegated_targets={}
+    for service_page in missing_form:
+        source_path = ROOT / (service_page['path'].lstrip('/') + 'index.html')
+        page_html = source_path.read_text(encoding='utf-8', errors='replace')
+        hrefs = [attributes(tag).get('href', '')
+                 for tag in re.findall(r'<a\b[^>]*>', page_html, re.I)]
+        for href in hrefs:
+            if not href.startswith('/') or not href.endswith('#request'):
+                continue
+            destination_path = ROOT / (slug(href).lstrip('/') + 'index.html')
+            if not destination_path.is_file():
+                continue
+            destination_html = destination_path.read_text(encoding='utf-8', errors='replace')
+            # A #request link is not sufficient if the section or form is absent.
+            if not re.search(r'\bid\s*=\s*["\']request["\']', destination_html, re.I):
+                continue
+            evidence = pickup_intake_source_evidence(destination_html)
+            if evidence['form_count'] == 1 and evidence['post']:
+                delegated_targets[service_page['path']] = href
+                break
+    missing_request_path=[p for p in missing_form
+                          if p['path'] not in delegated_targets]
     duplicate_or_nonpost=[p for p in service_pages
                           if p['intake']['form_count'] > 1
                           or (p['intake']['form_count'] == 1 and not p['intake']['post'])]
@@ -176,6 +198,8 @@ def write_report():
        '- Source-indexable service-intent pages checked for native intake: **%d**'%len(service_pages),
        '- Service-intent pages with exactly one native Formspree POST: **%d**'%len(with_form),
        '- Service-intent pages without embedded Formspree pickup form: **%d**'%len(missing_form),
+       '- No-form service pages with a verified in-source link to a Formspree request section: **%d**'%len(delegated_targets),
+       '- Service-intent pages with no native form and no verified delegated request section: **%d**'%len(missing_request_path),
        '- Service-intent pages with multiple/non-POST pickup forms: **%d**'%len(duplicate_or_nonpost),
        '- Single-form service pages missing one or more common intake fields: **%d**'%len(missing_dispatch),
        '',
@@ -217,6 +241,10 @@ def write_report():
         for p in omitted],100)
     section('Indexable service pages without embedded pickup form (verify their request link)',[
         p['path'] for p in missing_form],100)
+    section('No-form service pages with validated delegated intake links',[
+        source+' -> '+href for source,href in delegated_targets.items()],100)
+    section('Service pages with no direct or verified delegated pickup form',[
+        p['path'] for p in missing_request_path],100)
     section('Indexable service pages with multiple or non-POST pickup forms',[
         p['path'] for p in duplicate_or_nonpost],100)
     section('Service forms missing common intake or source fields (inspect before changes)',[
