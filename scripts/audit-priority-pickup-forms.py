@@ -801,6 +801,50 @@ for city in CALIFORNIA_FASTTRACK_LAUNDRY:
         errors.append(f"{slug}: invalid nested/unbalanced form labels")
 print("CALIFORNIA_FASTTRACK_LAUNDRY_CHECKED", len(CALIFORNIA_FASTTRACK_LAUNDRY))
 
+# Protect three repaired coastal Orange County washer/dryer request forms.
+# Source-only regression check: no customer data is submitted to Formspree.
+COASTAL_OC_LAUNDRY_INTAKES = (
+    "costa-mesa-washer-dryer-pickup",
+    "huntington-beach-washer-dryer-pickup",
+    "newport-beach-washer-dryer-pickup",
+)
+for slug in COASTAL_OC_LAUNDRY_INTAKES:
+    file = Path(slug) / "index.html"
+    if not file.is_file():
+        errors.append(f"{slug}: missing coastal Orange County laundry page")
+        continue
+    raw = file.read_text(encoding="utf-8", errors="replace")
+    forms = [m for m in re.findall(r'<form\b[^>]*>.*?</form>', raw, re.I | re.S)
+             if 'action="https://formspree.io/f/mvzeapzd"' in m.split(">", 1)[0]]
+    if len(forms) != 1:
+        errors.append(f"{slug}: expected exactly one Formspree request form")
+        continue
+    form = forms[0]
+    for field in ("name", "phone", "address", "city", "zip", "appliance",
+                  "condition", "location", "stairs", "photos_available"):
+        tags = re.findall(
+            rf'<(?:input|select|textarea)\b[^>]*\bname="{field}"[^>]*>',
+            form, re.I
+        )
+        if len(tags) != 1 or not re.search(r'\brequired\b', tags[0], re.I):
+            errors.append(f"{slug}: {field} must be uniquely required")
+    for field in ("appliance", "condition", "location", "stairs", "photos_available"):
+        if not select_ok(form, field):
+            errors.append(f"{slug}: {field} must be a blank-first required dropdown")
+    photo_link = re.findall(
+        r'<input\b[^>]*\bname="photo_link"[^>]*>', form, re.I
+    )
+    if (len(photo_link) != 1
+            or not re.search(r'\btype="url"', photo_link[0], re.I)
+            or re.search(r'\brequired\b', photo_link[0], re.I)):
+        errors.append(f"{slug}: photo_link must be a unique optional URL input")
+    if form.count(f'name="source_page" value="{slug}"') != 1:
+        errors.append(f"{slug}: missing accurate source-page attribution")
+    if form.count('name="service"') != 1:
+        errors.append(f"{slug}: missing original service classification")
+print("COASTAL_OC_LAUNDRY_INTAKES_CHECKED", len(COASTAL_OC_LAUNDRY_INTAKES))
+
+
 # FastTrack 3.0: regional request intake must preserve address, access and photo readiness.
 FASTTRACK_REGIONAL_HUB_INTAKE = {
     "inland-empire-appliance-pickup": "location",
