@@ -1049,6 +1049,12 @@ OBSERVED_LEAD_CITY_FORMS = {
     "concord": "Concord",
     "lynwood": "Lynwood",
     "gardena": "Gardena",
+    "downey": "Downey",
+    "escondido": "Escondido",
+    "san-marcos": "San Marcos",
+    "calimesa": "Calimesa",
+    "garden-grove": "Garden Grove",
+    "encinitas": "Encinitas",
 }
 for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
     slug = city_slug + "-appliance-pickup"
