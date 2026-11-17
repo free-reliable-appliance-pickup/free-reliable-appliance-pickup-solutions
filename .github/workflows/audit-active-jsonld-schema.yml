@@ -67,7 +67,7 @@ jobs:
                   ancestor_hidden=bool(self.stack and self.stack[-1][1])
                   style=next((value or '' for key,value in attrs if key.lower()=='style'), '')
                   # Inline CSS may hide text without the HTML hidden attribute.
-                  css_hidden=bool(re.search(r'(?i)(?:^|;)\\s*(?:display\\s*:\\s*none|visibility\\s*:\\s*hidden)\\s*(?:!important)?\\s*(?:;|$)',style))
+                  css_hidden=bool(re.search(r'(?i)(?:^|;)\s*(?:display\s*:\s*none|visibility\s*:\s*hidden)\s*(?:!important)?\s*(?:;|$)',style))
                   own_hidden=(tag in self.EXCLUDED
                               or any(key.lower()=='hidden' for key,_ in attrs)
                               or css_hidden)
