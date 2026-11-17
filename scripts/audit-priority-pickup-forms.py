@@ -1057,14 +1057,27 @@ OBSERVED_LEAD_CITY_FORMS = {
     "encinitas": "Encinitas",
 }
 class ObservedLeadFieldParser(HTMLParser):
-    """Read actual HTML attribute names, not substrings in data-required."""
+    """Read native form, control, and option attributes, ignoring comments."""
     def __init__(self):
         super().__init__()
         self.controls = []
+        self.form_attrs = None
+        self.current_select = None
 
     def handle_starttag(self, tag, attrs):
-        if tag in ("input", "select", "textarea"):
-            self.controls.append({"tag": tag, "attrs": dict(attrs)})
+        if tag == "form":
+            self.form_attrs = dict(attrs)
+        elif tag in ("input", "select", "textarea"):
+            control = {"tag": tag, "attrs": dict(attrs), "options": []}
+            self.controls.append(control)
+            if tag == "select":
+                self.current_select = control
+        elif tag == "option" and self.current_select is not None:
+            self.current_select["options"].append(dict(attrs))
+
+    def handle_endtag(self, tag):
+        if tag == "select":
+            self.current_select = None
 
 
 def observed_controls(controls, name):
@@ -1080,6 +1093,15 @@ def observed_native_required(control):
     return "required" in control["attrs"]
 
 
+def observed_blank_first(controls, name):
+    matches = observed_controls(controls, name)
+    if len(matches) != 1 or matches[0]["tag"] != "select":
+        return False
+    options = matches[0]["options"]
+    return (len(options) > 1 and options[0].get("value") == ""
+            and not any("selected" in opt for opt in options[1:]))
+
+
 # Negative regressions: duplicate city fields and data-required must not pass.
 _probe = ObservedLeadFieldParser()
 _probe.feed('<input name="city" value="Fremont"><input name="city" value="Elsewhere">'
@@ -1091,6 +1113,21 @@ if any(observed_native_required(c) for c in observed_controls(_probe.controls, "
     errors.append("observed-city test: data-required incorrectly treated as native required")
 if not all(observed_native_required(c) for c in observed_controls(_probe.controls, "stairs")):
     errors.append("observed-city test: native required attribute rejected")
+_method_probe = ObservedLeadFieldParser()
+_method_probe.feed('<form method="GET" data-method="POST"></form>')
+if (_method_probe.form_attrs or {}).get("method", "").upper() == "POST":
+    errors.append("observed-city test: spoofed data-method accepted as POST")
+_blank_probe = ObservedLeadFieldParser()
+_blank_probe.feed('<select name="condition" required>'
+                  '<option data-value="" value="working">Working</option>'
+                  '<option value="other">Other</option></select>')
+if observed_blank_first(_blank_probe.controls, "condition"):
+    errors.append("observed-city test: spoofed data-value accepted as blank choice")
+_preselected_probe = ObservedLeadFieldParser()
+_preselected_probe.feed('<select name="condition" required><option value="">Choose</option>'
+                        '<option value="working" selected>Working</option></select>')
+if observed_blank_first(_preselected_probe.controls, "condition"):
+    errors.append("observed-city test: preselected nonblank answer accepted")
 
 for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
     slug = city_slug + "-appliance-pickup"
@@ -1105,10 +1142,10 @@ for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
         errors.append(f"{slug}: must retain one native customer Formspree POST form")
         continue
     form = forms[0]
-    if not re.search(r'<form\b[^>]*\bmethod="POST"', form, re.I):
-        errors.append(f"{slug}: form must submit with POST")
     parsed = ObservedLeadFieldParser()
     parsed.feed(form)
+    if (parsed.form_attrs or {}).get("method", "").upper() != "POST":
+        errors.append(f"{slug}: form must submit with POST")
     controls = parsed.controls
     for name, value in (("source_page", slug), ("state", "California"), ("city", city_name)):
         if not observed_single_value(controls, name, value):
@@ -1120,7 +1157,7 @@ for city_slug, city_name in OBSERVED_LEAD_CITY_FORMS.items():
             errors.append(f"{slug}: {field} must be unique and natively required")
     for field in ("appliance", "condition", "location", "stairs", "photos_available"):
         matches = observed_controls(controls, field)
-        if not select_ok(form, field) or len(matches) != 1 or not observed_native_required(matches[0]):
+        if not observed_blank_first(controls, field) or len(matches) != 1 or not observed_native_required(matches[0]):
             errors.append(f"{slug}: {field} needs a required blank-first selection")
     phone = observed_controls(controls, "phone")
     if len(phone) != 1 or any(phone[0]["attrs"].get(key) != val for key, val in
@@ -1164,10 +1201,10 @@ for specialty_slug, expected in OBSERVED_SPECIALTY_FORM_CONTRACTS.items():
         errors.append(f"{specialty_slug}: expected exactly one Formspree pickup form")
         continue
     form = forms[0]
-    if not re.search(r'<form\b[^>]*\bmethod="POST"', form, re.I):
-        errors.append(f"{specialty_slug}: Formspree form must POST")
     parsed = ObservedLeadFieldParser()
     parsed.feed(form)
+    if (parsed.form_attrs or {}).get("method", "").upper() != "POST":
+        errors.append(f"{specialty_slug}: Formspree form must POST")
     controls = parsed.controls
     for name, value in (("state", "California"),
                         ("city", expected["city"]),
@@ -1180,7 +1217,7 @@ for specialty_slug, expected in OBSERVED_SPECIALTY_FORM_CONTRACTS.items():
             errors.append(f"{specialty_slug}: {name} must be uniquely and natively required")
     for name in ("condition", "photos_available"):
         matches = observed_controls(controls, name)
-        if len(matches) != 1 or matches[0]["tag"] != "select" or not select_ok(form, name) or not observed_native_required(matches[0]):
+        if len(matches) != 1 or not observed_blank_first(controls, name) or not observed_native_required(matches[0]):
             errors.append(f"{specialty_slug}: {name} selection must be blank-first and required")
     for name in ("paid_removal_preference", "photo_link"):
         matches = observed_controls(controls, name)
