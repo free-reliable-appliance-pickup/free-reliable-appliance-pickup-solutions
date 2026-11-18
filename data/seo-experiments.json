@@ -23,6 +23,47 @@
   },
   "experiments": [
     {
+      "id": "2026-11-18-sacramento-laundry-people-first-section",
+      "market": "Sacramento, CA — washer and dryer",
+      "hypothesis": "Removing an overt list of target search phrases from the dedicated Sacramento laundry page, while leaving actionable qualifications and request instructions intact, will improve reader-focused clarity and may help search engines understand the page. No ranking penalty is assumed.",
+      "pagesChanged": [
+        "/sacramento-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/sacramento-washer-dryer-pickup/",
+      "ownerQuery": "washer and dryer removal sacramento",
+      "lastChanged": "2026-11-18",
+      "baselinePeriod": {
+        "start": "2026-10-18",
+        "end": "2026-11-14"
+      },
+      "baseline": {
+        "source": "Connected first-party Google Search Console via Windsor.ai, 28 finalized days, page and query breakdown",
+        "dedicatedPage": {
+          "clicks": 0,
+          "impressions": 0
+        },
+        "generalPageRelevantQueries": {
+          "clicks": 0,
+          "impressions": 8,
+          "queries": [
+            "washer & dryer removal in sacramento",
+            "washer and dryer removal sacramento"
+          ]
+        },
+        "caveat": "Zero returned page impressions is not proof of non-indexing; user geography/device and anonymized queries can affect reports. A prospective quality experiment, not a confirmed algorithmic issue."
+      },
+      "change": "Remove one self-referential SEO phrase-list section (laundry-service-intro); preserve all working machine qualifications, city/metro guidance, form, real photo, local resources and internal links elsewhere. Update truthful WebPage dateModified and corresponding sitemap lastmod.",
+      "successSignals": [
+        "Dedicated Sacramento washer/dryer page begins appearing for matching relevant queries and gains qualified organic clicks over a later settled comparison window.",
+        "General Sacramento appliance page retains its different non-laundry commercial intent and clicks.",
+        "No loss of working request form, real-photo content, canonical, local phone, city/metro navigation or qualification rules."
+      ],
+      "evaluateNotBefore": "2026-12-03",
+      "preferredReview": "2026-12-20",
+      "status": "staged",
+      "freezeRule": "After this one-variable content cleanup is approved and deployed, do not further change title, meta, H1, body, canonical, schema-intent or main navigation until the first 14-day observation window ends; record any verified technical or factual exceptions."
+    },
+    {
       "id": "2026-11-12-rancho-laundry-exact-city-title",
       "market": "Rancho Cucamonga, CA — washer & dryer",
       "hypothesis": "Aligning the dedicated washer/dryer page's overly long title link with the page's clear H1 may help Google and local searchers recognize it as the appropriate result for the exact Rancho Cucamonga laundry-pickup query, without changing the general appliance page.",
