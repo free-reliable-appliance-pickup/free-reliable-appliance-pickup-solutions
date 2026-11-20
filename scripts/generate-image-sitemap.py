@@ -49,6 +49,15 @@ extra = [
     "fresno-stove-oven-pickup",
     # Nationwide service directory: use its visible multi-appliance garage hero.
     "service-areas",
+    # Existing indexable California laundry pages with verified real washer/dryer
+    # hero images. Keep in generator so image sitemap stays reproducible in CI.
+    "chula-vista-washer-dryer-pickup",
+    "santee-washer-dryer-pickup",
+    "oceanside-washer-dryer-pickup",
+    "carlsbad-washer-dryer-pickup",
+    "encinitas-washer-dryer-pickup",
+    "poway-washer-dryer-pickup",
+    "sacramento-metro-washer-dryer-pickup",
 ]
 
 slugs = []
