@@ -1,0 +1,211 @@
+{
+  "title": "VGM DEEPRANK-90 one-review California washer/dryer recovery",
+  "date": "2026-11-20",
+  "status": "review-only-not-approved",
+  "base_sha": "1bced26840b8a881de79cd68085da81b8426e849",
+  "source_pull_requests": {
+    "1480": "091c6c853c53f63fbaadf4c19346fde165a2c8fb",
+    "1494": "01c7b3fdf15c33e83f29cd602a9179325200b3b2",
+    "1495": "da9c3b0a1b3bb15f99beb6076c821f4169d15637",
+    "1497": "eff3d469e054f8b1eb43750ca0958de308e881b1"
+  },
+  "markets": [
+    "San Diego County, CA",
+    "Central Valley, CA"
+  ],
+  "staged_files": [
+    {
+      "path": "bakersfield-appliance-pickup/index.html",
+      "from": "central"
+    },
+    {
+      "path": "carlsbad-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "carlsbad-washer-dryer-pickup/index.html",
+      "from": "merged-image-plus-form"
+    },
+    {
+      "path": "chula-vista-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "chula-vista-washer-dryer-pickup/index.html",
+      "from": "merged-image-plus-form"
+    },
+    {
+      "path": "clovis-appliance-pickup/index.html",
+      "from": "central"
+    },
+    {
+      "path": "clovis-washer-dryer-pickup/index.html",
+      "from": "central"
+    },
+    {
+      "path": "coronado-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "coronado-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "del-mar-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "del-mar-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "el-cajon-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "el-cajon-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "encinitas-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "encinitas-washer-dryer-pickup/index.html",
+      "from": "merged-image-plus-form"
+    },
+    {
+      "path": "escondido-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "escondido-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "imperial-beach-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "imperial-beach-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "la-mesa-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "la-mesa-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "lemon-grove-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "lemon-grove-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "modesto-appliance-pickup/index.html",
+      "from": "central"
+    },
+    {
+      "path": "national-city-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "national-city-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "oceanside-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "oceanside-washer-dryer-pickup/index.html",
+      "from": "merged-image-plus-form"
+    },
+    {
+      "path": "poway-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "poway-washer-dryer-pickup/index.html",
+      "from": "merged-image-plus-form"
+    },
+    {
+      "path": "san-diego-washer-dryer-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "san-marcos-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "san-marcos-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "santee-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "santee-washer-dryer-pickup/index.html",
+      "from": "merged-image-plus-form"
+    },
+    {
+      "path": "scripts/generate-image-sitemap.py",
+      "from": "images"
+    },
+    {
+      "path": "sitemap-images.xml",
+      "from": "images"
+    },
+    {
+      "path": "solana-beach-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "solana-beach-washer-dryer-pickup/index.html",
+      "from": "forms"
+    },
+    {
+      "path": "stockton-appliance-pickup/index.html",
+      "from": "central"
+    },
+    {
+      "path": "stockton-washer-dryer-pickup/index.html",
+      "from": "central"
+    },
+    {
+      "path": "visalia-appliance-pickup/index.html",
+      "from": "central"
+    },
+    {
+      "path": "vista-appliance-pickup/index.html",
+      "from": "nav"
+    },
+    {
+      "path": "vista-washer-dryer-pickup/index.html",
+      "from": "forms"
+    }
+  ],
+  "verified_manual_merges": [
+    "carlsbad-washer-dryer-pickup/index.html",
+    "chula-vista-washer-dryer-pickup/index.html",
+    "encinitas-washer-dryer-pickup/index.html",
+    "oceanside-washer-dryer-pickup/index.html",
+    "poway-washer-dryer-pickup/index.html",
+    "santee-washer-dryer-pickup/index.html"
+  ],
+  "no_new_service_coverage": true,
+  "release_gates": [
+    "All latest-head GitHub Actions pass including CodeQL",
+    "Independent material form and photo review",
+    "Accountable maintainer explicit approval",
+    "Authorized merge",
+    "Verify live mobile pages and owner-controlled Formspree receipt",
+    "Compare settled GSC web impressions/clicks against predeployment baseline"
+  ]
+}
