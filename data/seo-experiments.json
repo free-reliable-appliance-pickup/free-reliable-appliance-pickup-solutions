@@ -60,7 +60,7 @@
         },
         "caveat": "The exact query has only one visible query-page row; this is a sparse sample and does not prove Google universally chooses the hub or that any page is unindexed. Image and web rankings are separate."
       },
-      "change": "Replace only the Fontana city page HTML <title> (from 'Free Appliance Pickup & Removal in Fontana, CA' to 'Free Appliance Pickup Fontana CA | Free Reliable Appliance Pickup'). Leave the hero photo, image metadata, description, H1, body, anchors, canonical, robots, schema, 909 contact and form exactly unchanged.",
+      "change": "One title-link concept only: synchronize the Fontana HTML <title>, og:title, and WebPage JSON-LD name to 'Free Appliance Pickup Fontana CA | Free Reliable Appliance Pickup'. The image/photo, og:image, twitter:image, primaryImageOfPage, meta description, H1, body, links, canonical, robots, 909 contact, request form and other city pages remain unchanged.",
       "successSignals": [
         "Fontana city URL starts appearing for the exact free appliance pickup Fontana query in finalized Google Web query+page data, not only the Inland Empire hub.",
         "City page Web impressions, CTR or qualified organic clicks improve against the 28-day baseline without loss of Image exposure.",
