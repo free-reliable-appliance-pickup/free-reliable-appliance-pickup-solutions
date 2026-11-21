@@ -23,13 +23,13 @@
   },
   "experiments": [
     {
-      "id": "2026-11-21-west-covina-homepage-city-handoff",
+      "id": "2026-11-21-west-covina-exact-city-title",
       "market": "West Covina, CA — general appliance pickup",
-      "hypothesis": "Google's Web query 'free appliance pickup west covina' has shown the homepage and several other site pages but not the dedicated West Covina city page in the available query+page data. A direct descriptive homepage link to the existing city page could help people and Google discover the appropriate owner, without altering city content, photo assets or request forms.",
+      "hypothesis": "In first-party Google Search Console Web data for 'free appliance pickup west covina', the homepage and four other URLs were reported, but not the existing general West Covina city page. Because the homepage is at its intentional 70-destination link limit, a measured three-field city title-link alignment may help Google choose the dedicated owner without changing homepage links or photos.",
       "pagesChanged": [
-        "/"
+        "/west-covina-appliance-pickup/"
       ],
-      "protectedOwner": "/",
+      "protectedOwner": "/west-covina-appliance-pickup/",
       "targetPage": "/west-covina-appliance-pickup/",
       "ownerQuery": "free appliance pickup west covina",
       "lastChanged": "2026-11-21",
@@ -86,20 +86,21 @@
           "homepageHadDirectWestCovinaCityLink": false,
           "homepageAlreadyLinkedSimilarPriorityCities": true,
           "cityCanonicalSelfReferenced": true,
-          "cityIndexFollow": true
+          "cityIndexFollow": true,
+          "homepagePolicy": "Homepage has 70 unique internal link destinations, at maximum allowed by Audit Homepage Concentration; attempted 71st link was reverted on the PR branch before merge. Regional SGV and service-areas pages already link to West Covina."
         },
         "caveat": "GSC query rows are privacy-limited and positions averaged; the absence of a city URL from reported rows is not proof it is unindexed or never shown. The new link is an experiment, not a guaranteed ranking signal."
       },
-      "change": "Insert exactly one descriptive direct link to /west-covina-appliance-pickup/ in the existing homepage San Gabriel Valley/Inland Empire priority city list, after Pomona. Do not change homepage title, meta, structured data, hero image, image alt/OG/Twitter markup, form, phone, navigation, other anchors, or any West Covina city-page byte.",
+      "change": "One title-link variable only: change West Covina city's HTML title, matching Open Graph title and WebPage JSON-LD name to 'Free Appliance Pickup West Covina CA | Free Reliable Appliance Pickup'. Do not alter the homepage, city page H1/body/meta description, internal links, canonical, image/OG-image/Twitter-image metadata, request form, phone, photo, schema other than WebPage name, or neighboring city pages.",
       "successSignals": [
-        "The existing West Covina general city URL begins receiving Google Web query+page rows for 'free appliance pickup west covina', subject to privacy thresholds.",
-        "West Covina city Web impressions and qualified clicks improve versus the 49-day baseline while other pages retain their appropriate regional intent.",
-        "No regressions to homepage image search exposure, photo, eligibility, phone routing or pickup forms."
+        "The West Covina general city page is reported for 'free appliance pickup west covina' in finalized Google Web query+page data, subject to GSC privacy thresholds.",
+        "West Covina city Web impressions and qualified organic clicks improve against the 49-day baseline, without degrading Image Search visibility.",
+        "No changes to homepage's 70-destination link budget, protected hero pictures or any lead form."
       ],
       "evaluateNotBefore": "2026-12-09",
       "preferredReview": "2026-12-12",
       "status": "running",
-      "freezeRule": "Single-link homepage experiment; avoid other speculative homepage city-link or title changes that would obscure attribution before the observation date. Factual, technical, intake and safety fixes remain allowed when verified and logged."
+      "freezeRule": "After this single city-title concept, freeze further speculative title/H1/body/link/schema-intent changes to the West Covina general page until the evaluation date; use separate Web/Image metrics. Verified technical, contact, form and safety fixes are exempt if logged."
     },
     {
       "id": "2026-11-20-upland-exact-city-organic-title",
