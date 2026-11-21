@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-20",
+  "updated": "2026-11-21",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,85 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-21-west-covina-homepage-city-handoff",
+      "market": "West Covina, CA — general appliance pickup",
+      "hypothesis": "Google's Web query 'free appliance pickup west covina' has shown the homepage and several other site pages but not the dedicated West Covina city page in the available query+page data. A direct descriptive homepage link to the existing city page could help people and Google discover the appropriate owner, without altering city content, photo assets or request forms.",
+      "pagesChanged": [
+        "/"
+      ],
+      "protectedOwner": "/",
+      "targetPage": "/west-covina-appliance-pickup/",
+      "ownerQuery": "free appliance pickup west covina",
+      "lastChanged": "2026-11-21",
+      "baselinePeriod": {
+        "start": "2026-10-01",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "dataSource": "Connected first-party Google Search Console via Windsor.ai; finalized Web Search query+page and page aggregates, 49-day range queried 2026-11-21",
+        "exactQuery": {
+          "query": "free appliance pickup west covina",
+          "reportedPages": [
+            {
+              "url": "/",
+              "impressions": 3,
+              "clicks": 0,
+              "avgPosition": 3.6667
+            },
+            {
+              "url": "/diamond-bar-appliance-pickup/",
+              "impressions": 2,
+              "clicks": 0,
+              "avgPosition": 18.5
+            },
+            {
+              "url": "/san-gabriel-valley-appliance-pickup/",
+              "impressions": 1,
+              "clicks": 0,
+              "avgPosition": 2
+            },
+            {
+              "url": "/service-areas/",
+              "impressions": 1,
+              "clicks": 0,
+              "avgPosition": 49
+            },
+            {
+              "url": "/west-covina-refrigerator-pickup/",
+              "impressions": 2,
+              "clicks": 0,
+              "avgPosition": 24.5
+            }
+          ],
+          "dedicatedGeneralCityPageReported": false
+        },
+        "cityPageOverall": {
+          "url": "/west-covina-appliance-pickup/",
+          "searchType": "web",
+          "clicks": 0,
+          "impressions": 5,
+          "avgPosition": 6.8
+        },
+        "sourceInspection": {
+          "homepageHadDirectWestCovinaCityLink": false,
+          "homepageAlreadyLinkedSimilarPriorityCities": true,
+          "cityCanonicalSelfReferenced": true,
+          "cityIndexFollow": true
+        },
+        "caveat": "GSC query rows are privacy-limited and positions averaged; the absence of a city URL from reported rows is not proof it is unindexed or never shown. The new link is an experiment, not a guaranteed ranking signal."
+      },
+      "change": "Insert exactly one descriptive direct link to /west-covina-appliance-pickup/ in the existing homepage San Gabriel Valley/Inland Empire priority city list, after Pomona. Do not change homepage title, meta, structured data, hero image, image alt/OG/Twitter markup, form, phone, navigation, other anchors, or any West Covina city-page byte.",
+      "successSignals": [
+        "The existing West Covina general city URL begins receiving Google Web query+page rows for 'free appliance pickup west covina', subject to privacy thresholds.",
+        "West Covina city Web impressions and qualified clicks improve versus the 49-day baseline while other pages retain their appropriate regional intent.",
+        "No regressions to homepage image search exposure, photo, eligibility, phone routing or pickup forms."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "running",
+      "freezeRule": "Single-link homepage experiment; avoid other speculative homepage city-link or title changes that would obscure attribution before the observation date. Factual, technical, intake and safety fixes remain allowed when verified and logged."
+    },
     {
       "id": "2026-11-20-upland-exact-city-organic-title",
       "market": "Upland, CA — general appliance pickup",
