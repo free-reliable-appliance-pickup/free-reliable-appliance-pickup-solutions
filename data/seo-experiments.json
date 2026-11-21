@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-12",
+  "updated": "2026-11-20",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,55 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-20-fontana-web-exact-city-title",
+      "market": "Fontana, California — general free appliance pickup",
+      "hypothesis": "Aligning only the Fontana page's HTML title with the exact city query and trusted business name may increase Web search selection and click-through versus the Inland Empire hub, without changing the content, images or inquiry path.",
+      "pagesChanged": [
+        "/fontana-appliance-pickup/"
+      ],
+      "protectedOwner": "/fontana-appliance-pickup/",
+      "ownerQuery": "free appliance pickup fontana",
+      "lastChanged": "2026-11-20",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "dataSource": "Connected first-party Google Search Console via Windsor.ai, 28-day finalized query+page+search_type and page+search_type pulls on 2026-11-20; search type WEB.",
+        "exactQuery": {
+          "query": "free appliance pickup fontana",
+          "selectedPage": "/inland-empire-appliance-pickup/",
+          "clicks": 1,
+          "impressions": 1,
+          "avgPosition": 29,
+          "dedicatedCityPageRows": 0
+        },
+        "cityPageOverall": {
+          "url": "/fontana-appliance-pickup/",
+          "clicks": 0,
+          "impressions": 5,
+          "avgPosition": 5.6
+        },
+        "comparableCityPage": {
+          "url": "/rancho-cucamonga-appliance-pickup/",
+          "clicks": 6,
+          "impressions": 531,
+          "avgPosition": 9.7571
+        },
+        "caveat": "The exact query has only one visible query-page row; this is a sparse sample and does not prove Google universally chooses the hub or that any page is unindexed. Image and web rankings are separate."
+      },
+      "change": "One title-link concept only: synchronize the Fontana HTML <title>, og:title, and WebPage JSON-LD name to 'Free Appliance Pickup Fontana CA | Free Reliable Appliance Pickup'. The image/photo, og:image, twitter:image, primaryImageOfPage, meta description, H1, body, links, canonical, robots, 909 contact, request form and other city pages remain unchanged.",
+      "successSignals": [
+        "Fontana city URL starts appearing for the exact free appliance pickup Fontana query in finalized Google Web query+page data, not only the Inland Empire hub.",
+        "City page Web impressions, CTR or qualified organic clicks improve against the 28-day baseline without loss of Image exposure.",
+        "No changes or regressions to photo indexing, call/text CTA, form and routing."
+      ],
+      "evaluateNotBefore": "2026-12-05",
+      "preferredReview": "2026-12-08",
+      "status": "running",
+      "freezeRule": "Title-only, single-city experiment. No further speculative organic title, H1, description, body, schema or internal-link changes to the Fontana general city page before evaluation, except verified technical/contact/indexability/safety corrections; keep the existing photos and image search visibility intact."
+    },
     {
       "id": "2026-11-12-rancho-laundry-exact-city-title",
       "market": "Rancho Cucamonga, CA — washer & dryer",
