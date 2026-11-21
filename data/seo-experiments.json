@@ -23,6 +23,40 @@
   },
   "experiments": [
     {
+      "id": "2026-11-21-sgv-laundry-official-alternatives",
+      "market": "San Gabriel Valley, California — washer and dryer regional hub",
+      "hypothesis": "Verified city-specific bulky-item alternatives for machines declined under reuse pickup rules make this regional page more useful and locally distinct than a city-link directory; ranking benefits are uncertain.",
+      "pagesChanged": [
+        "/san-gabriel-valley-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/san-gabriel-valley-washer-dryer-pickup/",
+      "lastChanged": "2026-11-21",
+      "baselinePeriod": {
+        "start": "2026-11-16",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "gscWeb": {
+          "clicks": 0,
+          "impressions": 0,
+          "note": "Free three-day Search Console view returned no recorded page row; absence does not prove deindexing."
+        },
+        "content": {
+          "municipalBulkyCollectionLinks": 0
+        }
+      },
+      "change": "Add one clearly labeled section with verified separate household bulky-item options for West Covina, Covina and Pomona; do not change title, metadata, schema, canonical, images, request form, phones or internal links.",
+      "successSignals": [
+        "Official city/hauler links remain correct and live; free-pickup qualifications are not overstated.",
+        "After a finalized 14-day window, review SGV laundry Web impressions, clicks and city query ownership separately from Image search.",
+        "Photo, intake, crawl eligibility and canonical remain intact."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "running",
+      "freezeRule": "After approved production merge, leave SGV washer/dryer organic title, body, links, images, canonical and FAQ unchanged until evaluation except verified factual/contact/form/indexing/safety corrections."
+    },
+    {
       "id": "2026-11-21-west-covina-exact-city-title",
       "market": "West Covina, CA — general appliance pickup",
       "hypothesis": "In first-party Google Search Console Web data for 'free appliance pickup west covina', the homepage and four other URLs were reported, but not the existing general West Covina city page. Because the homepage is at its intentional 70-destination link limit, a measured three-field city title-link alignment may help Google choose the dedicated owner without changing homepage links or photos.",
