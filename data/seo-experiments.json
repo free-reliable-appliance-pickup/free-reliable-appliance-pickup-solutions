@@ -23,6 +23,50 @@
   },
   "experiments": [
     {
+      "id": "2026-11-20-upland-exact-city-organic-title",
+      "market": "Upland, CA — general appliance pickup",
+      "hypothesis": "Replacing the Upland general page's overly broad 'Pickup & Removal in' title with an exact-city phrase plus the real business name may help Google select it as an organic Web result for Upland-specific pickup searches, without altering the established image or lead request experience.",
+      "pagesChanged": [
+        "/upland-appliance-pickup/"
+      ],
+      "protectedOwner": "/upland-appliance-pickup/",
+      "ownerQuery": "free appliance pickup upland",
+      "lastChanged": "2026-11-20",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "dataSource": "First-party Google Search Console via connected Windsor.ai (28-day finalized page+search_type Web pull, and query+page Web pull, retrieved 2026-11-20)",
+        "cityPage": {
+          "url": "/upland-appliance-pickup/",
+          "searchType": "web",
+          "clicks": 0,
+          "impressions": 2,
+          "avgPosition": 6
+        },
+        "exactCityQuery": {
+          "query": "free appliance pickup upland",
+          "reportedRows": 0
+        },
+        "context": {
+          "fontanaCityWebImpressions": 5,
+          "ranchoCucamongaCityWebImpressions": 531
+        },
+        "caveat": "Zero reported query rows means no reportable query-level detail, not proven zero queries/searches or an indexation failure. Very small samples make this a low-confidence SEO test, not a guaranteed improvement."
+      },
+      "change": "One title-link concept only: update HTML title, its corresponding og:title and WebPage JSON-LD name to 'Free Appliance Pickup Upland CA | Free Reliable Appliance Pickup'. Preserve H1, meta description, canonical, index/follow robots, garage hero/image/OG image metadata, text, CTAs, phone 909-375-6685, form fields and Formspree destination, and city/county links byte-for-byte.",
+      "successSignals": [
+        "Dedicated Upland general page begins receiving Web search query+page records for free appliance pickup Upland (subject to privacy thresholds).",
+        "Upland Web impressions, CTR or qualified organic clicks improve against low 28-day baseline without losing Image Search exposure.",
+        "Zero regressions to production form, photo, phone routing, canonical and local navigation."
+      ],
+      "evaluateNotBefore": "2026-12-05",
+      "preferredReview": "2026-12-08",
+      "status": "running",
+      "freezeRule": "Do not change the Upland general page's SEO title, H1, main body, schema-intent, internal link targeting, or image markup speculatively until finalized 14-day evaluation. Verified factual, indexing, customer-form and safety repairs are exempt if logged."
+    },
+    {
       "id": "2026-11-20-fontana-web-exact-city-title",
       "market": "Fontana, California — general free appliance pickup",
       "hypothesis": "Aligning only the Fontana page's HTML title with the exact city query and trusted business name may increase Web search selection and click-through versus the Inland Empire hub, without changing the content, images or inquiry path.",
