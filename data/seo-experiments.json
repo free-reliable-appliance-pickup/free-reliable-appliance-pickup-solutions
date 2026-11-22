@@ -23,6 +23,213 @@
   },
   "experiments": [
     {
+      "id": "2026-11-21-garden-grove-laundry-county-context-link",
+      "market": "Garden Grove, Orange County, CA — dedicated washer & dryer pickup",
+      "hypothesis": "Garden Grove appliance pickup's general city page received reportable Google Web impressions and one click but its dedicated laundry guide did not return reportable Web or Image page rows. The county-wide all-appliance hub links the general Garden Grove page but not its laundry guide. A single contextual internal link from Orange County to the existing Garden Grove laundry guide may strengthen user navigation and organic Google discovery without risking existing photos or lead forms.",
+      "pagesChanged": [
+        "/orange-county-appliance-pickup/"
+      ],
+      "targetPage": "/garden-grove-washer-dryer-pickup/",
+      "protectedOwner": "/garden-grove-washer-dryer-pickup/",
+      "ownerQuery": "free washer and dryer pickup garden grove",
+      "lastChanged": "2026-11-21",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "dataSource": "First-party Google Search Console via connected Windsor.ai, separate Google Web and Image page rows, 28-day finalized data retrieved 2026-11-21",
+        "gardenGroveGeneralPage": {
+          "url": "/garden-grove-appliance-pickup/",
+          "webImpressions": 7,
+          "webClicks": 1,
+          "webAvgPosition": 8.4286
+        },
+        "gardenGroveLaundryPage": {
+          "url": "/garden-grove-washer-dryer-pickup/",
+          "webRowsReturned": 0,
+          "imageRowsReturned": 0
+        },
+        "sourceInspection": {
+          "laundryGuideExists": true,
+          "laundryPageHttpStatus": 200,
+          "laundryIndexFollow": true,
+          "laundryInSitemap": true,
+          "orangeCountyWasherHubAlreadyLinksGardenGroveLaundry": true,
+          "generalOrangeCountyHubLinkedGardenGroveGeneral": true,
+          "generalOrangeCountyHubPreviouslyLinkedGardenGroveLaundry": false
+        },
+        "leadContext": "Reported Garden Grove washer/dryer-set lead came from the homepage, source recorded unknown; do not attribute it to Google or a city-specific search page.",
+        "caveat": "No returned rows is not proof of deindexing or no impressions; search analytics data can be sparse/privacy-limited. Adding an internal link cannot guarantee rankings, traffic or partner pickups."
+      },
+      "change": "Add exactly one contextual link from the existing Orange County general appliance pickup hub's city listing section to the Garden Grove washer/dryer guide. Keep all page titles, metadata, images, intake forms, phone numbers, SEO schema, robots/canonicals and other city pages unchanged.",
+      "successSignals": [
+        "Garden Grove washer/dryer guide starts receiving reportable Google Web impressions or qualified organic clicks from Garden Grove washer/dryer queries.",
+        "No regression in Google Image Search visibility for the county and city pages; existing images, phone and lead forms remain intact.",
+        "The public county guide provides a clear link to the existing Garden Grove laundry service review without implying guaranteed free pickup."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "running",
+      "freezeRule": "After approved release, hold further speculative link, title, H1, main copy and metadata edits to the Orange County general hub or Garden Grove laundry guide until at least 14 finalized observation days, except verified safety/form/contact/indexability fixes."
+    },
+    {
+      "id": "2026-11-21-rancho-organic-description-ctr-test",
+      "market": "Rancho Cucamonga, CA — general appliance pickup organic Web CTR",
+      "hypothesis": "The existing general Rancho Cucamonga city page received 531 Google Web impressions but only six clicks in 28 settled days (approximately 1.13% CTR), despite appearing for relevant appliance pickup and removal queries. A more actionable, still conditional meta-description may help increase qualified organic clicks without altering the title, images or customer intake.",
+      "pagesChanged": [
+        "/rancho-cucamonga-appliance-pickup/"
+      ],
+      "protectedOwner": "/rancho-cucamonga-appliance-pickup/",
+      "targetPage": "/rancho-cucamonga-appliance-pickup/",
+      "ownerQuery": "free appliance pickup rancho cucamonga",
+      "lastChanged": "2026-11-21",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "dataSource": "Connected first-party Google Search Console via Windsor.ai (Search Analytics with search_type dimension), finalized 28-day window retrieved 2026-11-21",
+        "generalRanchoWeb": {
+          "url": "/rancho-cucamonga-appliance-pickup/",
+          "clicks": 6,
+          "impressions": 531,
+          "ctr": 0.011299435028248588,
+          "avgPosition": 9.8
+        },
+        "queryEvidence": [
+          {
+            "query": "appliance pickup near me",
+            "impressions": 31,
+            "clicks": 0,
+            "avgPosition": 6.0645
+          },
+          {
+            "query": "free appliance pickup",
+            "impressions": 23,
+            "clicks": 0,
+            "avgPosition": 7.6087
+          },
+          {
+            "query": "free appliance pickup rancho cucamonga",
+            "impressions": 20,
+            "clicks": 0,
+            "avgPosition": 11.5
+          },
+          {
+            "query": "free washer and dryer pickup rancho cucamonga",
+            "impressions": 17,
+            "clicks": 0,
+            "avgPosition": 7.8235
+          }
+        ],
+        "caveat": "Google can rewrite descriptions; this test may not alter displayed snippets and does not guarantee rank or CTR gains. Sitewide GSC query rows are privacy-limited; page-level totals are preferred for scorecards. Today's reported California leads have not been attributed to Web search.",
+        "ciCorrection": "Exact-head initial CI found structured-data description mismatch and missing required term 'refrigerators'. Updated this same one-message experiment to synchronize the HTML meta and WebPage description (without changing OG copy), retaining required intent term."
+      },
+      "change": "Align the existing Rancho Cucamonga HTML meta description and matching WebPage JSON-LD description around one clearer, conditional pickup-request message. Preserve the required 'refrigerators' term. No title, H1, body, OG description or image, canonical, robots, form, phone, link or other city edits.",
+      "successSignals": [
+        "Qualified Google Web clicks and CTR improve relative to baseline for the same general Rancho page, with the comparison respecting seasonality and similar search intent.",
+        "No decline in Google Image search clicks/impressions or interference with the dedicated washer/dryer title experiment.",
+        "No change in working forms, phone routing, hero images, service qualification or URL ownership."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "running",
+      "freezeRule": "After approved deployment, hold further speculative Rancho general meta description changes for at least 14 finalized days; leave dedicated Rancho washer/dryer experiment protected through its own 2026-11-29 evaluation window."
+    },
+    {
+      "id": "2026-11-21-santa-clara-bay-area-laundry-hub-link",
+      "market": "Santa Clara, CA — dedicated washer and dryer pickup; San Francisco Bay Area hub",
+      "hypothesis": "The indexable Bay Area washer/dryer regional hub links San Francisco, Oakland and San Jose but omits the existing Santa Clara laundry guide. Adding one specific city link may improve navigability, crawl discovery, and eventual organic Google Web query-to-city ownership; this is an experiment and no ranking gain is guaranteed.",
+      "pagesChanged": [
+        "/sf-bay-area-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/santa-clara-washer-dryer-pickup/",
+      "targetPage": "/santa-clara-washer-dryer-pickup/",
+      "ownerQuery": "free washer and dryer pickup santa clara",
+      "lastChanged": "2026-11-21",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "dataSource": "Connected first-party Search Console via Windsor.ai, separate Web and Image page rows for finalized 28-day window; retrieved 2026-11-21",
+        "regionalBayLaundryHub": {
+          "url": "/sf-bay-area-washer-dryer-pickup/",
+          "reportableWebRows": 0,
+          "reportableImageRows": 0
+        },
+        "dedicatedSantaClaraLaundryPage": {
+          "url": "/santa-clara-washer-dryer-pickup/",
+          "reportableWebRows": 0,
+          "reportableImageRows": 0
+        },
+        "santaClaraGeneralPage": {
+          "url": "/santa-clara-appliance-pickup/",
+          "webImpressions": 8,
+          "webClicks": 0,
+          "webAvgPosition": 6.625
+        },
+        "sourceInspection": {
+          "bayHubIsIndexFollow": true,
+          "bayHubCanonicalSelfReferenced": true,
+          "regionalHubLinkedToSantaClaraLaundryBeforeChange": false,
+          "santaClaraLaundryPageExists": true,
+          "targetIsIndexFollow": true,
+          "existingHubCityLinks": [
+            "San Francisco",
+            "Oakland",
+            "San Jose"
+          ]
+        },
+        "caveat": "Zero returned query or page rows is not proof of deindexing or zero total impressions because GSC reports are thresholded/privacy-limited. Today's two reported form leads include a Santa Clara-area inquiry; its traffic source and appliance type are not verified, so no SEO attribution is claimed."
+      },
+      "change": "Add only one internal <a> destination from the Bay Area washer/dryer hub's existing city list to the already live Santa Clara washer/dryer guide. Do not alter page titles, description, H1/body qualification, images, phone, schema, robots, canonicals, existing forms or any other location.",
+      "successSignals": [
+        "Santa Clara washer/dryer guide receives reportable impressions or clicks from relevant California Google Web queries after the approved deployed change.",
+        "The Santa Clara guide becomes discoverable from its Bay Area regional washer/dryer hub without creating new location pages or changing protected imagery.",
+        "No regression in existing Web or Image Search visibility, no broken links, and no changes to working pickup request forms."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "running",
+      "freezeRule": "Upon approved merge, freeze further speculative internal-link and SEO-content changes to the Bay Area hub and Santa Clara laundry target until at least 14 finalized observation days are available; allow only verified technical/contact/form/safety corrections."
+    },
+    {
+      "id": "2026-11-21-sgv-laundry-official-alternatives",
+      "market": "San Gabriel Valley, California — washer and dryer regional hub",
+      "hypothesis": "Verified city-specific bulky-item alternatives for machines declined under reuse pickup rules make this regional page more useful and locally distinct than a city-link directory; ranking benefits are uncertain.",
+      "pagesChanged": [
+        "/san-gabriel-valley-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/san-gabriel-valley-washer-dryer-pickup/",
+      "lastChanged": "2026-11-21",
+      "baselinePeriod": {
+        "start": "2026-11-16",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "gscWeb": {
+          "clicks": 0,
+          "impressions": 0,
+          "note": "Free three-day Search Console view returned no recorded page row; absence does not prove deindexing."
+        },
+        "content": {
+          "municipalBulkyCollectionLinks": 0
+        }
+      },
+      "change": "Add one clearly labeled section with verified separate household bulky-item options for West Covina, Covina and Pomona; do not change title, metadata, schema, canonical, images, request form, phones or internal links.",
+      "successSignals": [
+        "Official city/hauler links remain correct and live; free-pickup qualifications are not overstated.",
+        "After a finalized 14-day window, review SGV laundry Web impressions, clicks and city query ownership separately from Image search.",
+        "Photo, intake, crawl eligibility and canonical remain intact."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "running",
+      "freezeRule": "After approved production merge, leave SGV washer/dryer organic title, body, links, images, canonical and FAQ unchanged until evaluation except verified factual/contact/form/indexing/safety corrections."
+    },
+    {
       "id": "2026-11-21-west-covina-exact-city-title",
       "market": "West Covina, CA — general appliance pickup",
       "hypothesis": "In first-party Google Search Console Web data for 'free appliance pickup west covina', the homepage and four other URLs were reported, but not the existing general West Covina city page. Because the homepage is at its intentional 70-destination link limit, a measured three-field city title-link alignment may help Google choose the dedicated owner without changing homepage links or photos.",
