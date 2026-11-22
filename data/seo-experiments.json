@@ -23,6 +23,69 @@
   },
   "experiments": [
     {
+      "id": "2026-11-21-rancho-organic-description-ctr-test",
+      "market": "Rancho Cucamonga, CA — general appliance pickup organic Web CTR",
+      "hypothesis": "The existing general Rancho Cucamonga city page received 531 Google Web impressions but only six clicks in 28 settled days (approximately 1.13% CTR), despite appearing for relevant appliance pickup and removal queries. A more actionable, still conditional meta-description may help increase qualified organic clicks without altering the title, images or customer intake.",
+      "pagesChanged": [
+        "/rancho-cucamonga-appliance-pickup/"
+      ],
+      "protectedOwner": "/rancho-cucamonga-appliance-pickup/",
+      "targetPage": "/rancho-cucamonga-appliance-pickup/",
+      "ownerQuery": "free appliance pickup rancho cucamonga",
+      "lastChanged": "2026-11-21",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "dataSource": "Connected first-party Google Search Console via Windsor.ai (Search Analytics with search_type dimension), finalized 28-day window retrieved 2026-11-21",
+        "generalRanchoWeb": {
+          "url": "/rancho-cucamonga-appliance-pickup/",
+          "clicks": 6,
+          "impressions": 531,
+          "ctr": 0.011299435028248588,
+          "avgPosition": 9.8
+        },
+        "queryEvidence": [
+          {
+            "query": "appliance pickup near me",
+            "impressions": 31,
+            "clicks": 0,
+            "avgPosition": 6.0645
+          },
+          {
+            "query": "free appliance pickup",
+            "impressions": 23,
+            "clicks": 0,
+            "avgPosition": 7.6087
+          },
+          {
+            "query": "free appliance pickup rancho cucamonga",
+            "impressions": 20,
+            "clicks": 0,
+            "avgPosition": 11.5
+          },
+          {
+            "query": "free washer and dryer pickup rancho cucamonga",
+            "impressions": 17,
+            "clicks": 0,
+            "avgPosition": 7.8235
+          }
+        ],
+        "caveat": "Google can rewrite descriptions; this test may not alter displayed snippets and does not guarantee rank or CTR gains. Sitewide GSC query rows are privacy-limited; page-level totals are preferred for scorecards. Today's reported California leads have not been attributed to Web search."
+      },
+      "change": "Replace only the HTML <meta name=\"description\"> on the existing indexable general Rancho Cucamonga page with a more explicit request CTA, keeping conditional pickup language. Do not edit title/OG description, H1/body, canonical, JSON-LD, robots, image metadata/pictures, forms, phones, links or other pages.",
+      "successSignals": [
+        "Qualified Google Web clicks and CTR improve relative to baseline for the same general Rancho page, with the comparison respecting seasonality and similar search intent.",
+        "No decline in Google Image search clicks/impressions or interference with the dedicated washer/dryer title experiment.",
+        "No change in working forms, phone routing, hero images, service qualification or URL ownership."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "proposed",
+      "freezeRule": "After approved deployment, hold further speculative Rancho general meta description changes for at least 14 finalized days; leave dedicated Rancho washer/dryer experiment protected through its own 2026-11-29 evaluation window."
+    },
+    {
       "id": "2026-11-21-west-covina-exact-city-title",
       "market": "West Covina, CA — general appliance pickup",
       "hypothesis": "In first-party Google Search Console Web data for 'free appliance pickup west covina', the homepage and four other URLs were reported, but not the existing general West Covina city page. Because the homepage is at its intentional 70-destination link limit, a measured three-field city title-link alignment may help Google choose the dedicated owner without changing homepage links or photos.",
