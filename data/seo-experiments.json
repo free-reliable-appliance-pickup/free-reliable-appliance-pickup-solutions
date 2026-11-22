@@ -72,9 +72,10 @@
             "avgPosition": 7.8235
           }
         ],
-        "caveat": "Google can rewrite descriptions; this test may not alter displayed snippets and does not guarantee rank or CTR gains. Sitewide GSC query rows are privacy-limited; page-level totals are preferred for scorecards. Today's reported California leads have not been attributed to Web search."
+        "caveat": "Google can rewrite descriptions; this test may not alter displayed snippets and does not guarantee rank or CTR gains. Sitewide GSC query rows are privacy-limited; page-level totals are preferred for scorecards. Today's reported California leads have not been attributed to Web search.",
+        "ciCorrection": "Exact-head initial CI found structured-data description mismatch and missing required term 'refrigerators'. Updated this same one-message experiment to synchronize the HTML meta and WebPage description (without changing OG copy), retaining required intent term."
       },
-      "change": "Replace only the HTML <meta name=\"description\"> on the existing indexable general Rancho Cucamonga page with a more explicit request CTA, keeping conditional pickup language. Do not edit title/OG description, H1/body, canonical, JSON-LD, robots, image metadata/pictures, forms, phones, links or other pages.",
+      "change": "Align the existing Rancho Cucamonga HTML meta description and matching WebPage JSON-LD description around one clearer, conditional pickup-request message. Preserve the required 'refrigerators' term. No title, H1, body, OG description or image, canonical, robots, form, phone, link or other city edits.",
       "successSignals": [
         "Qualified Google Web clicks and CTR improve relative to baseline for the same general Rancho page, with the comparison respecting seasonality and similar search intent.",
         "No decline in Google Image search clicks/impressions or interference with the dedicated washer/dryer title experiment.",
