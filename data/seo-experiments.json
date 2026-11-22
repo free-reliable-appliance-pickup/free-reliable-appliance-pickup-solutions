@@ -23,6 +23,50 @@
   },
   "experiments": [
     {
+      "id": "2026-11-21-phoenix-web-snippet-ctr",
+      "market": "Phoenix, AZ — general appliance pickup",
+      "hypothesis": "Connected first-party Google Web Search data show Phoenix's general page on page one for 'free appliance removal phoenix', with impressions but no clicks. Replacing the dry descriptive snippet with a clear conditional free-pickup CTA may improve organic click-through without changing titles, visible content, imagery or qualification.",
+      "pagesChanged": [
+        "/phoenix-appliance-pickup/"
+      ],
+      "protectedOwner": "/phoenix-appliance-pickup/",
+      "targetPage": "/phoenix-appliance-pickup/",
+      "ownerQuery": "free appliance removal phoenix",
+      "lastChanged": "2026-11-21",
+      "baselinePeriod": {
+        "start": "2026-11-17",
+        "end": "2026-11-19"
+      },
+      "baseline": {
+        "source": "Connected first-party Google Search Console via SMEPost, finalized three-day Web Search data. Free account does not expose prior-period comparison.",
+        "pageWeb": {
+          "clicks": 0,
+          "impressions": 50,
+          "ctr": 0,
+          "avgPosition": 7.66
+        },
+        "ownerQueryWeb": {
+          "query": "free appliance removal phoenix",
+          "clicks": 0,
+          "impressions": 12,
+          "ctr": 0,
+          "avgPosition": 3.4166666667
+        },
+        "imageSearch": "Not measured in this limited snapshot; no image markup changed",
+        "caveat": "Three settled days are a small sample. Google may choose a snippet different from the HTML meta description; ranking or CTR improvement is not guaranteed."
+      },
+      "change": "One organic search description concept: replace only the Phoenix page's HTML meta description, matching Open Graph description and WebPage JSON-LD description with 'Need free appliance removal in Phoenix, AZ? Working washers, dryers, refrigerators and stoves may qualify. Send your ZIP and photos or text 602-726-7552.' Keep H1, HTML title, OG title, canonical, robots, content, local phone, photos, image structured data, internal links, qualification rules, form endpoint/fields and neighboring pages unchanged.",
+      "successSignals": [
+        "After finalized data are available, evaluate Web Search CTR and clicks for the Phoenix owner page and exact 'free appliance removal phoenix' query relative to pre-change 50 impressions / 0 clicks and exact-query 12 impressions / 0 clicks.",
+        "Watch Web Search average position and impressions for unintended declines; assess Image Search separately when available.",
+        "No form, phone, image, SEO title, H1, canonical or service-eligibility regression."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "running",
+      "freezeRule": "Hold additional speculative Phoenix page description, title, H1, body and link-intent changes through the review window. Allow verified technical, factual, contact, form and safety fixes if separately logged."
+    },
+    {
       "id": "2026-11-21-west-covina-exact-city-title",
       "market": "West Covina, CA — general appliance pickup",
       "hypothesis": "In first-party Google Search Console Web data for 'free appliance pickup west covina', the homepage and four other URLs were reported, but not the existing general West Covina city page. Because the homepage is at its intentional 70-destination link limit, a measured three-field city title-link alignment may help Google choose the dedicated owner without changing homepage links or photos.",
