@@ -23,6 +23,64 @@
   },
   "experiments": [
     {
+      "id": "2026-11-21-santa-clara-bay-area-laundry-hub-link",
+      "market": "Santa Clara, CA — dedicated washer and dryer pickup; San Francisco Bay Area hub",
+      "hypothesis": "The indexable Bay Area washer/dryer regional hub links San Francisco, Oakland and San Jose but omits the existing Santa Clara laundry guide. Adding one specific city link may improve navigability, crawl discovery, and eventual organic Google Web query-to-city ownership; this is an experiment and no ranking gain is guaranteed.",
+      "pagesChanged": [
+        "/sf-bay-area-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/santa-clara-washer-dryer-pickup/",
+      "targetPage": "/santa-clara-washer-dryer-pickup/",
+      "ownerQuery": "free washer and dryer pickup santa clara",
+      "lastChanged": "2026-11-21",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-18"
+      },
+      "baseline": {
+        "dataSource": "Connected first-party Search Console via Windsor.ai, separate Web and Image page rows for finalized 28-day window; retrieved 2026-11-21",
+        "regionalBayLaundryHub": {
+          "url": "/sf-bay-area-washer-dryer-pickup/",
+          "reportableWebRows": 0,
+          "reportableImageRows": 0
+        },
+        "dedicatedSantaClaraLaundryPage": {
+          "url": "/santa-clara-washer-dryer-pickup/",
+          "reportableWebRows": 0,
+          "reportableImageRows": 0
+        },
+        "santaClaraGeneralPage": {
+          "url": "/santa-clara-appliance-pickup/",
+          "webImpressions": 8,
+          "webClicks": 0,
+          "webAvgPosition": 6.625
+        },
+        "sourceInspection": {
+          "bayHubIsIndexFollow": true,
+          "bayHubCanonicalSelfReferenced": true,
+          "regionalHubLinkedToSantaClaraLaundryBeforeChange": false,
+          "santaClaraLaundryPageExists": true,
+          "targetIsIndexFollow": true,
+          "existingHubCityLinks": [
+            "San Francisco",
+            "Oakland",
+            "San Jose"
+          ]
+        },
+        "caveat": "Zero returned query or page rows is not proof of deindexing or zero total impressions because GSC reports are thresholded/privacy-limited. Today's two reported form leads include a Santa Clara-area inquiry; its traffic source and appliance type are not verified, so no SEO attribution is claimed."
+      },
+      "change": "Add only one internal <a> destination from the Bay Area washer/dryer hub's existing city list to the already live Santa Clara washer/dryer guide. Do not alter page titles, description, H1/body qualification, images, phone, schema, robots, canonicals, existing forms or any other location.",
+      "successSignals": [
+        "Santa Clara washer/dryer guide receives reportable impressions or clicks from relevant California Google Web queries after the approved deployed change.",
+        "The Santa Clara guide becomes discoverable from its Bay Area regional washer/dryer hub without creating new location pages or changing protected imagery.",
+        "No regression in existing Web or Image Search visibility, no broken links, and no changes to working pickup request forms."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "proposed",
+      "freezeRule": "Upon approved merge, freeze further speculative internal-link and SEO-content changes to the Bay Area hub and Santa Clara laundry target until at least 14 finalized observation days are available; allow only verified technical/contact/form/safety corrections."
+    },
+    {
       "id": "2026-11-21-west-covina-exact-city-title",
       "market": "West Covina, CA — general appliance pickup",
       "hypothesis": "In first-party Google Search Console Web data for 'free appliance pickup west covina', the homepage and four other URLs were reported, but not the existing general West Covina city page. Because the homepage is at its intentional 70-destination link limit, a measured three-field city title-link alignment may help Google choose the dedicated owner without changing homepage links or photos.",
