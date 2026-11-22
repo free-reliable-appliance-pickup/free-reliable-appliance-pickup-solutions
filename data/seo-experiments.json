@@ -70,7 +70,7 @@
       ],
       "evaluateNotBefore": "2026-12-09",
       "preferredReview": "2026-12-12",
-      "status": "proposed",
+      "status": "running",
       "freezeRule": "After approved release, hold further speculative link, title, H1, main copy and metadata edits to the Orange County general hub or Garden Grove laundry guide until at least 14 finalized observation days, except verified safety/form/contact/indexability fixes."
     },
     {
@@ -134,7 +134,7 @@
       ],
       "evaluateNotBefore": "2026-12-09",
       "preferredReview": "2026-12-12",
-      "status": "proposed",
+      "status": "running",
       "freezeRule": "After approved deployment, hold further speculative Rancho general meta description changes for at least 14 finalized days; leave dedicated Rancho washer/dryer experiment protected through its own 2026-11-29 evaluation window."
     },
     {
@@ -192,7 +192,7 @@
       ],
       "evaluateNotBefore": "2026-12-09",
       "preferredReview": "2026-12-12",
-      "status": "proposed",
+      "status": "running",
       "freezeRule": "Upon approved merge, freeze further speculative internal-link and SEO-content changes to the Bay Area hub and Santa Clara laundry target until at least 14 finalized observation days are available; allow only verified technical/contact/form/safety corrections."
     },
     {
