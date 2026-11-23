@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-11-23 — Homepage regional washer/dryer ZIP handoffs (technical conversion correction; staged)
+
+- Verified the homepage ZIP-result UI offered a direct washer/dryer request link only for certain exact-city routes; the established Los Angeles County, San Gabriel Valley, Inland Empire, Riverside County, Orange County and Coachella Valley fallback routes showed only a general appliance link.
+- Added six lookup-to-existing-laundry-page associations in the results UI without changing ZIP matching, city/region phone numbers, service areas, pickup eligibility, Formspree endpoints or protected city-page copy. Links land at existing `#request` forms.
+- Extended `tests/homepage_zip_routing.test.js` with six real route-to-destination assertions, target request anchors and form action checks. No fake leads or live form submissions. A customer still must qualify for free pickup; no ranking claim.
+- This is a technical customer navigation correction to the homepage, not an SEO metadata/content experiment. Independent review, head-specific GitHub Actions including CodeQL and explicit owner merge approval are required before deployment.
+
 ## 2026-11-23 — All-commits SEO guard exception hardening (technical safety correction; staged)
 
 - Verified bypass risk in earlier proposed guard: for a multi-commit PR or two-parent merge, an unapproved speculative change in an early commit could be accepted if only the **last** commit started with `[technical-fix]`.
