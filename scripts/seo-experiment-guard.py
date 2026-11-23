@@ -36,7 +36,14 @@ if base_ref:
     # Read the latest non-merge commit introduced by the PR instead.
     message=sh("git","log","--no-merges","-1","--pretty=%B",f"origin/{base_ref}..HEAD")
 else:
-    message=sh("git","log","-1","--pretty=%B")
+    # On push, GitHub's normal merge commit hides the approved PR's
+    # [technical-fix] prefix. Match the PR check's latest non-merge commit,
+    # but only when HEAD has exactly two parents. Other pushes keep HEAD.
+    parents=sh("git","rev-list","--parents","-n","1","HEAD").split()
+    if len(parents)==3:
+        message=sh("git","log","--no-merges","-1","--pretty=%B","HEAD^1..HEAD^2")
+    else:
+        message=sh("git","log","-1","--pretty=%B")
 technical_override=message.lstrip().startswith("[technical-fix]")
 
 # Allow the one-time introduction of a brand-new experiment and its initial page change.
