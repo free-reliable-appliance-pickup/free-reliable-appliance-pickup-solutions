@@ -1,5 +1,9 @@
 # SEO change and decision register
 
+## 2026-11-22 — Orange County header image delivery
+
+Technical change for `/orange-county-appliance-pickup/` at commit `0032036d0dac16436c8a23b15b986e0eea89983b`. The 118-pixel brand mark and favicon requested a 394,490-byte PNG. The existing 236-pixel WebP used on the Inland Empire general page is 29,414 bytes. Both assets returned HTTP 200. The appliance photograph, social preview, form, search intent and service terms are preserved. The November 22 Orange County laundry search sample did not return this domain in its first ten web or image entries. This technical adjustment targets asset transfer size only. Check the public image source, content type and form after deployment. Roll back the two asset references if the logo fails to render.
+
 ## 2026-11-16 — Nine California dedicated washer/dryer form access fixes (staged, not deployed)
 - **Verified source defects:** Existing dedicated laundry request forms for Bloomington, Chino, Chino Hills, El Monte, Baldwin Park, South El Monte, Pico Rivera, Montebello and Temple City could submit without native floor/appliance-location or stairs answers, because those fields were absent and optional text notes could be empty. Pico Rivera silently preselected `Washer` instead of asking the applicant. Bloomington and South El Monte lacked static city/service identification; Pico Rivera lacked static service identification.
 - **Technical correction only:** All nine now show native-required `location` and `stairs` selects before optional access notes with blank-first choices and honest Unknown options. Pico Rivera appliance selection has a blank first choice. Missing static hidden city and service fields added only for Bloomington, South El Monte and Pico Rivera. This supersedes older incomplete drafts #656, #658 and #659 without changing their other city pages.
