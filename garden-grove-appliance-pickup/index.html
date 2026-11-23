@@ -126,7 +126,7 @@ footer{background:#17352a;color:#fff;text-align:center;padding:28px}footer a{col
     <label>Phone<input name="phone" type="tel" required autocomplete="tel" inputmode="tel"></label>
     <label>Pickup Address<input name="address" required autocomplete="street-address"></label>
     <label>City<input name="city" value="Garden Grove" required autocomplete="address-level2"></label>
-    <label>ZIP<input name="zip" required autocomplete="postal-code" inputmode="numeric"></label>
+    <label>ZIP<input type="text" name="zip" required autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" title="Enter a five-digit ZIP code"></label>
     <label>Appliance<select name="appliance" required><option value="">Select appliance</option><option>Refrigerator</option><option>Washer</option><option>Dryer</option><option>Washer and Dryer Set</option><option>Freezer</option><option>Stove / Range / Oven</option><option>Multiple Major Appliances</option></select></label>
     <label>Condition<select name="condition" required><option value="">Select condition</option><option>Fully Working</option><option>Needs Repair</option><option>Not Working</option><option>Unknown</option></select></label>
     <label>Appliance Location<select name="location" required><option value="">Select location</option><option>Garage</option><option>Driveway / Outside</option><option>First Floor Interior</option><option>Second Floor</option><option>Third Floor or Higher</option><option>Other</option></select></label>
