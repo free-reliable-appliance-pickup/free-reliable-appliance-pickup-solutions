@@ -102,3 +102,21 @@ for (const city of ['diamond-bar', 'temple-city']) {
   assert.match(form, /sms:\+19093756685/, city + ' must retain the local SMS photo handoff');
 }
 console.log('Diamond Bar and Temple City required photo-handoff regression PASS');
+
+
+// Photo sharing is required for Eastvale and Jurupa Valley washer/dryer requests.
+// Keep the existing local phone and Formspree endpoint, with no fake submissions.
+for (const city of ['eastvale', 'jurupa-valley']) {
+  const cityHtml = fs.readFileSync(path.join(__dirname, '..', city + '-washer-dryer-pickup', 'index.html'), 'utf8');
+  const form = cityHtml.match(/<form\b[^>]*action="https:\/\/formspree\.io\/f\/mvzeapzd"[^>]*>[\s\S]*?<\/form>/i)?.[0];
+  assert.ok(form, city + ' must retain the original Formspree request');
+  assert.match(form, /<select\b(?=[^>]*\bname="photos_available")(?=[^>]*\brequired\b)[^>]*>/i,
+    city + ' must require a photo-sharing choice');
+  assert.match(form, /<input\b(?=[^>]*\bname="photo_link")(?=[^>]*\btype="url")[^>]*>/i,
+    city + ' must allow an optional photo link');
+  assert.match(form, /This form does not upload photos directly/i,
+    city + ' must not claim unsupported file upload');
+  assert.match(form, /sms:\+19093756685/, city + ' must retain the local SMS photo handoff');
+  assert.match(form, /name="paid_removal_preference"/, city + ' must preserve the optional paid quote choice');
+}
+console.log('Eastvale and Jurupa Valley photo-sharing form contract PASS');
