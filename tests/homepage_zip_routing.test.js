@@ -11,7 +11,10 @@ assert.ok(match, 'Homepage routeForZip function must be present');
 const routeForZip = new Function('zip', match[1]);
 
 const exactCityCases = [
+  ['90620', 'Buena Park, CA', '/buena-park-appliance-pickup/'],
   ['90621', 'Buena Park, CA', '/buena-park-appliance-pickup/'],
+  ['90631', 'La Habra, CA', '/la-habra-appliance-pickup/'],
+  ['90680', 'Stanton, CA', '/stanton-appliance-pickup/'],
   ['90630', 'Cypress, CA', '/cypress-appliance-pickup/'],
   ['90623', 'La Palma, CA', '/la-palma-appliance-pickup/'],
   ['90720', 'Los Alamitos, CA', '/los-alamitos-appliance-pickup/'],
@@ -57,4 +60,21 @@ for (const [zip, href, phone] of controls) {
 }
 assert.equal(routeForZip('abc'), null, 'invalid ZIP should not map');
 assert.equal(routeForZip(''), null, 'blank ZIP should not map');
-console.log('Homepage ZIP regression: 7 corrected city routes, 17 regional controls, 2 invalid-input cases PASS');
+console.log('Homepage ZIP regression: 10 exact city routes, 17 regional controls, 2 invalid-input cases PASS');
+
+
+// California laundry photo-handoff contract: check the two corrected city
+// forms without sending a Formspree request or requiring any network access.
+for (const city of ['diamond-bar', 'temple-city']) {
+  const cityHtml = fs.readFileSync(path.join(__dirname, '..', city + '-washer-dryer-pickup', 'index.html'), 'utf8');
+  const form = cityHtml.match(/<form\b[^>]*action="https:\/\/formspree\.io\/f\/mvzeapzd"[^>]*>[\s\S]*?<\/form>/i)?.[0];
+  assert.ok(form, city + ' must retain its real Formspree intake form');
+  assert.match(form, /<select\b(?=[^>]*\bname="photos_available")(?=[^>]*\brequired\b)[^>]*>/i,
+    city + ' must ask for a required photo-sharing method');
+  assert.match(form, /<input\b(?=[^>]*\bname="photo_link")(?=[^>]*\btype="url")[^>]*>/i,
+    city + ' must allow an optional photo URL');
+  assert.match(form, /This form does not upload photos directly/i,
+    city + ' must avoid promising unsupported photo upload');
+  assert.match(form, /sms:\+19093756685/, city + ' must retain the local SMS photo handoff');
+}
+console.log('Diamond Bar and Temple City required photo-handoff regression PASS');

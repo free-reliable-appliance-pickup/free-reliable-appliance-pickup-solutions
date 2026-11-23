@@ -1,5 +1,37 @@
 # SEO change and decision register
 
+## 2026-11-23 — All-commits SEO guard exception hardening (technical safety correction; staged)
+
+- Verified bypass risk in earlier proposed guard: for a multi-commit PR or two-parent merge, an unapproved speculative change in an early commit could be accepted if only the **last** commit started with `[technical-fix]`.
+- Now every introduced non-merge commit subject must start with `[technical-fix]` before the protected-page override applies. For ordinary direct pushes the sole HEAD commit remains the candidate. No protected page/content changes.
+- Added isolated regression coverage for multi-commit merge and pull-request scenarios where the last commit is technical but an earlier speculative edit must still be blocked, plus the valid PR technical case. Preserve explicit accountable-maintainer approval, CodeQL, qualified independent review and the existing freeze policy.
+
+## 2026-11-23 — Diamond Bar and Temple City required photo-sharing handoff (technical intake correction; staged)
+
+- Verified conversion/qualification gap: both existing California dedicated washer/dryer intake forms had no photo-sharing choice or photo-link field, unlike other regional laundry forms; mobile contact bars already support texting photos.
+- Added a **required** `photos_available` choice (text after submitting, already shared, share link, ask for help), a truthful explanatory note that the Formspree form does **not** upload files directly, and an optional `photo_link` URL field to only `diamond-bar-washer-dryer-pickup/index.html` and `temple-city-washer-dryer-pickup/index.html`.
+- Preserve original Formspree action, phone `909-375-6685`, all original field names/required statuses, schema, titles, canonical, photos and pickup eligibility statements. No guarantee of free pickup or false form upload promise. No fake submissions. Reviewer and owner release approval still required.
+
+## 2026-11-23 — Orange County homepage ZIP handoff correction (staged technical exception)
+
+- **Verified customer-routing defect:** The homepage ZIP checker matched 90620 Buena Park, 90631 La Habra and 90680 Stanton to the broad 900–916 Los Angeles fallback. The existing specific Orange County city pages use the established 909-375-6685 pickup review number; routing those ZIPs to Los Angeles/310 misdirects qualified Orange County visitors.
+- **One bounded fix:** Extend the existing Buena Park exact-city match to 90620 and add exact-city 90631 La Habra and 90680 Stanton routes *before* the broad Los Angeles fallback. All three point to existing pages and the existing 909 contact. No ZIP is proof of service or a guaranteed free pickup.
+- **Protected boundaries:** Preserve every other ZIP mapping, including LA County, Ventura, San Diego, regional and nationwide fallbacks; no new URLs, title/H1/meta/schema/canonical/robots, images, Formspree intake, pickup terms or ranking copy. This is a factual customer contact/routing repair, not an SEO ranking experiment. Supersedes only the overlapping Orange County part of older unmerged PR #673; its separate Ventura changes are excluded.
+- **QA and release:** Extend the existing real-JavaScript homepage ZIP regression with three positive Orange County cases and unchanged 17 regional and two invalid-input controls. Require exact-head SEO Experiment Guard, CodeQL and other CI checks, independent review, explicit authorized release before merge, and read-only live ZIP interaction after any merge. Do not submit fake leads. Revert the three exact routing entries if regression is observed.
+
+## 2026-11-23 — Hemet washer/dryer ZIP validation (technical intake fix; proposed)
+
+- **Observed defect:** The Hemet dedicated washer/dryer form required a ZIP value but accepted arbitrary non-five-digit text, unlike the verified California laundry form standard. Other existing request fields already capture condition, pickup location, stairs, and photo-sharing plan.
+- **Minimal correction:** Added `type="text"`, `pattern="[0-9]{5}"`, `maxlength="5"` and a five-digit help title on the existing ZIP input; kept `required`, `inputmode="numeric"`, `autocomplete="postal-code"`, field name and leading-zero support. This is browser-side format validation, not ZIP service-area qualification.
+- **Protected surface:** No title, H1, description, canonical, robots, schema, images, body text, internal links, Formspree action, phone routing, photo handling, city scope or business promises changed. Rancho Cucamonga organic experiments are untouched. No fake lead was submitted.
+- **Release gate:** Review exact PR head and all required GitHub Actions including CodeQL and SEO Experiment Guard. Only merge after the accountable maintainer's exact-head approval; post-release read-only verification must check the live Hemet form. Revert only the input attributes if an actual regression appears. No SEO ranking lift is claimed.
+
+## 2026-11-23 — Four California washer/dryer ZIP inputs (proposed technical fix)
+
+- Confirmed from the main-branch HTML: Montclair, Azusa, Temple City and Diamond Bar dedicated washer/dryer request forms accepted ZIP values without a five-digit pattern or maxlength. This change adds native five-digit format checking and an explanatory title to their existing ZIP input only.
+- Preserved each form's existing `name=zip`, required fields, Formspree action, phone routing, photo instructions, existing fields, titles, canonical, robots, schema, photos, links and service claims. This is client-side format validation, not service-area validation or server-side fraud prevention.
+- Separate Hemet correction remains in PR #1537; San Jacinto general intake and photo-plan consistency require separate review. No fake leads were submitted. Verify protected SEO guard and CodeQL on exact final head; do not merge without accountable-maintainer approval. Rollback consists of reverting the four input attributes only.
+
 ## 2026-11-22 — Consolidated California laundry conversion and technical intake release (PRs #1528, #1532, #1533, #1534)
 
 **Single-release technical change set:** (1) add the existing Riverside city washer/dryer destination link from the Inland Empire general pickup corridor with its factual `data/seo-experiments.json` record (supersedes PR #1528); (2) replace only Orange County general page's oversized PNG brand header logo/favicon references with the existing smaller 236-pixel WebP, retaining the appliance photo and same logo semantics (supersedes PR #1532); (3) require five-digit browser ZIP format in Chino and Chino Hills dedicated washer/dryer request forms (supersedes PR #1533); and (4) require five-digit browser ZIP format in Garden Grove, Santa Ana, Irvine, Moreno Valley, Orange County and Riverside County general request forms (supersedes PR #1534). All fixes are carried over from verified source revisions, preserving the original required intake fields, Formspree POST actions, photos, phone numbers, canonical/robots/title and service promises.

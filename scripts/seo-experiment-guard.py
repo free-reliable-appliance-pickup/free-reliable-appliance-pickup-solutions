@@ -31,13 +31,23 @@ def page_file(path):
 changed=changed_files()
 base_ref=os.environ.get("GITHUB_BASE_REF","").strip()
 if base_ref:
-    # Pull-request workflows run on GitHub's synthetic merge commit, whose
-    # message starts with "Merge" and hides the real branch commit prefix.
-    # Read the latest non-merge commit introduced by the PR instead.
-    message=sh("git","log","--no-merges","-1","--pretty=%B",f"origin/{base_ref}..HEAD")
+    # PR workflows use a synthetic merge commit. Inspect every non-merge
+    # branch commit rather than only the final, potentially misleading title.
+    subjects=sh("git","log","--no-merges","--format=%s",f"origin/{base_ref}..HEAD")
 else:
-    message=sh("git","log","-1","--pretty=%B")
-technical_override=message.lstrip().startswith("[technical-fix]")
+    # On a two-parent merge push, inspect the complete introduced branch.
+    # Otherwise the one direct push commit is the candidate being checked.
+    parents=sh("git","rev-list","--parents","-n","1","HEAD").split()
+    if len(parents)==3:
+        subjects=sh("git","log","--no-merges","--format=%s","HEAD^1..HEAD^2")
+    else:
+        subjects=sh("git","log","-1","--format=%s")
+commit_subjects=[line.strip() for line in subjects.splitlines() if line.strip()]
+# A speculative earlier commit must never be laundered by a final commit
+# whose title happens to start with [technical-fix].
+technical_override=bool(commit_subjects) and all(
+    line.startswith("[technical-fix]") for line in commit_subjects
+)
 
 # Allow the one-time introduction of a brand-new experiment and its initial page change.
 # After merge, that experiment exists in the base data and its freeze is enforced.
