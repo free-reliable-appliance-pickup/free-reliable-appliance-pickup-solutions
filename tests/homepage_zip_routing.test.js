@@ -63,6 +63,30 @@ assert.equal(routeForZip(''), null, 'blank ZIP should not map');
 console.log('Homepage ZIP regression: 10 exact city routes, 17 regional controls, 2 invalid-input cases PASS');
 
 
+// Guard the homepage's high-intent regional laundry handoffs. The ZIP lookup
+// must continue offering general appliance pickup and a direct laundry form.
+const laundryMapMatch = html.match(/var laundryLinks=\{([\s\S]*?)\n        \};/);
+assert.ok(laundryMapMatch, 'Homepage laundryLinks map must be present');
+const regionalLaundryLinks = new Function('return ({' + laundryMapMatch[1] + '});')();
+const regionalLaundryCases = [
+  ['90012', '/los-angeles-county-washer-dryer-pickup/#request'],
+  ['91790', '/san-gabriel-valley-washer-dryer-pickup/#request'],
+  ['92399', '/inland-empire-washer-dryer-pickup/#request'],
+  ['92501', '/riverside-county-washer-dryer-pickup/#request'],
+  ['92601', '/orange-county-washer-dryer-pickup/#request'],
+  ['92234', '/coachella-valley-washer-dryer-pickup/#request']
+];
+for (const [zip, laundryHref] of regionalLaundryCases) {
+  const route = routeForZip(zip);
+  assert.ok(route, zip + ' must resolve to a regional intake route');
+  assert.equal(regionalLaundryLinks[route.href], laundryHref, zip + ' must offer the dedicated laundry request');
+  const localPath = laundryHref.split('#')[0].replace(/^\//, '');
+  const pageHtml = fs.readFileSync(path.join(__dirname, '..', localPath, 'index.html'), 'utf8');
+  assert.match(pageHtml, /id=["']request["']/, zip + ' laundry destination must have a request anchor');
+  assert.match(pageHtml, /<form\b[^>]*action=["']https:\/\/formspree\.io\//i, zip + ' laundry destination must keep its request form');
+}
+console.log('Homepage regional laundry handoffs: 6 ZIP paths to existing request forms PASS');
+
 // California laundry photo-handoff contract: check the two corrected city
 // forms without sending a Formspree request or requiring any network access.
 for (const city of ['diamond-bar', 'temple-city']) {
