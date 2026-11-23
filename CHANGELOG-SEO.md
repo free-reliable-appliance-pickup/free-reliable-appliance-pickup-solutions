@@ -1,5 +1,13 @@
 # SEO change and decision register
 
+## 2026-11-23 — Eastvale and Jurupa Valley laundry photo handoff (technical customer-intake correction; staged)
+
+- Verified both existing dedicated city laundry request forms omitted a photo-sharing status field or photo link even though their page copy asked customers to provide appliance photos. The adjacent Moreno Valley and Redlands laundry pages already collect photo-sharing choices.
+- Added a required photo-sharing method, clear no-direct-upload instructions, local 909 SMS handoff, and optional photo URL to both existing Eastvale and Jurupa Valley forms. Actual photos are required before pickup approval, not as a false upload claim.
+- Preserved existing Formspree action, customer contact and appliance fields, floor/stairs, free-pickup qualification, optional paid-quote choice, service telephone, URL, title, metadata, canonical, robots, images and running SEO experiments.
+- Extended existing Node regression test for both required photo choices, optional URL, honest instructions, SMS contact and unchanged paid-quote field. Do not merge without exact-head tests, CodeQL, SEO Experiment Guard, qualified independent review and owner authorization; no fake form submissions.
+
+
 ## 2026-11-23 — Homepage regional washer/dryer ZIP handoffs (technical conversion correction; staged)
 
 - Verified the homepage ZIP-result UI offered a direct washer/dryer request link only for certain exact-city routes; the established Los Angeles County, San Gabriel Valley, Inland Empire, Riverside County, Orange County and Coachella Valley fallback routes showed only a general appliance link.
