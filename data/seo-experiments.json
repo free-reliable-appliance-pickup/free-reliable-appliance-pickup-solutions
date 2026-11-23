@@ -23,6 +23,55 @@
   },
   "experiments": [
     {
+      "id": "2026-11-22-ie-general-riverside-city-laundry-route",
+      "market": "California Inland Empire general appliance pickup hub — Riverside city washer/dryer route",
+      "hypothesis": "The Inland Empire general hub directly connects Rancho Cucamonga, Fontana and Upland washer/dryer pickup pages, but sends Riverside visitors only to the Riverside general appliance page. A single direct link to the existing Riverside city laundry page may improve customer route selection when the pickup appliance is a washer/dryer. Any ranking benefit remains unproven.",
+      "pagesChanged": [
+        "/inland-empire-appliance-pickup/"
+      ],
+      "targetPage": "/riverside-washer-dryer-pickup/",
+      "protectedOwner": "/riverside-washer-dryer-pickup/",
+      "ownerQuery": "free washer and dryer pickup riverside ca",
+      "lastChanged": "2026-11-22",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-19"
+      },
+      "baseline": {
+        "dataSource": "First-party Search Console Web search reporting via Windsor.ai, 29-day finalized window checked Nov 22",
+        "inlandEmpireGeneral": {
+          "url": "/inland-empire-appliance-pickup/",
+          "webImpressions": 50,
+          "webClicks": 2,
+          "averagePosition": 10.64
+        },
+        "riversideGeneral": {
+          "url": "/riverside-appliance-pickup/",
+          "webImpressions": 33,
+          "webClicks": 1,
+          "averagePosition": 10.1212
+        },
+        "riversideCityLaundry": {
+          "url": "/riverside-washer-dryer-pickup/",
+          "webImpressions": 1,
+          "webClicks": 0,
+          "averagePosition": 5
+        },
+        "supportingEvidence": "Source inspection confirmed general Inland Empire hub has direct dedicated laundry links for Rancho Cucamonga, Fontana and Upland and a general Riverside city link in its Riverside County corridor paragraph, but no Riverside city laundry destination. Riverside city laundry page is independently live with self-canonical, index/follow and a Formspree pickup form; verified after PR #1527 release.",
+        "cautions": "One impression is not a stable ranking estimate. Web impressions may include image features. Internal link is customer navigation, not promised ranking gain."
+      },
+      "change": "Add one city-specific contextual Riverside washer/dryer link directly after Riverside general city link in existing Riverside County corridor paragraph. No new pages, title, meta, canonical, robots, schema, image, form, phone or protected city changes.",
+      "successSignals": [
+        "Riverside washer/dryer visitors arriving from the Inland Empire region page can select the exact city pickup form directly.",
+        "No regression in regional request button, photo, form required fields and phone routing.",
+        "Settled Search Console page/query organic Web clicks/qualified leads provide a comparison after release."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "proposed",
+      "freezeRule": "On approved deployment, avoid further speculative content or link edits to Inland Empire general hub and Riverside city laundry guide until at least Dec 9; factual, technical, safety, indexing and form corrections excepted."
+    },
+    {
       "id": "2026-11-22-homepage-bay-area-sacramento-zip-handoff",
       "market": "Santa Clara / San Jose / Sacramento Metro, California homepage intake routing",
       "hypothesis": "Existing homepage ZIP lookup sends verified South Bay and Sacramento Metro city/region ZIPs to statewide California general page despite live local and laundry-specific intake destinations. Routing to existing local forms should reduce navigational steps and clarify customer choices; no ranking uplift is assumed.",
