@@ -11,7 +11,10 @@ assert.ok(match, 'Homepage routeForZip function must be present');
 const routeForZip = new Function('zip', match[1]);
 
 const exactCityCases = [
+  ['90620', 'Buena Park, CA', '/buena-park-appliance-pickup/'],
   ['90621', 'Buena Park, CA', '/buena-park-appliance-pickup/'],
+  ['90631', 'La Habra, CA', '/la-habra-appliance-pickup/'],
+  ['90680', 'Stanton, CA', '/stanton-appliance-pickup/'],
   ['90630', 'Cypress, CA', '/cypress-appliance-pickup/'],
   ['90623', 'La Palma, CA', '/la-palma-appliance-pickup/'],
   ['90720', 'Los Alamitos, CA', '/los-alamitos-appliance-pickup/'],
@@ -57,4 +60,4 @@ for (const [zip, href, phone] of controls) {
 }
 assert.equal(routeForZip('abc'), null, 'invalid ZIP should not map');
 assert.equal(routeForZip(''), null, 'blank ZIP should not map');
-console.log('Homepage ZIP regression: 7 corrected city routes, 17 regional controls, 2 invalid-input cases PASS');
+console.log('Homepage ZIP regression: 10 exact city routes, 17 regional controls, 2 invalid-input cases PASS');
