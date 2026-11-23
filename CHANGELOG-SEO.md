@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-11-23 — Four California washer/dryer ZIP inputs (proposed technical fix)
+
+- Confirmed from the main-branch HTML: Montclair, Azusa, Temple City and Diamond Bar dedicated washer/dryer request forms accepted ZIP values without a five-digit pattern or maxlength. This change adds native five-digit format checking and an explanatory title to their existing ZIP input only.
+- Preserved each form's existing `name=zip`, required fields, Formspree action, phone routing, photo instructions, existing fields, titles, canonical, robots, schema, photos, links and service claims. This is client-side format validation, not service-area validation or server-side fraud prevention.
+- Separate Hemet correction remains in PR #1537; San Jacinto general intake and photo-plan consistency require separate review. No fake leads were submitted. Verify protected SEO guard and CodeQL on exact final head; do not merge without accountable-maintainer approval. Rollback consists of reverting the four input attributes only.
+
+
 ## 2026-11-22 — Consolidated California laundry conversion and technical intake release (PRs #1528, #1532, #1533, #1534)
 
 **Single-release technical change set:** (1) add the existing Riverside city washer/dryer destination link from the Inland Empire general pickup corridor with its factual `data/seo-experiments.json` record (supersedes PR #1528); (2) replace only Orange County general page's oversized PNG brand header logo/favicon references with the existing smaller 236-pixel WebP, retaining the appliance photo and same logo semantics (supersedes PR #1532); (3) require five-digit browser ZIP format in Chino and Chino Hills dedicated washer/dryer request forms (supersedes PR #1533); and (4) require five-digit browser ZIP format in Garden Grove, Santa Ana, Irvine, Moreno Valley, Orange County and Riverside County general request forms (supersedes PR #1534). All fixes are carried over from verified source revisions, preserving the original required intake fields, Formspree POST actions, photos, phone numbers, canonical/robots/title and service promises.
