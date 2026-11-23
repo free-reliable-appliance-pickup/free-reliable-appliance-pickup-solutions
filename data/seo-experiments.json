@@ -23,6 +23,49 @@
   },
   "experiments": [
     {
+      "id": "2026-11-22-homepage-bay-area-sacramento-zip-handoff",
+      "market": "Santa Clara / San Jose / Sacramento Metro, California homepage intake routing",
+      "hypothesis": "Existing homepage ZIP lookup sends verified South Bay and Sacramento Metro city/region ZIPs to statewide California general page despite live local and laundry-specific intake destinations. Routing to existing local forms should reduce navigational steps and clarify customer choices; no ranking uplift is assumed.",
+      "pagesChanged": [
+        "/"
+      ],
+      "targetPage": "/santa-clara-appliance-pickup/",
+      "ownerQuery": "free appliance pickup santa clara ca",
+      "lastChanged": "2026-11-22",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-19"
+      },
+      "baseline": {
+        "dataSource": "First-party Search Console Web via Windsor.ai; note GSC reports impressions/clicks, not ZIP-lookup conversions.",
+        "santaClaraGeneral": {
+          "page": "/santa-clara-appliance-pickup/",
+          "webImpressions": 10,
+          "webClicks": 1
+        },
+        "sanJoseGeneral": {
+          "page": "/san-jose-appliance-pickup/",
+          "webImpressions": 19,
+          "webClicks": 0
+        },
+        "sacramentoMetroGeneral": {
+          "page": "/sacramento-metro-appliance-pickup/",
+          "reportedRows": 0
+        },
+        "caveat": "No homepage ZIP-lookup event analytics were available. Reported rows don't prove actual ZIP lookup usage; site traffic causality cannot be inferred."
+      },
+      "change": "For exact Santa Clara ZIPs 95050/95051/95054, San Jose 951xx and Sacramento Metro 958xx, route ZIP-check results to existing local intake pages and show their existing washer/dryer request paths. Preserve forms, phone mappings, service qualification and all SEO metadata.",
+      "successSignals": [
+        "The 95050, 95051 and 95054 ZIP lookups route to Santa Clara city general and washer/dryer forms.",
+        "951xx ZIPs route to San Jose general and washer/dryer intake, and 958xx ZIPs to Sacramento Metro general and washer/dryer intake.",
+        "Existing other ZIP routing and Formspree request forms are unchanged; no requests submitted during testing."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "proposed",
+      "freezeRule": "After approved deployment, keep homepage ZIP routing stable for a comparable review period; verified incorrect ZIP mappings or service-contact issues may be fixed with logged evidence."
+    },
+    {
       "id": "2026-11-22-riverside-county-specific-city-laundry-handoff",
       "market": "Riverside city and Riverside County, California — washer and dryer pickup",
       "hypothesis": "Customers on the Riverside County general appliance hub who have a single washer or dryer at an address in Riverside city currently see a county-wide laundry destination but no direct handoff to the existing dedicated Riverside city washer/dryer guide. Adding one city-specific contextual link may make navigation more useful and may help Google discover the preferred page for Riverside city laundry intent; ranking benefit is unproven.",
