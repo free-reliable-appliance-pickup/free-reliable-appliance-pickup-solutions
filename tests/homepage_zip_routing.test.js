@@ -61,3 +61,20 @@ for (const [zip, href, phone] of controls) {
 assert.equal(routeForZip('abc'), null, 'invalid ZIP should not map');
 assert.equal(routeForZip(''), null, 'blank ZIP should not map');
 console.log('Homepage ZIP regression: 10 exact city routes, 17 regional controls, 2 invalid-input cases PASS');
+
+
+// California laundry photo-handoff contract: check the two corrected city
+// forms without sending a Formspree request or requiring any network access.
+for (const city of ['diamond-bar', 'temple-city']) {
+  const cityHtml = fs.readFileSync(path.join(__dirname, '..', city + '-washer-dryer-pickup', 'index.html'), 'utf8');
+  const form = cityHtml.match(/<form\b[^>]*action="https:\/\/formspree\.io\/f\/mvzeapzd"[^>]*>[\s\S]*?<\/form>/i)?.[0];
+  assert.ok(form, city + ' must retain its real Formspree intake form');
+  assert.match(form, /<select\b(?=[^>]*\bname="photos_available")(?=[^>]*\brequired\b)[^>]*>/i,
+    city + ' must ask for a required photo-sharing method');
+  assert.match(form, /<input\b(?=[^>]*\bname="photo_link")(?=[^>]*\btype="url")[^>]*>/i,
+    city + ' must allow an optional photo URL');
+  assert.match(form, /This form does not upload photos directly/i,
+    city + ' must avoid promising unsupported photo upload');
+  assert.match(form, /sms:\+19093756685/, city + ' must retain the local SMS photo handoff');
+}
+console.log('Diamond Bar and Temple City required photo-handoff regression PASS');
