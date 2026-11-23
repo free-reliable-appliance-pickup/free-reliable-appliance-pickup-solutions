@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-11-23 — All-commits SEO guard exception hardening (technical safety correction; staged)
+
+- Verified bypass risk in earlier proposed guard: for a multi-commit PR or two-parent merge, an unapproved speculative change in an early commit could be accepted if only the **last** commit started with `[technical-fix]`.
+- Now every introduced non-merge commit subject must start with `[technical-fix]` before the protected-page override applies. For ordinary direct pushes the sole HEAD commit remains the candidate. No protected page/content changes.
+- Added isolated regression coverage for multi-commit merge and pull-request scenarios where the last commit is technical but an earlier speculative edit must still be blocked, plus the valid PR technical case. Preserve explicit accountable-maintainer approval, CodeQL, qualified independent review and the existing freeze policy.
+
 ## 2026-11-23 — Diamond Bar and Temple City required photo-sharing handoff (technical intake correction; staged)
 
 - Verified conversion/qualification gap: both existing California dedicated washer/dryer intake forms had no photo-sharing choice or photo-link field, unlike other regional laundry forms; mobile contact bars already support texting photos.
