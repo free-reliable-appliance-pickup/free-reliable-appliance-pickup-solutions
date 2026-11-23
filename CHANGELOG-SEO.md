@@ -2,6 +2,8 @@
 
 ## 2026-11-22 — Orange County header image delivery
 
+**SEO Experiment Guard exception — verified technical fix only:** This work changes only the Orange County general page's brand-logo and favicon file references, not its Garden Grove contextual link, landing-page intent, photo, request flow, headings or search metadata. The protected `2026-11-21-garden-grove-laundry-county-context-link` experiment remains unchanged and its observation window through 2026-12-09 remains in force. The original 394,490-byte PNG and existing 29,414-byte WebP were checked for HTTP 200. The exemption is restricted to correcting avoidable header-asset transfer size; no ranking change is assumed. Revert only the two image references if the logo is incorrect in production.
+
 Technical change for `/orange-county-appliance-pickup/` at commit `0032036d0dac16436c8a23b15b986e0eea89983b`. The 118-pixel brand mark and favicon requested a 394,490-byte PNG. The existing 236-pixel WebP used on the Inland Empire general page is 29,414 bytes. Both assets returned HTTP 200. The appliance photograph, social preview, form, search intent and service terms are preserved. The November 22 Orange County laundry search sample did not return this domain in its first ten web or image entries. This technical adjustment targets asset transfer size only. Check the public image source, content type and form after deployment. Roll back the two asset references if the logo fails to render.
 
 ## 2026-11-16 — Nine California dedicated washer/dryer form access fixes (staged, not deployed)
