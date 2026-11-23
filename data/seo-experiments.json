@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-21",
+  "updated": "2026-11-22",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,46 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-22-national-single-washer-outside-california-routing",
+      "market": "National single-washer pickup guide — outside California route navigation",
+      "hypothesis": "The national single-washer guide links directly to California routes but not to its existing verified non-California washer/dryer routes. A few authentic local links help customers who have a single washer in Phoenix, Portland or Denver find the matching intake page; potential organic discovery improvement is an unproven secondary outcome.",
+      "pagesChanged": [
+        "/free-washer-pickup/"
+      ],
+      "targetPage": "/free-washer-pickup/",
+      "protectedOwner": "/free-washer-pickup/",
+      "ownerQuery": "free washer pickup near me",
+      "lastChanged": "2026-11-22",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-19"
+      },
+      "baseline": {
+        "dataSource": "First-party Google Search Console Web page rollup through connected Windsor.ai for 29 settled days, retrieved 2026-11-22",
+        "nationalSingleWasherPage": {
+          "url": "/free-washer-pickup/",
+          "returnedPageRows": 0,
+          "note": "No returned row among property page rows. Privacy/sampling limits mean this is not a literal zero-impression claim or proof of deindexing."
+        },
+        "relatedPageContext": {
+          "url": "/washer-dryer-pickup/",
+          "webImpressions": 12,
+          "webClicks": 0
+        },
+        "sourceChecks": "Phoenix AZ, Portland OR and Denver CO dedicated washer/dryer pages exist in production main GitHub source with index/follow, individual-washer eligibility text, and a Formspree pickup request form."
+      },
+      "change": "Add one compact other-U.S.-markets paragraph on the existing single-washer guide linking Phoenix AZ, Portland OR and Denver CO dedicated washer/dryer pages. No new city pages, other links, forms, schema, metadata, canonical, photos, business claims or qualification change.",
+      "successSignals": [
+        "Out-of-California visitors can reach a relevant live city-specific washer intake page from the national guide.",
+        "After finalized observation window, look for reportable Google Web impressions and qualified clicks to the national single-washer guide and destination pages, separately from Image Search.",
+        "No regression in local intake form, hero photo, brand text, required fields, URL and canonical."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "proposed",
+      "freezeRule": "After separately reviewed, approved deployment, do not speculate further on this page's on-page SEO, titles or market links for at least 14 settled days. Factual, safety, contact, indexing and form fixes are exempt if verified and logged."
+    },
     {
       "id": "2026-11-21-garden-grove-laundry-county-context-link",
       "market": "Garden Grove, Orange County, CA — dedicated washer & dryer pickup",
