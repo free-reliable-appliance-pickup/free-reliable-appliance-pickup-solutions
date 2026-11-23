@@ -234,6 +234,7 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
       {name:'Claremont, CA',zip:['91711'],phone:'909-375-6685',tel:'+19093756685',href:'/claremont-appliance-pickup/'},
       {name:'Pomona, CA',zip:['91766','91767','91768'],phone:'909-375-6685',tel:'+19093756685',href:'/pomona-appliance-pickup/'},
       {name:'Stockton, CA',zip:['95202','95203','95204','95205','95206','95207','95209','95210','95212','95219'],phone:'310-774-4304',tel:'+13107744304',href:'/stockton-appliance-pickup/'},
+      {name:'Santa Clara, CA',zip:['95050','95051','95054'],phone:'310-774-4304',tel:'+13107744304',href:'/santa-clara-appliance-pickup/'},
       {name:'Portland, OR',zip:['97201','97202','97203','97204','97205','97206','97209','97210','97211','97212','97213','97214','97215','97216','97217','97219','97220','97221','97227','97230','97232','97233','97236','97239','97266'],phone:'503-868-4455',tel:'+15038684455',href:'/portland-appliance-pickup/'},
       {name:'Salem, OR',zip:['97301','97302','97304','97305','97306','97317'],phone:'503-868-4455',tel:'+15038684455',href:'/salem-appliance-pickup/'},
       {name:'Phoenix, AZ',zip:['85003','85004','85006','85008','85012','85013','85014','85016','85018','85020','85021','85022','85024','85027','85028','85029','85031','85032','85033','85034','85035','85037','85040','85041','85042','85043','85044','85048','85050','85051','85053','85054','85083','85085','85086'],phone:'602-726-7552',tel:'+16027267552',href:'/phoenix-appliance-pickup/'}
@@ -252,6 +253,10 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
     if(p3===923 || p3===924) return {region:'Inland Empire / San Bernardino County / High Desert',phone:'909-375-6685',tel:'+19093756685',href:'/inland-empire-appliance-pickup/'};
     if(p3===925) return {region:'Riverside County',phone:'909-375-6685',tel:'+19093756685',href:'/riverside-county-appliance-pickup/'};
     if(p3===926 || p3===927 || p3===928) return {region:'Orange County',phone:'909-375-6685',tel:'+19093756685',href:'/orange-county-appliance-pickup/'};
+    // Route South Bay and Sacramento Metro ZIPs to existing local intake pages.
+    // These are review paths, not a promise of pickup availability.
+    if(p3===951) return {region:'San Jose, CA (request review)',phone:'310-774-4304',tel:'+13107744304',href:'/san-jose-appliance-pickup/'};
+    if(p3===958) return {region:'Sacramento Metro, CA (request review)',phone:'310-774-4304',tel:'+13107744304',href:'/sacramento-metro-appliance-pickup/'};
     if(p3===935) return {region:'Antelope Valley',phone:'310-774-4304',tel:'+13107744304',href:'/antelope-valley-appliance-pickup/'};
     if(p3>=900 && p3<=916) return {region:'Los Angeles County',phone:'310-774-4304',tel:'+13107744304',href:'/los-angeles-county-appliance-pickup/'};
     if(p3>=919 && p3<=921) return {region:'San Diego County',phone:'310-774-4304',tel:'+13107744304',href:'/san-diego-county-appliance-pickup/'};
@@ -282,7 +287,10 @@ section{padding:52px 0}.section-title{text-align:center;color:var(--blue);font-s
           '/rancho-cucamonga-appliance-pickup/':'/rancho-cucamonga-washer-dryer-pickup/#request',
           '/fontana-appliance-pickup/':'/fontana-washer-dryer-pickup/#request',
           '/ontario-appliance-pickup/':'/ontario-washer-dryer-pickup/#request',
-          '/upland-appliance-pickup/':'/upland-washer-dryer-pickup/#request'
+          '/upland-appliance-pickup/':'/upland-washer-dryer-pickup/#request',
+          '/santa-clara-appliance-pickup/':'/santa-clara-washer-dryer-pickup/#request',
+          '/san-jose-appliance-pickup/':'/san-jose-washer-dryer-pickup/#request',
+          '/sacramento-metro-appliance-pickup/':'/sacramento-metro-washer-dryer-pickup/#request'
         };
         var laundryHref=laundryLinks[route.href];
         var serviceLinks=laundryHref
