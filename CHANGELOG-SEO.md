@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-11-23 — Hemet washer/dryer ZIP validation (technical intake fix; proposed)
+
+- **Observed defect:** The Hemet dedicated washer/dryer form required a ZIP value but accepted arbitrary non-five-digit text, unlike the verified California laundry form standard. Other existing request fields already capture condition, pickup location, stairs, and photo-sharing plan.
+- **Minimal correction:** Added `type="text"`, `pattern="[0-9]{5}"`, `maxlength="5"` and a five-digit help title on the existing ZIP input; kept `required`, `inputmode="numeric"`, `autocomplete="postal-code"`, field name and leading-zero support. This is browser-side format validation, not ZIP service-area qualification.
+- **Protected surface:** No title, H1, description, canonical, robots, schema, images, body text, internal links, Formspree action, phone routing, photo handling, city scope or business promises changed. Rancho Cucamonga organic experiments are untouched. No fake lead was submitted.
+- **Release gate:** Review exact PR head and all required GitHub Actions including CodeQL and SEO Experiment Guard. Only merge after the accountable maintainer's exact-head approval; post-release read-only verification must check the live Hemet form. Revert only the input attributes if an actual regression appears. No SEO ranking lift is claimed.
+
 ## 2026-11-22 — Consolidated California laundry conversion and technical intake release (PRs #1528, #1532, #1533, #1534)
 
 **Single-release technical change set:** (1) add the existing Riverside city washer/dryer destination link from the Inland Empire general pickup corridor with its factual `data/seo-experiments.json` record (supersedes PR #1528); (2) replace only Orange County general page's oversized PNG brand header logo/favicon references with the existing smaller 236-pixel WebP, retaining the appliance photo and same logo semantics (supersedes PR #1532); (3) require five-digit browser ZIP format in Chino and Chino Hills dedicated washer/dryer request forms (supersedes PR #1533); and (4) require five-digit browser ZIP format in Garden Grove, Santa Ana, Irvine, Moreno Valley, Orange County and Riverside County general request forms (supersedes PR #1534). All fixes are carried over from verified source revisions, preserving the original required intake fields, Formspree POST actions, photos, phone numbers, canonical/robots/title and service promises.
