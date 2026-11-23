@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-21",
+  "updated": "2026-11-22",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,58 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-22-riverside-county-specific-city-laundry-handoff",
+      "market": "Riverside city and Riverside County, California — washer and dryer pickup",
+      "hypothesis": "Customers on the Riverside County general appliance hub who have a single washer or dryer at an address in Riverside city currently see a county-wide laundry destination but no direct handoff to the existing dedicated Riverside city washer/dryer guide. Adding one city-specific contextual link may make navigation more useful and may help Google discover the preferred page for Riverside city laundry intent; ranking benefit is unproven.",
+      "pagesChanged": [
+        "/riverside-county-appliance-pickup/"
+      ],
+      "targetPage": "/riverside-washer-dryer-pickup/",
+      "protectedOwner": "/riverside-washer-dryer-pickup/",
+      "ownerQuery": "free washer and dryer pickup riverside ca",
+      "lastChanged": "2026-11-22",
+      "baselinePeriod": {
+        "start": "2026-10-22",
+        "end": "2026-11-19"
+      },
+      "baseline": {
+        "dataSource": "First-party Google Search Console Web via connected Windsor.ai, finalized 29-day window, 2026-11-22",
+        "riversideGeneralPage": {
+          "url": "/riverside-appliance-pickup/",
+          "webImpressions": 33,
+          "webClicks": 1,
+          "averagePosition": 10.1212
+        },
+        "riversideCityLaundryPage": {
+          "url": "/riverside-washer-dryer-pickup/",
+          "webImpressions": 1,
+          "webClicks": 0,
+          "averagePosition": 5,
+          "reportedQueryPageRows": 0
+        },
+        "riversideCountyGeneralPage": {
+          "url": "/riverside-county-appliance-pickup/",
+          "reportedPageRows": 0
+        },
+        "riversideCountyLaundryPage": {
+          "url": "/riverside-county-washer-dryer-pickup/",
+          "reportedPageRows": 0
+        },
+        "sourceChecks": "Riverside County general guide is index/follow, self-canonical and has a Formspree request form. It links county-wide laundry guide but omitted direct Riverside city laundry link. Destination Riverside washer/dryer guide exists in GitHub and has index/follow and Formspree pickup form.",
+        "caveat": "Missing page/query rows are not proof of zero impressions or deindexing. One impression is too little to infer position quality. Google Web metrics may include image features, not just blue links."
+      },
+      "change": "Add exactly one descriptive contextual link on Riverside County general appliance guide for visitors with Riverside city washer/dryer requests, next to the existing county-wide laundry link. Keep city and SGV pages, title, H1, descriptions, schema, robots, canonical, photos, forms and phones unchanged.",
+      "successSignals": [
+        "County visitors with Riverside city pickup addresses can open the appropriate dedicated city washer/dryer request page.",
+        "The dedicated Riverside city laundry URL earns reportable Google Web impressions or qualified search clicks on city-specific laundry terms after finalized data accumulates.",
+        "Existing county and city contacts/forms, qualification terms, photography and search index directives do not regress."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "proposed",
+      "freezeRule": "After reviewed/approved deployment, hold additional speculative link/content/SEO changes to this county hub and the Riverside city laundry page through at least Dec 9. Verified factual, form, contact, indexability or safety fixes excepted."
+    },
     {
       "id": "2026-11-21-garden-grove-laundry-county-context-link",
       "market": "Garden Grove, Orange County, CA — dedicated washer & dryer pickup",
