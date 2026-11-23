@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-11-23 — Diamond Bar and Temple City required photo-sharing handoff (technical intake correction; staged)
+
+- Verified conversion/qualification gap: both existing California dedicated washer/dryer intake forms had no photo-sharing choice or photo-link field, unlike other regional laundry forms; mobile contact bars already support texting photos.
+- Added a **required** `photos_available` choice (text after submitting, already shared, share link, ask for help), a truthful explanatory note that the Formspree form does **not** upload files directly, and an optional `photo_link` URL field to only `diamond-bar-washer-dryer-pickup/index.html` and `temple-city-washer-dryer-pickup/index.html`.
+- Preserve original Formspree action, phone `909-375-6685`, all original field names/required statuses, schema, titles, canonical, photos and pickup eligibility statements. No guarantee of free pickup or false form upload promise. No fake submissions. Reviewer and owner release approval still required.
+
 ## 2026-11-23 — Orange County homepage ZIP handoff correction (staged technical exception)
 
 - **Verified customer-routing defect:** The homepage ZIP checker matched 90620 Buena Park, 90631 La Habra and 90680 Stanton to the broad 900–916 Los Angeles fallback. The existing specific Orange County city pages use the established 909-375-6685 pickup review number; routing those ZIPs to Los Angeles/310 misdirects qualified Orange County visitors.
