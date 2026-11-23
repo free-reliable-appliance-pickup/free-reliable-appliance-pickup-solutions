@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-11-22 — Six California general pickup ZIP field validation fixes
+
+**Verified source defect:** `/garden-grove-appliance-pickup/`, `/santa-ana-appliance-pickup/`, `/irvine-appliance-pickup/`, `/moreno-valley-appliance-pickup/`, `/orange-county-appliance-pickup/`, and `/riverside-county-appliance-pickup/` all used a required ZIP field without a native five-digit ZIP pattern or length constraint. Required and inputmode=numeric alone do not reject arbitrary ZIP text. Add the HTML five-digit ZIP pattern, maxlength and help title to exactly one input per existing form, retaining type=text where already present. This is browser-side format validation only, not ZIP-city verification or server-side fraud prevention. Leading zeroes are preserved.
+
+**SEO Experiment Guard verified technical exception:** This only repairs customer intake validation; protected California SEO experiment page titles, descriptions, body content, internal links, photos, phone numbers, schema, Formspree actions and field names remain untouched. No forms are submitted with test leads. No rankings or organic clicks are promised. Revert individual input attributes if legitimate ZIP submissions are blocked.
+
 ## 2026-11-16 — Nine California dedicated washer/dryer form access fixes (staged, not deployed)
 - **Verified source defects:** Existing dedicated laundry request forms for Bloomington, Chino, Chino Hills, El Monte, Baldwin Park, South El Monte, Pico Rivera, Montebello and Temple City could submit without native floor/appliance-location or stairs answers, because those fields were absent and optional text notes could be empty. Pico Rivera silently preselected `Washer` instead of asking the applicant. Bloomington and South El Monte lacked static city/service identification; Pico Rivera lacked static service identification.
 - **Technical correction only:** All nine now show native-required `location` and `stairs` selects before optional access notes with blank-first choices and honest Unknown options. Pico Rivera appliance selection has a blank first choice. Missing static hidden city and service fields added only for Bloomington, South El Monte and Pico Rivera. This supersedes older incomplete drafts #656, #658 and #659 without changing their other city pages.
