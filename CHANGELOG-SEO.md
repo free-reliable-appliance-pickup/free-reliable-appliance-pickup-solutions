@@ -1,5 +1,10 @@
 # SEO change and decision register
 
+## 2026-11-23 — San Bernardino County general intake ZIP validation (staged technical correction)
+
+- Live batch audit of 22 priority California general and laundry pages found the county general form lacked the existing five-digit native ZIP format constraint. Add pattern and maxlength to that field only, preserving Formspree, all other controls, service terms, metadata, links, images and active SEO experiments.
+- Add source regression to the existing test. No fake submissions or ranking claims. Require exact-head CI, CodeQL, SEO Experiment Guard, independent review and explicit maintainer approval before merge.
+
 ## 2026-11-23 — Western Inland Empire laundry intake consistency (staged technical correction)
 
 - Norco and Grand Terrace existing forms lacked structured floor/stairs, photo-sharing choice and photo URL; added the established Eastvale controls and optional paid-quote preference without a direct upload claim. All four Norco, Grand Terrace, Eastvale and Jurupa Valley forms lacked native five-digit ZIP validation; corrected format only.
