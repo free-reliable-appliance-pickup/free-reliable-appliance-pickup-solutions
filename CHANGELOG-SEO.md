@@ -1,5 +1,11 @@
 # SEO change and decision register
 
+## 2026-11-23 — Western Inland Empire laundry intake consistency (staged technical correction)
+
+- Norco and Grand Terrace existing forms lacked structured floor/stairs, photo-sharing choice and photo URL; added the established Eastvale controls and optional paid-quote preference without a direct upload claim. All four Norco, Grand Terrace, Eastvale and Jurupa Valley forms lacked native five-digit ZIP validation; corrected format only.
+- Preserved existing Formspree endpoint, original fields, SEO metadata, canonical, service promises, imagery, phone routing and experiments. Added read-only regression assertions. Replaces overlapping access changes in older PRs #655 and #735 only after verified release. No fake leads, ranking claim or automatic merge.
+- Require exact-head relevant CI, CodeQL, SEO Guard, independent review and explicit maintainer approval; revert this PR if intake regresses.
+
 ## 2026-11-23 — Eastvale and Jurupa Valley laundry photo handoff (technical customer-intake correction; staged)
 
 - Verified both existing dedicated city laundry request forms omitted a photo-sharing status field or photo link even though their page copy asked customers to provide appliance photos. The adjacent Moreno Valley and Redlands laundry pages already collect photo-sharing choices.
