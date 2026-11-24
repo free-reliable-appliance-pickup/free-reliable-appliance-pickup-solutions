@@ -120,3 +120,23 @@ for (const city of ['eastvale', 'jurupa-valley']) {
   assert.match(form, /name="paid_removal_preference"/, city + ' must preserve the optional paid quote choice');
 }
 console.log('Eastvale and Jurupa Valley photo-sharing form contract PASS');
+
+
+// Western Inland Empire laundry intake contract, no customer submissions.
+for (const city of ['norco', 'grand-terrace', 'eastvale', 'jurupa-valley']) {
+  const page = fs.readFileSync(path.join(__dirname, '..', city + '-washer-dryer-pickup', 'index.html'), 'utf8');
+  const form = page.match(/<form\b[^>]*action="https:\/\/formspree\.io\/f\/mvzeapzd"[^>]*>[\s\S]*?<\/form>/i)?.[0];
+  assert.ok(form, city + ' original Formspree action');
+  const zip = form.match(/<input\b[^>]*name="zip"[^>]*>/i)?.[0];
+  assert.ok(zip, city + ' ZIP input');
+  for (const token of ['required', 'pattern="[0-9]{5}"', 'maxlength="5"']) assert.ok(zip.includes(token), city + ' ZIP ' + token);
+  for (const name of ['location', 'stairs', 'photos_available']) {
+    const field = form.match(new RegExp('<select\\b(?=[^>]*name="' + name + '")(?=[^>]*\\brequired\\b)[^>]*>\\s*<option value="">', 'i'));
+    assert.ok(field, city + ' required blank-first ' + name);
+  }
+  assert.match(form, /<input\b(?=[^>]*name="photo_link")(?=[^>]*type="url")[^>]*>/i);
+  assert.match(form, /This form does not upload photos directly/i);
+  assert.match(form, /sms:\+19093756685/);
+  assert.match(form, /name="paid_removal_preference"/);
+}
+console.log('Western Inland Empire four laundry intake contracts PASS');
