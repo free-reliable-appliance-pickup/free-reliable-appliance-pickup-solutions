@@ -558,3 +558,9 @@ Next action / no-revisit-before:
 - **Protected boundaries:** No new/updated city pages, public headings, images, robots, sitemap, canonical, service status, partner data, fees, or Formspree destination. Shared routing code is touched but only adds one recognized input alias; test the existing full routing suite. No real Formspree receipt has been verified.
 - **Status and rollout:** Committed to branch for review; not merged or live. Confirm full suite on the latest PR SHA, complete required reviews, merge, and verify browser-visible Formspree routing fields. Roll back the one-line alias if a routing regression is observed.
 
+
+
+## 2026-11-25 — Four California laundry ZIP validations (staged technical correction)
+
+- Verified missing native ZIP format constraints on existing Highland, Loma Linda, Yucaipa and San Gabriel laundry forms. Add only five-digit pattern, maxlength and help title; preserve all existing controls, action, service terms, SEO metadata, images, links and experiment registry. This validates format only, not pickup eligibility.
+- Add source regression to existing Node test. No fake leads, ranking claim or deployment. Require exact-head checks, CodeQL, SEO Experiment Guard, independent review and explicit accountable-maintainer approval. Revert scoped attributes if necessary.
