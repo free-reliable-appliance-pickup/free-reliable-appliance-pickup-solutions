@@ -152,3 +152,15 @@ for (const city of ['highland', 'loma-linda', 'yucaipa', 'san-gabriel']) {
   for (const token of ['required', 'pattern="[0-9]{5}"', 'maxlength="5"']) assert.ok(zip.includes(token), city + ' ZIP ' + token);
 }
 console.log('Four California laundry ZIP format checks PASS');
+
+
+// County general intake ZIP validation must match the regional laundry form.
+{
+  const county = fs.readFileSync(path.join(__dirname, '..', 'san-bernardino-county-appliance-pickup', 'index.html'), 'utf8');
+  const form = county.match(/<form\b[^>]*action="https:\/\/formspree\.io\/f\/mvzeapzd"[^>]*>[\s\S]*?<\/form>/i)?.[0];
+  assert.ok(form, 'San Bernardino County general pickup form');
+  const zip = form.match(/<input\b[^>]*name="zip"[^>]*>/i)?.[0];
+  assert.ok(zip, 'County ZIP field');
+  for (const token of ['required', 'pattern="[0-9]{5}"', 'maxlength="5"']) assert.ok(zip.includes(token), 'County ZIP ' + token);
+}
+console.log('San Bernardino County general ZIP validation PASS');
