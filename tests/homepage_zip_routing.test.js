@@ -140,3 +140,15 @@ for (const city of ['norco', 'grand-terrace', 'eastvale', 'jurupa-valley']) {
   assert.match(form, /name="paid_removal_preference"/);
 }
 console.log('Western Inland Empire four laundry intake contracts PASS');
+
+
+// Four California laundry ZIP format checks (no customer submissions).
+for (const city of ['highland', 'loma-linda', 'yucaipa', 'san-gabriel']) {
+  const page = fs.readFileSync(path.join(__dirname, '..', city + '-washer-dryer-pickup', 'index.html'), 'utf8');
+  const form = page.match(/<form\b[^>]*action="https:\/\/formspree\.io\/f\/mvzeapzd"[^>]*>[\s\S]*?<\/form>/i)?.[0];
+  assert.ok(form, city + ' original Formspree form');
+  const zip = form.match(/<input\b[^>]*name="zip"[^>]*>/i)?.[0];
+  assert.ok(zip, city + ' ZIP input');
+  for (const token of ['required', 'pattern="[0-9]{5}"', 'maxlength="5"']) assert.ok(zip.includes(token), city + ' ZIP ' + token);
+}
+console.log('Four California laundry ZIP format checks PASS');
