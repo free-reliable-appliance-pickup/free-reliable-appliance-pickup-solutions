@@ -1,5 +1,12 @@
 # SEO change and decision register
 
+## 2026-11-23 — San Bernardino County general intake ZIP validation (staged technical correction)
+
+- Live batch audit of 22 priority California general and laundry pages found the county general form lacked the existing five-digit native ZIP format constraint. Add pattern and maxlength to that field only, preserving Formspree, all other controls, service terms, metadata, links, images and active SEO experiments.
+- Add source regression to the existing test. No fake submissions or ranking claims. Require exact-head CI, CodeQL, SEO Experiment Guard, independent review and explicit maintainer approval before merge.
+
+
+
 ## 2026-11-23 — Western Inland Empire laundry intake consistency (staged technical correction)
 
 - Norco and Grand Terrace existing forms lacked structured floor/stairs, photo-sharing choice and photo URL; added the established Eastvale controls and optional paid-quote preference without a direct upload claim. All four Norco, Grand Terrace, Eastvale and Jurupa Valley forms lacked native five-digit ZIP validation; corrected format only.
@@ -558,3 +565,9 @@ Next action / no-revisit-before:
 - **Protected boundaries:** No new/updated city pages, public headings, images, robots, sitemap, canonical, service status, partner data, fees, or Formspree destination. Shared routing code is touched but only adds one recognized input alias; test the existing full routing suite. No real Formspree receipt has been verified.
 - **Status and rollout:** Committed to branch for review; not merged or live. Confirm full suite on the latest PR SHA, complete required reviews, merge, and verify browser-visible Formspree routing fields. Roll back the one-line alias if a routing regression is observed.
 
+
+
+## 2026-11-25 — Four California laundry ZIP validations (staged technical correction)
+
+- Verified missing native ZIP format constraints on existing Highland, Loma Linda, Yucaipa and San Gabriel laundry forms. Add only five-digit pattern, maxlength and help title; preserve all existing controls, action, service terms, SEO metadata, images, links and experiment registry. This validates format only, not pickup eligibility.
+- Add source regression to existing Node test. No fake leads, ranking claim or deployment. Require exact-head checks, CodeQL, SEO Experiment Guard, independent review and explicit accountable-maintainer approval. Revert scoped attributes if necessary.
