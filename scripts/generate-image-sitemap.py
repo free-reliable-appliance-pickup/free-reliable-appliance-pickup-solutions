@@ -58,6 +58,13 @@ extra = [
     "encinitas-washer-dryer-pickup",
     "poway-washer-dryer-pickup",
     "sacramento-metro-washer-dryer-pickup",
+    # Verified indexable California specialty pages; match visible hero images.
+    "fontana-refrigerator-pickup",
+    "fontana-freezer-pickup",
+    "fontana-stove-oven-pickup",
+    "san-bernardino-refrigerator-pickup",
+    "ontario-refrigerator-pickup",
+    "riverside-refrigerator-pickup",
 ]
 
 slugs = []
