@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,52 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-26-california-regional-navigation-clarity",
+      "market": "San Gabriel Valley, San Bernardino County and Riverside County",
+      "hypothesis": "Removing repeated navigational blocks and correcting misleading appliance-category links may improve regional page usability and clarify local search intent while preserving all destinations and intake.",
+      "pagesChanged": [
+        "/san-gabriel-valley-appliance-pickup/",
+        "/san-bernardino-county-appliance-pickup/",
+        "/riverside-county-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/san-gabriel-valley-appliance-pickup/",
+        "/san-bernardino-county-appliance-pickup/",
+        "/riverside-county-appliance-pickup/"
+      ],
+      "ownerQuery": "free appliance pickup + region",
+      "lastChanged": "2026-11-26",
+      "baselinePeriod": {
+        "start": "2026-10-27",
+        "end": "2026-11-23"
+      },
+      "baseline": {
+        "dataSource": "First-party GSC via Windsor.ai; web search",
+        "sanBernardinoCounty": {
+          "impressions": 20,
+          "clicks": 0,
+          "position": 7.45
+        },
+        "sanGabrielValley": {
+          "reportedRows": 0
+        },
+        "riversideCounty": {
+          "reportedRows": 0
+        },
+        "publicSearch": "All three regional pages absent from first ten returned independent US-targeted search results; not localized Google rank evidence."
+      },
+      "change": "Remove duplicated navigation sections from San Bernardino County and Riverside County; correct nine misleading category anchors in SGV. Preserve all normalized href destinations, entire head, title, H1, all images, customer form, routing and coverage.",
+      "successSignals": [
+        "No lost destinations or form regressions",
+        "Increased web impressions and useful clicks on intended regional pages; compare image visibility separately",
+        "No guaranteed ranking improvement"
+      ],
+      "evaluateNotBefore": "2026-12-14",
+      "preferredReview": "2026-12-17",
+      "status": "proposed",
+      "freezeRule": "After approved release, preserve the scope of this change through at least 14 finalized observation days. Reset review dates if deployment is delayed. No speculative changes to protected city or Orange County pages."
+    },
     {
       "id": "2026-11-25-california-directory-intent",
       "market": "California general appliance pickup visibility; shared service-area directory",
