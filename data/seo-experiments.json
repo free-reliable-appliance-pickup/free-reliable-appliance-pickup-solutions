@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-22",
+  "updated": "2026-11-25",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,54 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-25-california-directory-intent",
+      "market": "California general appliance pickup visibility; shared service-area directory",
+      "hypothesis": "A clearly directory-specific search title may distinguish the city-selection directory from commercial city pages while retaining all descriptive internal anchor text and useful navigation. This is a test, not a proven ranking cause.",
+      "pagesChanged": [
+        "/service-areas/"
+      ],
+      "protectedOwner": "/service-areas/",
+      "ownerQuery": "appliance pickup service areas",
+      "lastChanged": "2026-11-25",
+      "baselinePeriod": {
+        "start": "2026-10-26",
+        "end": "2026-11-22"
+      },
+      "baseline": {
+        "source": "First-party Search Console Web via Windsor.ai",
+        "directory": {
+          "webImpressions": 111,
+          "webClicks": 1,
+          "averagePosition": 15.8739
+        },
+        "fontanaExact": {
+          "query": "free appliance pickup fontana",
+          "directoryImpressions": 2,
+          "directoryAveragePosition": 5,
+          "cityReportedRows": 0,
+          "inlandEmpireImpressions": 1,
+          "inlandEmpireClicks": 1
+        },
+        "ranchoExact": {
+          "query": "free appliance pickup rancho cucamonga",
+          "directoryImpressions": 8,
+          "cityImpressions": 22,
+          "cityAveragePosition": 10.1364
+        },
+        "caution": "Sparse samples; absence of a page/query row is not proof of deindexing. Multiple reported URLs are not proof of causal cannibalization."
+      },
+      "change": "Replace only the directory title in HTML title, Open Graph title and WebPage structured name. Keep description, H1, links/anchors, canonicals, robots, forms, routing, photos and all California city pages intact.",
+      "successSignals": [
+        "Directory remains usable and indexable with identical hrefs and body content.",
+        "Review exact city-intent queries and page impressions/clicks, directory traffic and customer requests against baseline; no guaranteed improvement.",
+        "Retain, revise or revert based on finalized data and no material loss of useful directory traffic."
+      ],
+      "evaluateNotBefore": "2026-12-09",
+      "preferredReview": "2026-12-12",
+      "status": "proposed",
+      "freezeRule": "Following approved deployment, preserve the directory title until review date except documented technical or factual fixes. No change to existing protected city pages."
+    },
     {
       "id": "2026-11-22-ie-general-riverside-city-laundry-route",
       "market": "California Inland Empire general appliance pickup hub — Riverside city washer/dryer route",
