@@ -65,6 +65,17 @@ extra = [
     "san-bernardino-refrigerator-pickup",
     "ontario-refrigerator-pickup",
     "riverside-refrigerator-pickup",
+    # Verified priority California specialty pages from the web sitemap.
+    "san-bernardino-freezer-pickup",
+    "san-bernardino-stove-oven-pickup",
+    "ontario-freezer-pickup",
+    "ontario-stove-oven-pickup",
+    "riverside-freezer-pickup",
+    "riverside-stove-oven-pickup",
+    "pasadena-refrigerator-pickup",
+    "west-covina-refrigerator-pickup",
+    "anaheim-refrigerator-pickup",
+    "irvine-refrigerator-pickup",
 ]
 
 slugs = []
