@@ -11947,6 +11947,17 @@
   ],
   "technicalMaintenance": [
     {
+      "date": "2026-11-26",
+      "type": "verified technical image discovery repair",
+      "reason": "Four existing indexable Coachella Valley laundry pages had only logo images. Restore one category-specific existing photo per page, synchronize social preview image, and add reproducible image sitemap entries. No phone, form, service claim, title, H1, canonical or schema changes.",
+      "pages": [
+        "/coachella-valley-washer-dryer-pickup/",
+        "/bermuda-dunes-washer-dryer-pickup/",
+        "/pga-west-washer-dryer-pickup/",
+        "/thousand-palms-washer-dryer-pickup/"
+      ]
+    },
+    {
       "date": "2026-10-05",
       "type": "verified CI/technical SEO repair",
       "reason": "GitHub SEO audits identified internal links to retired noindex aliases, stale dated CSS class markers, duplicate Rancho specialty forms that violated the single-city-intake model, and stale WebPage JSON-LD metadata. Repairs are limited to those verified technical failures and do not intentionally change protected ranking hypotheses.",
