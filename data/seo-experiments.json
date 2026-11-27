@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "policy": {
     "principle": "Every material SEO change must have a measurable hypothesis, a pre-change baseline, an owner query/page, a protected observation window, and a keep/revise/revert decision based on finalized Search Console evidence.",
     "avoid": [
@@ -22,6 +22,46 @@
     "activeExperimentRule": "Do not make speculative content rewrites to pages in a running experiment before its evaluateNotBefore date. Technical, factual, contact, indexability or safety corrections are allowed and must be logged."
   },
   "experiments": [
+    {
+      "id": "2026-11-26-fontana-laundry-structural-repetition-pilot",
+      "market": "Fontana, California — washer and dryer pickup",
+      "hypothesis": "Removing two redundant laundry guidance sections while retaining the existing local guidance and form may make the page easier to use and clarify its purpose. Organic visibility benefit is unproven.",
+      "pagesChanged": [
+        "/fontana-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/fontana-washer-dryer-pickup/",
+      "ownerQuery": "free washer and dryer pickup fontana",
+      "lastChanged": "2026-11-26",
+      "baselinePeriod": {
+        "start": "2026-10-27",
+        "end": "2026-11-23"
+      },
+      "baseline": {
+        "source": "First-party Google Search Console via Windsor.ai, Web",
+        "ownerPage": {
+          "webImpressions": 2,
+          "webClicks": 1,
+          "averagePosition": 4.5
+        },
+        "fontanaGeneral": {
+          "webImpressions": 4,
+          "webClicks": 0,
+          "averagePosition": 6.75
+        },
+        "ownerQueryReportedRows": 0,
+        "caution": "Absence of a query row is not proof of deindexing or zero true impressions; sparse sample. No image rows returned; image visibility not established."
+      },
+      "change": "Remove two repetitive body sections only; retain original title, canonical, schema, forms, photos, contact and local content. No redirects, noindex, sitemap or nationwide changes.",
+      "successSignals": [
+        "Compare finalized exact query and owner-page web impressions, clicks, and landing-page distribution against baseline; report image separately.",
+        "Retain useful local content, contact options and functioning form; check real leads where available.",
+        "Keep, revise or revert only after finalized evidence; low counts may require longer observation."
+      ],
+      "evaluateNotBefore": "2026-12-13",
+      "preferredReview": "2026-12-16",
+      "status": "running",
+      "freezeRule": "Starts only after approved production deployment; if deployment is delayed, extend observation until at least 14 days after actual deployment plus 3 days for GSC finalization. No speculative page edits before review."
+    },
     {
       "id": "2026-11-25-california-directory-intent",
       "market": "California general appliance pickup visibility; shared service-area directory",
