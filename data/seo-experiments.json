@@ -24,17 +24,15 @@
   "experiments": [
     {
       "id": "2026-11-26-california-regional-navigation-clarity",
-      "market": "San Gabriel Valley, San Bernardino County and Riverside County",
+      "market": "San Gabriel Valley and San Bernardino County",
       "hypothesis": "Removing repeated navigational blocks and correcting misleading appliance-category links may improve regional page usability and clarify local search intent while preserving all destinations and intake.",
       "pagesChanged": [
         "/san-gabriel-valley-appliance-pickup/",
-        "/san-bernardino-county-appliance-pickup/",
-        "/riverside-county-appliance-pickup/"
+        "/san-bernardino-county-appliance-pickup/"
       ],
       "protectedOwners": [
         "/san-gabriel-valley-appliance-pickup/",
-        "/san-bernardino-county-appliance-pickup/",
-        "/riverside-county-appliance-pickup/"
+        "/san-bernardino-county-appliance-pickup/"
       ],
       "ownerQuery": "free appliance pickup + region",
       "lastChanged": "2026-11-26",
@@ -57,7 +55,7 @@
         },
         "publicSearch": "All three regional pages absent from first ten returned independent US-targeted search results; not localized Google rank evidence."
       },
-      "change": "Remove duplicated navigation sections from San Bernardino County and Riverside County; correct nine misleading category anchors in SGV. Preserve all normalized href destinations, entire head, title, H1, all images, customer form, routing and coverage.",
+      "change": "Remove duplicated navigation sections from San Bernardino County; correct nine misleading category anchors in SGV. Preserve all normalized href destinations, entire head, title, H1, all images, customer form, routing and coverage. Riverside County left unchanged because its navigation is required by the quality audit.",
       "successSignals": [
         "No lost destinations or form regressions",
         "Increased web impressions and useful clicks on intended regional pages; compare image visibility separately",
