@@ -1,0 +1,76 @@
+name: Isolated Orange County mobile QA
+on:
+  pull_request:
+    branches:
+      - ca-orange-county-laundry-directory-pilot-20261127
+    paths:
+      - '.github/workflows/isolated-orange-county-mobile-1556.yml'
+permissions:
+  contents: read
+jobs:
+  mobile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: f98ce535cc760c580173598cc900bab1661ac075
+          persist-credentials: false
+      - name: Install Chromium browser runner
+        run: |
+          python -m pip install playwright==1.51.0
+          python -m playwright install --with-deps chromium
+      - name: Render pinned page without external requests or submissions
+        shell: bash
+        run: |
+          python - <<'PY'
+          import contextlib, http.server, os, subprocess, threading, json
+          from playwright.sync_api import sync_playwright
+          sha = subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip()
+          assert sha == 'f98ce535cc760c580173598cc900bab1661ac075'
+          server = http.server.ThreadingHTTPServer(('127.0.0.1',0), http.server.SimpleHTTPRequestHandler)
+          threading.Thread(target=server.serve_forever, daemon=True).start()
+          origin = f'http://127.0.0.1:{server.server_port}'
+          failures = []
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              for width in (360,390):
+                  page = browser.new_page(viewport={'width':width,'height':800}, is_mobile=True, has_touch=True)
+                  def guard(route):
+                      if route.request.method in ('GET','HEAD') and route.request.url.startswith(origin+'/'):
+                          route.continue_()
+                      else:
+                          route.abort()
+                  page.route('**/*', guard)
+                  page.add_init_script("document.addEventListener('submit', e => e.preventDefault(), true)")
+                  response = page.goto(origin+'/orange-county-washer-dryer-pickup/', wait_until='load')
+                  form = page.locator('form')
+                  form.scroll_into_view_if_needed()
+                  page.locator('img').evaluate_all("(imgs) => Promise.all(imgs.map(i => i.decode().catch(()=>null)))")
+                  details = page.evaluate("""() => {
+                    const form=document.querySelector('form');
+                    const zip=form.querySelector('[name=zip]');
+                    zip.value='abc'; const invalidRejected=!zip.checkValidity();
+                    zip.value='92801'; const validAccepted=zip.checkValidity(); zip.value='';
+                    const submit=form.querySelector('button[type=submit]');
+                    const hero=document.querySelector('img[alt="Real washer and dryer set for pickup in Orange County"]');
+                    const box=e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width,height:r.height}};
+                    const visible=e=>{const b=box(e);return b.width>0&&b.height>0&&b.left>=-1&&b.right<=innerWidth+1};
+                    const cities=['la-habra','la-palma','los-alamitos','stanton','villa-park'];
+                    return {viewport:innerWidth,documentWidth:document.documentElement.scrollWidth,
+                      form:box(form),submit:box(submit),formFits:visible(form),submitFits:visible(submit),
+                      invalidRejected,validAccepted,heroLoaded:!!hero&&hero.complete&&hero.naturalWidth>0,
+                      removedSectionsAbsent:!document.querySelector('.la-habra-wd-link-20260918,.oc-final-city-wd-links-20260918'),
+                      retainedCities:cities.every(city=>[...document.links].some(a=>a.pathname==='/'+city+'-washer-dryer-pickup/')),
+                      required:[...form.querySelectorAll('[required]')].map(e=>e.name),
+                      action:form.action};
+                  }""")
+                  print(json.dumps({'sha':sha,'requestedWidth':width,'httpStatus':response.status,**details}),flush=True)
+                  required={'name','phone','address','city','state','zip','appliance','condition','access_level','stairs','photos_available'}
+                  if not (response.status==200 and details['viewport']==width and details['documentWidth']<=width+1 and all(details[k] for k in ('formFits','submitFits','invalidRejected','validAccepted','heroLoaded','removedSectionsAbsent','retainedCities')) and required.issubset(details['required']) and details['action']=='https://formspree.io/f/mvzeapzd'):
+                      failures.append(width)
+                  page.close()
+              browser.close()
+          server.shutdown()
+          assert not failures, f'Mobile QA failed at widths {failures}'
+          PY
