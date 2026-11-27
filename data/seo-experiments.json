@@ -23,13 +23,11 @@
   },
   "experiments": [
     {
-      "id": "2026-11-26-ontario-cooling-city-consolidation-pilot",
-      "market": "Ontario, California — general and cooling appliance pickup",
-      "hypothesis": "Consolidating two extremely low-volume cooling pages into a stronger city owner may reduce overlapping URLs while preserving customer access. Search benefit and image visibility effects are unproven.",
+      "id": "2026-11-26-ontario-city-redundancy-pilot",
+      "market": "Ontario, California — main appliance pickup",
+      "hypothesis": "Removing the duplicated request instructions and category navigation may improve clarity for customers without changing service intent or sacrificing specialty-page discovery. Ranking benefit is unproven.",
       "pagesChanged": [
-        "/ontario-appliance-pickup/",
-        "/ontario-refrigerator-pickup/",
-        "/ontario-freezer-pickup/"
+        "/ontario-appliance-pickup/"
       ],
       "protectedOwner": "/ontario-appliance-pickup/",
       "ownerQuery": "free appliance pickup ontario",
@@ -38,7 +36,7 @@
         "end": "2026-11-23"
       },
       "baseline": {
-        "source": "Finalized Google Search Console via Windsor.ai",
+        "source": "Previously recorded finalized Google Search Console via Windsor.ai",
         "city": {
           "impressions": 43,
           "clicks": 0
@@ -60,27 +58,18 @@
           "clicks": 0,
           "position": 29.6
         },
-        "recent28Days": {
-          "start": "2026-10-27",
-          "end": "2026-11-23",
-          "cityImpressions": 6,
-          "refrigeratorImpressions": 1,
-          "freezerReportedRows": 0
-        },
-        "imageNote": "No Ontario image-search rows returned; this is not proof of zero image visibility.",
-        "leadNote": "No matching exact specialty source-page strings found in business email; untracked phone or text leads may exist."
+        "imageNote": "No image rows returned; not proof of zero visibility."
       },
-      "change": "Move cooling-specific practical guidance to the Ontario main city page; preserve the main hero, original photo files linked in the cooling sections, existing primary form, contact and city title. Two specialty URLs use immediate HTML refresh with canonical and fallback links; remove their web and image sitemap entries. No laundry, statewide, nationwide or other city changes.",
+      "change": "Delete only redundant What to Send With Your Ontario Request section from main city HTML. All unique link destinations retained elsewhere; exact form, head, hero and specialty pages retained; no changes to sitemaps or indexability. Supersedes unmerged cooling redirect proposal after three required checks failed.",
       "successSignals": [
-        "Confirm both legacy URLs navigate to the correct section, target form handles Refrigerator and Freezer, no broken customer route or source assets.",
-        "Compare combined city/cooling impressions, clicks, exact queries, image results and actual leads to baseline; assess transfer of signals rather than assume improvement.",
-        "Keep, revise or revert if loss of search visibility, leads or meaningful appliance-specific demand."
+        "Preserve customer form and image discovery.",
+        "Compare finalized web impressions and clicks for city and specialty pages; assess image search separately."
       ],
       "lastChanged": "2026-11-26",
       "evaluateNotBefore": "2026-12-13",
       "preferredReview": "2026-12-16",
       "status": "running",
-      "freezeRule": "Start only after approved production deployment. Extend review until 14 days after actual deployment plus 3 days for GSC finalization. No speculative edits during observation."
+      "freezeRule": "Begin only after approved deployment; extend review to at least 14 days after actual deployment plus 3 days for finalization."
     },
     {
       "id": "2026-11-26-fontana-laundry-structural-repetition-pilot",
