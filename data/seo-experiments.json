@@ -66,10 +66,10 @@
         "Compare finalized web impressions and clicks for city and specialty pages; assess image search separately."
       ],
       "lastChanged": "2026-11-26",
-      "evaluateNotBefore": "2026-12-13",
-      "preferredReview": "2026-12-16",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
       "status": "running",
-      "freezeRule": "Begin only after approved deployment; extend review to at least 14 days after actual deployment plus 3 days for finalization."
+      "freezeRule": "Provisional conservative gate while deployment is unconfirmed. Release against this record only through 2026-12-14; for a later release extend the gate before merge. Record actual production deployment in a registry-only follow-up and verify evaluateNotBefore is at least 17 days later (14 observation days plus 3 finalization days); do not shorten the provisional gate before finalized evidence is available."
     },
     {
       "id": "2026-11-26-california-regional-navigation-clarity",
