@@ -51,7 +51,9 @@
       "evaluateNotBefore": "2026-12-31",
       "preferredReview": "2027-01-03",
       "status": "running",
-      "freezeRule": "Provisional gate permits release only through 2026-12-14; extend before merge if later. Record verified actual deployment in a registry-only follow-up and ensure gate is at least 17 days after deployment; do not shorten before finalized evidence."
+      "deploymentVerifiedDate": "2026-11-27",
+      "deploymentEvidence": "PR #1556 merged at 36fdcb650b369ba39176b311103b1fcc46a75f33 on November 27. Public retrieval that day confirmed removed sections absent, city links, photo reference, phone and form present. Exact deployment timestamp unknown; no Formspree receipt test.",
+      "freezeRule": "Public content verified November 27; retain December 31 evaluation gate, exceeding the minimum 17-day observation and finalization interval. Do not shorten before finalized evidence."
     },
     {
       "id": "2026-11-26-ontario-city-redundancy-pilot",
