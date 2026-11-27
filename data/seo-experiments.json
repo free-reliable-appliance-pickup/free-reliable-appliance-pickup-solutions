@@ -23,6 +23,44 @@
   },
   "experiments": [
     {
+      "id": "2026-11-27-corona-customer-copy-pilot",
+      "market": "Corona, California — general appliance removal",
+      "hypothesis": "Replacing one explicit search-keyword list with direct customer instructions improves readability and preserves the page's removal intent. Ranking or CTR benefit is not established.",
+      "pagesChanged": [
+        "/corona-appliance-pickup/"
+      ],
+      "protectedOwner": "/corona-appliance-pickup/",
+      "ownerQuery": "appliance removal corona",
+      "baselinePeriod": {
+        "start": "2026-10-28",
+        "end": "2026-11-24"
+      },
+      "baseline": {
+        "source": "Google Search Console via Windsor.ai, Web",
+        "page": {
+          "impressions": 57,
+          "clicks": 0,
+          "position": 12.9649
+        },
+        "exactQuery": {
+          "impressions": 38,
+          "clicks": 0,
+          "position": 14.6053
+        },
+        "caution": "Average position and zero clicks do not establish that body copy caused poor visibility. No image baseline measured for this pilot."
+      },
+      "change": "Replace only the paragraph beginning 'For searches such as' with concise customer-facing instructions. Preserve title, description, schema, form, image, links and all other pages.",
+      "successSignals": [
+        "No change to indexability, image, navigation or customer request flow.",
+        "Compare finalized Web page and exact-query impressions and clicks; assess image visibility separately."
+      ],
+      "lastChanged": "2026-11-27",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
+      "status": "running",
+      "freezeRule": "Provisional release allowed through 2026-12-14 only; record verified deployment and ensure at least 17 days before evaluation. Do not shorten before finalized evidence."
+    },
+    {
       "id": "2026-11-27-orange-county-laundry-directory-pilot",
       "market": "Orange County, California — washer and dryer county hub",
       "hypothesis": "Removing two repeated city link blocks may improve customer navigation clarity without sacrificing city discovery. Search visibility benefit is unproven.",
