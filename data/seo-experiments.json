@@ -72,6 +72,50 @@
       "freezeRule": "Begin only after approved deployment; extend review to at least 14 days after actual deployment plus 3 days for finalization."
     },
     {
+      "id": "2026-11-26-california-regional-navigation-clarity",
+      "market": "San Gabriel Valley and San Bernardino County",
+      "hypothesis": "Removing repeated navigational blocks and correcting misleading appliance-category links may improve regional page usability and clarify local search intent while preserving all destinations and intake.",
+      "pagesChanged": [
+        "/san-gabriel-valley-appliance-pickup/",
+        "/san-bernardino-county-appliance-pickup/"
+      ],
+      "protectedOwners": [
+        "/san-gabriel-valley-appliance-pickup/",
+        "/san-bernardino-county-appliance-pickup/"
+      ],
+      "ownerQuery": "free appliance pickup + region",
+      "lastChanged": "2026-11-26",
+      "baselinePeriod": {
+        "start": "2026-10-27",
+        "end": "2026-11-23"
+      },
+      "baseline": {
+        "dataSource": "First-party GSC via Windsor.ai; web search",
+        "sanBernardinoCounty": {
+          "impressions": 20,
+          "clicks": 0,
+          "position": 7.45
+        },
+        "sanGabrielValley": {
+          "reportedRows": 0
+        },
+        "riversideCounty": {
+          "reportedRows": 0
+        },
+        "publicSearch": "All three regional pages absent from first ten returned independent US-targeted search results; not localized Google rank evidence."
+      },
+      "change": "Remove duplicated navigation sections from San Bernardino County; correct nine misleading category anchors in SGV. Preserve all normalized href destinations, entire head, title, H1, all images, customer form, routing and coverage. Riverside County left unchanged because its navigation is required by the quality audit.",
+      "successSignals": [
+        "No lost destinations or form regressions",
+        "Increased web impressions and useful clicks on intended regional pages; compare image visibility separately",
+        "No guaranteed ranking improvement"
+      ],
+      "evaluateNotBefore": "2026-12-14",
+      "preferredReview": "2026-12-17",
+      "status": "running",
+      "freezeRule": "Start only after approved deployment; extend review to at least 14 finalized observation days after actual deployment plus finalization lag."
+    },
+    {
       "id": "2026-11-26-fontana-laundry-structural-repetition-pilot",
       "market": "Fontana, California — washer and dryer pickup",
       "hypothesis": "Removing two redundant laundry guidance sections while retaining the existing local guidance and form may make the page easier to use and clarify its purpose. Organic visibility benefit is unproven.",
