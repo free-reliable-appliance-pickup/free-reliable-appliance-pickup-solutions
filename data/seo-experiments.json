@@ -23,6 +23,55 @@
   },
   "experiments": [
     {
+      "id": "2026-11-26-ontario-city-redundancy-pilot",
+      "market": "Ontario, California — main appliance pickup",
+      "hypothesis": "Removing the duplicated request instructions and category navigation may improve clarity for customers without changing service intent or sacrificing specialty-page discovery. Ranking benefit is unproven.",
+      "pagesChanged": [
+        "/ontario-appliance-pickup/"
+      ],
+      "protectedOwner": "/ontario-appliance-pickup/",
+      "ownerQuery": "free appliance pickup ontario",
+      "baselinePeriod": {
+        "start": "2026-09-11",
+        "end": "2026-11-23"
+      },
+      "baseline": {
+        "source": "Previously recorded finalized Google Search Console via Windsor.ai",
+        "city": {
+          "impressions": 43,
+          "clicks": 0
+        },
+        "refrigerator": {
+          "impressions": 1,
+          "clicks": 0
+        },
+        "freezer": {
+          "impressions": 2,
+          "clicks": 0
+        },
+        "laundry": {
+          "impressions": 11,
+          "clicks": 0
+        },
+        "cityExactQuery": {
+          "impressions": 5,
+          "clicks": 0,
+          "position": 29.6
+        },
+        "imageNote": "No image rows returned; not proof of zero visibility."
+      },
+      "change": "Delete only redundant What to Send With Your Ontario Request section from main city HTML. All unique link destinations retained elsewhere; exact form, head, hero and specialty pages retained; no changes to sitemaps or indexability. Supersedes unmerged cooling redirect proposal after three required checks failed.",
+      "successSignals": [
+        "Preserve customer form and image discovery.",
+        "Compare finalized web impressions and clicks for city and specialty pages; assess image search separately."
+      ],
+      "lastChanged": "2026-11-26",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
+      "status": "running",
+      "freezeRule": "Provisional conservative gate while deployment is unconfirmed. Release against this record only through 2026-12-14; for a later release extend the gate before merge. Record actual production deployment in a registry-only follow-up and verify evaluateNotBefore is at least 17 days later (14 observation days plus 3 finalization days); do not shorten the provisional gate before finalized evidence is available."
+    },
+    {
       "id": "2026-11-26-california-regional-navigation-clarity",
       "market": "San Gabriel Valley and San Bernardino County",
       "hypothesis": "Removing repeated navigational blocks and correcting misleading appliance-category links may improve regional page usability and clarify local search intent while preserving all destinations and intake.",
