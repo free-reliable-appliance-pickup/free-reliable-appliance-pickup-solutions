@@ -23,6 +23,37 @@
   },
   "experiments": [
     {
+      "id": "2026-11-27-orange-county-laundry-directory-pilot",
+      "market": "Orange County, California — washer and dryer county hub",
+      "hypothesis": "Removing two repeated city link blocks may improve customer navigation clarity without sacrificing city discovery. Search visibility benefit is unproven.",
+      "pagesChanged": [
+        "/orange-county-washer-dryer-pickup/"
+      ],
+      "protectedOwner": "/orange-county-washer-dryer-pickup/",
+      "ownerQuery": "free washer and dryer pickup orange county",
+      "baselinePeriod": {
+        "start": "2026-10-27",
+        "end": "2026-11-23"
+      },
+      "baseline": {
+        "source": "Finalized Google Search Console via Windsor.ai",
+        "webRowsReturned": 0,
+        "imageRowsReturned": 0,
+        "exactQueryRowsReturned": 0,
+        "caution": "No reported rows do not establish no impressions or deindexing. Public fetch confirmed self-canonical, index/follow, laundry hero, form and inbound California and county links; repository web and image sitemaps list this URL."
+      },
+      "change": "Remove only redundant standalone La Habra link and La Palma/Los Alamitos/Stanton/Villa Park link section; retain priority list, complete city directory, all 64 normalized unique hrefs, exact head, form, images and all other pages.",
+      "successSignals": [
+        "Preserve all unique link destinations, customer intake and photo.",
+        "Compare finalized Web and Image search impressions and clicks; do not infer rankings from absent rows."
+      ],
+      "lastChanged": "2026-11-27",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
+      "status": "running",
+      "freezeRule": "Provisional gate permits release only through 2026-12-14; extend before merge if later. Record verified actual deployment in a registry-only follow-up and ensure gate is at least 17 days after deployment; do not shorten before finalized evidence."
+    },
+    {
       "id": "2026-11-26-ontario-city-redundancy-pilot",
       "market": "Ontario, California — main appliance pickup",
       "hypothesis": "Removing the duplicated request instructions and category navigation may improve clarity for customers without changing service intent or sacrificing specialty-page discovery. Ranking benefit is unproven.",
