@@ -99,6 +99,11 @@ extra = [
     "pomona-freezer-pickup",
     "pomona-stove-oven-pickup",
     "southern-california-refrigerator-pickup",
+    # Restored visible laundry heroes on existing Coachella Valley pages.
+    "coachella-valley-washer-dryer-pickup",
+    "bermuda-dunes-washer-dryer-pickup",
+    "pga-west-washer-dryer-pickup",
+    "thousand-palms-washer-dryer-pickup",
 ]
 
 slugs = []
