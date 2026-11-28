@@ -23,6 +23,82 @@
   },
   "experiments": [
     {
+      "id": "2026-11-27-riverside-south-laundry-photo-pilot",
+      "market": "Menifee, Murrieta and Temecula, California — washer and dryer pickup",
+      "hypothesis": "Distinct representative original washer/dryer photographs may help customers distinguish existing city guides and improve image discovery. Ranking benefit is not assumed.",
+      "pagesChanged": [
+        "/menifee-washer-dryer-pickup/",
+        "/murrieta-washer-dryer-pickup/",
+        "/temecula-washer-dryer-pickup/"
+      ],
+      "ownerQuery": "washer and dryer pickup in Menifee, Murrieta and Temecula",
+      "baselinePeriod": {
+        "start": "2026-10-28",
+        "end": "2026-11-24"
+      },
+      "baseline": {
+        "source": "Google Search Console via Windsor.ai, Web and Image",
+        "menifee": {
+          "webImpressions": 1,
+          "webClicks": 0,
+          "averagePosition": 9
+        },
+        "murrieta": {
+          "webRowsReturned": 0
+        },
+        "temecula": {
+          "webImpressions": 1,
+          "webClicks": 0,
+          "averagePosition": 1
+        },
+        "imageRowsReturned": 0,
+        "caution": "No reported rows are not proof of deindexing; one impression is not a stable ranking estimate."
+      },
+      "change": "Replace repeated laundry hero image and matching image metadata and image sitemap entries with three visually inspected original side-by-side washer/dryer photos; descriptive alt text does not claim a completed local pickup. No customer form, routing, service claims, title, canonical or index policy changes.",
+      "successSignals": [
+        "Each existing city has a distinct representative image matching image sitemap and metadata.",
+        "No regression in forms, routing or indexing directives.",
+        "Compare finalized Web and Image impressions and clicks separately; retain, revise or revert with evidence."
+      ],
+      "lastChanged": "2026-11-27",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
+      "status": "running",
+      "freezeRule": "Provisional release through December 14 only; record deployment and preserve at least 17 days before evaluation."
+    },
+    {
+      "id": "2026-11-27-ca-laundry-repetition-batch",
+      "market": "Corona, Santa Ana and Covina, California — washer and dryer pickup",
+      "hypothesis": "Remove one redundant section per page to reduce repeated guidance and navigation without removing any unique link destination; search visibility impact is unproven.",
+      "pagesChanged": [
+        "/corona-washer-dryer-pickup/",
+        "/santa-ana-washer-dryer-pickup/",
+        "/covina-washer-dryer-pickup/"
+      ],
+      "ownerQuery": "City-specific washer and dryer pickup searches in Corona, Santa Ana and Covina",
+      "baselinePeriod": {
+        "start": "2026-10-28",
+        "end": "2026-11-24"
+      },
+      "baseline": {
+        "source": "Google Search Console via Windsor.ai, page-level Web and Image",
+        "webRowsReturned": 0,
+        "imageRowsReturned": 0,
+        "caution": "No returned rows is not proof of zero actual impressions or deindexing."
+      },
+      "change": "Remove one repetitive section per city; preserve all unique link destinations, entire HTML head, form markup, hero, contact, and remaining local guidance.",
+      "successSignals": [
+        "All unique link destinations and request forms preserved.",
+        "Compare settled Web and Image page impressions and clicks independently.",
+        "Retain, revise or revert only with evidence."
+      ],
+      "lastChanged": "2026-11-27",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
+      "status": "proposed",
+      "freezeRule": "Start only on approved deployment; extend review if needed to allow at least 14 days after deployment plus 3 days for finalization."
+    },
+    {
       "id": "2026-11-27-corona-customer-copy-pilot",
       "market": "Corona, California — general appliance removal",
       "hypothesis": "Replacing one explicit search-keyword list with direct customer instructions improves readability and preserves the page's removal intent. Ranking or CTR benefit is not established.",
