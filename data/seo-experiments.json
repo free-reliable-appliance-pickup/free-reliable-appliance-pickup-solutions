@@ -12256,6 +12256,51 @@
       "preferredReview": "2026-11-07",
       "status": "running",
       "freezeRule": "Do not make additional speculative photo/content/canonical/meta/link ownership edits on these pages until first observation date November 1; prefer November 7 finalization review. Technical breakage, factual inaccuracies and contact/indexability issues may be separately logged."
+    },
+    {
+      "id": "2026-11-28-ca-upland-san-bernardino-clarity",
+      "market": "Upland laundry and San Bernardino general appliance pickup",
+      "hypothesis": "Condense a single repeated guidance block per page; preserve service conditions and local guidance elsewhere, then measure visibility and qualified clicks.",
+      "pagesChanged": [
+        "/upland-washer-dryer-pickup/",
+        "/san-bernardino-appliance-pickup/"
+      ],
+      "ownerQuery": "free washer and dryer pickup Upland; free appliance pickup San Bernardino",
+      "baselinePeriod": {
+        "start": "2026-10-29",
+        "end": "2026-11-25"
+      },
+      "baseline": {
+        "source": "Windsor.ai Google Search Console Web page-level report",
+        "uplandLaundry": {
+          "impressions": 2,
+          "clicks": 0,
+          "position": 8.5,
+          "previousImpressions": 42
+        },
+        "sanBernardino": {
+          "impressions": 4,
+          "clicks": 0,
+          "position": 7.75,
+          "previousImpressions": 64
+        },
+        "previousPeriod": {
+          "start": "2026-10-01",
+          "end": "2026-10-28"
+        },
+        "caution": "Small samples; no claim that repetition caused the decline."
+      },
+      "change": "Shorten one repeated body block on each page; preserve all links, forms, head, scripts, photos and remaining local instructions.",
+      "successSignals": [
+        "No intake or navigation regression",
+        "Compare finalized Web and Image visibility separately",
+        "Keep, revise or revert based on evidence"
+      ],
+      "lastChanged": "2026-11-28",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2026-12-31",
+      "status": "running",
+      "freezeRule": "Provisional conservative gate: release against this record only through 2026-12-14; for later release extend the gate before merge. Record verified production deployment in a registry-only follow-up and ensure evaluateNotBefore is at least 17 days after deployment (14 observation days plus 3 finalization days). Do not shorten the provisional gate before finalized evidence."
     }
   ],
   "technicalMaintenance": [
