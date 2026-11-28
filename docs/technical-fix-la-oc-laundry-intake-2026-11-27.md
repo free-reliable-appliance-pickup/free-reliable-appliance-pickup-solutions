@@ -1,0 +1,5 @@
+# California LA / OC laundry intake technical repair
+
+Live and main-source evidence: Long Beach lacks a required photo-sharing plan, optional photo URL and five-digit ZIP constraint; Glendale lacks the optional photo URL and ZIP constraint; Irvine lacks an optional photo URL. Preserve existing option values, endpoint, hidden fields and regional contact numbers (Long Beach/Glendale 310-774-4304; Irvine 909-375-6685). Add the missing fields and clarify photo handoff; no edits outside the existing forms. Long Beach's protected clarity experiment is unchanged except for documented intake repair. Static checks confirm exact preservation outside forms and required photo selection and five-digit ZIP pattern. No request submitted. Independent review, exact-head checks, explicit maintainer approval, deployment and real receipt verification remain required.
+
+Supersedes PR #1568: its form-only changes were blocked by SEO Experiment Guard because all branch commit subjects must begin [technical-fix]. This replacement preserves the exact three HTML changes and records the reason without changing the guard or registry.
