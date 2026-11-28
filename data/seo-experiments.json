@@ -12297,10 +12297,10 @@
         "Keep, revise or revert based on evidence"
       ],
       "lastChanged": "2026-11-28",
-      "evaluateNotBefore": "2026-12-16",
-      "preferredReview": "2026-12-19",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2026-12-31",
       "status": "running",
-      "freezeRule": "Start observation after approved deployment; extend review to at least 14 days after publication plus three days finalization."
+      "freezeRule": "Provisional conservative gate: release against this record only through 2026-12-14; for later release extend the gate before merge. Record verified production deployment in a registry-only follow-up and ensure evaluateNotBefore is at least 17 days after deployment (14 observation days plus 3 finalization days). Do not shorten the provisional gate before finalized evidence."
     }
   ],
   "technicalMaintenance": [
