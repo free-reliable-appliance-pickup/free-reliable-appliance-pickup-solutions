@@ -1,0 +1,5 @@
+# Coachella-area seven-city laundry intake technical repair
+
+Manifest: palm-desert, palm-springs, rancho-mirage, indian-wells, la-quinta, cathedral-city, indio — each `-washer-dryer-pickup/index.html`.
+
+Current main source has required contact, address, appliance and condition fields, but missing structured location/stairs and photo-sharing fields; ZIP lacks five-digit validation. Consolidates the still-open older proposals #644–647, preserving their city/service attribution intent and adding current photo-sharing contract and ZIP pattern. Do not merge overlapping older proposals if this replacement is released. #648 and #649 are excluded, as are the four photo restoration pages in #1551. Existing Formspree action, telephone routing, outside-form HTML and SEO experiments unchanged. Source transformations checked for exact outside-form parity and required fields. Exact-head CI, independent review, browser QA, maintainer approval and legitimate receipt verification remain pending. No fake leads or ranking claims.
