@@ -12614,6 +12614,17 @@
         "montebello-washer-dryer-pickup/index.html",
         "alhambra-washer-dryer-pickup/index.html"
       ]
+    },
+    {
+      "date": "2026-11-26",
+      "type": "verified technical image discovery repair",
+      "reason": "Four existing indexable Coachella Valley laundry pages had only logo images. Restore one category-specific existing photo per page, synchronize social preview image, and add reproducible image sitemap entries. No phone, form, service claim, title, H1, canonical or schema changes.",
+      "pages": [
+        "/coachella-valley-washer-dryer-pickup/",
+        "/bermuda-dunes-washer-dryer-pickup/",
+        "/pga-west-washer-dryer-pickup/",
+        "/thousand-palms-washer-dryer-pickup/"
+      ]
     }
   ]
 }
