@@ -378,10 +378,12 @@
         "Review exact city-intent queries and page impressions/clicks, directory traffic and customer requests against baseline; no guaranteed improvement.",
         "Retain, revise or revert based on finalized data and no material loss of useful directory traffic."
       ],
-      "evaluateNotBefore": "2026-12-09",
-      "preferredReview": "2026-12-12",
-      "status": "proposed",
-      "freezeRule": "Following approved deployment, preserve the directory title until review date except documented technical or factual fixes. No change to existing protected city pages."
+      "evaluateNotBefore": "2026-12-15",
+      "preferredReview": "2026-12-18",
+      "status": "running",
+      "deploymentVerifiedDate": "2026-11-28",
+      "deploymentEvidence": "PR #1547 merged on November 26 at 7f3958543c211f0c1727d48fe296dc42df25c0d4. Public retrieval November 28 verified the directory-specific title and self-referencing canonical. Exact production deployment timestamp unknown; The recorded Search Console baseline (October 26 through November 22) predates the merge.",
+      "freezeRule": "Preserve the directory title until the December 15 evaluation gate or later, allowing at least 14 observation days plus 3 finalization days from the verified live date of November 28. No speculative changes to protected city pages; documented technical or factual fixes only."
     },
     {
       "id": "2026-11-22-ie-general-riverside-city-laundry-route",
