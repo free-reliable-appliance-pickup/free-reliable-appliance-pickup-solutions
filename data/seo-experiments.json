@@ -23,6 +23,38 @@
   },
   "experiments": [
     {
+      "id": "2026-11-27-ca-laundry-repetition-batch",
+      "market": "Corona, Santa Ana and Covina, California — washer and dryer pickup",
+      "hypothesis": "Remove one redundant section per page to reduce repeated guidance and navigation without removing any unique link destination; search visibility impact is unproven.",
+      "pagesChanged": [
+        "/corona-washer-dryer-pickup/",
+        "/santa-ana-washer-dryer-pickup/",
+        "/covina-washer-dryer-pickup/"
+      ],
+      "ownerQuery": "City-specific washer and dryer pickup searches in Corona, Santa Ana and Covina",
+      "baselinePeriod": {
+        "start": "2026-10-28",
+        "end": "2026-11-24"
+      },
+      "baseline": {
+        "source": "Google Search Console via Windsor.ai, page-level Web and Image",
+        "webRowsReturned": 0,
+        "imageRowsReturned": 0,
+        "caution": "No returned rows is not proof of zero actual impressions or deindexing."
+      },
+      "change": "Remove one repetitive section per city; preserve all unique link destinations, entire HTML head, form markup, hero, contact, and remaining local guidance.",
+      "successSignals": [
+        "All unique link destinations and request forms preserved.",
+        "Compare settled Web and Image page impressions and clicks independently.",
+        "Retain, revise or revert only with evidence."
+      ],
+      "lastChanged": "2026-11-27",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
+      "status": "proposed",
+      "freezeRule": "Start only on approved deployment; extend review if needed to allow at least 14 days after deployment plus 3 days for finalization."
+    },
+    {
       "id": "2026-11-27-corona-customer-copy-pilot",
       "market": "Corona, California — general appliance removal",
       "hypothesis": "Replacing one explicit search-keyword list with direct customer instructions improves readability and preserves the page's removal intent. Ranking or CTR benefit is not established.",
