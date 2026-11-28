@@ -23,6 +23,43 @@
   },
   "experiments": [
     {
+      "id": "2026-11-27-inland-empire-laundry-clarity",
+      "market": "Inland Empire, California — regional laundry pickup",
+      "hypothesis": "Replace search-engine-facing keyword enumeration with plain customer-facing service guidance to clarify the regional laundry page's purpose without changing navigation or intake.",
+      "pagesChanged": [
+        "/inland-empire-washer-dryer-pickup/"
+      ],
+      "ownerQuery": "Inland Empire washer and dryer pickup",
+      "baselinePeriod": {
+        "start": "2026-10-29",
+        "end": "2026-11-25"
+      },
+      "baseline": {
+        "source": "First-party Google Search Console via Windsor.ai; page-level Web and Image",
+        "webRowsReturned": 0,
+        "imageRowsReturned": 0,
+        "previousPeriod": {
+          "start": "2026-10-01",
+          "end": "2026-10-28",
+          "webImpressions": 27,
+          "webClicks": 0,
+          "averagePosition": 8.3333
+        },
+        "caution": "No returned rows is not proof of zero true impressions or deindexing; no causal claim."
+      },
+      "change": "Replace one heading and paragraph containing a search-query list; preserve all links, forms, photos, head, scripts and other page content.",
+      "successSignals": [
+        "No regression in request form, routing, internal links or imagery.",
+        "Compare finalized Web and Image impressions and clicks separately.",
+        "Keep, revise or revert based on evidence."
+      ],
+      "lastChanged": "2026-11-27",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
+      "status": "running",
+      "freezeRule": "Provisional conservative gate: release against this record only through 2026-12-14; for later release extend the gate before merge. Record verified production deployment in a registry-only follow-up and ensure evaluateNotBefore is at least 17 days after deployment (14 observation days plus 3 finalization days). Do not shorten before finalized evidence; no speculative changes before evaluation."
+    },
+    {
       "id": "2026-11-27-ca-four-laundry-clarity-pilot",
       "market": "Pasadena, Pomona, Long Beach and Fresno — California washer and dryer pickup",
       "hypothesis": "Condense one overlapping information section per page, retaining distinct local and equipment guidance; measure whether customer clarity and search discovery improve.",
