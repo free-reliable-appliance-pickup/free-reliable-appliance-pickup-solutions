@@ -54,10 +54,10 @@
         "Keep, revise or revert based on evidence."
       ],
       "lastChanged": "2026-11-27",
-      "evaluateNotBefore": "2026-12-15",
-      "preferredReview": "2026-12-18",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
       "status": "running",
-      "freezeRule": "Observation starts only after approved deployment; extend evaluation until at least 14 days after publication plus three days for finalization. No speculative changes before evaluation."
+      "freezeRule": "Provisional conservative gate: release against this record only through 2026-12-14; for later release extend the gate before merge. Record verified production deployment in a registry-only follow-up and ensure evaluateNotBefore is at least 17 days after deployment (14 observation days plus 3 finalization days). Do not shorten before finalized evidence; no speculative changes before evaluation."
     },
     {
       "id": "2026-11-27-ca-four-laundry-clarity-pilot",
