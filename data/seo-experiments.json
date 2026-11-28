@@ -23,6 +23,44 @@
   },
   "experiments": [
     {
+      "id": "2026-11-28-claremont-laundry-guidance-clarity",
+      "market": "Claremont, California — washer and dryer pickup",
+      "hypothesis": "Condense one repeated instruction paragraph in the route connections section, preserving testability guidance and all existing links and customer intake information.",
+      "pagesChanged": [
+        "/claremont-washer-dryer-pickup/"
+      ],
+      "ownerQuery": "free washer and dryer pickup Claremont",
+      "baselinePeriod": {
+        "start": "2026-10-29",
+        "end": "2026-11-25"
+      },
+      "baseline": {
+        "source": "First-party Google Search Console via Windsor.ai; page-level Web",
+        "impressions": 2,
+        "clicks": 0,
+        "averagePosition": 7.5,
+        "previousPeriod": {
+          "start": "2026-10-01",
+          "end": "2026-10-28",
+          "impressions": 33,
+          "clicks": 1,
+          "averagePosition": 14.2121
+        },
+        "caution": "Low sample; no claim repetition caused the decline."
+      },
+      "change": "Replace only one repetitive paragraph in the route connections section. Preserve all links, title, head, scripts, images, forms, contact, and other content.",
+      "successSignals": [
+        "No intake or navigation regression",
+        "Compare finalized Web and Image impressions and clicks separately",
+        "Keep, revise or revert based on evidence"
+      ],
+      "lastChanged": "2026-11-28",
+      "evaluateNotBefore": "2026-12-31",
+      "preferredReview": "2027-01-03",
+      "status": "running",
+      "freezeRule": "Provisional conservative gate: release against this record only through 2026-12-14; for later release extend the gate before merge. Record verified production deployment in a registry-only follow-up and ensure evaluateNotBefore is at least 17 days after deployment. No speculative changes before evaluation."
+    },
+    {
       "id": "2026-11-27-ca-four-laundry-clarity-pilot",
       "market": "Pasadena, Pomona, Long Beach and Fresno — California washer and dryer pickup",
       "hypothesis": "Condense one overlapping information section per page, retaining distinct local and equipment guidance; measure whether customer clarity and search discovery improve.",
